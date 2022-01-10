@@ -1,6 +1,9 @@
+import produce from 'immer'
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useRecoilValue } from 'recoil'
+import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import MailOpenIcn from '../../../Icons/MailOpenIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -10,6 +13,7 @@ import TinyMCE from '../../Utilities/TinyMCE'
 import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc'
 
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
+  const fieldsArr = useRecoilValue($fieldsArr)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
   if (signConf.template && signConf?.default?.templateDetails?.[signConf?.template] && (!signConf?.templateActions || (signConf.templateActions.length !== signConf?.default?.templateDetails?.[signConf?.template]?.actions?.length))) {
@@ -46,11 +50,9 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
   }
 
   const handleNote = val => {
-    setSignConf(oldState => {
-      const tmp = { ...oldState }
-      tmp.notes = val
-      return tmp
-    })
+    setSignConf(prevState => produce(prevState, draft => {
+      draft.notes = val
+    }))
   }
 
   const privateMsgField = val => {
@@ -190,6 +192,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
         {/* <textarea rows="5" className="btcd-paper-inp mt-2 w-7" onChange={e => handleAction('notes', 'notes', e.target.value)} value={signConf.notes} /> */}
         <TinyMCE
           id="body-content"
+          formFields={fieldsArr}
           value={signConf.notes}
           onChangeHandler={handleNote}
         />

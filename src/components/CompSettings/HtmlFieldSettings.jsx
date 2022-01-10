@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
@@ -11,7 +11,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import Back2FldBtn from './Back2FldBtn'
-
+import sc from '../../styles/commonStyleEditorStyle'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 
 export default function HtmlFieldSettings() {
@@ -65,7 +65,7 @@ export default function HtmlFieldSettings() {
         <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: fieldData.content }}
-          className={css(FieldStyle.input, ut.px10, ut.py5, ut.pmt0)}
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
         />
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />

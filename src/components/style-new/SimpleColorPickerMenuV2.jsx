@@ -6,15 +6,17 @@ import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
+import { hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 
-function SimpleColorPickerMenu({ action, value, objectPaths }) {
+function SimpleColorPickerMenuV2({ action, value, objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -61,7 +63,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   }, [action])
 
   const handleColor = () => {
-    const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
+    const [_h, _s, _l] = hsva2hsla(color.h, color.s, color.v)
     if (!action.type) return
 
     const h = Math.round(_h || 0)
@@ -102,28 +104,16 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
       case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = hsla
-          // drft['--gfbc-h'] = Math.round(_h)
-          // drft['--gfbc-s'] = `${s}%`
-          // drft['--gfbc-l'] = `${l}%`
-          // drft['--gfbc-a'] = a / 100
         }))
         break
       case 'global-fld-bg-color':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bg-color'] = hsla
-          // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${s}%`
-          // drft['--gfbg-l'] = `${l}%`
-          // drft['--gfbg-a'] = a / 100
         }))
         break
       case 'fw-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--fld-wrp-bg'] = hsla
-          // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${s}%`
-          // drft['--gfbg-l'] = `${l}%`
-          // drft['--gfbg-a'] = a / 100
         }))
         break
       case 'individul-color':
@@ -169,7 +159,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     if (typeof clr === 'string') {
       c = `var(${clr})`
     } else {
-      const [_h, _s, _l] = hsv2hsl(clr.h, clr.s, clr.v)
+      const [_h, _s, _l] = hsva2hsla(clr.h, clr.s, clr.v)
       c = `hsla(${Math.round(_h || 0)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${clr.a || 100})`
     }
 
@@ -239,7 +229,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   )
 }
 
-export default memo(SimpleColorPickerMenu)
+export default memo(SimpleColorPickerMenuV2)
 
 const c = {
   preview_wrp: {

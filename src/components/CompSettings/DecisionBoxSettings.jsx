@@ -2,22 +2,23 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -114,7 +115,7 @@ export default function DecisionBoxSettings() {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: fieldData.lbl || fieldData?.info?.lbl }}
           // className="err-msg-box mt-2"
-          className={css(FieldStyle.input, ut.px10, ut.py5, ut.pmt0)}
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
         />
       </div>
 

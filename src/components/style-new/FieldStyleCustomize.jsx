@@ -2,15 +2,19 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { memo } from 'react'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $flags, $styles, $themeVars } from '../../GlobalStates'
+import { $fields, $flags } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SingleToggle from '../Utilities/SingleToggle'
+import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
@@ -28,9 +32,11 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
   const themeVars = useRecoilValue($themeVars)
-
+  const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
+
+  const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme.includes(element)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -38,7 +44,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }, [])
 
   const getValueFromThemeVar = (val) => {
-    if (val.match(/var/g)?.[0] === 'var') {
+    if (val?.match(/var/g)?.[0] === 'var') {
       const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]
     }
@@ -51,7 +57,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   // sub title
-  const subtitl = classes[`.${fieldKey}-sub-titl`]?.['font-size']
+  const subtitl = classes?.[`.${fieldKey}-sub-titl`]?.['font-size']
   const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
     updateFontSize(unit, value, 'sub-titl')
@@ -60,7 +66,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const subTitlFSUnit = getStrFromStr(subTitlFs)
 
   // heplper text
-  const hplTxtFs = classes[`.${fieldKey}-hlp-txt`]?.['font-size']
+  const hplTxtFs = classes?.[`.${fieldKey}-hlp-txt`]?.['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
     updateFontSize(unit, value, 'hlp-txt')
@@ -68,9 +74,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
-  const overrideGlobalThemeHandler = (e, elmnt) => {
-    const { target: { checked } } = e
-
+  const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
     if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
@@ -107,6 +111,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       }))
     }
   }
+  // console.log({ fldStyleObj, element, isFieldElemetOverrided })
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
@@ -119,31 +124,36 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           Themes /
           {' '}
         </Link>
-        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
+        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Individual Field Style Customize</span>
       </span>
-      <h4 className={css(cls.title)}>Theme Customize</h4>
+      <h4 className={css(cls.title)}>
+        {fieldsTypes[fieldType]}
+        {' '}
+        {element?.replaceAll('-', ' ')}
+      </h4>
+      <div className={css(ut.flxc)}>
+        <h5 className={css(cls.subTitle)}>{fields[fieldKey].adminLbl}</h5>
+        <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
+      </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-
-        <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <span>
-          Override Global Theme Color
-          {' '}
-          <input
-            type="checkbox"
-            onChange={(e) => overrideGlobalThemeHandler(e, element)}
-            checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
-            aria-label="default Theme Color"
+        {element !== 'quick-tweaks' && (
+          <SingleToggle
+            title="Override form theme styles"
+            action={(e) => overrideGlobalThemeHandler(e, element)}
+            isChecked={isFieldElemetOverrided}
+            className={css(ut.mr2, ut.mb2)}
           />
-        </span>
+        )}
 
         <div className={css(cls.container)}>
+          {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
+
           {element === 'field-container' && (
             <div className={css(!checkExistElement('field-container') && cls.blur)}>
               <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
             </div>
           )}
-
           {element === 'label-subtitle-container' && (
             <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
               <IndividualCustomStyle elementKey="lbl-wrp" fldKey={fieldKey} />
@@ -193,18 +203,12 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             </div>
           )}
         </div>
-        <div className={css(cls.divider)} />
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
     </div>
   )
 })
-
-// const MenuItem = ({ label, onClick, name }) => {
-//   const { css } = useFela()
-//   return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
-// }
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -244,10 +248,18 @@ const cls = {
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
   blur: {
-    // fr: 'blur(1px)',
-    oy: '0.2',
-    bd: 'radial-gradient(white, transparent)',
+    oy: '0.5',
+    cur: 'not-allowed',
+    bd: 'white',
     zx: 9,
-    pnevn: 'none',
+    pe: 'none',
+  },
+  pill: {
+    brs: 8,
+    b: '1px solid var(--b-31-44-27)',
+    px: 5,
+    py: 2,
+    bd: 'var(--b-23-95)',
+    fw: 500,
   },
 }

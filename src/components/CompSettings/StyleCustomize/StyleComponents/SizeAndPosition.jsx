@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHistory, $builderHookStates, $layouts, $updateBtn } from '../../../../GlobalStates'
+import { $breakpoint, $builderHistory, $builderHookStates, $layouts, $updateBtn } from '../../../../GlobalStates/GlobalStates'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../../Utils/FormBuilderHelper'

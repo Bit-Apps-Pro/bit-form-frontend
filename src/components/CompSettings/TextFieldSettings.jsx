@@ -10,19 +10,19 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $styles, $updateBtn } from '../../GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
-import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -54,6 +54,7 @@ function TextFieldSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
+  const selectedFieldId = useRecoilValue($selectedFieldId)
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const subtitle = fieldData.subtitle || ''
@@ -145,7 +146,9 @@ function TextFieldSettings() {
     if (value === '') {
       delete fieldData.subtitle
       setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    } else fieldData.subtitle = value
+    } else {
+      fieldData.subtitle = value
+    }
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -153,9 +156,10 @@ function TextFieldSettings() {
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
-    if (checked) fieldData.subtitle = 'Sub Title'
-    else delete fieldData.subtitle
-
+    if (checked) {
+      fieldData.subtitle = 'Sub Title'
+      addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
+    } else delete fieldData.subtitle
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -177,8 +181,10 @@ function TextFieldSettings() {
   }
 
   const hideHelperTxt = ({ target: { checked } }) => {
-    if (checked) fieldData.helperTxt = 'Helper Text'
-    else delete fieldData.helperTxt
+    if (checked) {
+      fieldData.helperTxt = 'Helper Text'
+      addDefaultStyleClasses(selectedFieldId, 'hepTxt', setStyles)
+    } else delete fieldData.helperTxt
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -417,6 +423,7 @@ function TextFieldSettings() {
   }
 
   const setIconModel = (typ) => {
+    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIcnType(typ)
     setIcnMdl(true)
   }
@@ -426,6 +433,10 @@ function TextFieldSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      setStyles(prvStyle => produce(prvStyle, draft => {
+        if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
+        if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
+      }))
     }
   }
 
@@ -951,7 +962,10 @@ function TextFieldSettings() {
                 <>
                   <div className={css(ut.mr2, ut.mt3)}>
                     <div className={css(ut.flxc, ut.ml1)}>
-                      <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression', 'bitform')}:</h4>
+                      <h4 className={css(ut.m0, FieldStyle.title)}>
+                        {__('Expression', 'bitform')}
+                        :
+                      </h4>
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                     </div>
                     <input

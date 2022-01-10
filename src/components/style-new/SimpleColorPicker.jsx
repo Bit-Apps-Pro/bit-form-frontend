@@ -1,16 +1,34 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $draggableModal, $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $draggableModal } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
+import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler }) {
+export default function SimpleColorPicker({ title,
+  stateObjName,
+  propertyPath,
+  subtitle,
+  value,
+  objectPaths,
+  modalType,
+  modalId,
+  deleteable,
+  delPropertyHandler,
+  allowImportant,
+  hslaPaths,
+  fldKey }) {
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
@@ -18,44 +36,51 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const clearHandler = () => {
-    if (objectPaths?.property) {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = ''
-      }))
-    } else if (stateName === 'themeColors') {
-      setThemeColors(prvStyle => produce(prvStyle, drft => {
-        drft[`--${modalType}`] = ''
-      }))
-    } else if (stateName === 'themeVars') {
-      setThemeVars(prvStyle => produce(prvStyle, drft => {
-        drft[`--${modalType}`] = ''
-      }))
+    switch (stateObjName) {
+      case 'themeColors':
+        setThemeColors(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = ''
+        }))
+        break
+      case 'themeVars':
+        setThemeVars(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = ''
+        }))
+        break
+      case 'styles':
+        setStyles(prvState => produce(prvState, drftStyles => {
+          assignNestedObj(drftStyles, propertyPath, '')
+        }))
+        break
+      default:
+        break
     }
   }
 
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
-      <div className={css(ut.flxc)}>
+      <div className={css(ut.flxc, deleteable && ut.ml1)}>
         {deleteable && (
-          <button onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
-            <TrashIcn size="15" />
+          <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+            <TrashIcn size="14" />
           </button>
         )}
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} objectPaths={objectPaths} />
+        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
+        {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
+            <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
             <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
           </button>
           {value && (
-            <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
               <CloseIcn size="12" />
             </button>
           )}
@@ -66,15 +91,23 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
 }
 
 const c = {
-  containerHover: {
-    '&:hover .delete-btn': {
-      bd: 'var(--b-79-96)',
-      brs: '50%',
-      cr: 'var(--b-50)',
-      oy: 1,
-      tm: 'scale(1.1)',
-    },
+  delBtn: {
+    se: 20,
+    flx: 'center',
+    b: 'none',
+    p: 0,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    lt: -15,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
+  containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 130,
@@ -103,15 +136,7 @@ const c = {
     bd: 'transparent',
     p: 0,
   },
-  delBtn: {
-    b: 'none',
-    p: 5,
-    bd: 'transparent',
-    mr: 5,
-    oy: 0,
-    tn: '.2s all',
-    curp: 1,
-  },
+
   clrVal: {
     w: 73,
     ws: 'nowrap',

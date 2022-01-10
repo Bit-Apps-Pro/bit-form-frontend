@@ -1,28 +1,28 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 
-import React, { memo, useState, useCallback } from 'react'
+import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useImmer } from 'use-immer'
-import { $confirmations, $fieldsArr, $updateBtn } from '../../GlobalStates'
+import { $confirmations, $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
+import EditIcn from '../../Icons/EditIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import CheckBox from '../Utilities/CheckBox'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import SingleToggle from '../Utilities/SingleToggle'
+import SliderModal from '../Utilities/SliderModal'
 import TinyMCE from '../Utilities/TinyMCE'
 import ConfirmMsgPreview from './ConfirmMsgPreview'
-import SliderModal from '../Utilities/SliderModal'
-import EditIcn from '../../Icons/EditIcn'
-import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -46,9 +46,9 @@ function ConfMsg({ removeIntegration }) {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: 'inset' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: 'inset' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',

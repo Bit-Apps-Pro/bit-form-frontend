@@ -1,4 +1,4 @@
-export default function ToggleLeftIcn({ size = 24, stroke = 2 }) {
+export default function ToggleLeftIcn({ size = 21, stroke = 2 }) {
   return (
     <svg
       width={size}

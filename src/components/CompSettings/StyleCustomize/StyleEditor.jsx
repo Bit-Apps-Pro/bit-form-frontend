@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useHistory } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
-import { $draggableModal } from '../../../GlobalStates'
+import { $draggableModal } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import CustomInputControl from './ChildComp/CustomInputControl'

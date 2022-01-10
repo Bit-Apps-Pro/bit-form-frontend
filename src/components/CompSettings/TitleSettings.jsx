@@ -6,9 +6,10 @@ import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
@@ -19,19 +20,19 @@ import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import BorderControl from '../style-new/BorderControl'
+import SimpleColorPicker from '../style-new/SimpleColorPicker'
+import SpacingControl from '../style-new/SpacingControl'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import SmartTags from './SmartTags'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import Icons from './Icons'
-import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import SpacingControl from '../style-new/SpacingControl'
-import SimpleColorPicker from '../style-new/SimpleColorPicker'
+import SmartTags from './SmartTags'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
-import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
-import BorderControl from '../style-new/BorderControl'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function TitleSettings() {
   const { css } = useFela()
@@ -322,7 +323,11 @@ function TitleSettings() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
               <div className={css(ut.flxcb, ut.mr2)}>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={titlePaths} />
+                <SpacingControl
+                  action={{ type: 'spacing-control' }}
+                  subtitle="Spacing control"
+                  objectPaths={titlePaths}
+                />
               </div>
             </div>
           </div>

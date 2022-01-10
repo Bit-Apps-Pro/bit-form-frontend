@@ -1,8 +1,11 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles, $themeVars } from '../../GlobalStates'
+import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
+import { getValueByObjPath } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -11,15 +14,22 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
-  const spaceHandler = (val, property) => {
+  const spaceHandler = (val, propertyPath) => {
     if (object === 'themeVars') {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[property] = `${val}`
+        drftStyle[propertyPath] = `${val}`
       }))
     }
-    if (object === 'fieldStyle') {
+    if (object === 'styles') {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[paths.fk].classes[paths.selector][property] = `${val}`
+        console.log('paths', paths, propertyPath)
+
+        const value = getValueByObjPath(drft, propertyPath)
+        const isAlreadyImportant = value?.match(/!important/gi)?.[0]
+        if (isAlreadyImportant) {
+          val = `${val} !important`
+        }
+        assignNestedObj(drft, propertyPath, val)
       }))
     }
   }
@@ -33,12 +43,12 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     }
   }
 
-  const getVal = (property) => {
-    if (object === 'themeVars') return themeVars[property]
-    if (object === 'fieldStyle') {
-      let value = styles.fields[paths.fk].classes[paths.selector][property]
-      const checkCssVar = value?.match(/var/gi)?.[0]
-      if (checkCssVar === 'var') {
+  const getVal = (propertyPath) => {
+    if (object === 'themeVars') return themeVars[propertyPath]
+    if (object === 'styles') {
+      let value = getValueByObjPath(styles, propertyPath)
+      const isCssVar = value?.match(/var/gi)?.[0]
+      if (isCssVar === 'var') {
         const getVarProperty = value.replaceAll(/\(|var|,.*|\)/gi, '')
         value = themeVars[getVarProperty]
       }
@@ -52,7 +62,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     <>
       {paths?.margin && (
         <SpaceControl
-          isResetable={checkIsResetable(paths.margin)}
+          stateObjName={objectPaths.object}
+          propertyPath={objectPaths.paths.margin}
           undoHandler={() => undoHandler(paths.margin)}
           value={getVal(paths.margin)}
           title="Margin"
@@ -62,7 +73,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
       )}
       {paths?.padding && (
         <SpaceControl
-          isResetable={checkIsResetable(paths.padding)}
+          stateObjName={objectPaths.object}
+          propertyPath={objectPaths.paths.padding}
           undoHandler={() => undoHandler(paths.padding)}
           value={getVal(paths.padding)}
           title="Padding"

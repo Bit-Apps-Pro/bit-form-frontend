@@ -7,13 +7,14 @@ import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
 import TableLoader2 from '../Loaders/TableLoader2'
 import ExportImportMenu from '../ExportImport/ExportImportMenu'
-import { $reports, $reportSelector } from '../../GlobalStates'
+import { $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
 import SearchIcon from '../../Icons/SearchIcon'
 import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import CopyIcn from '../../Icons/CopyIcn'
@@ -64,7 +65,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
-    <Menu icn={<EyeOffIcon size="20" />}>
+    <Menu icn={<EyeOffIcon size="21" />}>
       <Scrollbars autoHide style={{ width: 200 }}>
         <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
           {tableCol.map((column, i) => (
@@ -103,28 +104,29 @@ function Table(props) {
     allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
-    setColumnOrder } = useTable({
-      debug: true,
-      fetchData,
-      columns,
-      data,
-      manualPagination: typeof props.pageCount !== 'undefined',
-      pageCount: props.pageCount,
-      initialState: {
-        pageIndex: 0,
-        hiddenColumns: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'hiddenColumns' in reportData.details) ? reportData.details.hiddenColumns : [],
-        pageSize: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'pageSize' in reportData.details) ? reportData.details.pageSize : 10,
-        sortBy: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'sortBy' in reportData.details) ? reportData.details.sortBy : [],
-        filters: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'filters' in reportData.details) ? reportData.details.filters : [],
-        globalFilter: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'globalFilter' in reportData.details) ? reportData.details.globalFilter : '',
-        columnOrder: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'order' in reportData.details) ? reportData.details.order : [],
+    setColumnOrder } = useTable(
+      {
+        debug: true,
+        fetchData,
+        columns,
+        data,
+        manualPagination: typeof props.pageCount !== 'undefined',
+        pageCount: props.pageCount,
+        initialState: {
+          pageIndex: 0,
+          hiddenColumns: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'hiddenColumns' in reportData.details) ? reportData.details.hiddenColumns : [],
+          pageSize: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'pageSize' in reportData.details) ? reportData.details.pageSize : 10,
+          sortBy: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'sortBy' in reportData.details) ? reportData.details.sortBy : [],
+          filters: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'filters' in reportData.details) ? reportData.details.filters : [],
+          globalFilter: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'globalFilter' in reportData.details) ? reportData.details.globalFilter : '',
+          columnOrder: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'order' in reportData.details) ? reportData.details.order : [],
+        },
+        autoResetPage: false,
+        autoResetHiddenColumns: false,
+        autoResetSortBy: false,
+        autoResetFilters: false,
+        autoResetGlobalFilter: false,
       },
-      autoResetPage: false,
-      autoResetHiddenColumns: false,
-      autoResetSortBy: false,
-      autoResetFilters: false,
-      autoResetGlobalFilter: false,
-    },
       useFilters,
       useGlobalFilter,
       useSortBy,
@@ -148,9 +150,11 @@ function Table(props) {
           },
           ...cols,
         ])
-      }) : '')
+      }) : '',
+    )
   const [stateSavable, setstateSavable] = useState(false)
   const [search, setSearch] = useState(globalFilter)
+  const { css } = useFela()
   useEffect(() => {
     if (fetchData) {
       fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search })
@@ -262,7 +266,7 @@ function Table(props) {
                 {'setBulkStatus' in props
                   && (
                     <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
-                      <ToggleLeftIcn />
+                      <ToggleLeftIcn stroke="1.5" />
                     </button>
                   )}
                 {'duplicateData' in props
@@ -272,9 +276,9 @@ function Table(props) {
                     </button>
                   )}
                 <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
-                  <TrashIcn size="20" />
+                  <TrashIcn size="21" />
                 </button>
-                <small className="btcd-pill">
+                <small className={css(cls.pill)}>
                   {selectedFlatRows.length}
                   {' '}
                   {__('Row Selected', 'bitform')}
@@ -432,6 +436,16 @@ function Table(props) {
 
     </>
   )
+}
+
+const cls = {
+  pill: {
+    bd: 'hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.8)',
+    cr: 'var(--white)',
+    py: 5,
+    px: 7,
+    brs: 5,
+  },
 }
 
 export default memo(Table)

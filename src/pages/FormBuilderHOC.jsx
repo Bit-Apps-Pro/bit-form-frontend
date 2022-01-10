@@ -10,19 +10,22 @@ import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
 import GridLayout from '../components/GridLayout'
+import StyleLayers from '../components/LeftBars/StyleLayers'
+import ToolBar from '../components/LeftBars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
-import ToolBar from '../components/LeftBars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors, $lightThemeColors, $darkThemeColors } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
+import { $styles, $tempStyles } from '../GlobalStates/StylesState'
+import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
-import StyleLayers from '../components/LeftBars/StyleLayers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -49,12 +52,7 @@ const styleReducer = (style, action) => {
 }
 
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
-  // const formSettings = {}cd
-  // const { formType, formID: pramsFormId } = {}
-  // const { formType, formID pramsFormId } = { formType: 'edit', formID: 2 }
-  // const isLoading = false
   const newFormId = useRecoilValue($newFormId)
-  // const [fields, setFields] = useRecoilState($fields)
   const isNewForm = formType === 'new'
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
@@ -78,7 +76,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setThemeVars = useSetRecoilState($themeVars)
   const setTempStyles = useSetRecoilState($tempStyles)
   const setStyle = useSetRecoilState($styles)
-  const themeColors = useRecoilValue($themeColors)
   const setLightThemeColors = useSetRecoilState($lightThemeColors)
   const setDarkThemeColors = useSetRecoilState($darkThemeColors)
 
@@ -104,8 +101,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setBreakpointSize(parseStyle.breakpointSize)
       setTempStyles(preStyle => produce(preStyle, drft => {
         drft.themeVars = parseStyle?.themeVars
-        drft.themeColors = themeColors
-        drft.tempStyles = parseStyle.style
+        drft.lightThemeColors = parseStyle.themeColors?.lightThemeColors
+        drft.darkThemeColors = parseStyle.themeColors?.darkThemeColors
+        drft.styles = parseStyle.style
       }))
       setThemeVars(parseStyle.themeVars)
       if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
@@ -230,7 +228,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [])
 
   const afterResizing = useCallback(() => {
-    console.log('resize off')
     setBuilderPointerEventNone(false)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
   }, [])

@@ -13,6 +13,7 @@ import TableCheckBox from './Utilities/TableCheckBox'
 
 export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {
   const [modal, setModal] = useState(false)
+
   // const [, setTemplates] = useState(null)
   const staticTem = [{ lbl: 'Blank', img: '' }, { lbl: 'Contact Form', img: '' }]
   const { css } = useFela()
@@ -34,10 +35,11 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
           <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <Link to={`/form/builder/new/${tem.lbl}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>
+            <Link to={`/form/builder/new/${newFormId}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>
           </div>
         </div>
       ))}
+
       <div className="btcd-tem flx">
         <DownloadIcon size="60" />
         <div>Form Import</div>
@@ -45,6 +47,7 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
           <button onClick={() => setModal(true)} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Import', 'bitform')}</button>
         </div>
       </div>
+
       <Modal
         show={modal}
         setModal={setModal}

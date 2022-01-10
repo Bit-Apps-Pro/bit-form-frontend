@@ -6,8 +6,7 @@ import { useState } from 'react'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useFela } from 'react-fela'
-import { $fieldsArr, $mailTemplates } from '../GlobalStates'
-// import '../resource/css/tinymce.css'
+import { $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
@@ -25,7 +24,9 @@ function EmailTemplateNew() {
   const { css } = useFela()
 
   const handleBody = value => {
-    setTem(prev => ({ ...prev, body: value }))
+    setTem(prevState => produce(prevState, draft => {
+      draft.body = value
+    }))
   }
 
   const handleInput = ({ target: { name, value } }) => {

@@ -1,9 +1,9 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -28,13 +28,11 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }, [errorModal])
 
   const setErrMsg = (name, val) => {
-    const fdata = deepCopy(fieldData)
-    if (!fdata.err) fdata.err = {}
-    if (!fdata.err[name]) fdata.err[name] = {}
-    fdata.err[name].msg = val
-    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
+    setFields(prevState => produce(prevState, draft => {
+      if (!draft[fldKey].err) draft[fldKey].err = {}
+      if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
+      draft[fldKey].err[name].msg = val
+    }))
     addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 

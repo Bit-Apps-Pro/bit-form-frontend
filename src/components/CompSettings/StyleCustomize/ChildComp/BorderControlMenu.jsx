@@ -1,10 +1,12 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars, $styles } from '../../../../GlobalStates'
+import { $styles } from '../../../../GlobalStates/StylesState'
+import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
+import { getObjByKey, getValueByObjPath, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
@@ -12,15 +14,19 @@ export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
 
-  const { object, paths } = objectPaths
+  const { object, borderObjName, paths } = objectPaths
 
-  const stateObj = getStyleStateObj(object, { themeVars, styles })
+  const stateObj = getObjByKey(object, { themeVars, styles })
 
-  const borderStyle = getStyleValueFromObjectPath(stateObj, paths.border)
-  const borderWidth = getStyleValueFromObjectPath(stateObj, paths.borderWidth)
-  const borderRadius = getStyleValueFromObjectPath(stateObj, paths.borderRadius)
+  const borderStyleStateObj = getObjByKey(borderObjName, { themeVars, themeColors, styles })
+  const borderStylePath = paths.border
+
+  const borderStyle = getValueByObjPath(borderStyleStateObj, borderStylePath)
+  const borderWidth = getValueByObjPath(stateObj, paths.borderWidth)
+  const borderRadius = getValueByObjPath(stateObj, paths?.borderRadius)
 
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)
@@ -37,8 +43,7 @@ export default function BorderControlMenu({ objectPaths }) {
       }
       return `${shVal || ''}`
     }).join(' ')
-
-    setStyleStateObj(object, paths.border, newBorderStyleValue, { setThemeVars, setStyles })
+    setStyleStateObj(borderObjName, paths.border, newBorderStyleValue, { setThemeColors, setStyles })
   }
 
   const onSizeChange = (pathName, val) => {

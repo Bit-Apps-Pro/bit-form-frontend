@@ -1,14 +1,15 @@
+import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
-import { deepCopy } from '../../../Utils/Helpers'
+import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import TinyMCE from '../../Utilities/TinyMCE'
 import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
   const bits = useRecoilValue($bits)
+  const fieldsArr = useRecoilValue($fieldsArr)
 
   const mailOptions = () => {
     const mail = []
@@ -35,9 +36,9 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
   }
 
   const handleMailBody = val => {
-    const tmp = deepCopy(mailConf)
-    tmp.body = val
-    setMailConf({ ...tmp })
+    setMailConf(prevState => produce(prevState, draft => {
+      draft.body = val
+    }))
   }
 
   const addFieldToSubject = e => {
@@ -109,6 +110,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
         </div>
         <TinyMCE
           id="body-content"
+          formFields={fieldsArr}
           value={mailConf.body || ''}
           onChangeHandler={handleMailBody}
         />

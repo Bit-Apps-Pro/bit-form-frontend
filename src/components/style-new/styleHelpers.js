@@ -2,14 +2,17 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+// eslint-disable-next-line camelcase
+import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
+import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths, id }) => {
+export const showDraggableModal = (e, setDraggableModal, props) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
-  const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
+  const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - (props.width || 250))
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths, id })
+  setDraggableModal({ show: true, position: { x, y }, ...props })
 }
 
 // This Function used for Array To Style String converter (like shadow)
@@ -205,51 +208,53 @@ export const removeHightlight = (selector = '[data-highlight]') => {
 }
 
 /**
+ * @function commonStyle(fk, type)
  * @param {string} fk field key
  * @param {string} type size
+ * @return style classes
 */
-export const CommonStyle = (fk, type) => {
+export const commonStyle = (fk, type) => {
   switch (type) {
     case 'small-2':
       return {
         [`.${fk}-lbl`]: { 'font-size': '10px' },
-        [`.${fk}-st`]: { 'font-size': '9px' },
-        [`.${fk}-ht`]: { 'font-size': '9px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '9px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '9px' },
         [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important', height: '10px' },
       }
     case 'small-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
-        [`.${fk}-st`]: { 'font-size': '10px' },
-        [`.${fk}-ht`]: { 'font-size': '10px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '10px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
         [`.${fk}-fld`]: { 'font-size': '12px', padding: '6px 3px' },
       }
     case 'small':
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
-        [`.${fk}-st`]: { 'font-size': '12px' },
-        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
         [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
       }
     case 'medium':
       return {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
-        [`.${fk}-st`]: { 'font-size': '11px' },
-        [`.${fk}-ht`]: { 'font-size': '11px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '11px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '11px' },
         [`.${fk}-fld`]: { 'font-size': '16px', padding: '8px 5px' },
       }
     case 'large':
       return {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
-        [`.${fk}-st`]: { 'font-size': '12px' },
-        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
         [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
       }
     case 'large-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
-        [`.${fk}-st`]: { 'font-size': '14px' },
-        [`.${fk}-ht`]: { 'font-size': '14px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '14px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
         [`.${fk}-fld`]: { 'font-size': '20px', padding: '10px 7px' },
       }
     default:
@@ -259,9 +264,10 @@ export const CommonStyle = (fk, type) => {
 
 export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) || []
 
-export const getStyleStateObj = (obj, states) => states[obj]
+export const getObjByKey = (objName, obj) => obj[objName]
 
-export const getStyleValueFromObjectPath = (obj, path) => {
+export const getValueByObjPath = (obj, path) => {
+  if (!obj || !path) return null
   const paths = path?.split('->') || []
   if (paths.length === 1) {
     return obj[paths[0]]
@@ -269,6 +275,7 @@ export const getStyleValueFromObjectPath = (obj, path) => {
   let value = obj
   for (let i = 0; i < paths.length; i += 1) {
     value = value[paths[i]]
+    if (value === undefined) return ''
   }
 
   return value
@@ -280,8 +287,125 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
     setStateFunc = setStates.setThemeVars
   } else if (obj === 'styles') {
     setStateFunc = setStates.setStyles
+  } else if (obj === 'themeColors') {
+    setStateFunc = setStates.setThemeColors
   }
   setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)
+  }))
+}
+
+export function arrDiff(arr1, arr2) {
+  return arr1
+    .filter(x => !arr2.includes(x))
+    .concat(arr2.filter(x => !arr1.includes(x)))
+}
+
+export const addableCssPropsByField = (fieldType) => {
+  switch (fieldType) {
+    case 'text':
+    case 'date':
+    case 'number':
+    case 'username':
+    case 'textarea':
+    case 'email':
+      return Object.keys(editorConfig.texfieldStyle.properties)
+    case 'dropdown':
+    // return Object.keys(editorConfig.texfieldStyle.properties)
+
+    // eslint-disable-next-line no-fallthrough
+    default:
+      break
+  }
+}
+
+const styleClasses = {
+  lbl: ['lbl', 'lbl-wrp'],
+  lblPreIcn: ['lbl-pre-i'],
+  lblSufIcn: ['lbl-suf-i'],
+  subTitl: ['sub-titl'],
+  subTlePreIcn: ['sub-titl-pre-i'],
+  subTleSufIcn: ['sub-titl-suf-i'],
+  hepTxt: ['hlp-txt'],
+  hlpPreIcn: ['hlp-txt-pre-i'],
+  hlpSufIcn: ['hlp-txt-suf-i'],
+  prefixIcn: ['pre-i'],
+  suffixIcn: ['suf-i'],
+}
+
+const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+
+export const removeUnuseStyles = (fields, setStyles) => {
+  const fieldsArray = Object.keys(fields)
+  setStyles(prvStyle => produce(prvStyle, deftStyles => {
+    fieldsArray.forEach(fldkey => {
+      const fld = fields[fldkey]
+      if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
+      if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
+      if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
+      if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
+      if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
+      if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
+      if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
+
+      switch (fld.typ) {
+        case 'text':
+        case 'number':
+        case 'password':
+        case 'username':
+        case 'email':
+        case 'url':
+        case 'date':
+        case 'datetime-local':
+        case 'time':
+        case 'month':
+        case 'week':
+        case 'color':
+        case 'textarea':
+          if (!fld.prefixIcn) deleteStyles(deftStyles, styleClasses.prefixIcn, fldkey)
+          if (!fld.suffixIcn) deleteStyles(deftStyles, styleClasses.suffixIcn, fldkey)
+          break
+        case 'radio':
+
+          break
+        case 'check':
+
+          break
+        default:
+          break
+      }
+    })
+  }))
+}
+
+export const addDefaultStyleClasses = (fk, element, setStyle) => {
+  setStyle(prvStyle => produce(prvStyle, drftStyle => {
+    const fldTyp = prvStyle.fields[fk].fieldType
+    switch (fldTyp) {
+      case 'text':
+      case 'number':
+      case 'password':
+      case 'username':
+      case 'email':
+      case 'url':
+      case 'date':
+      case 'datetime-local':
+      case 'time':
+      case 'month':
+      case 'week':
+      case 'color':
+      case 'textarea':
+        // eslint-disable-next-line no-case-declarations
+        const textStyleBitFormDefault = textStyle_1_bitformDefault({ fk, fldTyp })
+        // eslint-disable-next-line no-case-declarations
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      default:
+        break
+    }
   }))
 }

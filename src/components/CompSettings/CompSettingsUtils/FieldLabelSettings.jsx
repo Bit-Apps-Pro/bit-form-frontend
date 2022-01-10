@@ -2,9 +2,10 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $styles, $updateBtn } from '../../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $styles } from '../../../GlobalStates/StylesState'
 import CloseIcn from '../../../Icons/CloseIcn'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
@@ -12,7 +13,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
@@ -27,6 +28,7 @@ export default function FieldLabelSettings() {
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const selectedFieldId = useRecoilValue($selectedFieldId)
 
   const [styles, setStyles] = useRecoilState($styles)
   const [icnMdl, setIcnMdl] = useState(false)
@@ -54,6 +56,7 @@ export default function FieldLabelSettings() {
   const hideFieldLabel = e => {
     if (!e.target.checked) {
       fieldData.valid.hideLbl = true
+      addDefaultStyleClasses(selectedFieldId, 'lbl', setStyles)
     } else {
       delete fieldData.valid.hideLbl
     }
@@ -74,6 +77,7 @@ export default function FieldLabelSettings() {
   }
 
   const setIconModel = (typ) => {
+    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIcnType(typ)
     setIcnMdl(true)
   }

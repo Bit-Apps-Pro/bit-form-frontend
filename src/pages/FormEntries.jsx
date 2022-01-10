@@ -10,7 +10,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
+import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -201,7 +201,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           ) {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
-              return JSON.parse(row.cell.value).map((itm, i) => (
+              return getUploadedFilesArr(row.cell.value).map((itm, i) => (
                 <TableFileLink
                   key={`file-n-${row.cell.row.index + i}`}
                   fname={itm}
@@ -305,50 +305,48 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     setshowRelatedInfoMdl(true)
   }
 
-  const fetchData = useCallback(
-    ({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
-      // eslint-disable-next-line no-plusplus
-      if (refreshResp) {
-        setRefreshResp(0)
-        setisloading(true)
-        return
-      }
+  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
+    // eslint-disable-next-line no-plusplus
+    if (refreshResp) {
+      setRefreshResp(0)
+      setisloading(true)
+      return
+    }
 
-      // eslint-disable-next-line no-plusplus
-      const fetchId = ++fetchIdRef.current
-      if (allResp.length < 1) {
-        setisloading(true)
-      }
-      if (fetchId === fetchIdRef.current) {
-        const startRow = pageSize * pageIndex
-        bitsFetch(
-          {
-            id: formID,
-            offset: startRow,
-            pageSize,
-            sortBy,
-            filters,
-            globalFilter,
-          },
-          'bitforms_get_form_entries',
-        ).then((res) => {
-          if (res?.success) {
-            setPageCount(Math.ceil(res.data.count / pageSize))
-            setCountEntries(res.data.count)
-            setAllResp(res.data.entries)
-          }
+    // eslint-disable-next-line no-plusplus
+    const fetchId = ++fetchIdRef.current
+    if (allResp.length < 1) {
+      setisloading(true)
+    }
+    if (fetchId === fetchIdRef.current) {
+      const startRow = pageSize * pageIndex
+      bitsFetch(
+        {
+          id: formID,
+          offset: startRow,
+          pageSize,
+          sortBy,
+          filters,
+          globalFilter,
+        },
+        'bitforms_get_form_entries',
+      ).then((res) => {
+        if (res?.success) {
+          setPageCount(Math.ceil(res.data.count / pageSize))
+          setCountEntries(res.data.count)
+          setAllResp(res.data.entries)
+        }
 
-          setForms(allforms => formsReducer(allforms, {
-            type: 'update',
-            data: { formID, entries: res.data.count },
-          }))
+        setForms(allforms => formsReducer(allforms, {
+          type: 'update',
+          data: { formID, entries: res.data.count },
+        }))
 
-          setisloading(false)
-        })
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [delConfMdl, dupConfMdl, editData, formID, refreshResp],
-  )
+        setisloading(false)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delConfMdl, dupConfMdl, editData, formID, refreshResp])
 
   const onRowClick = useCallback(
     (e, row, idx, rowFetchData) => {
@@ -370,11 +368,25 @@ function FormEntries({ allResp, setAllResp, integrations }) {
 
   const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
 
+  const getUploadedFilesArr = files => {
+    try {
+      const parsedFiles = files ? JSON.parse(files) : []
+      if (Array.isArray(parsedFiles)) {
+        return parsedFiles
+      }
+      if (Object.prototype.toString.call(parsedFiles) === '[object Object]') {
+        return Object.values(parsedFiles)
+      }
+      return parsedFiles
+    } catch (_) {
+      return []
+    }
+  }
+
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up') {
       return (
-        allResp[rowDtl.idx]?.[entry.accessor]
-        && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => (
+        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
           <TableFileLink
             key={`file-n-${i + 1.1}`}
             fname={it}

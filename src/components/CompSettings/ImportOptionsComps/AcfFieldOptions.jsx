@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import SnackMsg from '../../Utilities/SnackMsg'
 
 export const generateAcfOptions = (importOpts, lblKey, valKey) => {

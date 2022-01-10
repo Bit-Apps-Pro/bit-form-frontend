@@ -51,7 +51,6 @@ const ut = {
   flxClm: { dy: 'flex', fd: 'column' },
 
   cp: { cur: 'pointer' },
-  pmt0: { '& p': { m: 0 } },
   // margin
   ma: { m: 'auto' },
   m10: { m: 10 },

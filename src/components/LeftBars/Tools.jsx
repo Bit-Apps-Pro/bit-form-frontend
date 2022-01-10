@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHookStates, $draggingField } from '../../GlobalStates'
+import { $breakpoint, $builderHookStates, $draggingField } from '../../GlobalStates/GlobalStates'
 
 function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, title }) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')

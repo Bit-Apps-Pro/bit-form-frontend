@@ -161,7 +161,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Checkbox', 'bitform'),
       keywords: 'Check Box',
       icn: <CheckBoxIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 30, w: 60, i: 'shadow_block', minH: 30 },
       elm: {
         typ: 'check',
         lbl: __('Check Boxs', 'bitform'),

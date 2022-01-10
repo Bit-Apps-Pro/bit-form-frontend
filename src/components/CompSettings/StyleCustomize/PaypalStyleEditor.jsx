@@ -3,14 +3,14 @@ import produce from 'immer'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
+import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 
 export default function PaypalStyleEditor() {
-  const { formID, formType,fieldKey: fldKey } = useParams()
+  const { formID, formType, fieldKey: fldKey } = useParams()
   const [lay, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)

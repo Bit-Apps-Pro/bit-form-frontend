@@ -1,9 +1,9 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -24,10 +24,9 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setLbl = val => {
-    const tmp = deepCopy(fieldData)
-    tmp.lbl = val
-
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: tmp } }))
+    setFields(prevState => produce(prevState, draft => {
+      draft[fldKey].lbl = val
+    }))
   }
 
   const cancelModal = () => {

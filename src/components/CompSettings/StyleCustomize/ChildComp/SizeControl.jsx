@@ -3,9 +3,9 @@ import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
-export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, value, name, min = 1, max = 100, id }) {
+export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, value, name, min = 1, max = 100, id, step = 1 }) {
   const { css } = useFela()
-  const step = 1
+  // const step = 1
 
   return (
     <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width }}>

@@ -1,67 +1,154 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $colorScheme } from '../../GlobalStates/GlobalStates'
+import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $darkThemeColors, $lightThemeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
-import sc from '../../styles/commonStyleEditorStyle'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import Tip from '../Utilities/Tip'
+import { getValueByObjPath } from './styleHelpers'
 
-export default function ResetStyle({ objectKey, stateName, objectPaths }) {
-  const { themeColors: tmpThemeColors, themeVars: tmpThemeVars, tempStyles } = useRecoilValue($tempStyles)
-  const [themeColor, setThemeColor] = useRecoilState($themeColors)
+export default function ResetStyle({ stateObjName, propertyPath }) {
+  const { lightThemeColors: tmpLightThemeColors,
+    darkThemeColors: tmpDarkThemeColors,
+    themeVars: tmpThemeVars,
+    styles: tmpStyles } = useRecoilValue($tempStyles)
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
+  const colorScheme = useRecoilValue($colorScheme)
+  const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
+  const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
 
+  // console.log({ stateObjName, lightThemeColors, propertyPath },
+  //   'lightThemeColors', lightThemeColors[propertyPath],
+  //   'temlighThemeColors', tmpLightThemeColors,
+  //   darkThemeColors[propertyPath] === tmpDarkThemeColors[propertyPath],
+  // )
   let show = false
-  if (objectPaths?.object === 'fieldStyle') {
-    const styleValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
-    const tempStyleValue = tempStyles.fields && tempStyles?.fields[objectPaths.fk]?.classes[objectPaths.selector][objectPaths.property]
-    if (styleValue !== tempStyleValue) {
-      show = true
-    }
-  } else if (stateName === 'themeVars') {
-    if (tmpThemeVars?.[objectKey] && themeVar?.[objectKey] !== tmpThemeVars?.[objectKey]) {
-      console.log('reset ', tmpThemeVars?.[objectKey], themeVar?.[objectKey])
-      show = true
-    }
-  } else if (stateName === 'themeColors') {
-    if (tmpThemeColors?.[objectKey] && tmpThemeColors?.[objectKey] !== themeColor?.[objectKey]) {
-      show = true
-    }
+  switch (stateObjName) {
+    case 'styles':
+      if (Array.isArray(propertyPath)) {
+        propertyPath.forEach(property => {
+          const styleVlu = getValueByObjPath(styles, property)
+          const tempStyleVlue = getValueByObjPath(tmpStyles, property)
+          if (tempStyleVlue !== '' && styleVlu !== tempStyleVlue) show = true
+        })
+      } else {
+        const styleVlu = getValueByObjPath(styles, propertyPath)
+        const tempStyleVlue = getValueByObjPath(tmpStyles, propertyPath)
+        if (tempStyleVlue !== '' && styleVlu !== tempStyleVlue) show = true
+      }
+      break
+
+    case 'themeVars':
+      if (Array.isArray(propertyPath)) {
+        propertyPath.forEach(property => {
+          if (tmpThemeVars?.[property] && themeVar?.[property] !== tmpThemeVars?.[property]) {
+            // console.log('reset ', tmpThemeVars?.[property], themeVar?.[property])
+            show = true
+          }
+        })
+      } else if (tmpThemeVars?.[propertyPath] && themeVar?.[propertyPath] !== tmpThemeVars?.[propertyPath]) {
+        show = true
+      }
+      break
+
+    case 'themeColors':
+      if (colorScheme === 'light') {
+        if (Array.isArray(propertyPath)) {
+          propertyPath.forEach(property => {
+            if (tmpLightThemeColors?.[property] && tmpLightThemeColors?.[property] !== lightThemeColors?.[property]) {
+              show = true
+            }
+          })
+        } else if (tmpLightThemeColors?.[propertyPath] && tmpLightThemeColors?.[propertyPath] !== lightThemeColors?.[propertyPath]) {
+          show = true
+        }
+      } else if (colorScheme === 'dark') {
+        if (Array.isArray(propertyPath)) {
+          propertyPath.forEach(property => {
+            if (tmpDarkThemeColors?.[property] && tmpDarkThemeColors?.[property] !== darkThemeColors?.[property]) {
+              show = true
+            }
+          })
+        } else if (tmpDarkThemeColors?.[propertyPath] && tmpDarkThemeColors?.[propertyPath] !== darkThemeColors?.[propertyPath]) {
+          show = true
+        }
+      }
+      break
+
+    default:
+      break
   }
 
-  const resetValue = () => {
-    if (stateName === 'themeVars') {
-      if (!tmpThemeVars[objectKey]) return
-      setThemeVar(prvStyle => produce(prvStyle, drft => { drft[objectKey] = tmpThemeVars[objectKey] }))
-    }
-    if (stateName === 'themeColors') {
-      if (!tmpThemeColors[objectKey]) return
-      setThemeColor(prvStyle => produce(prvStyle, drft => { drft[objectKey] = tmpThemeColors[objectKey] }))
-    }
-    if (objectPaths.object === 'fieldStyle') {
-      const value = tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = value
-      }))
+  const resetValue = (path) => {
+    switch (stateObjName) {
+      case 'themeVars':
+        if (!tmpThemeVars[path]) return
+        setThemeVar(prvStyle => produce(prvStyle, drft => { drft[path] = tmpThemeVars[path] }))
+        break
+      case 'themeColors':
+        if (colorScheme === 'light') {
+          if (!tmpLightThemeColors[path]) return
+          setLightThemeColors(prvStyle => produce(prvStyle, drft => {
+            drft[path] = tmpLightThemeColors[path]
+          }))
+        } else {
+          if (!tmpDarkThemeColors[path]) return
+          setDarkThemeColors(prvStyle => produce(prvStyle, drft => {
+            drft[path] = tmpDarkThemeColors[path]
+          }))
+        }
+        break
+      case 'styles':
+        const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, path)
+        if (value) {
+          setStyles(prvStyle => produce(prvStyle, drft => {
+            assignNestedObj(drft, path, value)
+          }))
+        }
+        break
+
+      default:
+        break
     }
   }
 
   const reset = () => {
-    if (Array.isArray(objectKey)) objectKey.forEach(v => resetValue(v))
-    else resetValue()
+    if (Array.isArray(propertyPath)) propertyPath.forEach(path => resetValue(path))
+    else resetValue(propertyPath)
   }
 
   return (
-    <button
-      title="Reset Style"
-      onClick={reset}
-      className={css(sc.resetBtn)}
-      type="button"
-      style={{ visibility: show ? 'visible' : 'hidden' }}
-    >
-      <StyleResetIcn size="80" />
-    </button>
+    <Tip msg="Reset style">
+      <button
+        onClick={reset}
+        className={css(st.resetBtn)}
+        type="button"
+        style={{ visibility: show ? 'visible' : 'hidden' }}
+      >
+        <StyleResetIcn size="20" />
+      </button>
+    </Tip>
   )
+}
+
+const st = {
+  resetBtn: {
+    se: 20,
+    flx: 'center',
+    p: 3,
+    brs: 20,
+    b: 'none',
+    bd: 'none',
+    curp: 1,
+    cr: 'var(--white-0-0-29)',
+    mr: 3,
+    ':hover': { bd: 'var(--white-0-95)', cr: 'var(--white-0-29)' },
+  },
 }

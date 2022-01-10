@@ -5,7 +5,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $fieldsArr } from '../../GlobalStates'
+import { $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 
 function SmartTags({ fieldName }) {

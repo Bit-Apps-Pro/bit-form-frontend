@@ -1,27 +1,23 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars, $styles } from '../../GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
+import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
   const { object, paths } = objectPaths
 
-  const shadowStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.shadow, { themeVars })
+  const currentState = getObjByKey(object, { themeColors, styles })
+  const shadowStyleStr = getValueByObjPath(currentState, paths.shadow, { themeColors, styles })
 
-  const extractShadowValue = () => {
-    const [xOffset, yOffset, blur, spread, color, inset] = splitValueBySpaces(shadowStyle)
-
-    return { xOffset, yOffset, blur, spread, color, inset }
-  }
-
-  const shadowValues = extractShadowValue()
+  const shadowValues = extractShadowValue(shadowStyleStr)
 
   const newShadowVal = (name, val, unit) => {
     if (name === 'color') {
@@ -34,14 +30,14 @@ export default function ShadowControlMenu({ objectPaths }) {
   }
 
   const generateShadowValue = (name, { value, unit }) => {
-    const newShadowStyle = Object.entries(shadowValues).map(([shName, shVal]) => {
+    const newshadowStyleStr = Object.entries(shadowValues).map(([shName, shVal]) => {
       if (shName === name) {
         return newShadowVal(name, value, unit)
       }
       return newShadowVal(shName, shVal, '')
     }).join(' ')
 
-    setStyleStateObj(object, paths.shadow, newShadowStyle, { setThemeVars, setStyles })
+    setStyleStateObj(object, paths.shadow, newshadowStyleStr, { setThemeColors, setStyles })
   }
 
   const unitHandler = (name, unit, value, oldVal) => {
@@ -119,4 +115,9 @@ export default function ShadowControlMenu({ objectPaths }) {
       </div>
     </div>
   )
+}
+
+const extractShadowValue = (shadowStr) => {
+  const [xOffset, yOffset, blur, spread, color, inset] = splitValueBySpaces(shadowStr)
+  return { xOffset, yOffset, blur, spread, color, inset }
 }

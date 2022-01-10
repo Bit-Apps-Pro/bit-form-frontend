@@ -6,7 +6,7 @@ import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $confirmations, $fieldsArr, $integrations, $mailTemplates, $updateBtn, $workflows } from '../GlobalStates'
+import { $bits, $confirmations, $fieldsArr, $integrations, $mailTemplates, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'
@@ -111,7 +111,7 @@ function Workflow({ formID }) {
       toast.promise(prom, {
         success: 'Successfully Deleted.',
         loading: 'Deleting...',
-        error: 'Error occured, Try again.',
+        error: 'Error occurred, Try again.',
       })
     } else {
       workFlows.splice(val, 1)
@@ -788,23 +788,23 @@ function Workflow({ formID }) {
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <div className="d-flx flx-wrp">
                     {lgcGrp.action_run !== 'delete'
-                    && (
-                      <TableCheckBox
-                        onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)}
-                        className="ml-2"
-                        title={__('Success Message', 'bitform')}
-                        checked={checkKeyInArr('successMsg', lgcGrpInd)}
-                      />
-                    )}
+                      && (
+                        <TableCheckBox
+                          onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)}
+                          className="ml-2"
+                          title={__('Success Message', 'bitform')}
+                          checked={checkKeyInArr('successMsg', lgcGrpInd)}
+                        />
+                      )}
                     {!lgcGrp.action_run.match(/^(delete|edit)$/)
-                    && (
-                      <TableCheckBox
-                        onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)}
-                        className="ml-2"
-                        title={__('Redirect URL', 'bitform')}
-                        checked={checkKeyInArr('redirectPage', lgcGrpInd)}
-                      />
-                    )}
+                      && (
+                        <TableCheckBox
+                          onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)}
+                          className="ml-2"
+                          title={__('Redirect URL', 'bitform')}
+                          checked={checkKeyInArr('redirectPage', lgcGrpInd)}
+                        />
+                      )}
                     <TableCheckBox
                       onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)}
                       className="ml-2"
@@ -818,55 +818,55 @@ function Workflow({ formID }) {
                       checked={checkKeyInArr('mailNotify', lgcGrpInd)}
                     />
                     {lgcGrp.action_run !== 'delete'
-                    && (
-                      <TableCheckBox
-                        onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)}
-                        className="ml-2"
-                        title={__('Integration', 'bitform')}
-                        checked={checkKeyInArr('integ', lgcGrpInd)}
-                      />
-                    )}
+                      && (
+                        <TableCheckBox
+                          onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)}
+                          className="ml-2"
+                          title={__('Integration', 'bitform')}
+                          checked={checkKeyInArr('integ', lgcGrpInd)}
+                        />
+                      )}
                   </div>
                 )}
                 {lgcGrp.action_run === 'delete'
-                && (
-                  <CheckBox
-                    onChange={e => preventDelete(e.target.checked, lgcGrpInd)}
-                    checked={workFlows[lgcGrpInd].avoid_delete}
-                    title={<small className="txt-dp">Prevent Delete</small>}
-                  />
-                )}
+                  && (
+                    <CheckBox
+                      onChange={e => preventDelete(e.target.checked, lgcGrpInd)}
+                      checked={workFlows[lgcGrpInd].avoid_delete}
+                      title={<small className="txt-dp">Prevent Delete</small>}
+                    />
+                  )}
 
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
                     {checkKeyInArr('webHooks', lgcGrpInd)
-                    && (
-                      <DropDown
-                        action={val => setWebHooks(val, lgcGrpInd)}
-                        jsonValue
-                        value={getValueFromArr('webHooks', 'id', lgcGrpInd)}
-                        title={<span className="f-m f-5">{__('Web Hooks', 'bitform')}</span>}
-                        titleClassName="mt-2 w-7"
-                        className="w-10"
-                        isMultiple
-                        options={confirmations?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))}
-                        placeholder={__('Select Hooks to Call', 'bitform')}
-                      />
-                    )}
+                      && (
+                        <DropDown
+                          action={val => setWebHooks(val, lgcGrpInd)}
+                          jsonValue
+                          value={getValueFromArr('webHooks', 'id', lgcGrpInd)}
+                          title={<span className="f-m f-5">{__('Web Hooks', 'bitform')}</span>}
+                          titleClassName="mt-2 w-7"
+                          className="w-10"
+                          isMultiple
+                          options={confirmations?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))}
+                          placeholder={__('Select Hooks to Call', 'bitform')}
+                        />
+                      )}
                     {checkKeyInArr('integ', lgcGrpInd)
-                    && (
-                      <DropDown
-                        action={val => setInteg(val, lgcGrpInd)}
-                        jsonValue
-                        value={getValueFromArr('integ', 'id', lgcGrpInd)}
-                        title={<span className="f-m f-5">{__('Integrations', 'bitform')}</span>}
-                        titleClassName="mt-2 w-7"
-                        className="w-10"
-                        isMultiple
-                        options={integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))}
-                        placeholder={__('Select Integation', 'bitform')}
-                      />
-                    )}
+                      && (
+                        <DropDown
+                          action={val => setInteg(val, lgcGrpInd)}
+                          jsonValue
+                          value={getValueFromArr('integ', 'id', lgcGrpInd)}
+                          title={<span className="f-m f-5">{__('Integrations', 'bitform')}</span>}
+                          titleClassName="mt-2 w-7"
+                          className="w-10"
+                          isMultiple
+                          options={integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))}
+                          placeholder={__('Select Integation', 'bitform')}
+                        />
+                      )}
 
                     {lgcGrp.action_run !== 'delete' && (
                       <>

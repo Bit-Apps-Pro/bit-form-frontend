@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
 import { checkIfHasColonLblVlu } from './importOptionsHelpers'
 

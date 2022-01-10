@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-export const fieldTool = {
+const fieldsTypes = {
   check: 'Check Box',
   title: 'Title',
   divider: 'Divider',
@@ -28,3 +28,4 @@ export const fieldTool = {
   paypal: 'Paypal',
   razorpay: 'Razorpay',
 }
+export default fieldsTypes

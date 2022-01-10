@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useRecoilValue } from 'recoil'
-import { $breakpoint, $layouts } from '../GlobalStates'
+import { $breakpoint, $layouts } from '../GlobalStates/GlobalStates'
 
 export default function RenderGridLayoutStyle() {
   const layouts = useRecoilValue($layouts)

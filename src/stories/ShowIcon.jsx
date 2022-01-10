@@ -116,6 +116,7 @@ import BoxIcon from '../Icons/BoxIcon'
 import BoxFullIcon from '../Icons/BoxFullIcon'
 import LightIcn from '../Icons/LightIcn'
 import DarkIcn from '../Icons/DarkIcn'
+import StarIcn from '../Icons/StarIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ShowIcon() {
@@ -521,6 +522,11 @@ export default function ShowIcon() {
       key: 'Question Icon',
       icon: <RadioIcn size="30" />,
       com: '<RadioIcn size="30" />',
+    },
+    {
+      key: 'Star Icon',
+      icon: <StarIcn size="30" />,
+      com: '<StarIcn size="30" />',
     },
     {
       key: 'RazorPay Icon',

@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useParams } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
 import { useEffect, useRef } from 'react'
-import { $successMessageStyle } from '../../GlobalStates'
-import confirmMsgCssStyles from './confirm_msg_css_styles'
+import { useParams } from 'react-router-dom'
 import RenderStyle from '../style-new/RenderStyle'
+import confirmMsgCssStyles from './confirm_msg_css_styles'
 
 export default function ConfirmMsgPreview({ active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)

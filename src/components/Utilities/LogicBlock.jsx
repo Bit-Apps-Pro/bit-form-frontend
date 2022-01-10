@@ -7,7 +7,7 @@ import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
-import { $fields, $fieldsArr } from '../../GlobalStates'
+import { $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 
 function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   const fields = useRecoilValue($fields)

@@ -1,11 +1,11 @@
 /* eslint-disable-next-line no-undef */
-import { withQuicklink } from 'quicklink/dist/react/hoc'
+// import { withQuicklink } from 'quicklink/dist/react/hoc'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $integrations } from '../GlobalStates'
+import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import EditIcn from '../Icons/EditIcn'
 import InfoIcn from '../Icons/InfoIcn'
 import TrashIcn from '../Icons/TrashIcn'
@@ -260,4 +260,4 @@ function Integrations() {
   )
 }
 
-export default withQuicklink(Integrations)
+export default Integrations

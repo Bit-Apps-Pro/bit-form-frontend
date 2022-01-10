@@ -40,7 +40,7 @@ const draggableModalStyle = {
     h: 30,
     pl: 10,
     pt: 5,
-    flx: 'center',
+    flx: 'center-between',
   },
 
 }

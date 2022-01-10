@@ -4,7 +4,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fieldsArr, $mailTemplates } from '../GlobalStates'
+import { $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
 import { deepCopy } from '../Utils/Helpers'
@@ -32,11 +32,9 @@ function EmailTemplateEdit() {
   }
 
   const handleBody = val => {
-    setMailTem(prevTemplates => {
-      const mailTem = deepCopy(prevTemplates)
-      mailTem[id].body = val
-      return mailTem
-    })
+    setMailTem(prevState => produce(prevState, draft => {
+      draft[id].body = val
+    }))
   }
 
   const addFieldToSubject = e => {

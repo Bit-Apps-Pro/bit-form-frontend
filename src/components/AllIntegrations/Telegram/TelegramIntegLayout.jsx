@@ -1,7 +1,8 @@
+import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
+import CheckBox from '../../Utilities/CheckBox'
 import TinyMCE from '../../Utilities/TinyMCE'
 import TelegramActions from './TelegramActions'
 import { refreshGetUpdates } from './TelegramCommonFunc'
@@ -14,10 +15,9 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
   }
 
   const setFromField = (val) => {
-    const newConf = { ...telegramConf }
-    newConf.body = `${newConf.body} ${val} `
-    // setTelegramConf({ ...newConf })
-    setTelegramConf(newConf)
+    setTelegramConf(prevState => produce(prevState, draft => {
+      draft.body = `${newConf.body} ${val} `
+    }))
   }
   const changeActionRun = (e) => {
     const newConf = { ...telegramConf }

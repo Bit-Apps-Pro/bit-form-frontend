@@ -2,7 +2,7 @@ import { useFela } from 'react-fela'
 import ut from '../../styles/2.utilities'
 import Downmenu from '../Utilities/Downmenu'
 import ColorPreview from './ColorPreview'
-import SimpleColorPickerMenu from './SimpleColorPickerMenu'
+import SimpleColorPickerMenuV2 from './SimpleColorPickerMenuV2'
 
 export default function SimpleColorPickerTooltip({ action, value }) {
   const { css } = useFela()
@@ -17,7 +17,7 @@ export default function SimpleColorPickerTooltip({ action, value }) {
           <ColorPreview bg={value} h={25} w={25} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
         </button>
-        <SimpleColorPickerMenu action={action} value={value} />
+        <SimpleColorPickerMenuV2 action={action} value={value} />
       </Downmenu>
 
       {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">

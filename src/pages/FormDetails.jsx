@@ -12,7 +12,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
@@ -71,59 +71,14 @@ function FormDetails() {
   }
 
   const setNewFormProps = () => {
+    // for all kind of template
     if (formType === 'new') {
-      const defaultConfirmationValue = {
-        type: {
-          successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
-          redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
-          webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
-        },
-      }
-      const defaultWorkflowValue = [
-        {
-          title: __('Show Success Message', 'bitform'),
-          action_type: 'onsubmit',
-          action_run: 'create_edit',
-          action_behaviour: 'always',
-          logics: [
-            {
-              field: '',
-              logic: '',
-              val: '',
-            },
-            'or',
-            {
-              field: '',
-              logic: '',
-              val: '',
-            },
-          ],
-          actions: [
-            {
-              field: '',
-              action: 'value',
-            },
-          ],
-          successAction: [
-            {
-              type: 'successMsg',
-              details: { id: '{"index":0}' },
-            },
-          ],
-        },
-      ]
       setworkFlows(defaultWorkflowValue)
       setConfirmations(defaultConfirmationValue)
     }
-    if (formID === 'Blank') {
-      const btnData = {
-        typ: 'button',
-        btnSiz: 'md',
-        btnTyp: 'submit',
-        txt: 'Submit',
-        align: 'right',
-        valid: {},
-      }
+    // form blank form only
+    // if (formId === 'Blank') {
+    if (formType === 'new') {
       const btnFld = {}
       btnFld[`b${newFormId}-1`] = btnData
       setFields(btnFld)
@@ -220,20 +175,20 @@ function FormDetails() {
         .then(res => {
           if (res?.success && componentMounted) {
             const responseData = res.data
-            // responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
-            // exp start
-            if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
-              const l = responseData.form_content.layout
-              const nl = { lg: [], md: [], sm: [] }
-              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-              setLay(nl)
-              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = nl }))
-            } else {
-              setLay(responseData.form_content.layout)
-              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
-            }
+            if (responseData.form_content.layout !== undefined) setLay(responseData.form_content.layout)
+            // experimental start
+            // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
+            //   const l = responseData.form_content.layout
+            //   const nl = { lg: [], md: [], sm: [] }
+            //   l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
+            //   l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
+            //   l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
+            //   setLay(nl)
+            //   setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = nl }))
+            // } else {
+            //   setLay(responseData.form_content.layout)
+            //   setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
+            // }
             // exp end
 
             setFields(responseData.form_content.fields)
@@ -379,3 +334,52 @@ function FormDetails() {
 }
 
 export default memo(withRouter(FormDetails))
+
+const defaultConfirmationValue = {
+  type: {
+    successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
+    redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
+    webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
+  },
+}
+const defaultWorkflowValue = [
+  {
+    title: __('Show Success Message', 'bitform'),
+    action_type: 'onsubmit',
+    action_run: 'create_edit',
+    action_behaviour: 'always',
+    logics: [
+      {
+        field: '',
+        logic: '',
+        val: '',
+      },
+      'or',
+      {
+        field: '',
+        logic: '',
+        val: '',
+      },
+    ],
+    actions: [
+      {
+        field: '',
+        action: 'value',
+      },
+    ],
+    successAction: [
+      {
+        type: 'successMsg',
+        details: { id: '{"index":0}' },
+      },
+    ],
+  },
+]
+const btnData = {
+  typ: 'button',
+  btnSiz: 'md',
+  btnTyp: 'submit',
+  txt: 'Submit',
+  align: 'right',
+  valid: {},
+}
