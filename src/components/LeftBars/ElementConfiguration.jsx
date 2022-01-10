@@ -28,10 +28,10 @@ export default function ElementConfiguration({ fldKey }) {
             {(fieldObj.lblPreIcn || fieldObj.lblSufIcn) && (
               <LayerAccordion onClick={() => styleHandler('label')} offset="3.1" title="Label" fldData={fieldObj} key={fldKey} open={fldKey === selectedFieldKey && (fieldObj.lblPreIcn || fieldObj.lblSufIcn)}>
                 {fieldObj.lblPreIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`} subRoute={fldKey} route="lbl-pre-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-pre-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblPreIcn[0]}`} subRoute={fldKey} route="lbl-pre-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-pre-i="${fldKey}"]`} />
                 )}
                 {fieldObj.lblSufIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`} subRoute={fldKey} route="lbl-suf-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblSufIcn[0]}`} subRoute={fldKey} route="lbl-suf-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`} />
                 )}
               </LayerAccordion>
             )}
