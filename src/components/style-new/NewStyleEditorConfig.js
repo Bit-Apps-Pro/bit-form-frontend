@@ -20,6 +20,7 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {},
+      'background-color': {},
       color: {},
       'font-size': {},
       border: {},

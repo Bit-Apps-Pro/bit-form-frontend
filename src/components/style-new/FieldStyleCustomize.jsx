@@ -16,6 +16,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
+import IndividualInputFldCustomStyle from './IndividualInputFldCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
@@ -208,6 +209,11 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           {element === 'pre-i' && (
             <div className={css(!checkExistElement(element) && cls.blur)}>
               <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
+            </div>
+          )}
+          {element === 'fld' && (
+            <div className={css(!checkExistElement(element) && cls.blur)}>
+              <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />
             </div>
           )}
         </div>

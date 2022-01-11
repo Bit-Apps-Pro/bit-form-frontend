@@ -16,7 +16,7 @@ import SpacingControl from './SpacingControl'
 import { addableCssPropsByField } from './styleHelpers'
 import TransitionControl from './TransitionControl'
 
-export default function IndividualCustomStyle({ elementKey, fldKey }) {
+export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
@@ -25,6 +25,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
     { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
+    { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'Foucs Style' },
   ]
 
   const fldStyleObj = styles?.fields?.[fldKey]
