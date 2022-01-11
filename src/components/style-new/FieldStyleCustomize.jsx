@@ -113,6 +113,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
   // console.log({ fldStyleObj, element, isFieldElemetOverrided })
 
+  console.log('element', element)
+
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
@@ -200,6 +202,12 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                   />
                 </div>
               </div>
+            </div>
+          )}
+
+          {element === 'pre-i' && (
+            <div className={css(!checkExistElement(element) && cls.blur)}>
+              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
             </div>
           )}
         </div>

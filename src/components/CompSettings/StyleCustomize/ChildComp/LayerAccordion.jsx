@@ -77,7 +77,9 @@ export default function LayerAccordion({ className,
               <span className={`title ${css(cls.dflx, ut.fw500)}`}>
                 {title}
               </span>
-              <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
+              {tag && (
+                <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
+              )}
               <Cooltip width={150} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(cls.tipBody)}>
                   {(fldData.lbl || fldData.txt || fldData.adminLbl) && (
