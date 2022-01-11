@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState } from 'recoil'
-import { $styles } from '../../GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 function FormWrapperControlMenu() {

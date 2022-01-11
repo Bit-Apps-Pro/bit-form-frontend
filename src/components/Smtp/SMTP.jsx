@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { $bits } from '../../GlobalStates'
+import { $bits } from '../../GlobalStates/GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import SMTPConfigForm from './SMTPConfigForm'

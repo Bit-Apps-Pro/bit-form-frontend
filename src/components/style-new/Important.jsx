@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $styles } from '../../GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import StarIcn from '../../Icons/StarIcn'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'

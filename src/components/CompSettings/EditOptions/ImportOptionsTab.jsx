@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
 import ImportOptions from '../ImportOptions'
 

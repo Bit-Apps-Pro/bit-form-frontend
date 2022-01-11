@@ -3,8 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import { useEffect } from 'react'
-import { lazy, Suspense } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'

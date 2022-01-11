@@ -44,6 +44,7 @@ const customProperties = {
   ttf: $ => ({ transitionTimingFunction: $ }),
   tm: $ => ({ transform: $ }),
 
+  re: $ => ({ resize: $ }),
   ow: $ => ({ overflow: $ }),
   owy: $ => ({ overflowY: $ }),
   owx: $ => ({ overflowX: $ }),

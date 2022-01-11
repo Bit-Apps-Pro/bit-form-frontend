@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import SpacingControl from '../style-new/SpacingControl'

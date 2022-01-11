@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates'
+import { $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'

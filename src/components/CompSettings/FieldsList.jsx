@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import FieldLinkBtn from './FieldLinkButton'
 

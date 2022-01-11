@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -21,6 +21,7 @@ import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -305,7 +306,11 @@ export default function SelectSettings() {
         disable={!fieldData?.adminLbl}
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Admin label" className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+          <AutoResizeInput
+            ariaLabel="Admin label"
+            value={adminLabel}
+            changeAction={setAdminLabel}
+          />
         </div>
       </SimpleAccordion>
 

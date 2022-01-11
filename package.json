@@ -24,6 +24,7 @@
     "filepond-plugin-image-transform": "^3.8.7",
     "filepond-plugin-image-validate-size": "^1.2.6",
     "filepond-plugin-media-preview": "ernestbrandi/filepond-plugin-media-preview",
+    "htmr": "^1.0.1",
     "immer": "^9.0.7",
     "quicklink": "^2.2.0",
     "react": "^17.0.2",
@@ -53,7 +54,8 @@
     "regenerator-runtime": "^0.13.9",
     "sortablejs": "^1.14.0",
     "swr": "^1.1.2",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "use-immer": "^0.6.0"
   },
   "scripts": {
     "testt": "DISABLE_ESLINT_PLUGIN=true react-scripts test",

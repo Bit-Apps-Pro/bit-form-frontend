@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $styles, $updateBtn } from '../../../GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $styles } from '../../../GlobalStates/StylesState'
 import CloseIcn from '../../../Icons/CloseIcn'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
@@ -17,6 +18,7 @@ import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
+import AutoResizeInput from './AutoResizeInput'
 
 export default function FieldLabelSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -107,13 +109,8 @@ export default function FieldLabelSettings() {
         open={!fieldData.valid.hideLbl}
         disable={fieldData.valid.hideLbl}
       >
-        <input
-          className={`${css(FieldStyle.input)}`}
-          aria-label="Field Label input"
-          type="text"
-          onChange={setLabel}
-          value={label}
-        />
+
+        <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label} />
 
         <div className={css(ut.mt2, { mx: 10 })}>
           <div className={css(ut.flxcb)}>

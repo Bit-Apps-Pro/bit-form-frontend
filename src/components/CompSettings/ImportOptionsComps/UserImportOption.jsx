@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import { sortByField } from '../../../Utils/Helpers'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import SnackMsg from '../../Utilities/SnackMsg'
 
 const getTrimmedString = str => (typeof str === 'string' ? str?.trim() : str?.toString())

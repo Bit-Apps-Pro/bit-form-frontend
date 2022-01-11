@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
-import { $themeColors } from '../../GlobalStates'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'

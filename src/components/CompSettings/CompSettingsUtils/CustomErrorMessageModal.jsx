@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates'
+import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -33,8 +33,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
       if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
       draft[fldKey].err[name].msg = val
     }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
-
+    // addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const cancelModal = () => {

@@ -1,6 +1,6 @@
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import NavBtn from './NavBtn'
 

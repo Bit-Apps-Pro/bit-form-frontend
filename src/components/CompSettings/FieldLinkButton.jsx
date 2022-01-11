@@ -1,6 +1,6 @@
 import { useParams, useHistory } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
-import { $selectedFieldId } from '../../GlobalStates'
+import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'

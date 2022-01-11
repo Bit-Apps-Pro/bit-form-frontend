@@ -1,12 +1,13 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import produce from 'immer'
-import { $draggableModal, $styles } from '../../GlobalStates'
-import { getValueByObjPath, showDraggableModal } from './styleHelpers'
+import { $draggableModal } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
-import Important from './Important'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import Important from './Important'
+import { getValueByObjPath, showDraggableModal } from './styleHelpers'
 
 export default function SpacingControl({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()

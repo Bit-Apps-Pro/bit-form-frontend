@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempStyles, $themeVars } from '../../GlobalStates'
+import { $tempStyles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function MarginControlMenu() {

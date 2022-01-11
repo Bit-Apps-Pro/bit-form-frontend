@@ -10,7 +10,8 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $styles, $updateBtn } from '../../GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -26,6 +27,7 @@ import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -482,15 +484,11 @@ function TextFieldSettings() {
           disable={!fieldData?.adminLbl}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <input
-              aria-label="Admin label for this Field"
+            <AutoResizeInput
+              ariaLabel="Admin label for this Field"
               placeholder="Type Admin label here..."
-              className={css(FieldStyle.input)}
               value={adminLabel}
-              type="text"
-              onChange={setAdminLabel}
-            // onKeyDown={setAdminLabel}
-            // onKeyPress={e => console.log(e.target.value)}
+              changeAction={setAdminLabel}
             />
           </div>
         </SimpleAccordion>
@@ -507,15 +505,11 @@ function TextFieldSettings() {
           disable={!fieldData?.subtitle}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <textarea
-              cols="30"
-              rows="2"
-              aria-label="Sub title for this Field"
+            <AutoResizeInput
+              ariaLabel="Sub title for this Field"
               placeholder="Type sub title here..."
-              className={css(FieldStyle.input)}
               value={subtitle}
-              type="text"
-              onChange={setSubTitle}
+              changeAction={setSubTitle}
             />
           </div>
 
@@ -630,15 +624,11 @@ function TextFieldSettings() {
           disable={!fieldData?.helperTxt}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <textarea
-              cols="30"
-              rows="2"
+            <AutoResizeInput
               aria-label="Helper text for this Field"
               placeholder="Type Helper text here..."
-              className={css(FieldStyle.input)}
               value={helperTxt}
-              type="text"
-              onChange={setHelperTxt}
+              changeAction={setHelperTxt}
             />
           </div>
           <div className={css(ut.mt2, { mx: 10 })}>

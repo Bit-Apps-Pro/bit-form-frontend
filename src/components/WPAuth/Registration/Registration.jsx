@@ -31,7 +31,7 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
   }, [])
 
   return (
-    <div style={{ width: 900, opacity: status === 0 && 0.6 }}>
+    <div style={{ width: 900, opacity: status === 0 && 0.6, pointerEvents: status === 0 && 'none' }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div>
         <UserFieldMap

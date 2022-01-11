@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits, $fieldLabels } from '../../GlobalStates'
+import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
