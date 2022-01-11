@@ -150,7 +150,6 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
       .then(res => {
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
-          console.log('fieldData', fieldData, iconType)
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
           setStyles(prvStyle => produce(prvStyle, draft => {
             if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
