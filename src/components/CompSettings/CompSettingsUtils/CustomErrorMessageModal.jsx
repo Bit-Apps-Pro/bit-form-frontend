@@ -33,7 +33,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
       if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
       draft[fldKey].err[name].msg = val
     }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    // addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const cancelModal = () => {
