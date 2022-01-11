@@ -28,14 +28,13 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }, [errorModal])
 
   const setErrMsg = (name, val) => {
-    const fdata = deepCopy(fieldData)
-    if (!fdata.err) fdata.err = {}
-    if (!fdata.err[name]) fdata.err[name] = {}
-    fdata.err[name].msg = val
-    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
+    setFields(prevState => produce(prevState, draft => {
+      if (!draft[fldKey].err) draft[fldKey].err = {}
+      if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
+      draft[fldKey].err[name].msg = val
+    }))
     addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
+
   }
 
   const cancelModal = () => {
