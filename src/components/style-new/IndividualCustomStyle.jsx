@@ -153,6 +153,22 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             )
           }
           {
+            existingProperties.includes('background-color') && (
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Background Color"
+                value={existingCssProperties?.['background-color']}
+                modalId="field-container-backgroung"
+                stateObjName="styles"
+                propertyPath={getPropertyPath('background-color')}
+                deleteable
+                delPropertyHandler={() => delPropertyHandler('background-color')}
+                clearHandler={() => clearHandler('background-color')}
+                allowImportant
+              />
+            )
+          }
+          {
             existingProperties.includes('color') && (
               <SimpleColorPicker
                 title="Color"
