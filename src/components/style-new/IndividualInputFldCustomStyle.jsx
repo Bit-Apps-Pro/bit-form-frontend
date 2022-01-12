@@ -2,46 +2,66 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SimpleDropdown from '../Utilities/SimpleDropdown'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
+import FontPicker from './FontPicker'
 import IndividualShadowControl from './IndividualShadowControl'
+import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField } from './styleHelpers'
+import { addableCssPropsByField, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
-  console.log(styles)
-
-  const options = [
-    { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
-    { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
-    { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'Foucs Style' },
-  ]
+  const themeVars = useRecoilValue($themeVars)
 
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
+  console.log(classes)
 
-  const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
-  const existingProperties = Object.keys(existingCssProperties)
-  const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+  const existingProps = (state = '') => {
+    const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
+    const existingProperties = Object.keys(existingCssProperties)
+    const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+    return [existingCssProperties, existingProperties, addableCssProps]
+  }
 
-  const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
-  const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
-  const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
+  // const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
+  // const existingProperties = Object.keys(existingCssProperties)
+  // const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+
+  // const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
+  // const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
+  // const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
+
+  // const existingCssFocusProperties = classes?.[`.${fldKey}-${elementKey}:focus`]
+  // const existingFocusProperties = Object.keys(existingCssFocusProperties || {})
+  // const addableCssFocusProps = addableCssPropsByField(fieldType)?.filter(x => !existingFocusProperties?.includes(x))
+
+  const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
+  const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
+  const [existingCssFocusProperties, existingFocusProperties, addableCssFocusProps] = existingProps(':focus')
 
   const setNewCssProp = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
+      if (!existingCssProperties) {
+        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`] = {}
+      }
       drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
     }))
   }
@@ -53,72 +73,82 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
       drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][prop] = ''
     }))
   }
-
-  // const getValueFromThemeVar = (val) => {
-  //   if (val.match(/var/g)?.[0] === 'var') {
-  //     const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-  //     return themeVars[getVarProperty]
-  //   }
-  //   return val
-  // }
-
-  // const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
-  // const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
-  // const fldFSValue = getNumFromStr(fldLblfsvalue)
-  // const fldFSUnit = getStrFromStr(fldLblfsvalue)
-
-  // const updateFontSize = (unit, value) => {
-  //   setStyles(prvStyle => produce(prvStyle, drft => {
-  //     drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['font-size'] = `${value}${unit}`
-  //   }))
-  // }
-
-  const delPropertyHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
-    }))
-  }
-  const clearHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
+  const setNewCssFocusProp = (prop) => {
+    setStyles(prvStyles => produce(prvStyles, drft => {
+      if (!existingCssFocusProperties) {
+        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:focus`] = {}
+      }
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:focus`][prop] = ''
     }))
   }
 
-  const delHoverPropertyHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][property]
-    }))
+  const getValueFromThemeVar = (val) => {
+    if (val?.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val?.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
   }
-  const clearHoverHandler = (property) => {
+
+  // for font size
+  const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
+  const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
+  const fldFSValue = getNumFromStr(fldLblfsvalue)
+  const fldFSUnit = getStrFromStr(fldLblfsvalue)
+
+  const updateHandler = (value, unit, styleUnit, proparty) => {
+    const convertvalue = unitConverter(unit, value, styleUnit)
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][property] = ''
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][proparty] = `${convertvalue}${unit}`
     }))
   }
 
-  const propertyObjPath = (property) => (
+  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
+
+  const fontWeigthHandler = (val) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['font-weight'] = val
+    }))
+  }
+
+  // for height
+  const fldHight = classes[`.${fldKey}-${elementKey}`]?.height
+  const fldHightvalue = getValueFromThemeVar(fldHight)
+  const fldHightValue = getNumFromStr(fldHightvalue)
+  const fldHeightUnit = getStrFromStr(fldHightvalue)
+
+  const fldHightHandler = ({ value, unit }) => updateHandler(value, unit, fldHeightUnit, 'height')
+
+  const delPropertyHandler = (property, state = '') => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property]
+    }))
+  }
+
+  const clearHandler = (property, state = '') => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
+    }))
+  }
+
+  const propertyObjPath = (property, state = '') => (
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->padding` },
-      },
-    }
-  )
-  const hoverPropertyObjPath = (property) => (
-    {
-      object: 'styles',
-      paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->padding` },
+        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->margin` },
+        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->padding` },
       },
     }
   )
 
-  const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
-  const getHoverPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->${cssProperty}`
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
-  // const margin = spacingObj({ margin: existingProperties.includes('margin') })
-  // const padding = spacingObj({ padding: existingProperties.includes('padding') })
+  const borderStyleObj = (state = '') => ({
+    object: 'styles',
+    borderObjName: 'styles',
+    paths: { border: getPropertyPath('border', state), borderWidth: getPropertyPath('border-width', state) },
+  })
+
   return (
     <>
       <StyleSegmentControl
@@ -153,6 +183,106 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
+          {existingProperties.includes('font-size') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('font-size')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SizeControl
+                  inputHandler={fldFsSizeHandler}
+                  sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                  value={fldFSValue || 0}
+                  unit={fldFSUnit || 'px'}
+                  width="110px"
+                  options={['px', 'em', 'rem']}
+                />
+              </div>
+            </div>
+          )}
+          {existingProperties.includes('height') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('height')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('height')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SizeControl
+                  inputHandler={fldHightHandler}
+                  sizeHandler={({ unitKey, unitValue }) => fldHightHandler({ unit: unitKey, value: unitValue })}
+                  value={fldHightValue || 0}
+                  unit={fldHeightUnit || 'px'}
+                  width="110px"
+                  options={['px', 'em', 'rem']}
+                />
+              </div>
+            </div>
+          )}
+          {existingProperties.includes('font-weight') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('font-weight')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontweightoptions}
+                  value={existingCssProperties?.['font-weight']}
+                  onChange={val => fontWeigthHandler(val)}
+                  w={130}
+                  h={30}
+                />
+              </div>
+            </div>
+          )}
+          {existingProperties.includes('font-family') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('font-family')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
+              </div>
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <FontPicker id="global-font-fam" />
+              </div>
+            </div>
+          )}
+          {existingProperties.includes('border') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('border', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+                stateObjName="styles"
+              />
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <BorderControl
+                  subtitle="Field Container Border"
+                  value={existingCssProperties?.border}
+                  objectPaths={borderStyleObj()}
+                  id="fld-wrp-bdr"
+                />
+              </div>
+            </div>
+          )}
           {
             existingProperties.includes('background-color') && (
               <SimpleColorPicker
@@ -287,10 +417,10 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                 value={existingCssHoverProperties?.background}
                 modalId="field-container-backgroung"
                 stateObjName="styles"
-                propertyPath={getHoverPropertyPath('background')}
+                propertyPath={getPropertyPath('background', ':hover')}
                 deleteable
-                delPropertyHandler={() => delHoverPropertyHandler('background')}
-                clearHandler={() => clearHoverHandler('background')}
+                delPropertyHandler={() => delPropertyHandler('background', ':hover')}
+                clearHandler={() => clearHandler('background', ':hover')}
                 allowImportant
               />
             )
@@ -303,10 +433,10 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                 value={existingCssHoverProperties?.color}
                 modalId="field-container-color"
                 stateObjName="styles"
-                propertyPath={getHoverPropertyPath('color')}
+                propertyPath={getPropertyPath('color', ':hover')}
                 deleteable
-                delPropertyHandler={() => delHoverPropertyHandler('color')}
-                clearHandler={() => clearHoverHandler('color')}
+                delPropertyHandler={() => delPropertyHandler('color', ':hover')}
+                clearHandler={() => clearHandler('color', ':hover')}
                 allowImportant
               />
             )
@@ -315,7 +445,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delHoverPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -325,7 +455,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                     allowImportant
                     action={{ type: 'spacing-control' }}
                     subtitle="Margin control"
-                    objectPaths={hoverPropertyObjPath('margin')}
+                    objectPaths={propertyObjPath('margin', ':hover')}
                     id="margin-control"
                   />
                 </div>
@@ -336,7 +466,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delHoverPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -345,7 +475,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   allowImportant
                   action={{ type: 'spacing-control' }}
                   subtitle="Padding control"
-                  objectPaths={hoverPropertyObjPath('padding')}
+                  objectPaths={propertyObjPath('padding', ':hover')}
                   id="padding-control"
                 />
               </div>
@@ -358,15 +488,155 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               value={existingCssHoverProperties?.['box-shadow']}
               modalId="field-container-box-shadow"
               stateObjName="styles"
-              propertyPath={getPropertyPath('box-shadow')}
+              propertyPath={getPropertyPath('box-shadow', ':hover')}
               deleteable
-              delPropertyHandler={() => delHoverPropertyHandler('box-shadow')}
-              clearHandler={() => clearHoverHandler('box-shadow')}
+              delPropertyHandler={() => delPropertyHandler('box-shadow', ':hover')}
+              clearHandler={() => clearHandler('box-shadow', ':hover')}
               allowImportant
               fldKey={fldKey}
             />
           )}
+          {existingHoverProperties.includes('border') && (
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                <ResetStyle
+                  propertyPath={[getPropertyPath('border', ':hover'), getPropertyPath('border-width', ':hover')]}
+                  stateObjName="styles"
+                />
+                <BorderControl
+                  subtitle="Field Container Border"
+                  value={existingCssHoverProperties?.border}
+                  objectPaths={borderStyleObj(':hover')}
+                  id="fld-wrp-bdr"
+                />
+              </div>
+            </ThemeStylePropertyBlock>
+          )}
           <CssPropertyList properties={addableCssHoverProps} setProperty={setNewCssHoverProp} />
+        </div>
+      </Grow>
+      <Grow open={controller === 'Focus'}>
+        <div className={css(cls.space)}>
+          {
+            existingFocusProperties?.includes('background') && (
+              <SimpleColorPicker
+                title="Background"
+                subtitle="Background Color"
+                value={existingCssFocusProperties?.background}
+                modalId="field-container-backgroung"
+                stateObjName="styles"
+                propertyPath={getPropertyPath('background', ':focus')}
+                deleteable
+                delPropertyHandler={() => delPropertyHandler('background', ':focus')}
+                clearHandler={() => clearHandler('background', ':focus')}
+                allowImportant
+              />
+            )
+          }
+          {
+            existingFocusProperties?.includes('background-color') && (
+              <SimpleColorPicker
+                title="Background"
+                subtitle="Background Color"
+                value={existingCssFocusProperties?.['background-color']}
+                modalId="field-container-backgroung"
+                stateObjName="styles"
+                propertyPath={getPropertyPath('background-color', ':focus')}
+                deleteable
+                delPropertyHandler={() => delPropertyHandler('background-color', ':focus')}
+                clearHandler={() => clearHandler('background-color', ':focus')}
+                allowImportant
+              />
+            )
+          }
+          {existingFocusProperties.includes('border') && (
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                <ResetStyle
+                  propertyPath={[getPropertyPath('border', ':focus'), getPropertyPath('border-width', ':focus')]}
+                  stateObjName="styles"
+                />
+                <BorderControl
+                  subtitle="Field Container Border"
+                  value={existingCssFocusProperties?.border}
+                  objectPaths={borderStyleObj(':focus')}
+                  id="fld-wrp-bdr"
+                />
+              </div>
+            </ThemeStylePropertyBlock>
+          )}
+          {
+            existingFocusProperties?.includes('color') && (
+              <SimpleColorPicker
+                title="Color"
+                subtitle="Color"
+                value={existingCssFocusProperties?.color}
+                modalId="field-container-color"
+                stateObjName="styles"
+                propertyPath={getPropertyPath('color', ':focus')}
+                deleteable
+                delPropertyHandler={() => delPropertyHandler('color', ':focus')}
+                clearHandler={() => clearHandler('color', ':focus')}
+                allowImportant
+              />
+            )
+          }
+          {
+            existingFocusProperties.includes('margin') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
+                </div>
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <SpacingControl
+                    allowImportant
+                    action={{ type: 'spacing-control' }}
+                    subtitle="Margin control"
+                    objectPaths={propertyObjPath('margin', ':focus')}
+                    id="margin-control"
+                  />
+                </div>
+              </div>
+            )
+          }
+          {
+            existingFocusProperties.includes('padding') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
+                </div>
+                <SpacingControl
+                  allowImportant
+                  action={{ type: 'spacing-control' }}
+                  subtitle="Padding control"
+                  objectPaths={propertyObjPath('padding', ':focus')}
+                  id="padding-control"
+                />
+              </div>
+            )
+          }
+          {existingFocusProperties.includes('box-shadow') && (
+            <IndividualShadowControl
+              title="Box-shadow"
+              subtitle="Box-shadow"
+              value={existingCssFocusProperties?.['box-shadow']}
+              modalId="field-container-box-shadow"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('box-shadow', ':focus')}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('box-shadow', ':focus')}
+              clearHandler={() => clearHandler('box-shadow', ':focus')}
+              allowImportant
+              fldKey={fldKey}
+            />
+          )}
+          <CssPropertyList properties={addableCssFocusProps} setProperty={setNewCssFocusProp} />
         </div>
       </Grow>
     </>
@@ -396,3 +666,24 @@ const cls = {
   containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   space: { p: 5 },
 }
+const options = [
+  { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
+  { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
+  { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'Foucs Style' },
+]
+
+const fontweightoptions = [
+  { label: 100, value: 100 },
+  { label: 200, value: 200 },
+  { label: 300, value: 300 },
+  { label: 400, value: 400 },
+  { label: 500, value: 500 },
+  { label: 600, value: 600 },
+  { label: 700, value: 700 },
+  { label: 800, value: 800 },
+  { label: 900, value: 900 },
+  { label: 'Bold', value: 'bold' },
+  { label: 'Normal', value: 'normal' },
+  { label: 'Initial', value: 'initial' },
+  { label: 'Inherit', value: 'inherit' },
+]
