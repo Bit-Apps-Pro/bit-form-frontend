@@ -565,7 +565,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
+          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>
         </div>
         {!focusSearch
           && (
