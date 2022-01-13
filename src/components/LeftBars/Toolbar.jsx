@@ -51,7 +51,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const [isScroll, setIsScroll] = useState(false)
 
   const tools = [
-
     {
       name: __('Title', 'bitform'),
       keywords: 'title',
@@ -109,7 +108,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: {},
       },
     },
-
     {
       name: __('Text', 'bitform'),
       keywords: 'Text',
@@ -479,6 +477,18 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
       },
     },
+    {
+      name: __('Phone Number', 'bitform'),
+      keywords: 'Phone Number, Phone, Phone Number Field',
+      icn: <RazorPayIcn w="23" />,
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
+      elm: {
+        typ: 'phone',
+        lbl: __('Phone Number', 'bitform'),
+        valid: {},
+        err: {},
+      },
+    },
     /* {
       name: 'Blank Block',
       icn: blank,
@@ -545,6 +555,13 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   //   z-index: 99;
   // }
 
+  const toolsArray = () => {
+    if (!searchData.length && !sortedTools.length) return tools
+    if (!sortedTools.length && searchData) return searchData
+    if (!searchData.length && sortedTools) return sortedTools
+    return []
+  }
+
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
       <div className={css(ut.flxc, isScroll && Toolbars.searchBar)}>
@@ -581,19 +598,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           style={{ maxWidth: 400 }}
         >
           <div className={css(Toolbars.tool_bar)}>
-            {!searchData.length && !sortedTools.length && tools.map(tool => (
-              <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {tool.name}
-              </Tools>
-            ))}
-            {!sortedTools.length && searchData && searchData.map(tool => (
-              <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {tool.name}
-              </Tools>
-            ))}
-            {!searchData.length && sortedTools && sortedTools.map(tool => (
+            {toolsArray().map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {tool.name}
