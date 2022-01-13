@@ -89,7 +89,7 @@ export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)
 export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
 
 export const searchKey = (e) => {
-  if (e.code === 'Slash') {
+  if (e.ctrlKey && e.code === 'Slash') {
     document.getElementById('search-icon').focus()
   }
   if (e.code === 'Escape') {
