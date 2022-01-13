@@ -29,6 +29,9 @@ const editorConfig = {
       'box-shadow': {},
       'border-radius': {},
       transition: {},
+      'font-family': {},
+      'font-weight': {},
+      height: {},
     },
   },
 }
