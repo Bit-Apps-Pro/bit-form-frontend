@@ -501,9 +501,9 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
   // TODO disable this event when a modal opened
   useEffect(() => {
-    window.addEventListener('keyup', searchKey)
+    window.addEventListener('keydown', searchKey)
     return () => {
-      window.removeEventListener('keyup', searchKey)
+      window.removeEventListener('keydown', searchKey)
     }
   }, [])
 
@@ -569,6 +569,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <input
             title="Search Field"
             aria-label="Search Field"
+            autoComplete="off"
             placeholder="Search..."
             id="search-icon"
             type="search"
@@ -581,7 +582,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
+          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>
         </div>
         {!focusSearch
           && (
