@@ -41,60 +41,34 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     return [existingCssProperties, existingProperties, addableCssProps]
   }
 
-  // const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
-  // const existingProperties = Object.keys(existingCssProperties)
-  // const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
-
-  // const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
-  // const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
-  // const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
-
-  // const existingCssFocusProperties = classes?.[`.${fldKey}-${elementKey}:focus`]
-  // const existingFocusProperties = Object.keys(existingCssFocusProperties || {})
-  // const addableCssFocusProps = addableCssPropsByField(fieldType)?.filter(x => !existingFocusProperties?.includes(x))
-
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
   const [existingCssFocusProperties, existingFocusProperties, addableCssFocusProps] = existingProps(':focus')
 
-  const setNewCssProp = (property) => {
+  const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       if (!existingCssProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`] = {}
+        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`] = {}
       }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
-    }))
-  }
-  const setNewCssHoverProp = (prop) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
-      if (!existingCssHoverProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`] = {}
-      }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][prop] = ''
-    }))
-  }
-  const setNewCssFocusProp = (prop) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
-      if (!existingCssFocusProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:focus`] = {}
-      }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:focus`][prop] = ''
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
     }))
   }
 
   const getValueFromThemeVar = (val) => {
     if (val?.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val?.replaceAll(/\(|var|,.*|\)/gi, '')
+      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
       return themeVars[getVarProperty]
     }
     return val
   }
 
-  // for font size
-  const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
-  const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
-  const fldFSValue = getNumFromStr(fldLblfsvalue)
-  const fldFSUnit = getStrFromStr(fldLblfsvalue)
+  const getStyleValueAndUnit = (prop) => {
+    const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
+    const themeVal = getValueFromThemeVar(getVlu)
+    const value = getNumFromStr(themeVal)
+    const unit = getStrFromStr(themeVal)
+    return [value, unit]
+  }
 
   const updateHandler = (value, unit, styleUnit, proparty) => {
     const convertvalue = unitConverter(unit, value, styleUnit)
@@ -103,6 +77,8 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
+  // for font size
+  const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
 
   const fontWeigthHandler = (val) => {
@@ -112,11 +88,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   }
 
   // for height
-  const fldHight = classes[`.${fldKey}-${elementKey}`]?.height
-  const fldHightvalue = getValueFromThemeVar(fldHight)
-  const fldHightValue = getNumFromStr(fldHightvalue)
-  const fldHeightUnit = getStrFromStr(fldHightvalue)
-
+  const [fldHightValue, fldHeightUnit] = getStyleValueAndUnit('height')
   const fldHightHandler = ({ value, unit }) => updateHandler(value, unit, fldHeightUnit, 'height')
 
   const delPropertyHandler = (property, state = '') => {
@@ -384,25 +356,6 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
-
-          {/* {
-        existingCssProperties.includes('font-size') && (
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Field Font Size</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={updateFontSize}
-                sizeHandler={({ unitKey, unitValue }) => updateFontSize({ unit: unitKey, value: unitValue })}
-                value={fldFSValue}
-                unit={fldFSUnit}
-                width="110px"
-                options={['px', 'em', 'rem']}
-                id="font-size-control"
-              />
-            </div>
-          </div>
-        )
-      } */}
           <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
         </div>
 
@@ -441,6 +394,19 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
+          {existingHoverProperties.includes('font-family') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('font-family', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
+              </div>
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <FontPicker id="global-font-fam" />
+              </div>
+            </div>
+          )}
           {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
@@ -512,7 +478,21 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               </div>
             </ThemeStylePropertyBlock>
           )}
-          <CssPropertyList properties={addableCssHoverProps} setProperty={setNewCssHoverProp} />
+          {existingHoverProperties.includes('transition') && (
+            <TransitionControl
+              title="Transition"
+              subtitle="Transition"
+              value={existingCssHoverProperties?.transition}
+              modalId="field-container-transition"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('transition', ':hover')}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('transition', ':hover')}
+              clearHandler={() => clearHandler('transition', ':hover')}
+              allowImportant
+            />
+          )}
+          <CssPropertyList properties={addableCssHoverProps} setProperty={(prop) => setNewCssProp(prop, ':hover')} />
         </div>
       </Grow>
       <Grow open={controller === 'Focus'}>
@@ -549,6 +529,19 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
+          {existingFocusProperties.includes('font-family') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('font-family', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
+              </div>
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <FontPicker id="global-font-fam" />
+              </div>
+            </div>
+          )}
           {existingFocusProperties.includes('border') && (
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
@@ -636,7 +629,21 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               fldKey={fldKey}
             />
           )}
-          <CssPropertyList properties={addableCssFocusProps} setProperty={setNewCssFocusProp} />
+          {existingFocusProperties.includes('transition') && (
+            <TransitionControl
+              title="Transition"
+              subtitle="Transition"
+              value={existingCssFocusProperties?.transition}
+              modalId="field-container-transition"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('transition', ':focus')}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('transition', ':focus')}
+              clearHandler={() => clearHandler('transition', ':focus')}
+              allowImportant
+            />
+          )}
+          <CssPropertyList properties={addableCssFocusProps} setProperty={(prop) => setNewCssProp(prop, ':focus')} />
         </div>
       </Grow>
     </>
@@ -669,7 +676,7 @@ const cls = {
 const options = [
   { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
   { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
-  { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'Foucs Style' },
+  { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'focus Style' },
 ]
 
 const fontweightoptions = [
