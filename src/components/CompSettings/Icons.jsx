@@ -227,6 +227,10 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
   const selectedSaveIcon = () => {
     fieldData[iconType] = prefix
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setStyles(prvStyle => produce(prvStyle, draft => {
+      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
+      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+    }))
     setModal(false)
   }
 
