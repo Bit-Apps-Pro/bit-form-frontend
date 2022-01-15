@@ -257,7 +257,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'email',
         lbl: __('Email Field', 'bitform'),
         ph: __('example@mail.com', 'bitform'),
-        pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{1,24})+$',
+        pattern: '^[^$_bf_$s@]+@[^$_bf_$s@]+$_bf_$.[^$_bf_$s@]+$',
         valid: {},
         err: { invalid: { dflt: 'Email is invalid', show: true } },
       },
