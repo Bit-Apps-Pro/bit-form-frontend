@@ -33,8 +33,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
-    const existingProperties = Object.keys(existingCssProperties)
+    const existingProperties = Object.keys(existingCssProperties || {})
     const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+    console.log(existingCssProperties, existingProperties, addableCssProps)
     return [existingCssProperties, existingProperties, addableCssProps]
   }
 
