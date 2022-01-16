@@ -206,7 +206,22 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             </div>
           )}
 
+          {element === 'lbl-pre-i' && (
+            <div className={css(!checkExistElement(element) && cls.blur)}>
+              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
+            </div>
+          )}
+          {element === 'lbl-suf-i' && (
+            <div className={css(!checkExistElement(element) && cls.blur)}>
+              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
+            </div>
+          )}
           {element === 'pre-i' && (
+            <div className={css(!checkExistElement(element) && cls.blur)}>
+              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
+            </div>
+          )}
+          {element === 'suf-i' && (
             <div className={css(!checkExistElement(element) && cls.blur)}>
               <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
             </div>
