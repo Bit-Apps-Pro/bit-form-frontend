@@ -31,6 +31,9 @@ const editorConfig = {
       'border-radius': {},
       transition: {},
       filter: {},
+      'font-family': {},
+      'font-weight': {},
+      height: {},
     },
   },
 }

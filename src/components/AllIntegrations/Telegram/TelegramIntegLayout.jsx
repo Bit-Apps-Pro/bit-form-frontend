@@ -16,7 +16,7 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
 
   const setFromField = (val) => {
     setTelegramConf(prevState => produce(prevState, draft => {
-      draft.body = `${newConf.body} ${val} `
+      draft.body = `${draft.body} ${val} `
     }))
   }
   const changeActionRun = (e) => {

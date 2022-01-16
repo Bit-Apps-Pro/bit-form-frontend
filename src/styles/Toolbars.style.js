@@ -111,7 +111,7 @@ const Toolbars = {
     brs: 4,
     px: 6,
     py: 3,
-    fs: 12,
+    fs: 9,
     fw: 600,
     tp: '50%',
     tm: 'translateY(-50%)',
