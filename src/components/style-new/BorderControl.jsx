@@ -2,45 +2,66 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
+import Important from './Important'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function BorderControl({ subtitle, value, objectPaths, id }) {
+export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
 
   const [, color] = splitValueBySpaces(value)
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const setThemeVars = useSetRecoilState($themeVars)
+  const setStyles = useSetRecoilState($styles)
+
   const { shadow, borderRadius, borderWidth, border } = objectPaths.paths
 
   const clearValue = () => {
-    setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-      drft[shadow] = ''
-      drft[borderRadius] = ''
-      drft[borderWidth] = ''
-      drft[border] = ''
-    }))
+    switch (objectPaths.borderObjectName) {
+      case 'themeVars':
+        setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+          drft[shadow] = ''
+          drft[borderRadius] = ''
+          drft[borderWidth] = ''
+          drft[border] = ''
+        }))
+        break
+      case 'styles':
+        setStyles(prvState => produce(prvState, drft => {
+          drft[shadow] = ''
+          drft[borderRadius] = ''
+          drft[borderWidth] = ''
+          drft[border] = ''
+        }))
+        break
+      default:
+        break
+    }
   }
 
   return (
-    <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
-      <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, id })}
-        type="button"
-        className={css(c.pickrBtn)}
-      >
-        <ColorPreview bg={color} h={25} w={25} className={css(ut.mr2)} />
-        <span className={css(c.clrVal)}>{value || 'Add Border Style'}</span>
-      </button>
-      {value && (
-        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
-          <CloseIcn size="12" />
+    <div className={css(ut.flxc)}>
+      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={shadow || borderRadius || borderWidth || border} />)}
+      <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
+        <button
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, id })}
+          type="button"
+          className={css(c.pickrBtn)}
+        >
+          <ColorPreview bg={color?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
+          <span className={css(c.clrVal)}>{value || 'Add Border Style'}</span>
         </button>
-      )}
+        {value && (
+          <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Border">
+            <CloseIcn size="12" />
+          </button>
+        )}
+      </div>
     </div>
   )
 }
@@ -53,6 +74,7 @@ const c = {
     brs: 10,
     p: 3,
     flx: 'center-between',
+    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
   preview: {
     w: 25,
@@ -64,14 +86,15 @@ const c = {
   },
   clearBtn: {
     brs: '50%',
-    w: 20,
-    h: 20,
+    p: 4,
+    w: 17,
+    h: 17,
     b: 'none',
     flx: 'center',
     bd: 'transparent',
     cr: 'var(--white-0-50)',
     curp: 1,
-    ':hover': { cr: 'var(--black-0)' },
+    ':hover': { cr: 'var(--black-0)', bd: '#d3d1d1' },
   },
   pickrBtn: {
     b: 'none',
@@ -81,11 +104,10 @@ const c = {
     p: 0,
   },
   clrVal: {
-    w: 90,
+    w: 73,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',
-    ta: 'left',
   },
   active: { focusShadow: 1 },
 }
