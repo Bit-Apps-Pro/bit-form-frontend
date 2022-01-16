@@ -28,10 +28,10 @@ export default function ElementConfiguration({ fldKey }) {
             {(fieldObj.lblPreIcn || fieldObj.lblSufIcn) && (
               <LayerAccordion onClick={() => styleHandler('label')} offset="3.1" title="Label" fldData={fieldObj} key={fldKey} open={fldKey === selectedFieldKey && (fieldObj.lblPreIcn || fieldObj.lblSufIcn)}>
                 {fieldObj.lblPreIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblPreIcn[0]}`} subRoute={fldKey} route="lbl-pre-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-pre-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblPreIcn[0]}`} subRoute={fldKey} route="lbl-pre-i" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-pre-i="${fldKey}"]`} />
                 )}
                 {fieldObj.lblSufIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblSufIcn[0]}`} subRoute={fldKey} route="lbl-suf-icn" label="Label prefix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.lblSufIcn[0]}`} subRoute={fldKey} route="lbl-suf-i" label="Label suffix Icon" offset="3.3" highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`} />
                 )}
               </LayerAccordion>
             )}
@@ -49,7 +49,7 @@ export default function ElementConfiguration({ fldKey }) {
                   <NavBtn cssSelector={`.${fldKey}-${styleClasses.prefixIcn[0]}`} subRoute={fldKey} route="pre-i" label="Input field prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`} />
                 )}
                 {fieldObj.suffixIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`} subRoute={fldKey} route="suf-i" label="Input field prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`} subRoute={fldKey} route="suf-i" label="Input field suffix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
                 )}
               </LayerAccordion>
             )}
@@ -67,7 +67,7 @@ export default function ElementConfiguration({ fldKey }) {
                   <NavBtn cssSelector={`.${fldKey}-${styleClasses.subTlePreIcn[0]}`} subRoute={fldKey} route="sub-titl-pre-icn" label="Subtitle prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`} />
                 )}
                 {fieldObj.subTleSufIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`} subRoute={fldKey} route="sub-titl-suf-icn" label="Subtitle prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`} subRoute={fldKey} route="sub-titl-suf-icn" label="Subtitle suffix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
                 )}
               </LayerAccordion>
             )}
@@ -86,7 +86,7 @@ export default function ElementConfiguration({ fldKey }) {
                   <NavBtn cssSelector={`.${fldKey}-${styleClasses.hlpPreIcn[0]}`} subRoute={fldKey} route="hlp-txt-pre-icn" label="Helper Text prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`} />
                 )}
                 {fieldObj.hlpSufIcn && (
-                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.hlpSufIcn[0]}`} subRoute={fldKey} route="hlp-txt-suf-icn" label="Helper Text prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.hlpSufIcn[0]}`} subRoute={fldKey} route="hlp-txt-suf-icn" label="Helper Text suffix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} />
                 )}
               </LayerAccordion>
             )}
