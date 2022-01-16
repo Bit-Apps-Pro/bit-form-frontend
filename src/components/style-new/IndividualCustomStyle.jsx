@@ -31,17 +31,22 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
-  const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
-  const existingProperties = Object.keys(existingCssProperties)
-  const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+  const existingProps = (state = '') => {
+    const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
+    const existingProperties = Object.keys(existingCssProperties)
+    const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+    return [existingCssProperties, existingProperties, addableCssProps]
+  }
 
-  const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
-  const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
-  const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
+  const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
+  const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
-  const setNewCssProp = (property) => {
+  const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
+      if (!existingCssProperties) {
+        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`] = {}
+      }
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
     }))
   }
   const setNewCssHoverProp = (prop) => {
@@ -72,52 +77,29 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   //   }))
   // }
 
-  const delPropertyHandler = (property) => {
+  const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
+      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property]
     }))
   }
-  const clearHandler = (property) => {
+  const clearHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
-    }))
-  }
-
-  const delHoverPropertyHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][property]
-    }))
-  }
-  const clearHoverHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][property] = ''
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
     }))
   }
 
-  const propertyObjPath = (property) => (
+  const propertyObjPath = (property, state = '') => (
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->padding` },
-      },
-    }
-  )
-  const hoverPropertyObjPath = (property) => (
-    {
-      object: 'styles',
-      paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->padding` },
+        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->margin` },
+        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->padding` },
       },
     }
   )
 
-  const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
-  const getHoverPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->${cssProperty}`
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
-  // const margin = spacingObj({ margin: existingProperties.includes('margin') })
-  // const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
     <>
       <StyleSegmentControl
@@ -286,10 +268,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 value={existingCssHoverProperties?.background}
                 modalId="field-container-backgroung"
                 stateObjName="styles"
-                propertyPath={getHoverPropertyPath('background')}
+                propertyPath={getPropertyPath('background', ':hover')}
                 deleteable
-                delPropertyHandler={() => delHoverPropertyHandler('background')}
-                clearHandler={() => clearHoverHandler('background')}
+                delPropertyHandler={() => delPropertyHandler('background', ':hover')}
+                clearHandler={() => clearHandler('background', ':hover')}
                 allowImportant
               />
             )
@@ -302,10 +284,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 value={existingCssHoverProperties?.color}
                 modalId="field-container-color"
                 stateObjName="styles"
-                propertyPath={getHoverPropertyPath('color')}
+                propertyPath={getPropertyPath('color', ':hover')}
                 deleteable
-                delPropertyHandler={() => delHoverPropertyHandler('color')}
-                clearHandler={() => clearHoverHandler('color')}
+                delPropertyHandler={() => delPropertyHandler('color', ':hover')}
+                clearHandler={() => clearHandler('color', ':hover')}
                 allowImportant
               />
             )
@@ -314,7 +296,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delHoverPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -324,7 +306,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                     allowImportant
                     action={{ type: 'spacing-control' }}
                     subtitle="Margin control"
-                    objectPaths={hoverPropertyObjPath('margin')}
+                    objectPaths={propertyObjPath('margin', ':hover')}
                     id="margin-control"
                   />
                 </div>
@@ -335,7 +317,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delHoverPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -344,7 +326,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   allowImportant
                   action={{ type: 'spacing-control' }}
                   subtitle="Padding control"
-                  objectPaths={hoverPropertyObjPath('padding')}
+                  objectPaths={propertyObjPath('padding', ':hover')}
                   id="padding-control"
                 />
               </div>
@@ -359,8 +341,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               stateObjName="styles"
               propertyPath={getPropertyPath('box-shadow')}
               deleteable
-              delPropertyHandler={() => delHoverPropertyHandler('box-shadow')}
-              clearHandler={() => clearHoverHandler('box-shadow')}
+              delPropertyHandler={() => delPropertyHandler('box-shadow', ':hover')}
+              clearHandler={() => clearHandler('box-shadow', ':hover')}
               allowImportant
               fldKey={fldKey}
             />
