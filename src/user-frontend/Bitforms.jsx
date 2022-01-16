@@ -314,22 +314,26 @@ export default function Bitforms(props) {
           formData.append('g-recaptcha-response', token)
           const uri = new URL(bitFormsFront.ajaxURL)
           uri.searchParams.append('action', 'bitforms_submit_form')
-          const submitResp = fetch(uri,
+          const submitResp = fetch(
+            uri,
             {
               method: 'POST',
               body: formData,
-            })
+            },
+          )
           submitResponse(submitResp)
         })
       })
     } else {
       const uri = new URL(bitFormsFront.ajaxURL)
       uri.searchParams.append('action', 'bitforms_submit_form')
-      const submitResp = fetch(uri,
+      const submitResp = fetch(
+        uri,
         {
           method: 'POST',
           body: formData,
-        })
+        },
+      )
       submitResponse(submitResp)
     }
   }
@@ -343,6 +347,7 @@ export default function Bitforms(props) {
       .then(result => {
         let responsedRedirectPage = null
         let hitCron = null
+        let newNonce = ''
         if (result !== undefined && result.success) {
           handleReset()
           if (typeof result.data === 'object') {
@@ -352,6 +357,10 @@ export default function Bitforms(props) {
             }
             if (result.data.cronNotOk) {
               hitCron = result.data.cronNotOk
+            }
+            console.log('new nonce', result.data)
+            if (result.data.new_nonce) {
+              newNonce = result.data.new_nonce
             }
             setMessage(result.data.message)
             setSnack(true)
@@ -384,7 +393,7 @@ export default function Bitforms(props) {
           }
         }
         if (responsedRedirectPage) {
-          triggerIntegration(hitCron)
+          triggerIntegration(hitCron, newNonce)
           const timer = setTimeout(() => {
             window.location = decodeURI(responsedRedirectPage)
             if (timer) {
@@ -392,7 +401,7 @@ export default function Bitforms(props) {
             }
           }, 1000)
         } else {
-          triggerIntegration(hitCron)
+          triggerIntegration(hitCron, newNonce)
         }
 
         setbuttonDisabled(false)
@@ -407,7 +416,7 @@ export default function Bitforms(props) {
       })
   }
 
-  const triggerIntegration = (hitCron) => {
+  const triggerIntegration = (hitCron, newNonce) => {
     if (hitCron) {
       if (typeof hitCron === 'string') {
         const uri = new URL(hitCron)
@@ -418,13 +427,15 @@ export default function Bitforms(props) {
       } else {
         const uri = new URL(bitFormsFront.ajaxURL)
         uri.searchParams.append('action', 'bitforms_trigger_workflow')
-        const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
-        fetch(uri,
+        const data = { cronNotOk: hitCron, token: newNonce || props.nonce, id: props.appID }
+        fetch(
+          uri,
           {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' },
-          })
+          },
+        )
           .then(response => response.json())
       }
     }
