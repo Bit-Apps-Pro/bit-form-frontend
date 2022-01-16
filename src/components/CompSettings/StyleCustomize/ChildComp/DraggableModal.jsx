@@ -7,10 +7,12 @@ import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
 import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
+import FilterControlMenu from '../../../style-new/FilterControlMenu'
 import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 import IndividualShadowControlMenu from '../../../style-new/IndividualShadowControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
+import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 import TransitionControlMenu from '../../../style-new/TransitionControlMenu'
@@ -33,8 +35,10 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
     case 'theme-control': return <CustomThemeGallary fldKey={fldKey} />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
+    case 'size-control': return <SizeControlMenu value={value} objectPaths={objectPaths} />
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     case 'transition-control': return <TransitionControlMenu stateObjName={stateObjName} propertyPath={propertyPath} />
+    case 'filter-control': return <FilterControlMenu value={value} objectPaths={objectPaths} />
     default: return 'loading'
   }
 }
@@ -51,8 +55,10 @@ const setTitle = (component) => {
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
     case 'space-control': return 'Margin & Padding Control'
+    case 'size-control': return 'Width,Height Control'
     case 'shadow-control': return 'Shadow'
     case 'transition-control': return 'Transition'
+    case 'filter-control': return 'Filter Control'
     default: return '...'
   }
 }

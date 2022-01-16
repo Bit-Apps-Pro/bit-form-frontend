@@ -9,9 +9,13 @@ import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
+import FilterControler from './FilterControler'
 import IndividualShadowControl from './IndividualShadowControl'
+import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
+import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField } from './styleHelpers'
 import TransitionControl from './TransitionControl'
@@ -116,6 +120,24 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
   const getHoverPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}:hover->${cssProperty}`
 
+  const fldBorderObjPath = {
+    object: 'styles',
+    borderObjName: 'styles',
+    paths: { border: getPropertyPath('border'), borderWidth: getPropertyPath('border-width'), borderRadius: getPropertyPath('border-radius') },
+  }
+
+  const fldSizeObjPath = {
+    object: 'styles',
+    sizeObjName: 'styles',
+    paths: { width: getPropertyPath('width'), height: getPropertyPath('height') },
+  }
+
+  const filterObjPath = {
+    object: 'styles',
+    sizeObjName: 'styles',
+    paths: { filter: getPropertyPath('filter') },
+  }
+
   // const margin = spacingObj({ margin: existingProperties.includes('margin') })
   // const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
@@ -184,6 +206,27 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
+          {existingProperties.includes('border') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+                stateObjName="styles"
+              />
+              <BorderControl
+                allowImportant
+                subtitle="Field Container Border"
+                value={existingCssProperties?.border}
+                objectPaths={fldBorderObjPath}
+                id="fld-wrp-bdr"
+              />
+            </div>
+          )}
           {
             existingProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
@@ -224,6 +267,27 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             )
           }
+          {
+            existingProperties.includes('size') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button title="Delete Property" onClick={() => delPropertyHandler('width')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Size', 'bitform')}</span>
+                </div>
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <SizeControler
+                    action={{ type: 'size-control' }}
+                    subtitle="Size control"
+                    objectPaths={fldSizeObjPath}
+                    id="size-control"
+                  />
+                </div>
+              </div>
+            )
+          }
+
           {existingProperties.includes('box-shadow') && (
             <IndividualShadowControl
               title="Box-shadow"
@@ -253,6 +317,28 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
+          {
+            existingProperties.includes('filter') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button title="Delete Property" onClick={() => delPropertyHandler('filter')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
+                </div>
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <FilterControler
+                    action={{ type: 'filter-control' }}
+                    subtitle="Filter control"
+                    objectPaths={filterObjPath}
+                    id="filter-control"
+                    elementKey={elementKey}
+                    fldKey={fldKey}
+                  />
+                </div>
+              </div>
+            )
+          }
 
           {/* {
         existingCssProperties.includes('font-size') && (
@@ -310,6 +396,27 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
+          {existingHoverProperties.includes('border') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button title="Delete Property" onClick={() => delHoverPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={[getHoverPropertyPath('border'), getHoverPropertyPath('border-width')]}
+                stateObjName="styles"
+              />
+              <BorderControl
+                allowImportant
+                subtitle="Field Container Border"
+                value={existingCssProperties?.border}
+                objectPaths={fldBorderObjPath}
+                id="fld-wrp-bdr"
+              />
+            </div>
+          )}
           {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>

@@ -26,9 +26,11 @@ const editorConfig = {
       border: {},
       margin: {},
       padding: {},
+      size: {},
       'box-shadow': {},
       'border-radius': {},
       transition: {},
+      filter: {},
     },
   },
 }
