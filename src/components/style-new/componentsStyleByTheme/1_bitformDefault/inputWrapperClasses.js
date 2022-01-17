@@ -88,5 +88,29 @@ export default function inputWrapperClasses(fk) {
       width: '11px',
       height: '11px',
     },
+    [`.${fk}-err-msg`]: {
+      background: 'var(--err-bg, none)',
+      color: 'var(--err-c, inherit)',
+      'font-size': 'var(--err-txt-fs)',
+      display: 'flex',
+      'align-items': 'center',
+      'text-align': 'var(--err-txt-al, init)',
+      padding: 'var(--err-p, 0)',
+      margin: 'var(--err-m, 0)',
+      'box-shadow': 'var--err-sh, none)',
+      'border-radius': 'var(--err-bdr-rad, 0)',
+      border: 'var(--err-bdr, medium none)',
+      'border-width': 'var(--err-bdr-width, 0)',
+    },
+    [`.${fk}-err-txt-pre-i`]: {
+      width: '11px',
+      height: '11px',
+      margin: '5px',
+    },
+    [`.${fk}-err-txt-suf-i`]: {
+      width: '11px',
+      height: '11px',
+      margin: '5px',
+    },
   }
 }

@@ -101,10 +101,12 @@ const $themeVarsLg = atom({
     '--hlp-txt-bdr-width': '', // helper text border width
     '--hlp-txt-bdr-rad': '', // helper text border radius
 
-    '--err-m': '', // error messages margin
-    '--err-p': '', // error messages padding
+    '--err-m': '1px', // error messages margin
+    '--err-p': '5px', // error messages padding
     '--err-bdr-width': '1px', // error message border width
     '--err-bdr-rad': '8px', // error message border radius
+    '--err-txt-al': '', // error text align
+    '--err-txt-fs': '12px', // error text font size
   },
 })
 export const $themeVarsMd = atom({ key: '$themeVarsMd', default: {} })

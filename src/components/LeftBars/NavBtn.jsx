@@ -35,7 +35,7 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
         {cssSelector && (
-          <Cooltip width={180} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+          <Cooltip width={180} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(s.tipBody)}>
               {`CSS Selector: ${cssSelector}`}
             </div>
@@ -85,6 +85,7 @@ const s = {
     },
     '& .hovertip': { oy: 0 },
     ':hover': {
+      '& .hovertip': { oy: 1 },
       bd: '#eeeff7',
       '& div[data-action-btn]': { dy: 'flex' },
     },
