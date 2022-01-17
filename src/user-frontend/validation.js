@@ -114,7 +114,7 @@ const isElementInViewport = elm => {
   )
 }
 
-const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
+const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
 
 // eslint-disable-next-line no-nested-ternary
 const nmbrFldValidation = (fldValue, fldData) => ((fldData.mn && (Number(fldValue) < Number(fldData.mn))) ? 'mn' : (fldData.mx && (Number(fldValue) > Number(fldData.mx))) ? 'mx' : '')
