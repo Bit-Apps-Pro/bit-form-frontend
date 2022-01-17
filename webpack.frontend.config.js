@@ -101,7 +101,7 @@ module.exports = (env, argv) => {
                   // useBuiltIns: 'entry',
                   // corejs: 3,
                   targets: {
-                    browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
+                    browsers: !production ? ['Chrome >= 88'] : ['>0.1%', 'ie >= 11'],
                     // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
                   },
                 },
