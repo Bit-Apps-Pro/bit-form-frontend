@@ -216,6 +216,12 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
             </div>
           )}
+          {element === 'error-message' && (
+            <div className={css(!checkExistElement('err-msg') && cls.blur)}>
+              <IndividualCustomStyle elementKey="err-msg" fldKey={fieldKey} />
+            </div>
+          )}
+
           {element === 'pre-i' && (
             <div className={css(!checkExistElement(element) && cls.blur)}>
               <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />

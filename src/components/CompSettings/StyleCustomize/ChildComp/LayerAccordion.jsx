@@ -12,6 +12,7 @@ import Cooltip from '../../../Utilities/Cooltip'
 export default function LayerAccordion({ className,
   title,
   children,
+  childrenAccodin = false,
   fldData,
   open = false,
   actionComponent,
@@ -74,18 +75,16 @@ export default function LayerAccordion({ className,
           <SortIcn className={`toggle-icn ${css(cls.icn)} `} size="9" style={{ transform: `rotate(${tgl ? 180 : 90}deg)` }} />
           <div className={css(cls.flxbwn)}>
             <div className={css(ut.flxc)}>
-              <span className={`title ${css(cls.dflx, ut.fw500)}`}>
+              <span className={`title ${css(cls.dflx, !childrenAccodin && ut.fw500)}`}>
                 {title}
               </span>
               {tag && (
                 <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
               )}
-              <Cooltip width={150} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+              <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(cls.tipBody)}>
                   {(fldData.lbl || fldData.txt || fldData.adminLbl) && (
-                    <>
-                      {fldData.lbl || fldData.txt || fldData.adminLbl}
-                    </>
+                    fldData.lbl || fldData.txt || fldData.adminLbl
                   )}
                 </div>
               </Cooltip>
@@ -141,8 +140,8 @@ const cls = {
   flxbwn: { flx: 'between' },
   titlebar: {
     ws: 'nowrap',
-    ow: 'hidden',
     fw: 500,
+    ow: 'hidden',
     ':hover': { bd: '#eeeff7' },
     '& .hovertip': { oy: 0 },
   },

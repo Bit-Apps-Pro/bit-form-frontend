@@ -3,6 +3,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -28,11 +29,13 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const { css } = useFela()
   const [controller, setController] = useState('Default')
   const themeVars = useRecoilValue($themeVars)
+  const fields = useRecoilValue($fields)
 
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
-  console.log(classes)
+  const selectedField = fields[fldKey]
+  console.log(classes, fields)
 
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
@@ -89,7 +92,14 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
   // for height
   const [fldHightValue, fldHeightUnit] = getStyleValueAndUnit('height')
-  const fldHightHandler = ({ value, unit }) => updateHandler(value, unit, fldHeightUnit, 'height')
+  const fldHightHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value, fldHeightUnit)
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].height = `${convertvalue}${unit}`
+      if (selectedField.prefixIcn) drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['padding-left'] = `${convertvalue + 10}${unit}!important`
+      if (selectedField.suffixIcn) drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['padding-right'] = `${convertvalue + 10}${unit}!important`
+    }))
+  }
 
   const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -689,8 +699,8 @@ const fontweightoptions = [
   { label: 700, value: 700 },
   { label: 800, value: 800 },
   { label: 900, value: 900 },
-  { label: 'Bold', value: 'bold' },
   { label: 'Normal', value: 'normal' },
-  { label: 'Initial', value: 'initial' },
-  { label: 'Inherit', value: 'inherit' },
+  { label: 'Bold', value: 'bold' },
+  { label: 'Bolder', value: 'bolder' },
+  { label: 'Lighter', value: 'lighter' },
 ]

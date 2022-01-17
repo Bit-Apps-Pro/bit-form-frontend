@@ -109,7 +109,7 @@ const Toolbars = {
     cr: 'var(--white-0-0-64)',
     b: '1px solid var(--white-0-75)',
     brs: 4,
-    px: 6,
+    px: 4,
     py: 3,
     fs: 9,
     fw: 600,

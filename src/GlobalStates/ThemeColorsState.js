@@ -46,10 +46,10 @@ export const $lightThemeColors = atom({
     '--hlp-txt-sh': '', // helper text box shadow
     '--hlp-txt-bdr': '', // helper text border
 
-    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
-    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    '--err-bg': 'hsla(0, 82%, 87%, 100)', // error messages background color
+    '--err-c': 'hsla(0 , 68%, 35%, 100)', // error messages text color
     '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
-    '--err-bdr': 'solid red', // error message border
+    '--err-bdr': 'solid hsla(0, 23%, 72%, 100)', // error message border
   },
 })
 

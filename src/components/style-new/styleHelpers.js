@@ -19,7 +19,7 @@ export const showDraggableModal = (e, setDraggableModal, props) => {
 export const objectArrayToStyleStringGenarator = shadows => {
   let shadowString = ''
   shadows.map(shadow => {
-    shadowString += `${Object.values(shadow).join(' ') },`
+    shadowString += `${Object.values(shadow).join(' ')},`
   })
   shadowString = shadowString.slice(0, -1)
   return shadowString
@@ -331,6 +331,9 @@ const styleClasses = {
   hlpSufIcn: ['hlp-txt-suf-i'],
   prefixIcn: ['pre-i'],
   suffixIcn: ['suf-i'],
+  err: ['err-msg'],
+  errPreIcn: ['err-txt-pre-i'],
+  errSufIcn: ['err-txt-suf-i'],
 }
 
 const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
@@ -349,6 +352,9 @@ export const removeUnuseStyles = (fields, setStyles) => {
       if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
       if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
       if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
+      if (!fld.err) deleteStyles(deftStyles, styleClasses.err, fldkey)
+      if (!fld.errPreIcn) deleteStyles(deftStyles, styleClasses.errPreIcn, fldkey)
+      if (!fld.errSufIcn) deleteStyles(deftStyles, styleClasses.errSufIcn, fldkey)
 
       switch (fld.typ) {
         case 'text':
@@ -382,6 +388,7 @@ export const removeUnuseStyles = (fields, setStyles) => {
 
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
   setStyle(prvStyle => produce(prvStyle, drftStyle => {
+    console.log('fk', fk, 'element', element)
     const fldTyp = prvStyle.fields[fk].fieldType
     switch (fldTyp) {
       case 'text':
