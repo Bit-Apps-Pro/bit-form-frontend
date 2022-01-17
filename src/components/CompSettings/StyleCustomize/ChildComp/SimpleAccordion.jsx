@@ -12,6 +12,7 @@ import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
 export default function SimpleAccordion({ className,
+  titleCls,
   title,
   toggleName,
   children,
@@ -25,6 +26,7 @@ export default function SimpleAccordion({ className,
   isPro,
   disable,
   actionComponent,
+  icnStrok = 2,
   onClick }) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
@@ -85,7 +87,7 @@ export default function SimpleAccordion({ className,
         onKeyPress={toggleAccordion}
       >
         <div className={css(SimpleAccordionStyle.flxbwn)}>
-          <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
+          <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
             {title}
             {tip && (
               <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
@@ -102,7 +104,7 @@ export default function SimpleAccordion({ className,
               )}
               {actionComponent && actionComponent}
             </div>
-            <ChevronDownIcn className="toggle-icn" size="20" rotate={!!tgl} />
+            <ChevronDownIcn className="toggle-icn" size="20" stroke={icnStrok} rotate={!!tgl} />
           </div>
         </div>
       </div>
