@@ -20,6 +20,65 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
+  const getDfltFilterObject = (filterName) => {
+    let filterObject = {}
+    switch (filterName) {
+      case 'brightness':
+      case 'grayscale':
+      case 'contrast':
+      case 'invert':
+      case 'sepia':
+        filterObject = {
+          value: `${filterName}(100%)`,
+          units: ['', '%'],
+          minValue: 0,
+          maxValue: 100,
+        }
+        break
+      case 'blur':
+        filterObject = {
+          value: `${filterName}(2px)`,
+          units: ['', 'px', 'em', 'rem'],
+          minValue: 0,
+          maxValue: 100,
+        }
+        break
+      case 'drop-shadow':
+        filterObject = {
+          value: `${filterName}(8px 8px 10px #878787)`,
+          units: ['px'],
+          minValue: -200,
+          maxValue: 200,
+        }
+        break
+      case 'hue-rotate':
+        filterObject = {
+          value: `${filterName}(90deg)`,
+          units: ['deg'],
+          minValue: -360,
+          maxValue: 360,
+        }
+        break
+      case 'saturate':
+      case 'opacity':
+        filterObject = {
+          value: `${filterName}(30%)`,
+          units: ['', '%'],
+          minValue: 0,
+          maxValue: 100,
+        }
+        break
+      default:
+        filterObject = {
+          value: 'none',
+          units: [''],
+          minValue: 0,
+          maxValue: 0,
+        }
+    }
+    return filterObject
+  }
+
   let filterValues = getValueByObjPath(styles, paths?.filter)
   filterValues = filterValues.replace('none', '')
   const filterNames = filterValues.trim() ? filterValues.trim().split(/\B\s+(?![^(]*\))/gi) : []
@@ -28,7 +87,10 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
     let value = filter.slice(filter.indexOf('(') + 1, filter.indexOf(')')).trim()
     const unit = getStrFromStr(value) || ''
     if (value.indexOf(' ') < 0) value = getNumFromStr(value)
-    return { name, value, unit }
+    const filterObject = getDfltFilterObject(name)
+    let title = name.replace('-', ' ')
+    title = title.replace(title.slice(0, 1), title.slice(0, 1).toUpperCase())
+    return { title, name, value, unit, options: filterObject.units, min: filterObject.minValue, max: filterObject.maxValue }
   })
 
   const existFilterNames = filtersObjects.map(filter => filter.name)
@@ -37,28 +99,31 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
     setStyles(prvStyle => produce(prvStyle, drft => {
       let filterValue = getValueByObjPath(prvStyle, paths.filter)
       const startPos = filterValue.indexOf(filterName)
-      console.log('start pos=', startPos)
       const endPos = filterValue.indexOf(')', startPos) + 1
       if (!unit) unit = ''
 
       if (filterName === 'drop-shadow') {
         const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
         values[indexNo] = `${value}${unit}`
-        // console.log('before', filterValue)
         filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
-        // console.log('after', filterValue)
       } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
       assignNestedObj(drft, paths.filter, filterValue.trim())
     }))
   }
 
-  const unitHandler = (filterName, unit, value) => {
+  const unitHandler = (filterName, unit, value, indexNo) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       let filterValue = getValueByObjPath(prvStyle, paths.filter)
       const startPos = filterValue.indexOf(filterName)
       const endPos = filterValue.indexOf(')', startPos) + 1
-      filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
-      assignNestedObj(drft, paths.filter, filterValue)
+      if (!unit) unit = ''
+
+      if (filterName === 'drop-shadow') {
+        const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
+        values[indexNo] = `${value}${unit}`
+        filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
+      } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
+      assignNestedObj(drft, paths.filter, filterValue.trim())
     }))
   }
   const handleClearProperties = filterName => {
@@ -75,41 +140,7 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
     // setStyles(prvStyle => produce(prvStyle, drft => {
     //   drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
     // }))
-    let filterValue = ''
-    switch (filterName) {
-      case 'blur':
-        filterValue = `${filterName}(2px)`
-        break
-      case 'brightness':
-        filterValue = `${filterName}(200%)`
-        break
-      case 'contrast':
-        filterValue = `${filterName}(200%)`
-        break
-      case 'drop-shadow':
-        filterValue = `${filterName}(8px 8px 10px #878787)`
-        break
-      case 'grayscale':
-        filterValue = `${filterName}(100%)`
-        break
-      case 'hue-rotate':
-        filterValue = `${filterName}(90deg)`
-        break
-      case 'invert':
-        filterValue = `${filterName}(100%)`
-        break
-      case 'opacity':
-        filterValue = `${filterName}(30%)`
-        break
-      case 'saturate':
-        filterValue = `${filterName}(8)`
-        break
-      case 'sepia':
-        filterValue = `${filterName}(100%)`
-        break
-      default:
-        filterValue = 'none'
-    }
+    const filterValue = getDfltFilterObject(filterName).value
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
       const prevValue = getValueByObjPath(prvStyle, paths.filter)
       if (filterValue === 'none') assignNestedObj(drftStyles, paths.filter, `${filterValue}`)
@@ -146,6 +177,9 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
             <>
               <SimpleAccordion
                 className={css(c.accordionHead)}
+                open
+                titleCls={css({ fw: 500 })}
+                icnStrok={1}
                 title="Drop Shadow"
                 actionComponent={(
                   <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
@@ -161,10 +195,10 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
                       value={Number(getNumFromStr(valueArr[0]) || 0)}
                       unit={getStrFromStr(valueArr[0]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 0)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, valueArr[0], 0)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 0, valueArr[0])}
+                      options={['px', 'mm', 'em', 'rem']}
+                      min="-100"
+                      max="100"
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
@@ -174,10 +208,10 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
                       value={Number(getNumFromStr(valueArr[1]) || 0)}
                       unit={getStrFromStr(valueArr[1]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 1)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, valueArr[1], 1)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 1, valueArr[1])}
+                      options={['px', 'mm', 'em', 'rem']}
+                      min="-100"
+                      max="100"
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
@@ -187,10 +221,10 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
                       value={Number(getNumFromStr(valueArr[2]) || 0)}
                       unit={getStrFromStr(valueArr[2]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 2)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, valueArr[2], 2)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 2, valueArr[2])}
+                      options={['px', 'mm', 'em', 'rem']}
+                      min="0"
+                      max="100"
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2)}>
@@ -204,22 +238,25 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
             </>
           )
         }
+
         return (
           <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-            <span className={css(ut.fs12, ut.fw500, { w: 85 })}>{filter.name}</span>
-            <SizeControl
-              width="80px"
-              value={Number(filter.value)}
-              unit={filter.unit}
-              inputHandler={valObj => setFilterValue(filter.name, valObj)}
-              sizeHandler={({ unitKey, unitValue }) => unitHandler(filter.name, unitKey, unitValue)}
-              options={[`${filter.unit}`]}
-              min="-200"
-              max="200"
-            />
-            <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
-              <CloseIcn size="12" />
-            </button>
+            <span className={css(ut.fs12, ut.fw500, { w: 85 })}>{filter.title}</span>
+            <div className={css(ut.flxcb)}>
+              <SizeControl
+                width="80px"
+                value={Number(filter.value)}
+                unit={filter.unit}
+                inputHandler={valObj => setFilterValue(filter.name, valObj)}
+                sizeHandler={({ unitKey, unitValue }) => unitHandler(filter.name, unitKey, unitValue)}
+                options={filter.options}
+                min={filter.min}
+                max={filter.max}
+              />
+              <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
+                <CloseIcn size="12" />
+              </button>
+            </div>
           </div>
         )
       })}

@@ -15,9 +15,8 @@ export default function FilterControler({ subtitle, action, value, objectPaths, 
   const [styles, setStyles] = useRecoilState($styles)
 
   const { object, paths } = objectPaths
-  // const val = getValueByObjPath(styles, paths?.width || paths?.height)
-  console.log('path', paths)
-  const val = `filter: ${getValueByObjPath(styles, paths?.filter)}`
+
+  const val = getValueByObjPath(styles, paths?.filter)
 
   const clearHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
