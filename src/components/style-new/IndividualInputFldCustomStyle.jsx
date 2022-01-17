@@ -128,7 +128,10 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const borderStyleObj = (state = '') => ({
     object: 'styles',
     borderObjName: 'styles',
-    paths: { border: getPropertyPath('border', state), borderWidth: getPropertyPath('border-width', state) },
+    paths: {
+      border: getPropertyPath('border', state),
+      borderWidth: getPropertyPath('border-width', state),
+    },
   })
 
   return (
@@ -168,7 +171,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('font-size') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('font-size')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-size')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
@@ -190,7 +198,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('height') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('height')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('height')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
@@ -212,7 +225,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('font-weight') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('font-weight')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-weight')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
@@ -233,7 +251,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('font-family') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('font-family')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-family')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
@@ -246,7 +269,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('border') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('border')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('border', 'bitform')}</span>
@@ -301,7 +329,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('margin')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -322,7 +355,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('padding')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -407,7 +445,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingHoverProperties.includes('font-family') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('font-family', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-family', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
@@ -421,7 +464,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('margin', ':hover')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -442,7 +490,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('padding', ':hover')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -502,7 +555,10 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
-          <CssPropertyList properties={addableCssHoverProps} setProperty={(prop) => setNewCssProp(prop, ':hover')} />
+          <CssPropertyList
+            properties={addableCssHoverProps}
+            setProperty={(prop) => setNewCssProp(prop, ':hover')}
+          />
         </div>
       </Grow>
       <Grow open={controller === 'Focus'}>
@@ -542,7 +598,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
           {existingFocusProperties.includes('font-family') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('font-family', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-family', ':focus')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
@@ -588,7 +649,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingFocusProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('margin', ':focus')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -609,7 +675,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
             existingFocusProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':focus')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('padding', ':focus')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -653,7 +724,10 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
-          <CssPropertyList properties={addableCssFocusProps} setProperty={(prop) => setNewCssProp(prop, ':focus')} />
+          <CssPropertyList
+            properties={addableCssFocusProps}
+            setProperty={(prop) => setNewCssProp(prop, ':focus')}
+          />
         </div>
       </Grow>
     </>
