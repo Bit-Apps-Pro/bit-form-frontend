@@ -1,5 +1,6 @@
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
+import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import TweaksIcn from '../../Icons/TweaksIcn'
@@ -12,10 +13,15 @@ import NavBtn from './NavBtn'
 export default function StyleLayers() {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
+  const history = useHistory()
+  const { formID, formType } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => fieldTypes[typ] || typ
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
+  const styleHandler = (route, fldKey) => {
+    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+  }
   return (
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
@@ -35,7 +41,7 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}>
+            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}>
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <ElementConfiguration fldKey={fldKey} />
