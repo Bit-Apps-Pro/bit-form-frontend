@@ -24,7 +24,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
-  console.log(styles)
 
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
@@ -39,7 +38,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
     const existingProperties = Object.keys(existingCssProperties || {})
     const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
-    console.log(existingCssProperties, existingProperties, addableCssProps)
     return [existingCssProperties, existingProperties, addableCssProps]
   }
 
@@ -108,13 +106,20 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const fldBorderObjPath = {
     object: 'styles',
     borderObjName: 'styles',
-    paths: { border: getPropertyPath('border'), borderWidth: getPropertyPath('border-width'), borderRadius: getPropertyPath('border-radius') },
+    paths: {
+      border: getPropertyPath('border'),
+      borderWidth: getPropertyPath('border-width'),
+      borderRadius: getPropertyPath('border-radius'),
+    },
   }
 
   const fldSizeObjPath = {
     object: 'styles',
     sizeObjName: 'styles',
-    paths: { width: getPropertyPath('width'), height: getPropertyPath('height') },
+    paths: {
+      width: getPropertyPath('width'),
+      height: getPropertyPath('height'),
+    },
   }
 
   const filterObjPath = {
@@ -123,8 +128,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     paths: { filter: getPropertyPath('filter') },
   }
 
-  // const margin = spacingObj({ margin: existingProperties.includes('margin') })
-  // const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
     <>
       <StyleSegmentControl
@@ -194,7 +197,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           {existingProperties.includes('border') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('border')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
@@ -216,7 +224,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('margin')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -237,7 +250,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('padding')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -256,7 +274,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('size') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('width')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('width')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Size', 'bitform')}</span>
@@ -306,7 +329,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingProperties.includes('filter') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('filter')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('filter')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
@@ -384,13 +412,18 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           {existingHoverProperties.includes('border') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
-                <button title="Delete Property" onClick={() => delHoverPropertyHandler('border')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('border', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
                   <TrashIcn size="14" />
                 </button>
                 <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
               </div>
               <ResetStyle
-                propertyPath={[getHoverPropertyPath('border'), getHoverPropertyPath('border-width')]}
+                propertyPath={[getPropertyPath('border', ':hover'), getPropertyPath('border-width', ':hover')]}
                 stateObjName="styles"
               />
               <BorderControl
@@ -406,7 +439,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('margin', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('margin', ':hover')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -427,7 +465,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             existingHoverProperties.includes('padding') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
                 <div className={css(ut.flxc, ut.ml1)}>
-                  <button title="Delete Property" onClick={() => delPropertyHandler('padding', ':hover')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('padding', ':hover')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn size="14" />
                   </button>
                   <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
@@ -457,14 +500,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               fldKey={fldKey}
             />
           )}
-          <CssPropertyList properties={addableCssHoverProps} setProperty={setNewCssHoverProp} />
+          <CssPropertyList
+            properties={addableCssHoverProps}
+            setProperty={setNewCssHoverProp}
+          />
         </div>
       </Grow>
     </>
   )
 }
-
-// const ucFirst = (val) => val.charAt(0).toUpperCase() + val.slice(1).replace(/-/gi, ' ')
 
 const cls = {
   container: { ml: 12, mr: 15, pn: 'relative' },
