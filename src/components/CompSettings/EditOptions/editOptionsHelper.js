@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export const newOptKey = optKey => {
   const key = optKey.current
   optKey.current += 1

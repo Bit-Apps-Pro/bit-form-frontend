@@ -156,69 +156,65 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
   return (
     <div className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}>
       {!isGroupEnd && (
-        <>
-          <div className={css(optionStyle.inputContainer)}>
-            <div className="flx">
-              <DragHandle className={css(optionStyle.drag)} />
+        <div className={css(optionStyle.inputContainer)}>
+          <div className="flx">
+            <DragHandle className={css(optionStyle.drag)} />
+          </div>
+          {isGroupStart && (
+            <div>
+              <span className={css(ut.flxc, ut.ml2, ut.mr2, optionStyle.grouptitle)}>
+                Group Title
+              </span>
+              <input type="text" className={css(optionStyle.grouptitleinput)} onChange={setGroupTitle} value={value.groupLbl} />
             </div>
-            {isGroupStart && (
-              <div>
-                <span className={css(ut.flxc, ut.ml2, ut.mr2, optionStyle.grouptitle)}>
-                  Group Title
-                </span>
-                <input type="text" className={css(optionStyle.grouptitleinput)} onChange={setGroupTitle} value={value.groupLbl} />
-              </div>
-            )}
-            {isGroupEnd && (
-              <>
-                <span className={css(ut.flxc, ut.ml2)} style={{ height: 40 }}>
-                  {`Group ${value.type.split('-')[1]} End`}
-                </span>
-              </>
-            )}
+          )}
+          {isGroupEnd && (
+            <span className={css(ut.flxc, ut.ml2)} style={{ height: 40 }}>
+              {`Group ${value.type.split('-')[1]} End`}
+            </span>
+          )}
 
-            {!('type' in value) && (
-              <>
-                <input type="text" value={value[lblKey]} onChange={e => setOpt(e, optIndx, lblKey)} width={140} className={css(optionStyle.input)} />
-                <input type="text" value={value[valKey]} onChange={e => setOpt(e, optIndx, valKey)} placeholder={`${value[lblKey]}`} width={140} className={css(optionStyle.input)} />
-              </>
-            )}
-            {!isGroupStart && checkByDefault && (
-              <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-                <Tip msg="Check by Default">
-                  <TableCheckBox checked={value.check !== undefined} onChange={(e) => setCheck(e, optIndx)} className="" />
-                </Tip>
-              </span>
-            )}
-            {type === 'check' && (
-              <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-                <Tip msg="Required">
-                  <TableCheckBox checked={value.req !== undefined} className="m-0 " onChange={(e) => setReq(e, optIndx)} />
-                </Tip>
-              </span>
-            )}
-            <div className={`${css(optionStyle.action)} acc ${isGroupStart && 'group-acc'} ${value.req && 'active'}`}>
+          {!('type' in value) && (
+            <>
+              <input type="text" value={value[lblKey]} onChange={e => setOpt(e, optIndx, lblKey)} width={140} className={css(optionStyle.input)} />
+              <input type="text" value={value[valKey]} onChange={e => setOpt(e, optIndx, valKey)} placeholder={`${value[lblKey]}`} width={140} className={css(optionStyle.input)} />
+            </>
+          )}
+          {!isGroupStart && checkByDefault && (
+            <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
+              <Tip msg="Check by Default">
+                <TableCheckBox checked={value.check !== undefined} onChange={(e) => setCheck(e, optIndx)} className="" />
+              </Tip>
+            </span>
+          )}
+          {type === 'check' && (
+            <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
+              <Tip msg="Required">
+                <TableCheckBox checked={value.req !== undefined} className="m-0 " onChange={(e) => setReq(e, optIndx)} />
+              </Tip>
+            </span>
+          )}
+          <div className={`${css(optionStyle.action)} acc ${isGroupStart && 'group-acc'} ${value.req && 'active'}`}>
 
-              <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
-                <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
-                  <button type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
-                    <span className={css(optionStyle.addbtnside)}><CloseIcn size="16" stroke="2" /></span>
-                  </button>
-                </Tip>
-                <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                  <button type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
-                    <CopyIcn size="16" stroke="2" />
-                  </button>
-                </Tip>
-                <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                  <button type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
-                    <TrashIcn size="23" />
-                  </button>
-                </Tip>
-              </div>
+            <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
+              <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
+                <button type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
+                  <span className={css(optionStyle.addbtnside)}><CloseIcn size="16" stroke="2" /></span>
+                </button>
+              </Tip>
+              <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
+                <button type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
+                  <CopyIcn size="16" stroke="2" />
+                </button>
+              </Tip>
+              <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
+                <button type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
+                  <TrashIcn size="23" />
+                </button>
+              </Tip>
             </div>
           </div>
-        </>
+        </div>
       )}
 
     </div>
