@@ -7,12 +7,13 @@ import SingleToggle from '../Utilities/SingleToggle'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 
-import 'brace/mode/javascript'
-import 'brace/mode/css'
-import 'brace/snippets/javascript'
-import 'brace/theme/tomorrow'
-import 'brace/theme/twilight'
-import 'brace/ext/language_tools'
+import 'ace-builds/src-min-noconflict/ext-language_tools'
+import 'ace-builds/src-min-noconflict/mode-javascript'
+import 'ace-builds/src-min-noconflict/snippets/javascript'
+import 'ace-builds/src-min-noconflict/mode-css'
+import 'ace-builds/src-min-noconflict/snippets/css'
+import 'ace-builds/src-min-noconflict/theme-tomorrow'
+import 'ace-builds/src-min-noconflict/theme-twilight'
 
 function Editor() {
   const { css } = useFela()
@@ -91,65 +92,61 @@ function Editor() {
           </div>
 
           <Grow open={editorTab === 'JS'}>
-            <>
-              {enableEditor === 'on' ? (
-                <AceEditor
-                  height="330px"
-                  width="99%"
-                  placeholder=""
-                  mode="javascript"
-                  theme={theme}
-                  onChange={(newValue) => setJsCode(newValue)}
-                  fontSize={14}
-                  showPrintMargin
-                  showGutter
-                  highlightActiveLine
-                  className={css(style.editor)}
+            {enableEditor === 'on' ? (
+              <AceEditor
+                height="330px"
+                width="99%"
+                placeholder=""
+                mode="javascript"
+                theme={theme}
+                onChange={(newValue) => setJsCode(newValue)}
+                fontSize={14}
+                showPrintMargin
+                showGutter
+                highlightActiveLine
+                className={css(style.editor)}
+                value={jsCode}
+                setOptions={options}
+              />
+            ) : (
+              <div>
+                <textarea
+                  className={css(style.editor, { h: 330 })}
+                  onChange={(e) => setJsCode(e.target.value)}
                   value={jsCode}
-                  setOptions={options}
+                  rows="18"
                 />
-              ) : (
-                <div>
-                  <textarea
-                    className={css(style.editor,{ h:330 })}
-                    onChange={(e) => setJsCode(e.target.value)}
-                    value={jsCode}
-                    rows="18"
-                  />
-                </div>
-              )}
-            </>
+              </div>
+            )}
           </Grow>
 
           <Grow open={editorTab === 'CSS'}>
-            <>
-              {enableEditor === 'on' ? (
-                <AceEditor
-                  height="330px"
-                  width="99%"
-                  placeholder=""
-                  mode="css"
-                  theme={theme}
-                  className={css(style.editor)}
-                  onChange={(newValue) => setCssCode(newValue)}
-                  fontSize={14}
-                  showPrintMargin
-                  showGutter
-                  highlightActiveLine
+            {enableEditor === 'on' ? (
+              <AceEditor
+                height="330px"
+                width="99%"
+                placeholder=""
+                mode="css"
+                theme={theme}
+                className={css(style.editor)}
+                onChange={(newValue) => setCssCode(newValue)}
+                fontSize={14}
+                showPrintMargin
+                showGutter
+                highlightActiveLine
+                value={cssCode}
+                setOptions={options}
+              />
+            ) : (
+              <div>
+                <textarea
+                  className={css(style.editor, { h: 330 })}
+                  onChange={(e) => setCssCode(e.target.value)}
                   value={cssCode}
-                  setOptions={options}
+                  rows="18"
                 />
-              ) : (
-                <div>
-                  <textarea
-                    className={css(style.editor,{ h:330 })}
-                    onChange={(e) => setCssCode(e.target.value)}
-                    value={cssCode}
-                    rows="18"
-                  />
-                </div>
-              )}
-            </>
+              </div>
+            )}
           </Grow>
         </>
       </Grow>
