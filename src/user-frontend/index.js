@@ -45,14 +45,14 @@ export default function BitformsRenderer(contentID) {
   const getGclid = () => {
     let gID = ''
     if (document.referrer) {
-      const idExists = RegExp('[?&]gclid=([^&]*)').exec(document.referrer)
+      const idExists = /[?&]gclid=([^&]*)/.exec(document.referrer)
       if (idExists) {
         // eslint-disable-next-line prefer-destructuring
         gID = idExists[1]
       }
     }
     if (gID === '' && window.location.search) {
-      const idExists = RegExp('[?&]gclid=([^&]*)').exec(window.location.search)
+      const idExists = /[?&]gclid=([^&]*)/.exec(window.location.search)
       if (idExists) {
         // eslint-disable-next-line prefer-destructuring
         gID = idExists[1]

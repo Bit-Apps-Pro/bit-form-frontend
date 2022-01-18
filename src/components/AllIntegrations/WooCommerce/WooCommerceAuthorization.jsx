@@ -76,12 +76,10 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         )}
 
         {isAuthorized && (
-          <>
-            <button onClick={() => setStep(2)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button" disabled={!isAuthorized}>
-              {__('Next', 'bitform')}
-              <BackIcn className="ml-1 rev-icn" />
-            </button>
-          </>
+          <button onClick={() => setStep(2)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button" disabled={!isAuthorized}>
+            {__('Next', 'bitform')}
+            <BackIcn className="ml-1 rev-icn" />
+          </button>
         )}
       </div>
     </>

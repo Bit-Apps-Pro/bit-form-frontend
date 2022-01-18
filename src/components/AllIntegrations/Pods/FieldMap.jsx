@@ -43,15 +43,13 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
       {
         isRequired
           ? (
-            <>
-              <button
-                onClick={() => addFieldMap(propName, i, dataConf, setDataConf)}
-                className="icn-btn sh-sm ml-2 mr-1"
-                type="button"
-              >
-                +
-              </button>
-            </>
+            <button
+              onClick={() => addFieldMap(propName, i, dataConf, setDataConf)}
+              className="icn-btn sh-sm ml-2 mr-1"
+              type="button"
+            >
+              +
+            </button>
           )
           : (
             <>

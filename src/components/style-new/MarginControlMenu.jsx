@@ -11,7 +11,6 @@ export default function MarginControlMenu() {
   const tempStyle = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyle.themeVars
 
-
   const fieldMarginHandler = (v) => {
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle['--fld-m'] = `${v}`
@@ -25,8 +24,6 @@ export default function MarginControlMenu() {
     }))
   }
   return (
-    <>
-      <SpaceControl isResetable={tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fidMargin} title="Field Margin" onChange={val => fieldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-    </>
+    <SpaceControl isResetable={tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fidMargin} title="Field Margin" onChange={val => fieldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
   )
 }

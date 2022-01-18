@@ -47,8 +47,10 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
   const getEntry = (e) => {
     e.preventDefault()
     setIsLoading(true)
-    bitsFetch({ data },
-      'bitforms_filter_export_data').then((res) => {
+    bitsFetch(
+      { data },
+      'bitforms_filter_export_data',
+    ).then((res) => {
       if (res !== undefined && res.success) {
         if (res.data?.count !== 0) {
           const header = []

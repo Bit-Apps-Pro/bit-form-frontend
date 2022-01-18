@@ -252,7 +252,7 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
       const fieldName = field.substring(2, field.length - 1)
       if (fieldValues[fieldName]) {
         let val2Rplc = fieldValues[fieldName].value
-        if (Array.isArray(fieldValues[fieldName].value) && !isNaN(fieldValues[fieldName].value[0])) {
+        if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
           val2Rplc = 0
           fieldValues[fieldName].value.map(sV => { val2Rplc += Number(sV) })
         }
@@ -275,7 +275,7 @@ export const evalMathExpression = (stringToReplace) => {
     if (!mathEpr) {
       return stringToReplace
     }
-    const isInvalid = mathEpr.filter(v => isNaN(v))
+    const isInvalid = mathEpr.filter(v => Number.isNaN(v))
     if (isInvalid && isInvalid.length > 0) {
       return mutatedString
     }

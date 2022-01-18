@@ -126,13 +126,11 @@ export default function SingleFormSettings() {
     if (e.target.checked) {
       let msg
       if (!reCaptchaV3 || !reCaptchaV3?.siteKey || !reCaptchaV3?.secretKey) {
-        msg = __(
-          <p>
-            to use ReCaptchaV3, you must set site key and secret from
-            &nbsp;
-            <Link to="/app-settings/recaptcha">app settings</Link>
-          </p>, 'bitform',
-        )
+        msg = __(<p>
+          to use ReCaptchaV3, you must set site key and secret from
+          &nbsp;
+          <Link to="/app-settings/recaptcha">app settings</Link>
+        </p>, 'bitform')
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -140,11 +138,9 @@ export default function SingleFormSettings() {
       const captchaFlds = fields ? Object.values(fields).find(fld => fld.typ === 'recaptcha') : undefined
 
       if (captchaFlds) {
-        msg = __(
-          <p>
-            You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
-          </p>, 'bitform',
-        )
+        msg = __(<p>
+          You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
+                 </p>, 'bitform')
         setAlertMdl({ show: true, msg })
         return false
       }

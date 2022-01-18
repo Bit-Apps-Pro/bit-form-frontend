@@ -28,8 +28,10 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
     setLoading(true)
     closeConfMdl()
     e.preventDefault()
-    bitsFetch({ postData: postFilter },
-      'bitforms_delete_post_type').then((res) => {
+    bitsFetch(
+      { postData: postFilter },
+      'bitforms_delete_post_type',
+    ).then((res) => {
       if (res !== undefined && res.success) {
         setsnack({ ...{ show: true, msg: __('Delete successfully, refresh your window', 'bitform') } })
       }

@@ -257,12 +257,10 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           </>
         )}
         {(event === 'milestone' || event === 'tasklist' || event === 'issue') && (
-          <>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={sprintf(__('%s Flag', 'bitform'), event)} subTitle={`${__('Add a flag to', 'bitform')} ${event} ${__('pushed to Zoho Projects.', 'bitform')}`} />
-              {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} ${__('flag is required', 'bitform')}`}</small>}
-            </div>
-          </>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={sprintf(__('%s Flag', 'bitform'), event)} subTitle={`${__('Add a flag to', 'bitform')} ${event} ${__('pushed to Zoho Projects.', 'bitform')}`} />
+            {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} ${__('flag is required', 'bitform')}`}</small>}
+          </div>
         )}
         {event === 'issue' && (
           <>

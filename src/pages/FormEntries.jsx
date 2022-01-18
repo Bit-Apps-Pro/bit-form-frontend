@@ -56,8 +56,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           && field !== 'sl'
           && field !== 'selection'
           && field !== 'table_ac'
+          && allLabelObj[field] !== undefined
         ) {
-          allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
+          labels.push(allLabelObj[field])
         }
       })
       // temporary tuen off report feature
@@ -221,7 +222,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
 
-            if (val.key === '__user_ip' && isFinite(row.cell.value)) {
+            if (val.key === '__user_ip' && Number.isFinite(row.cell.value)) {
               return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
             }
             return row.cell.value

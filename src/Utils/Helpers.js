@@ -297,4 +297,3 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
 })
 
 export const firstLetterUpper = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-

@@ -30,7 +30,6 @@ export default function LabelControlMenu() {
   const tempStyles = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyles.themeVars
 
-
   const { '--fld-lbl-fs': fldLblFs,
     '--sub-titl-fs': subTitleFs,
     '--hlp-txt-fs': heplrTxtFs,

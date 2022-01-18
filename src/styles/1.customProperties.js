@@ -93,7 +93,6 @@ const customProperties = {
   ws: $ => ({ whiteSpace: $ }),
   wb: $ => ({ wordBreak: $ }),
   oy: $ => ({ opacity: $ }),
-  cg: $ => ({ columnGap: Number.isInteger($) ? `${$}px` : $ }),
 
   // width and height same
   se: ($) => ({

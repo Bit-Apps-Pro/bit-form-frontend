@@ -32,26 +32,22 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp w-5 mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(type, propName, ev, i, dataConf, setDataConf)}>
           <option value="">{__('Select Field', 'bitform')}</option>
-          <>
-            { formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
-            <option value="custom">{__('Custom...', 'bitform')}</option>
-          </>
+          { formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+          <option value="custom">{__('Custom...', 'bitform')}</option>
 
         </select>
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-        <>
-          <select className="btcd-paper-inp w-5" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(type, propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
-            <option value="">{__('Select Field', 'bitform')}</option>
-            {
-              customFields?.map(header => (
-                <option key={`${header.key}-1`} value={header.key}>
-                  {`${header.name}`}
-                </option>
-              ))
-            }
-          </select>
-        </>
+        <select className="btcd-paper-inp w-5" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(type, propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            customFields?.map(header => (
+              <option key={`${header.key}-1`} value={header.key}>
+                {`${header.name}`}
+              </option>
+            ))
+          }
+        </select>
 
       </div>
       {/*

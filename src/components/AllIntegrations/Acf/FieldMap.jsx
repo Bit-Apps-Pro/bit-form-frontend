@@ -52,18 +52,16 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
         </select>
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-        <>
-          <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
-            <option value="">{__('Select Field', 'bitform')}</option>
-            {
-              customFields?.map(header => (
-                <option key={`${header.key}-1`} value={header.key}>
-                  {`${header.name}`}
-                </option>
-              ))
-            }
-          </select>
-        </>
+        <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            customFields?.map(header => (
+              <option key={`${header.key}-1`} value={header.key}>
+                {`${header.name}`}
+              </option>
+            ))
+          }
+        </select>
 
       </div>
 

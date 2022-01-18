@@ -88,16 +88,14 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
       {
         fldType.match(/select|check|radio/g)
           ? (
-            <>
-              <MultiSelect
-                className="msl-wrp-options btcd-paper-drpdwn w-10"
-                defaultValue={value || ''}
-                onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-                options={getOptions()}
-                customValue
-                fldType={fldType}
-              />
-            </>
+            <MultiSelect
+              className="msl-wrp-options btcd-paper-drpdwn w-10"
+              defaultValue={value || ''}
+              onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+              options={getOptions()}
+              customValue
+              fldType={fldType}
+            />
           ) : (
             <MtInput
               label="Value"

@@ -107,33 +107,31 @@ export default function Option({ options }) {
     setScrolIndex(newIndex)
   }
   return (
-    <>
-      <div className={css(optionStyle.wrapper)}>
-        <SortableContainer onSortEnd={onSortEnd} useDragHandle=".drag">
-          <VirtualList
-            width="100%"
-            height={200}
-            itemCount={option.length}
-            itemSize={50} // Also supports variable heights (array or function getter)
-            className="VirtualList"
-            scrollToIndex={scrolIndex}
-            scrollToAlignment="center"
-            overscanCount={10}
-            renderItem={({ index, style }) => (
-              <div key={index} style={style}>
-                <SortableItem key={`key=${index}`} index={index} value={option[index]} ind={index} />
-              </div>
-            )}
-          />
+    <div className={css(optionStyle.wrapper)}>
+      <SortableContainer onSortEnd={onSortEnd} useDragHandle=".drag">
+        <VirtualList
+          width="100%"
+          height={200}
+          itemCount={option.length}
+          itemSize={50} // Also supports variable heights (array or function getter)
+          className="VirtualList"
+          scrollToIndex={scrolIndex}
+          scrollToAlignment="center"
+          overscanCount={10}
+          renderItem={({ index, style }) => (
+            <div key={index} style={style}>
+              <SortableItem key={`key=${index}`} index={index} value={option[index]} ind={index} />
+            </div>
+          )}
+        />
 
-        </SortableContainer>
-        <div className="flx">
-          <Button className={css(optionStyle.add_btn)} onClick={addOption}>
-            {__('Add More +', 'bitform')}
-          </Button>
-        </div>
+      </SortableContainer>
+      <div className="flx">
+        <Button className={css(optionStyle.add_btn)} onClick={addOption}>
+          {__('Add More +', 'bitform')}
+        </Button>
       </div>
-    </>
+    </div>
   )
 }
 const optionStyle = {

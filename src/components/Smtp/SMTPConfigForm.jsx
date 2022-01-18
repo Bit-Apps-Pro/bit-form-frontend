@@ -23,8 +23,10 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
     const formmail = new FormData(formRef.current)
     e.preventDefault()
     setIsLoading(true)
-    const prom = bitsFetch(formmail,
-      'bitforms_mail_config')
+    const prom = bitsFetch(
+      formmail,
+      'bitforms_mail_config',
+    )
       .then((res) => {
         if (res !== undefined && res.success) {
           setIsLoading(false)

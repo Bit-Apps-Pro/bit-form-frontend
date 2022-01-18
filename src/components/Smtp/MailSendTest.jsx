@@ -15,8 +15,10 @@ export default function MailSendTest({ settab }) {
     const testEmailData = new FormData(formRef.current)
     e.preventDefault()
     setisTestLoading(true)
-    const prom = bitsFetch(testEmailData,
-      'bitforms_test_email')
+    const prom = bitsFetch(
+      testEmailData,
+      'bitforms_test_email',
+    )
       .then((res) => {
         setisTestLoading(false)
         if (res !== undefined && res.success) {

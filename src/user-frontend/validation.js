@@ -68,14 +68,15 @@ const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, 
 const generateFormEntries = () => {
   const formData = new FormData(document.getElementById(`form-${contentId}`))
   const formEntries = {}
-  for (const [key, value] of formData.entries()) {
+  const entries = Array.from(formData.entries())
+  entries.forEach(([key, value]) => {
     const fldKey = generateFieldKey(key)
-    if (!(fldKey in fields)) continue
+    if (!(fldKey in fields)) return
     if (formEntries[fldKey]) {
       if (!Array.isArray(formEntries[fldKey])) formEntries[fldKey] = [formEntries[fldKey]]
       formEntries[fldKey].push(value)
     } else formEntries[fldKey] = value
-  }
+  })
 
   return formEntries
 }

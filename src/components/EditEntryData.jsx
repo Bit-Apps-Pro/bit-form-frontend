@@ -76,12 +76,14 @@ export default function EditEntryData(props) {
               const uri = new URL(bits.ajaxURL)
               uri.searchParams.append('action', 'bitforms_trigger_workflow')
               const triggerData = { cronNotOk: hitCron, id: `bitforms_${formID}` }
-              fetch(uri,
+              fetch(
+                uri,
                 {
                   method: 'POST',
                   body: JSON.stringify(triggerData),
                   headers: { 'Content-Type': 'application/json' },
-                })
+                },
+              )
                 .then(res => res.json())
             }
           }

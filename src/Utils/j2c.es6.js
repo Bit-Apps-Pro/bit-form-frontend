@@ -246,32 +246,33 @@ function sheet(statements, buf, prefix, rawPrefix, vendors, local, ns) {
 
           inDeclaration = (inDeclaration && buf.push('}') && 0)
 
-          sheet(v, buf,
-          // eslint-disable-next-line no-cond-assign
+          sheet(
+            v,
+            buf,
+            // eslint-disable-next-line no-cond-assign
             (kk = /,/.test(prefix) || prefix && /,/.test(k))
               ? cartesian(prefix.split(','), (local
-                ? k.replace(
-                  /()(?::global\(\s*(\.[-\w]+)\s*\)|(\.)([-\w]+))/g, ns.l,
-                ) : k
+                ? k.replace(/()(?::global\(\s*(\.[-\w]+)\s*\)|(\.)([-\w]+))/g, ns.l) : k
               ).split(','), prefix).join(',')
-              : concat(prefix, (local
-                ? k.replace(
-                  /()(?::global\(\s*(\.[-\w]+)\s*\)|(\.)([-\w]+))/g, ns.l,
-                ) : k
-              ), prefix),
+              : concat(
+                prefix, (
+                  local
+                    ? k.replace(/()(?::global\(\s*(\.[-\w]+)\s*\)|(\.)([-\w]+))/g, ns.l) : k
+                ), prefix,
+              ),
             kk
               ? cartesian(rawPrefix.split(','), k.split(','), rawPrefix).join(',')
               : concat(rawPrefix, k, rawPrefix),
             vendors,
-            local, ns)
+            local,
+            ns,
+          )
         }
       }
       if (inDeclaration) buf.push('}')
       break
     case STRING:
-      buf.push(
-        (prefix || ':-error-no-selector'), ' {',
-      )
+      buf.push((prefix || ':-error-no-selector'), ' {')
       declarations(statements, buf, '', vendors, local, ns)
       buf.push('}')
   }
@@ -317,7 +318,11 @@ function j2c(res) {
       }
     }
     sheet(
-      statements, buf, '', '', emptyArray /* vendors */,
+      statements,
+      buf,
+      '',
+      '',
+      emptyArray /* vendors */,
       1, // local
       {
         e: function extend(parent, child) {

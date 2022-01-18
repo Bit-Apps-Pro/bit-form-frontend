@@ -27,8 +27,10 @@ export default function Cpt({ settab, types }) {
     const formData = new FormData(formRef.current)
     setLoading(true)
     e.preventDefault()
-    bitsFetch(formData,
-      'bitforms_add_post_type')
+    bitsFetch(
+      formData,
+      'bitforms_add_post_type',
+    )
       .then((res) => {
         if (res !== undefined && res.success) {
           setsnack({ ...{ show: true, msg: __('cpt added successfully, refresh your window', 'bitform') } })
