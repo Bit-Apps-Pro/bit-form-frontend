@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import AceEditor from 'react-ace'
@@ -111,7 +112,7 @@ function Editor() {
               ) : (
                 <div>
                   <textarea
-                    className={css(style.editor,{ h:330 })}
+                    className={css(style.editor, { h: 330 })}
                     onChange={(e) => setJsCode(e.target.value)}
                     value={jsCode}
                     rows="18"
@@ -142,7 +143,7 @@ function Editor() {
               ) : (
                 <div>
                   <textarea
-                    className={css(style.editor,{ h:330 })}
+                    className={css(style.editor, { h: 330 })}
                     onChange={(e) => setCssCode(e.target.value)}
                     value={cssCode}
                     rows="18"

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
