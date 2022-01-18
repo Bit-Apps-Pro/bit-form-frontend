@@ -73,6 +73,6 @@ module.exports = {
     'no-use-before-define': 'off',
     allowShortCircuit: 0,
     'react/function-component-definition': 0,
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsForRegex: ['draft'] }],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsForRegex: ['(d|D)raft'] }],
   },
 }
