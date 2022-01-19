@@ -570,7 +570,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             title="Search Field"
             aria-label="Search Field"
             autoComplete="off"
-            placeholder="Search..."
+            // placeholder="Search..."
             id="search-icon"
             type="search"
             name="searchIcn"
