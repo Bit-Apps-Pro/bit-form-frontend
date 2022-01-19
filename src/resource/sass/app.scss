@@ -62,8 +62,8 @@ a:hover {
   min-height: 100vh;
   height: 100%;
   font-size: 16px;
-  // background-color       : #f5f8ff;
-  background-color: var(--light-98);
+  // background-color: var(--light-98);
+  background-color:#1e1e1e;
 
   & a {
     text-decoration: none;
@@ -1561,7 +1561,7 @@ input[type="checkbox"].disabled:checked:before {
 
   & span {
     font-weight: 500;
-    margin-left: 5px
+    margin-left: 5px;
   }
 
   & input {
@@ -1759,25 +1759,22 @@ nav.top-nav {
 }
 
 .logo {
-  background: var(--white);
+  // background: var(--white);
+  color:rgb(255, 8, 0);
   height: 40px;
-  width: 40px;
+  width: 135px;
   overflow: hidden;
   border-radius: 15px;
   // box-shadow   : 2px 2px 5px 0px #444444;
-  box-shadow: 2px 2px 5px 0px var(--white-0-27);
+  // box-shadow: 2px 2px 5px 0px var(--white-0-27);
   transition: width 0.4s, border-radius 0.4s;
 
-  &:hover {
-    width: 125px;
-  }
-
   & img {
-    width: 23px;
+    width: 20px;
   }
 
   & span {
-    color: var(--dp-blue-bg);
+    color: hsl(355deg 100% 64%);
     white-space: nowrap;
     font-size: 17px;
     font-weight: 600;
@@ -1785,7 +1782,8 @@ nav.top-nav {
 }
 
 .nav-wrp {
-  background: var(--dp-blue-bg);
+  // background: var(--dp-blue-bg);
+  background: #1e1e1e;
   height: 230px;
   padding: 20px;
 }
@@ -1795,8 +1793,7 @@ nav.top-nav {
   min-height: 80vh;
   margin: -150px 20px 30px;
   margin-top: -150px;
-  border-radius: 20px;
-  // box-shadow   : 0px 0px 7px 1px rgba(17, 9, 52, 0.24);
+  border-radius: 15px;
   box-shadow: 0px 0px 7px 1px var(--b-70-12-24);
 
   &>div:not(#all-forms#form-res) {

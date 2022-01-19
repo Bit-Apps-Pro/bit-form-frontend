@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-rou
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader'
 // import './resource/icons/style.css'
-import logo from './resource/img/bit-form-logo.svg'
+import logo from '../logo.svg'
 import './resource/sass/global.scss'
 import './resource/sass/app.scss'
 import ut from './styles/2.utilities'
@@ -27,6 +27,9 @@ export default function App() {
   const { css } = useFela()
 
   useEffect(() => { removeUnwantedCSS() }, [])
+
+  const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
+  document.querySelector('#wpbody').style.backgroundColor = backgroundColor
 
   return (
     <Suspense fallback={(<Loader className={css([ut['g-c'], loaderStyle])} />)}>
@@ -45,8 +48,8 @@ export default function App() {
         }}
       />
       <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
-        <div className="Btcd-App">
-          <div className="nav-wrp">
+        <div className="Btcd-App" style={{ backgroundColor }}>
+          <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
               <div className="logo flx" title={__('Bit Form', 'bitform')}>
                 <Link to="/" className="flx">
