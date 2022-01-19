@@ -1,8 +1,8 @@
-import { useFela } from 'react-fela'
 import Scrollbars from 'react-custom-scrollbars-2'
-import FileLblProperty from './FileLblProperty'
-import Modal from '../../Utilities/Modal'
+import { useFela } from 'react-fela'
 import ut from '../../../styles/2.utilities'
+import Modal from '../../Utilities/Modal'
+import FileLblProperty from './FileLblProperty'
 
 export default function ImageValidateoMdl({ showMdl, setshowMdl, title }) {
   const { css } = useFela()

@@ -441,6 +441,23 @@ export const assignNestedObj = (obj, keyPath, value) => {
   obj[paths[lastKeyIndex]] = value
 }
 
+export const deleteNestedObj = (obj, keyPath) => {
+  const paths = keyPath?.split('->') || []
+  if (paths.length === 1) {
+    delete obj[paths[0]]
+    return
+  }
+  const lastKeyIndex = paths.length - 1
+  for (let i = 0; i < lastKeyIndex; i += 1) {
+    const key = paths[i]
+    if (!(key in obj)) {
+      obj[key] = {}
+    }
+    obj = obj[key]
+  }
+  delete obj[paths[lastKeyIndex]]
+}
+
 export const propertyValueSumY = (propertyValue = '') => {
   let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
   if (arr.length === 1) { arr = Array(4).fill(arr[0]) }

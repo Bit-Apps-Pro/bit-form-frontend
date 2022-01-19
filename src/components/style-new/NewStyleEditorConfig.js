@@ -35,6 +35,8 @@ const editorConfig = {
       'font-family': {},
       'font-weight': {},
       height: {},
+      'line-height': {},
+      'word-spacing': {},
     },
   },
 }

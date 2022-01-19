@@ -11,6 +11,7 @@ import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -31,6 +32,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const themeVars = useRecoilValue($themeVars)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
+  const themeVars = useRecoilValue($themeVars)
 
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
@@ -42,6 +44,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const { classes, fieldType } = fldStyleObj
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
@@ -80,19 +83,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
   const setNewCssProp = (property, state = '') => {
+    const checkExistingCssProperties = state === '' ? existingCssProperties : existingCssHoverProperties
     setStyles(prvStyle => produce(prvStyle, drft => {
-      if (!existingCssProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`] = {}
+      if (!checkExistingCssProperties) {
+        assignNestedObj(drft, getPropertyPath(property, state), {})
       }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
-    }))
-  }
-  const setNewCssHoverProp = (prop) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
-      if (!existingCssHoverProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`] = {}
-      }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][prop] = ''
+      assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
   }
 
@@ -122,12 +118,43 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property]
+      deleteNestedObj(drft, getPropertyPath(property, state))
     }))
   }
   const clearHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
+      assignNestedObj(drft, deleteNestedObj(property, state), '')
+    }))
+  }
+
+  const getValueFromThemeVar = (val) => {
+    if (val?.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+
+  const getStyleValueAndUnit = (prop) => {
+    const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
+    const themeVal = getValueFromThemeVar(getVlu)
+    const value = getNumFromStr(themeVal)
+    const unit = getStrFromStr(themeVal)
+    return [value, unit]
+  }
+  const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
+  const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
+
+  const lineHeightHandler = ({ value, unit }) => {
+    const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
+    }))
+  }
+  const wordSpacingHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value, wordSpacingUnit)
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('word-spacing'), `${convertvalue}${unit}`)
     }))
   }
 
@@ -135,13 +162,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->padding` },
+        ...property === 'margin' && { margin: getPropertyPath('margin', state) },
+        ...property === 'padding' && { padding: getPropertyPath('padding', state) },
       },
     }
   )
-
-  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
   const fldBorderObjPath = {
     object: 'styles',
@@ -257,6 +282,66 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 value={existingCssProperties?.border}
                 objectPaths={fldBorderObjPath}
                 id="fld-wrp-bdr"
+              />
+            </div>
+          )}
+          {existingProperties.includes('line-height') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('line-height')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Line-height', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('line-height')}
+                stateObjName="styles"
+              />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={lineHeightHandler}
+                sizeHandler={({ unitKey, unitValue }) => lineHeightHandler({ unit: unitKey, value: unitValue })}
+                value={fldLineHeightVal}
+                unit={fldLineHeightUnit}
+                width="110px"
+                options={['', 'px', 'em', 'rem', '%']}
+                step="0.1"
+              />
+            </div>
+          )}
+          {existingProperties.includes('word-spacing') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('word-spacing')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Word-spacing', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('word-spacing')}
+                stateObjName="styles"
+              />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={wordSpacingHandler}
+                sizeHandler={({ unitKey, unitValue }) => wordSpacingHandler({ unit: unitKey, value: unitValue })}
+                value={wordSpacingVal}
+                unit={wordSpacingUnit}
+                width="110px"
+                options={['px', 'em', 'rem', '%']}
+                step="0.1"
               />
             </div>
           )}
@@ -587,7 +672,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           )}
           <CssPropertyList
             properties={addableCssHoverProps}
-            setProperty={setNewCssHoverProp}
+            setProperty={(prop) => setNewCssProp(prop, ':hover')}
           />
         </div>
       </Grow>

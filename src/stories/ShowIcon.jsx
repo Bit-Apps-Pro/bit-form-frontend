@@ -147,7 +147,8 @@ export default function ShowIcon() {
   }, [])
 
   const searchIcn = (e) => {
-    if (e.code === 'KeyA') {
+    console.log(e)
+    if (e.ctrlKey && e.code === 'Slash') {
       document.getElementById('search-bar').focus()
     }
     if (e.code === 'Escape') {
@@ -777,7 +778,7 @@ export default function ShowIcon() {
     <>
       <div className="icn-search flx">
         <div className="main">
-          <button onClick={searchBtn} className="search-key" title="Press 'A' for Search Icon">S</button>
+          <button onClick={searchBtn} className="search-key" title="Press 'Ctrl+/' for Search Icon">Ctrl+/</button>
           <input className="input" aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
         </div>
       </div>

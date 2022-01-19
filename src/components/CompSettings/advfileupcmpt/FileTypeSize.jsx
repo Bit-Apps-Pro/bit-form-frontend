@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import TableCheckBox from '../../Utilities/TableCheckBox'
+import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 
 function FileTypeSize({ action }) {
   const { fieldKey: fldKey } = useParams()

@@ -24,7 +24,6 @@ export default function FieldReadOnlySettings({ cls }) {
         delete fldData.readOnly
       }
     })
-    console.log(allFields)
     const req = checked ? 'on' : 'off'
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Read only field ${req}`, type: `read_only_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)

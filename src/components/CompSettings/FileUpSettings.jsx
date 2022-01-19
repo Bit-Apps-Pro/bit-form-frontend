@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../Utilities/CopyText'
@@ -148,7 +149,7 @@ export default function FileUpSettings() {
           </>
         )} */}
         <div className={`flx ${!isMultiple && 'mt-1'}`}>
-          <input type="number" className="btcd-paper-inp" value={mxUp} onChange={setMxUp} placeholder="Any Size" />
+          <input type="number" className="btcd-paper-inp" value={mxUp} onChange={setMxUp} placeholder="Any Size" aria-label="File upload setting" />
           {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={fieldData.unit}>
             <option value="">Unit</option>
             <option value="KB">KB</option>

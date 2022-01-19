@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import AceEditor from 'react-ace'
