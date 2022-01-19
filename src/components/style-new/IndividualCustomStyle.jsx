@@ -32,7 +32,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const themeVars = useRecoilValue($themeVars)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
-  const themeVars = useRecoilValue($themeVars)
 
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
@@ -127,21 +126,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const getValueFromThemeVar = (val) => {
-    if (val?.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
-  }
-
-  const getStyleValueAndUnit = (prop) => {
-    const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const themeVal = getValueFromThemeVar(getVlu)
-    const value = getNumFromStr(themeVal)
-    const unit = getStrFromStr(themeVal)
-    return [value, unit]
-  }
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
 
