@@ -55,14 +55,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
-  const getValueFromThemeVar = (val) => {
-    if (val?.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
-  }
-
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromThemeVar(getVlu)
@@ -91,13 +83,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // const getValueFromThemeVar = (val) => {
-  //   if (val.match(/var/g)?.[0] === 'var') {
-  //     const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-  //     return themeVars[getVarProperty]
-  //   }
-  //   return val
-  // }
+  const getValueFromThemeVar = (val) => {
+    if (val.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
 
   // const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
   // const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
