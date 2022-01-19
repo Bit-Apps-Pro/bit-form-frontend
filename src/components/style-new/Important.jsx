@@ -30,7 +30,7 @@ export default function Important({ propertyPath, className }) {
   return (
     <Tip msg="Set style as !important">
       <button
-        style={{ visibility: isStyleValueEmptyOrCssVar ? 'hidden' : 'visible' }}
+        style={{ visibility: isStyleValueEmptyOrCssVar ? 'visible' : 'visible', pointerEvents: 'none' }}
         className={`${css(cls.btn, isAlreadyImportant && cls.active)} ${className}`}
         type="button"
         onClick={addOrRemoveImportant}
