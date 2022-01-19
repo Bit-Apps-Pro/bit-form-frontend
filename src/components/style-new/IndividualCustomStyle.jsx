@@ -2,12 +2,15 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -17,13 +20,14 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField } from './styleHelpers'
+import { addableCssPropsByField, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
+  const themeVars = useRecoilValue($themeVars)
 
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
@@ -33,6 +37,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
+
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
@@ -45,19 +51,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
   const setNewCssProp = (property, state = '') => {
+    const checkExistingCssProperties = state === '' ? existingCssProperties : existingCssHoverProperties
     setStyles(prvStyle => produce(prvStyle, drft => {
-      if (!existingCssProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`] = {}
+      if (!checkExistingCssProperties) {
+        assignNestedObj(drft, getPropertyPath(property, state), {})
       }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
-    }))
-  }
-  const setNewCssHoverProp = (prop) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
-      if (!existingCssHoverProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`] = {}
-      }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}:hover`][prop] = ''
+      assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
   }
 
@@ -82,12 +81,36 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property]
+      deleteNestedObj(drft, getPropertyPath(property, state))
     }))
   }
   const clearHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
+      assignNestedObj(drft, deleteNestedObj(property, state), '')
+    }))
+  }
+
+  const getValueFromThemeVar = (val) => {
+    if (val?.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+
+  const getStyleValueAndUnit = (prop) => {
+    const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
+    const themeVal = getValueFromThemeVar(getVlu)
+    const value = getNumFromStr(themeVal)
+    const unit = getStrFromStr(themeVal)
+    return [value, unit]
+  }
+  const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
+
+  const lineHeightHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value, fldLineHeightUnit)
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
     }))
   }
 
@@ -95,13 +118,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->padding` },
+        ...property === 'margin' && { margin: getPropertyPath('margin', state) },
+        ...property === 'padding' && { padding: getPropertyPath('padding', state) },
       },
     }
   )
-
-  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
   const fldBorderObjPath = {
     object: 'styles',
@@ -217,6 +238,35 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 value={existingCssProperties?.border}
                 objectPaths={fldBorderObjPath}
                 id="fld-wrp-bdr"
+              />
+            </div>
+          )}
+          {existingProperties.includes('line-height') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('line-height')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('line-height', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('line-height')}
+                stateObjName="styles"
+              />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={lineHeightHandler}
+                sizeHandler={({ unitKey, unitValue }) => lineHeightHandler({ unit: unitKey, value: unitValue })}
+                value={fldLineHeightVal}
+                unit={fldLineHeightUnit}
+                width="110px"
+                options={['px', 'em', 'rem']}
               />
             </div>
           )}
@@ -502,7 +552,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           )}
           <CssPropertyList
             properties={addableCssHoverProps}
-            setProperty={setNewCssHoverProp}
+            setProperty={(prop) => setNewCssProp(prop, ':hover')}
           />
         </div>
       </Grow>
