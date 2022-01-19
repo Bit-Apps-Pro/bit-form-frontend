@@ -106,11 +106,18 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     return [value, unit]
   }
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
+  const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
 
   const lineHeightHandler = ({ value, unit }) => {
-    const convertvalue = unitConverter(unit, value, fldLineHeightUnit)
+    const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
+    }))
+  }
+  const wordSpacingHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value, wordSpacingUnit)
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('word-spacing'), `${convertvalue}${unit}`)
     }))
   }
 
@@ -252,7 +259,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 >
                   <TrashIcn size="14" />
                 </button>
-                <span className={css(ut.fw500)}>{__('line-height', 'bitform')}</span>
+                <span className={css(ut.fw500)}>{__('Line-height', 'bitform')}</span>
               </div>
               <ResetStyle
                 propertyPath={getPropertyPath('line-height')}
@@ -266,7 +273,38 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 value={fldLineHeightVal}
                 unit={fldLineHeightUnit}
                 width="110px"
-                options={['px', 'em', 'rem']}
+                options={['', 'px', 'em', 'rem', '%']}
+                step="0.1"
+              />
+            </div>
+          )}
+          {existingProperties.includes('word-spacing') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('word-spacing')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Word-spacing', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('word-spacing')}
+                stateObjName="styles"
+              />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={wordSpacingHandler}
+                sizeHandler={({ unitKey, unitValue }) => wordSpacingHandler({ unit: unitKey, value: unitValue })}
+                value={wordSpacingVal}
+                unit={wordSpacingUnit}
+                width="110px"
+                options={['px', 'em', 'rem', '%']}
+                step="0.1"
               />
             </div>
           )}
