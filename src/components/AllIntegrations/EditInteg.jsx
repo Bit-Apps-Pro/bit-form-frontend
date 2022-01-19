@@ -37,6 +37,7 @@ const EditPabbly = lazy(() => import('./Pabbly/EditPabbly'))
 const EditTelegram = lazy(() => import('./Telegram/EditTelegram'))
 const EditFluentCrm = lazy(() => import('./FluentCRM/EditFluentCrm'))
 const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
+const EditAutonami = lazy(() => import('./Autonami/EditAutonami'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -108,6 +109,8 @@ export default function EditInteg({ allIntegURL }) {
         return <EditFluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Encharge':
         return <EditEncharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Autonami':
+        return <EditAutonami allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }
