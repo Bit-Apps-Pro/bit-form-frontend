@@ -8,6 +8,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -37,6 +38,8 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const selectedField = fields[fldKey]
   console.log(classes, fields)
 
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
+
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
     const existingProperties = Object.keys(existingCssProperties)
@@ -51,9 +54,9 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       if (!existingCssProperties) {
-        drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`] = {}
+        assignNestedObj(drft, getPropertyPath(property, state), {})
       }
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
+      assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
   }
 
@@ -73,10 +76,11 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     return [value, unit]
   }
 
-  const updateHandler = (value, unit, styleUnit, proparty) => {
+  const updateHandler = (value, unit, styleUnit, property) => {
     const convertvalue = unitConverter(unit, value, styleUnit)
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][proparty] = `${convertvalue}${unit}`
+      const v = `${convertvalue}${unit}`
+      assignNestedObj(drft, getPropertyPath(property), v)
     }))
   }
 
@@ -86,7 +90,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
   const fontWeigthHandler = (val) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['font-weight'] = val
+      assignNestedObj(drft, getPropertyPath('font-weight'), val)
     }))
   }
 
@@ -96,20 +100,21 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     const convertvalue = unitConverter(unit, value, fldHeightUnit)
     setStyles(prvStyle => produce(prvStyle, drft => {
       drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].height = `${convertvalue}${unit}`
-      if (selectedField.prefixIcn) drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['padding-left'] = `${convertvalue + 10}${unit}!important`
-      if (selectedField.suffixIcn) drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['padding-right'] = `${convertvalue + 10}${unit}!important`
+      const v = `${convertvalue + 10}${unit}!important`
+      if (selectedField.prefixIcn) assignNestedObj(drft, getPropertyPath('padding-left'), v)
+      if (selectedField.suffixIcn) assignNestedObj(drft, getPropertyPath('padding-right'), v)
     }))
   }
 
   const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property]
+      deleteNestedObj(drft, getPropertyPath(property, state))
     }))
   }
 
   const clearHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}${state}`][property] = ''
+      assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
   }
 
@@ -117,13 +122,11 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->margin` },
-        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->padding` },
+        ...property === 'margin' && { margin: getPropertyPath(property, state) },
+        ...property === 'padding' && { padding: getPropertyPath(property, state) },
       },
     }
   )
-
-  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
   const borderStyleObj = (state = '') => ({
     object: 'styles',
