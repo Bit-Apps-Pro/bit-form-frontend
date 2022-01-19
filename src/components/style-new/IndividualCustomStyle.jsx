@@ -2,12 +2,18 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
+import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
+import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
+import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -17,11 +23,12 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField } from './styleHelpers'
+import { addableCssPropsByField, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
+  const themeVars = useRecoilValue($themeVars)
   const { css } = useFela()
   const [controller, setController] = useState('Default')
 
@@ -34,6 +41,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
+  const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
+
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
     const existingProperties = Object.keys(existingCssProperties || {})
@@ -44,6 +53,32 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
+  const getValueFromThemeVar = (val) => {
+    if (val?.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+
+  const getStyleValueAndUnit = (prop) => {
+    const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
+    const themeVal = getValueFromThemeVar(getVlu)
+    const value = getNumFromStr(themeVal)
+    const unit = getStrFromStr(themeVal)
+    return [value, unit]
+  }
+
+  const updateHandler = (value, unit, styleUnit, proparty) => {
+    const convertvalue = unitConverter(unit, value, styleUnit)
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][proparty] = `${convertvalue}${unit}`
+    }))
+  }
+
+  // for font size
+  const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
+  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
   const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       if (!existingCssProperties) {
@@ -79,6 +114,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   //     drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['font-size'] = `${value}${unit}`
   //   }))
   // }
+  const setAlign = (alignValue) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['text-align'] = alignValue
+    }))
+  }
 
   const delPropertyHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -276,7 +316,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 <div className={css(ut.flxc, ut.ml1)}>
                   <button
                     title="Delete Property"
-                    onClick={() => delPropertyHandler('width')}
+                    onClick={() => {
+                      delPropertyHandler('width')
+                      delPropertyHandler('height')
+                    }}
                     className={`${css(cls.delBtn)} delete-btn`}
                     type="button"
                   >
@@ -295,6 +338,38 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             )
           }
+          {existingProperties.includes('text-align') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('text-align')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Text align', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('text-align')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <StyleSegmentControl
+                  className={css({ w: 130 })}
+                  show={['icn']}
+                  tipPlace="bottom"
+                  options={[
+                    { icn: <TxtAlignLeftIcn size="17" />, label: 'left', tip: 'Left' },
+                    { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+                    { icn: <TxtAlignJustifyIcn size="17" />, label: 'justify', tip: 'Justify' },
+                    { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
+                  ]}
+                  onChange={e => setAlign(e)}
+                  activeValue={txtAlignValue}
+                />
+              </div>
+            </div>
+          )}
 
           {existingProperties.includes('box-shadow') && (
             <IndividualShadowControl
@@ -353,24 +428,34 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             )
           }
 
-          {/* {
-        existingCssProperties.includes('font-size') && (
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Field Font Size</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={updateFontSize}
-                sizeHandler={({ unitKey, unitValue }) => updateFontSize({ unit: unitKey, value: unitValue })}
-                value={fldFSValue}
-                unit={fldFSUnit}
-                width="110px"
-                options={['px', 'em', 'rem']}
-                id="font-size-control"
-              />
+          {existingProperties.includes('font-size') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-size')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SizeControl
+                  className={css({ w: 130 })}
+                  inputHandler={fldFsSizeHandler}
+                  sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                  value={fldFSValue || 0}
+                  unit={fldFSUnit || 'px'}
+                  // width="110px"
+                  options={['px', 'em', 'rem']}
+                />
+              </div>
             </div>
-          </div>
-        )
-      } */}
+          )}
           <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
         </div>
 
@@ -509,6 +594,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     </>
   )
 }
+
+const textAlignOptions = [
+  { label: 'Center', value: 'center' },
+  { label: 'Left', value: 'left' },
+  { label: 'Right', value: 'right' },
+  { label: 'Justify', value: 'justify' },
+]
 
 const cls = {
   container: { ml: 12, mr: 15, pn: 'relative' },
