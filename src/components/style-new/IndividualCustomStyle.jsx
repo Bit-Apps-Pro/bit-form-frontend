@@ -62,13 +62,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     return [value, unit]
   }
 
-  const updateHandler = (value, unit, styleUnit, proparty) => {
-    const convertvalue = unitConverter(unit, value, styleUnit)
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][proparty] = `${convertvalue}${unit}`
-    }))
-  }
-
   // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
@@ -117,15 +110,42 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
+  // const getValueFromThemeVar = (val) => {
+  //   if (val?.match(/var/g)?.[0] === 'var') {
+  //     const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+  //     return themeVars[getVarProperty]
+  //   }
+  //   return val
+  // }
+
+  // const getStyleValueAndUnit = (prop) => {
+  //   const v = classes[`.${fldKey}-${elementKey}`]?.[prop]
+  //   const getVlu = v === undefined ? '0px' : v
+  //   console.log(getVlu)
+  //   const themeVal = getValueFromThemeVar(getVlu)
+  //   const value = getNumFromStr(themeVal)
+  //   const unit = getStrFromStr(themeVal)
+  //   return [value, unit]
+  // }
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
 
-  const lineHeightHandler = ({ value, unit }) => {
-    const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
+  const updateHandler = (value, unit, styleUnit, property) => {
+    const convertvalue = unitConverter(unit, value, styleUnit)
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const v = `${convertvalue}${unit}`
+      assignNestedObj(drft, getPropertyPath(property), v)
     }))
   }
+
+  // const lineHeightHandler = ({ value, unit }) => {
+  //   const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
+  //   setStyles(prvStyle => produce(prvStyle, drftStyle => {
+  //     assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
+  //   }))
+  // }
+
+  const lineHeightHandler = ({ value, unit }) => updateHandler(value, unit, fldLineHeightUnit, 'line-height')
   const wordSpacingHandler = ({ value, unit }) => {
     const convertvalue = unitConverter(unit, value, wordSpacingUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
@@ -278,14 +298,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 stateObjName="styles"
               />
               <SizeControl
-                min={0.1}
-                max={100}
                 inputHandler={lineHeightHandler}
                 sizeHandler={({ unitKey, unitValue }) => lineHeightHandler({ unit: unitKey, value: unitValue })}
-                value={fldLineHeightVal}
-                unit={fldLineHeightUnit}
+                value={fldLineHeightVal || 0}
+                unit={fldLineHeightUnit || 'px'}
                 width="110px"
-                options={['', 'px', 'em', 'rem', '%']}
+                options={['px', 'em', 'rem']}
                 step="0.1"
               />
             </div>
@@ -312,8 +330,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 max={100}
                 inputHandler={wordSpacingHandler}
                 sizeHandler={({ unitKey, unitValue }) => wordSpacingHandler({ unit: unitKey, value: unitValue })}
-                value={wordSpacingVal}
-                unit={wordSpacingUnit}
+                value={wordSpacingVal || 0}
+                unit={wordSpacingUnit || 'px'}
                 width="110px"
                 options={['px', 'em', 'rem', '%']}
                 step="0.1"
