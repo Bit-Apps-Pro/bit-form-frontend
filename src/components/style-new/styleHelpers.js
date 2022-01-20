@@ -85,7 +85,10 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === '%' && unit === 'em') return Number(value * 0.01)
 }
 
-export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)?.[0]
+export const getNumFromStr = (str = '') => {
+  const num = str.match(/[-]?([0-9]*[.])?[0-9]+/gi)
+  return num ? num[0] : 0
+}
 export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
 
 export const searchKey = (e) => {

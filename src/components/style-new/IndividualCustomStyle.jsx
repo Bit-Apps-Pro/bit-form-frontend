@@ -57,9 +57,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const themeVal = getValueFromThemeVar(getVlu)
-    const value = getNumFromStr(themeVal)
-    const unit = getStrFromStr(themeVal)
+    const value = getNumFromStr(getVlu)
+    const unit = getStrFromStr(getVlu)
     return [value, unit]
   }
 
