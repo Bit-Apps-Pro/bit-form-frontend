@@ -15,6 +15,7 @@ export default function Important({ propertyPath, className }) {
   const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue.match(/var/gi)
 
   const addOrRemoveImportant = () => {
+    console.log('added')
     let newStyleValue
 
     if (isAlreadyImportant) {
@@ -30,7 +31,7 @@ export default function Important({ propertyPath, className }) {
   return (
     <Tip msg="Set style as !important">
       <button
-        style={{ visibility: isStyleValueEmptyOrCssVar ? 'visible' : 'visible', pointerEvents: 'none' }}
+        style={{ visibility: isStyleValueEmptyOrCssVar ? 'visible' : 'visible',  }}
         className={`${css(cls.btn, isAlreadyImportant && cls.active)} ${className}`}
         type="button"
         onClick={addOrRemoveImportant}

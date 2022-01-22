@@ -22,17 +22,22 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
+  let checkImportant = ''
   const getTransitionStyleVal = () => {
     let transitionValue = getValueByObjPath(styles, propertyPath)
+
     if (transitionValue.match(/var/gi)?.[0] === 'var') {
       const themeVarTransition = transitionValue?.replaceAll(/\(|var|,.*|\)/gi, '')
       transitionValue = themeVars[themeVarTransition]
+    }
+    if (transitionValue.match(/(!important)/gi)) {
+      checkImportant = '!important'
+      transitionValue = transitionValue.replaceAll(/(!important)/gi, '')
     }
     return transitionValue
   }
   const splitMultipleTransition = (transitionString) => (transitionString && transitionString?.split(/,(?![^(]*\))/gi)) || []
   const arrOfTransitionStr = splitMultipleTransition(getTransitionStyleVal())
-
   const arrOfExtractedTransitionObj = extractMultipleTransitionValuesArr(arrOfTransitionStr)
 
   const newTransitionVal = (name, val, unit) => {
@@ -49,20 +54,26 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
       return newTransitionVal(tnName, tnVal, '')
     }).join(' ')
 
-    if (arrOfTransitionStr[indx]?.match(/!important/gi)?.[0]) {
-      arrOfTransitionStr[indx] = `${newTransitionStyle} !important`
-    } else {
-      arrOfTransitionStr[indx] = newTransitionStyle
+    arrOfTransitionStr[indx] = newTransitionStyle
+
+    let tnArrToStr = arrOfTransitionStr.toString()
+
+    if (checkImportant) {
+      tnArrToStr = `${tnArrToStr} !important`
     }
     setStyles(prvStyles => produce(prvStyles, drftStyles => {
-      assignNestedObj(drftStyles, propertyPath, arrOfTransitionStr.toString())
+      assignNestedObj(drftStyles, propertyPath, tnArrToStr)
     }))
   }
 
   const addTransitionHandler = () => {
+    let getOldTransition = getTransitionStyleVal()
+    if (getOldTransition?.match(/(!important)/gi)?.[0]) {
+      getOldTransition = getOldTransition.replaceAll(/(!important)/gi, '')
+      checkImportant = ' !important'
+    }
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldTransition = getTransitionStyleVal()
-      const newTransition = getOldTransition === undefined || getOldTransition === '' ? 'all 0.1s 0.1s ease' : `${getOldTransition}, all 0.1s 0.1s ease`
+      const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
       assignNestedObj(drftStyles, propertyPath, newTransition)
     }))
   }
@@ -173,7 +184,7 @@ export default memo(TransitionControlMenu)
 
 const extractMultipleTransitionValuesArr = (arrOfTransitionStr) => {
   const transitionArr = arrOfTransitionStr.map(trnsition => {
-    if (!trnsition) return { property: 'box-shadow', duration: '8.4s', delay: '7.6s', func: 'linear' }
+    if (!trnsition) return { property: 'all', duration: '8.4s', delay: '7.6s', func: 'ease' }
     const [property, duration, delay, func] = splitValueBySpaces(trnsition)
     return { property, duration, delay, func }
   })

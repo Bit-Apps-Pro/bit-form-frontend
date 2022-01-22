@@ -242,7 +242,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
-                  options={fontweightoptions}
+                  options={fontweightVariants}
                   value={existingCssProperties?.['font-weight']}
                   onChange={val => fontWeigthHandler(val)}
                   w={130}
@@ -766,7 +766,7 @@ const options = [
   { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'focus Style' },
 ]
 
-const fontweightoptions = [
+const fontweightVariants = [
   { label: 100, value: 100 },
   { label: 200, value: 200 },
   { label: 300, value: 300 },
