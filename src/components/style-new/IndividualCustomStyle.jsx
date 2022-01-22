@@ -57,8 +57,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const value = getNumFromStr(getVlu)
-    const unit = getStrFromStr(getVlu)
+    const value = getNumFromStr(getVlu) || 0
+    const unit = getStrFromStr(getVlu) || 'px'
     return [value, unit]
   }
 
@@ -74,7 +74,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
   }
-
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
       const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
@@ -131,6 +130,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
 
   const updateHandler = (value, unit, styleUnit, property) => {
+    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
     setStyles(prvStyle => produce(prvStyle, drft => {
       const v = `${convertvalue}${unit}`
@@ -304,7 +304,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 unit={fldLineHeightUnit || 'px'}
                 width="110px"
                 options={['px', 'em', 'rem']}
-                step="0.1"
+                step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
               />
             </div>
           )}
@@ -334,7 +334,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 unit={wordSpacingUnit || 'px'}
                 width="110px"
                 options={['px', 'em', 'rem', '%']}
-                step="0.1"
+                step={wordSpacingUnit !== 'px' ? '0.1' : 1}
               />
             </div>
           )}
@@ -530,6 +530,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   unit={fldFSUnit || 'px'}
                   // width="110px"
                   options={['px', 'em', 'rem']}
+                  step={fldFSUnit !== 'px' ? '0.1' : 1}
                 />
               </div>
             </div>
