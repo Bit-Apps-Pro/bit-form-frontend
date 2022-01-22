@@ -192,7 +192,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
                   value={fldFSValue || 0}
                   unit={fldFSUnit || 'px'}
-                  width="110px"
+                  width="130px"
                   options={['px', 'em', 'rem']}
                 />
               </div>
@@ -219,7 +219,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   sizeHandler={({ unitKey, unitValue }) => fldHightHandler({ unit: unitKey, value: unitValue })}
                   value={fldHightValue || 0}
                   unit={fldHeightUnit || 'px'}
-                  width="110px"
+                  width="130px"
                   options={['px', 'em', 'rem']}
                 />
               </div>
@@ -694,6 +694,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   subtitle="Padding control"
                   objectPaths={propertyObjPath('padding', ':focus')}
                   id="padding-control"
+                  width="130px"
                 />
               </div>
             )

@@ -93,7 +93,6 @@ const c = {
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 130,
-    mnw: 130,
     brs: 10,
     p: 8,
     flx: 'center-between',

@@ -8,6 +8,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
+import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -16,7 +17,6 @@ import editorConfig from './NewStyleEditorConfig'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
 export default function FormContainerCustomizer() {
@@ -31,21 +31,27 @@ export default function FormContainerCustomizer() {
     .keys(editorConfig.formWrapper.properties)
     .filter(x => !formWrpStylesPropertiesArr.includes(x))
 
-  const delPropertyHandler = (prop) => {
+  const getPropertyPath = (cssProperty) => `form->${colorScheme}->_frm->${cssProperty}`
+
+  const delPropertyHandler = (property) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
-      delete drft.form[colorScheme]._frm[prop]
+      if (Array.isArray(property)) {
+        property.forEach(prop => deleteNestedObj(drft, getPropertyPath(prop)))
+      } else {
+        deleteNestedObj(drft, getPropertyPath(property))
+      }
     }))
   }
 
   const setNewCssProp = (prop) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
-      drft.form[colorScheme]._frm[prop] = editorConfig.defaultProps[prop]
+      assignNestedObj(drft, getPropertyPath(prop), editorConfig.defaultProps[prop])
     }))
   }
 
   const clearHandler = (prop) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.form[colorScheme]._frm[prop] = ''
+      assignNestedObj(drft, getPropertyPath(prop), '')
     }))
   }
 
@@ -53,12 +59,11 @@ export default function FormContainerCustomizer() {
     {
       object: 'styles',
       paths: {
-        ...property === 'margin' && { margin: `form->${colorScheme}->_frm->margin` },
-        ...property === 'padding' && { padding: `form->${colorScheme}->_frm->padding` },
+        ...property === 'margin' && { margin: getPropertyPath('margin') },
+        ...property === 'padding' && { padding: getPropertyPath('padding') },
       },
     }
   )
-  const getPropertyPath = (cssProperty) => `form->${colorScheme}->_frm->${cssProperty}`
 
   const fwStylePathObj = {
     object: 'styles',
@@ -162,21 +167,31 @@ export default function FormContainerCustomizer() {
           allowImportant
         />
       )}
+      
       {formWrpStylesPropertiesArr.includes('border') && (
-        <ThemeStylePropertyBlock label="Border">
-          <div className={css(ut.flxc)}>
-            <ResetStyle
-              propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
-              stateObjName="styles"
-            />
-            <BorderControl
-              subtitle="Field Container Border"
-              value={formWrpStylesObj?.border}
-              objectPaths={fwStylePathObj}
-              id="fld-wrp-bdr"
-            />
+        <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
+          <div className={css(ut.flxc, ut.ml1)}>
+            <button
+              title="Delete Property"
+              onClick={() => delPropertyHandler(['border', 'border-width'])}
+              className={`${css(sc.propsDelBtn)} delete-btn`}
+              type="button"
+            >
+              <TrashIcn size="14" />
+            </button>
+            <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
           </div>
-        </ThemeStylePropertyBlock>
+          <ResetStyle
+            propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+            stateObjName="styles"
+          />
+          <BorderControl
+            subtitle="Field Container Border"
+            value={formWrpStylesObj?.border}
+            objectPaths={fwStylePathObj}
+            id="fld-wrp-bdr"
+          />
+        </div>
       )}
       {formWrpStylesPropertiesArr.includes('transition') && (
         <TransitionControl

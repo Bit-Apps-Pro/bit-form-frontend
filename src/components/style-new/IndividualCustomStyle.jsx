@@ -302,7 +302,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 sizeHandler={({ unitKey, unitValue }) => lineHeightHandler({ unit: unitKey, value: unitValue })}
                 value={fldLineHeightVal || 0}
                 unit={fldLineHeightUnit || 'px'}
-                width="110px"
+                width="130px"
                 options={['px', 'em', 'rem']}
                 step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
               />
@@ -332,7 +332,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 sizeHandler={({ unitKey, unitValue }) => wordSpacingHandler({ unit: unitKey, value: unitValue })}
                 value={wordSpacingVal || 0}
                 unit={wordSpacingUnit || 'px'}
-                width="110px"
+                width="130px"
                 options={['px', 'em', 'rem', '%']}
                 step={wordSpacingUnit !== 'px' ? '0.1' : 1}
               />
@@ -411,6 +411,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                     subtitle="Size control"
                     objectPaths={fldSizeObjPath}
                     id="size-control"
+                    width="130px"
                   />
                 </div>
               </div>
@@ -528,7 +529,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
                   value={fldFSValue || 0}
                   unit={fldFSUnit || 'px'}
-                  // width="110px"
+                  width="130px"
                   options={['px', 'em', 'rem']}
                   step={fldFSUnit !== 'px' ? '0.1' : 1}
                 />
