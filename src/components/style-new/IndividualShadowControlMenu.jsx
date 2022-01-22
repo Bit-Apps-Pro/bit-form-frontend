@@ -26,12 +26,17 @@ function IndividualShadowControlMenu({ propertyPath }) {
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
+  let importantAlreadyExist = ''
 
   const getShadowStyleVal = () => {
     let shadowValue = getValueByObjPath(styles, propertyPath)
     if (shadowValue.match(/var/gi)?.[0] === 'var') {
       const themeVarShadow = shadowValue.replaceAll(/\(|var|,.*|\)/gi, '')
       shadowValue = themeVars[themeVarShadow]
+    }
+    if (shadowValue.match(/(!important)/gi)) {
+      importantAlreadyExist = '!important'
+      shadowValue = shadowValue.replaceAll(/(!important)/gi, '')
     }
     return shadowValue
   }
@@ -59,8 +64,14 @@ function IndividualShadowControlMenu({ propertyPath }) {
       return newShadowVal(shName, shVal, '')
     }).join(' ')
     arrOfShadowStr[indx] = newShadowStyle
+
+    let shadowArrToStr = arrOfShadowStr.toString()
+
+    if (importantAlreadyExist) {
+      shadowArrToStr = `${shadowArrToStr} !important`
+    }
     setStyles(prvStyles => produce(prvStyles, drftStyles => {
-      assignNestedObj(drftStyles, propertyPath, arrOfShadowStr.toString())
+      assignNestedObj(drftStyles, propertyPath, shadowArrToStr)
     }))
   }
 
@@ -74,7 +85,7 @@ function IndividualShadowControlMenu({ propertyPath }) {
   const addShadowHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
       const getOldShadow = getShadowStyleVal()
-      const newShadow = getOldShadow === undefined || getOldShadow === '' ? '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)' : `${getOldShadow},`
+      const newShadow = getOldShadow === undefined || getOldShadow === '' ? '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)' : `${getOldShadow},0px 5px 15px 2px hsla(0, 0%, 0%, 35%)${importantAlreadyExist}`
       assignNestedObj(drftStyles, propertyPath, newShadow)
     }))
   }

@@ -30,7 +30,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
       const themeVarTransition = transitionValue?.replaceAll(/\(|var|,.*|\)/gi, '')
       transitionValue = themeVars[themeVarTransition]
     }
-    if (transitionValue.match(/(!important)/gi)) {
+    if (transitionValue.match(/(!important)/gi)?.[0]) {
       checkImportant = '!important'
       transitionValue = transitionValue.replaceAll(/(!important)/gi, '')
     }
@@ -67,11 +67,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
   }
 
   const addTransitionHandler = () => {
-    let getOldTransition = getTransitionStyleVal()
-    if (getOldTransition?.match(/(!important)/gi)?.[0]) {
-      getOldTransition = getOldTransition.replaceAll(/(!important)/gi, '')
-      checkImportant = ' !important'
-    }
+    const getOldTransition = getTransitionStyleVal()
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
       const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
       assignNestedObj(drftStyles, propertyPath, newTransition)
