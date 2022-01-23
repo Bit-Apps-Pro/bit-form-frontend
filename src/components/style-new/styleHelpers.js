@@ -392,7 +392,7 @@ export const removeUnuseStyles = (fields, setStyles) => {
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
   setStyle(prvStyle => produce(prvStyle, drftStyle => {
     console.log('fk', fk, 'element', element)
-    const fldTyp = prvStyle.fields[fk].fieldType
+    const fldTyp = prvStyle.fields[fk]?.fieldType
     switch (fldTyp) {
       case 'text':
       case 'number':

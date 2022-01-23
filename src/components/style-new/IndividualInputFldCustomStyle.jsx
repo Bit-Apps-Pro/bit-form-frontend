@@ -7,6 +7,10 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
+import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
+import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
+import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
@@ -46,7 +50,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
     const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
     return [existingCssProperties, existingProperties, addableCssProps]
   }
-
+  const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
   const [existingCssFocusProperties, existingFocusProperties, addableCssFocusProps] = existingProps(':focus')
@@ -103,6 +107,12 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
       const v = `${convertvalue + 10}${unit}!important`
       if (selectedField.prefixIcn) assignNestedObj(drft, getPropertyPath('padding-left'), v)
       if (selectedField.suffixIcn) assignNestedObj(drft, getPropertyPath('padding-right'), v)
+    }))
+  }
+
+  const setAlign = (alignValue) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['text-align'] = alignValue
     }))
   }
 
@@ -378,6 +388,38 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               </div>
             )
           }
+          {existingProperties.includes('text-align') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('text-align')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Text align', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('text-align')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <StyleSegmentControl
+                  className={css({ w: 130 })}
+                  show={['icn']}
+                  tipPlace="bottom"
+                  options={[
+                    { icn: <TxtAlignLeftIcn size="17" />, label: 'left', tip: 'Left' },
+                    { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+                    { icn: <TxtAlignJustifyIcn size="17" />, label: 'justify', tip: 'Justify' },
+                    { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
+                  ]}
+                  onChange={e => setAlign(e)}
+                  activeValue={txtAlignValue}
+                />
+              </div>
+            </div>
+          )}
           {existingProperties.includes('box-shadow') && (
             <IndividualShadowControl
               title="Box-shadow"
