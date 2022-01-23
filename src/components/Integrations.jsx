@@ -17,6 +17,7 @@ import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
 import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
+import autonami from '../resource/img/integ/autonami.png'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
 import integrately from '../resource/img/integ/integrately.svg'
@@ -79,6 +80,7 @@ function Integrations() {
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
+    { type: 'Autonami', logo: autonami, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
