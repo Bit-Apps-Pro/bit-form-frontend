@@ -55,11 +55,29 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
+  const getValueFromThemeVar = (val) => {
+    if (val && val.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const value = getNumFromStr(getVlu) || 0
-    const unit = getStrFromStr(getVlu) || 'px'
+    const themeVal = getValueFromThemeVar(getVlu)
+    const value = getNumFromStr(themeVal) || 0
+    const unit = getStrFromStr(themeVal) || 'px'
     return [value, unit]
+  }
+
+  const updateHandler = (value, unit, styleUnit, property) => {
+    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
+    const convertvalue = unitConverter(unit, value, styleUnit)
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const v = `${convertvalue}${unit}`
+      assignNestedObj(drft, getPropertyPath(property), v)
+    }))
   }
 
   // for font size
@@ -73,13 +91,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       }
       assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
-  }
-  const getValueFromThemeVar = (val) => {
-    if (val.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
   }
 
   // const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
@@ -117,26 +128,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   //   return val
   // }
 
-  // const getStyleValueAndUnit = (prop) => {
-  //   const v = classes[`.${fldKey}-${elementKey}`]?.[prop]
-  //   const getVlu = v === undefined ? '0px' : v
-  //   console.log(getVlu)
-  //   const themeVal = getValueFromThemeVar(getVlu)
-  //   const value = getNumFromStr(themeVal)
-  //   const unit = getStrFromStr(themeVal)
-  //   return [value, unit]
-  // }
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
-
-  const updateHandler = (value, unit, styleUnit, property) => {
-    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
-    const convertvalue = unitConverter(unit, value, styleUnit)
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      const v = `${convertvalue}${unit}`
-      assignNestedObj(drft, getPropertyPath(property), v)
-    }))
-  }
 
   // const lineHeightHandler = ({ value, unit }) => {
   //   const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
