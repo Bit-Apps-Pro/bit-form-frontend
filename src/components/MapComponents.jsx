@@ -67,9 +67,9 @@ function MapComponents(props) {
     case 'button':
       return <Button formID={props.formID} attr={props.atts} fieldData={props.fieldData} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
     case 'paypal':
-      return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} handleFormValidationErrorMessages={props.handleFormValidationErrorMessages} />
     case 'razorpay':
-      return <RazorPay fieldKey={props.fieldKey} contentID={props.contentID} formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} resetFieldValue={props.resetFieldValue} />
+      return <RazorPay fieldKey={props.fieldKey} contentID={props.contentID} formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} resetFieldValue={props.resetFieldValue} handleFormValidationErrorMessages={props.handleFormValidationErrorMessages} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
