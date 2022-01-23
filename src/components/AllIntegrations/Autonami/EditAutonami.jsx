@@ -14,7 +14,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
   const { id, formID } = useParams();
 
   const [autonamiConf, setAutonamiConf] = useState({ ...integrations[id] });
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [snack, setSnackbar] = useState({ show: false });
 
   const saveConfig = () => {
@@ -55,7 +55,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
         setAutonamiConf={setAutonamiConf}
         isLoading={isLoading}
         step={2}
-        setisLoading={setisLoading}
+        setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
 

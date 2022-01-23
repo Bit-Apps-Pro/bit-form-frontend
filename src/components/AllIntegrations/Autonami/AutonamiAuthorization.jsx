@@ -6,7 +6,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 
 export default function AutonamiAuthorization({ formID, autonamiConf, setAutonamiConf, step, nextPage, setSnackbar, isInfo }) {
-  const [isAuthorized, setisAuthorized] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ integrationName: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -21,7 +21,7 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
       .then(result => {
         if (isMounted) {
           if (result?.success) {
-            setisAuthorized(true)
+            setIsAuthorized(true)
             setSnackbar({ show: true, msg: __('Connect Successfully', 'bitfrom') })
           }
           setShowAuthMsg(true)
