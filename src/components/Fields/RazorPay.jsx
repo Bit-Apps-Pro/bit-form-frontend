@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
+import { isFormValidatedWithoutError } from '../../user-frontend/frontendHelpers'
 import validateForm from '../../user-frontend/validation'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 
-export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
+export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend, handleFormValidationErrorMessages }) {
   const appSettingsContext = useContext(AppSettings)
   const [clientID, setClientID] = useState('')
   const [amount, setAmount] = useState(attr.options.amount || 1)
@@ -120,8 +121,6 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
   }
 
   const displayRazorpay = () => {
-    if (!validateForm({ form: contentID })) return
-
     const dynValues = setDefaultValues()
     const { currency, name, description, theme, modal, notes } = attr.options
     // eslint-disable-next-line camelcase
@@ -148,8 +147,12 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       handler: async response => paymentHandler(response),
     }
 
-    const paymentObject = new window.Razorpay(options)
-    paymentObject.open()
+    isFormValidatedWithoutError(contentID, handleFormValidationErrorMessages)
+      .then(() => {
+        const paymentObject = new window.Razorpay(options)
+        paymentObject.open()
+      })
+      .catch(() => false)
   }
 
   return (
