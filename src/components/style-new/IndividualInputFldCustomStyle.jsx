@@ -40,7 +40,13 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
   const selectedField = fields[fldKey]
-  console.log(classes, fields)
+
+  const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: arr[item] }))
+
+  const fontweightVariants = styles.fontWeightVariants.length !== 0 ? arrayToObject(styles.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.fontStyle.length !== 0 ? arrayToObject(styles.fontStyle) : staticFontStyleVariants
+
+  console.log(styles, fontweightVariants)
 
   const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
@@ -92,9 +98,9 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
 
-  const fontWeigthHandler = (val) => {
+  const fontPropertyUpdateHandler = (property, val) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, getPropertyPath('font-weight'), val)
+      assignNestedObj(drft, getPropertyPath(property), val)
     }))
   }
 
@@ -103,7 +109,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const fldHightHandler = ({ value, unit }) => {
     const convertvalue = unitConverter(unit, value, fldHeightUnit)
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].height = `${convertvalue}${unit}`
+      assignNestedObj(drft, getPropertyPath('height'), `${convertvalue}${unit}`)
       const v = `${convertvalue + 10}${unit}!important`
       if (selectedField.prefixIcn) assignNestedObj(drft, getPropertyPath('padding-left'), v)
       if (selectedField.suffixIcn) assignNestedObj(drft, getPropertyPath('padding-right'), v)
@@ -112,7 +118,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
   const setAlign = (alignValue) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['text-align'] = alignValue
+      assignNestedObj(drft, getPropertyPath('text-align'), alignValue)
     }))
   }
 
@@ -253,8 +259,34 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontweightVariants}
-                  value={existingCssProperties?.['font-weight']}
-                  onChange={val => fontWeigthHandler(val)}
+                  value={Number(existingCssProperties?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val)}
+                  w={130}
+                  h={30}
+                />
+              </div>
+            </div>
+          )}
+          {existingProperties.includes('font-style') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-weight')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-style')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={existingCssProperties?.['font-style']}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
                 />
@@ -809,7 +841,7 @@ const options = [
   { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'focus Style' },
 ]
 
-const fontweightVariants = [
+const staticFontweightVariants = [
   { label: 100, value: 100 },
   { label: 200, value: 200 },
   { label: 300, value: 300 },
@@ -823,4 +855,9 @@ const fontweightVariants = [
   { label: 'Bold', value: 'bold' },
   { label: 'Bolder', value: 'bolder' },
   { label: 'Lighter', value: 'lighter' },
+]
+const staticFontStyleVariants = [
+  { label: 'Normal', value: 'normal' },
+  { label: 'Italic', value: 'italic' },
+  { label: 'Oblique', value: 'oblique' },
 ]

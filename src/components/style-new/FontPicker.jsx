@@ -10,7 +10,7 @@ export default function FontPicker({ id }) {
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
         className={css(c.btn)}
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id, width: 240 })}
         type="button"
       >
         Montseterrat

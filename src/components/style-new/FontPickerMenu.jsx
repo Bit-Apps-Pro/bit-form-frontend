@@ -1,13 +1,19 @@
+/* eslint-disable no-param-reassign */
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import VirtualList from 'react-tiny-virtual-list'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import useSWR from 'swr'
-import ut from '../../styles/2.utilities'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import SearchIcon from '../../Icons/SearchIcon'
-import CheckMarkIcn from '../../Icons/CheckMarkIcn'
+import { $tempStyles, $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
+import CheckMarkIcn from '../../Icons/CheckMarkIcn'
+import SearchIcon from '../../Icons/SearchIcon'
+import ut from '../../styles/2.utilities'
 import { sortByField } from '../../Utils/Helpers'
+import SingleToggle from '../Utilities/SingleToggle'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 
 export default function FontPickerMenu() {
   const { css } = useFela()
@@ -17,7 +23,11 @@ export default function FontPickerMenu() {
   const [focusSearch, setfocusSearch] = useState(false)
   const [data, setData] = useState('Palanquin')
   const [scrolIndex, setScrolIndex] = useState(0)
-  const [controller, setController] = useState({ parent: 'Google', child: '' })
+  const [controller, setController] = useState({ parent: 'Custom', child: '' })
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const tempStyle = useRecoilValue($tempStyles)
+  // const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
 
   const apiKey = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
   const uri = `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`
@@ -35,6 +45,7 @@ export default function FontPickerMenu() {
     const index = allFonts?.items?.findIndex(item => item.family === data)
     setScrolIndex(index)
   }, [allFonts])
+  console.log('styles', styles)
 
   const onTabChangeHandler = (lbl, type) => {
     if (type === 'parent') setController({ parent: lbl })
@@ -48,8 +59,58 @@ export default function FontPickerMenu() {
     setFonts(filtered)
   }
 
-  const setCheck = (i) => {
-    setData(i)
+  const GetgoogleFontWeightfontStyle = (array) => {
+    const weight = []
+    const style = ['Regular']
+    const param = []
+    let string = ''
+
+    for (let i = 0; i < array.length; i += 1) {
+      const dig = array[i].match(/\d+/gi)?.[0]
+      if (dig) {
+        if (!weight.includes(Number(dig))) {
+          weight.push(Number(dig))
+          param.push(`0,${dig};`)
+        }
+      }
+      if (array[i].match(/\d+\D+/gi)) {
+        if (dig) {
+          param.push(`1,${dig};`)
+        }
+        const str = array[i].match(/\D+/gi)?.[0]
+        if (!style.includes(str)) {
+          style.push(str)
+        }
+      }
+    }
+    if (weight.length !== 0 || style.length !== 0) {
+      const str = param.sort().toString().replaceAll(/;,/gi, ';')
+      string = str.substring(0, str.length - 1)
+      string = `wght@${string}`
+    }
+    return [weight, style, string]
+  }
+  const generateFontUrl = (font, string) => {
+    const fontFamily = font.replaceAll(/\s/gi, '+')
+    const newParmrs = string !== '' ? `:ital,${string}` : ''
+    return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
+  }
+
+  const setCheck = (fontFamily, variants) => {
+    const [weight, style, string] = GetgoogleFontWeightfontStyle(variants)
+    console.log(weight)
+    const url = generateFontUrl(fontFamily, string)
+    console.log(weight, style, url)
+    setStyles(prvStyles => produce(prvStyles, drft => {
+      drft.fontType = 'google'
+      drft.fontWeightVariants = weight
+      drft.fontStyle = style
+    }))
+    setThemeVars(prvState => produce(prvState, drft => {
+      drft['--g-font-family'] = fontFamily
+    }))
+
+    setData(fontFamily)
   }
 
   const fontSorted = (orderBy) => {
@@ -57,10 +118,33 @@ export default function FontPickerMenu() {
     setSorted(orderBy === 'ASC')
     setFonts(sorted)
   }
+  const setThemeFont = ({ target: { checked } }) => {
+    if (checked) {
+      setThemeVars(prvState => produce(prvState, drft => {
+        drft['--g-font-family'] = 'inherit'
+      }))
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fontType = 'inherit'
+      }))
+    } else {
+      setThemeVars(prvState => produce(prvState, drft => {
+        drft['--g-font-family'] = ''
+      }))
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fontType = ''
+      }))
+    }
+  }
 
   return (
     <div className={css(fontStyle.container)}>
-      <StyleSegmentControl options={[{ label: 'Google' }, { label: 'Custom' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} activeValue={controller.parent} wideTab />
+      <StyleSegmentControl
+        options={[{ label: 'Custom' }, { label: 'Google' }]}
+        onChange={lbl => onTabChangeHandler(lbl, 'parent')}
+        activeValue={controller.parent}
+        wideTab
+        className={css((themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit') && fontStyle.active)}
+      />
       {loading && (
         <div title="Loading...">
           <div className={css(ut.mt2)} />
@@ -104,7 +188,7 @@ export default function FontPickerMenu() {
             scrollToIndex={fonts.length ? scrolIndex : 0}
             renderItem={({ index, style }) => (
               <div key={index} style={style}>
-                <button className={css(fontStyle.btn)} type="button" onClick={() => setCheck(fonts[index]?.family)}>
+                <button className={css(fontStyle.btn)} type="button" onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}>
                   <span className={css(fontStyle.title)}>{fonts[index].family}</span>
                   {data === fonts[index].family && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />}
                 </button>
@@ -115,10 +199,22 @@ export default function FontPickerMenu() {
       )}
 
       {controller.parent === 'Custom' && (
-        <div className={css(ut.flxcb)}>
-          <span className={css(fontStyle.title)}>Link</span>
-          <input className={css(fontStyle.url)} type="url" placeholder="http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf" />
-        </div>
+        <>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(fontStyle.title)}>Inherit from theme</span>
+            <SingleToggle
+              name="themeInherit"
+              isChecked={themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit'}
+              action={setThemeFont}
+            />
+          </div>
+          {!(themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit') && (
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(fontStyle.title)}>Link</span>
+              <input className={css(fontStyle.url)} aria-label="Custom font" type="url" placeholder="http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf" />
+            </div>
+          )}
+        </>
       )}
     </div>
   )
@@ -235,6 +331,11 @@ const fontStyle = {
       bd: 'var(--b-79-96)',
       cr: 'var(--b-50)',
     },
+  },
+  active: {
+    oy: '0.5',
+    cur: 'not-allowed',
+    pe: 'none',
   },
 
 }
