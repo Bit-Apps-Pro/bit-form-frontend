@@ -8,13 +8,13 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import AutonamiAuthorization from './AutonamiAuthorization'
-import { checkMappedFields, refreshCrmList } from './AutonamiCommonFunc'
+import { checkMappedFields, refreshAutonamiList } from './AutonamiCommonFunc'
 import AutonamiIntegLayout from './AutonamiIntegLayout'
 
 export default function Autonami({  formFields, setIntegration, integrations, allIntegURL  }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [autonamiConf, setAutonamiConf] = useState({
@@ -45,7 +45,7 @@ export default function Autonami({  formFields, setIntegration, integrations, al
     } else {
       setStep(val)
       if (val === 2 && autonamiConf.name) {
-        refreshCrmList(formID, autonamiConf, setAutonamiConf, setisLoading, setSnackbar)
+        refreshAutonamiList(formID, autonamiConf, setAutonamiConf, setIsLoading, setSnackbar)
       }
     }
   }
@@ -65,7 +65,7 @@ export default function Autonami({  formFields, setIntegration, integrations, al
         step={step}
         nextPage={nextPage}
         isLoading={isLoading}
-        setisLoading={setisLoading}
+        setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
 
@@ -76,7 +76,7 @@ export default function Autonami({  formFields, setIntegration, integrations, al
           formFields={formFields}
           autonamiConf={autonamiConf}
           setAutonamiConf={setAutonamiConf}
-          setisLoading={setisLoading}
+          setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
         <br />

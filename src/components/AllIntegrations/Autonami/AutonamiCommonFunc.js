@@ -1,8 +1,8 @@
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const refreshCrmList = (formID, autonamiConf, setAutonamiConf, setisLoading, setSnackbar) => {
-  setisLoading(true)
+export const refreshAutonamiList = (formID, autonamiConf, setAutonamiConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
   bitsFetch({}, 'bitforms_refresh_autonami_lists')
     .then(result => {
       if (result && result.success) {
@@ -23,12 +23,12 @@ export const refreshCrmList = (formID, autonamiConf, setAutonamiConf, setisLoadi
       } else {
         setSnackbar({ show: true, msg: __('Autonami list refresh failed. please try again', 'bitform') })
       }
-      setisLoading(false)
+      setIsLoading(false)
     })
-    .catch(() => setisLoading(false))
+    .catch(() => setIsLoading(false))
 }
 
-export const refreshAutonamiHeader = (autonamiConf, setAutonamiConf, setisLoading, setSnackbar) => {
+export const refreshAutonamiHeader = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar) => {
   bitsFetch({}, 'bitforms_autonami_headers')
     .then(result => {
       if (result && result.success) {
@@ -45,9 +45,9 @@ export const refreshAutonamiHeader = (autonamiConf, setAutonamiConf, setisLoadin
       } else {
         setSnackbar({ show: true, msg: __('Autonami fields refresh failed. please try again', 'bitform') })
       }
-      setisLoading(false)
+      setIsLoading(false)
     })
-    .catch(() => setisLoading(false))
+    .catch(() => setIsLoading(false))
 }
 
 export const handleInput = (e, autonamiConf, setAutonamiConf) => {

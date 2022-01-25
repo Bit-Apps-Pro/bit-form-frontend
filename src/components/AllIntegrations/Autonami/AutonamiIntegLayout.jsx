@@ -4,15 +4,15 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import AutonamiActions from './AutonamiActions'
-import { refreshCrmList, refreshAutonamiHeader } from './AutonamiCommonFunc'
+import { refreshAutonamiList, refreshAutonamiHeader } from './AutonamiCommonFunc'
 import AutonamiFieldMap from './AutonamiFieldMap'
 
-export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, setAutonamiConf, isLoading, setisLoading, setSnackbar }) {
+export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, setAutonamiConf, isLoading, setIsLoading, setSnackbar }) {
   const setTags = (val) => {
     const newConf = { ...autonamiConf }
     if (val) {
       newConf.tags = val ? val.split(',') : []
-      refreshAutonamiHeader(newConf, setAutonamiConf, setisLoading, setSnackbar)
+      refreshAutonamiHeader(newConf, setAutonamiConf, setIsLoading, setSnackbar)
     } else {
       delete newConf.tags
     }
@@ -40,7 +40,7 @@ export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, 
             ))
           }
         </select>
-        <button onClick={() => refreshCrmList(formID, autonamiConf, setAutonamiConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Autonami List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshAutonamiList(formID, autonamiConf, setAutonamiConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Autonami List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <div className="flx mt-5">
         <b className="wdt-200 d-in-b">{__('Autonami Tags: ', 'bitform')}</b>
@@ -117,7 +117,7 @@ export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, 
             <AutonamiActions
               autonamiConf={autonamiConf}
               setAutonamiConf={setAutonamiConf}
-              setisLoading={setisLoading}
+              setIsLoading={setIsLoading}
               setSnackbar={setSnackbar}
             />
           </>
