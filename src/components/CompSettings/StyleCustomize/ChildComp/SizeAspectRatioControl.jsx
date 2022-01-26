@@ -2,15 +2,28 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import ut from '../../../../styles/2.utilities'
 import sizeAspectRatioControlStyle from '../../../../styles/sizeAspectRatioControl.style'
+import { getNumFromStr, getStrFromStr } from '../../../style-new/styleHelpers'
 import SizeControl from './SizeControl'
 
-export default function SizeAspectRatioControl({ options, className }) {
+export default function SizeAspectRatioControl({ options, className, valuChangeHandler, unitOptions }) {
   const { css } = useFela()
   const [aspectRatioMode, setAspectRatioMode] = useState(false)
 
-  const calculatePaddedNewAspectRatio = (rW, rH, cW, cH) => {
-    // original width * new height / original height = new width;
-    // original height * new width / original width = new height;
+  const fldSizeHandler = ({ value, unit }, inputId) => {
+    if (aspectRatioMode) {
+      if (inputId === 0) {
+        const oldH = getNumFromStr(options[1].value)
+        const oldW = getNumFromStr(options[0].value)
+        const newH = (value * oldH) / oldW
+        valuChangeHandler(newH, unit, 1)
+      } else if (inputId === 1) {
+        const oldW = getNumFromStr(options[0].value)
+        const oldH = getNumFromStr(options[1].value)
+        const newW = (value * oldW) / oldH
+        valuChangeHandler(newW, unit, 0)
+      }
+    }
+    valuChangeHandler(value, unit, inputId)
   }
 
   return (
@@ -25,8 +38,17 @@ export default function SizeAspectRatioControl({ options, className }) {
         </svg>
       </button>
       <div>
-        {options.map(opt => (
-          <SizeControl className={css(ut.mt1)} label={opt.label} width="100px" />
+        {options.map((opt, index) => (
+          <SizeControl
+            options={unitOptions}
+            className={css(ut.mt1)}
+            label={opt.label}
+            width="120px"
+            value={getNumFromStr(opt.value)}
+            unit={getStrFromStr(opt.value)}
+            inputHandler={({ unit, value }) => fldSizeHandler({ unit, value }, index)}
+            sizeHandler={({ unitKey, unitValue }) => fldSizeHandler({ unit: unitKey, value: unitValue }, index)}
+          />
         ))}
       </div>
     </div>

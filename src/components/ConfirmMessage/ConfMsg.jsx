@@ -6,6 +6,8 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useImmer } from 'use-immer'
 import { $confirmations, $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
+import BoxFullIcon from '../../Icons/BoxFullIcon'
+import BoxIcon from '../../Icons/BoxIcon'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import StackIcn from '../../Icons/StackIcn'
@@ -14,6 +16,8 @@ import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
@@ -21,6 +25,7 @@ import CheckBox from '../Utilities/CheckBox'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import SingleToggle from '../Utilities/SingleToggle'
 import SliderModal from '../Utilities/SliderModal'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import TinyMCE from '../Utilities/TinyMCE'
 import ConfirmMsgPreview from './ConfirmMsgPreview'
 
@@ -151,6 +156,15 @@ function ConfMsg({ removeIntegration }) {
       }
     }
   }
+
+  const unitOption = ['px', 'em', 'rem']
+
+  const options = [
+    { label: 'All', icn: <BoxFullIcon stroke="1.7" size={14} />, show: ['icn'], tip: 'All Side' },
+    { label: 'Individual', icn: <BoxIcon stroke="1.7" size="15" />, show: ['icn'], tip: 'Individual Side' },
+  ]
+
+  const [controller, setController] = useState('All')
 
   const positions = {
     snackbar: ['top-left',
@@ -308,6 +322,19 @@ function ConfMsg({ removeIntegration }) {
         brs: '8px !important',
       },
     },
+    segmentcontainer: {
+      flx: 'align-center',
+      jc: 'flex-end',
+      flxp: 'wrap',
+      mt: 10,
+      w: 220,
+    },
+    segmentWrapper: {
+      w: 255,
+      p: '0px 20px',
+    },
+    titlecontainer: { flx: 'center-between' },
+    title: { fs: 12, fw: 500 },
     label: {
       fs: '12px',
       fw: '500',
@@ -335,22 +362,34 @@ function ConfMsg({ removeIntegration }) {
             onTitleChange={e => handleMsgTitle(e, i)}
           >
             <div className={css({ p: 10, flx: '1', fd: 'column' })}>
-              <div>
-                <b>{__('Message Type', 'bitform')}</b>
-                <CheckBox radio name="msg-type" onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
-                <CheckBox radio name="msg-type" onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
-                <button type="button" onClick={() => setModal({ show: true })}>
-                  Edit Style
-                  <span><EditIcn size="20" /></span>
 
-                </button>
-              </div>
               <div className={css({ flx: 1, fd: 'column', rg: 5 })}>
+                <div>
+                  <div className={css({ flx: 'align-center', cg: 5 })}>
+                    <span className={css({ w: 130 })}>{__('Message Styles', 'bitform')}</span>
+                    <select
+                      className={css(styles.selectInput)}
+                      name="animation"
+                      value={animation}
+                      onChange={handleMsgAnimation}
+                    >
+                      <option value="custom-style">Custom Style</option>
+                    </select>
+                    <button type="button" className={css(styles.input, { curp: 1 })} title="Edit styles" onClick={() => setModal({ show: true })}>
+                      <span><EditIcn size="20" /></span>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <span className={css({ w: 130 })}>{__('Message Type', 'bitform')}</span>
+                  <CheckBox radio name="msg-type" onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
+                  <CheckBox radio name="msg-type" onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
+                </div>
                 <div className={css({ flx: 1, cg: 5 })}>
                   <div className={css({ flx: 'align-center' })}>
-                    <span className={css({ fs: 15, w: 100 })}>Animation</span>
+                    <span className={css({ fs: 15, w: 80 })}>Animation</span>
                     <select
-                      className="btcd-paper-inp"
+                      className={css(styles.selectInput)}
                       name="animation"
                       value={animation}
                       onChange={handleMsgAnimation}
@@ -362,22 +401,19 @@ function ConfMsg({ removeIntegration }) {
                   </div>
                   {(msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(animation)) && (
                     <div className={css({ flx: 'align-center' })}>
-                      <span className={css({ fs: 15, w: 100 })}>Position</span>
+                      <span className={css({ fs: 15, w: 65 })}>Position</span>
                       <select
-                        className="btcd-paper-inp"
+                        className={css(styles.selectInput)}
                         name="position"
                         value={position}
                         onChange={handlePositionChange}
                       >
-                        <option value="">{__('Select Position', 'bitform')}</option>
                         {
                           positions[msgType].map(value => <option value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                         }
                       </select>
                     </div>
                   )}
-                </div>
-                <div className={css({ flx: 1, cg: 5 })}>
                   <div className={css({ flx: 'align-center' })}>
                     <span className={css({ fs: 15, w: 80 })}>Auto Hide</span>
                     <SingleToggle action={handleAutoHide} isChecked={autoHide} className="flx" />
@@ -385,7 +421,8 @@ function ConfMsg({ removeIntegration }) {
                   {autoHide && (
                     <div className={css({ flx: 'align-center' })}>
                       <span className={css({ fs: 15, w: 70 })}>Duration</span>
-                      <input placeholder="Duration" className={`btcd-paper-inp ${css({ w: 100 })}`} type="number" value={duration} onChange={handleDelay} />
+                      <input placeholder="Duration" className={css(styles.input, { w: 50 })} type="number" value={duration} onChange={handleDelay} />
+                      <small>Sec</small>
                     </div>
                   )}
                 </div>
@@ -432,7 +469,10 @@ function ConfMsg({ removeIntegration }) {
                       Shadow
                     </button>
                     <button type="button" name="width" className={`${css(styles.styleButton)} ${activePeperties === 'width' && 'active'}`} onClick={handleActiveProperties}>
-                      width
+                      Width
+                    </button>
+                    <button type="button" name="padding" className={`${css(styles.styleButton)} ${activePeperties === 'padding' && 'active'}`} onClick={handleActiveProperties}>
+                      Padding
                     </button>
                   </div>
                   <div className="properties-container">
@@ -544,6 +584,95 @@ function ConfMsg({ removeIntegration }) {
                         </div>
                       </div>
                     )}
+                    {activePeperties === 'padding'
+                      && (
+                        <div className={css(styles.segmentWrapper)}>
+                          <div className={css(styles.titlecontainer)}>
+                            <span className={css(styles.title)}>Padding</span>
+                            <StyleSegmentControl
+                              square
+                              defaultActive="All"
+                              options={options}
+                              values={60}
+                              component="button"
+                              onChange={lbl => setController(lbl)}
+                              show={['icn']}
+                              variant="lightgray"
+                              noShadow
+                              activeValue={controller}
+                            />
+                          </div>
+                          <div className={css(styles.segmentcontainer)}>
+                            <Grow open={controller === 'All'}>
+                              <div className={css({ p: 2 })}>
+                                <SizeControl
+                                  min="0"
+                                  inputHandler={() => { }}
+                                  sizeHandler={() => { }}
+                                  id="0"
+                                  label={<BoxFullIcon size={14} />}
+                                  value={0}
+                                  unit="px"
+                                  options={unitOption}
+                                  width="110px"
+                                />
+                              </div>
+                            </Grow>
+                            <Grow open={controller === 'Individual'}>
+                              <div className={css(ut.flxc, { flxp: 'wrap', jc: 'end', p: 2 })}>
+                                <SizeControl
+                                  min="0"
+                                  inputHandler={() => { }}
+                                  sizeHandler={() => { }}
+                                  id="0"
+                                  label={<BoxIcon size="14" varient="top" />}
+                                  width="100px"
+                                  value={0}
+                                  unit="px"
+                                  options={unitOption}
+                                  className={css(ut.mr1, ut.mb1)}
+                                />
+                                <SizeControl
+                                  min="0"
+                                  inputHandler={() => { }}
+                                  sizeHandler={() => { }}
+                                  id="0"
+                                  label={<BoxIcon size="14" varient="right" />}
+                                  width="100px"
+                                  value={0}
+                                  unit="px"
+                                  options={unitOption}
+                                  className={css(ut.mr1, ut.mb1)}
+                                />
+                                <SizeControl
+                                  min="0"
+                                  inputHandler={() => { }}
+                                  sizeHandler={() => { }}
+                                  id="0"
+                                  label={<BoxIcon size="14" varient="bottom" />}
+                                  width="100px"
+                                  value={0}
+                                  unit="px"
+                                  options={unitOption}
+                                  className={css(ut.mr1, ut.mb1)}
+                                />
+                                <SizeControl
+                                  min="0"
+                                  inputHandler={() => { }}
+                                  sizeHandler={() => { }}
+                                  id="0"
+                                  label={<BoxIcon size="14" varient="left" />}
+                                  width="100px"
+                                  value={0}
+                                  unit="px"
+                                  options={unitOption}
+                                  className={css(ut.mr1, ut.mb1)}
+                                />
+                              </div>
+                            </Grow>
+                          </div>
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>

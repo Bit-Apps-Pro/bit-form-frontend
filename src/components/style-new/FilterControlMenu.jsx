@@ -12,7 +12,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
 import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 
-export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
+export default function FilterControlMenu({ title = 'Filters', elementKey, fldKey, objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
@@ -167,7 +167,7 @@ export default function FilterControlMenu({ elementKey, fldKey, objectPaths }) {
   return (
     <>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Filters</span>
+        <span className={css(ut.fs12, ut.fs12, ut.fw500)}>{title}</span>
         <CssPropertyList properties={availableFilterProps} setProperty={addFilterToCss} />
       </div>
       {filtersObjects.map(filter => {
