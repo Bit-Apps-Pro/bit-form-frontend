@@ -14,12 +14,12 @@ const backgroundImageControlStyle = {
   },
 
   select: {
-    w: 60,
+    w: 100,
     bi: 'none',
     ae: '',
     p: 5,
     pb: 8,
-    brs: 8,
+    brs: 10,
     bc: 'var(--white-0-95)',
     b: 0,
     oe: 0,
@@ -49,13 +49,15 @@ const backgroundImageControlStyle = {
 
   positiondot: {
     dy: 'inline-block',
-    h: 5,
-    w: 5,
+    h: 10,
+    w: 10,
     lh: 1,
     bc: 'var(--white-0-50)',
     brs: '100%',
     curp: '',
   },
+
+  positionDotActive: { oe: '3px solid #2271b1' },
 
   filterlist: { mnw: 80 },
 

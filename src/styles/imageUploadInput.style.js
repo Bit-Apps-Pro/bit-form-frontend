@@ -1,7 +1,7 @@
 const imageUploadInputStyle = {
   title: { fs: 12 },
 
-  inputcontainer: { pn: 'relative', h: 30, w: 120 },
+  inputcontainer: { pn: 'relative', h: 30, w: 120, curp: 1 },
 
   imagebox: {
     w: 25,
@@ -29,6 +29,7 @@ const imageUploadInputStyle = {
     bc: 'var(--white-0-95) !important',
     oe: 'none',
     fs: 12,
+    curp: 1,
 
     ':focus': { bs: 'none !important' },
   },
@@ -42,7 +43,7 @@ const imageUploadInputStyle = {
     pn: 'absolute',
     rt: 9,
     tp: '50%',
-    tm: 'translateY(-25%)',
+    tm: 'translateY(-50%)',
   },
 }
 
