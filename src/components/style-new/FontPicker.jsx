@@ -1,21 +1,24 @@
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { showDraggableModal } from './styleHelpers'
 
 export default function FontPicker({ id }) {
   const { css } = useFela()
+  const themeVars = useRecoilValue($themeVars)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+
+  const font = themeVars['--g-font-family']
   return (
-    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
-      <button
-        className={css(c.btn)}
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id, width: 240 })}
-        type="button"
-      >
-        Montseterrat
-      </button>
-    </div>
+    <button
+      className={css(c.preview_wrp, c.btn, draggableModal.id === id && c.active)}
+      onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id, width: 240 })}
+      type="button"
+
+    >
+      {font || 'Configure'}
+    </button>
   )
 }
 
@@ -25,13 +28,16 @@ const c = {
     w: 130,
     mnw: 130,
     brs: 10,
-    p: 3,
+    px: 5,
+    py: 3,
     flx: 'center-between',
     h: 30,
     fw: 500,
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
+    ta: 'left',
+    pl: 5,
   },
-  btn: { b: 'none', curp: 1 },
+  btn: { b: 'none', curp: 1, dy: 'block' },
   clrVal: {
     w: 70,
     textOverflow: 'ellipsis',

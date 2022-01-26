@@ -419,3 +419,53 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
     }
   }))
 }
+
+export const generateFontUrl = (font, string) => {
+  const fontFamily = font.replaceAll(/\s/gi, '+')
+  const newParmrs = string !== '' ? `:ital,${string}` : ''
+  return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
+}
+export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
+  const fieldsArr = Object.keys(styles.fields)
+  const fieldsLenght = fieldsArr.length
+
+  const fontWeightVariant = []
+  const fontWeightparam = []
+  const fontStyleParam = []
+  let string = ''
+
+  for (let fldIndx = 0; fldIndx < fieldsLenght; fldIndx += 1) {
+    const fieldClasses = styles.fields[fieldsArr[fldIndx]].classes
+    const fieldClassesArr = Object.keys(fieldClasses)
+    const fieldClassesLen = fieldClassesArr.length
+    for (let clsIndx = 0; clsIndx < fieldClassesLen; clsIndx += 1) {
+      const clsProperties = fieldClasses[fieldClassesArr[clsIndx]]
+      if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-weight')) {
+        const weight = clsProperties['font-weight']
+        if (!fontWeightVariant.includes(weight)) fontWeightVariant.push(weight)
+      }
+      if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-style')) {
+        const style = clsProperties['font-style']
+        if (!fontStyleParam.includes(style)) fontStyleParam.push(style)
+      }
+    }
+  }
+
+  const fontWeightVLen = fontWeightVariant.length
+  if (fontWeightVLen > 0) {
+    for (let indx = 0; indx < fontWeightVLen; indx += 1) {
+      if (fontStyleParam.includes('italic')) {
+        fontWeightparam.push(`1,${fontWeightVariant[indx]};`)
+      }
+      fontWeightparam.push(`0,${fontWeightVariant[indx]};`)
+    }
+    const str = fontWeightparam.sort().toString().replaceAll(/;,/gi, ';')
+    string = str.substring(0, str.length - 1)
+    string = `wght@${string}`
+  }
+
+  const url = generateFontUrl(fontFamily, string)
+  setStyle(prvStyle => produce(prvStyle, drft => {
+    drft.font.fontURL = url
+  }))
+}

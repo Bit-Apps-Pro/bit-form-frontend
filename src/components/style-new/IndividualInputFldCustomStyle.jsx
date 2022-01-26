@@ -43,10 +43,8 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
   const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: arr[item] }))
 
-  const fontweightVariants = styles.fontWeightVariants.length !== 0 ? arrayToObject(styles.fontWeightVariants) : staticFontweightVariants
-  const fontStyleVariants = styles.fontStyle.length !== 0 ? arrayToObject(styles.fontStyle) : staticFontStyleVariants
-
-  console.log(styles, fontweightVariants)
+  const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
   const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
 
@@ -255,14 +253,14 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                 <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
-
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontweightVariants}
-                  value={Number(existingCssProperties?.['font-weight'])}
+                  value={existingCssProperties?.['font-weight']}
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && styles.font.fontWeightVariants.includes(existingCssProperties?.['font-weight'])) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -289,6 +287,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-style'] && styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -834,6 +833,7 @@ const cls = {
   },
   containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   space: { p: 5 },
+  warningBorder: { b: '1px solid yellow' },
 }
 const options = [
   { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },

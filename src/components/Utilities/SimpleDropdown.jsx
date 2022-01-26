@@ -4,7 +4,7 @@ import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import ut from '../../styles/2.utilities'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 
-export default function SimpleDropdown({ options, value, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25 }) {
+export default function SimpleDropdown({ options, value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25 }) {
   let defaultVal = null
   const selected = options.find(opt => opt.value === value)
   if (Number.isInteger(value)) {
@@ -87,7 +87,7 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
         onClick={handleDropdownClick}
         onKeyUp={handleDropdownClick}
         tabIndex="0"
-        className={`${menu.open && css(simppleDpdStyle.dpd_open)} ${css(simppleDpdStyle.dpd)} ${css({ w })}`}
+        className={`${menu.open && css(simppleDpdStyle.dpd_open)} ${css(simppleDpdStyle.dpd)} ${css({ w })} ${cls}`}
       >
         <div className={css(simppleDpdStyle.selected)} style={{ height: h - 8 }}>
           <div className={css(ut.flxc)}>
