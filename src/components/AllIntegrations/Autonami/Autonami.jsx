@@ -8,7 +8,7 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import AutonamiAuthorization from './AutonamiAuthorization'
-import { checkMappedFields, refreshAutonamiList } from './AutonamiCommonFunc'
+import { checkMappedFields, getAutonamiFields } from './AutonamiCommonFunc'
 import AutonamiIntegLayout from './AutonamiIntegLayout'
 
 export default function Autonami({  formFields, setIntegration, integrations, allIntegURL  }) {
@@ -27,27 +27,20 @@ export default function Autonami({  formFields, setIntegration, integrations, al
   })
 
   const nextPage = (val) => {
-    setTimeout(() => {
-      document.getElementById('btcd-settings-wrp').scrollTop = 0
-    }, 300)
-    if (val === 3) {
+    if (val == 2 && autonamiConf.name !== '') {
+      getAutonamiFields(autonamiConf, setAutonamiConf, setIsLoading, setSnackbar)
+      setStep(val)
+    } else if (val == 3) {
       if (!checkMappedFields(autonamiConf)) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
-      if (!autonamiConf.list_id) {
-        setSnackbar({ show: true, msg: 'Please select list to continue.' })
-        return
-      }
-      if (autonamiConf.name !== '' && autonamiConf.field_map.length > 0) {
+      if (autonamiConf.field_map.length > 0) {
         setStep(val)
       }
-    } else {
-      setStep(val)
-      if (val === 2 && autonamiConf.name) {
-        refreshAutonamiList(formID, autonamiConf, setAutonamiConf, setIsLoading, setSnackbar)
-      }
     }
+    
+    document.getElementById('btcd-settings-wrp').scrollTop = 0
   }
 
   return (
@@ -84,7 +77,7 @@ export default function Autonami({  formFields, setIntegration, integrations, al
         <br />
         <button
           onClick={() => nextPage(3)}
-          disabled={!autonamiConf.list_id || autonamiConf.field_map.length < 1}
+          disabled={autonamiConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

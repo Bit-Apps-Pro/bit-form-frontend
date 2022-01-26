@@ -62,9 +62,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={
-          autonamiConf.list_id === "" || autonamiConf.field_map.length < 1
-        }
+        disabled={autonamiConf.field_map.length < 1}
         isLoading={isLoading}
       />
       <br />

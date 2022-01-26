@@ -1,9 +1,9 @@
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const refreshAutonamiList = (formID, autonamiConf, setAutonamiConf, setIsLoading, setSnackbar) => {
+export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  bitsFetch({}, 'bitforms_refresh_autonami_lists')
+  bitsFetch({}, 'bitforms_autonami_lists_and_tags')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...autonamiConf }
@@ -16,27 +16,32 @@ export const refreshAutonamiList = (formID, autonamiConf, setAutonamiConf, setIs
         if (result.data.autonamiTags) {
           newConf.default.autonamiTags = result.data.autonamiTags
         }
-        setSnackbar({ show: true, msg: __('Autonami list refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Autonami lists and tags refreshed', 'bitform') })
         setAutonamiConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Autonami list refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Autonami lists and tags refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Autonami list refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Autonami lists and tags refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })
     .catch(() => setIsLoading(false))
 }
 
-export const refreshAutonamiHeader = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar) => {
-  bitsFetch({}, 'bitforms_autonami_headers')
+export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar, refreshFields=false) => {
+  bitsFetch({}, 'bitforms_autonami_fields')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...autonamiConf }
-        if (result.data.autonamiFlelds) {
-          newConf.default.fields = result.data.autonamiFlelds
-          const { fields } = newConf.default
-          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', autonamiField: f.key, required: true }))
+        if (!newConf.default) {
+          newConf.default = {}
+        }
+        if (result.data.autonamiFields) {
+          newConf.default.fields = result.data.autonamiFields
+          if(!refreshFields) {
+            const { fields } = newConf.default
+            newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', autonamiField: f.key, required: true }))
+          }
           setSnackbar({ show: true, msg: __('Autonami fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Autonami fields found. Try changing the header row number or try again', 'bitform') })
