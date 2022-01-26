@@ -1854,6 +1854,7 @@ arrow:after,
     background-size: 13px 13px;
     background-image: radial-gradient(#458ff7 0.5px, #fff 0.5px);
     background-size: 10px 10px;
+    font-family: var(--g-font-family)
   /* background-color: var(--white-100); */
 }
 

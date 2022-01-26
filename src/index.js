@@ -4,16 +4,15 @@
 // import 'react-app-polyfill/ie11'
 // import 'react-app-polyfill/stable'
 
+import { createRenderer } from 'fela'
+import customProperty from 'fela-plugin-custom-property'
 import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import { RecoilRoot } from 'recoil'
-import { createRenderer } from 'fela'
 import { RendererProvider } from 'react-fela'
-import customProperty from 'fela-plugin-custom-property'
-import AppSettingsProvider from './Utils/AppSettingsContext'
+import { RecoilRoot } from 'recoil'
 import Loader from './components/Loaders/Loader'
 import customProperties from './styles/1.customProperties'
-import { RenderPortal } from './RenderPortal'
+import AppSettingsProvider from './Utils/AppSettingsContext'
 
 const App = lazy(() => import('./App'))
 

@@ -16,6 +16,12 @@ export const $stylesLg = atom({
   key: '$stylesLg',
   default: {
     theme: 'bitformDefault',
+    font: {
+      fontType: '',
+      fontURL: '',
+      fontWeightVariants: [],
+      fontStyle: [],
+    },
     form: {
       light: {
         _frm: { background: 'var(--global-bg-color)' },

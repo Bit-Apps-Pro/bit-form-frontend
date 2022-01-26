@@ -17,6 +17,7 @@ import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer, reportsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
+import { updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
@@ -40,7 +41,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [integrations, setIntegration] = useRecoilState($integrations)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
-  const style = useRecoilValue($styles)
+  // const style = useRecoilValue($styles)
+  const [style, setStyles] = useRecoilState($styles)
   const breakpointSize = useRecoilValue($breakpointSize)
   const themeVars = useRecoilValue($themeVars)
 
@@ -116,6 +118,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     } else {
       select('#update-btn').click()
     }
+    if (style.font.fontType === 'google') updateGoogleFontUrl(style, setStyles, themeVars['--g-font-family'])
   }
 
   const checkSubmitBtn = () => {
