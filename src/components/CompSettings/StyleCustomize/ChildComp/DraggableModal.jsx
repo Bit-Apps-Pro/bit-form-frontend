@@ -6,6 +6,7 @@ import { $draggableModal } from '../../../../GlobalStates/GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
+import BackgroundControlMenu from '../../../style-new/BackgroundControlMenu'
 import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
 import FilterControlMenu from '../../../style-new/FilterControlMenu'
 import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
@@ -26,6 +27,7 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
+    case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'font': return <FontPickerMenu />
@@ -47,6 +49,7 @@ const setTitle = (component) => {
   switch (component) {
     case 'border-style': return 'Border'
     case 'color-picker': return 'Color picker'
+    case 'background': return 'Background Control'
     case 'individual-shadow-control': return 'Shadow control'
     case 'font': return 'Fonts'
     case 'label-control': return 'Label Placement Control'

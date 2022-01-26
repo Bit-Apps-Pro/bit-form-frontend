@@ -16,6 +16,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import FilterControler from './FilterControler'
@@ -181,6 +182,23 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     paths: { filter: getPropertyPath('filter') },
   }
 
+  const fldBgObjPath = {
+    object: 'styles',
+    bgObjName: 'styles',
+    paths: {
+      'background-attachment': getPropertyPath('background-attachment'),
+      'background-blend-mode': getPropertyPath('background-blend-mode'),
+      'background-clip': getPropertyPath('background-clip'),
+      'background-color': getPropertyPath('background-color'),
+      'background-image': getPropertyPath('background-image'),
+      'background-origin': getPropertyPath('background-origin'),
+      'background-position': getPropertyPath('background-position'),
+      'background-repeat': getPropertyPath('background-repeat'),
+      'background-size': getPropertyPath('background-size'),
+      'backdrop-filter': getPropertyPath('backdrop-filter'),
+    },
+  }
+
   return (
     <>
       <StyleSegmentControl
@@ -201,13 +219,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         <div className={css(cls.space)}>
           {
             existingProperties.includes('background') && (
-              <SimpleColorPicker
+              <BackgroundControl
                 title="Background"
-                subtitle="Background Color"
+                subtitle="Background Color/Image"
                 value={existingCssProperties?.background}
-                modalId="field-container-backgroung"
+                modalId="field-container-background"
                 stateObjName="styles"
-                propertyPath={getPropertyPath('background')}
+                objectPaths={fldBgObjPath}
                 deleteable
                 delPropertyHandler={() => delPropertyHandler('background')}
                 clearHandler={() => clearHandler('background')}

@@ -1,85 +1,180 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import StyleResetIcn from '../../../../Icons/StyleResetIcn'
-import TrashIcn from '../../../../Icons/TrashIcn'
+import { useRecoilState } from 'recoil'
+import { $styles } from '../../../../GlobalStates/StylesState'
 import ut from '../../../../styles/2.utilities'
-import backgroundImageControlStyle from '../../../../styles/backgroundImageControl.style'
+import bgImgControlStyle from '../../../../styles/backgroundImageControl.style'
+import FilterControlMenu from '../../../style-new/FilterControlMenu'
 import SimpleGradientColorPicker from '../../../style-new/SimpleGradientColorPicker'
-import Downmenu from '../../../Utilities/Downmenu'
+import { getObjByKey, getValueByObjPath, setStyleStateObj } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import Tip from '../../../Utilities/Tip'
-import CustomInputControl from './CustomInputControl'
+import Grow from './Grow'
 import ImageUploadInput from './ImageUploadInput'
 import SizeAspectRatioControl from './SizeAspectRatioControl'
 
-export default function BackgroundImageControl({ }) {
-  const [controller, setController] = useState({ parent: 'Image', child: '' })
+export default function BackgroundImageControl({ stateObjName,
+  propertyPath,
+  objectPaths,
+  id,
+  fldKey }) {
+  const [controller, setController] = useState({ parent: 'Image', child: 'Upload' })
   const { css } = useFela()
-  const backgroundsize = 'auto'
-  const [bgPos, setBgPos] = useState('initial !important')
+  const { object, bgObjName, paths } = objectPaths
   const [bgfilters, setBgFilters] = useState('blur(20%) brightness(120%)')
+  const [bgImage, setBgImage] = useState('')
+  const [bgSize, setBgSize] = useState({
+    type: 'auto',
+    w: '0px',
+    h: '0px',
+  })
+  const [bgPosition, setBgPosition] = useState({
+    type: 'initial',
+    x: '0px',
+    y: '0px',
+  })
+  const [bgPositionValue, setBgPositionValue] = useState('center')
+  const [bgRepeat, setBgRepeat] = useState('initial')
+  const [styles, setStyles] = useRecoilState($styles)
 
-  const onTabChangeHandler = (lbl, type) => {
-    if (type === 'parent') setController({ parent: lbl })
-    else if (type === 'child') setController(old => ({ ...old, child: lbl }))
+  const stateObj = getObjByKey(object, { styles })
+
+  const onValueChange = (pathName, val) => {
+    console.log('styles', styles)
+    setStyleStateObj(object, pathName, val, { setStyles })
+  }
+  const gradientChangeHandler = (e) => {
+    onValueChange(paths['background-image'], e.style)
   }
 
-  const generateBgFiltersArr = () => (bgfilters.length ? bgfilters.split(' ').map(fltr => ({ name: fltr.match(/.+?(?=\()/)[0], value: fltr.match(/\d*\.?\d/)[0], unit: fltr.match(/%|px|deg/)?.[0] || '' })) : [])
+  const clearBgImage = (e) => {
+    e.stopPropagation()
+    setBgImage('')
+  }
 
-  const generateBgFiltersStr = filters => filters.map(fltr => `${fltr.name}(${fltr.value}${fltr.unit})`).join(' ')
+  useEffect(() => {
+    setBgImage(getValueByObjPath(stateObj, paths['background-image']))
+  }, [])
 
-  const addNewFilter = (name, value, unit) => {
-    const filters = generateBgFiltersArr()
-    if (!filters.find(fltr => fltr.name === name)) {
-      filters.push({ name, value, unit })
-      setBgFilters(generateBgFiltersStr(filters))
+  useEffect(() => {
+    onValueChange(paths['background-image'], bgImage)
+  }, [bgImage])
+
+  useEffect(() => {
+    onValueChange(paths['background-repeat'], bgRepeat)
+  }, [bgRepeat])
+
+  useEffect(() => {
+    if (bgSize.type === 'size') {
+      onValueChange(paths['background-size'], `${bgSize.w} ${bgSize.h}`)
+    } else {
+      onValueChange(paths['background-size'], bgSize.type)
+    }
+  }, [bgSize])
+
+  useEffect(() => {
+    if (bgPosition.type === 'positions') {
+      onValueChange(paths['background-position'], bgPositionValue)
+    } else if (bgPosition.type === 'size') {
+      onValueChange(paths['background-position'], `${bgPosition.x} ${bgPosition.y}`)
+    } else {
+      onValueChange(paths['background-position'], bgPosition.type)
+    }
+  }, [bgPosition, bgPositionValue])
+
+  const sizeSelectHandler = e => {
+    setBgSize(prevBgSize => ({ ...prevBgSize, type: e.target.value }))
+  }
+
+  const positionSelectHandler = e => {
+    setBgPosition(prevBgPos => ({ ...prevBgPos, type: e.target.value }))
+  }
+
+  const bgRepeatSelectHandler = e => {
+    setBgRepeat(e.target.value)
+  }
+  const positionChangeHandler = (value) => {
+    setBgPositionValue(value)
+  }
+
+  const urlChangeHandler = e => {
+    onValueChange(paths['background-image'], `url(${e.target.value})`)
+    setBgImage(`url(${e.target.value})`)
+  }
+  const fldBgSizeHandler = (value, unit, inputId) => {
+    if (inputId === 0) {
+      setBgSize(prevBgSize => ({ ...prevBgSize, w: `${value}${unit}` }))
+    } else {
+      setBgSize(prevBgSize => ({ ...prevBgSize, h: `${value}${unit}` }))
     }
   }
 
-  const removeFilter = name => {
-    const filters = generateBgFiltersArr()
-    filters.splice(filters.findIndex(fltr => fltr.name === name), 1)
-    setBgFilters(generateBgFiltersStr(filters))
+  const fldBgPositionHandler = (value, unit, inputId) => {
+    if (inputId === 0) {
+      setBgPosition(prevBgPos => ({ ...prevBgPos, x: `${value}${unit}` }))
+    } else {
+      setBgPosition(prevBgPos => ({ ...prevBgPos, y: `${value}${unit}` }))
+    }
   }
 
-  const setFilterValue = (name, value) => {
-    const filters = generateBgFiltersArr()
-    const filterIndex = filters.findIndex(fltr => fltr.name === name)
-    filters[filterIndex].value = value
-    setBgFilters(generateBgFiltersStr(filters))
+  const onTabChangeHandler = (lbl, type) => {
+    if (type === 'parent') setController({ parent: lbl, child: 'Upload' })
+    else if (type === 'child') setController(old => ({ ...old, child: lbl }))
+  }
+
+  const setWpMedia = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const wpMediaMdl = wp.media({
+        title: 'Media',
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
+        multiple: false,
+      })
+
+      wpMediaMdl.on('select', () => {
+        const attachment = wpMediaMdl.state().get('selection').first().toJSON()
+        // fieldData[iconType] = attachment.url
+        // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+        // setModal(false)
+        onValueChange(paths['background-image'], `url(${attachment.url})`)
+        setBgImage(`url(${attachment.url})`)
+      })
+
+      wpMediaMdl.open()
+    }
   }
 
   return (
-    <div className={css(backgroundImageControlStyle.container)}>
+    <div className={css(bgImgControlStyle.container)}>
       <StyleSegmentControl options={[{ label: 'Image' }, { label: 'Gradient' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} activeValue={controller.parent} wideTab />
-      <div className={css(backgroundImageControlStyle.innercontainer, ut.mt1)}>
+      <div className={css(bgImgControlStyle.innercontainer, ut.mt1)}>
         {controller.parent === 'Image' && (
           <>
             <StyleSegmentControl options={[{ label: 'Upload' }, { label: 'Link' }]} onChange={lbl => onTabChangeHandler(lbl, 'child')} activeValue={controller.child} wideTab />
             <div className={css(ut.mt2)}>
 
               {controller.child === 'Upload' && (
-                <ImageUploadInput title="Image" value="test.png" />
+                <ImageUploadInput title="Image" imageSrc={bgImage.replace(/(url\(|\))/gi, '')} value="test.png" clickAction={setWpMedia} clearAction={clearBgImage} />
               )}
 
               {controller.child === 'Link' && (
                 <div className={css(ut.mt2)}>
                   <div className={css(ut.flxcb)}>
-                    <span className={css(backgroundImageControlStyle.title)}>URL</span>
-                    <input className={css(backgroundImageControlStyle.urlinput)} type="url" placeholder="https://www.example.com" />
+                    <span className={css(bgImgControlStyle.title)}>URL</span>
+                    <input className={css(bgImgControlStyle.urlinput)} type="url" value={bgImage.replace(/(url\(|\))/gi, '')} onChange={urlChangeHandler} placeholder="https://www.example.com" />
                   </div>
                   {/* <button type="button" className={css(ut.mt2)}>browse</button> */}
                 </div>
               )}
-              <div className={css(ut.mt3)}>
+              <div className={css(ut.mt2)}>
                 <div className={css(ut.flxcb)}>
-                  <span className={css(backgroundImageControlStyle.title)}>Size</span>
+                  <span className={css(bgImgControlStyle.title)}>Size</span>
                   <div className={css(ut.flxc)}>
-                    <span className={css(backgroundImageControlStyle.icon)}>
+                    {/* <span className={css(backgroundImageControlStyle.icon)}>
                       <StyleResetIcn size={12} />
                     </span>
-                    <span className={css(backgroundImageControlStyle.icon)}>*</span>
-                    <select name="" id="" className={css(backgroundImageControlStyle.select)}>
+                    <span className={css(backgroundImageControlStyle.icon)}>*</span> */}
+                    <select value={bgSize.type} name="" id="" onChange={sizeSelectHandler} className={css(bgImgControlStyle.select)}>
                       <option value="auto">auto</option>
                       <option value="size">size</option>
                       <option value="cover">cover</option>
@@ -88,114 +183,129 @@ export default function BackgroundImageControl({ }) {
                     </select>
                   </div>
                 </div>
-
-                <SizeAspectRatioControl className={css(ut.ml6, ut.mb2)} options={[{ label: 'W' }, { label: 'H' }]} />
-
+                <Grow open={bgSize.type === 'size'}>
+                  <SizeAspectRatioControl
+                    className={css(ut.ml6, ut.mb2)}
+                    options={[{ label: 'W', value: bgSize.w }, { label: 'H', value: bgSize.h }]}
+                    unitOptions={['px', '%']}
+                    valuChangeHandler={fldBgSizeHandler}
+                  />
+                </Grow>
               </div>
 
-              <div className={css(ut.mt3)}>
+              <div className={css(ut.mt2)}>
                 <div className={css(ut.flxcb)}>
-                  <span className={css(backgroundImageControlStyle.title)}>Position</span>
+                  <span className={css(bgImgControlStyle.title)}>Position</span>
                   <div className={css(ut.flxc)}>
-                    <span className={css(backgroundImageControlStyle.icon)}>
+                    {/* <span className={css(backgroundImageControlStyle.icon)}>
                       <StyleResetIcn size={12} />
-                    </span>
-                    <span className={css(backgroundImageControlStyle.icon, bgPos.includes('!important') ? backgroundImageControlStyle.activeicon : '')}>*</span>
-                    <select name="" id="" className={css(backgroundImageControlStyle.select)}>
-                      <option value="contain">initial</option>
-                      <option value="contain">size</option>
+                    </span> */}
+                    {/* <span className={css(backgroundImageControlStyle.icon, bgPosition.includes('!important') ? backgroundImageControlStyle.activeicon : '')}>*</span> */}
+                    <select value={bgPosition.type} name="" id="" onChange={positionSelectHandler} className={css(bgImgControlStyle.select)}>
+                      <option value="positions">Positions</option>
+                      <option value="size">Size</option>
+                      <option value="inherit">Inherit</option>
+                      <option value="initial">Initial</option>
                     </select>
                   </div>
                 </div>
 
-                <SizeAspectRatioControl className={css(ut.ml6, ut.mt2)} options={[{ label: 'X' }, { label: 'Y' }]} />
+                <Grow open={bgPosition.type === 'size'}>
+                  <SizeAspectRatioControl
+                    className={css(ut.ml6, ut.mb2)}
+                    options={[{ label: 'X', value: bgPosition.x }, { label: 'Y', value: bgPosition.y }]}
+                    unitOptions={['px', '%']}
+                    valuChangeHandler={fldBgPositionHandler}
+                  />
+                </Grow>
+                <Grow open={bgPosition.type === 'positions'}>
 
-                <div className={css(ut.flxcb, ut.ml6, ut.mt3, backgroundImageControlStyle.positioncontainer)}>
-                  <div className={css(backgroundImageControlStyle.positionitem)}>
-                    <Tip msg="Top Left">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
+                  <div className={css(ut.flxcb, ut.ml6, ut.mt2, bgImgControlStyle.positioncontainer)}>
+                    <div className={css(bgImgControlStyle.positionitem)}>
+                      <Tip msg="Top Left">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'top left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top left')} onClick={() => positionChangeHandler('top left')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
+                      <Tip msg="Top Center">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'top center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top center')} onClick={() => positionChangeHandler('top center')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
+                      <Tip msg="Top Right">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'top right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top right')} onClick={() => positionChangeHandler('top right')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem)}>
+                      <Tip msg="Center Left">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'center left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center left')} onClick={() => positionChangeHandler('center left')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
+                      <Tip msg="Center">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center')} onClick={() => positionChangeHandler('center')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
+                      <Tip msg="Center Right">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'center right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center right')} onClick={() => positionChangeHandler('center right')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem)}>
+                      <Tip msg="Bottom Left">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'bottom left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom left')} onClick={() => positionChangeHandler('bottom left')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
+                      <Tip msg="Bottom Center">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'bottom center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom center')} onClick={() => positionChangeHandler('bottom center')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
+                    <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
+                      <Tip msg="Bottom Right">
+                        <span className={css(bgImgControlStyle.positiondot, bgPositionValue === 'bottom right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom right')} onClick={() => positionChangeHandler('bottom right')} tabIndex={0}>&nbsp;</span>
+                      </Tip>
+                    </div>
                   </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txCenter)}>
-                    <Tip msg="Top Center">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txRight)}>
-                    <Tip msg="Top Right">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem)}>
-                    <Tip msg="Center Left">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txCenter)}>
-                    <Tip msg="Center">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txRight)}>
-                    <Tip msg="Center Right">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem)}>
-                    <Tip msg="Bottom Left">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txCenter)}>
-                    <Tip msg="Bottom Center">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                  <div className={css(backgroundImageControlStyle.positionitem, ut.txRight)}>
-                    <Tip msg="Bottom Right">
-                      <span className={css(backgroundImageControlStyle.positiondot)} />
-                    </Tip>
-                  </div>
-                </div>
+                </Grow>
 
               </div>
-
-              <div className={css(ut.mt3)}>
+              <div className={css(ut.mt2)}>
                 <div className={css(ut.flxcb)}>
-                  <span className={css(backgroundImageControlStyle.title)}>Filters</span>
-                  <Downmenu place="bottom-end">
-                    <button type="button" className={css(backgroundImageControlStyle.addbtn)}>+ Add</button>
-                    <div className={css(backgroundImageControlStyle.filterlist)}>
-                      <button onClick={() => addNewFilter('blur', 5, 'px')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Blur</button>
-                      <button onClick={() => addNewFilter('brightness', 120, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Brightness</button>
-                      <button onClick={() => addNewFilter('contrast', 10, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Contrast</button>
-                      <button onClick={() => addNewFilter('grayscale', 50, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Grayscale</button>
-                      <button onClick={() => addNewFilter('hue-rotate', 45, 'deg')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Hue Rotate</button>
-                      <button onClick={() => addNewFilter('invert', 10, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Invert</button>
-                      <button onClick={() => addNewFilter('opacity', 10, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Opacity</button>
-                      <button onClick={() => addNewFilter('saturate', 110, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Saturate</button>
-                      <button onClick={() => addNewFilter('sepia', 10, '%')} type="button" className={css(backgroundImageControlStyle.filterbutton)}>Sepia</button>
-                    </div>
-                  </Downmenu>
-                </div>
-
-                {generateBgFiltersArr().map(fltr => (
-                  <div className={css(ut.flxc, ut.mt1)}>
-                    <CustomInputControl label={fltr.name} value={fltr.value} min={0} width="50%" onChange={val => setFilterValue(fltr.name, val)} />
-                    {/* <SizeControl className={css(ut.mt1)} label={fltr.name} width="50%" /> */}
-                    <button onClick={() => removeFilter(fltr.name)} type="button" className={css(ut.ml1, backgroundImageControlStyle.removebtn)}>
-                      <TrashIcn size={14} />
-                    </button>
+                  <span className={css(bgImgControlStyle.title)}>Repeat</span>
+                  <div className={css(ut.flxc)}>
+                    {/* <span className={css(backgroundImageControlStyle.icon)}>
+                      <StyleResetIcn size={12} />
+                    </span> */}
+                    {/* <span className={css(backgroundImageControlStyle.icon, bgPosition.includes('!important') ? backgroundImageControlStyle.activeicon : '')}>*</span> */}
+                    <select value={bgRepeat} name="" id="" onChange={bgRepeatSelectHandler} className={css(bgImgControlStyle.select)}>
+                      <option value="repeat">Repeat</option>
+                      <option value="repeat-x">Repeat-X</option>
+                      <option value="repeat-y">Repeat-Y</option>
+                      <option value="no-repeat">No Repeat</option>
+                      <option value="space">Space</option>
+                      <option value="round">Round</option>
+                      <option value="initial">Initial</option>
+                    </select>
                   </div>
-                ))}
+                </div>
+              </div>
 
+              <div className={css(ut.mt2)}>
+                <FilterControlMenu
+                  title="Backdrop Filters"
+                  objectPaths={{
+                    object: 'styles',
+                    paths: { filter: paths['backdrop-filter'] },
+                  }}
+                />
               </div>
             </div>
           </>
         )}
 
         {controller.parent === 'Gradient' && (
-          <SimpleGradientColorPicker />
+          <SimpleGradientColorPicker changeHandler={gradientChangeHandler} />
         )}
 
       </div>
