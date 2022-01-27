@@ -46,6 +46,7 @@ export default function Bitforms(props) {
           fieldData={fieldData}
           buttonDisabled={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'submit' && buttonDisabled}
           handleReset={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'reset' && handleReset}
+          handleFormValidationErrorMessages={handleFormValidationErrorMessages}
         />
       </div>
     )
@@ -338,6 +339,30 @@ export default function Bitforms(props) {
     }
   }
 
+  const handleFormValidationErrorMessages = result => {
+    if (result.data && typeof result.data === 'string') {
+      setMessage(result.data)
+      sethasError(true)
+      setSnack(true)
+    } else if (result.data) {
+      if (result.data.$form !== undefined) {
+        setMessage(deepCopy(result.data.$form))
+        sethasError(true)
+        setSnack(true)
+        // eslint-disable-next-line no-param-reassign
+        delete result.data.$form
+      }
+      if (Object.keys(result.data).length > 0) {
+        const newData = fieldData !== undefined && deepCopy(fieldData)
+
+        Object.keys(result.data).map(element => {
+          newData[props.fieldsKey[element]].error = result.data[element]
+        })
+        dispatchFieldData(newData)
+      }
+    }
+  }
+
   const submitResponse = resp => {
     resp.then(response => new Promise((resolve, reject) => {
       if (response.status > 400) {
@@ -371,26 +396,8 @@ export default function Bitforms(props) {
             setMessage(result.data)
             setSnack(true)
           }
-        } else if (result.data && typeof result.data === 'string') {
-          setMessage(result.data)
-          sethasError(true)
-          setSnack(true)
-        } else if (result.data) {
-          if (result.data.$form !== undefined) {
-            setMessage(deepCopy(result.data.$form))
-            sethasError(true)
-            setSnack(true)
-            // eslint-disable-next-line no-param-reassign
-            delete result.data.$form
-          }
-          if (Object.keys(result.data).length > 0) {
-            const newData = fieldData !== undefined && deepCopy(fieldData)
-
-            Object.keys(result.data).map(element => {
-              newData[props.fieldsKey[element]].error = result.data[element]
-            })
-            dispatchFieldData(newData)
-          }
+        } else {
+          handleFormValidationErrorMessages(result)
         }
         if (responsedRedirectPage) {
           triggerIntegration(hitCron, newNonce)
