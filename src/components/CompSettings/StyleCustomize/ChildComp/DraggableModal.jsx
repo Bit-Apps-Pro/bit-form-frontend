@@ -17,22 +17,24 @@ import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 import TransitionControlMenu from '../../../style-new/TransitionControlMenu'
+import TextDecorationControlMenu from './TextDecorationControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
 const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColorsPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, objectPaths, id, stateObjName, propertyPath, fldKey, hslaPaths }) => {
+const RenderComponent = ({ component, action, value, defaultValue, objectPaths, id, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
-    case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
+    case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} propertyArray={propertyArray} defaultValue={defaultValue} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
+    case 'text-decoration': return <TextDecorationControlMenu objectPaths={objectPaths} />
     case 'field-margin-control': return <MarginControlMenu />
     case 'theme-control': return <CustomThemeGallary fldKey={fldKey} />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
@@ -54,6 +56,7 @@ const setTitle = (component) => {
     case 'font': return 'Fonts'
     case 'label-control': return 'Label Placement Control'
     case 'spacing-control': return 'Label Spacing Control'
+    case 'text-decoration': return 'Text Decoration'
     case 'field-margin-control': return 'Field Margin Control'
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
@@ -69,7 +72,7 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, subtitle, action, value, objectPaths, id, fldKey, hslaPaths } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, propertyArray, subtitle, action, value, defaultValue, objectPaths, id, fldKey, hslaPaths } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
@@ -94,7 +97,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} fldKey={fldKey} hslaPaths={hslaPaths} />
+            <RenderComponent component={component} action={action} value={value} defaultValue={defaultValue} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} propertyArray={propertyArray} fldKey={fldKey} hslaPaths={hslaPaths} />
           </Suspense>
         </div>
       </div>
