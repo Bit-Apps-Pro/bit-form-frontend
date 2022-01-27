@@ -35,6 +35,7 @@ import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
+import IconStyleBtn from './IconStyleBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -43,6 +44,7 @@ function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const bits = useRecoilValue($bits)
   const { fieldKey: fldKey } = useParams()
+
   if (!fldKey) return <>No field exist with this field key</>
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -517,7 +519,10 @@ function TextFieldSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.subTlePreIcn && (
-                <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
+                <>
+                  <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
+                  <IconStyleBtn route="sub-titl-pre-i" />
+                </>
               )}
 
               <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
@@ -565,7 +570,10 @@ function TextFieldSettings() {
             <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.subTleSufIcn && (
-                <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
+                <>
+                  <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
+                  <IconStyleBtn route="sub-titl-suf-i" />
+                </>
               )}
 
               <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
@@ -636,7 +644,10 @@ function TextFieldSettings() {
               <span className={css(ut.fw500)}>Start Icon</span>
               <div className={css(ut.flxcb)}>
                 {fieldData?.hlpPreIcn && (
-                  <img src={fieldData?.hlpPreIcn} alt="Icon" width="18" height="18" />
+                  <>
+                    <img src={fieldData?.hlpPreIcn} alt="Icon" width="18" height="18" />
+                    <IconStyleBtn route="hlp-txt-pre-i" />
+                  </>
                 )}
 
                 <button type="button" onClick={() => setIconModel('hlpPreIcn')} className={css(ut.icnBtn)}>
@@ -686,7 +697,10 @@ function TextFieldSettings() {
               <span className={css(ut.fw500)}>End Icon</span>
               <div className={css(ut.flxcb)}>
                 {fieldData?.hlpSufIcn && (
-                  <img src={fieldData?.hlpSufIcn} alt="Icon" width="18" height="18" />
+                  <>
+                    <img src={fieldData?.hlpSufIcn} alt="Icon" width="18" height="18" />
+                    <IconStyleBtn route="hlp-txt-suf-i" />
+                  </>
                 )}
 
                 <button type="button" onClick={() => setIconModel('hlpSufIcn')} className={css(ut.icnBtn)}>
@@ -750,7 +764,11 @@ function TextFieldSettings() {
               <span className={css(ut.fw500)}>Start icon</span>
               <div className={css(ut.flxcb)}>
                 {fieldData?.prefixIcn && (
-                  <img src={fieldData?.prefixIcn} alt="start icon" width="18" height="18" />
+                  <>
+                    <img src={fieldData?.prefixIcn} alt="start icon" width="18" height="18" />
+                    <IconStyleBtn route="pre-i" />
+                  </>
+
                 )}
 
                 <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.icnBtn)}>
@@ -770,7 +788,10 @@ function TextFieldSettings() {
                 <span className={css(ut.fw500)}>End icon</span>
                 <div className={css(ut.flxcb)}>
                   {fieldData?.suffixIcn && (
-                    <img src={fieldData?.suffixIcn} alt="end icon" width="18" height="18" />
+                    <>
+                      <img src={fieldData?.suffixIcn} alt="end icon" width="18" height="18" />
+                      <IconStyleBtn route="suf-i" />
+                    </>
                   )}
                   <button onClick={() => setIconModel('suffixIcn')} className={css(ut.icnBtn)} type="button">
                     <EditIcn size={22} />
@@ -908,28 +929,30 @@ function TextFieldSettings() {
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
-        {fieldData.typ === 'text' && (
-          <>
-            <SimpleAccordion
-              title={__('Input mode', 'bitform')}
-              className={css(FieldStyle.fieldSection)}
-              open
-            >
-              <div className={css(FieldStyle.placeholder)}>
-                <select
-                  className={css(FieldStyle.input)}
-                  aria-label="Input mode for this Field"
-                  placeholder="Type field inpur mode here..."
-                  value={imputMode}
-                  onChange={handleInputmode}
-                >
-                  {inputModeList.map(itm => <option key={`input-itm${Math.random() * 222 + 89}`} value={itm}>{itm}</option>)}
-                </select>
-              </div>
-            </SimpleAccordion>
-            <hr className={css(FieldStyle.divider)} />
-          </>
-        )}
+        {
+          fieldData.typ === 'text' && (
+            <>
+              <SimpleAccordion
+                title={__('Input mode', 'bitform')}
+                className={css(FieldStyle.fieldSection)}
+                open
+              >
+                <div className={css(FieldStyle.placeholder)}>
+                  <select
+                    className={css(FieldStyle.input)}
+                    aria-label="Input mode for this Field"
+                    placeholder="Type field inpur mode here..."
+                    value={imputMode}
+                    onChange={handleInputmode}
+                  >
+                    {inputModeList.map(itm => <option key={`input-itm${Math.random() * 222 + 89}`} value={itm}>{itm}</option>)}
+                  </select>
+                </div>
+              </SimpleAccordion>
+              <hr className={css(FieldStyle.divider)} />
+            </>
+          )
+        }
 
         <SimpleAccordion
           title={__('Required', 'bitform')}
