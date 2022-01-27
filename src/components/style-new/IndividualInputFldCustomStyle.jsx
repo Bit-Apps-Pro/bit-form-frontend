@@ -40,8 +40,8 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
   const selectedField = fields[fldKey]
-
-  const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: arr[item] }))
+  
+  const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
 
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
@@ -256,11 +256,11 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontweightVariants}
-                  value={existingCssProperties?.['font-weight']}
+                  value={String(existingCssProperties?.['font-weight'])}
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && styles.font.fontWeightVariants.includes(existingCssProperties?.['font-weight'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -283,7 +283,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontStyleVariants}
-                  value={existingCssProperties?.['font-style']}
+                  value={String(existingCssProperties?.['font-style'])}
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
@@ -842,15 +842,15 @@ const options = [
 ]
 
 const staticFontweightVariants = [
-  { label: 100, value: 100 },
-  { label: 200, value: 200 },
-  { label: 300, value: 300 },
-  { label: 400, value: 400 },
-  { label: 500, value: 500 },
-  { label: 600, value: 600 },
-  { label: 700, value: 700 },
-  { label: 800, value: 800 },
-  { label: 900, value: 900 },
+  { label: 100, value: '100' },
+  { label: 200, value: '200' },
+  { label: 300, value: '300' },
+  { label: 400, value: '400' },
+  { label: 500, value: '500' },
+  { label: 600, value: '600' },
+  { label: 700, value: '700' },
+  { label: 800, value: '800' },
+  { label: 900, value: '900' },
   { label: 'Normal', value: 'normal' },
   { label: 'Bold', value: 'bold' },
   { label: 'Bolder', value: 'bolder' },
