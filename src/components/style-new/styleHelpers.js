@@ -469,3 +469,5 @@ export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
     drft.font.fontURL = url
   }))
 }
+
+export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
