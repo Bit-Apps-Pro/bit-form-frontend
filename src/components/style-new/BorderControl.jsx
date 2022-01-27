@@ -6,6 +6,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
@@ -25,18 +26,16 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
     switch (objectPaths.borderObjectName) {
       case 'themeVars':
         setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          drft[shadow] = ''
-          drft[borderRadius] = ''
-          drft[borderWidth] = ''
-          drft[border] = ''
+          assignNestedObj(drft, borderRadius, '')
+          assignNestedObj(drft, borderWidth, '')
+          assignNestedObj(drft, border, '')
         }))
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drft => {
-          drft[shadow] = ''
-          drft[borderRadius] = ''
-          drft[borderWidth] = ''
-          drft[border] = ''
+          assignNestedObj(drft, borderRadius, '')
+          assignNestedObj(drft, borderWidth, '')
+          assignNestedObj(drft, border, '')
         }))
         break
       default:

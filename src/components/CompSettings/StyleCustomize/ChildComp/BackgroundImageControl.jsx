@@ -40,7 +40,6 @@ export default function BackgroundImageControl({ stateObjName,
   const stateObj = getObjByKey(object, { styles })
 
   const onValueChange = (pathName, val) => {
-    console.log('styles', styles)
     setStyleStateObj(object, pathName, val, { setStyles })
   }
   const gradientChangeHandler = (e) => {

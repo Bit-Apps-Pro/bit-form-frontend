@@ -71,25 +71,37 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))
   if (prvUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
   if (prvUnit === 'px' && unit === '%') return Number(value * 6.25)
+  if (prvUnit === 'px' && unit === '') return Number(value)
 
   if (prvUnit === 'em' && unit === 'px') return Number(value * 16)
+  if (prvUnit === 'em' && unit === '') return Number(value * 16)
   if (prvUnit === 'em' && unit === 'rem') return Number(value)
   if (prvUnit === 'em' && unit === '%') return Number(value * 100)
 
   if (prvUnit === 'rem' && unit === 'em') return Number(value)
   if (prvUnit === 'rem' && unit === 'px') return Number(value * 16)
+  if (prvUnit === 'rem' && unit === '') return Number(value * 16)
   if (prvUnit === 'rem' && unit === '%') return Number(value * 100)
 
   if (prvUnit === '%' && unit === 'px') return Number(value * 0.16)
+  if (prvUnit === '%' && unit === '') return Number(value * 0.01)
   if (prvUnit === '%' && unit === 'rem') return Number(value * 0.01)
   if (prvUnit === '%' && unit === 'em') return Number(value * 0.01)
+
+  if (prvUnit === '' && unit === 'em') return Number((value * 0.0625).toFixed(3))
+  if (prvUnit === '' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
+  if (prvUnit === '' && unit === '%') return Number(value * 100)
+  if (prvUnit === '' && unit === 'px') return Number(value)
 }
 
 export const getNumFromStr = (str = '') => {
-  const num = str.match(/[-]?([0-9]*[.])?[0-9]+/gi)
+  const num = str?.match(/[-]?([0-9]*[.])?[0-9]+/gi)
   return num ? num[0] : 0
 }
-export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
+export const getStrFromStr = (str = '') => {
+  const newStr = str?.match(/([A-z]|%)+/gi)?.[0]
+  return newStr || ''
+}
 
 export const searchKey = (e) => {
   if (e.ctrlKey && e.code === 'Slash') {
