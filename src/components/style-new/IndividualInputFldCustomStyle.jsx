@@ -292,24 +292,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               </div>
             </div>
           )}
-          {existingProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
+
           {existingProperties.includes('border') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
@@ -518,24 +501,6 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
-          {existingHoverProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family', ':hover')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
           {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
@@ -724,24 +689,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
-          {existingFocusProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family', ':focus')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
+
           {existingFocusProperties.includes('border') && (
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
