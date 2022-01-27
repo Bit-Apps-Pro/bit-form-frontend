@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useEffect, useState } from 'react'
@@ -5,6 +6,7 @@ import { useFela } from 'react-fela'
 import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useSWR from 'swr'
+import toast from 'react-hot-toast'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
@@ -14,7 +16,7 @@ import ut from '../../styles/2.utilities'
 import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { generateFontUrl } from './styleHelpers'
+import { findExistingFontStyleAndWeidth, generateFontUrl } from './styleHelpers'
 
 export default function FontPickerMenu() {
   const { css } = useFela()
@@ -62,7 +64,7 @@ export default function FontPickerMenu() {
     setFonts(filtered)
   }
 
-  const getGoogleFontWeightFontStyle = (array) => {
+  const getGoogleFontWeightStyle = (array) => {
     const weight = []
     const style = ['normal']
     const param = []
@@ -94,8 +96,25 @@ export default function FontPickerMenu() {
     return [weight, style, string]
   }
 
+  const checkedExistingGoogleFontVariantStyle = () => {
+    const weightVariants = styles.font.fontWeightVariants
+    const styleVariants = styles.font.fontStyle
+
+    const [fontWeight, fontStyle] = findExistingFontStyleAndWeidth(styles)
+
+    const getNotExistVariant = fontWeight.filter(w => !weightVariants.includes(Number(w)))
+    const getNotExiststyle = fontStyle.filter(w => !styleVariants.includes(Number(w)))
+
+    if (getNotExistVariant.length > 0) {
+      toast.error(`Not available font weight ${getNotExistVariant.toString()}!`)
+    }
+    if (getNotExiststyle.length > 0) {
+      toast.error(`Not available font style ${getNotExiststyle.toString()}!`)
+    }
+  }
+
   const setCheck = (fontFamily, variants) => {
-    const [weight, style, string] = getGoogleFontWeightFontStyle(variants)
+    const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
     setStyles(prvStyles => produce(prvStyles, drft => {
       drft.font.fontType = 'google'
@@ -108,6 +127,7 @@ export default function FontPickerMenu() {
     }))
 
     setData(fontFamily)
+    styles.font.fontType === 'google' && checkedExistingGoogleFontVariantStyle()
   }
 
   const fontSorted = (orderBy) => {

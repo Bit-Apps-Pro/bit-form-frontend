@@ -14,6 +14,7 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
+import { staticFontStyleVariants, staticFontweightVariants } from '../../Utils/StaticData/fontvariant'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleDropdown from '../Utilities/SimpleDropdown'
@@ -25,7 +26,7 @@ import IndividualShadowControl from './IndividualShadowControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
@@ -41,7 +42,6 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const { classes, fieldType } = fldStyleObj
   const selectedField = fields[fldKey]
 
-  const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: arr[item] }))
 
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
@@ -96,9 +96,9 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
 
-  const fontPropertyUpdateHandler = (property, val) => {
+  const fontPropertyUpdateHandler = (property, val, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, getPropertyPath(property), val)
+      assignNestedObj(drft, getPropertyPath(property, state), val)
     }))
   }
 
@@ -256,11 +256,11 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontweightVariants}
-                  value={existingCssProperties?.['font-weight']}
+                  value={String(existingCssProperties?.['font-weight'])}
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && styles.font.fontWeightVariants.includes(existingCssProperties?.['font-weight'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) && cls.warningBorder)}
                 />
               </div>
             </div>
@@ -283,33 +283,16 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SimpleDropdown
                   options={fontStyleVariants}
-                  value={existingCssProperties?.['font-style']}
+                  value={String(existingCssProperties?.['font-style'])}
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-style'] && styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
                 />
               </div>
             </div>
           )}
-          {existingProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
+
           {existingProperties.includes('border') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
@@ -518,24 +501,6 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
-          {existingHoverProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family', ':hover')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
           {
             existingHoverProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
@@ -631,6 +596,59 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
+          {existingHoverProperties.includes('font-weight') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-weight', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontweightVariants}
+                  value={String(existingCssHoverProperties?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val, ':hover')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssHoverProperties?.['font-weight']))) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
+          {existingHoverProperties.includes('font-style') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-style', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-style', ':hover')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={String(existingCssHoverProperties?.['font-style'])}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val, ':hover')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-style'] && !styles.font.fontStyle.includes(existingCssHoverProperties?.['font-style'])) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
           <CssPropertyList
             properties={addableCssHoverProps}
             setProperty={(prop) => setNewCssProp(prop, ':hover')}
@@ -671,24 +689,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               />
             )
           }
-          {existingFocusProperties.includes('font-family') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-family', ':focus')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Family', 'bitform')}</span>
-              </div>
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <FontPicker id="global-font-fam" />
-              </div>
-            </div>
-          )}
+
           {existingFocusProperties.includes('border') && (
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
@@ -801,6 +802,59 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
               allowImportant
             />
           )}
+          {existingFocusProperties.includes('font-weight') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-weight', ':focus')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontweightVariants}
+                  value={String(existingFocusProperties?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val, ':focus')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingFocusProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingFocusProperties?.['font-weight']))) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
+          {existingFocusProperties.includes('font-style') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-style', ':focus')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-style', ':focus')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={String(existingFocusProperties?.['font-style'])}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val, ':focus')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingFocusProperties['font-style'] && !styles.font.fontStyle.includes(existingFocusProperties?.['font-style'])) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
           <CssPropertyList
             properties={addableCssFocusProps}
             setProperty={(prop) => setNewCssProp(prop, ':focus')}
@@ -839,25 +893,4 @@ const options = [
   { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
   { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
   { label: 'Focus', icn: 'Focus', show: ['icn'], tip: 'focus Style' },
-]
-
-const staticFontweightVariants = [
-  { label: 100, value: 100 },
-  { label: 200, value: 200 },
-  { label: 300, value: 300 },
-  { label: 400, value: 400 },
-  { label: 500, value: 500 },
-  { label: 600, value: 600 },
-  { label: 700, value: 700 },
-  { label: 800, value: 800 },
-  { label: 900, value: 900 },
-  { label: 'Normal', value: 'normal' },
-  { label: 'Bold', value: 'bold' },
-  { label: 'Bolder', value: 'bolder' },
-  { label: 'Lighter', value: 'lighter' },
-]
-const staticFontStyleVariants = [
-  { label: 'Normal', value: 'normal' },
-  { label: 'Italic', value: 'italic' },
-  { label: 'Oblique', value: 'oblique' },
 ]

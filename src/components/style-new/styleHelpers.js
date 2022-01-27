@@ -425,14 +425,11 @@ export const generateFontUrl = (font, string) => {
   const newParmrs = string !== '' ? `:ital,${string}` : ''
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
-export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
+export const findExistingFontStyleAndWeidth = (styles) => {
+  const fontWeightVariant = []
+  const fontStyleParam = []
   const fieldsArr = Object.keys(styles.fields)
   const fieldsLenght = fieldsArr.length
-
-  const fontWeightVariant = []
-  const fontWeightparam = []
-  const fontStyleParam = []
-  let string = ''
 
   for (let fldIndx = 0; fldIndx < fieldsLenght; fldIndx += 1) {
     const fieldClasses = styles.fields[fieldsArr[fldIndx]].classes
@@ -450,6 +447,12 @@ export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
       }
     }
   }
+  return [fontWeightVariant, fontStyleParam]
+}
+export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
+  const fontWeightparam = []
+  let string = ''
+  const [fontWeightVariant, fontStyleParam] = findExistingFontStyleAndWeidth(styles)
 
   const fontWeightVLen = fontWeightVariant.length
   if (fontWeightVLen > 0) {
@@ -469,3 +472,5 @@ export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
     drft.font.fontURL = url
   }))
 }
+
+export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
