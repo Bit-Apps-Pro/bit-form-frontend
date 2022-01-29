@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
@@ -11,6 +12,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -25,7 +27,6 @@ export default function FieldStyleCustomizeHOC() {
   const styles = useRecoilValue($styles)
 
   if (!styles?.fields?.[fieldKey]) { console.error('no style object found according to this field'); return <>No Field</> }
-
   return <FieldStyleCustomize {...{ formType, formID, fieldKey, element }} />
 }
 const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
@@ -38,6 +39,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const { fieldType, classes, theme } = fldStyleObj
 
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme.includes(element)
+  const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -75,6 +77,11 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
+  const deleteHoverProperties = (drft, elemnt) => {
+    const hoverStyle = drft.fields[fieldKey].classes[`.${fieldKey}-${elemnt}:hover`]
+    if (hoverStyle) deleteNestedObj(drft, getPath(elemnt, ':hover'))
+  }
+
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
     if (theme === 'material') return
     if (checked) {
@@ -91,19 +98,29 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           const getElementStyle = bitformDefaultTheme(fieldKey, fieldType)
           if (elmnt === 'field-container') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-fld-wrp`]
-            drft.fields[fieldKey].classes[`.${fieldKey}-fld-wrp`] = getStyle
+            assignNestedObj(drft, getPath('fld-wrp'), getStyle)
+
+            deleteHoverProperties(drft, 'fld-wrp')
           } else if (elmnt === 'label-subtitle-container') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-lbl-wrp`]
-            drft.fields[fieldKey].classes[`.${fieldKey}-lbl-wrp`] = getStyle
+            assignNestedObj(drft, getPath('lbl-wrp'), getStyle)
+
+            deleteHoverProperties(drft, 'lbl-wrp')
           } else if (elmnt === 'label') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-lbl`]
-            drft.fields[fieldKey].classes[`.${fieldKey}-lbl`] = getStyle
+            assignNestedObj(drft, getPath('lbl'), getStyle)
+
+            deleteHoverProperties(drft, 'fld')
           } else if (elmnt === 'subtitle') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-sub-titl`]
-            drft.fields[fieldKey].classes[`.${fieldKey}-sub-titl`] = getStyle
+            assignNestedObj(drft, getPath('sub-titl'), getStyle)
+
+            deleteHoverProperties(drft, 'sub-titl')
           } else if (elmnt === 'helper-text') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-hlp-txt`]
-            drft.fields[fieldKey].classes[`.${fieldKey}-hlp-txt`] = getStyle
+            assignNestedObj(drft, getPath('hlp-txt'), getStyle)
+
+            deleteHoverProperties(drft, 'hlp-txt')
           }
         }
         // if (theme === 'material') {
@@ -112,7 +129,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       }))
     }
   }
-  // console.log({ fldStyleObj, element, isFieldElemetOverrided })
 
   console.log('element', element)
 
