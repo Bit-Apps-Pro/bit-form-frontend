@@ -59,6 +59,9 @@ function TextFieldSettings() {
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
+  // const adminLblHide = fieldData.adminLblHide || true
+  // const subtitleHide = fieldData.subtitleHide || true
+  // const hlpTxtHide = fieldData.hlpTxtHide || true
   const subtitle = fieldData.subtitle || ''
   const helperTxt = fieldData.helperTxt || ''
   const imputMode = fieldData.inputMode || 'text'
@@ -72,6 +75,8 @@ function TextFieldSettings() {
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
+
+  console.log(fieldData)
 
   const subTlePreIcn = `.${fldKey}-sub-titl-pre-i`
   const subTleSufIcn = `.${fldKey}-sub-titl-suf-i`
@@ -135,7 +140,9 @@ function TextFieldSettings() {
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
       fieldData.adminLbl = fieldData.lbl || fldKey
+      fieldData.adminLblHide = true
     } else {
+      fieldData.adminLblHide = false
       delete fieldData.adminLbl
     }
     const req = e.target.checked ? 'on' : 'off'
@@ -160,8 +167,12 @@ function TextFieldSettings() {
   const hideSubTitle = ({ target: { checked } }) => {
     if (checked) {
       fieldData.subtitle = 'Sub Title'
+      fieldData.subtitleHide = true
       addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
-    } else delete fieldData.subtitle
+    } else {
+      delete fieldData.subtitle
+      fieldData.subtitleHide = false
+    }
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -185,8 +196,12 @@ function TextFieldSettings() {
   const hideHelperTxt = ({ target: { checked } }) => {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
+      fieldData.hlpTxtHide = true
       addDefaultStyleClasses(selectedFieldId, 'hepTxt', setStyles)
-    } else delete fieldData.helperTxt
+    } else {
+      fieldData.hlpTxtHide = false
+      delete fieldData.helperTxt
+    }
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -199,7 +214,9 @@ function TextFieldSettings() {
   const hidePlaceholder = (e) => {
     if (e.target.checked) {
       fieldData.ph = 'type here...'
+      fieldData.phHide = true
     } else {
+      fieldData.phHide = false
       delete fieldData.ph
     }
     const req = e.target.checked ? 'Show' : 'Hide'
@@ -481,9 +498,9 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideAdminLabel}
-          toggleChecked={fieldData?.adminLbl !== undefined}
-          open={fieldData?.adminLbl !== undefined}
-          disable={!fieldData?.adminLbl}
+          toggleChecked={fieldData?.adminLblHide}
+          open={fieldData?.adminLblHide}
+          disable={!fieldData?.adminLblHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
@@ -502,9 +519,9 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideSubTitle}
-          toggleChecked={fieldData?.subtitle !== undefined}
-          open={fieldData?.subtitle !== undefined}
-          disable={!fieldData?.subtitle}
+          toggleChecked={fieldData?.subtitleHide}
+          open={fieldData?.subtitleHide}
+          disable={!fieldData?.subtitleHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
@@ -627,9 +644,9 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideHelperTxt}
-          toggleChecked={fieldData?.helperTxt !== undefined}
-          open={fieldData?.helperTxt !== undefined}
-          disable={!fieldData?.helperTxt}
+          toggleChecked={fieldData?.hlpTxtHide}
+          open={fieldData?.hlpTxtHide}
+          disable={!fieldData?.hlpTxtHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
@@ -816,9 +833,9 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hidePlaceholder}
-          toggleChecked={fieldData?.ph !== undefined}
-          open={fieldData?.ph !== undefined}
-          disable={!fieldData?.ph}
+          toggleChecked={fieldData?.phHide}
+          open={fieldData?.phHide}
+          disable={!fieldData?.phHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
@@ -887,9 +904,8 @@ function TextFieldSettings() {
         >
           <div className={css(FieldStyle.placeholder)}>
             <MultiSelect
-              width="100%"
               defaultValue={autoComplete}
-              className={`${css(FieldStyle.input)}`}
+              className={`${css(FieldStyle.multiselectInput)}`}
               placeholder="Select one"
               options={autofillList}
               onChange={val => seAutoComplete(val)}
