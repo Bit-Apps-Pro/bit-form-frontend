@@ -16,6 +16,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
+import IconStyleBtn from '../IconStyleBtn'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import AutoResizeInput from './AutoResizeInput'
@@ -24,6 +25,7 @@ export default function FieldLabelSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
+
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
@@ -117,7 +119,10 @@ export default function FieldLabelSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.lblPreIcn && (
-                <img src={fieldData?.lblPreIcn} alt="start icon" width="18" height="18" />
+                <>
+                  <img src={fieldData?.lblPreIcn} alt="start icon" width="18" height="18" />
+                  <IconStyleBtn route="lbl-pre-i" />
+                </>
               )}
 
               <button type="button" onClick={() => setIconModel('lblPreIcn')} className={css(ut.icnBtn)}>
@@ -167,7 +172,10 @@ export default function FieldLabelSettings() {
             <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.lblSufIcn && (
-                <img src={fieldData?.lblSufIcn} alt="end icon" width="18" height="18" />
+                <>
+                  <img src={fieldData?.lblSufIcn} alt="end icon" width="18" height="18" />
+                  <IconStyleBtn route="lbl-suf-i" />
+                </>
               )}
 
               <button type="button" onClick={() => setIconModel('lblSufIcn')} className={css(ut.icnBtn)}>

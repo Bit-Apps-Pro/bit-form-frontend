@@ -12,6 +12,7 @@ import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import autonami from '../resource/img/integ/autonami.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
@@ -83,6 +84,7 @@ function Integrations() {
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
+    { type: 'Autonami', logo: autonami, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },

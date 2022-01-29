@@ -13,8 +13,10 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
+import { staticFontStyleVariants, staticFontweightVariants } from '../../Utils/StaticData/fontvariant'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SimpleDropdown from '../Utilities/SimpleDropdown'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
@@ -25,7 +27,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import TextDecorationControl from './TextDecorationControl'
 import TransitionControl from './TransitionControl'
 
@@ -43,6 +45,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
+
+  const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
@@ -164,6 +169,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     const convertvalue = unitConverter(unit, value, letterSpacingUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('letter-spacing'), `${convertvalue}${unit}`)
+    }))
+  }
+  const fontPropertyUpdateHandler = (property, val, state = '') => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      assignNestedObj(drft, getPropertyPath(property, state), val)
     }))
   }
 
@@ -655,38 +665,92 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             </div>
           )}
-
-          {existingProperties.includes('opacity') && (
+          {existingProperties.includes('font-weight') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
                 <button
                   title="Delete Property"
-                  onClick={() => delPropertyHandler('opacity')}
+                  onClick={() => delPropertyHandler('font-weight')}
                   className={`${css(cls.delBtn)} delete-btn`}
                   type="button"
                 >
                   <TrashIcn size="14" />
                 </button>
-                <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
+                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
               </div>
-              <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
-
+              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
               <div className={css(ut.flxc, { cg: 3 })}>
-                <SizeControl
-                  className={css({ w: 130 })}
-                  inputHandler={fldOpacityHandler}
-                  sizeHandler={({ unitKey, unitValue }) => fldOpacityHandler({ unit: unitKey, value: unitValue })}
-                  value={fldOpctyValue || 0}
-                  unit={fldOpctyUnit}
-                  min={0}
-                  max={fldOpctyUnit ? 100 : 1}
-                  width="130px"
-                  options={['', '%']}
-                  step={fldOpctyUnit ? 1 : '0.1'}
+                <SimpleDropdown
+                  options={fontweightVariants}
+                  value={String(existingCssProperties?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val)}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
                 />
               </div>
             </div>
           )}
+          {existingProperties.includes('font-style') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-style')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-style')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={String(existingCssProperties?.['font-style'])}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val)}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
+          {
+            existingProperties.includes('opacity') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('opacity')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
+                </div>
+                <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
+
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <SizeControl
+                    className={css({ w: 130 })}
+                    inputHandler={fldOpacityHandler}
+                    sizeHandler={({ unitKey, unitValue }) => fldOpacityHandler({ unit: unitKey, value: unitValue })}
+                    value={fldOpctyValue || 0}
+                    unit={fldOpctyUnit}
+                    min={0}
+                    max={fldOpctyUnit ? 100 : 1}
+                    width="130px"
+                    options={['', '%']}
+                    step={fldOpctyUnit ? 1 : '0.1'}
+                  />
+                </div>
+              </div>
+            )
+          }
           <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
         </div>
 
@@ -816,6 +880,59 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               fldKey={fldKey}
             />
           )}
+          {existingHoverProperties.includes('font-weight') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-weight', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontweightVariants}
+                  value={String(existingCssHoverProperties?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val, ':hover')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssHoverProperties?.['font-weight']))) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
+          {existingHoverProperties.includes('font-style') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('font-style', ':hover')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+              </div>
+              <ResetStyle propertyPath={getPropertyPath('font-style', ':hover')} stateObjName="styles" />
+
+              <div className={css(ut.flxc, { cg: 3 })}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={String(existingCssHoverProperties?.['font-style'])}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val, ':hover')}
+                  w={130}
+                  h={30}
+                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-style'] && !styles.font.fontStyle.includes(existingCssHoverProperties?.['font-style'])) || cls.warningBorder)}
+                />
+              </div>
+            </div>
+          )}
           <CssPropertyList
             properties={addableCssHoverProps}
             setProperty={(prop) => setNewCssProp(prop, ':hover')}
@@ -825,13 +942,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     </>
   )
 }
-
-const textAlignOptions = [
-  { label: 'Center', value: 'center' },
-  { label: 'Left', value: 'left' },
-  { label: 'Right', value: 'right' },
-  { label: 'Justify', value: 'justify' },
-]
 
 const cls = {
   container: { ml: 12, mr: 15, pn: 'relative' },

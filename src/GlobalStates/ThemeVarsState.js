@@ -60,6 +60,7 @@ const $themeVarsLg = atom({
   default: {
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
+    '--g-font-family': 'inherit', // default font family inherit from theme
     '--dir': 'ltr', // direaction
     '--inp-wrp-width': '',
     '--lbl-al': '', // label align
