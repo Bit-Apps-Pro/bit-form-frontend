@@ -98,6 +98,7 @@ const ut = {
   p2: { p: 10 },
   p3: { p: 15 },
   p4: { p: 20 },
+  pb10: { pb: 10 },
   pr4: { pr: '20px !important' },
   pl6: { pl: 30 },
   py1: { py: 5 },
