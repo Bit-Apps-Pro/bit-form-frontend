@@ -1501,8 +1501,10 @@ arrow:after,
     --g-41: #00faa7;
     --white-base: 0;
     --white-100: hsla(var(--white-base), 0%, 100%, 100%);
+    --white-0-0-12: hsla(var(--white-base), 0%, 0%, 12%);
     --white-0-93: hsla(var(--white-base), 0%, 93%, 100%);
     --black-0: hsla(var(--white-base), 0%, 0%, 100%);
+    --red-83-54: hsla(var(--white-base), 83%, 54%, 100%);
     --red-100-49: hsla(var(--white-base), 100%, 49%, 100%);
 }
  
