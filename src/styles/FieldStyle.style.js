@@ -22,7 +22,7 @@ const FieldStyle = {
     ':hover': { bc: 'hsl(210deg 100% 98%)' },
   },
 
-  placeholder: { dy: 'block'},
+  placeholder: { dy: 'block' },
 
   input: {
     fs: 14,
@@ -47,6 +47,10 @@ const FieldStyle = {
     fs: 14,
     fw: 500,
     mt: 10,
+    '& .msl': {
+      h: '35px!important',
+      '& .msl-input': { p: 1 },
+    },
     '&.msl-vars': { w: '99% !important' },
     '&.msl-wrp > .msl-options': {
       pn: 'relative !important',
