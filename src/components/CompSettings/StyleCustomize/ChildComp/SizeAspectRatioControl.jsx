@@ -14,12 +14,12 @@ export default function SizeAspectRatioControl({ options, className, valuChangeH
       if (inputId === 0) {
         const oldH = getNumFromStr(options[1].value)
         const oldW = getNumFromStr(options[0].value)
-        const newH = (value * oldH) / oldW
+        const newH = Number((value * oldH) / oldW).toFixed(2)
         valuChangeHandler(newH, unit, 1)
       } else if (inputId === 1) {
         const oldW = getNumFromStr(options[0].value)
         const oldH = getNumFromStr(options[1].value)
-        const newW = (value * oldW) / oldH
+        const newW = Number((value * oldW) / oldH).toFixed(2)
         valuChangeHandler(newW, unit, 0)
       }
     }

@@ -22,7 +22,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, un
 // TODO fix shadow value changing ,
 // TODO check empty value
 // TODO check all use cases  empty/null/undefined values
-function IndividualShadowControlMenu({ propertyPath }) {
+function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
@@ -44,9 +44,8 @@ function IndividualShadowControlMenu({ propertyPath }) {
   const splitMultipleShadows = (shadowString) => (shadowString && shadowString?.split(/,(?![^(]*\))/gi)) || []
   const arrOfShadowStr = splitMultipleShadows(getShadowStyleVal())
 
-  const arrOfExtractedShadowObj = extractMultipleShadowValuesArr(arrOfShadowStr)
+  const arrOfExtractedShadowObj = extractMultipleShadowValuesArr(arrOfShadowStr, propertyArray)
 
-  console.log({ arrOfExtractedShadowObj })
   const newShadowVal = (name, val, unit) => {
     if (name === 'color') {
       return val || 'hsla(0, 0%, 0%, 100)'
@@ -85,7 +84,7 @@ function IndividualShadowControlMenu({ propertyPath }) {
   const addShadowHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
       const getOldShadow = getShadowStyleVal()
-      const newShadow = getOldShadow === undefined || getOldShadow === '' ? '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)' : `${getOldShadow},0px 5px 15px 2px hsla(0, 0%, 0%, 35%)${importantAlreadyExist}`
+      const newShadow = getOldShadow === undefined || getOldShadow === '' ? defaultValue : `${getOldShadow},${defaultValue}${importantAlreadyExist}`
       assignNestedObj(drftStyles, propertyPath, newShadow)
     }))
   }
@@ -98,6 +97,7 @@ function IndividualShadowControlMenu({ propertyPath }) {
       assignNestedObj(drftStyles, propertyPath, shadowArr.toString())
     }))
   }
+
   return (
     <div>
       {arrOfExtractedShadowObj.map((shadowObj, indx) => (
@@ -119,69 +119,93 @@ function IndividualShadowControlMenu({ propertyPath }) {
             key={`shadow-${indx * 2 * 4}`}
           >
             <div className={css(ut.p1)}>
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>X</span>
-                <SizeControl
-                  width="105px"
-                  value={Number(getNumFromStr(shadowObj.xOffset) || 0)}
-                  unit={getStrFromStr(shadowObj.xOffset) || 'px'}
-                  inputHandler={valObj => generateShadowValue('xOffset', valObj, indx)}
-                  sizeHandler={({ unitKey, unitValue }) => unitHandler('xOffset', unitKey, unitValue, shadowObj.xOffset, indx)}
-                  options={['px', 'em', 'rem']}
-                  min="-10"
-                  max="20"
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Y</span>
-                <SizeControl
-                  width="105px"
-                  value={Number(getNumFromStr(shadowObj.yOffset) || 0)}
-                  unit={getStrFromStr(shadowObj.yOffset) || 'px'}
-                  inputHandler={valObj => generateShadowValue('yOffset', valObj, indx)}
-                  sizeHandler={({ unitKey, unitValue }) => unitHandler('yOffset', unitKey, unitValue, shadowObj.yOffset, indx)}
-                  options={['px', 'em', 'rem']}
-                  min="-10"
-                  max="20"
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Blur</span>
-                <SizeControl
-                  width="105px"
-                  value={Number(getNumFromStr(shadowObj.blur) || 0)}
-                  unit={getStrFromStr(shadowObj.blur) || 'px'}
-                  inputHandler={valObj => generateShadowValue('blur', valObj, indx)}
-                  sizeHandler={({ unitKey, unitValue }) => unitHandler('blur', unitKey, unitValue, shadowObj.blur, indx)}
-                  options={['px', 'em', 'rem']}
-                  min="-10"
-                  max="20"
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Spread</span>
-                <SizeControl
-                  width="105px"
-                  value={Number(getNumFromStr(shadowObj.spread) || 0)}
-                  unit={getStrFromStr(shadowObj.spread) || 'px'}
-                  inputHandler={valObj => generateShadowValue('spread', valObj, indx)}
-                  sizeHandler={({ unitKey, unitValue }) => unitHandler('spread', unitKey, unitValue, shadowObj.spread, indx)}
-                  options={['px', 'em', 'rem']}
-                  min="-10"
-                  max="20"
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Color</span>
-                <SimpleColorPickerTooltip action={{ onChange: val => generateShadowValue('color', { value: val }, indx) }} value={shadowObj.color} />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Inset</span>
-                <select className={css(sc.select)} value={shadowObj.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}>
-                  <option value="">outset</option>
-                  <option value="inset">inset</option>
-                </select>
-              </div>
+              {
+                propertyArray.includes('xOffset') && (
+                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>X</span>
+                    <SizeControl
+                      width="105px"
+                      value={Number(getNumFromStr(shadowObj.xOffset) || 0)}
+                      unit={getStrFromStr(shadowObj.xOffset) || 'px'}
+                      inputHandler={valObj => generateShadowValue('xOffset', valObj, indx)}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('xOffset', unitKey, unitValue, shadowObj.xOffset, indx)}
+                      options={['px', 'em', 'rem']}
+                      min="-10"
+                      max="20"
+                    />
+                  </div>
+                )
+              }
+              {
+                propertyArray.includes('yOffset') && (
+                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>Y</span>
+                    <SizeControl
+                      width="105px"
+                      value={Number(getNumFromStr(shadowObj.yOffset) || 0)}
+                      unit={getStrFromStr(shadowObj.yOffset) || 'px'}
+                      inputHandler={valObj => generateShadowValue('yOffset', valObj, indx)}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('yOffset', unitKey, unitValue, shadowObj.yOffset, indx)}
+                      options={['px', 'em', 'rem']}
+                      min="-10"
+                      max="20"
+                    />
+                  </div>
+                )
+              }
+              {
+                propertyArray.includes('blur') && (
+                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>Blur</span>
+                    <SizeControl
+                      width="105px"
+                      value={Number(getNumFromStr(shadowObj.blur) || 0)}
+                      unit={getStrFromStr(shadowObj.blur) || 'px'}
+                      inputHandler={valObj => generateShadowValue('blur', valObj, indx)}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('blur', unitKey, unitValue, shadowObj.blur, indx)}
+                      options={['px', 'em', 'rem']}
+                      min="-10"
+                      max="20"
+                    />
+                  </div>
+                )
+              }
+              {
+                propertyArray.includes('spread') && (
+                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>Spread</span>
+                    <SizeControl
+                      width="105px"
+                      value={Number(getNumFromStr(shadowObj.spread) || 0)}
+                      unit={getStrFromStr(shadowObj.spread) || 'px'}
+                      inputHandler={valObj => generateShadowValue('spread', valObj, indx)}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('spread', unitKey, unitValue, shadowObj.spread, indx)}
+                      options={['px', 'em', 'rem']}
+                      min="-10"
+                      max="20"
+                    />
+                  </div>
+                )
+              }
+              {
+                propertyArray.includes('color') && (
+                  <div className={css(ut.flxcb, ut.mb2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>Color</span>
+                    <SimpleColorPickerTooltip action={{ onChange: val => generateShadowValue('color', { value: val }, indx) }} value={shadowObj.color} />
+                  </div>
+                )
+              }
+              {
+                propertyArray.includes('inset') && (
+                  <div className={css(ut.flxcb, ut.mb2)}>
+                    <span className={css(ut.fs12, ut.fw500)}>Inset</span>
+                    <select className={css(sc.select)} value={shadowObj.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}>
+                      <option value="">outset</option>
+                      <option value="inset">inset</option>
+                    </select>
+                  </div>
+                )
+              }
             </div>
           </SimpleAccordion>
           <div className={css(c.divider)} />
@@ -204,11 +228,14 @@ function IndividualShadowControlMenu({ propertyPath }) {
 
 export default memo(IndividualShadowControlMenu)
 
-const extractMultipleShadowValuesArr = (arrOfShadowStr) => {
+const extractMultipleShadowValuesArr = (arrOfShadowStr, propertyArray) => {
   const shadowArr = arrOfShadowStr.map(shdw => {
     if (!shdw) return { xOffset: '2px', yOffset: '2px', blur: '3px', spread: '0px', color: 'hsla(0, 44%, 35%, 66%)', inset: '' }
-    const [xOffset, yOffset, blur, spread, color, inset] = splitValueBySpaces(shdw)
-    return { xOffset, yOffset, blur, spread, color, inset }
+    const tempObj = {}
+    splitValueBySpaces(shdw).map((value, index) => {
+      tempObj[propertyArray[index]] = value
+    })
+    return tempObj
   })
   return shadowArr
 }

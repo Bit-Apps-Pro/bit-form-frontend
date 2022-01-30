@@ -1,6 +1,6 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -9,33 +9,38 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
-import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
+import { getObjByKey, getValueByObjPath, showDraggableModal } from './styleHelpers'
 
-export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant }) {
+export default function TextDecorationControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
 
-  const [, color] = splitValueBySpaces(value)
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
-  const setThemeVars = useSetRecoilState($themeVars)
-  const setStyles = useSetRecoilState($styles)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [styles, setStyles] = useRecoilState($styles)
 
-  const { shadow, borderRadius, borderWidth, border } = objectPaths.paths
+  const stateObj = getObjByKey(objectPaths.object, { themeVars, styles })
+
+  const { textDecorationLine, textDecorationStyle, textDecorationColor, textDecorationThickness } = objectPaths.paths
+
+  const txtDcrtnValue = `${getValueByObjPath(stateObj, textDecorationLine)} ${getValueByObjPath(stateObj, textDecorationStyle)} ${getValueByObjPath(stateObj, textDecorationThickness)}`
 
   const clearValue = () => {
-    switch (objectPaths.borderObjectName) {
+    switch (objectPaths.txtObjName) {
       case 'themeVars':
         setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          assignNestedObj(drft, borderRadius, '')
-          assignNestedObj(drft, borderWidth, '')
-          assignNestedObj(drft, border, '')
+          assignNestedObj(drft, textDecorationLine, '')
+          assignNestedObj(drft, textDecorationStyle, '')
+          assignNestedObj(drft, textDecorationColor, '')
+          assignNestedObj(drft, textDecorationThickness, '')
         }))
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drft => {
-          assignNestedObj(drft, borderRadius, '')
-          assignNestedObj(drft, borderWidth, '')
-          assignNestedObj(drft, border, '')
+          assignNestedObj(drft, textDecorationLine, '')
+          assignNestedObj(drft, textDecorationStyle, '')
+          assignNestedObj(drft, textDecorationColor, '')
+          assignNestedObj(drft, textDecorationThickness, '')
         }))
         break
       default:
@@ -45,18 +50,18 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={shadow || borderRadius || borderWidth || border} />)}
+      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={textDecorationLine} />)}
       <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'text-decoration', subtitle, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
         >
-          <ColorPreview bg={color?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-          <span className={css(c.clrVal)}>{value || 'Add Border Style'}</span>
+          <ColorPreview bg={getValueByObjPath(stateObj, textDecorationColor)?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
+          <span className={css(c.clrVal)}>{txtDcrtnValue || 'Add Text Decoration Style'}</span>
         </button>
-        {value && (
-          <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Border">
+        {txtDcrtnValue && (
+          <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear TextDecoration">
             <CloseIcn size="12" />
           </button>
         )}

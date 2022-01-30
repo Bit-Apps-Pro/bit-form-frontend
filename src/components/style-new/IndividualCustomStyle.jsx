@@ -28,6 +28,7 @@ import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import TextDecorationControl from './TextDecorationControl'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
@@ -73,7 +74,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromThemeVar(getVlu)
     const value = getNumFromStr(themeVal) || 0
-    const unit = getStrFromStr(themeVal) || 'px'
+    const unit = getStrFromStr(themeVal)
     return [value, unit]
   }
 
@@ -85,6 +86,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       assignNestedObj(drft, getPropertyPath(property), v)
     }))
   }
+
+  // for field opacity
+  const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
+  const fldOpacityHandler = ({ value, unit }) => updateHandler(value, unit, fldOpctyUnit, 'opacity')
 
   // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
@@ -120,6 +125,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
   }
+  const delMultiPropertyHandler = (propertyPaths, state = '') => {
+    propertyPaths.map(propertyPath => {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        deleteNestedObj(drft, propertyPath)
+      }))
+    })
+  }
   const clearHandler = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, deleteNestedObj(property, state), '')
@@ -136,6 +148,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
+  const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
   // const lineHeightHandler = ({ value, unit }) => {
   //   const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
@@ -152,6 +165,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
+  const letterSpacingHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value, letterSpacingUnit)
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('letter-spacing'), `${convertvalue}${unit}`)
+    }))
+  }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, getPropertyPath(property, state), val)
@@ -175,6 +194,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       border: getPropertyPath('border'),
       borderWidth: getPropertyPath('border-width'),
       borderRadius: getPropertyPath('border-radius'),
+    },
+  }
+
+  const fldTxtDcrtnObjPath = {
+    object: 'styles',
+    txtObjName: 'styles',
+    paths: {
+      textDecorationLine: getPropertyPath('text-decoration-line'),
+      textDecorationStyle: getPropertyPath('text-decoration-style'),
+      textDecorationColor: getPropertyPath('text-decoration-color'),
+      textDecorationThickness: getPropertyPath('text-decoration-thickness'),
     },
   }
 
@@ -360,6 +390,36 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               />
             </div>
           )}
+          {existingProperties.includes('letter-spacing') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => delPropertyHandler('letter-spacing')}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Letter-spacing', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('letter-spacing')}
+                stateObjName="styles"
+              />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={letterSpacingHandler}
+                sizeHandler={({ unitKey, unitValue }) => letterSpacingHandler({ unit: unitKey, value: unitValue })}
+                value={letterSpacingVal || 0}
+                unit={letterSpacingUnit || 'px'}
+                width="130px"
+                options={['px', 'em', 'rem', '']}
+                step={letterSpacingUnit !== 'px' ? '0.1' : 1}
+              />
+            </div>
+          )}
           {
             existingProperties.includes('margin') && (
               <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
@@ -470,6 +530,53 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 />
               </div>
             </div>
+          )}
+
+          {existingProperties.includes('text-decoration') && (
+            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+              <div className={css(ut.flxc, ut.ml1)}>
+                <button
+                  title="Delete Property"
+                  onClick={() => {
+                    delPropertyHandler('text-decoration')
+                    delMultiPropertyHandler(Object.values(fldTxtDcrtnObjPath.paths))
+                  }}
+                  className={`${css(cls.delBtn)} delete-btn`}
+                  type="button"
+                >
+                  <TrashIcn size="14" />
+                </button>
+                <span className={css(ut.fw500)}>{__('Text Decoration', 'bitform')}</span>
+              </div>
+              <ResetStyle
+                propertyPath={getPropertyPath('text-decoration-line')}
+                stateObjName="styles"
+              />
+              <TextDecorationControl
+                subtitle="text-decoration"
+                value={existingCssProperties?.['text-decoration-line']}
+                objectPaths={fldTxtDcrtnObjPath}
+                id="fld-txt-dcrtn"
+              />
+            </div>
+          )}
+
+          {existingProperties.includes('text-shadow') && (
+            <IndividualShadowControl
+              title="Text-shadow"
+              subtitle="text-shadow"
+              value={existingCssProperties?.['text-shadow']}
+              defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
+              modalId="field-container-text-shadow"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('text-shadow')}
+              propertyArray={['xOffset', 'yOffset', 'blur', 'color']}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('text-shadow')}
+              clearHandler={() => clearHandler('text-shadow')}
+              allowImportant
+              fldKey={fldKey}
+            />
           )}
 
           {existingProperties.includes('box-shadow') && (
@@ -611,6 +718,39 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             </div>
           )}
+          {
+            existingProperties.includes('opacity') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('opacity')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
+                </div>
+                <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
+
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <SizeControl
+                    className={css({ w: 130 })}
+                    inputHandler={fldOpacityHandler}
+                    sizeHandler={({ unitKey, unitValue }) => fldOpacityHandler({ unit: unitKey, value: unitValue })}
+                    value={fldOpctyValue || 0}
+                    unit={fldOpctyUnit}
+                    min={0}
+                    max={fldOpctyUnit ? 100 : 1}
+                    width="130px"
+                    options={['', '%']}
+                    step={fldOpctyUnit ? 1 : '0.1'}
+                  />
+                </div>
+              </div>
+            )
+          }
           <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
         </div>
 
