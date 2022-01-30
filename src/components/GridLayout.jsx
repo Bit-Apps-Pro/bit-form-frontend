@@ -261,8 +261,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       const allBreakpoints = ['sm', 'md', 'lg']
       allBreakpoints.forEach(brkpnt => {
         const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
-        const { x, y, w, h, minH, maxH, minW } = layouts[brkpnt][layIndx]
-        const newLayoutItem = { i: newBlk, x, y: y + h, w, h, minH, maxH, minW }
+        const { y, h } = layouts[brkpnt][layIndx]
+        const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
         newLayItem[brkpnt] = newLayoutItem
         draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
       })
@@ -273,6 +273,18 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const oldFields = produce(fields, draft => { draft[newBlk] = fldData })
     // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
+
+    // clone style
+    setStyles(styles => produce(styles, draftStyle => {
+      const fldStyle = draftStyle.fields[fldKey]
+      const fldClasses = fldStyle.classes
+      draftStyle.fields[newBlk] = { ...fldStyle }
+      draftStyle.fields[newBlk].classes = {}
+      Object.keys(fldClasses).forEach(cls => {
+        const newClassName = cls.replace(fldKey, newBlk)
+        draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+      })
+    }))
 
     sessionStorage.setItem('btcd-lc', '-')
 
