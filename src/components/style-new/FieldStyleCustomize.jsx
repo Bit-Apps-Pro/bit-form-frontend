@@ -38,6 +38,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
 
+  console.log(styles)
+
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
 
@@ -77,9 +79,9 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
-  const deleteHoverProperties = (drft, elemnt) => {
-    const hoverStyle = drft.fields[fieldKey].classes[`.${fieldKey}-${elemnt}:hover`]
-    if (hoverStyle) deleteNestedObj(drft, getPath(elemnt, ':hover'))
+  const deleteStyle = (drft, elemnt, state = '') => {
+    const hoverStyle = drft.fields[fieldKey].classes[`.${fieldKey}-${elemnt}${state}`]
+    if (hoverStyle) deleteNestedObj(drft, getPath(elemnt, state))
   }
 
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
@@ -100,27 +102,34 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             const getStyle = getElementStyle.classes[`.${fieldKey}-fld-wrp`]
             assignNestedObj(drft, getPath('fld-wrp'), getStyle)
 
-            deleteHoverProperties(drft, 'fld-wrp')
+            deleteStyle(drft, 'fld-wrp', ':hover')
           } else if (elmnt === 'label-subtitle-container') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-lbl-wrp`]
             assignNestedObj(drft, getPath('lbl-wrp'), getStyle)
 
-            deleteHoverProperties(drft, 'lbl-wrp')
+            deleteStyle(drft, 'lbl-wrp', ':hover')
           } else if (elmnt === 'label') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-lbl`]
             assignNestedObj(drft, getPath('lbl'), getStyle)
 
-            deleteHoverProperties(drft, 'fld')
+            deleteStyle(drft, 'lbl', ':hover')
           } else if (elmnt === 'subtitle') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-sub-titl`]
             assignNestedObj(drft, getPath('sub-titl'), getStyle)
 
-            deleteHoverProperties(drft, 'sub-titl')
+            deleteStyle(drft, 'sub-titl', ':hover')
           } else if (elmnt === 'helper-text') {
             const getStyle = getElementStyle.classes[`.${fieldKey}-hlp-txt`]
             assignNestedObj(drft, getPath('hlp-txt'), getStyle)
 
-            deleteHoverProperties(drft, 'hlp-txt')
+            deleteStyle(drft, 'hlp-txt', ':hover')
+          } else if (elmnt === 'fld') {
+            const fldStyle = getElementStyle.classes[`.${fieldKey}-fld`]
+            const hoverFldStyle = getElementStyle.classes[`.${fieldKey}-fld:hover`]
+            const focusFldStyle = getElementStyle.classes[`.${fieldKey}-fld:focus`]
+            assignNestedObj(drft, getPath('fld'), fldStyle)
+            assignNestedObj(drft, getPath('fld', ':hover'), hoverFldStyle)
+            assignNestedObj(drft, getPath('fld', ':focus'), focusFldStyle)
           }
         }
         // if (theme === 'material') {
@@ -252,6 +261,12 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             <div className={css(!checkExistElement(element) && cls.blur)}>
               <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />
             </div>
+          )}
+          {element === 'bg-img' && (
+            <h2>background image</h2>
+            // <div className={css(!checkExistElement(element) && cls.blur)}>
+            //   <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />
+            // </div>
           )}
         </div>
 

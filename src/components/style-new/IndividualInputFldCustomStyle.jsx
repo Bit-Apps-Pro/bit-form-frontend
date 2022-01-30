@@ -21,7 +21,6 @@ import SimpleDropdown from '../Utilities/SimpleDropdown'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
-import FontPicker from './FontPicker'
 import IndividualShadowControl from './IndividualShadowControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -42,7 +41,6 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const { classes, fieldType } = fldStyleObj
   const selectedField = fields[fldKey]
 
-
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
@@ -50,7 +48,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
 
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
-    const existingProperties = Object.keys(existingCssProperties)
+    const existingProperties = Object.keys(existingCssProperties || [])
     const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
     return [existingCssProperties, existingProperties, addableCssProps]
   }
