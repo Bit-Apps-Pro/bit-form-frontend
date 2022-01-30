@@ -26,7 +26,7 @@ export default function StyleLayers() {
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
       <div className={css(s.divider)} />
-      <Scrollbars style={{ height: 'calc(100% - 120px' }} autoHide>
+      <Scrollbars style={{ height: 'calc(100% - 120px)' }} autoHide>
         <div className={css(s.scrollDiv)}>
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
