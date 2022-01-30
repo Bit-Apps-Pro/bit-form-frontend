@@ -1061,6 +1061,7 @@ function TextFieldSettings() {
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
                 className={css(FieldStyle.fieldSection)}
+                isUnique="show"
               />
               <hr className={css(FieldStyle.divider)} />
             </>

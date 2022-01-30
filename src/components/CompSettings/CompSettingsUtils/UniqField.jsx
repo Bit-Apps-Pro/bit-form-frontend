@@ -29,6 +29,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
+    // console.log('name', name)
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[name]) fieldData.err[name] = {}
     if (checked) {
@@ -46,7 +47,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
 
   const setShowErrMsg = e => {
     const { name, checked } = e.target
-
+    // console.log('name', name)
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
     if (checked) {
@@ -72,6 +73,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
       setErrorModal(true)
     })
   }
+  // console.log('Unic', fieldData.err, fieldData.err[type][isUnique], type, isUnique)
 
   return (
     <SimpleAccordion
