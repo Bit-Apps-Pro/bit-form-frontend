@@ -3,10 +3,10 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useSWR from 'swr'
-import toast from 'react-hot-toast'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
@@ -24,8 +24,6 @@ export default function FontPickerMenu() {
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [focusSearch, setfocusSearch] = useState(false)
-  const [data, setData] = useState('Palanquin')
-  const [scrolIndex, setScrolIndex] = useState(0)
   const [controller, setController] = useState({ parent: 'Custom', child: '' })
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempStyle = useRecoilValue($tempStyles)
@@ -48,14 +46,14 @@ export default function FontPickerMenu() {
     } else {
       setLoading(false)
     }
-    const index = allFonts?.items?.findIndex(item => item.family === data)
-    setScrolIndex(index)
   }, [allFonts])
 
   const onTabChangeHandler = (lbl, type) => {
     if (type === 'parent') setController({ parent: lbl })
     else if (type === 'child') setController(old => ({ ...old, child: lbl }))
   }
+
+  const findSelectedFontIndx = () => styles.font.fontType === 'google' && allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family'])
 
   const searchHandler = (e) => {
     const { value } = e.target
@@ -125,8 +123,6 @@ export default function FontPickerMenu() {
     setThemeVars(prvState => produce(prvState, drft => {
       drft['--g-font-family'] = fontFamily
     }))
-
-    setData(fontFamily)
     styles.font.fontType === 'google' && checkedExistingGoogleFontVariantStyle()
   }
 
@@ -227,7 +223,8 @@ export default function FontPickerMenu() {
             height={200}
             itemCount={fonts.length || 1}
             itemSize={fonts.length ? 30 : 0}
-            scrollToIndex={fonts.length ? scrolIndex : 0}
+            scrollToIndex={fonts.length ? findSelectedFontIndx() : 0}
+            scrollToAlignment="auto"
             renderItem={({ index, style }) => (
               <div key={index} style={style}>
                 <button
