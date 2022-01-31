@@ -38,6 +38,7 @@ export default function ThemeCustomize() {
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const genarateTitle = () => {
