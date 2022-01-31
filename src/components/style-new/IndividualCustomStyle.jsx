@@ -11,9 +11,11 @@ import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
+import sizeControlStyle from '../../styles/sizeControl.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import { staticFontStyleVariants, staticFontweightVariants } from '../../Utils/StaticData/fontvariant'
+import CustomInputControl from '../CompSettings/StyleCustomize/ChildComp/CustomInputControl'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleDropdown from '../Utilities/SimpleDropdown'
@@ -22,12 +24,13 @@ import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import FilterControler from './FilterControler'
+import Important from './Important'
 import IndividualShadowControl from './IndividualShadowControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 import TextDecorationControl from './TextDecorationControl'
 import TransitionControl from './TransitionControl'
 
@@ -72,7 +75,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const themeVal = getValueFromThemeVar(getVlu)
+    const themeVal = getValueFromThemeVar(getVlu?.replace('!important', ''))
     const value = getNumFromStr(themeVal) || 0
     const unit = getStrFromStr(themeVal)
     return [value, unit]
@@ -81,15 +84,25 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const updateHandler = (value, unit, styleUnit, property) => {
     if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
+    const propertyPath = getPropertyPath(property)
     setStyles(prvStyle => produce(prvStyle, drft => {
-      const v = `${convertvalue}${unit}`
-      assignNestedObj(drft, getPropertyPath(property), v)
+      const preValue = getValueByObjPath(drft, propertyPath)
+      const isAlreadyImportant = preValue?.match(/!important/gi)?.[0]
+      let v = `${convertvalue}${unit}`
+      if (isAlreadyImportant) {
+        v = `${v} !important`
+      }
+      assignNestedObj(drft, propertyPath, v)
     }))
   }
 
   // for field opacity
   const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
   const fldOpacityHandler = ({ value, unit }) => updateHandler(value, unit, fldOpctyUnit, 'opacity')
+
+  // Z-Index
+  const [fldZIndex] = getStyleValueAndUnit('z-index')
+  const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
@@ -104,16 +117,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // const fldLblfs = classes[`.${fldKey}-${elementKey}`]?.['font-size']
-  // const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
-  // const fldFSValue = getNumFromStr(fldLblfsvalue)
-  // const fldFSUnit = getStrFromStr(fldLblfsvalue)
-
-  // const updateFontSize = (unit, value) => {
-  //   setStyles(prvStyle => produce(prvStyle, drft => {
-  //     drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['font-size'] = `${value}${unit}`
-  //   }))
-  // }
   const setAlign = (alignValue) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['text-align'] = alignValue
@@ -650,13 +653,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
-
+              <Important propertyPath={getPropertyPath('font-size')} />
               <div className={css(ut.flxc, { cg: 3 })}>
                 <SizeControl
                   className={css({ w: 130 })}
                   inputHandler={fldFsSizeHandler}
                   sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-                  value={fldFSValue || 0}
+                  value={fldFSValue || 12}
                   unit={fldFSUnit || 'px'}
                   width="130px"
                   options={['px', 'em', 'rem']}
@@ -733,7 +736,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
                 </div>
                 <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
-
+                <Important propertyPath={getPropertyPath('opacity')} />
                 <div className={css(ut.flxc, { cg: 3 })}>
                   <SizeControl
                     className={css({ w: 130 })}
@@ -747,6 +750,40 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                     options={['', '%']}
                     step={fldOpctyUnit ? 1 : '0.1'}
                   />
+                </div>
+              </div>
+            )
+          }
+
+          {
+            existingProperties.includes('z-index') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => delPropertyHandler('z-index')}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Z-Index', 'bitform')}</span>
+                </div>
+                <ResetStyle propertyPath={getPropertyPath('z-index')} stateObjName="styles" />
+                <Important propertyPath={getPropertyPath('z-index')} />
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <div className={`${css(sizeControlStyle.container)}`}>
+                    <CustomInputControl
+                      className={css(sizeControlStyle.input)}
+                      label=""
+                      value={fldZIndex || 0}
+                      min={0}
+                      max={100}
+                      step={1}
+                      width="130px"
+                      onChange={value => fldZIndexHandler(value)}
+                    />
+                  </div>
                 </div>
               </div>
             )

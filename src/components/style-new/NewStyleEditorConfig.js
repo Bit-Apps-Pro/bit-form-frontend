@@ -42,6 +42,7 @@ const editorConfig = {
       'line-height': {},
       'word-spacing': {},
       'letter-spacing': {},
+      'z-index': {},
     },
   },
 }
