@@ -4,7 +4,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
-import { memo, useState } from 'react'
+import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -23,6 +24,7 @@ import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
+import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -57,6 +59,7 @@ function TextFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
   const selectedFieldId = useRecoilValue($selectedFieldId)
+  const patternTippy = useRef()
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const subtitle = fieldData.subtitle || ''
@@ -290,6 +293,29 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
+  const setRegexrValue = value => {
+    // eslint-disable-next-line no-underscore-dangle
+    patternTippy?.current?._tippy?.hide()
+    if (!bits.isPro) return
+    if (value === '') {
+      delete fieldData.valid.regexr
+    } else {
+      const val = escapeBackslashPattern(value)
+      fieldData.valid.regexr = val
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.regexr) fieldData.err.regexr = {}
+      const ifPredefined = predefinedPatterns.find(opt => opt.val === val)
+      fieldData.err.regexr.dflt = `<p>${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
+      fieldData.err.regexr.show = true
+      if (fieldData.typ === 'password') {
+        delete fieldData.valid.validations
+      }
+    }
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
   const setFlags = e => {
     if (!bits.isPro) return
     if (e.target.value === '') {
@@ -463,6 +489,31 @@ function TextFieldSettings() {
   }
 
   const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+  const style = {
+    dotBtn: {
+      b: 0,
+      brs: 5,
+      mr: 15,
+      curp: 1,
+    },
+    button: {
+      dy: 'block',
+      w: '100%',
+      ta: 'left',
+      b: 0,
+      bd: 'none',
+      p: 3,
+      curp: 1,
+      '&:hover':
+      {
+        bd: 'var(--white-0-95)',
+        cr: 'var(--black-0)',
+        brs: 8,
+      },
+      fs: 11,
+    },
+  }
+
   return (
     <>
       <div className="">
@@ -984,26 +1035,46 @@ function TextFieldSettings() {
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3)}>
-                    <div className={css(ut.flxc, ut.ml1)}>
+                    <div className={css(ut.flxcb, ut.ml1)}>
                       <h4 className={css(ut.m0, FieldStyle.title)}>
                         {__('Expression', 'bitform')}
                         :
                       </h4>
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
+                      <Downmenu instance={patternTippy}>
+                        <button
+                          data-close
+                          type="button"
+                          className={css(style.dotBtn)}
+                          unselectable="on"
+                          draggable="false"
+                          style={{ cursor: 'pointer' }}
+                          title={__('Fields', 'bitform')}
+                        >
+                          <BdrDottedIcn size="19" />
+                        </button>
+                        <div>
+                          <ul role="menu">
+                            {predefinedPatterns?.map(opt => (
+                              <li role="menuitem" className={`${css(style.button)} btnHover`} onKeyPress={() => setRegexrValue(opt.val)} onClick={() => setRegexrValue(opt.val)}>
+                                <span>{opt.lbl}</span>
+                                <br />
+                                <small>{generateBackslashPattern(opt.val)}</small>
+                              </li>
+                            ))}
+                          </ul>
+                          {/* {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)} */}
+                        </div>
+                      </Downmenu>
                     </div>
-                    <input
-                      className={css(FieldStyle.input)}
-                      aria-label="Pattern for input field"
-                      type="text"
+                    <AutoResizeInput
+                      ariaLabel="Pattern for input field"
                       placeholder="e.g. ([A-Z])\w+"
                       list="patterns"
                       disabled={!bits.isPro}
                       value={generateBackslashPattern(regexr)}
-                      onChange={setRegexr}
+                      changeAction={setRegexr}
                     />
-                    <datalist id="patterns">
-                      {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
-                    </datalist>
                   </div>
                   <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" cls={css(FieldStyle.input)} disabled={!bits.isPro} />
                   {regexr && (
