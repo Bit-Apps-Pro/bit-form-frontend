@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-no-bind */
@@ -664,7 +665,7 @@ function TextFieldSettings() {
               <div className={css(ut.flxcb)}>
                 {fieldData?.hlpPreIcn && (
                   <>
-                    <img src={fieldData?.hlpPreIcn} alt="Icon" width="18" height="18" />
+                    <img src={fieldData?.hlpPreIcn} alt="Hepler text start icon" width="18" height="18" />
                     <IconStyleBtn route="hlp-txt-pre-i" />
                   </>
                 )}
@@ -701,7 +702,7 @@ function TextFieldSettings() {
                   <div className={css(ut.flxc)}>
                     <SizeControl
                       inputHandler={val => icnHeightHandle(val, hlpPreIcnCls, hlpPreIcnHeight)}
-                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls, hlpIcnHeight)}
+                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls)}
                       value={getNumFromStr(hlpPreIcnHeight) || 10}
                       unit={getStrFromStr(hlpPreIcnHeight) || 'px'}
                       width="80px"
@@ -717,7 +718,7 @@ function TextFieldSettings() {
               <div className={css(ut.flxcb)}>
                 {fieldData?.hlpSufIcn && (
                   <>
-                    <img src={fieldData?.hlpSufIcn} alt="Icon" width="18" height="18" />
+                    <img src={fieldData?.hlpSufIcn} alt="Hepler text end icon" width="18" height="18" />
                     <IconStyleBtn route="hlp-txt-suf-i" />
                   </>
                 )}
