@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
+import CheckMarkIcn from '../../../../Icons/CheckMarkIcn'
 import FocusIcn from '../../../../Icons/FocusIcn'
 import SortIcn from '../../../../Icons/SortIcn'
 import ut from '../../../../styles/2.utilities'
@@ -19,7 +20,8 @@ export default function LayerAccordion({ className,
   offset = 0,
   tag,
   highlightSelector,
-  onClick }) {
+  onClick,
+  styleOverride }) {
   const [tgl, setTgl] = useState((open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -81,6 +83,7 @@ export default function LayerAccordion({ className,
               {tag && (
                 <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
               )}
+              {styleOverride && <spna className={css(ut.flxc, { px: 2 })} title="Override theme styles"><CheckMarkIcn cls="context-btn-color" size="15" /></spna>}
               <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(cls.tipBody)}>
                   {(fldData.lbl || fldData.txt || fldData.adminLbl) && (
@@ -111,7 +114,6 @@ export default function LayerAccordion({ className,
           </div>
         </div>
       </div>
-
       <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
         <CSSTransition
           in={tgl}

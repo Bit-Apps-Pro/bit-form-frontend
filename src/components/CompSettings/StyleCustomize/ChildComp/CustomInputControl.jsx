@@ -92,9 +92,9 @@ export default function CustomInputControl(
   }
 
   const stepUp = (e) => {
-    let newVal = Number(value) + (getStepByEvent(e) || step)
+    let newVal = Number(value) + Number((getStepByEvent(e) || step))
     if (!Number.isInteger(newVal)) {
-      newVal = parseFloat(newVal.toFixed(3))
+      newVal = parseFloat(newVal.toFixed(2))
     }
     if (newVal < min) newVal = min
     if (newVal > max) newVal = max

@@ -36,7 +36,7 @@ export default function CssPropertyList({ properties, setProperty }) {
   )
 }
 const s = {
-  wrp: { flx: 'center', '& .tippy-content': { p: 0 } },
+  wrp: { mt: 10, flx: 'center', '& .tippy-content': { p: 0 } },
   addBtn: {
     se: 25,
     b: 'none',

@@ -25,11 +25,10 @@ const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction
     rowIncrease()
   }, [])
 
-  const handleInputChange = e => {
-    if (changeAction) changeAction(e)
+  useEffect(() => {
     rowDecrease()
     rowIncrease()
-  }
+  }, [value])
 
   return (
     <textarea
@@ -40,7 +39,7 @@ const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction
       placeholder={placeholder}
       value={value}
       rows={rows}
-      onChange={handleInputChange}
+      onChange={changeAction}
     />
   )
 }

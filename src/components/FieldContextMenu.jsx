@@ -1,4 +1,5 @@
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
@@ -41,6 +42,7 @@ export default function FieldContextMenu({ isContextMenu,
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const { css } = useFela()
 
   const handleFieldHide = brkpnt => {
     // setFields(allFields => produce(allFields, draft => {
@@ -125,7 +127,7 @@ export default function FieldContextMenu({ isContextMenu,
                   draggable="false"
                   title={__('More Options', 'bitform')}
                 >
-                  <EyeOffIcon size="16" />
+                  <EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />
                   <span>Hide</span>
                   <ChevronRightIcon size="19" />
                 </button>
