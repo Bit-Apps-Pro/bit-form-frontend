@@ -486,3 +486,7 @@ export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
 }
 
 export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
+
+export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
+
+export const isLabelOverrideStyles = (styles, fldKey, lblName) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.includes(lblName)
