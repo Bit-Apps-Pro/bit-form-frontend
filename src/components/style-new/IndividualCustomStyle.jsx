@@ -823,4 +823,5 @@ const cls = {
   },
   containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   space: { p: 5 },
+  warningBorder: { b: '1px solid yellow' },
 }
