@@ -53,7 +53,7 @@ export default function FontPickerMenu() {
     else if (type === 'child') setController(old => ({ ...old, child: lbl }))
   }
 
-  const findSelectedFontIndx = () => styles.font.fontType === 'google' && allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family'])
+  const findSelectedFontIndx = () => (styles?.font?.fontType === 'google' ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family']) : Number(0))
 
   const searchHandler = (e) => {
     const { value } = e.target
@@ -163,6 +163,7 @@ export default function FontPickerMenu() {
       }))
     }
   }
+  console.log(findSelectedFontIndx())
 
   return (
     <div className={css(fontStyle.container)}>
