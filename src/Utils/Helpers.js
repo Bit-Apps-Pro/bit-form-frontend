@@ -1,4 +1,7 @@
 /* eslint-disable no-nested-ternary */
+
+import htmr from 'htmr'
+
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
@@ -297,3 +300,15 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
 })
 
 export const firstLetterUpper = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+
+export const renderDOMObjectFromHTMLStr = str => {
+  try {
+    return (
+      <>
+        {htmr(str)}
+      </>
+    )
+  } catch (_) {
+    return str
+  }
+}
