@@ -76,8 +76,6 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  console.log(fieldData)
-
   const subTlePreIcn = `.${fldKey}-sub-titl-pre-i`
   const subTleSufIcn = `.${fldKey}-sub-titl-suf-i`
 
@@ -405,7 +403,11 @@ function TextFieldSettings() {
   //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   // }
   const seAutoComplete = (value) => {
-    const val = value.split(',').join(' ')
+    let strValue = value
+    if (strValue.match(/(off)/gi)?.[0] === 'off' && strValue.split(',').length > 1) {
+      strValue = strValue.replaceAll(/(off,)/gi, '')
+    }
+    const val = strValue.split(',').join(' ')
     if (val === '') delete fieldData.autoComplete
     else fieldData.autoComplete = val
 
@@ -909,6 +911,7 @@ function TextFieldSettings() {
               placeholder="Select one"
               options={autofillList}
               onChange={val => seAutoComplete(val)}
+              disableChip
             />
             {/* <select
               className={css(FieldStyle.input)}
@@ -1061,6 +1064,7 @@ function TextFieldSettings() {
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
                 className={css(FieldStyle.fieldSection)}
+                isUnique="show"
               />
               <hr className={css(FieldStyle.divider)} />
             </>

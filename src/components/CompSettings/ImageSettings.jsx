@@ -15,6 +15,7 @@ import ShadowControl from '../style-new/ShadowControl'
 import SpacingControl from '../style-new/SpacingControl'
 import Modal from '../Utilities/Modal'
 import Icons from './Icons'
+import IconStyleBtn from './IconStyleBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -51,6 +52,8 @@ function ImageSettings() {
     },
   }
 
+  console.log(fieldData)
+
   return (
     <div>
       <FieldSettingTitle
@@ -62,52 +65,69 @@ function ImageSettings() {
 
       <SimpleAccordion
         title="Image"
-        className={css(ut.ml2, ut.mr2)}
+        className={css(ut.ml2, ut.mr2, ut.pb10)}
+        titleCls={css(ut.ml1)}
       >
+        <div className={css(ut.pb10)}>
 
-        <div className={css(ut.flxcb, ut.mt2)}>
-          <span className={css(ut.fw500, ut.ml2)}>Background Image</span>
-          <div className={css(ut.flxcb, ut.mr2)}>
-            {fieldData?.bg_img && (
-              <img src={fieldData?.bg_img} alt="icon" width="25" height="25" />
-            )}
-            <button type="button" onClick={() => setIcnMdl(true)} className={css(ut.icnBtn)}>
-              <EditIcn size={22} />
-            </button>
-            {fieldData?.bg_img && (
-              <button onClick={() => removeImage('bg_img')} className={css(ut.icnBtn)} type="button">
-                <CloseIcn size="13" />
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500, ut.ml2)}>Background Image</span>
+            <div className={css(ut.flxcb, ut.mr2)}>
+              {fieldData?.bg_img && (
+                <>
+                  <img src={fieldData?.bg_img} alt="icon" width="25" height="25" />
+                  <IconStyleBtn route="bg-img" />
+                </>
+              )}
+              <button type="button" onClick={() => setIcnMdl(true)} className={css(ut.icnBtn)}>
+                <EditIcn size={22} />
               </button>
-            )}
+              {fieldData?.bg_img && (
+                <button onClick={() => removeImage('bg_img')} className={css(ut.icnBtn)} type="button">
+                  <CloseIcn size="13" />
+                </button>
+              )}
 
-          </div>
-        </div>
-        <div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500, ut.ml2)}>Border</span>
-            <div className={css(ut.flxcb, ut.mr2)}>
-              <BorderControl subtitle="Image Border" value={border} objectPaths={objectPaths} />
             </div>
           </div>
-        </div>
-        <br />
-        <div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Shadow</span>
-            <div className={css(ut.flxcb, ut.mr2)}>
-              <ShadowControl subtitle="Border Shadow" value={boxShadow} objectPaths={objectPaths} />
+          <div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500, ut.ml2)}>Border</span>
+              <div className={css(ut.flxcb, ut.mr2)}>
+                <BorderControl
+                  subtitle="Image Border"
+                  value={border}
+                  objectPaths={objectPaths}
+                  id="image-border-control"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
-            <div className={css(ut.flxcb, ut.mr2)}>
-              <SpacingControl
-                action={{ type: 'spacing-control' }}
-                subtitle="Spacing control"
-                objectPaths={objectPaths}
-              />
+          <br />
+          <div>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500, ut.ml2)}>Shadow</span>
+              <div className={css(ut.flxcb, ut.mr2)}>
+                <ShadowControl
+                  subtitle="Border Shadow"
+                  value={boxShadow}
+                  objectPaths={objectPaths}
+                  id="image-shadow-control"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
+              <div className={css(ut.flxcb, ut.mr2)}>
+                <SpacingControl
+                  action={{ type: 'spacing-control' }}
+                  subtitle="Spacing control"
+                  objectPaths={objectPaths}
+                  id="image-spacing-control"
+                />
+              </div>
             </div>
           </div>
         </div>

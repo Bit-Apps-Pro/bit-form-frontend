@@ -24,7 +24,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths, id })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths, id, width: 250 })}
         type="button"
         className={css(c.pickrBtn)}
       >
