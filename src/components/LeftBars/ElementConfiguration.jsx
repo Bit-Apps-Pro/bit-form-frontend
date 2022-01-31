@@ -21,7 +21,7 @@ export default function ElementConfiguration({ fldKey }) {
   }
   return (
     <>
-      {fieldObj.lbl
+      {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
         && (
           <>
             <NavBtn cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`} subRoute={fldKey} route="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'label-subtitle-container')} />
@@ -58,7 +58,7 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
-      {fieldObj.subtitle
+      {(fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
         && (
           <>
             {!(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn) && (
@@ -77,7 +77,7 @@ export default function ElementConfiguration({ fldKey }) {
           </>
         )}
 
-      {fieldObj.helperTxt
+      {(fieldObj.helperTxt || fieldObj.hlpPreIcn || fieldObj.hlpSufIcn)
         && (
           <>
             {!(fieldObj.hlpPreIcn || fieldObj.hlpSufIcn) && (

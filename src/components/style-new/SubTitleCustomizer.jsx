@@ -5,6 +5,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -19,7 +20,8 @@ export default function SubTitleCustomizer() {
   const { '--sub-titl-bg': stBg,
     '--sub-titl-bdr': stBdr } = themeVars
 
-  const { '--sub-titl-sh': stSh, '--sub-titl-c': stC } = themeColors
+  const { '--sub-titl-sh': stSh,
+    '--sub-titl-c': stC } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -77,6 +79,10 @@ export default function SubTitleCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      <FontWeightAndStyleControl
+        fontWeightVar="--sub-titl-font-w"
+        fontStyleVar="--sub-titl-font-style"
+      />
     </div>
   )
 }

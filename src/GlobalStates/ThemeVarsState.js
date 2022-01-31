@@ -87,6 +87,8 @@ const $themeVarsLg = atom({
     '--fld-lbl-fs': '1rem', // field label font size
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
+    '--fld-font-w': 700, // field font weight
+    '--fld-font-style': '', // field font style
 
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '', // subtitle padding
@@ -94,6 +96,8 @@ const $themeVarsLg = atom({
     '--sub-titl-fs': '12px', // subtitle font size
     '--sub-titl-bdr-width': '', // subtitle border width
     '--sub-titl-bdr-rad': '', // subtitle border radius
+    '--sub-titl-font-w': 700, // sub title font weight
+    '--sub-titl-font-style': '', // subtitle font style
 
     '--hlp-txt-m': '', // helper text margin
     '--hlp-txt-p': '', // hepler text padding
@@ -101,6 +105,8 @@ const $themeVarsLg = atom({
     '--hlp-txt-al': '', // helper text align
     '--hlp-txt-bdr-width': '', // helper text border width
     '--hlp-txt-bdr-rad': '', // helper text border radius
+    '--hlp-txt-font-w': 700, // helper text font weight
+    '--hlp-txt-font-style': '', // helper text font style
 
     '--err-m': '1px', // error messages margin
     '--err-p': '5px', // error messages padding
