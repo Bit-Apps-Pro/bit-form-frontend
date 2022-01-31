@@ -3,15 +3,18 @@ import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
+import { isFieldOverrideStyles, isLabelOverrideStyles } from '../style-new/styleHelpers'
 import ElementConfiguration from './ElementConfiguration'
 import NavBtn from './NavBtn'
 
 export default function StyleLayers() {
   const { css } = useFela()
+  const styles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
   const history = useHistory()
   const { formID, formType } = useParams()
@@ -41,12 +44,12 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}>
+            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
-              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
               <ElementConfiguration fldKey={fldKey} />
               {!fldData.typ.match(/^(button|)$/) && (
-                <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
+                <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
               )}
             </LayerAccordion>
           ))}

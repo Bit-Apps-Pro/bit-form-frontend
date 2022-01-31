@@ -1,11 +1,12 @@
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
+import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 
-export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1, icn, highlightSelector }) {
+export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1, icn, highlightSelector, styleOverride }) {
   const { formType, formID, fieldKey, element, rightBar } = useParams()
 
   let active = false
@@ -34,6 +35,7 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
+        {styleOverride && <spna className={css(ut.flxc, { px: 2 })} title="Override theme styles"><CheckMarkIcn cls="context-btn-color" size="15" /></spna>}
         {cssSelector && (
           <Cooltip width={180} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(s.tipBody)}>
