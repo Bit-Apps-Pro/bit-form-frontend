@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect, createRef } from 'react'
 import validateForm from '../../user-frontend/validation'
+import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -85,7 +86,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               />
               <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
                 <span data-bx className={`${fieldKey}-bx`} />
-                <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
+                <span className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
               </label>
             </div>
           ))}

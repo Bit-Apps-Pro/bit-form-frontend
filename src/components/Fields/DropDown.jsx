@@ -3,6 +3,7 @@
 import { useState, useEffect, memo } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 
 function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
@@ -72,16 +73,17 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   const getOptions = () => {
     const opt = []
     attr.opt.map(option => {
+      const lblHtml = renderDOMObjectFromHTMLStr(option.lbl)
       if (option.lbl) {
-        opt.push({ label: option.lbl, value: option.lbl })
+        opt.push({ label: lblHtml, value: lblHtml })
         if (option.prefix_img) {
           opt.push({
             ...option,
-            title: (option.label || option.lbl),
+            title: (option.label || lblHtml),
             label: (
               <div>
                 <img src="http://bitcode.io/wp-content/plugins/BitForm/static/countries/af.png" alt="" />
-                {option.label || option.lbl}
+                {option.label || lblHtml}
               </div>),
           })
         }
@@ -96,11 +98,11 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
         }
         opt.push({
           ...option,
-          title: (option.label || option.lbl),
+          title: (option.label || lblHtml),
           label: (
             <div className="btcd-flx">
               <img className="dpd-prefix" src={`${assetsURL}${option.prefix_img}`} alt={option.label} />
-              {option.label || option.lbl}
+              {option.label || lblHtml}
             </div>),
         })
       } else {
