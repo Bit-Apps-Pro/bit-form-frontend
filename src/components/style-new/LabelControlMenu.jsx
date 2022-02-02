@@ -2,9 +2,8 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHookStates } from '../../GlobalStates/GlobalStates'
-import { $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
 import LblPlacementReverseIcn from '../../Icons/LblPlacementReverseIcn'
@@ -15,11 +14,11 @@ import LblvertcalPlsmntTopIcn from '../../Icons/LblvertcalPlsmntTopIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
-import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import ResetStyle from './ResetStyle'
 import { getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 
 export default function LabelControlMenu() {
@@ -27,8 +26,6 @@ export default function LabelControlMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [openVarPos, setOpenVarPos] = useState(false)
-  const tempStyles = useRecoilValue($tempStyles)
-  const tempThemeVars = tempStyles.themeVars
 
   const { '--fld-lbl-fs': fldLblFs,
     '--sub-titl-fs': subTitleFs,
@@ -96,130 +93,59 @@ export default function LabelControlMenu() {
     }
   }
 
-  const setLabelVerticalPos = (name) => {
-    switch (name) {
-      case 'top':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle['--lbl-wrp-sa'] = ''
-        }))
-        break
-      case 'center':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle['--lbl-wrp-sa'] = 'center'
-        }))
-        break
-      case 'end':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle['--lbl-wrp-sa'] = 'end'
-        }))
-        break
-      default:
-        break
-    }
-  }
-
-  const setLabelAlign = (align) => setAlign(align, '--lbl-al')
-  const setSubLabelAlign = (align) => setAlign(align, '--sub-titl-al')
-  const setHelperTextAlign = (align) => setAlign(align, '--hlp-txt-al')
-
-  const setAlign = (align, posVar) => {
-    switch (align) {
-      case 'left':
-        setThemeVars(preStyle => produce(preStyle, drftStyle => {
-          drftStyle[posVar] = ''
-        }))
-        break
-      case 'center':
-        setThemeVars(preStyle => produce(preStyle, drftStyle => {
-          drftStyle[posVar] = 'center'
-        }))
-        break
-      case 'right':
-        setThemeVars(preStyle => produce(preStyle, drftStyle => {
-          drftStyle[posVar] = 'right'
-        }))
-        break
-      default:
-        break
-    }
-  }
-  const mainStyle = {
-    main: { flx: 'center-between' },
-    label: { fs: 12 },
-  }
-
-  const fontSizeHandler = ({ value, unit }) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle['--fld-lbl-fs'] = `${value}${unit}`
+  const updateState = (varName, value = '') => {
+    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle[varName] = value
     }))
   }
 
-  const subTtlFontSizeHandler = ({ value, unit }) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle['--sub-titl-fs'] = `${value}${unit}`
-    }))
-  }
+  const setLabelVerticalPos = (position) => updateState('--lbl-wrp-sa', position === 'top' ? '' : position)
+  const setLabelAlign = (align) => updateState('--lbl-al', align === 'left' ? '' : align)
+  const setSubLabelAlign = (align) => updateState('--sub-titl-al', align === 'left' ? '' : align)
+  const setHelperTextAlign = (align) => updateState('--hlp-txt-al', align === 'left' ? '' : align)
 
-  const hlprTxtFontSizeHandler = ({ value, unit }) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle['--hlp-txt-fs'] = `${value}${unit}`
-    }))
+  const fontSizeHandler = ({ v, u, varName }) => {
+    const val = `${v}${u}`
+    updateState(varName, val)
   }
 
   const lblWidthHandler = ({ value, unit }) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle['--lbl-wrp-width'] = `${value}${unit}`
-    }))
+    const val = `${value}${unit}`
+    updateState('--lbl-wrp-width', val)
   }
 
   const unitHandler = (unit, value, name) => {
     if (value) {
       const preUnit = getStrFromStr(themeVars[name])
       const convetVal = unitConverter(unit, value, preUnit)
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[name] = `${convetVal}${unit}`
-      }))
+
+      const val = `${convetVal}${unit}`
+      updateState(name, val)
     }
-  }
-  const undoHandler = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[value] = tempThemeVars[value] || '0px'
-    }))
-  }
-  const undoAlignHandler = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[value] = tempThemeVars[value] || ''
-    }))
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '3px' }}>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Font Size</span>
-        <button type="button" disabled={!tempThemeVars['--fld-lbl-fs']} onClick={() => undoHandler('--fld-lbl-fs')}>
-          <UndoIcon size="18" />
-        </button>
+        <ResetStyle propertyPath="--fld-lbl-fs" stateObjName="themeVars" />
         <SizeControl
-          width="105px"
+          width="100px"
           value={Number(fldLblFsVal || 0)}
           unit={fldLblFsUnit}
-          inputHandler={fontSizeHandler}
+          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--fld-lbl-fs' })}
           sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--fld-lbl-fs')}
           options={['px', 'em', 'rem']}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Subtitle Font Size</span>
-        <button disabled={!tempThemeVars['--sub-titl-fs']} type="button" onClick={() => undoHandler('--sub-titl-fs')}>
-          <UndoIcon size="18" />
-        </button>
+        <ResetStyle propertyPath="--sub-titl-fs" stateObjName="themeVars" />
         <SizeControl
-          width="105px"
+          width="100px"
           value={Number(subTitleFsVal)}
           unit={subTitleFsUnit}
-          inputHandler={subTtlFontSizeHandler}
+          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--sub-titl-fs' })}
           sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--sub-titl-fs')}
           name="subTitle"
           options={['px', 'em', 'rem']}
@@ -227,14 +153,12 @@ export default function LabelControlMenu() {
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Helper Text Font Size</span>
-        <button disabled={!tempThemeVars['--hlp-txt-fs']} type="button" onClick={() => undoHandler('--hlp-txt-fs')}>
-          <UndoIcon size="18" />
-        </button>
+        <ResetStyle propertyPath="--hlp-txt-fs" stateObjName="themeVars" />
         <SizeControl
-          width="105px"
+          width="100px"
           value={Number(heplrTxtFsVal)}
           unit={heplrTxtFsUnit}
-          inputHandler={hlprTxtFontSizeHandler}
+          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--hlp-txt-fs' })}
           sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--hlp-txt-fs')}
           name="heprTxt"
           options={['px', 'em', 'rem']}
@@ -242,11 +166,9 @@ export default function LabelControlMenu() {
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Width</span>
-        <button disabled={!tempThemeVars['--lbl-wrp-width']} type="button" onClick={() => undoHandler('--lbl-wrp-width')}>
-          <UndoIcon size="18" />
-        </button>
+        <ResetStyle propertyPath="--lbl-wrp-width" stateObjName="themeVars" />
         <SizeControl
-          width="105px"
+          width="100px"
           value={Number(lblWidthVal)}
           unit={lblWidthUnit}
           inputHandler={lblWidthHandler}
@@ -267,18 +189,13 @@ export default function LabelControlMenu() {
           ]}
           onChange={name => handleLabelPosition(name)}
           activeValue={activeLabelPosition}
+          width="100px"
         />
       </div>
       <Grow open={openVarPos}>
         <div className={css(ut.mb2, mainStyle.main)}>
           <span className={css(mainStyle.label)}>Label Postion Vertical</span>
-          {
-            tempThemeVars['--lbl-wrp-sa'] && (
-              <button type="button" onClick={() => undoAlignHandler('--lbl-wrp-sa')}>
-                <UndoIcon size="18" />
-              </button>
-            )
-          }
+          <ResetStyle propertyPath="--lbl-wrp-sa" stateObjName="themeVars" />
           <StyleSegmentControl
             show={['icn']}
             tipPlace="bottom"
@@ -289,18 +206,13 @@ export default function LabelControlMenu() {
             ]}
             onChange={e => setLabelVerticalPos(e)}
             activeValue={lwSa}
+            width="100px"
           />
         </div>
       </Grow>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Label Alignment</span>
-        {
-          tempThemeVars['--lbl-al'] && (
-            <button type="button" onClick={() => undoAlignHandler('--lbl-al')}>
-              <UndoIcon size="18" />
-            </button>
-          )
-        }
+        <ResetStyle propertyPath="--lbl-al" stateObjName="themeVars" />
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
@@ -311,17 +223,12 @@ export default function LabelControlMenu() {
           ]}
           onChange={e => setLabelAlign(e)}
           activeValue={lblAl}
+          width="100px"
         />
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Subtitle Alignment</span>
-        {
-          tempThemeVars['--sub-titl-al'] && (
-            <button type="button" onClick={() => undoAlignHandler('--sub-titl-al')}>
-              <UndoIcon size="18" />
-            </button>
-          )
-        }
+        <ResetStyle propertyPath="--sub-titl-al" stateObjName="themeVars" />
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
@@ -332,17 +239,12 @@ export default function LabelControlMenu() {
           ]}
           onChange={e => setSubLabelAlign(e)}
           activeValue={stAl}
+          width="100px"
         />
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Helpertext Alignment</span>
-        {
-          tempThemeVars['--hlp-txt-al'] && (
-            <button type="button" onClick={() => undoAlignHandler('--hlp-txt-al')}>
-              <UndoIcon size="18" />
-            </button>
-          )
-        }
+        <ResetStyle propertyPath="--hlp-txt-al" stateObjName="themeVars" />
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
@@ -353,8 +255,13 @@ export default function LabelControlMenu() {
           ]}
           onChange={e => setHelperTextAlign(e)}
           activeValue={htAl}
+          width="100px"
         />
       </div>
     </div>
   )
+}
+const mainStyle = {
+  main: { flx: 'center-between' },
+  label: { fs: 12 },
 }
