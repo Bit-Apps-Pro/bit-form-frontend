@@ -191,7 +191,7 @@ export default function FontPickerMenu() {
       {controller === 'Google' && (
         <>
           <div className={css(ut.flxc, fontStyle.searchBar, ut.mt2, ut.mb2)}>
-            <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '90%' : '78%' }}>
+            <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '100%' : '90%' }}>
               <input
                 title="Search fonts"
                 aria-label="Search fonts"
@@ -267,7 +267,7 @@ export default function FontPickerMenu() {
                   name="fontURL"
                   aria-label="Custom font url"
                   type="url"
-                  placeholder="e.g http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
+                  placeholder="e.g: http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
                 />
               </div>
               <div className={css(ut.flxClm, ut.mt2)}>
@@ -279,7 +279,7 @@ export default function FontPickerMenu() {
                   name="font-family"
                   aria-label="Custom font family"
                   type="text"
-                  placeholder="e.g Lato"
+                  placeholder="e.g: Lato"
                 />
               </div>
             </>
@@ -291,14 +291,24 @@ export default function FontPickerMenu() {
 }
 
 const fontStyle = {
-  container: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
+  container: {
+    scrollBehavior: 'auto !important',
+    mb: 5,
+    '& *': { scrollBehavior: 'auto !important' },
+  },
   url: {
     w: '100%',
-    brs: 8,
-    b: 0,
+    brs: '8px !important',
+    b: '1px solid var(--white-0-75)  !important',
     oe: 0,
-    bc: 'var(--white-0-95)',
     p: 5,
+    ':focus': {
+      bs: '0px 0px 3px 0px var(--b-50) !important',
+      bcr: 'var(--b-92-62) !important',
+      pr: '0px !important',
+      '& ~ .shortcut': { dy: 'none' },
+      '& ~ span svg': { cr: 'var(--b-50)' },
+    },
   },
   btn: {
     b: 0,
@@ -343,7 +353,7 @@ const fontStyle = {
     pl: '27px !important',
     pr: '5px !important',
     ':focus': {
-      bs: '0px 0px 0px 1.5px var(--b-50) !important',
+      bs: '0px 0px 3px 0px var(--b-50) !important',
       bcr: 'var(--b-92-62) !important',
       pr: '0px !important',
       '& ~ .shortcut': { dy: 'none' },
@@ -380,7 +390,6 @@ const fontStyle = {
   },
   fields_search: {
     pn: 'relative',
-    ml: 7,
     mr: 5,
     tn: 'width .2s',
   },
