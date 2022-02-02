@@ -106,7 +106,7 @@ export default function inputWrapperClasses(fk) {
       'text-align': 'var(--err-txt-al, init)',
       padding: 'var(--err-p, 0)',
       margin: 'var(--err-m, 0)',
-      'box-shadow': 'var--err-sh, none)',
+      'box-shadow': 'var(--err-sh, none)',
       'border-radius': 'var(--err-bdr-rad, 0)',
       border: 'var(--err-bdr, medium none)',
       'border-width': 'var(--err-bdr-width, 0)',

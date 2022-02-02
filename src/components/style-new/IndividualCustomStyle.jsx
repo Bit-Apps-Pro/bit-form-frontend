@@ -691,7 +691,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -718,7 +718,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -940,7 +940,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-weight', val, ':hover')}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssHoverProperties?.['font-weight']))) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssHoverProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssHoverProperties?.['font-weight']))) || cls.warningBorder)}
                 />
               </div>
             </div>
@@ -967,7 +967,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val, ':hover')}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'google' && existingCssHoverProperties['font-style'] && !styles.font.fontStyle.includes(existingCssHoverProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssHoverProperties['font-style'] && !styles.font.fontStyle.includes(existingCssHoverProperties?.['font-style'])) || cls.warningBorder)}
                 />
               </div>
             </div>
