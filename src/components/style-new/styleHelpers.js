@@ -490,3 +490,10 @@ export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr
 export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
 
 export const isLabelOverrideStyles = (styles, fldKey, lblName) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.includes(lblName)
+
+export const ucFirst = (val) => val.charAt(0).toUpperCase() + val.slice(1)
+
+export const isValidURL = (string) => {
+  const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g)
+  return (res !== null)
+}

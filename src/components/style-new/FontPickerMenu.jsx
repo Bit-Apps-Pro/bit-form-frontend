@@ -16,22 +16,22 @@ import ut from '../../styles/2.utilities'
 import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { findExistingFontStyleAndWeidth, generateFontUrl } from './styleHelpers'
+import { findExistingFontStyleAndWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
 export default function FontPickerMenu() {
   const { css } = useFela()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [styles, setStyles] = useRecoilState($styles)
   const [focusSearch, setfocusSearch] = useState(false)
-  const [controller, setController] = useState({ parent: 'Custom', child: '' })
+  const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempStyle = useRecoilValue($tempStyles)
   // const setStyles = useSetRecoilState($styles)
-  const [styles, setStyles] = useRecoilState($styles)
 
   const inheritFont = themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit'
-  const checkGoogleFontExist = (styles.font.fontType === 'google')
+  const checkGoogleFontExist = (styles.font.fontType === 'Google')
 
   const apiKey = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
   const uri = `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`
@@ -48,12 +48,11 @@ export default function FontPickerMenu() {
     }
   }, [allFonts])
 
-  const onTabChangeHandler = (lbl, type) => {
-    if (type === 'parent') setController({ parent: lbl })
-    else if (type === 'child') setController(old => ({ ...old, child: lbl }))
+  const onTabChangeHandler = (lbl) => {
+    setController(lbl)
   }
 
-  const findSelectedFontIndx = () => (styles?.font?.fontType === 'google' ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family']) : 0)
+  const findSelectedFontIndx = () => (styles?.font?.fontType === 'Google' ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family']) : 0)
 
   const searchHandler = (e) => {
     const { value } = e.target
@@ -115,7 +114,7 @@ export default function FontPickerMenu() {
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
     setStyles(prvStyles => produce(prvStyles, drft => {
-      drft.font.fontType = 'google'
+      drft.font.fontType = 'Google'
       drft.font.fontWeightVariants = weight
       drft.font.fontStyle = style
       drft.font.fontURL = url
@@ -123,7 +122,7 @@ export default function FontPickerMenu() {
     setThemeVars(prvState => produce(prvState, drft => {
       drft['--g-font-family'] = fontFamily
     }))
-    styles.font.fontType === 'google' && checkedExistingGoogleFontVariantStyle()
+    styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantStyle()
   }
 
   const fontSorted = (orderBy) => {
@@ -146,15 +145,19 @@ export default function FontPickerMenu() {
 
   const customFontHandler = ({ target: { name, value } }) => {
     if (name === 'fontURL') {
+      if (!isValidURL(value)) {
+        toast.error('Font url is invalid!')
+        return
+      }
       setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.font.fontType = 'custom'
+        drft.font.fontType = 'Custom'
         drft.font.fontURL = value
         drft.font.fontStyle = []
         drft.font.fontWeightVariants = []
       }))
     } else {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.font.fontType = 'custom'
+        drft.font.fontType = 'Custom'
         drft.font.fontStyle = []
         drft.font.fontWeightVariants = []
       }))
@@ -168,8 +171,8 @@ export default function FontPickerMenu() {
     <div className={css(fontStyle.container)}>
       <StyleSegmentControl
         options={[{ label: 'Custom' }, { label: 'Google' }]}
-        onChange={lbl => onTabChangeHandler(lbl, 'parent')}
-        activeValue={controller.parent}
+        onChange={lbl => onTabChangeHandler(lbl)}
+        activeValue={controller}
         wideTab
         className={css(inheritFont && fontStyle.disabled)}
       />
@@ -185,10 +188,10 @@ export default function FontPickerMenu() {
           ))}
         </div>
       )}
-      {controller.parent === 'Google' && (
+      {controller === 'Google' && (
         <>
           <div className={css(ut.flxc, fontStyle.searchBar, ut.mt2, ut.mb2)}>
-            <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '90%' : '78%' }}>
+            <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '100%' : '90%' }}>
               <input
                 title="Search fonts"
                 aria-label="Search fonts"
@@ -244,7 +247,7 @@ export default function FontPickerMenu() {
         </>
       )}
 
-      {controller.parent === 'Custom' && (
+      {(controller === 'Custom' || controller === 'inherit') && (
         <>
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(fontStyle.title)}>Inherit from theme</span>
@@ -256,7 +259,7 @@ export default function FontPickerMenu() {
           </div>
           {!inheritFont && (
             <>
-              <div className={css(ut.flxcb, ut.mt2)}>
+              <div className={css(ut.flxClm, ut.mt2)}>
                 <span className={css(fontStyle.title)}>Link</span>
                 <input
                   className={css(fontStyle.url)}
@@ -264,19 +267,19 @@ export default function FontPickerMenu() {
                   name="fontURL"
                   aria-label="Custom font url"
                   type="url"
-                  placeholder="http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
+                  placeholder="e.g: http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
                 />
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
+              <div className={css(ut.flxClm, ut.mt2)}>
                 <span className={css(fontStyle.title)}>Font Family</span>
                 <input
-                  value={(styles.font.fontType === 'custom' && themeVars['--g-font-family']) || ''}
+                  value={(styles.font.fontType === 'Custom' && themeVars['--g-font-family']) || ''}
                   className={css(fontStyle.url)}
                   onChange={customFontHandler}
                   name="font-family"
                   aria-label="Custom font family"
-                  type="url"
-                  placeholder="Lato"
+                  type="text"
+                  placeholder="e.g: Lato"
                 />
               </div>
             </>
@@ -288,14 +291,24 @@ export default function FontPickerMenu() {
 }
 
 const fontStyle = {
-  container: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
+  container: {
+    scrollBehavior: 'auto !important',
+    mb: 5,
+    '& *': { scrollBehavior: 'auto !important' },
+  },
   url: {
-    w: '60%',
-    brs: 8,
-    b: 0,
+    w: '100%',
+    brs: '8px !important',
+    b: '1px solid var(--white-0-75)  !important',
     oe: 0,
-    bc: 'var(--white-0-95)',
     p: 5,
+    ':focus': {
+      bs: '0px 0px 3px 0px var(--b-50) !important',
+      bcr: 'var(--b-92-62) !important',
+      pr: '0px !important',
+      '& ~ .shortcut': { dy: 'none' },
+      '& ~ span svg': { cr: 'var(--b-50)' },
+    },
   },
   btn: {
     b: 0,
@@ -331,7 +344,7 @@ const fontStyle = {
       },
     },
   },
-  title: { fs: 12 },
+  title: { fs: 12, mb: 2 },
   search_field: {
     w: '100%',
     oe: 'none',
@@ -340,7 +353,7 @@ const fontStyle = {
     pl: '27px !important',
     pr: '5px !important',
     ':focus': {
-      bs: '0px 0px 0px 1.5px var(--b-50) !important',
+      bs: '0px 0px 3px 0px var(--b-50) !important',
       bcr: 'var(--b-92-62) !important',
       pr: '0px !important',
       '& ~ .shortcut': { dy: 'none' },
@@ -377,7 +390,6 @@ const fontStyle = {
   },
   fields_search: {
     pn: 'relative',
-    ml: 7,
     mr: 5,
     tn: 'width .2s',
   },

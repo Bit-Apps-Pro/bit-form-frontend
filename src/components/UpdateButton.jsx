@@ -118,7 +118,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     } else {
       select('#update-btn').click()
     }
-    if (style.font.fontType === 'google') updateGoogleFontUrl(style, setStyles, themeVars['--g-font-family'])
+    if (style.font.fontType === 'Google') updateGoogleFontUrl(style, setStyles, themeVars['--g-font-family'])
   }
 
   const checkSubmitBtn = () => {
