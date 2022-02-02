@@ -169,7 +169,7 @@ export default function ThemeQuickTweaksCustomizer() {
             sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
             value={globalBdrRadValue}
             unit={globalBdrRadUnit}
-            width="110px"
+            width="128px"
             options={['px', 'em', 'rem']}
           />
         </div>
@@ -185,7 +185,7 @@ export default function ThemeQuickTweaksCustomizer() {
           sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
           value={globalBdrWidthVal}
           unit={globalBdrWidthUnit}
-          width="110px"
+          width="128px"
           options={['px', 'em', 'rem']}
         />
       </div>
@@ -206,22 +206,21 @@ export default function ThemeQuickTweaksCustomizer() {
             sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
             value={fldFSValue}
             unit={fldFSUnit}
-            width="110px"
+            width="128px"
             options={['px', 'em', 'rem']}
           />
         </div>
       </div>
 
-      <div className={css(ut.flxcb, ut.mt2)}>
+      <div className={css(ut.flxcb, ut.mt3)}>
+        <span className={css(ut.fw500)}>Label Alignment</span>
+        <LabelControl id="label-alignment" />
+      </div>
+
+      <div className={css(ut.flxcb, ut.mt3)}>
         <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
         <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
       </div>
-
-      <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fw500)}>Label Alignment</span>
-        <LabelControl />
-      </div>
-
     </>
   )
 }
