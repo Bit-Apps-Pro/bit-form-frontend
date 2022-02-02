@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
+import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -111,7 +112,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
-                <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
+                <span className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
               </label>
             </div>
           ))}
