@@ -78,8 +78,7 @@ export default function IndividualShadowControl({ title,
             type="button"
             className={css(c.pickrBtn)}
           >
-            {/* <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} /> */}
-            <span ssss className={css(c.clrVal)}>{getValue()}</span>
+            <span className={css(c.clrVal)}>{getValue() || 'Configure'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
@@ -100,7 +99,7 @@ const c = {
     h: '30px !important',
     mnw: 130,
     brs: 10,
-    p: 3,
+    p: 7,
     flx: 'center-between',
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
@@ -144,7 +143,6 @@ const c = {
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',
-    pl: 5,
   },
   active: { focusShadow: 1 },
 
