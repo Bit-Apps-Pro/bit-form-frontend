@@ -4,6 +4,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 // eslint-disable-next-line camelcase
 import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
+import titleStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -316,7 +317,7 @@ export function arrDiff(arr1, arr2) {
     .concat(arr2.filter(x => !arr1.includes(x)))
 }
 
-export const addableCssPropsByField = (fieldType) => {
+export const addableCssPropsByField = (fieldType, elementKey = 'fld') => {
   switch (fieldType) {
     case 'text':
     case 'date':
@@ -325,6 +326,9 @@ export const addableCssPropsByField = (fieldType) => {
     case 'textarea':
     case 'email':
       return Object.keys(editorConfig.texfieldStyle.properties)
+    case 'title':
+      console.log('fldtype', fieldType, 'elementkey', elementKey)
+      return Object.keys(editorConfig[fieldType][elementKey].properties)
     case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
 
@@ -335,6 +339,10 @@ export const addableCssPropsByField = (fieldType) => {
 }
 
 const styleClasses = {
+  logo: ['logo'],
+  title: ['title'],
+  titlePreIcn: ['title-pre-i'],
+  titleSufIcn: ['title-suf-i'],
   lbl: ['lbl', 'lbl-wrp'],
   lblPreIcn: ['lbl-pre-i'],
   lblSufIcn: ['lbl-suf-i'],
@@ -403,8 +411,8 @@ export const removeUnuseStyles = (fields, setStyles) => {
 
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
   setStyle(prvStyle => produce(prvStyle, drftStyle => {
-    console.log('fk', fk, 'element', element)
     const fldTyp = prvStyle.fields[fk]?.fieldType
+    console.log('fk', fk, 'element', element, 'fldType', fldTyp)
     switch (fldTyp) {
       case 'text':
       case 'number':
@@ -424,6 +432,14 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         // eslint-disable-next-line no-case-declarations
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'title':
+        // eslint-disable-next-line no-case-declarations
+        const titleStyleBitFormDefault = titleStyle_1_bitformDefault({ fk, fldTyp })
+        // eslint-disable-next-line no-case-declarations
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = titleStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       default:
