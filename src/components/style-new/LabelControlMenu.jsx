@@ -115,13 +115,10 @@ export default function LabelControlMenu() {
   }
 
   const unitHandler = (unit, value, name) => {
-    if (value) {
-      const preUnit = getStrFromStr(themeVars[name])
-      const convetVal = unitConverter(unit, value, preUnit)
-
-      const val = `${convetVal}${unit}`
-      updateState(name, val)
-    }
+    const preUnit = getStrFromStr(themeVars[name])
+    const convetVal = unitConverter(unit, value, preUnit)
+    const val = `${convetVal}${unit}`
+    updateState(name, val)
   }
 
   return (
@@ -165,7 +162,7 @@ export default function LabelControlMenu() {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Label Width</span>
+        <span className={css(ut.fs12)}>Label Wrapper Width</span>
         <ResetStyle propertyPath="--lbl-wrp-width" stateObjName="themeVars" />
         <SizeControl
           width="100px"
@@ -176,7 +173,6 @@ export default function LabelControlMenu() {
           options={['px', 'em', 'rem', '%']}
         />
       </div>
-
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Label Postion</span>
         <StyleSegmentControl

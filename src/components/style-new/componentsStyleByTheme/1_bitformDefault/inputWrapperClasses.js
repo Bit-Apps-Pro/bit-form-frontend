@@ -42,6 +42,7 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--fld-lbl-bdr-rad, 0)',
       border: 'var(--fld-lbl-bdr, medium none)',
       'border-width': 'var(--fld-lbl-bdr-width, 0)',
+      width: '100%',
     },
     [`.${fk}-sub-titl`]: {
       background: 'var(--sub-titl-bg, none)',
@@ -56,6 +57,7 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--sub-titl-bdr-rad, 0)',
       border: 'var(--sub-titl-bdr, medium none)',
       'border-width': 'var(--sub-titl-bdr-width, 0)',
+      width: '100%',
     },
     [`.${fk}-hlp-txt`]: {
       background: 'var(--hlp-txt-bg, none)',
@@ -70,6 +72,7 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--hlp-txt-bdr-rad, 0)',
       border: 'var(--hlp-txt-bdr, medium none)',
       'border-width': 'var(--hlp-txt-bdr-width, 0)',
+      width: '100%',
     },
 
     [`.${fk}-inp-wrp`]: { width: 'var(--inp-wrp-width, auto)' },
