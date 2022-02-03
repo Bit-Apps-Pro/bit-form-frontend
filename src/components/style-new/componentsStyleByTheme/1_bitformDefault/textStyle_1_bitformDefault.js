@@ -33,6 +33,16 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
     [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
 
+    // title icon
+    [`.${fk}-title-pre-i`]: {
+      width: '20px',
+      height: '20px',
+    },
+    [`.${fk}-title-suf-i`]: {
+      width: '20px',
+      height: '20px',
+    },
+
     // field icon
     [`.${fk}-pre-i`]: {
       position: 'absolute',

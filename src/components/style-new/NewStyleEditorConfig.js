@@ -1,3 +1,29 @@
+const labelCssProps = {
+  background: {},
+  border: { width: true, color: true, radius: true },
+  color: {},
+  'font-size': {},
+  'font-weight': {},
+  'font-style': {},
+  'text-align': {},
+  'text-decoration': {},
+  'text-shadow': {},
+  'box-shadow': {},
+  margin: {},
+  padding: {},
+  opacity: {},
+}
+const iconCssProps = {
+  border: { width: true, color: true, radius: true },
+  margin: {},
+  padding: {},
+  opacity: {},
+  weight: {},
+  height: {},
+  size: {},
+  'box-shadow': {},
+  filter: {},
+}
 const editorConfig = {
   formWrapper: {
     states: ['hover'],
@@ -23,7 +49,7 @@ const editorConfig = {
       'background-color': {},
       color: {},
       'font-size': {},
-      border: {},
+      border: { width: true, color: true, radius: true },
       margin: {},
       padding: {},
       opacity: {},
@@ -38,6 +64,7 @@ const editorConfig = {
       'font-family': {},
       'font-weight': {},
       'font-style': {},
+      weight: {},
       height: {},
       'line-height': {},
       'word-spacing': {},
@@ -45,5 +72,49 @@ const editorConfig = {
       'z-index': {},
     },
   },
+  title: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: {
+        background: {},
+        border: { width: true, color: true, radius: true },
+        margin: {},
+        padding: {},
+        opacity: {},
+        'box-shadow': {},
+        size: {},
+      },
+    },
+    logo: {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    title: {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'sub-titl': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'title-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'title-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'sub-titl-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'sub-titl-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+  },
+  titleFieldSubTitle: {},
+  titleFieldPrefixIcon: {},
 }
 export default editorConfig

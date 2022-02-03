@@ -14,7 +14,6 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
@@ -40,7 +39,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   console.log(styles)
 
-  const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme.includes(element)
+  const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme?.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
 
   useEffect(() => {
@@ -143,6 +142,43 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
+  const getElmDataBasedOnElement = () => {
+    let elementKey = ''
+    let classKey = ''
+    switch (element) {
+      case 'field-container':
+        elementKey = 'fld-wrp'
+        break
+      case 'label-subtitle-container':
+        elementKey = 'lbl-wrp'
+        break
+      case 'subtitle':
+        elementKey = 'sub-titl'
+        break
+      case 'helper-text':
+        elementKey = 'hlp-txt'
+        break
+      case 'error-message':
+        classKey = 'err-msg'
+        elementKey = 'err-msg'
+        break
+      default:
+        elementKey = ''
+        classKey = ''
+    }
+
+    return { elementKey, classKey }
+  }
+
+  const renderIndividualCustomStyleComp = () => {
+    const { elementKey, classKey } = getElmDataBasedOnElement()
+    return (
+      <div className={css(!checkExistElement(classKey || element) && cls.blur)}>
+        <IndividualCustomStyle elementKey={elementKey || element} fldKey={fieldKey} />
+      </div>
+    )
+  }
+
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -177,86 +213,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
 
-          {element === 'field-container' && (
-            <div className={css(!checkExistElement('field-container') && cls.blur)}>
-              <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'label-subtitle-container' && (
-            <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
-              <IndividualCustomStyle elementKey="lbl-wrp" fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'label' && (
-            <div className={css(!checkExistElement('label') && cls.blur)}>
-              <IndividualCustomStyle elementKey="lbl" fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'subtitle' && (
-            <div className={css(!checkExistElement('subtitle') && cls.blur)}>
-              <IndividualCustomStyle elementKey="sub-titl" fldKey={fieldKey} />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Font Size</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={subtitlFsHandler}
-                    sizeHandler={({ unitKey, unitValue }) => subtitlFsHandler({ unit: unitKey, value: unitValue })}
-                    value={subTitlFSValue}
-                    unit={subTitlFSUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                    id="font-size-control"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          {element === 'helper-text' && (
-            <div className={css(!checkExistElement('helper-text') && cls.blur)}>
-              <IndividualCustomStyle elementKey="hlp-txt" fldKey={fieldKey} />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Font Size</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={hlpTxtFsHandler}
-                    sizeHandler={({ unitKey, unitValue }) => hlpTxtFsHandler({ unit: unitKey, value: unitValue })}
-                    value={hplTxtFSValue}
-                    unit={hplTxtFSUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                    id="font-size-control"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+          {element !== 'quick-tweaks' && element !== 'fld' && renderIndividualCustomStyleComp(element, 'fld-wrp', 'field-container')}
 
-          {element === 'lbl-pre-i' && (
-            <div className={css(!checkExistElement(element) && cls.blur)}>
-              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'lbl-suf-i' && (
-            <div className={css(!checkExistElement(element) && cls.blur)}>
-              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'error-message' && (
-            <div className={css(!checkExistElement('err-msg') && cls.blur)}>
-              <IndividualCustomStyle elementKey="err-msg" fldKey={fieldKey} />
-            </div>
-          )}
-
-          {element === 'pre-i' && (
-            <div className={css(!checkExistElement(element) && cls.blur)}>
-              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
-            </div>
-          )}
-          {element === 'suf-i' && (
-            <div className={css(!checkExistElement(element) && cls.blur)}>
-              <IndividualCustomStyle elementKey={element} fldKey={fieldKey} />
-            </div>
-          )}
           {element === 'fld' && (
             <div className={css(!checkExistElement(element) && cls.blur)}>
               <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />

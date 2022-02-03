@@ -21,6 +21,27 @@ export default function ElementConfiguration({ fldKey }) {
   }
   return (
     <>
+      {fieldObj.logo && (
+        <NavBtn cssSelector={`.${fldKey}-${styleClasses.logo[0]}`} subRoute={fldKey} route="logo" label="Logo" offset="2.5" highlightSelector={`[data-dev-logo="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'logo')} />
+      )}
+      {(fieldObj.title || fieldObj.titlePreIcn || fieldObj.titleSufIcn)
+        && (
+          <>
+            {!(fieldObj.titlePreIcn || fieldObj.titleSufIcn) && (
+              <NavBtn cssSelector={`.${fldKey}-${styleClasses.title[0]}`} subRoute={fldKey} route="title" label="Title" offset="2.5" highlightSelector={`[data-dev-title="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'title')} />
+            )}
+            {(fieldObj.titlePreIcn || fieldObj.titleSufIcn) && (
+              <LayerAccordion childrenAccodin onClick={() => styleHandler('title')} offset="3.1" title="Title" fldData={fieldObj} key={fldKey} open={fldKey === selectedFieldKey && (fieldObj.titlePreIcn || fieldObj.titleSufIcn)} styleOverride={isLabelOverrideStyles(styles, fldKey, 'title')}>
+                {fieldObj.titlePreIcn && (
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.titlePreIcn[0]}`} subRoute={fldKey} route="title-pre-i" label="Prefix Icon" offset="3.3" highlightSelector={`[data-dev-title-pre-i="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'title-pre-i')} />
+                )}
+                {fieldObj.titleSufIcn && (
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.titleSufIcn[0]}`} subRoute={fldKey} route="title-suf-i" label="Suffix Icon" offset="3.3" highlightSelector={`[data-dev-title-suf-i="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'title-suf-i')} />
+                )}
+              </LayerAccordion>
+            )}
+          </>
+        )}
       {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
         && (
           <>
@@ -99,6 +120,10 @@ export default function ElementConfiguration({ fldKey }) {
   )
 }
 const styleClasses = {
+  logo: ['logo'],
+  title: ['title'],
+  titlePreIcn: ['title-pre-i'],
+  titleSufIcn: ['title-suf-i'],
   lbl: ['lbl', 'lbl-wrp'],
   lblPreIcn: ['lbl-pre-i'],
   lblSufIcn: ['lbl-suf-i'],

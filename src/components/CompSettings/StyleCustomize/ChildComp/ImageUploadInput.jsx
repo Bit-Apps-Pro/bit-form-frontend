@@ -35,7 +35,7 @@ export default function ImageUploadInput({ title, imageSrc, value, clickAction, 
         >
           <img src={imageSrc} alt="" className={css(imageUploadInputStyle.image)} />
         </span>
-        <input className={css(imageUploadInputStyle.input)} value={value} type="text" />
+        <input className={css(imageUploadInputStyle.input)} value={value} type="text" readOnly placeholder="ex: Image.png" />
         <button type="button" className={css(imageUploadInputStyle.button)} onClick={clearAction}>
           <CloseIcn size={10} />
         </button>

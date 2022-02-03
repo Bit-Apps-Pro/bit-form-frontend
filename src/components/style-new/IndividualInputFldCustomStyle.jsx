@@ -51,7 +51,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
   const existingProps = (state = '') => {
     const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
     const existingProperties = Object.keys(existingCssProperties || [])
-    const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
+    const addableCssProps = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existingProperties?.includes(x))
     return [existingCssProperties, existingProperties, addableCssProps]
   }
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']

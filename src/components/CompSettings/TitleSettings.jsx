@@ -7,31 +7,26 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
-import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
-import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
-import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import BorderControl from '../style-new/BorderControl'
-import SimpleColorPicker from '../style-new/SimpleColorPicker'
-import SpacingControl from '../style-new/SpacingControl'
-import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import Tip from '../Utilities/Tip'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import Icons from './Icons'
+import IconStyleBtn from './IconStyleBtn'
 import SmartTags from './SmartTags'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
-import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function TitleSettings() {
@@ -40,15 +35,11 @@ function TitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [styles, setStyles] = useRecoilState($styles)
-  const wrpCLass = `.${fldKey}-wrp`
-  const titleClass = `.${fldKey}-title`
-  const subTitleClass = `.${fldKey}-sub-title`
-  const logoCls = `.${fldKey}-logo`
-  const { classes } = styles.fields[fldKey]
-  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
-  const { color: titleClr, 'font-size': tleFntSize } = classes[titleClass] || ''
-  const { color: subTitleClr, 'font-size': subTleFntSize } = classes[subTitleClass] || ''
-  const { border, width: logoWidth, height: logoHeight } = classes[logoCls] || ''
+  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
+  const wrpCLass = `.${fldKey}-fld-wrp`
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
 
@@ -63,26 +54,22 @@ function TitleSettings() {
     }))
   }, [fieldData?.bg_img])
 
-  const positionHandle = (val, type) => {
-    let justifyContent = 'left'
-    if (val === 'center') justifyContent = 'center'
-    else if (val === 'flex-end') justifyContent = 'right'
-
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[wrpCLass][type] = val
-      drftStyle.fields[fldKey].classes[wrpCLass]['justify-content'] = justifyContent
-    }))
-  }
-
-  const flexDirectionHandle = (val, type) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[wrpCLass][type] = val
-    }))
-  }
-
   const setIconModel = (typ) => {
+    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setFieldName(typ)
     setIcnMdl(true)
+  }
+
+  const removeIcon = (iconType) => {
+    if (fieldData[iconType]) {
+      delete fieldData[iconType]
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+      setStyles(prvStyle => produce(prvStyle, draft => {
+        if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
+        if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
+      }))
+    }
   }
 
   const removeImage = (name) => {
@@ -93,57 +80,55 @@ function TitleSettings() {
     }
   }
 
-  const titlePath = `fields->${fldKey}->classes->${titleClass}`
-  const subTitlePath = `fields->${fldKey}->classes->${subTitleClass}`
-  const logoPath = `fields->${fldKey}->classes->${logoCls}`
-
-  const titlePaths = {
-    object: 'styles',
-    paths: {
-      margin: `${titlePath}->margin`,
-      padding: `${titlePath}->padding`,
-    },
-  }
-  const subTitlePaths = {
-    object: 'styles',
-    paths: {
-      margin: `${subTitlePath}->margin`,
-      padding: `${subTitlePath}->padding`,
-    },
-  }
-  const logoPaths = {
-    object: 'styles',
-    paths: {
-      border: `${logoPath}->border`,
-      borderWidth: `${logoPath}->border-width`,
-      borderRadius: `${logoPath}->border-radius`,
-    },
+  const hideLogo = ({ target: { checked } }) => {
+    if (checked) {
+      fieldData.logo = 'logo'
+      fieldData.logoHide = true
+      addDefaultStyleClasses(selectedFieldId, 'logo', setStyles)
+    } else {
+      delete fieldData.logo
+      fieldData.logoHide = false
+    }
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    // recalculate builder field height
+    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    addToBuilderHistory(setBuilderHistory, { event: `Logo ${req}:  ${fieldData.lbl || fldKey}`, type: `logo${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  const colorHandler = (val, cls) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].color = val
-    }))
+  const hideTitle = ({ target: { checked } }) => {
+    if (checked) {
+      fieldData.title = 'Title'
+      fieldData.titleHide = true
+      addDefaultStyleClasses(selectedFieldId, 'title', setStyles)
+    } else {
+      delete fieldData.title
+      fieldData.titleHide = false
+    }
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    // recalculate builder field height
+    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fldKey}`, type: `title_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
-  const fntSizeHandler = ({ unit, value, id }) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(tleFntSize || 'px'))
 
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[id]['font-size'] = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
-  const widthHandler = ({ unit, value }) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(logoWidth || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[logoCls].width = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-  const heightHandler = ({ unit, value }) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(logoHeight || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[logoCls].height = `${convertvalue}${unit || 'px'}`
-    }))
+  const hideSubTitle = ({ target: { checked } }) => {
+    if (checked) {
+      fieldData.subtitle = 'Sub Title'
+      fieldData.subtitleHide = true
+      addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
+    } else {
+      delete fieldData.subtitle
+      fieldData.subtitleHide = false
+    }
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    // recalculate builder field height
+    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const inputHandler = (val, type) => {
@@ -163,116 +148,50 @@ function TitleSettings() {
           subtitle={fieldData.typ}
           fieldKey={fldKey}
         />
-        <div className={css(ut.mt2, { mx: 10 })}>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Background Image</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.bg_img && (
-                <img src={fieldData?.bg_img} alt="icon" width="25" height="25" />
-              )}
-              <button type="button" onClick={() => setIconModel('bg_img')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.bg_img && (
-                <button onClick={() => removeImage('bg_img')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-        </div>
-        <hr className={css(FieldStyle.divider)} />
-        <div className={css(style.main)}>
-          <span className={css(style.label)}>Label Alignment</span>
-          <StyleSegmentControl
-            show={['icn']}
-            tipPlace="bottom"
-            className={css(style.segment)}
-            options={[
-              { icn: <TxtAlignLeftIcn size="17" />, label: 'flex-start', tip: 'Left' },
-              { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
-              { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
-            ]}
-            onChange={val => positionHandle(val, 'align-items')}
-            activeValue={position}
-          />
-        </div>
-        <hr className={css(FieldStyle.divider)} />
-        <div className={css(style.main)}>
-          <span className={css(style.label)}>Flex Direction</span>
-          <StyleSegmentControl
-            show={['icn']}
-            tipPlace="bottom"
-            className={css(style.segment)}
-            options={[
-              { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
-              { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
-              { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
-              { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
-            ]}
-            onChange={val => flexDirectionHandle(val, 'flex-direction')}
-            activeValue={flex}
-          />
-        </div>
-        <hr className={css(FieldStyle.divider)} />
         <SimpleAccordion
-          title="Logo"
-          className={css(ut.m10)}
+          title={__('Logo', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideLogo}
+          toggleChecked={fieldData?.logoHide}
+          open={fieldData?.logoHide}
+          disable={!fieldData?.logoHide}
         >
           <div className={css(ut.flxcb, ut.ml2)}>
             <span className={css(ut.fw500)}>Image</span>
             <div className={css(ut.flxcb)}>
-              {fieldData?.titleImg && (
-                <img src={fieldData?.titleImg} alt="icon" width="25" height="25" />
+              {fieldData?.logo && (
+                <>
+                  <img src={fieldData?.logo} alt="icon" width="25" height="25" />
+                  <Tip msg="Customize Style">
+                    <IconStyleBtn route="logo" />
+                  </Tip>
+                </>
               )}
-              <button type="button" onClick={() => setIconModel('titleImg')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.titleImg && (
-                <button onClick={() => removeImage('titleImg')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
+              <Tip msg="Change Logo">
+                <button type="button" onClick={() => setIconModel('logo')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
                 </button>
+              </Tip>
+              {fieldData?.logo && (
+                <Tip msg="Remove Logo">
+                  <button onClick={() => removeImage('logo')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                </Tip>
               )}
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500, ut.ml2)}>Border</span>
-            <div className={css(ut.flxcb, ut.mr2)}>
-              <BorderControl subtitle="Image Border" value={border} objectPaths={logoPaths} />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Width</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={widthHandler}
-                sizeHandler={({ unitKey, unitValue }) => widthHandler({ unit: unitKey, value: unitValue })}
-                value={getNumFromStr(logoWidth) || 10}
-                unit={getStrFromStr(logoWidth) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Height</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={heightHandler}
-                sizeHandler={({ unitKey, unitValue }) => heightHandler({ unit: unitKey, value: unitValue })}
-                value={getNumFromStr(logoHeight) || 10}
-                unit={getStrFromStr(logoHeight) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
             </div>
           </div>
         </SimpleAccordion>
         <hr className={css(FieldStyle.divider)} />
         <SimpleAccordion
-          title="Title"
-          className={css(ut.m10)}
+          title={__('Title', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideTitle}
+          toggleChecked={fieldData?.titleHide}
+          open={fieldData?.titleHide}
+          disable={!fieldData?.titleHide}
         >
           <div className={css(FieldStyle.placeholder, ut.mt2, ut.ml1)}>
             <div className={css(style.title)}>
@@ -294,13 +213,11 @@ function TitleSettings() {
                 />
               </Downmenu>
             </div>
-
-            <textarea
+            <AutoResizeInput
               placeholder="Title..."
-              className={css(FieldStyle.input)}
               name="title"
               value={fieldData?.title}
-              onChange={handleTitle}
+              changeAction={handleTitle}
             />
           </div>
           <div className={css(ut.flxcb)}>
@@ -319,73 +236,98 @@ function TitleSettings() {
               </select>
             </div>
           </div>
-          <div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
-              <div className={css(ut.flxcb, ut.mr2)}>
-                <SpacingControl
-                  action={{ type: 'spacing-control' }}
-                  subtitle="Spacing control"
-                  objectPaths={titlePaths}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Font Color</span>
+              {fieldData?.titlePreIcn && (
+                <>
+                  <img src={fieldData?.titlePreIcn} alt="start icon" width="18" height="18" />
+                  <Tip msg="Customize Style">
+                    <IconStyleBtn route="sub-titl-pre-i" />
+                  </Tip>
+                </>
+              )}
+
+              <Tip msg="Change Icon">
+                <button type="button" onClick={() => setIconModel('titlePreIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+              </Tip>
+              {fieldData.titlePreIcn && (
+                <Tip msg="Remove Icon">
+                  <button onClick={() => removeIcon('titlePreIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                </Tip>
+              )}
+
             </div>
-            <SimpleColorPicker value={titleClr || 'hsla(201, 71%, 39%, 100)'} action={{ onChange: (val) => colorHandler(val, `.${fldKey}-title`) }} id="title-font-clr" />
           </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Font Size</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={fntSizeHandler}
-                sizeHandler={({ unitKey, unitValue, id }) => fntSizeHandler({ unit: unitKey, value: unitValue, id })}
-                value={getNumFromStr(tleFntSize) || 10}
-                unit={getStrFromStr(tleFntSize) || 'px'}
-                width="110px"
-                options={['px', 'em', 'rem']}
-                id={`.${fldKey}-title`}
-              />
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
+            <div className={css(ut.flxcb)}>
+              {fieldData?.titleSufIcn && (
+                <>
+                  <img src={fieldData?.titleSufIcn} alt="end icon" width="18" height="18" />
+                  <Tip msg="Customize Style">
+                    <IconStyleBtn route="sub-titl-suf-i" />
+                  </Tip>
+                </>
+              )}
+              <Tip msg="Edit Icon">
+                <button type="button" onClick={() => setIconModel('titleSufIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+              </Tip>
+              {fieldData.titleSufIcn && (
+                <Tip msg="Remove Icon">
+                  <button onClick={() => removeIcon('titleSufIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                </Tip>
+              )}
+
             </div>
           </div>
         </SimpleAccordion>
         <hr className={css(FieldStyle.divider)} />
-        <SimpleAccordion
-          title="Sub Title"
-          className={css(ut.m10)}
-        >
 
-          <div className={css(FieldStyle.placeholder, ut.mt2)}>
-            <div className={css(style.title)}>
-              <label className={css(ut.fw500, ut.ml2)}>Sub Title</label>
-              <Downmenu>
-                <button
-                  data-close
-                  type="button"
-                  className={css(style.btn)}
-                  unselectable="on"
-                  draggable="false"
-                  style={{ cursor: 'pointer' }}
-                  title={__('Fields', 'bitform')}
-                >
-                  <BdrDottedIcn size="19" />
-                </button>
-                <SmartTags
-                  fieldName="subTitle"
-                />
-              </Downmenu>
-            </div>
+        <SimpleAccordion
+          title={__('Sub Title', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideSubTitle}
+          toggleChecked={fieldData?.subtitleHide}
+          open={fieldData?.subtitleHide}
+          disable={!fieldData?.subtitleHide}
+        >
+          <div className={css(style.title, ut.mt2)}>
+            <label className={css(ut.fw500, ut.ml2)}>Sub Title</label>
+            <Downmenu>
+              <button
+                data-close
+                type="button"
+                className={css(style.btn)}
+                unselectable="on"
+                draggable="false"
+                style={{ cursor: 'pointer' }}
+                title={__('Fields', 'bitform')}
+              >
+                <BdrDottedIcn size="19" />
+              </button>
+              <SmartTags
+                fieldName="subtitle"
+              />
+            </Downmenu>
+          </div>
+          <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
               placeholder="Sub Title..."
-              name="subTitle"
-              value={fieldData?.subTitle}
+              name="subtitle"
+              value={fieldData?.subtitle}
               changeAction={handleTitle}
             />
           </div>
-
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
@@ -403,35 +345,61 @@ function TitleSettings() {
             </div>
           </div>
 
-          <div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
-              <div className={css(ut.flxcb, ut.mr2)}>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subTitlePaths} />
-              </div>
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Font Color</span>
+              {fieldData?.subTlePreIcn && (
+                <>
+                  <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
+                  <Tip msg="Customize Style">
+                    <IconStyleBtn route="sub-titl-pre-i" />
+                  </Tip>
+                </>
+              )}
+
+              <Tip msg="Edit Icon">
+                <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+              </Tip>
+              {fieldData.subTlePreIcn && (
+                <Tip msg="Remove Icon">
+                  <button onClick={() => removeIcon('subTlePreIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                </Tip>
+              )}
+
             </div>
-            <SimpleColorPicker value={subTitleClr || 'hsla(201, 71%, 39%, 100)'} action={{ onChange: (val) => colorHandler(val, `.${fldKey}-sub-title`) }} id="sub-title-font-clr" />
           </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Font Size</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={fntSizeHandler}
-                sizeHandler={({ unitKey, unitValue, id }) => fntSizeHandler({ unit: unitKey, value: unitValue, id })}
-                value={getNumFromStr(subTleFntSize) || 10}
-                unit={getStrFromStr(subTleFntSize) || 'px'}
-                width="110px"
-                options={['px', 'em', 'rem']}
-                id={`.${fldKey}-sub-title`}
-              />
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
+            <div className={css(ut.flxcb)}>
+              {fieldData?.subTleSufIcn && (
+                <>
+                  <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
+                  <Tip msg="Customize Style">
+                    <IconStyleBtn route="sub-titl-suf-i" />
+                  </Tip>
+                </>
+              )}
+              <Tip msg="Edit Icon">
+                <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+              </Tip>
+              {fieldData.subTleSufIcn && (
+                <Tip msg="Remove Icon">
+                  <button onClick={() => removeIcon('subTleSufIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                </Tip>
+              )}
+
             </div>
           </div>
         </SimpleAccordion>
+
         <hr className={css(FieldStyle.divider)} />
       </div>
       <Modal
