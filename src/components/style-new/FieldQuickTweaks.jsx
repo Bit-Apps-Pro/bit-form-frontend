@@ -1,13 +1,18 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
+import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 import ThemeControl from './ThemeControl'
@@ -18,6 +23,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const themeVars = useRecoilValue($themeVars)
   const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
+  const fldStyleObj = styles?.fields?.[fieldKey]
+  const { fieldType, classes, theme } = fldStyleObj
+  const wrpCLass = `.${fieldKey}-fld-wrp`
+  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 
   const setSizes = ({ target: { value } }) => {
@@ -64,44 +73,112 @@ export default function FieldQuickTweaks({ fieldKey }) {
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
   const [borderRadVal, borderRadUnit] = getBorderRadius()
+  const positionHandle = (val, type) => {
+    let justifyContent = 'left'
+    if (val === 'center') justifyContent = 'center'
+    else if (val === 'flex-end') justifyContent = 'right'
+
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
+      drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
+    }))
+  }
+
+  const flexDirectionHandle = (val, type) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
+    }))
+  }
   return (
     <>
-      <SimpleColorPicker
-        title="Accent Color"
-        subtitle="Accent Color"
-        value={accentColor}
-        stateObjName="field-accent-color"
-        propertyPath="--global-accent-color"
-        modalId="global-primary-clr"
-        fldKey={fieldKey}
-      />
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Size</span>
-        <select onChange={setSizes} className={css(sc.select)}>
-          {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
-        </select>
-      </div>
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Theme</span>
-        <ThemeControl fldKey={fieldKey} />
-      </div>
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Border Radius</span>
-        <div className={css(ut.flxc)}>
-          <SizeControl
-            min={0}
-            max={20}
-            inputHandler={borderRadHandler}
-            sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-            value={borderRadVal}
-            unit={borderRadUnit}
-            width="110px"
-            options={['px', 'em', 'rem']}
+      {fieldType !== 'title' && (
+        <>
+          <SimpleColorPicker
+            title="Accent Color"
+            subtitle="Accent Color"
+            value={accentColor}
+            stateObjName="field-accent-color"
+            propertyPath="--global-accent-color"
+            modalId="global-primary-clr"
+            fldKey={fieldKey}
           />
-        </div>
-      </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Size</span>
+            <select onChange={setSizes} className={css(sc.select)}>
+              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+            </select>
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <ThemeControl fldKey={fieldKey} />
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border Radius</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                min={0}
+                max={20}
+                inputHandler={borderRadHandler}
+                sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                value={borderRadVal}
+                unit={borderRadUnit}
+                width="110px"
+                options={['px', 'em', 'rem']}
+              />
+            </div>
+          </div>
+        </>
+      )}
+      {fieldType === 'title' && (
+        <>
+          <div className={css(style.main)}>
+            <span className={css(style.label)}>Label Alignment</span>
+            <StyleSegmentControl
+              show={['icn']}
+              tipPlace="bottom"
+              className={css(style.segment)}
+              options={[
+                { icn: <TxtAlignLeftIcn size="17" />, label: 'flex-start', tip: 'Left' },
+                { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+                { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
+              ]}
+              onChange={val => positionHandle(val, 'align-items')}
+              activeValue={position}
+            />
+          </div>
+          <div className={css(style.main)}>
+            <span className={css(style.label)}>Flex Direction</span>
+            <StyleSegmentControl
+              show={['icn']}
+              tipPlace="bottom"
+              className={css(style.segment)}
+              options={[
+                { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
+                { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
+                { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
+                { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
+              ]}
+              onChange={val => flexDirectionHandle(val, 'flex-direction')}
+              activeValue={flex}
+            />
+          </div>
+        </>
+      )}
     </>
   )
+}
+
+const style = {
+  main: { flx: 'center-between' },
+  label: {
+    fw: 500,
+    ml: 10,
+    mt: 5,
+  },
+  segment: {
+    mr: 7,
+    mt: 4,
+  },
 }
 const sizes = {
   'small-2': 'Small-2',

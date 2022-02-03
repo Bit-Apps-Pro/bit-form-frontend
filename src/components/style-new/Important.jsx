@@ -15,7 +15,6 @@ export default function Important({ propertyPath, className }) {
   const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue.match(/var/gi)
 
   const addOrRemoveImportant = () => {
-    console.log('added')
     let newStyleValue
 
     if (isAlreadyImportant) {
