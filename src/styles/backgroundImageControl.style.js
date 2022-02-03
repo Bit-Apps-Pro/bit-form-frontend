@@ -2,15 +2,20 @@ const backgroundImageControlStyle = {
   container: { w: 250, cr: '#888' },
   innercontainer: { p: 10 },
 
-  title: { fs: 12 },
+  title: { fs: 12, ml: 5 },
 
   urlinput: {
-    w: '60%',
-    brs: 8,
-    b: 0,
-    oe: 0,
+    brs: 10,
+    flx: 'align-center',
+    h: 30,
+    w: '100%',
+    p: 2,
     bc: 'var(--white-0-95)',
-    p: 5,
+    cr: 'var(--white-0-50)',
+    b: '1px solid transparent',
+    ':focus-within': { focusShadow: 1 },
+    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
+    oe: 0,
   },
 
   select: {

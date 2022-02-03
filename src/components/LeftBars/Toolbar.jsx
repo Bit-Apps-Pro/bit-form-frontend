@@ -58,8 +58,11 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
       elm: {
         typ: 'title',
+        titleImg: '',
+        logoHide: false,
         title: __('Title', 'bitform'),
-        subTitle: __('Sub Title', 'bitform'),
+        titleHide: true,
+        subTitleHide: false,
         valid: {},
         err: {},
       },

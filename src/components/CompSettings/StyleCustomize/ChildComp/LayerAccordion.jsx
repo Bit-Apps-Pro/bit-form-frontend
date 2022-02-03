@@ -83,7 +83,7 @@ export default function LayerAccordion({ className,
               {tag && (
                 <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
               )}
-              {styleOverride && <spna className={css(ut.flxc, { px: 2 })} title="Override theme styles"><CheckMarkIcn cls="context-btn-color" size="15" /></spna>}
+              {styleOverride && <span className={css(ut.flxc, { px: 2 })} title="Theme styles override"><CheckMarkIcn cls="context-btn-color" size="15" /></span>}
               <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(cls.tipBody)}>
                   {(fldData.lbl || fldData.txt || fldData.adminLbl) && (

@@ -35,9 +35,9 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
+        {styleOverride && <span className={css(ut.flxc, { px: 2 })} title="Theme styles overrided"><CheckMarkIcn cls="context-btn-color" size="15" /></span>}
       </div>
       <div className={css(s.navActionBtn)} data-action-btn>
-        {styleOverride && <spna className={css(ut.flxc, { px: 2 })} title="Override theme styles"><CheckMarkIcn cls="context-btn-color" size="15" /></spna>}
         {cssSelector && (
           <Cooltip width={180} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(s.tipBody)}>

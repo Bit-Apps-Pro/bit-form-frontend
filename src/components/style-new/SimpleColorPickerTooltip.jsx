@@ -63,6 +63,7 @@ const c = {
     p: 0,
   },
   clrVal: {
+    fs: 12,
     w: 90,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
