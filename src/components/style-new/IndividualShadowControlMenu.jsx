@@ -99,7 +99,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
   }
 
   return (
-    <div>
+    <div className={css(c.overflowXhidden)}>
       {arrOfExtractedShadowObj.map((shadowObj, indx) => (
         <>
           <SimpleAccordion
@@ -259,7 +259,7 @@ const c = {
     brs: '50%',
     '&:hover': { bd: 'var(--white-0-86)' },
   },
-  footer: { flx: 'center' },
+  footer: { flx: 'center', m: 5 },
   addBtn: {
     se: 25,
     b: 'none',
@@ -272,4 +272,6 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
+  overflowXhidden: { owx: 'hidden' },
+
 }

@@ -57,7 +57,7 @@ export default function IndividualShadowControl({ title,
         break
     }
   }
-
+  const getValue = () => value?.replaceAll(/\(|var|\)/gi, '')
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
@@ -72,14 +72,14 @@ export default function IndividualShadowControl({ title,
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
+        <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 240, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 250, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+            {/* <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} /> */}
+            <span ssss className={css(c.clrVal)}>{getValue()}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
@@ -97,6 +97,7 @@ const c = {
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 130,
+    h: '30px !important',
     mnw: 130,
     brs: 10,
     p: 3,
@@ -143,6 +144,7 @@ const c = {
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',
+    pl: 5,
   },
   active: { focusShadow: 1 },
 
