@@ -70,14 +70,15 @@ const c = {
   },
   clearBtn: {
     brs: '50%',
-    w: 20,
-    h: 20,
+    p: 4,
+    w: 17,
+    h: 17,
     b: 'none',
     flx: 'center',
     bd: 'transparent',
     cr: 'var(--white-0-50)',
     curp: 1,
-    ':hover': { cr: 'var(--black-0)' },
+    ':hover': { cr: 'var(--black-0)', bd: '#d3d1d1' },
   },
   pickrBtn: {
     b: 'none',
