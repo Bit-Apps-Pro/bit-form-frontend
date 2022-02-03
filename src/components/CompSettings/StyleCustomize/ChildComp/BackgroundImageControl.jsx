@@ -153,14 +153,14 @@ export default function BackgroundImageControl({ stateObjName,
             <div className={css(ut.mt2)}>
 
               {controller.child === 'Upload' && (
-                <ImageUploadInput title="Image" imageSrc={bgImage.replace(/(url\(|\))/gi, '')} value="test.png" clickAction={setWpMedia} clearAction={clearBgImage} />
+                <ImageUploadInput title="Image" imageSrc={bgImage.replace(/(url\(|\))/gi, '')} value={bgImage.slice(bgImage.lastIndexOf('/') + 1, -1)} clickAction={setWpMedia} clearAction={clearBgImage} />
               )}
 
               {controller.child === 'Link' && (
                 <div className={css(ut.mt2)}>
-                  <div className={css(ut.flxcb)}>
+                  <div className={css(ut.flxClm)}>
                     <span className={css(bgImgControlStyle.title)}>URL</span>
-                    <input className={css(bgImgControlStyle.urlinput)} type="url" value={bgImage.replace(/(url\(|\))/gi, '')} onChange={urlChangeHandler} placeholder="https://www.example.com" />
+                    <input type="url" className={css(bgImgControlStyle.urlinput)} value={bgImage.replace(/(url\(|\))/gi, '')} onChange={urlChangeHandler} placeholder="ex: https://www.example.com" />
                   </div>
                   {/* <button type="button" className={css(ut.mt2)}>browse</button> */}
                 </div>
