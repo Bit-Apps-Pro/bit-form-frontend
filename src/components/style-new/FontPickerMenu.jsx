@@ -28,7 +28,6 @@ export default function FontPickerMenu() {
   const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempStyle = useRecoilValue($tempStyles)
-  // const setStyles = useSetRecoilState($styles)
 
   const inheritFont = themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit'
   const checkGoogleFontExist = (styles.font.fontType === 'Google')
@@ -145,10 +144,7 @@ export default function FontPickerMenu() {
 
   const customFontHandler = ({ target: { name, value } }) => {
     if (name === 'fontURL') {
-      if (!isValidURL(value)) {
-        toast.error('Font url is invalid!')
-        return
-      }
+      if (!isValidURL(value)) return
       setStyles(prvStyle => produce(prvStyle, drft => {
         drft.font.fontType = 'Custom'
         drft.font.fontURL = value
@@ -165,6 +161,9 @@ export default function FontPickerMenu() {
         drft['--g-font-family'] = value
       }))
     }
+  }
+  const urlValidationHandler = ({ target: { value } }) => {
+    if (value !== '' && !isValidURL(value)) toast.error('Font url is invalid!')
   }
 
   return (
@@ -264,6 +263,7 @@ export default function FontPickerMenu() {
                 <input
                   className={css(fontStyle.url)}
                   onChange={customFontHandler}
+                  onBlur={urlValidationHandler}
                   name="fontURL"
                   aria-label="Custom font url"
                   type="url"

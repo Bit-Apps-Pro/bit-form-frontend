@@ -57,6 +57,12 @@ export default function SimpleColorPicker({ title,
     }
   }
 
+  const checkVarValue = () => {
+    let v = value
+    if (value.match(/var/gi)) v = value.replaceAll(/\(|var|\)/gi, '')
+    return v
+  }
+
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
@@ -77,7 +83,7 @@ export default function SimpleColorPicker({ title,
             className={css(c.pickrBtn)}
           >
             <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+            <span className={css(c.clrVal)}>{checkVarValue()}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
