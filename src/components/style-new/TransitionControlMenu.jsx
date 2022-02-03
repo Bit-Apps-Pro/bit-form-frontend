@@ -82,24 +82,39 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
       assignNestedObj(drftStyles, propertyPath, transitionArr.toString())
     }))
   }
+  const convartUnit = (vlu, unt, prvUnt) => {
+    let newVal
+    if (unt === prvUnt) newVal = vlu
+    else if (unt === 's' && prvUnt === 'ms') newVal = vlu * 1000
+    else if (unt === 'ms' && prvUnt === 's') newVal = vlu / 1000
+    return newVal
+  }
+  const sizeHandler = (v, prop, indx, prvUnit) => {
+    const { unitKey: unit, unitValue: value } = v
+    const newValue = convartUnit(value, unit, prvUnit)
+    generateTransitionValue(prop, { unit, newValue }, indx)
+  }
   return (
-    <div>
+    <div className={css(c.overflowXhidden)}>
       {arrOfExtractedTransitionObj.map((transitionObj, indx) => (
         <>
           <SimpleAccordion
             className={css(c.accordionHead)}
             title={__(`Transition ${indx + 1}`, 'bitform')}
             open={indx === 0}
-            actionComponent={(
-              <button
-                type="button"
-                title="Remove"
-                className={css(c.delBtn)}
-                onClick={() => deleteTransition(indx)}
-              >
-                <TrashIcn size="14" />
-              </button>
-            )}
+            actionComponent={
+              // eslint-disable-next-line operator-linebreak
+              indx !== 0 &&
+              (
+                <button
+                  type="button"
+                  title="Remove"
+                  className={css(c.delBtn)}
+                  onClick={() => deleteTransition(indx)}
+                >
+                  <TrashIcn size="14" />
+                </button>
+              )}
             key={`transition-${indx * 2 * 4}`}
           >
             <div className={css(ut.p1)}>
@@ -120,27 +135,29 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
               <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Duration</span>
                 <SizeControl
-                  width="105px"
+                  width="110px"
                   value={Number(getNumFromStr(transitionObj.duration) || 0)}
                   unit={getStrFromStr(transitionObj.duration) || 's'}
                   inputHandler={valObj => generateTransitionValue('duration', valObj, indx)}
-                  options={['s']}
-                  min="0.1"
-                  max="10"
-                  step="0.1"
+                  sizeHandler={(v) => sizeHandler(v, 'duration', indx, getStrFromStr(transitionObj.duration))}
+                  options={['s', 'ms']}
+                  min={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
+                  max={getStrFromStr(transitionObj.duration) === 's' ? 10 : 10000}
+                  step={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
                 />
               </div>
               <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Delay</span>
                 <SizeControl
-                  width="105px"
+                  width="110px"
                   value={Number(getNumFromStr(transitionObj.delay) || 0)}
                   unit={getStrFromStr(transitionObj.delay) || 's'}
                   inputHandler={valObj => generateTransitionValue('delay', valObj, indx)}
-                  options={['s']}
-                  min="0.1"
-                  max="10"
-                  step="0.1"
+                  sizeHandler={(v) => sizeHandler(v, 'delay', indx, getStrFromStr(transitionObj.delay))}
+                  options={['s', 'ms']}
+                  min={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
+                  max={getStrFromStr(transitionObj.delay) === 's' ? 10 : 10000}
+                  step={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
                 />
               </div>
               <div className={css(ut.flxcb, ut.mb2)}>
@@ -206,7 +223,7 @@ const c = {
     brs: '50%',
     '&:hover': { bd: 'var(--white-0-86)' },
   },
-  footer: { flx: 'center' },
+  footer: { flx: 'center', m: 5 },
   addBtn: {
     se: 25,
     b: 'none',
@@ -219,6 +236,7 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
+  overflowXhidden: { owx: 'hidden' },
 }
 
 const transitionFunc = [

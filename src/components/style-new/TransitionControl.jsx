@@ -71,7 +71,7 @@ export default function TransitionControl({ title,
         {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 240, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >

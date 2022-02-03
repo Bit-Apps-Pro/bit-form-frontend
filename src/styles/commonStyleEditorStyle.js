@@ -4,7 +4,7 @@ const sc = {
     b: 'none',
     brs: '10px !important',
     fw: 500,
-    w: 128,
+    w: '110px !important',
     cr: 'var(--b-54-12) !important',
     ':hover': {
       bs: '0 0 0 1px var(--white-0-83) !important',
