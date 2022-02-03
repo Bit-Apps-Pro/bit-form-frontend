@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $fields, $flags } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $fields, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
@@ -36,13 +36,26 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const [modal, setModal] = useState(false)
   const fields = useRecoilValue($fields)
   const setStyles = useSetRecoilState($styles)
+  const selectedFldId = useRecoilValue($selectedFieldId)
 
-  const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
+  const styleModeHandler = ({ target: { checked } }) => {
+    setFlags(prv => ({ ...prv, styleMode: checked }))
+    if (checked) {
+      history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-settings).*/g, `field-theme-customize/quick-tweaks/${selectedFldId}`))
+    } else {
+      history.replace(history.location.pathname.replace(/(field-theme-customize|style|fields-list|themes|field-settings).*/g, 'theme-customize/quick-tweaks'))
+    }
+  }
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
       if (prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: true }
     })
+    if (selectedFldId !== null) {
+      history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-settings).*/g, `field-theme-customize/quick-tweaks/${selectedFldId}`))
+    } else {
+      history.replace(history.location.pathname.replace(/(field-theme-customize|style|fields-list|themes|field-settings).*/g, 'theme-customize/quick-tweaks'))
+    }
     removeUnuseStyles(fields, setStyles)
   }
   const formFieldButtonHandler = () => {
@@ -50,6 +63,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: false }
     })
+    history.replace(history.location.pathname.replace(/(field-theme-customize|style|theme-customize|themes|field-settings).*/g, 'fields-list'))
     removeUnuseStyles(fields, setStyles)
   }
 
