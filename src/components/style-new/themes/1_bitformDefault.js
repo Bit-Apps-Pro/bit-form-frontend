@@ -68,18 +68,21 @@ export default function bitformDefaultTheme(fk, type, direction) {
       return {
         theme: 'bitformDefault',
         fieldType: type,
+        overrideGlobalTheme: [],
         classes: titleStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'image':
       return {
         theme: 'bitformDefault',
         fieldType: type,
+        overrideGlobalTheme: [],
         classes: imageStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'divider':
       return {
         theme: 'bitformDefault',
         fieldType: type,
+        overrideGlobalTheme: [],
         classes: dividerStyle_1_bitformDefault({ fk, type, direction }),
       }
     default:
