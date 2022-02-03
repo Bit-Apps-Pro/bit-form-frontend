@@ -21,6 +21,11 @@ export default function FieldBlockWrapper({ layoutItem,
   formID,
   navigateToFieldSettings,
   navigateToStyle }) {
+  const styleNavigation = e => {
+    e.stopPropagation()
+    navigateToStyle(fields[layoutItem.i].typ)
+  }
+
   return (
     <>
       <div className="blk-icn-wrp pos-abs flx">
@@ -36,7 +41,7 @@ export default function FieldBlockWrapper({ layoutItem,
           type="button"
           className="g-c curp us-n no-drg blk-wrp-btn"
           title={__('Style', 'bitform')}
-          onClick={() => navigateToStyle(fields[layoutItem.i].typ)}
+          onClick={styleNavigation}
         >
           <BrushIcn height="18" width="14" />
         </button>

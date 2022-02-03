@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
@@ -351,8 +353,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // if (typ === 'paypal') history.replace(history.location.pathname.replace(/fields-list|style\/.+|style/g, 'style/fl/ppl'))
     // // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
     // else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
-    console.log(history.location.pathname)
-    history.push(`/form/builder/${formType}/${formID}/field-theme-customize`)
+    history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFieldId}`)
     // history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
   }
@@ -366,7 +367,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   return (
-    <div style={{ width: gridWidth + 6 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+    <div style={{ width: gridWidth + 6 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
