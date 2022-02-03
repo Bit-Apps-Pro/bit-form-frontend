@@ -86,7 +86,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
-        <span className={css(ut.fs12, ut.fw500)}>Style</span>
+        <span className={css(ut.fs12, ut.fw500)}>Thickness</span>
         <SizeControl
           min={0.1}
           max={100}
@@ -94,7 +94,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           sizeHandler={({ unitKey, unitValue }) => thicknessHandler({ unit: unitKey, value: unitValue })}
           value={thicknesValue || 0}
           unit={thicknesUnit || 'px'}
-          width="130px"
+          width="110px"
           options={['px', 'em', 'rem', '']}
           step={thicknesUnit !== 'px' ? '0.1' : 1}
         />
