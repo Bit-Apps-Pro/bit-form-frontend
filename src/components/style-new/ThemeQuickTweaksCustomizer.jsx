@@ -111,8 +111,8 @@ export default function ThemeQuickTweaksCustomizer() {
   return (
     <>
       <SimpleColorPicker
-        title="Background color"
-        subtitle="Background color"
+        title="Field Wrapper Background Color"
+        subtitle="Field Wrapper Background Color"
         value={globalBgColor}
         stateObjName="themeColors"
         propertyPath="--global-bg-color"

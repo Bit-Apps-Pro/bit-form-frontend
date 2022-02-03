@@ -59,7 +59,7 @@ export default function SimpleColorPicker({ title,
 
   const checkVarValue = () => {
     let v = value
-    if (value.match(/var/gi)) v = value.replaceAll(/\(|var|\)/gi, '')
+    if (value?.match(/var/gi)?.[0]) v = value.replaceAll(/\(|var|\)/gi, '')
     return v
   }
 
