@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-expressions */
-import { __ } from '../../../Utils/i18nwrap'
 
 export const addFieldMap = (i, confTmp, setConf) => {
   const newConf = { ...confTmp }

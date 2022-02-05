@@ -1,7 +1,7 @@
 import { __ } from '../../../Utils/i18nwrap'
-import { addFieldMap } from './IntegrationHelpers'
 import { getAllDropboxFolders } from './DropboxCommonFunc'
 import DropboxFieldMap from './DropboxFieldMap'
+import { addFieldMap } from './IntegrationHelpers'
 
 export default function DropboxIntegLayout({ formId, formFields, dropboxConf, setDropboxConf, isLoading, setIsLoading }) {
   return (

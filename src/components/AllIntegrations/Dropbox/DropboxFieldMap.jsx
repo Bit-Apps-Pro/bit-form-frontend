@@ -2,7 +2,6 @@ import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap, delFieldMap } from './IntegrationHelpers'
 
 export default function DropboxFieldMap({ i, formFields, field, dropboxConf, setDropboxConf }) {
-  
   const handleFieldMapping = (event, index) => {
     const newConf = { ...dropboxConf }
     newConf.field_map[index][event.target.name] = event.target.value

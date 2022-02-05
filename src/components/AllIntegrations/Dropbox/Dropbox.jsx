@@ -1,38 +1,38 @@
 /* eslint-disable no-unused-expressions */
-import { useState } from "react";
-import "react-multiple-select-dropdown-lite/dist/index.css";
-import { useHistory, useParams } from "react-router-dom";
-import { __ } from "../../../Utils/i18nwrap";
-import SnackMsg from "../../Utilities/SnackMsg";
-import Steps from "../../Utilities/Steps";
-import { saveIntegConfig } from "../IntegrationHelpers/IntegrationHelpers";
-import IntegrationStepThree from "../IntegrationHelpers/IntegrationStepThree";
-import DropboxAuthorization from "./DropboxAuthorization";
-import DropboxIntegLayout from "./DropboxIntegLayout";
+import { useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import DropboxAuthorization from './DropboxAuthorization'
+import DropboxIntegLayout from './DropboxIntegLayout'
 
 function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory();
+  const history = useHistory()
   const { formID } = useParams()
-  const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(1);
-  const [snack, setSnackbar] = useState({ show: false });
+  const [isLoading, setIsLoading] = useState(false)
+  const [step, setStep] = useState(1)
+  const [snack, setSnackbar] = useState({ show: false })
 
   const [dropboxConf, setDropboxConf] = useState({
-    name: "Dropbox Integration",
-    type: "Dropbox",
-    apiKey: process.env.NODE_ENV === "development" ? "ybmbut986ut5y61" : "",
-    apiSecret: process.env.NODE_ENV === "development" ? "bzan1ymigsk2sa1" : "",
-    accessCode: "",
-    field_map: [{ formField: "", dropboxFormField: "" }],
+    name: 'Dropbox Integration',
+    type: 'Dropbox',
+    apiKey: process.env.NODE_ENV === 'development' ? 'ybmbut986ut5y61' : '',
+    apiSecret: process.env.NODE_ENV === 'development' ? 'bzan1ymigsk2sa1' : '',
+    accessCode: '',
+    field_map: [{ formField: '', dropboxFormField: '' }],
     foldersList: [],
     actions: {},
-  });
+  })
 
   const saveConfig = () => {
-    saveIntegConfig(integrations, setIntegration, allIntegURL, dropboxConf, history);
-  };
+    saveIntegConfig(integrations, setIntegration, allIntegURL, dropboxConf, history)
+  }
 
-  document.querySelector(".btcd-s-wrp").scrollTop = 0;
+  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   return (
     <div>
@@ -59,7 +59,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: `${100}%`,
-            overintegrations: "visible",
+            overintegrations: 'visible',
           }),
         }}
       >
@@ -78,7 +78,9 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__("Next", "bitform")} &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+          &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
@@ -89,7 +91,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
         saveConfig={() => saveConfig()}
       />
     </div>
-  );
+  )
 }
 
-export default Dropbox;
+export default Dropbox

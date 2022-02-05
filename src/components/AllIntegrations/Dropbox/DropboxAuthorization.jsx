@@ -3,7 +3,6 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import CopyText from '../../Utilities/CopyText'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
 
 export default function DropboxAuthorization({ formId, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
@@ -15,7 +14,7 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
     setStep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-  
+
   const handleInput = e => {
     const newConf = { ...dropboxConf }
     const rmError = { ...error }
@@ -26,11 +25,11 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
   }
 
   const getAccessCode = () => {
-    if(!dropboxConf.apiKey || !dropboxConf.apiSecret) {
+    if (!dropboxConf.apiKey || !dropboxConf.apiSecret) {
       toast.error(__('Please enter API key and API secret', 'bitform'))
       return
     }
-    window.open(`https://www.dropbox.com/oauth2/authorize?client_id=${dropboxConf.apiKey}&token_access_type=offline&response_type=code`, '_blank');
+    window.open(`https://www.dropbox.com/oauth2/authorize?client_id=${dropboxConf.apiKey}&token_access_type=offline&response_type=code`, '_blank')
   }
 
   return (
@@ -40,25 +39,27 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
 
       {/* <div className="mt-3"><b>{__('Redirect URIs:', 'bitform')}</b></div>
       <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} /> */}
-            
-      <small className='d-blk mt-3'>
-        {__('To Get Api Key & Secret, Please Visit', 'bitform')}&nbsp;
-        <a className="btcd-link" rel="noreferrer" target='_blank' href='https://www.dropbox.com/developers/apps/create?_tk=pilot_lp&_ad=ctabtn1&_camp=create'>{__('Dropbox API Console', 'bitform')}</a>
+
+      <small className="d-blk mt-3">
+        {__('To Get Api Key & Secret, Please Visit', 'bitform')}
+        &nbsp;
+        <a className="btcd-link" rel="noreferrer" target="_blank" href="https://www.dropbox.com/developers/apps/create?_tk=pilot_lp&_ad=ctabtn1&_camp=create">{__('Dropbox API Console', 'bitform')}</a>
       </small>
 
       <div className="mt-3"><b>{__('Dropbox Api Key:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="apiKey" value={dropboxConf.apiKey} type="text" placeholder={__('Api Key...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red' }}>{error.apiKey}</div>
-      
+
       <div className="mt-3"><b>{__('Dropbox Api Secret:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="apiSecret" value={dropboxConf.apiSecret} type="text" placeholder={__('Api Secret...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red' }}>{error.apiSecret}</div>
-      
+
       <small className="d-blk mt-3">
-        {__('To Get Access Code, Please Visit', 'bitform')}&nbsp;
+        {__('To Get Access Code, Please Visit', 'bitform')}
+        &nbsp;
         <a className="btcd-link" rel="noreferrer" style={{ cursor: 'pointer' }} onClick={getAccessCode}>{__('Dropbox Access Code', 'bitform')}</a>
       </small>
-      
+
       <div className="mt-3"><b>{__('Dropbox Access Code:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="accessCode" value={dropboxConf.accessCode} type="text" placeholder={__('Access Code...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red' }}>{error.accessCode}</div>

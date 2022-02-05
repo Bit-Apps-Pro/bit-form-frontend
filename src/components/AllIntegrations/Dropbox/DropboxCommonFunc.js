@@ -1,7 +1,7 @@
 /* eslint-disable no-else-return */
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, dropboxConf, setDropboxConf, setIsLoading, setSnackbar, isNew, error, setError) => {
   const newConf = { ...dropboxConf }
@@ -28,7 +28,7 @@ export const getAllDropboxFolders = (formId, dropboxConf, setDropboxConf) => {
         if (result.data.dropboxFoldersList) {
           newConf.foldersList = result.data.dropboxFoldersList
           newConf.tokenDetails = result.data.tokenDetails
-          console.log(result.data.dropboxFoldersList);
+          console.log(result.data.dropboxFoldersList)
         }
 
         setDropboxConf(newConf)
@@ -46,7 +46,7 @@ export const getAllDropboxFolders = (formId, dropboxConf, setDropboxConf) => {
 
 export const handleAuthorize = (formId, confTmp, setConf, setIsAuthorized, setIsLoading) => {
   if (!confTmp.accessCode || !confTmp.apiKey || !confTmp.apiSecret) {
-    toast.error(__('Dropbox ApiKey, ApiSecret & Access Code can\'t be empty', 'bitform'));
+    toast.error(__('Dropbox ApiKey, ApiSecret & Access Code can\'t be empty', 'bitform'))
     return
   }
   setIsLoading(true)
@@ -65,11 +65,11 @@ export const handleAuthorize = (formId, confTmp, setConf, setIsAuthorized, setIs
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
-        toast.success(__('Authorized Successfully', 'bitform'));
+        toast.success(__('Authorized Successfully', 'bitform'))
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        toast.error(`${__('Authorization failed Cause: ', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}`);
+        toast.error(`${__('Authorization failed Cause: ', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}`)
       } else {
-        toast.error(__('Authorization failed. please try again', 'bitform'));
+        toast.error(__('Authorization failed. please try again', 'bitform'))
       }
       setIsLoading(false)
     })
