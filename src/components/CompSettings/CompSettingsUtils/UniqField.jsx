@@ -46,7 +46,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
   }
 
   const setShowErrMsg = e => {
-    const { name, checked } = e.target
+    const { checked } = e.target
     // console.log('name', name)
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
@@ -55,7 +55,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
       const msg = 'That field is taken. Try another'
       if (!fieldData.err[type].dflt) fieldData.err[type].dflt = msg
     } else {
-      delete fieldData.err[name].show
+      delete fieldData.err[type].show
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
