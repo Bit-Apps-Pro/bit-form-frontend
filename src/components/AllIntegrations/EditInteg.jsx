@@ -41,6 +41,7 @@ const EditTelegram = lazy(() => import('./Telegram/EditTelegram'))
 const EditFluentCrm = lazy(() => import('./FluentCRM/EditFluentCrm'))
 const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
 const EditAutonami = lazy(() => import('./Autonami/EditAutonami'))
+const EditDropbox = lazy(() => import('./Dropbox/EditDropbox'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -115,6 +116,8 @@ export default function EditInteg({ allIntegURL }) {
         return <EditEncharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Autonami':
         return <EditAutonami allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Dropbox':
+        return <EditDropbox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }

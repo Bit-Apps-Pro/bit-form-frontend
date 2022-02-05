@@ -41,6 +41,7 @@ const Telegram = lazy(() => import('./Telegram/Telegram'))
 const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
 const Autonami = lazy(() => import('./Autonami/Autonami'))
+const Dropbox = lazy(() => import('./Dropbox/Dropbox'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [integs, setIntegration] = useRecoilState($integrations)
@@ -114,6 +115,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Autonami':
         return <Autonami allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Dropbox':
+        return <Dropbox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         return <></>
     }
