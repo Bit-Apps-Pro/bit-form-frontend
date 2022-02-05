@@ -50,7 +50,7 @@ export default function ShadowControlMenu({ objectPaths }) {
 
   return (
     <div>
-      <div className={css(ut.flxcb, ut.mb2)}>
+      <div className={css(ut.flxcb, ut.mb2, ut.pt1)}>
         <span className={css(ut.fs12, ut.fw500)}>X</span>
         <SizeControl
           width="105px"
