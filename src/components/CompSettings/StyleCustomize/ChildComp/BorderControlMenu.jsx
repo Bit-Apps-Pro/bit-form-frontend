@@ -30,7 +30,6 @@ export default function BorderControlMenu({ objectPaths }) {
 
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)
-
     return { type, color }
   }
 
