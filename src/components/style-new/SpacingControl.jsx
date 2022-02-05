@@ -1,8 +1,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -13,11 +14,21 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
+  const themeVars = useRecoilValue($themeVars)
 
-  // console.log({ value, objectPaths })
   const { object, paths } = objectPaths
+  const margin = themeVars[paths?.margin]
+  const padding = themeVars[paths?.padding]
   const val = getValueByObjPath(styles, paths?.margin || paths?.padding)
   // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
+  const getValue = () => {
+    let valu = ''
+    if (objectPaths.object === 'themeVars') {
+      if (margin) valu += `Margin: ${margin} `
+      if (padding) valu += `Padding: ${padding}`
+    }
+    return valu
+  }
 
   const clearHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -30,14 +41,14 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
       {allowImportant && (<Important propertyPath={paths?.margin || paths?.padding} />)}
-      <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+      <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
           title={val}
         >
-          {val || 'Configure'}
+          {getValue() || 'Configure'}
         </button>
         {(val) && (
           <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">

@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
@@ -18,17 +20,21 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const setThemeVars = useSetRecoilState($themeVars)
+  const setThemeColors = useSetRecoilState($themeColors)
   const setStyles = useSetRecoilState($styles)
 
   const { shadow, borderRadius, borderWidth, border } = objectPaths.paths
 
   const clearValue = () => {
-    switch (objectPaths.borderObjectName) {
+    switch (objectPaths.borderObjName) {
+      case 'themeColors':
       case 'themeVars':
         setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          assignNestedObj(drft, borderRadius, '')
-          assignNestedObj(drft, borderWidth, '')
-          assignNestedObj(drft, border, '')
+          drft[borderRadius] = ''
+          drft[borderWidth] = ''
+        }))
+        setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
+          drft[border] = ''
         }))
         break
       case 'styles':
@@ -46,7 +52,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
   return (
     <div className={css(ut.flxc)}>
       {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={shadow || borderRadius || borderWidth || border} />)}
-      <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
+      <div title={value} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, id })}
           type="button"

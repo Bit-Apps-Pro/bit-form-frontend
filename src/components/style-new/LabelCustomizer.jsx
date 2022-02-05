@@ -4,6 +4,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontSizeControl from './FontSizeControl'
 import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
@@ -31,7 +32,7 @@ export default function LabelCustomizer() {
         modalId="fld-lbl-bg"
       />
       <SimpleColorPicker
-        title="Text Colors"
+        title="Text Color"
         subtitle="Text Color"
         value={flc}
         stateObjName="themeColors"
@@ -76,9 +77,13 @@ export default function LabelCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--fld-lbl-fs"
+      />
       <FontWeightAndStyleControl
-        fontWeightVar="--fld-font-w"
-        fontStyleVar="--fld-font-style"
+        fontWeightVar="--lbl-font-w"
+        fontStyleVar="--lbl-font-style"
       />
     </div>
   )

@@ -5,6 +5,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontSizeControl from './FontSizeControl'
 import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
@@ -17,11 +18,11 @@ export default function SubTitleCustomizer() {
   const themeVars = useRecoilValue($themeVars)
   const themeColors = useRecoilValue($themeColors)
 
-  const { '--sub-titl-bg': stBg,
-    '--sub-titl-bdr': stBdr } = themeVars
+  const { '--sub-titl-bdr': stBdr } = themeVars
 
   const { '--sub-titl-sh': stSh,
-    '--sub-titl-c': stC } = themeColors
+    '--sub-titl-c': stC,
+    '--sub-titl-bg': stBg } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -79,6 +80,10 @@ export default function SubTitleCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--sub-titl-fs"
+      />
       <FontWeightAndStyleControl
         fontWeightVar="--sub-titl-font-w"
         fontStyleVar="--sub-titl-font-style"

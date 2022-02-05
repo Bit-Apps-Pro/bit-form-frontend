@@ -12,6 +12,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FontPicker from './FontPicker'
+import FontSizeControl from './FontSizeControl'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -25,7 +26,6 @@ export default function ThemeQuickTweaksCustomizer() {
 
   const { '--dir': direction,
     '--g-bdr-rad': globalBorderRad,
-    '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth } = themeVars
 
   const { '--global-accent-color': globalPrimaryColor,
@@ -42,14 +42,11 @@ export default function ThemeQuickTweaksCustomizer() {
   }
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
-  const fldFSValue = getNumFromStr(fldFs)
-  const fldFSUnit = getStrFromStr(fldFs)
 
   const globalBdrWidthVal = getNumFromStr(globalBdrWidth)
   const globalBdrWidthUnit = getStrFromStr(globalBdrWidth)
   const borderRadHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrRadUnit, '--g-bdr-rad')
   const borderWidthHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrWidthUnit, '--g-bdr-width')
-  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, '--fld-fs')
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
@@ -155,7 +152,10 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Font Family</span>
-        <FontPicker id="global-font-fam" />
+        <span className={css(ut.flxc)}>
+          <ResetStyle stateObjName="themeVars" propertyPath="--g-font-family" />
+          <FontPicker id="global-font-fam" />
+        </span>
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>
@@ -177,17 +177,19 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Border width</span>
-        <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-width" />
-        <SizeControl
-          min={0}
-          max={20}
-          inputHandler={borderWidthHandler}
-          sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-          value={globalBdrWidthVal}
-          unit={globalBdrWidthUnit}
-          width="128px"
-          options={['px', 'em', 'rem']}
-        />
+        <span className={css(ut.flxc)}>
+          <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-width" />
+          <SizeControl
+            min={0}
+            max={20}
+            inputHandler={borderWidthHandler}
+            sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+            value={globalBdrWidthVal}
+            unit={globalBdrWidthUnit}
+            width="128px"
+            options={['px', 'em', 'rem']}
+          />
+        </span>
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>
@@ -197,20 +199,10 @@ export default function ThemeQuickTweaksCustomizer() {
         </select>
       </div>
 
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Field Font Size</span>
-        <div className={css(ut.flxc)}>
-          <ResetStyle propertyPath="--fld-fs" stateObjName="themeVars" />
-          <SizeControl
-            inputHandler={fldFsSizeHandler}
-            sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-            value={fldFSValue}
-            unit={fldFSUnit}
-            width="128px"
-            options={['px', 'em', 'rem']}
-          />
-        </div>
-      </div>
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--fld-fs"
+      />
 
       <div className={css(ut.flxcb, ut.mt3)}>
         <span className={css(ut.fw500)}>Label Alignment</span>

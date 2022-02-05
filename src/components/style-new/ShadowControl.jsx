@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
@@ -10,25 +11,30 @@ import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
 export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const { css } = useFela()
-  const setThemeVars = useSetRecoilState($themeVars)
+  const setThemeColors = useSetRecoilState($themeColors)
 
   const colorVal = splitValueBySpaces(value)[4]
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const clearValue = () => {
-    if (Object.prototype.hasOwnProperty.call(objectPaths.paths, 'shadow')) {
-      setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-        drft[objectPaths.paths.shadow] = ''
-      }))
+    switch (objectPaths.object) {
+      case 'themeColors':
+        setThemeColors(prvColorVar => produce(prvColorVar, drft => {
+          drft[objectPaths.paths.shadow] = ''
+        }))
+        break
+
+      default:
+        break
     }
   }
   return (
-    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+    <div title={value} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
         onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths, id, width: 250 })}
         type="button"
         className={css(c.pickrBtn)}
       >
-        <ColorPreview bg={colorVal} h={25} w={25} className={css(ut.mr2)} />
+        <ColorPreview bg={colorVal} h={24} w={29} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value || 'Add Shadow'}</span>
       </button>
       {value && (

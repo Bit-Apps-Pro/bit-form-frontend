@@ -76,11 +76,13 @@ const $themeVarsLg = atom({
     '--fld-wrp-bdr-rad': '', // field wrapper border radius
 
     '--lbl-wrp-sa': '',
-    '--lbl-wrp-width': '', // label wrapper  width
+    '--lbl-wrp-width': '100%', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
     '--lbl-wrp-bdr-width': '', // label wrapper border width
     '--lbl-wrp-bdr-rad': '', // label wrapper border radius
+    '--lbl-font-w': 700, // field font weight
+    '--lbl-font-style': '', // field font style
 
     '--fld-lbl-m': '', // field label margin
     '--fld-lbl-p': '', // field label padding
@@ -114,6 +116,8 @@ const $themeVarsLg = atom({
     '--err-bdr-rad': '8px', // error message border radius
     '--err-txt-al': '', // error text align
     '--err-txt-fs': '12px', // error text font size
+    '--err-txt-font-w': 700, // helper text font weight
+    '--err-txt-font-style': '', // helper text font style
   },
 })
 export const $themeVarsMd = atom({ key: '$themeVarsMd', default: {} })
