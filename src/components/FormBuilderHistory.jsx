@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import Scrollbars from 'react-custom-scrollbars-2'
 import VirtualList from 'react-tiny-virtual-list'
-import { $builderHelperStates, $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $builderHookStates, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import EllipsisIcon from '../Icons/EllipsisIcon'
+import HistoryIcn from '../Icons/HistoryIcn'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
-import HistoryIcn from '../Icons/HistoryIcn'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
@@ -23,7 +22,7 @@ export default function FormBuilderHistory() {
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
-  const setBuilderHelpers = useSetRecoilState($builderHelperStates)
+  const setBuilderHooks = useSetRecoilState($builderHookStates)
   // const [scrolIndex, setScrolIndex] = useState(0)
 
   const handleUndoRedoShortcut = e => {
@@ -106,7 +105,7 @@ export default function FormBuilderHistory() {
     } else {
       checkedState(indx, setLayouts, 'layouts')
     }
-    setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
+    setBuilderHooks(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
 
     if (state.fields) {
       setFields(state.fields)
