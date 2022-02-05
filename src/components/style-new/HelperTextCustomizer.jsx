@@ -4,6 +4,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontSizeControl from './FontSizeControl'
 import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
@@ -75,6 +76,10 @@ export default function HelperTextCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--hlp-txt-fs"
+      />
       <FontWeightAndStyleControl
         fontWeightVar="--hlp-txt-font-w"
         fontStyleVar="--hlp-txt-font-style"
