@@ -17,11 +17,11 @@ export default function SubTitleCustomizer() {
   const themeVars = useRecoilValue($themeVars)
   const themeColors = useRecoilValue($themeColors)
 
-  const { '--sub-titl-bg': stBg,
-    '--sub-titl-bdr': stBdr } = themeVars
+  const { '--sub-titl-bdr': stBdr } = themeVars
 
   const { '--sub-titl-sh': stSh,
-    '--sub-titl-c': stC } = themeColors
+    '--sub-titl-c': stC,
+    '--sub-titl-bg': stBg } = themeColors
 
   return (
     <div className={css(ut.m10)}>

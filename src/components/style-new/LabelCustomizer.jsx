@@ -31,7 +31,7 @@ export default function LabelCustomizer() {
         modalId="fld-lbl-bg"
       />
       <SimpleColorPicker
-        title="Text Colors"
+        title="Text Color"
         subtitle="Text Color"
         value={flc}
         stateObjName="themeColors"
@@ -77,8 +77,8 @@ export default function LabelCustomizer() {
         </div>
       </ThemeStylePropertyBlock>
       <FontWeightAndStyleControl
-        fontWeightVar="--fld-font-w"
-        fontStyleVar="--fld-font-style"
+        fontWeightVar="--lbl-font-w"
+        fontStyleVar="--lbl-font-style"
       />
     </div>
   )

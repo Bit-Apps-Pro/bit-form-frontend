@@ -43,6 +43,8 @@ export default function inputWrapperClasses(fk) {
       border: 'var(--fld-lbl-bdr, medium none)',
       'border-width': 'var(--fld-lbl-bdr-width, 0)',
       width: '100%',
+      'font-weight': 'var(--lbl-font-w)',
+      'font-style': 'var(--lbl-font-style)',
     },
     [`.${fk}-sub-titl`]: {
       background: 'var(--sub-titl-bg, none)',
@@ -58,6 +60,8 @@ export default function inputWrapperClasses(fk) {
       border: 'var(--sub-titl-bdr, medium none)',
       'border-width': 'var(--sub-titl-bdr-width, 0)',
       width: '100%',
+      'font-weight': 'var(--sub-titl-font-w)',
+      'font-style': 'var(--sub-titl-font-style)',
     },
     [`.${fk}-hlp-txt`]: {
       background: 'var(--hlp-txt-bg, none)',
@@ -73,6 +77,8 @@ export default function inputWrapperClasses(fk) {
       border: 'var(--hlp-txt-bdr, medium none)',
       'border-width': 'var(--hlp-txt-bdr-width, 0)',
       width: '100%',
+      'font-weight': 'var(--hlp-txt-font-w)',
+      'font-style': 'var(--hlp-txt-font-style)',
     },
 
     [`.${fk}-inp-wrp`]: { width: 'var(--inp-wrp-width, auto)' },
@@ -113,6 +119,8 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--err-bdr-rad, 0)',
       border: 'var(--err-bdr, medium none)',
       'border-width': 'var(--err-bdr-width, 0)',
+      'font-weight': 'var(--err-txt-font-w)',
+      'font-style': 'var(--err-txt-font-style)',
     },
     [`.${fk}-err-txt-pre-i`]: {
       width: '11px',

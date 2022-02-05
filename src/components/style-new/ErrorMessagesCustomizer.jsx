@@ -4,6 +4,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -75,6 +76,10 @@ export default function ErrorMessagesCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      <FontWeightAndStyleControl
+        fontWeightVar="--err-txt-font-w"
+        fontStyleVar="--err-txt-font-style"
+      />
     </div>
   )
 }
