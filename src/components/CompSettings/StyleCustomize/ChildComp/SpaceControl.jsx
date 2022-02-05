@@ -82,19 +82,22 @@ export default function SpaceControl({ value,
     <div className={className}>
       <div className={css(s.titlecontainer)}>
         <span className={css(s.title)}>{title}</span>
-        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        <StyleSegmentControl
-          square
-          defaultActive="All"
-          options={options}
-          values={60}
-          component="button"
-          onChange={lbl => changeHandler(lbl)}
-          show={['icn']}
-          variant="lightgray"
-          noShadow
-          activeValue={controller}
-        />
+        <span className={css(ut.flxc)}>
+          <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
+          <StyleSegmentControl
+            square
+            defaultActive="All"
+            options={options}
+            values={60}
+            component="button"
+            onChange={lbl => changeHandler(lbl)}
+            show={['icn']}
+            variant="lightgray"
+            noShadow
+            activeValue={controller}
+          />
+        </span>
+
       </div>
       <div className={css(s.segmentcontainer)}>
         <Grow open={controller === 'All'}>

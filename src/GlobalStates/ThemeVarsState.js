@@ -76,7 +76,7 @@ const $themeVarsLg = atom({
     '--fld-wrp-bdr-rad': '', // field wrapper border radius
 
     '--lbl-wrp-sa': '',
-    '--lbl-wrp-width': '', // label wrapper  width
+    '--lbl-wrp-width': '100%', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
     '--lbl-wrp-bdr-width': '', // label wrapper border width

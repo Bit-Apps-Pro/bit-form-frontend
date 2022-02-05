@@ -125,53 +125,64 @@ export default function LabelControlMenu() {
     <div style={{ marginTop: '3px' }}>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Font Size</span>
-        <ResetStyle propertyPath="--fld-lbl-fs" stateObjName="themeVars" />
-        <SizeControl
-          width="100px"
-          value={Number(fldLblFsVal || 0)}
-          unit={fldLblFsUnit}
-          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--fld-lbl-fs' })}
-          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--fld-lbl-fs')}
-          options={['px', 'em', 'rem']}
-        />
+        <span className={css(ut.flxc)}>
+          <ResetStyle propertyPath="--fld-lbl-fs" stateObjName="themeVars" />
+          <SizeControl
+            width="100px"
+            value={Number(fldLblFsVal || 0)}
+            unit={fldLblFsUnit}
+            inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--fld-lbl-fs' })}
+            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--fld-lbl-fs')}
+            options={['px', 'em', 'rem']}
+          />
+        </span>
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Subtitle Font Size</span>
-        <ResetStyle propertyPath="--sub-titl-fs" stateObjName="themeVars" />
-        <SizeControl
-          width="100px"
-          value={Number(subTitleFsVal)}
-          unit={subTitleFsUnit}
-          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--sub-titl-fs' })}
-          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--sub-titl-fs')}
-          name="subTitle"
-          options={['px', 'em', 'rem']}
-        />
+        <span className={css(ut.flxc)}>
+
+          <ResetStyle propertyPath="--sub-titl-fs" stateObjName="themeVars" />
+          <SizeControl
+            width="100px"
+            value={Number(subTitleFsVal)}
+            unit={subTitleFsUnit}
+            inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--sub-titl-fs' })}
+            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--sub-titl-fs')}
+            name="subTitle"
+            options={['px', 'em', 'rem']}
+          />
+        </span>
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Helper Text Font Size</span>
-        <ResetStyle propertyPath="--hlp-txt-fs" stateObjName="themeVars" />
-        <SizeControl
-          width="100px"
-          value={Number(heplrTxtFsVal)}
-          unit={heplrTxtFsUnit}
-          inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--hlp-txt-fs' })}
-          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--hlp-txt-fs')}
-          name="heprTxt"
-          options={['px', 'em', 'rem']}
-        />
+        <span className={css(ut.flxc)}>
+
+          <ResetStyle propertyPath="--hlp-txt-fs" stateObjName="themeVars" />
+          <SizeControl
+            width="100px"
+            value={Number(heplrTxtFsVal)}
+            unit={heplrTxtFsUnit}
+            inputHandler={({ value, unit }) => fontSizeHandler({ v: value, u: unit, varName: '--hlp-txt-fs' })}
+            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--hlp-txt-fs')}
+            name="heprTxt"
+            options={['px', 'em', 'rem']}
+          />
+        </span>
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Wrapper Width</span>
-        <ResetStyle propertyPath="--lbl-wrp-width" stateObjName="themeVars" />
-        <SizeControl
-          width="100px"
-          value={Number(lblWidthVal)}
-          unit={lblWidthUnit}
-          inputHandler={lblWidthHandler}
-          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--lbl-wrp-width')}
-          options={['px', 'em', 'rem', '%']}
-        />
+        <span className={css(ut.flxc)}>
+          <ResetStyle propertyPath="--lbl-wrp-width" stateObjName="themeVars" />
+          <SizeControl
+            width="100px"
+            value={Number(lblWidthVal)}
+            unit={lblWidthUnit}
+            inputHandler={lblWidthHandler}
+            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--lbl-wrp-width')}
+            options={['px', 'em', 'rem', '%']}
+          />
+        </span>
+
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Label Postion</span>

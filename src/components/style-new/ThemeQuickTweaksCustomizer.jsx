@@ -155,7 +155,10 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Font Family</span>
-        <FontPicker id="global-font-fam" />
+        <span className={css(ut.flxc)}>
+          <ResetStyle stateObjName="themeVars" propertyPath="--g-font-family" />
+          <FontPicker id="global-font-fam" />
+        </span>
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>
@@ -177,17 +180,19 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Border width</span>
-        <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-width" />
-        <SizeControl
-          min={0}
-          max={20}
-          inputHandler={borderWidthHandler}
-          sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-          value={globalBdrWidthVal}
-          unit={globalBdrWidthUnit}
-          width="128px"
-          options={['px', 'em', 'rem']}
-        />
+        <span className={css(ut.flxc)}>
+          <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-width" />
+          <SizeControl
+            min={0}
+            max={20}
+            inputHandler={borderWidthHandler}
+            sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+            value={globalBdrWidthVal}
+            unit={globalBdrWidthUnit}
+            width="128px"
+            options={['px', 'em', 'rem']}
+          />
+        </span>
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>

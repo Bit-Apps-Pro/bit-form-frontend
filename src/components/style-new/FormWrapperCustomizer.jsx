@@ -174,16 +174,18 @@ export default function FormWrapperCustomizer() {
             </button>
             <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
           </div>
-          <ResetStyle
-            propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
-            stateObjName="styles"
-          />
-          <BorderControl
-            subtitle="Field Container Border"
-            value={formWrpStylesObj?.border}
-            objectPaths={fwStylePathObj}
-            id="fld-wrp-bdr"
-          />
+          <span className={css(ut.flxc)}>
+            <ResetStyle
+              propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+              stateObjName="styles"
+            />
+            <BorderControl
+              subtitle="Field Container Border"
+              value={formWrpStylesObj?.border}
+              objectPaths={fwStylePathObj}
+              id="fld-wrp-bdr"
+            />
+          </span>
         </div>
       )}
       {formWrpStylesPropertiesArr.includes('transition') && (

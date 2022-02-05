@@ -39,12 +39,17 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const selectedFldId = useRecoilValue($selectedFieldId)
 
   const styleModeHandler = ({ target: { checked } }) => {
-    setFlags(prv => ({ ...prv, styleMode: checked }))
+    console.log(checked)
     if (checked) {
-      history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-settings).*/g, `field-theme-customize/quick-tweaks/${selectedFldId}`))
+      if (selectedFldId) {
+        history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-theme-customize).*/g, `field-settings/${selectedFldId}`))
+      } else {
+        history.replace(history.location.pathname.replace(/(theme-customize|style|themes|field-theme-customize|field-settings).*/g, 'fields-list'))
+      }
     } else {
       history.replace(history.location.pathname.replace(/(field-theme-customize|style|fields-list|themes|field-settings).*/g, 'theme-customize/quick-tweaks'))
     }
+    setFlags(prv => ({ ...prv, styleMode: checked }))
   }
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
