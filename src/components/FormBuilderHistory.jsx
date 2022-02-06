@@ -13,6 +13,18 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 
+export function handleUndoRedoShortcut(e) {
+  if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
+    if (e.key.toLowerCase() === 'z') {
+      const undoBtn = document.querySelector('#builder-undo-btn')
+      undoBtn.click()
+    } else if (e.key.toLowerCase() === 'y') {
+      const redoBtn = document.querySelector('#builder-redo-btn')
+      redoBtn.click()
+    }
+  }
+}
+
 export default function FormBuilderHistory() {
   const { css } = useFela()
   const [disabled, setDisabled] = useState(false)
@@ -25,24 +37,6 @@ export default function FormBuilderHistory() {
   const setBuilderHooks = useSetRecoilState($builderHookStates)
   // const [scrolIndex, setScrolIndex] = useState(0)
 
-  const handleUndoRedoShortcut = e => {
-    console.log('undo redo triggered')
-    if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
-      let action = ''
-      if (e.key.toLowerCase() === 'z') {
-        action = 'undo'
-      } else if (e.key.toLowerCase() === 'y') {
-        action = 'redo'
-      }
-      if (action) {
-        e.preventDefault()
-        const newActive = action === 'undo' ? active - 1 : active + 1
-        handleHistory(newActive)
-        return false
-      }
-    }
-  }
-
   useEffect(() => {
     document.addEventListener('keypress', handleUndoRedoShortcut)
 
@@ -50,10 +44,10 @@ export default function FormBuilderHistory() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, disabled])
 
-  const actionsBasedOnType = {
-    add_fld: 'remove_fld',
-    remove_fld: 'add_fld',
-  }
+  // const actionsBasedOnType = {
+  //   add_fld: 'remove_fld',
+  //   remove_fld: 'add_fld',
+  // }
 
   // const handleHistory = indx => {
   //   if (indx < 0 || disabled) return
@@ -97,7 +91,7 @@ export default function FormBuilderHistory() {
 
     const { state } = histories[indx]
 
-    // setDisabled(true)
+    setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
     if (state.layouts) {
       setLayouts(state.layouts)
@@ -141,12 +135,12 @@ export default function FormBuilderHistory() {
     <div>
       <div className={css(OptionToolBarStyle.option_right)}>
         <Tip msg="Undo">
-          <button type="button" disabled={!active || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active - 1)}>
+          <button type="button" id="builder-undo-btn" disabled={!active || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active - 1)}>
             <UndoIcon size="25" />
           </button>
         </Tip>
         <Tip msg="Redo">
-          <button type="button" disabled={(active === (histories.length - 1)) || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active + 1)}>
+          <button type="button" id="builder-redo-btn" disabled={(active === (histories.length - 1)) || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active + 1)}>
             <RedoIcon size="25" />
           </button>
         </Tip>
@@ -190,9 +184,7 @@ export default function FormBuilderHistory() {
                           <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
                           {index > 0 && (
                             <span className={css(builderHistoryStyle.fldkey)}>
-                              Field Key:
-                              {' '}
-                              {histories[index].state.fldKey}
+                              {`Field Key: ${histories[index].state.fldKey}`}
                             </span>
                           )}
                         </button>
