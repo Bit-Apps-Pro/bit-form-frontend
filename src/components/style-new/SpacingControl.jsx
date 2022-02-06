@@ -21,11 +21,11 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const padding = themeVars[paths?.padding]
   const val = getValueByObjPath(styles, paths?.margin || paths?.padding)
   // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
-  const getValue = () => {
+  const getValue = (m = 'M', p = 'P') => {
     let valu = ''
     if (objectPaths.object === 'themeVars') {
-      if (margin) valu += `Margin: ${margin} `
-      if (padding) valu += `Padding: ${padding}`
+      if (margin) valu += `${m}: ${margin}; `
+      if (padding) valu += `${p}: ${padding}`
     }
     return valu
   }
@@ -41,7 +41,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
       {allowImportant && (<Important propertyPath={paths?.margin || paths?.padding} />)}
-      <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+      <div title={getValue('Margin', 'Padding')} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
           type="button"

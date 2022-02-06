@@ -118,6 +118,21 @@ const $themeVarsLg = atom({
     '--err-txt-fs': '12px', // error text font size
     '--err-txt-font-w': 700, // helper text font weight
     '--err-txt-font-style': '', // helper text font style
+
+    '--pre-i-h': '20px', // prefix icon height
+    '--pre-i-w': '20px', // prefix icon width
+    '--pre-i-m': '5px', // prefix icon margin
+    '--pre-i-p': '', // prefix icon padding
+    '--pre-i-bdr-width': '', // prefix icon border width
+    '--pre-i-bdr-rad': '8px', // prefix icon message border radius
+
+    '--suf-i-h': '20px', // suffix icon height
+    '--suf-i-w': '20px', // suffix icon width
+    '--suf-i-m': '5px', // suffix icon margin
+    '--suf-i-p': '', // suffix icon padding
+    '--suf-i-bdr-width': '', // suffix icon border width
+    '--suf-i-bdr-rad': '8px', // suffix icon border radius
+
   },
 })
 export const $themeVarsMd = atom({ key: '$themeVarsMd', default: {} })

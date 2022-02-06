@@ -229,7 +229,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                   </div>
                   <div className={css(ut.flxcb, ut.mb2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Color</span>
-                    <input width="105px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
+                    <input aria-label="Filter image" width="105px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
                     {/* <SimpleColorPickerTooltip action={{ onChange: val => setFilterValue('drop-shadow', { value: val }, 3) }} value={valueArr[3]} /> */}
                   </div>
                 </div>

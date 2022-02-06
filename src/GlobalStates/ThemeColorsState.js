@@ -50,6 +50,14 @@ export const $lightThemeColors = atom({
     '--err-c': 'hsla(0 , 68%, 35%, 100)', // error messages text color
     '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
     '--err-bdr': 'solid hsla(0, 23%, 72%, 100)', // error message border
+
+    '--pre-i-fltr': '', // prefix icon filter
+    '--pre-i-sh': '', // prefix icon shadow
+    '--pre-i-bdr': '', // prefix icon border
+
+    '--suf-i-fltr': '', // suffix icon filter
+    '--suf-i-sh': '', // suffix icon shadow
+    '--suf-i-bdr': '', // suffix icon border
   },
 })
 

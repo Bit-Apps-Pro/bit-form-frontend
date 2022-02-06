@@ -25,6 +25,7 @@ import LabelContainerCustomizer from './LabelContainerCustomizer'
 import LabelCustomizer from './LabelCustomizer'
 import SubTitleCustomizer from './SubTitleCustomizer'
 import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
+import PreIcnCustomizer from './PreIcnCustomizer'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -113,6 +114,7 @@ export default function ThemeCustomize() {
         {element === 'subtitle' && <SubTitleCustomizer />}
         {element === 'helper-text' && <HelperTextCustomizer />}
         {element === 'error-messages' && <ErrorMessagesCustomizer />}
+        {element === 'pre-i' && <PreIcnCustomizer />}
 
         {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>

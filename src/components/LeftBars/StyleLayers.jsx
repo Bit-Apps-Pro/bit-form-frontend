@@ -41,6 +41,8 @@ export default function StyleLayers() {
           <NavBtn route="subtitle" label="Sub Title" offset="3" highlightSelector="[data-dev-sub-titl]" />
           <NavBtn route="helper-text" label="Helper Texts" offset="3" highlightSelector="[data-dev-hlp-txt]" />
           <NavBtn route="error-messages" label="Error Messages" offset="3" highlightSelector="[data-dev-err-msg]" />
+          <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-err-txt-pre-i]" />
+          <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-err-txt-suf-i]" />
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
