@@ -56,13 +56,15 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
             onChangeHandler(editor.getContent())
           })
 
-          formFields && editor.addButton('addFormField', {
-            text: 'Form Fields ',
-            tooltip: 'Add Form Field Value in Message',
-            type: 'menubutton',
-            icon: false,
-            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
-          })
+          if (formFields) {
+            editor.addButton('addFormField', {
+              text: 'Form Fields ',
+              tooltip: 'Add Form Field Value in Message',
+              type: 'menubutton',
+              icon: false,
+              menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+            })
+          }
 
           editor.addButton('toogleCode', {
             text: '</>',
