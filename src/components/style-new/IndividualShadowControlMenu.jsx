@@ -106,16 +106,19 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
             className={css(c.accordionHead)}
             title={__(`Shadow ${indx + 1}`, 'bitform')}
             open={indx === 0}
-            actionComponent={(
-              <button
-                type="button"
-                title="Remove"
-                className={css(c.delBtn)}
-                onClick={() => deleteShadow(indx)}
-              >
-                <TrashIcn size="14" />
-              </button>
-            )}
+            actionComponent={
+              arrOfExtractedShadowObj.length > 1
+              && (
+                <button
+                  type="button"
+                  title="Remove"
+                  className={css(c.delBtn)}
+                  onClick={() => deleteShadow(indx)}
+                >
+                  <TrashIcn size="14" />
+                </button>
+              )
+            }
             key={`shadow-${indx * 2 * 4}`}
           >
             <div className={css(ut.p1)}>
@@ -124,7 +127,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>X</span>
                     <SizeControl
-                      width="105px"
+                      width="128px"
                       value={Number(getNumFromStr(shadowObj.xOffset) || 0)}
                       unit={getStrFromStr(shadowObj.xOffset) || 'px'}
                       inputHandler={valObj => generateShadowValue('xOffset', valObj, indx)}
@@ -141,7 +144,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Y</span>
                     <SizeControl
-                      width="105px"
+                      width="128px"
                       value={Number(getNumFromStr(shadowObj.yOffset) || 0)}
                       unit={getStrFromStr(shadowObj.yOffset) || 'px'}
                       inputHandler={valObj => generateShadowValue('yOffset', valObj, indx)}
@@ -158,7 +161,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Blur</span>
                     <SizeControl
-                      width="105px"
+                      width="128px"
                       value={Number(getNumFromStr(shadowObj.blur) || 0)}
                       unit={getStrFromStr(shadowObj.blur) || 'px'}
                       inputHandler={valObj => generateShadowValue('blur', valObj, indx)}
@@ -175,7 +178,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Spread</span>
                     <SizeControl
-                      width="105px"
+                      width="128px"
                       value={Number(getNumFromStr(shadowObj.spread) || 0)}
                       unit={getStrFromStr(shadowObj.spread) || 'px'}
                       inputHandler={valObj => generateShadowValue('spread', valObj, indx)}

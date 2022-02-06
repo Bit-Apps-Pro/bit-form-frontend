@@ -103,9 +103,8 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
             title={__(`Transition ${indx + 1}`, 'bitform')}
             open={indx === 0}
             actionComponent={
-              // eslint-disable-next-line operator-linebreak
-              arrOfExtractedTransitionObj.length > 1 &&
-              (
+              arrOfExtractedTransitionObj.length > 1
+              && (
                 <button
                   type="button"
                   title="Remove"
