@@ -1,7 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
@@ -15,14 +14,12 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function SubTitleCustomizer() {
   const { css } = useFela()
-  const themeVars = useRecoilValue($themeVars)
   const themeColors = useRecoilValue($themeColors)
-
-  const { '--sub-titl-bdr': stBdr } = themeVars
 
   const { '--sub-titl-sh': stSh,
     '--sub-titl-c': stC,
-    '--sub-titl-bg': stBg } = themeColors
+    '--sub-titl-bg': stBg,
+    '--sub-titl-bdr': stBdr } = themeColors
 
   return (
     <div className={css(ut.m10)}>

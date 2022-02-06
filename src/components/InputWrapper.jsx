@@ -100,7 +100,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       )} */}
       {/* field error message */}
       {(showAllErrorMsg || showOnlyThisFldErrMsg) && (
-        <div className={`${fieldKey}-err-msg`}>
+        <div data-dev-err-msg={fieldKey} className={`${fieldKey}-err-msg`}>
           {fieldData.errPreIcn && <img data-dev-err-txt-pre-i={fieldKey} className={`${fieldKey}-err-txt-pre-i`} src={fieldData.errPreIcn} alt="" />}
           {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
           {fieldData.errSufIcn && <img data-dev-err-txt-suf-i={fieldKey} className={`${fieldKey}-err-txt-suf-i`} src={fieldData.errSufIcn} alt="" />}
