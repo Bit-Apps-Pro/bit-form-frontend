@@ -15,7 +15,8 @@ export default function SpaceControl({ value,
   onChange = () => { },
   className,
   stateObjName,
-  propertyPath }) {
+  propertyPath,
+  width }) {
   const { css } = useFela()
 
   let values = (value?.replaceAll(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')
@@ -111,7 +112,7 @@ export default function SpaceControl({ value,
               value={values[0] && getNumFromStr(values[0])}
               unit={values[0] && getStrFromStr(values[0])}
               options={unitOption}
-              width="110px"
+              width={width || '110px'}
             />
           </div>
         </Grow>
