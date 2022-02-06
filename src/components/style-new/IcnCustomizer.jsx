@@ -9,14 +9,23 @@ import ShadowControl from './ShadowControl'
 import SpacingControl from './SpacingControl'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
-export default function PreIcnCustomizer() {
+export default function IcnCustomizer({ elementKey }) {
   const { css } = useFela()
   const themeColors = useRecoilValue($themeColors)
 
-  console.log(themeColors)
-
-  const { '--pre-i-sh': preIcnSh,
-    '--pre-i-bdr': preIcnBdr } = themeColors
+  const preIconSpacingObj = {
+    object: 'themeVars',
+    paths: { margin: `--${elementKey}-m`, padding: `--${elementKey}-p` },
+  }
+  const preIcnShObj = {
+    object: 'themeColors',
+    paths: { shadow: `--${elementKey}-sh` },
+  }
+  const preIcnBdrObj = {
+    object: 'themeVars',
+    borderObjName: 'themeColors',
+    paths: { border: `--${elementKey}-bdr`, borderWidth: `--${elementKey}-bdr-width`, borderRadius: `--${elementKey}-bdr-rad` },
+  }
 
   return (
     <div className={css(ut.m10)}>
@@ -37,7 +46,7 @@ export default function PreIcnCustomizer() {
           />
           <ShadowControl
             subtitle="Prefix Icon Shadow"
-            value={preIcnSh}
+            value={themeColors[`--${elementKey}-sh`]}
             objectPaths={preIcnShObj}
             id="pre-i-sh"
           />
@@ -46,12 +55,12 @@ export default function PreIcnCustomizer() {
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
-            propertyPath={['--pre-i-bdr-width', '--pre-i-bdr-rad']}
+            propertyPath={[`--${elementKey}-bdr-width`, `--${elementKey}-bdr-rad`]}
             stateObjName="themeVars"
           />
           <BorderControl
             subtitle="Prefix Icon Border"
-            value={preIcnBdr}
+            value={themeColors[`--${elementKey}-bdr`]}
             objectPaths={preIcnBdrObj}
             id="pre-i-control"
           />
@@ -59,17 +68,4 @@ export default function PreIcnCustomizer() {
       </ThemeStylePropertyBlock>
     </div>
   )
-}
-const preIconSpacingObj = {
-  object: 'themeVars',
-  paths: { margin: '--pre-i-m', padding: '--pre-i-p' },
-}
-const preIcnShObj = {
-  object: 'themeColors',
-  paths: { shadow: '--pre-i-sh' },
-}
-const preIcnBdrObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--pre-i-bdr', borderWidth: '--pre-i-bdr-width', borderRadius: '--pre-i-bdr-rad' },
 }

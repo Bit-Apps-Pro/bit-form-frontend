@@ -58,6 +58,38 @@ export const $lightThemeColors = atom({
     '--suf-i-fltr': '', // suffix icon filter
     '--suf-i-sh': '', // suffix icon shadow
     '--suf-i-bdr': '', // suffix icon border
+
+    '--lbl-pre-i-fltr': '', // label prefix icon filter
+    '--lbl-pre-i-sh': '', // label prefix icon shadow
+    '--lbl-pre-i-bdr': '', // label prefix icon border
+
+    '--lbl-suf-i-fltr': '', // label suffix icon filter
+    '--lbl-suf-i-sh': '', // label suffix icon shadow
+    '--lbl-suf-i-bdr': '', // label suffix icon border
+
+    '--sub-titl-pre-i-fltr': '', // sub title prefix icon filter
+    '--sub-titl-pre-i-sh': '', // sub title prefix icon shadow
+    '--sub-titl-pre-i-bdr': '', // sub title prefix icon border
+
+    '--sub-titl-suf-i-fltr': '', // sub title suffix icon filter
+    '--sub-titl-suf-i-sh': '', // sub title suffix icon shadow
+    '--sub-titl-suf-i-bdr': '', // sub title suffix icon border
+
+    '--hlp-txt-pre-i-fltr': '', // helper txt prefix icon filter
+    '--hlp-txt-pre-i-sh': '', // helper txt prefix icon shadow
+    '--hlp-txt-pre-i-bdr': '', // helper txt prefix icon border
+
+    '--hlp-txt-suf-i-fltr': '', // helper txt suffix icon filter
+    '--hlp-txt-suf-i-sh': '', // helper txt suffix icon shadow
+    '--hlp-txt-suf-i-bdr': '', // helper txt suffix icon border
+
+    '--err-txt-pre-i-fltr': '', // helper txt prefix icon filter
+    '--err-txt-pre-i-sh': '', // helper txt prefix icon shadow
+    '--err-txt-pre-i-bdr': '', // helper txt prefix icon border
+
+    '--err-txt-suf-i-fltr': '', // helper txt suffix icon filter
+    '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
+    '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
   },
 })
 

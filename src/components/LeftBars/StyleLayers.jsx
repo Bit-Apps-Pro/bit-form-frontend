@@ -38,11 +38,19 @@ export default function StyleLayers() {
           <NavBtn route="field-container" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-container" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
           <NavBtn route="label" label="Labels" offset="3" highlightSelector="[data-dev-lbl]" />
+          <NavBtn route="lbl-pre-i" label="Label Prefix Icon" offset="3" highlightSelector="[data-dev-lbl-pre-i]" />
+          <NavBtn route="lbl-suf-i" label="Label Suffix Icon" offset="3" highlightSelector="[data-dev-lbl-suf-i]" />
           <NavBtn route="subtitle" label="Sub Title" offset="3" highlightSelector="[data-dev-sub-titl]" />
+          <NavBtn route="sub-titl-pre-i" label="Sub Title Prefix Icon" offset="3" highlightSelector="[data-dev-sub-titl-pre-i]" />
+          <NavBtn route="sub-titl-suf-i" label="Sub Title Suffix Icon" offset="3" highlightSelector="[data-dev-sub-titl-suf-i]" />
           <NavBtn route="helper-text" label="Helper Texts" offset="3" highlightSelector="[data-dev-hlp-txt]" />
+          <NavBtn route="hlp-txt-pre-i" label="Helper Text Prefix Icon" offset="3" highlightSelector="[data-dev-hlp-txt-pre-i]" />
+          <NavBtn route="hlp-txt-suf-i" label="Helper Text Suffix Icon" offset="3" highlightSelector="[data-dev-hlp-txt-suf-i]" />
           <NavBtn route="error-messages" label="Error Messages" offset="3" highlightSelector="[data-dev-err-msg]" />
-          <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-err-txt-pre-i]" />
-          <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-err-txt-suf-i]" />
+          <NavBtn route="err-txt-pre-i" label="Error Text Prefix Icon" offset="3" highlightSelector="[data-dev-err-txt-pre-i]" />
+          <NavBtn route="err-txt-suf-i" label="Error Text Suffix Icon" offset="3" highlightSelector="[data-dev-err-txt-suf-i]" />
+          <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-pre-i]" />
+          <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-suf-i]" />
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
