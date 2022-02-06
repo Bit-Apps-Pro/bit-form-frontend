@@ -84,15 +84,15 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
   }
   const convartUnit = (vlu, unt, prvUnt) => {
     let newVal
-    if (unt === prvUnt) newVal = vlu
-    else if (unt === 's' && prvUnt === 'ms') newVal = vlu * 1000
-    else if (unt === 'ms' && prvUnt === 's') newVal = vlu / 1000
+    if (prvUnt === unt) newVal = vlu
+    else if (prvUnt === 'ms' && unt === 's') newVal = vlu / 1000
+    else if (prvUnt === 's' && unt === 'ms') newVal = vlu * 1000
     return newVal
   }
   const sizeHandler = (v, prop, indx, prvUnit) => {
-    const { unitKey: unit, unitValue: value } = v
-    const newValue = convartUnit(value, unit, prvUnit)
-    generateTransitionValue(prop, { unit, newValue }, indx)
+    const { unitKey: unit, unitValue: val } = v
+    const value = convartUnit(val, unit, prvUnit)
+    generateTransitionValue(prop, { value, unit }, indx)
   }
   return (
     <div className={css(c.overflowXhidden)}>
@@ -104,7 +104,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
             open={indx === 0}
             actionComponent={
               // eslint-disable-next-line operator-linebreak
-              indx !== 0 &&
+              arrOfExtractedTransitionObj.length > 1 &&
               (
                 <button
                   type="button"
@@ -114,7 +114,8 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                 >
                   <TrashIcn size="14" />
                 </button>
-              )}
+              )
+            }
             key={`transition-${indx * 2 * 4}`}
           >
             <div className={css(ut.p1)}>
@@ -135,7 +136,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
               <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Duration</span>
                 <SizeControl
-                  width="110px"
+                  width="128px"
                   value={Number(getNumFromStr(transitionObj.duration) || 0)}
                   unit={getStrFromStr(transitionObj.duration) || 's'}
                   inputHandler={valObj => generateTransitionValue('duration', valObj, indx)}
@@ -149,7 +150,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
               <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Delay</span>
                 <SizeControl
-                  width="110px"
+                  width="128px"
                   value={Number(getNumFromStr(transitionObj.delay) || 0)}
                   unit={getStrFromStr(transitionObj.delay) || 's'}
                   inputHandler={valObj => generateTransitionValue('delay', valObj, indx)}
