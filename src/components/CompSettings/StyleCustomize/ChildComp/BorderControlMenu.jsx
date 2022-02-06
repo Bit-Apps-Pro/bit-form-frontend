@@ -90,6 +90,7 @@ export default function BorderControlMenu({ objectPaths }) {
           unitOption={['px', 'em', 'rem']}
           min="0"
           max="10"
+          width="128px"
         />
       )}
 
@@ -102,6 +103,7 @@ export default function BorderControlMenu({ objectPaths }) {
           unitOption={['px', 'em', 'rem', '%']}
           min="0"
           max="20"
+          width="128px"
         />
       )}
     </>

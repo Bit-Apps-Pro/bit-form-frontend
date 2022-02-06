@@ -14,13 +14,12 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
-
-import FormContainerCustomizer from './FormContainerCustomizer'
-import FormWrapperCustomizer from './FormWrapperCustomizer'
-
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
 import FieldContainerCustomizer from './FieldContainerCustomizer'
+import FormContainerCustomizer from './FormContainerCustomizer'
+import FormWrapperCustomizer from './FormWrapperCustomizer'
 import HelperTextCustomizer from './HelperTextCustomizer'
+import IcnCustomizer from './IcnCustomizer'
 import LabelContainerCustomizer from './LabelContainerCustomizer'
 import LabelCustomizer from './LabelCustomizer'
 import SubTitleCustomizer from './SubTitleCustomizer'
@@ -33,12 +32,10 @@ export default function ThemeCustomize() {
 
   const setFlags = useSetRecoilState($flags)
 
-  // console.log({}])
-
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const genarateTitle = () => {
@@ -113,6 +110,7 @@ export default function ThemeCustomize() {
         {element === 'subtitle' && <SubTitleCustomizer />}
         {element === 'helper-text' && <HelperTextCustomizer />}
         {element === 'error-messages' && <ErrorMessagesCustomizer />}
+        {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
 
         {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>

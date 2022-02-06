@@ -31,7 +31,7 @@ export default function FilterControler({ subtitle, action, value, objectPaths, 
       {allowImportant && (<Important propertyPath={paths?.filter} />)}
       <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-control', subtitle, action, value, objectPaths, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-control', width: 250, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
           title={val}
