@@ -4,6 +4,7 @@ import textStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefau
 import titleStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import dividerStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
+import buttonStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme(fk, type, direction) {
   switch (type) {
@@ -84,6 +85,13 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         overrideGlobalTheme: [],
         classes: dividerStyle_1_bitformDefault({ fk, type, direction }),
+      }
+    case 'button':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: buttonStyle_1_bitformDefault({ fk, type, direction }),
       }
     default:
       return {}
