@@ -84,7 +84,6 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
               {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {renderDOMObjectFromHTMLStr(fieldData.helperTxt || '')}
-              {/* {new DOMParser().parseFromString(fieldData?.helperTxt, 'text/html')} */}
               {fieldData.hlpSufIcn && <img data-dev-hlp-txt-suf-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )
@@ -108,18 +107,4 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       )}
     </div>
   )
-}
-
-function renderHelperText(fieldKey, hlpTxtIcn, hlpTxt) {
-  return `
-  ${hlpTxtIcn ? `
-    <img
-      data-dev-pre-i="${fieldKey}"
-      className="${fieldKey}-hlp-txt-icn"}
-      src="${hlpTxtIcn}"
-      alt=""
-    />
-  ` : ''}
-  ${hlpTxt && hlpTxt}
-</div>`
 }
