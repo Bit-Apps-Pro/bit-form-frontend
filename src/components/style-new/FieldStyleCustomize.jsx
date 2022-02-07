@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
@@ -9,7 +10,6 @@ import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
@@ -18,7 +18,6 @@ import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import IndividualInputFldCustomStyle from './IndividualInputFldCustomStyle'
-import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -32,10 +31,9 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
-  const themeVars = useRecoilValue($themeVars)
   const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const { fieldType, classes, theme } = fldStyleObj
+  const { fieldType, theme } = fldStyleObj
 
   console.log(styles)
 
@@ -46,37 +44,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
-
-  const getValueFromThemeVar = (val) => {
-    if (val?.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
-  }
-  const updateFontSize = (unit, value, elemn) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fieldKey].classes[`.${fieldKey}-${elemn}`]['font-size'] = `${value}${unit}`
-    }))
-  }
-
-  // sub title
-  const subtitl = classes?.[`.${fieldKey}-sub-titl`]?.['font-size']
-  const subTitlFs = getValueFromThemeVar(subtitl)
-  const subtitlFsHandler = ({ unit, value }) => {
-    updateFontSize(unit, value, 'sub-titl')
-  }
-  const subTitlFSValue = getNumFromStr(subTitlFs)
-  const subTitlFSUnit = getStrFromStr(subTitlFs)
-
-  // heplper text
-  const hplTxtFs = classes?.[`.${fieldKey}-hlp-txt`]?.['font-size']
-  const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
-  const hlpTxtFsHandler = ({ unit, value }) => {
-    updateFontSize(unit, value, 'hlp-txt')
-  }
-  const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
-  const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
   const deleteStyle = (drft, elemnt, state = '') => {
     const hoverStyle = drft.fields[fieldKey].classes[`.${fieldKey}-${elemnt}${state}`]
@@ -97,38 +64,54 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
         if (theme === 'bitformDefault') {
           const getElementStyle = bitformDefaultTheme(fieldKey, fieldType)
-          if (elmnt === 'field-container') {
-            const getStyle = getElementStyle.classes[`.${fieldKey}-fld-wrp`]
-            assignNestedObj(drft, getPath('fld-wrp'), getStyle)
+          switch (elmnt) {
+            case 'field-container':
+              const fldwrp = getElementStyle.classes[`.${fieldKey}-fld-wrp`]
+              assignNestedObj(drft, getPath('fld-wrp'), fldwrp)
+              deleteStyle(drft, 'fld-wrp', ':hover')
+              break
 
-            deleteStyle(drft, 'fld-wrp', ':hover')
-          } else if (elmnt === 'label-subtitle-container') {
-            const getStyle = getElementStyle.classes[`.${fieldKey}-lbl-wrp`]
-            assignNestedObj(drft, getPath('lbl-wrp'), getStyle)
+            case 'label-subtitle-container':
+              const lblwrp = getElementStyle.classes[`.${fieldKey}-lbl-wrp`]
+              assignNestedObj(drft, getPath('lbl-wrp'), lblwrp)
+              deleteStyle(drft, 'lbl-wrp', ':hover')
+              break
 
-            deleteStyle(drft, 'lbl-wrp', ':hover')
-          } else if (elmnt === 'label') {
-            const getStyle = getElementStyle.classes[`.${fieldKey}-lbl`]
-            assignNestedObj(drft, getPath('lbl'), getStyle)
+            case 'label':
+              const lbl = getElementStyle.classes[`.${fieldKey}-lbl`]
+              assignNestedObj(drft, getPath('lbl'), lbl)
+              deleteStyle(drft, 'lbl', ':hover')
+              break
 
-            deleteStyle(drft, 'lbl', ':hover')
-          } else if (elmnt === 'subtitle') {
-            const getStyle = getElementStyle.classes[`.${fieldKey}-sub-titl`]
-            assignNestedObj(drft, getPath('sub-titl'), getStyle)
+            case 'subtitle':
+              const subtitle = getElementStyle.classes[`.${fieldKey}-sub-titl`]
+              assignNestedObj(drft, getPath('sub-titl'), subtitle)
+              deleteStyle(drft, 'sub-titl', ':hover')
+              break
 
-            deleteStyle(drft, 'sub-titl', ':hover')
-          } else if (elmnt === 'helper-text') {
-            const getStyle = getElementStyle.classes[`.${fieldKey}-hlp-txt`]
-            assignNestedObj(drft, getPath('hlp-txt'), getStyle)
+            case 'helper-text':
+              const hlptxt = getElementStyle.classes[`.${fieldKey}-hlp-txt`]
+              assignNestedObj(drft, getPath('hlp-txt'), hlptxt)
+              deleteStyle(drft, 'hlp-txt', ':hover')
+              break
 
-            deleteStyle(drft, 'hlp-txt', ':hover')
-          } else if (elmnt === 'fld') {
-            const fldStyle = getElementStyle.classes[`.${fieldKey}-fld`]
-            const hoverFldStyle = getElementStyle.classes[`.${fieldKey}-fld:hover`]
-            const focusFldStyle = getElementStyle.classes[`.${fieldKey}-fld:focus`]
-            assignNestedObj(drft, getPath('fld'), fldStyle)
-            assignNestedObj(drft, getPath('fld', ':hover'), hoverFldStyle)
-            assignNestedObj(drft, getPath('fld', ':focus'), focusFldStyle)
+            case 'fld':
+              const fldStyle = getElementStyle.classes[`.${fieldKey}-fld`]
+              const hoverFldStyle = getElementStyle.classes[`.${fieldKey}-fld:hover`]
+              const focusFldStyle = getElementStyle.classes[`.${fieldKey}-fld:focus`]
+              assignNestedObj(drft, getPath('fld'), fldStyle)
+              assignNestedObj(drft, getPath('fld', ':hover'), hoverFldStyle)
+              assignNestedObj(drft, getPath('fld', ':focus'), focusFldStyle)
+              break
+
+            case 'error-message':
+              const errMsg = getElementStyle.classes[`.${fieldKey}-err-msg`]
+              assignNestedObj(drft, getPath('err-msg'), errMsg)
+              deleteStyle(drft, 'err-msg', ':hover')
+              break
+
+            default:
+              break
           }
         }
         // if (theme === 'material') {
@@ -137,8 +120,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       }))
     }
   }
-
-  console.log('element', element)
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
@@ -181,7 +162,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       </div>
     )
   }
-
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
