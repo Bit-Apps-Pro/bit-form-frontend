@@ -312,3 +312,35 @@ export const renderDOMObjectFromHTMLStr = str => {
     return str
   }
 }
+
+export const getElmDataBasedOnElement = (element) => {
+  let elementKey = element
+  let classKey = element
+  switch (element) {
+    case 'field-container':
+      elementKey = 'fld-wrp'
+      break
+    case 'label-subtitle-container':
+      elementKey = 'lbl-wrp'
+      break
+    case 'subtitle':
+      elementKey = 'sub-titl'
+      break
+    case 'helper-text':
+      elementKey = 'hlp-txt'
+      break
+    case 'error-message':
+      classKey = 'err-msg'
+      elementKey = 'err-msg'
+      break
+    case 'image':
+      classKey = 'img'
+      elementKey = 'img'
+      break
+    default:
+      elementKey = element
+      classKey = element
+  }
+
+  return { elementKey, classKey }
+}
