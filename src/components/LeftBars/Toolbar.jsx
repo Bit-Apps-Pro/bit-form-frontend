@@ -71,9 +71,10 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Divider', 'bitform'),
       keywords: 'divider',
       icn: <DividerIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 8 },
+      pos: { h: 20, w: 60, i: 'shadow_block', minH: 8 },
       elm: {
         typ: 'divider',
+        divider: {},
         err: {},
       },
     },
@@ -84,6 +85,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 10 },
       elm: {
         typ: 'image',
+        img: {},
         err: {},
       },
     },
