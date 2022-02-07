@@ -24,10 +24,12 @@ import SimpleDropdown from '../Utilities/SimpleDropdown'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
+import BorderImageControl from './BorderImageControl'
 import CssPropertyList from './CssPropertyList'
 import FilterControler from './FilterControler'
 import Important from './Important'
 import IndividualShadowControl from './IndividualShadowControl'
+import editorConfig from './NewStyleEditorConfig'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
@@ -109,14 +111,33 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
+
   const setNewCssProp = (property, state = '') => {
-    const checkExistingCssProperties = state === '' ? existingCssProperties : existingCssHoverProperties
     setStyles(prvStyle => produce(prvStyle, drft => {
-      if (!checkExistingCssProperties) {
-        assignNestedObj(drft, getPropertyPath(property, state), {})
-      }
       assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
+
+    addDynamicCssProps(property, state)
+  }
+
+  // new functio to add dynamic css props
+  const addDynamicCssProps = (property, state) => {
+    const configProperty = editorConfig[fieldType][elementKey].properties[property]
+    if (typeof configProperty === 'object') {
+      Object.keys(configProperty).map(prop => {
+        if (configProperty[prop]) {
+          const propPath = getPropertyPath(prop, state)
+          setStyles(prvStyle => produce(prvStyle, drft => {
+            assignNestedObj(drft, propPath, getValueByObjPath(styles, propPath))
+          }))
+        }
+      })
+    } else {
+      const propPath = getPropertyPath(property, state)
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        assignNestedObj(drft, propPath, getValueByObjPath(styles, propPath))
+      }))
+    }
   }
 
   const setAlign = (alignValue) => {
@@ -129,11 +150,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     setStyles(prvStyle => produce(prvStyle, drft => {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
+    Object.keys(editorConfig[fieldType][elementKey].properties[property])?.map(propName => {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        deleteNestedObj(drft, getPropertyPath(propName, state))
+      }))
+    })
   }
   const delMultiPropertyHandler = (propertyPaths, state = '') => {
     propertyPaths.map(propertyPath => {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        deleteNestedObj(drft, propertyPath)
+        deleteNestedObj(drft, propertyPath, state)
       }))
     })
   }
@@ -143,24 +169,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // const getValueFromThemeVar = (val) => {
-  //   if (val?.match(/var/g)?.[0] === 'var') {
-  //     const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-  //     return themeVars[getVarProperty]
-  //   }
-  //   return val
-  // }
-
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
-
-  // const lineHeightHandler = ({ value, unit }) => {
-  //   const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
-  //   setStyles(prvStyle => produce(prvStyle, drftStyle => {
-  //     assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
-  //   }))
-  // }
 
   const lineHeightHandler = ({ value, unit }) => updateHandler(value, unit, fldLineHeightUnit, 'line-height')
   const wordSpacingHandler = ({ value, unit }) => {
@@ -192,6 +203,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }
   )
 
+  // -- apply for temp test
+  const borderPropObj = editorConfig[fieldType][elementKey].properties.border
   const fldBorderObjPath = {
     object: 'styles',
     borderObjName: 'styles',
@@ -201,6 +214,23 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       borderRadius: getPropertyPath('border-radius'),
     },
   }
+  const borderPropKeys = Object.keys(borderPropObj)
+  borderPropKeys.map(prop => {
+    fldBorderObjPath.paths[prop] = getPropertyPath(prop)
+  })
+
+  const fldBorderHoverObjPath = {
+    object: 'styles',
+    borderObjName: 'styles',
+    paths: {
+      border: getPropertyPath('border', ':hover'),
+      borderWidth: getPropertyPath('border-width', ':hover'),
+      borderRadius: getPropertyPath('border-radius', ':hover'),
+    },
+  }
+  borderPropKeys.map(prop => {
+    fldBorderHoverObjPath.paths[prop] = getPropertyPath(prop, ':hover')
+  })
 
   const fldTxtDcrtnObjPath = {
     object: 'styles',
@@ -245,6 +275,18 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     },
   }
 
+  const fldBrdrImgObjPath = {
+    object: 'styles',
+    bgObjName: 'styles',
+    paths: {
+      'border-image': getPropertyPath('border-image'),
+      'border-image-slice': getPropertyPath('border-image-slice'),
+      'border-image-width': getPropertyPath('border-image-width'),
+      'border-image-outset': getPropertyPath('border-image-outset'),
+      'border-image-repeat': getPropertyPath('border-image-repeat'),
+    },
+  }
+
   return (
     <>
       <StyleSegmentControl
@@ -275,6 +317,22 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 deleteable
                 delPropertyHandler={() => delPropertyHandler('background')}
                 clearHandler={() => clearHandler('background')}
+                allowImportant
+              />
+            )
+          }
+          {
+            existingProperties.includes('border-image') && (
+              <BorderImageControl
+                title="Border Image"
+                subtitle="Border Gradient Color/Image"
+                value={existingCssProperties['border-image']}
+                modalId="field-border-image"
+                stateObjName="styles"
+                objectPaths={fldBrdrImgObjPath}
+                deleteable
+                delPropertyHandler={() => delPropertyHandler('border-image')}
+                clearHandler={() => clearHandler('border-image')}
                 allowImportant
               />
             )
@@ -849,7 +907,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 allowImportant
                 subtitle="Field Container Border"
                 value={existingCssProperties?.border}
-                objectPaths={fldBorderObjPath}
+                objectPaths={fldBorderHoverObjPath}
+                state=":hover"
                 id="fld-wrp-bdr"
               />
             </div>
