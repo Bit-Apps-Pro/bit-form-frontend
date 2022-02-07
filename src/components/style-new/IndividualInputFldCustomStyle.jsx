@@ -260,7 +260,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) && cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function IndividualInputFldCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
