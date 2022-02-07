@@ -84,13 +84,15 @@ export default function LayerAccordion({ className,
                 <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
               )}
               {styleOverride && <span className={css(ut.flxc, { px: 2 })} title="Theme styles override"><CheckMarkIcn cls="context-btn-color" size="15" /></span>}
-              <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
-                <div className={css(cls.tipBody)}>
-                  {(fldData.lbl || fldData.txt || fldData.adminLbl) && (
-                    fldData.lbl || fldData.txt || fldData.adminLbl
-                  )}
-                </div>
-              </Cooltip>
+              {fldData && (
+                <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
+                  <div className={css(cls.tipBody)}>
+                    {(fldData?.lbl || fldData?.txt || fldData?.adminLbl) && (
+                      fldData.lbl || fldData.txt || fldData.adminLbl
+                    )}
+                  </div>
+                </Cooltip>
+              )}
               <div className={css(cls.navActionBtn)} data-action-btn-lbl>
                 {highlightSelector && (
                   <div

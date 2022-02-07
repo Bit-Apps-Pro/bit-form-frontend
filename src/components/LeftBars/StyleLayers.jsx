@@ -22,8 +22,9 @@ export default function StyleLayers() {
   const showFldTitle = (typ) => fieldTypes[typ] || typ
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
-  const styleHandler = (route, fldKey) => {
-    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+  const styleHandler = (route, fldKey = null) => {
+    if (fldKey) history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+    else history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
   }
   return (
     <div className={css(s.con)}>
@@ -37,18 +38,27 @@ export default function StyleLayers() {
           <NavBtn route="form-container" label="Form Container" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="field-container" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-container" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
-          <NavBtn route="label" label="Labels" offset="3" highlightSelector="[data-dev-lbl]" />
-          <NavBtn route="lbl-pre-i" label="Label Prefix Icon" offset="3" highlightSelector="[data-dev-lbl-pre-i]" />
-          <NavBtn route="lbl-suf-i" label="Label Suffix Icon" offset="3" highlightSelector="[data-dev-lbl-suf-i]" />
-          <NavBtn route="subtitle" label="Sub Title" offset="3" highlightSelector="[data-dev-sub-titl]" />
-          <NavBtn route="sub-titl-pre-i" label="Sub Title Prefix Icon" offset="3" highlightSelector="[data-dev-sub-titl-pre-i]" />
-          <NavBtn route="sub-titl-suf-i" label="Sub Title Suffix Icon" offset="3" highlightSelector="[data-dev-sub-titl-suf-i]" />
-          <NavBtn route="helper-text" label="Helper Texts" offset="3" highlightSelector="[data-dev-hlp-txt]" />
-          <NavBtn route="hlp-txt-pre-i" label="Helper Text Prefix Icon" offset="3" highlightSelector="[data-dev-hlp-txt-pre-i]" />
-          <NavBtn route="hlp-txt-suf-i" label="Helper Text Suffix Icon" offset="3" highlightSelector="[data-dev-hlp-txt-suf-i]" />
-          <NavBtn route="error-messages" label="Error Messages" offset="3" highlightSelector="[data-dev-err-msg]" />
-          <NavBtn route="err-txt-pre-i" label="Error Text Prefix Icon" offset="3" highlightSelector="[data-dev-err-txt-pre-i]" />
-          <NavBtn route="err-txt-suf-i" label="Error Text Suffix Icon" offset="3" highlightSelector="[data-dev-err-txt-suf-i]" />
+
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('label')} offset="6" title="Label" highlightSelector="[data-dev-lbl]">
+            <NavBtn route="lbl-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
+            <NavBtn route="lbl-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
+          </LayerAccordion>
+
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('subtitle')} offset="6" title="Sub Title" highlightSelector="[data-dev-sub-titl]">
+            <NavBtn route="sub-titl-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-sub-titl-pre-i]" />
+            <NavBtn route="sub-titl-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
+          </LayerAccordion>
+
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('helper-text')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
+            <NavBtn route="hlp-txt-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
+            <NavBtn route="hlp-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
+          </LayerAccordion>
+
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('error-messages')} offset="6" title="Error Messages" highlightSelector="[data-dev-err-msg]">
+            <NavBtn route="err-txt-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-err-txt-pre-i]" />
+            <NavBtn route="err-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
+          </LayerAccordion>
+
           <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-pre-i]" />
           <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-suf-i]" />
 
