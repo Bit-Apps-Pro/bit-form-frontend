@@ -1,6 +1,6 @@
 const labelCssProps = {
   background: {},
-  border: { width: true, color: true, radius: true },
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
   color: {},
   'font-size': {},
   'font-weight': {},
@@ -14,7 +14,7 @@ const labelCssProps = {
   opacity: {},
 }
 const iconCssProps = {
-  border: { width: true, color: true, radius: true },
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
   margin: {},
   padding: {},
   opacity: {},
@@ -23,6 +23,16 @@ const iconCssProps = {
   size: {},
   'box-shadow': {},
   filter: {},
+}
+
+const fieldWrpCssProps = {
+  background: {},
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  margin: {},
+  padding: {},
+  opacity: {},
+  'box-shadow': {},
+  size: {},
 }
 const editorConfig = {
   formWrapper: {
@@ -75,15 +85,7 @@ const editorConfig = {
   title: {
     'fld-wrp': {
       states: ['hover'],
-      properties: {
-        background: {},
-        border: { width: true, color: true, radius: true },
-        margin: {},
-        padding: {},
-        opacity: {},
-        'box-shadow': {},
-        size: {},
-      },
+      properties: { ...fieldWrpCssProps },
     },
     logo: {
       states: ['hover'],
@@ -114,7 +116,85 @@ const editorConfig = {
       properties: { ...iconCssProps },
     },
   },
-  titleFieldSubTitle: {},
-  titleFieldPrefixIcon: {},
+  divider: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    divider: {
+      states: ['hover'],
+      properties: {
+        border: {
+          'border-bottom': true,
+          'border-color': true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        'border-image': {
+          'border-image': true,
+          'border-image-slice': true,
+          'border-image-width': true,
+          'border-image-outset': true,
+          'border-image-repeat': true,
+        },
+        margin: {},
+        opacity: {},
+        'box-shadow': {},
+      },
+    },
+  },
+  image: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    img: {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+  },
+  button: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    btn: {
+      states: ['hover'],
+      properties: {
+        background: {},
+        border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+        margin: {},
+        padding: {},
+        opacity: {},
+        'box-shadow': {},
+        size: {},
+        'font-size': {},
+        'font-weight': {},
+        height: {},
+        weight: {},
+        color: {},
+      },
+    },
+    'btn-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'btn-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'hlp-txt': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'hlp-txt-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'hlp-txt-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+  },
 }
 export default editorConfig
