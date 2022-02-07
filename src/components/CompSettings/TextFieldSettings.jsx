@@ -733,37 +733,6 @@ function TextFieldSettings() {
               </div>
             </div>
 
-            {fieldData?.hlpPreIcn && (
-              <>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Width</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnWidthHandle(val, hlpPreIcnCls, hlpPreIcnWidth)}
-                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls, hlpPreIcnWidth)}
-                      value={getNumFromStr(hlpPreIcnWidth) || 10}
-                      unit={getStrFromStr(hlpPreIcnWidth) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Height</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnHeightHandle(val, hlpPreIcnCls, hlpPreIcnHeight)}
-                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls)}
-                      value={getNumFromStr(hlpPreIcnHeight) || 10}
-                      unit={getStrFromStr(hlpPreIcnHeight) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>End Icon</span>
               <div className={css(ut.flxcb)}>
@@ -785,37 +754,6 @@ function TextFieldSettings() {
 
               </div>
             </div>
-
-            {fieldData?.hlpSufIcn && (
-              <>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Width</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnWidthHandle(val, hlpSufIcnCls, hlpPreIcnWidth)}
-                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpSufIcnCls, hlpSufIcnWidth)}
-                      value={getNumFromStr(hlpSufIcnWidth) || 10}
-                      unit={getStrFromStr(hlpSufIcnWidth) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Height</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnHeightHandle(val, hlpSufIcnCls, hlpSufIcnHeight)}
-                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpSufIcnCls, hlpSufIcnHeight)}
-                      value={getNumFromStr(hlpSufIcnHeight) || 10}
-                      unit={getStrFromStr(hlpSufIcnHeight) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
           </div>
 
         </SimpleAccordion>

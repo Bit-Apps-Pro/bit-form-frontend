@@ -13,12 +13,12 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import IndividualInputFldCustomStyle from './IndividualInputFldCustomStyle'
-import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -37,8 +37,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
 
-  console.log(styles)
-
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme?.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
 
@@ -46,37 +44,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
-
-  const getValueFromThemeVar = (val) => {
-    if (val?.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
-  }
-  const updateFontSize = (unit, value, elemn) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fieldKey].classes[`.${fieldKey}-${elemn}`]['font-size'] = `${value}${unit}`
-    }))
-  }
-
-  // sub title
-  const subtitl = classes?.[`.${fieldKey}-sub-titl`]?.['font-size']
-  const subTitlFs = getValueFromThemeVar(subtitl)
-  const subtitlFsHandler = ({ unit, value }) => {
-    updateFontSize(unit, value, 'sub-titl')
-  }
-  const subTitlFSValue = getNumFromStr(subTitlFs)
-  const subTitlFSUnit = getStrFromStr(subTitlFs)
-
-  // heplper text
-  const hplTxtFs = classes?.[`.${fieldKey}-hlp-txt`]?.['font-size']
-  const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
-  const hlpTxtFsHandler = ({ unit, value }) => {
-    updateFontSize(unit, value, 'hlp-txt')
-  }
-  const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
-  const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
   const deleteStyle = (drft, elemnt, state = '') => {
     const hoverStyle = drft.fields[fieldKey].classes[`.${fieldKey}-${elemnt}${state}`]
@@ -138,43 +105,13 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     }
   }
 
-  console.log('element', element)
-
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
-  const getElmDataBasedOnElement = () => {
-    let elementKey = ''
-    let classKey = ''
-    switch (element) {
-      case 'field-container':
-        elementKey = 'fld-wrp'
-        break
-      case 'label-subtitle-container':
-        elementKey = 'lbl-wrp'
-        break
-      case 'subtitle':
-        elementKey = 'sub-titl'
-        break
-      case 'helper-text':
-        elementKey = 'hlp-txt'
-        break
-      case 'error-message':
-        classKey = 'err-msg'
-        elementKey = 'err-msg'
-        break
-      default:
-        elementKey = ''
-        classKey = ''
-    }
-
-    return { elementKey, classKey }
-  }
-
   const renderIndividualCustomStyleComp = () => {
-    const { elementKey, classKey } = getElmDataBasedOnElement()
+    const { elementKey, classKey } = getElmDataBasedOnElement(element)
     return (
-      <div className={css(!checkExistElement(classKey || element) && cls.blur)}>
-        <IndividualCustomStyle elementKey={elementKey || element} fldKey={fieldKey} />
+      <div className={css(!checkExistElement(classKey) && cls.blur)}>
+        <IndividualCustomStyle elementKey={elementKey} fldKey={fieldKey} />
       </div>
     )
   }
