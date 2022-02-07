@@ -70,6 +70,7 @@ const editorConfig = {
       'word-spacing': {},
       'letter-spacing': {},
       'z-index': {},
+      width: {},
     },
   },
   title: {

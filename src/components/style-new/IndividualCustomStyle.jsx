@@ -67,6 +67,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
   const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
 
+  const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
+
   const getValueFromThemeVar = (val) => {
     if (val && val.match(/var/g)?.[0] === 'var') {
       const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
@@ -87,9 +89,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
     const propertyPath = getPropertyPath(property)
+
     setStyles(prvStyle => produce(prvStyle, drft => {
       const preValue = getValueByObjPath(drft, propertyPath)
-      const isAlreadyImportant = preValue?.match(/!important/gi)?.[0]
+      const isAlreadyImportant = preValue?.match(/(!important)/gi)?.[0]
       let v = `${convertvalue}${unit}`
       if (isAlreadyImportant) {
         v = `${v} !important`
@@ -100,7 +103,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   // for field opacity
   const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
-  const fldOpacityHandler = ({ value, unit }) => updateHandler(value, unit, fldOpctyUnit, 'opacity')
+
+  // for width
+  const [widthValue, widthUnit] = getStyleValueAndUnit('width')
 
   // Z-Index
   const [fldZIndex] = getStyleValueAndUnit('z-index')
@@ -108,7 +113,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
-  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
   const setNewCssProp = (property, state = '') => {
     const checkExistingCssProperties = state === '' ? existingCssProperties : existingCssHoverProperties
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -143,42 +147,26 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // const getValueFromThemeVar = (val) => {
-  //   if (val?.match(/var/g)?.[0] === 'var') {
-  //     const getVarProperty = val?.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-  //     return themeVars[getVarProperty]
-  //   }
-  //   return val
-  // }
-
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
   const [wordSpacingVal, wordSpacingUnit] = getStyleValueAndUnit('word-spacing')
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
-  // const lineHeightHandler = ({ value, unit }) => {
-  //   const convertvalue = unit ? unitConverter(unit, value, fldLineHeightUnit) : value
-  //   setStyles(prvStyle => produce(prvStyle, drftStyle => {
-  //     assignNestedObj(drftStyle, getPropertyPath('line-height'), `${convertvalue}${unit}`)
-  //   }))
-  // }
-
-  const lineHeightHandler = ({ value, unit }) => updateHandler(value, unit, fldLineHeightUnit, 'line-height')
-  const wordSpacingHandler = ({ value, unit }) => {
-    const convertvalue = unitConverter(unit, value, wordSpacingUnit)
+  const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
+    const convertvalue = unitConverter(unit, value, prvUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, getPropertyPath('word-spacing'), `${convertvalue}${unit}`)
+      let v = `${convertvalue}${unit}`
+      const checkExistImportant = existImportant(getPropertyPath(prop, state))
+      if (checkExistImportant) v += ' !important'
+      assignNestedObj(drftStyle, getPropertyPath(prop, state), v)
     }))
   }
 
-  const letterSpacingHandler = ({ value, unit }) => {
-    const convertvalue = unitConverter(unit, value, letterSpacingUnit)
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, getPropertyPath('letter-spacing'), `${convertvalue}${unit}`)
-    }))
-  }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, getPropertyPath(property, state), val)
+      let v = val
+      const checkExistImportant = existImportant(getPropertyPath(property, state))
+      if (checkExistImportant) v += ' !important'
+      assignNestedObj(drft, getPropertyPath(property, state), v)
     }))
   }
 
@@ -354,15 +342,18 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 propertyPath={getPropertyPath('line-height')}
                 stateObjName="styles"
               />
-              <SizeControl
-                inputHandler={lineHeightHandler}
-                sizeHandler={({ unitKey, unitValue }) => lineHeightHandler({ unit: unitKey, value: unitValue })}
-                value={fldLineHeightVal || 0}
-                unit={fldLineHeightUnit || 'px'}
-                width="130px"
-                options={['px', 'em', 'rem']}
-                step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
-              />
+              <div className={css(ut.flxc)}>
+                <Important className={css(cls.mr2)} propertyPath={getPropertyPath('line-height')} />
+                <SizeControl
+                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit)}
+                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit)}
+                  value={fldLineHeightVal || 0}
+                  unit={fldLineHeightUnit || 'px'}
+                  width="128px"
+                  options={['px', 'em', 'rem']}
+                  step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
+                />
+              </div>
             </div>
           )}
           {existingProperties.includes('word-spacing') && (
@@ -382,17 +373,20 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 propertyPath={getPropertyPath('word-spacing')}
                 stateObjName="styles"
               />
-              <SizeControl
-                min={0.1}
-                max={100}
-                inputHandler={wordSpacingHandler}
-                sizeHandler={({ unitKey, unitValue }) => wordSpacingHandler({ unit: unitKey, value: unitValue })}
-                value={wordSpacingVal || 0}
-                unit={wordSpacingUnit || 'px'}
-                width="130px"
-                options={['px', 'em', 'rem', '%']}
-                step={wordSpacingUnit !== 'px' ? '0.1' : 1}
-              />
+              <div className={css(ut.flxc)}>
+                <Important className={css(ut.mr1)} propertyPath={getPropertyPath('word-spacing')} />
+                <SizeControl
+                  min={0.1}
+                  max={100}
+                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'word-spacing', wordSpacingUnit)}
+                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'word-spacing', wordSpacingUnit)}
+                  value={wordSpacingVal || 0}
+                  unit={wordSpacingUnit || 'px'}
+                  width="128px"
+                  options={['px', 'em', 'rem', '%']}
+                  step={wordSpacingUnit !== 'px' ? '0.1' : 1}
+                />
+              </div>
             </div>
           )}
           {existingProperties.includes('letter-spacing') && (
@@ -412,17 +406,20 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 propertyPath={getPropertyPath('letter-spacing')}
                 stateObjName="styles"
               />
-              <SizeControl
-                min={0.1}
-                max={100}
-                inputHandler={letterSpacingHandler}
-                sizeHandler={({ unitKey, unitValue }) => letterSpacingHandler({ unit: unitKey, value: unitValue })}
-                value={letterSpacingVal || 0}
-                unit={letterSpacingUnit || 'px'}
-                width="130px"
-                options={['px', 'em', 'rem', '']}
-                step={letterSpacingUnit !== 'px' ? '0.1' : 1}
-              />
+              <div className={css(ut.flxc)}>
+                <Important className={css(ut.mr1)} propertyPath={getPropertyPath('letter-spacing')} />
+                <SizeControl
+                  min={0.1}
+                  max={100}
+                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'letter-spacing', letterSpacingUnit)}
+                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'letter-spacing', letterSpacingUnit)}
+                  value={letterSpacingVal || 0}
+                  unit={letterSpacingUnit || 'px'}
+                  width="128px"
+                  options={['px', 'em', 'rem', '']}
+                  step={letterSpacingUnit !== 'px' ? '0.1' : 1}
+                />
+              </div>
             </div>
           )}
           {
@@ -498,7 +495,39 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                     subtitle="Size control"
                     objectPaths={fldSizeObjPath}
                     id="size-control"
-                    width="130px"
+                    width="128px"
+                  />
+                </div>
+              </div>
+            )
+          }
+          {
+            existingProperties.includes('width') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => { delPropertyHandler('width') }}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Width', 'bitform')}</span>
+                </div>
+                <ResetStyle
+                  propertyPath={getPropertyPath('width')}
+                  stateObjName="styles"
+                />
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('width')} />
+                  <SizeControl
+                    width="128px"
+                    value={Number(widthValue)}
+                    unit={widthUnit}
+                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'width', widthUnit)}
+                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'width', widthUnit)}
+                    options={['px', 'em', 'rem', '%']}
                   />
                 </div>
               </div>
@@ -655,15 +684,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
-              <Important propertyPath={getPropertyPath('font-size')} />
               <div className={css(ut.flxc, { cg: 3 })}>
+                <Important propertyPath={getPropertyPath('font-size')} />
                 <SizeControl
                   className={css({ w: 130 })}
-                  inputHandler={fldFsSizeHandler}
-                  sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit)}
+                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit)}
                   value={fldFSValue || 12}
                   unit={fldFSUnit || 'px'}
-                  width="130px"
+                  width="128px"
                   options={['px', 'em', 'rem']}
                   step={fldFSUnit !== 'px' ? '0.1' : 1}
                 />
@@ -685,6 +714,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
               <div className={css(ut.flxc, { cg: 3 })}>
+                <Important propertyPath={getPropertyPath('font-weight')} />
                 <SimpleDropdown
                   options={fontweightVariants}
                   value={String(existingCssProperties?.['font-weight'])}
@@ -710,8 +740,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-style')} stateObjName="styles" />
-
               <div className={css(ut.flxc, { cg: 3 })}>
+                <Important propertyPath={getPropertyPath('font-style')} />
                 <SimpleDropdown
                   options={fontStyleVariants}
                   value={String(existingCssProperties?.['font-style'])}
@@ -738,19 +768,19 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
                 </div>
                 <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
-                <Important propertyPath={getPropertyPath('opacity')} />
                 <div className={css(ut.flxc, { cg: 3 })}>
+                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('opacity')} />
                   <SizeControl
                     className={css({ w: 130 })}
-                    inputHandler={fldOpacityHandler}
-                    sizeHandler={({ unitKey, unitValue }) => fldOpacityHandler({ unit: unitKey, value: unitValue })}
+                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit)}
+                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'opacity', fldOpctyUnit)}
                     value={fldOpctyValue || 0}
                     unit={fldOpctyUnit}
                     min={0}
-                    max={fldOpctyUnit ? 100 : 1}
-                    width="130px"
+                    max={fldOpctyUnit === '' ? 1 : 100}
+                    width="128px"
                     options={['', '%']}
-                    step={fldOpctyUnit ? 1 : '0.1'}
+                    step={fldOpctyUnit === '' ? 0.1 : 1}
                   />
                 </div>
               </div>
@@ -1003,4 +1033,5 @@ const cls = {
   containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   space: { p: 5 },
   warningBorder: { b: '1px solid yellow' },
+  mr2: { mr: 2 },
 }

@@ -152,6 +152,9 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       case 'label-subtitle-container':
         elementKey = 'lbl-wrp'
         break
+      case 'label':
+        elementKey = 'lbl'
+        break
       case 'subtitle':
         elementKey = 'sub-titl'
         break
