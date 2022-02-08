@@ -1,3 +1,40 @@
+const labelCssProps = {
+  background: {},
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  color: {},
+  'font-size': {},
+  'font-weight': {},
+  'font-style': {},
+  'text-align': {},
+  'text-decoration': {},
+  'text-shadow': {},
+  'box-shadow': {},
+  margin: {},
+  padding: {},
+  opacity: {},
+}
+const iconCssProps = {
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  margin: {},
+  padding: {},
+  opacity: {},
+  weight: {},
+  height: {},
+  size: {},
+  'box-shadow': {},
+  filter: {},
+}
+
+const fieldWrpCssProps = {
+  background: {},
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  margin: {},
+  padding: {},
+  opacity: {},
+  'box-shadow': {},
+  size: {},
+}
+
 const textFldCssProps = {
   'fld-wrp': {
     states: ['hover'],
@@ -63,42 +100,6 @@ const textFldCssProps = {
     states: ['hover'],
     properties: { ...iconCssProps },
   },
-}
-const labelCssProps = {
-  background: {},
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
-  color: {},
-  'font-size': {},
-  'font-weight': {},
-  'font-style': {},
-  'text-align': {},
-  'text-decoration': {},
-  'text-shadow': {},
-  'box-shadow': {},
-  margin: {},
-  padding: {},
-  opacity: {},
-}
-const iconCssProps = {
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
-  margin: {},
-  padding: {},
-  opacity: {},
-  weight: {},
-  height: {},
-  size: {},
-  'box-shadow': {},
-  filter: {},
-}
-
-const fieldWrpCssProps = {
-  background: {},
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
-  margin: {},
-  padding: {},
-  opacity: {},
-  'box-shadow': {},
-  size: {},
 }
 const editorConfig = {
   formWrapper: {
