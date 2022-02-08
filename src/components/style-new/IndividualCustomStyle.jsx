@@ -685,7 +685,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
               <div className={css(ut.flxc, { cg: 3 })}>
-                <Important propertyPath={getPropertyPath('font-size')} />
+                <Important className={css({ mr: 2 })} propertyPath={getPropertyPath('font-size')} />
                 <SizeControl
                   className={css({ w: 130 })}
                   inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit)}
@@ -721,7 +721,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
@@ -748,7 +748,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
