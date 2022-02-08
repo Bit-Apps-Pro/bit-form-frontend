@@ -4,18 +4,6 @@ import RenderStyle from '../style-new/RenderStyle'
 function TitleField({ fieldKey, attr, styleClasses }) {
   const { logo, logoHide, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = attr
   const fieldData = attr
-  // useEffect(() => {
-  //   const txtWrp = selectInGrid(`#${fieldKey}-txt-wrp`)
-  //   const titleHeading = document.createElement(titleTag || 'h1')
-  //   const subTitleSpan = document.createElement(subTitleTag || 'span')
-  //   titleHeading.className = `${fieldKey}-title`
-  //   titleHeading.textContent = title
-  //   txtWrp.appendChild(titleHeading)
-
-  //   subTitleSpan.className = `${fieldKey}-sub-titl`
-  //   subTitleSpan.textContent = subtitle
-  //   txtWrp.appendChild(subTitleSpan)
-  // }, [titleTag || subTitleTag])
 
   const titleGenerator = (tag, text, cls, preIcn, sufIcn) => {
     switch (tag) {

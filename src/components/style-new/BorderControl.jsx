@@ -13,7 +13,7 @@ import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant }) {
+export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
 
   const [, color] = splitValueBySpaces(value)
@@ -54,7 +54,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
       {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={shadow || borderRadius || borderWidth || border} />)}
       <div title={value} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}
           type="button"
           className={css(c.pickrBtn)}
         >

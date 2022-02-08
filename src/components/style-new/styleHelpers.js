@@ -1,7 +1,11 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+import buttonStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
+import dividerStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
+import imageStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 // eslint-disable-next-line camelcase
 import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
@@ -96,11 +100,11 @@ export const unitConverter = (unit, value, prvUnit) => {
 }
 
 export const getNumFromStr = (str = '') => {
-  const num = str?.match(/[-]?([0-9]*[.])?[0-9]+/gi)
+  const num = str ? str?.match(/[-]?([0-9]*[.])?[0-9]+/gi) : 0
   return num ? num[0] : 0
 }
 export const getStrFromStr = (str = '') => {
-  const newStr = str?.match(/([A-z]|%)+/gi)?.[0]
+  const newStr = str ? str?.match(/([A-z]|%)+/gi)?.[0] : ''
   return newStr || ''
 }
 
@@ -212,8 +216,6 @@ export function highlightElm(selector, selectType = 'element padding margin') {
 
     marginDiv.appendChild(elementDiv)
     elementDiv.appendChild(paddingDiv)
-    // console.log('', marginDiv)
-    // document.body.appendChild(marginDiv)
     document.getElementById('bit-grid-layout')?.contentWindow?.document.body.prepend(marginDiv)
   })
 }
@@ -327,7 +329,9 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld') => {
     case 'email':
       return Object.keys(editorConfig.texfieldStyle.properties)
     case 'title':
-      console.log('fldtype', fieldType, 'elementkey', elementKey)
+    case 'divider':
+    case 'image':
+    case 'button':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
@@ -338,7 +342,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld') => {
   }
 }
 
-const styleClasses = {
+export const styleClasses = {
   logo: ['logo'],
   title: ['title'],
   titlePreIcn: ['title-pre-i'],
@@ -349,11 +353,17 @@ const styleClasses = {
   subTitl: ['sub-titl'],
   subTlePreIcn: ['sub-titl-pre-i'],
   subTleSufIcn: ['sub-titl-suf-i'],
+  fld: ['fld'],
+  divider: ['divider'],
+  image: ['img'],
+  button: ['btn'],
   hepTxt: ['hlp-txt'],
   hlpPreIcn: ['hlp-txt-pre-i'],
   hlpSufIcn: ['hlp-txt-suf-i'],
   prefixIcn: ['pre-i'],
   suffixIcn: ['suf-i'],
+  btnPreIcn: ['btn-pre-i'],
+  btnSufIcn: ['btn-suf-i'],
   err: ['err-msg'],
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
@@ -412,7 +422,6 @@ export const removeUnuseStyles = (fields, setStyles) => {
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
   setStyle(prvStyle => produce(prvStyle, drftStyle => {
     const fldTyp = prvStyle.fields[fk]?.fieldType
-    console.log('fk', fk, 'element', element, 'fldType', fldTyp)
     switch (fldTyp) {
       case 'text':
       case 'number':
@@ -427,19 +436,33 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
       case 'week':
       case 'color':
       case 'textarea':
-        // eslint-disable-next-line no-case-declarations
         const textStyleBitFormDefault = textStyle_1_bitformDefault({ fk, fldTyp })
-        // eslint-disable-next-line no-case-declarations
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'title':
-        // eslint-disable-next-line no-case-declarations
         const titleStyleBitFormDefault = titleStyle_1_bitformDefault({ fk, fldTyp })
-        // eslint-disable-next-line no-case-declarations
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = titleStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'divider':
+        const dividerStyleBitFormDefault = dividerStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dividerStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'image':
+        const imageStyleBitFormDefault = imageStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = imageStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'button':
+        const buttonStyleBitFormDefault = buttonStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = buttonStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       default:

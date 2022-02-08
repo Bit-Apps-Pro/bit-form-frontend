@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
-import { isLabelOverrideStyles } from '../style-new/styleHelpers'
+import { isLabelOverrideStyles, styleClasses } from '../style-new/styleHelpers'
 import NavBtn from './NavBtn'
 
 export default function ElementConfiguration({ fldKey }) {
@@ -61,6 +61,12 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
+      {fieldObj.divider && (
+        <NavBtn cssSelector={`.${fldKey}-${styleClasses.divider[0]}`} subRoute={fldKey} route="divider" label="Divider" offset="2.5" highlightSelector={`[data-dev-divider="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'divider')} />
+      )}
+      {fieldObj.img && (
+        <NavBtn cssSelector={`.${fldKey}-${styleClasses.image[0]}`} subRoute={fldKey} route="img" label="Image" offset="2.5" highlightSelector={`[data-dev-divider="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'image')} />
+      )}
       {fieldObj.typ.match(/^(text|number|password|username|email|url|date|datetime-local|time|month|week|color|textarea|)$/)
         && (
           <>
@@ -74,6 +80,25 @@ export default function ElementConfiguration({ fldKey }) {
                 )}
                 {fieldObj.suffixIcn && (
                   <NavBtn cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`} subRoute={fldKey} route="suf-i" label="Suffix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')} />
+                )}
+              </LayerAccordion>
+            )}
+          </>
+        )}
+
+      {fieldObj.typ.match(/^(button|)$/)
+        && (
+          <>
+            {!(fieldObj.btnPreIcn || fieldObj.btnSufIcn) && (
+              <NavBtn cssSelector={`.${fldKey}-${styleClasses.button[0]}`} subRoute={fldKey} route="btn" label="Button" offset="2.5" highlightSelector={`[data-dev-sub-titl="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn')} />
+            )}
+            {(fieldObj.btnPreIcn || fieldObj.btnSufIcn) && (
+              <LayerAccordion childrenAccodin onClick={() => styleHandler('btn')} offset="3.1" title="Button" fldData={fieldObj} key={fldKey} open={fldKey === selectedFieldKey && (fieldObj.btnPreIcn || fieldObj.btnSufIcn)} styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn')}>
+                {fieldObj.btnPreIcn && (
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.btnPreIcn[0]}`} subRoute={fldKey} route="btn-pre-i" label="Prefix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn-pre-i')} />
+                )}
+                {fieldObj.btnSufIcn && (
+                  <NavBtn cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`} subRoute={fldKey} route="btn-suf-i" label="Suffix Icon" offset="3.3" highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn-suf-i')} />
                 )}
               </LayerAccordion>
             )}
@@ -118,22 +143,4 @@ export default function ElementConfiguration({ fldKey }) {
         )}
     </>
   )
-}
-const styleClasses = {
-  logo: ['logo'],
-  title: ['title'],
-  titlePreIcn: ['title-pre-i'],
-  titleSufIcn: ['title-suf-i'],
-  lbl: ['lbl', 'lbl-wrp'],
-  lblPreIcn: ['lbl-pre-i'],
-  lblSufIcn: ['lbl-suf-i'],
-  subTitl: ['sub-titl'],
-  subTlePreIcn: ['sub-titl-pre-i'],
-  subTleSufIcn: ['sub-titl-suf-i'],
-  fld: ['fld'],
-  hepTxt: ['hlp-txt'],
-  hlpPreIcn: ['hlp-txt-pre-i'],
-  hlpSufIcn: ['hlp-txt-suf-i'],
-  prefixIcn: ['pre-i'],
-  suffixIcn: ['suf-i'],
 }

@@ -3,16 +3,12 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
-import BorderControl from '../style-new/BorderControl'
-import ShadowControl from '../style-new/ShadowControl'
-import SpacingControl from '../style-new/SpacingControl'
 import Modal from '../Utilities/Modal'
 import Icons from './Icons'
 import IconStyleBtn from './IconStyleBtn'
@@ -25,10 +21,6 @@ function ImageSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [icnMdl, setIcnMdl] = useState('')
-  const styles = useRecoilValue($styles)
-
-  const imgClass = `.${fldKey}-img`
-  const { border, 'box-shadow': boxShadow } = styles.fields[fldKey].classes[imgClass]
 
   const removeImage = (name) => {
     if (fieldData[name]) {
@@ -37,22 +29,6 @@ function ImageSettings() {
       setFields(allFields)
     }
   }
-
-  const path = `fields->${fldKey}->classes->${imgClass}`
-
-  const objectPaths = {
-    object: 'styles',
-    paths: {
-      border: `${path}->border`,
-      borderWidth: `${path}->border-width`,
-      borderRadius: `${path}->border-radius`,
-      shadow: `${path}->box-shadow`,
-      margin: `${path}->margin`,
-      padding: `${path}->padding`,
-    },
-  }
-
-  console.log(fieldData)
 
   return (
     <div>
@@ -76,7 +52,7 @@ function ImageSettings() {
               {fieldData?.bg_img && (
                 <>
                   <img src={fieldData?.bg_img} alt="icon" width="25" height="25" />
-                  <IconStyleBtn route="bg-img" />
+                  <IconStyleBtn route="img" />
                 </>
               )}
               <button type="button" onClick={() => setIcnMdl(true)} className={css(ut.icnBtn)}>
@@ -88,46 +64,6 @@ function ImageSettings() {
                 </button>
               )}
 
-            </div>
-          </div>
-          <div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500, ut.ml2)}>Border</span>
-              <div className={css(ut.flxcb, ut.mr2)}>
-                <BorderControl
-                  subtitle="Image Border"
-                  value={border}
-                  objectPaths={objectPaths}
-                  id="image-border-control"
-                />
-              </div>
-            </div>
-          </div>
-          <br />
-          <div>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500, ut.ml2)}>Shadow</span>
-              <div className={css(ut.flxcb, ut.mr2)}>
-                <ShadowControl
-                  subtitle="Border Shadow"
-                  value={boxShadow}
-                  objectPaths={objectPaths}
-                  id="image-shadow-control"
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
-              <div className={css(ut.flxcb, ut.mr2)}>
-                <SpacingControl
-                  action={{ type: 'spacing-control' }}
-                  subtitle="Spacing control"
-                  objectPaths={objectPaths}
-                  id="image-spacing-control"
-                />
-              </div>
             </div>
           </div>
         </div>

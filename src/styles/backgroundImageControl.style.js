@@ -2,7 +2,7 @@ const backgroundImageControlStyle = {
   container: { w: 250, cr: '#888' },
   innercontainer: { p: 10 },
 
-  title: { fs: 12, ml: 5 },
+  title: { fs: 12 },
 
   urlinput: {
     brs: 10,

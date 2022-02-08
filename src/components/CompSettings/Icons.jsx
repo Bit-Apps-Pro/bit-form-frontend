@@ -21,7 +21,7 @@ import LoaderSm from '../Loaders/LoaderSm'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
 
-function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
+function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '' }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -151,10 +151,12 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-          setStyles(prvStyle => produce(prvStyle, draft => {
-            if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
-            if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
-          }))
+          if (addPaddingOnSelect) {
+            setStyles(prvStyle => produce(prvStyle, draft => {
+              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
+              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+            }))
+          }
         }
         setDnLoading(false)
         setModal(false)
