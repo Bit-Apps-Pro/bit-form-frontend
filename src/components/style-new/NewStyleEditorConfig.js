@@ -1,3 +1,69 @@
+const textFldCssProps = {
+  'fld-wrp': {
+    states: ['hover'],
+    properties: { ...fieldWrpCssProps },
+  },
+  'lbl-wrp': {
+    states: ['hover'],
+    properties: { ...fieldWrpCssProps },
+  },
+  lbl: {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
+  'lbl-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'lbl-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'sub-titl': {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
+  'title-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'title-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'sub-titl-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'sub-titl-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'hlp-txt': {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
+  'hlp-txt-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'hlp-txt-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'err-msg': {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
+  'err-txt-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'err-txt-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+}
 const labelCssProps = {
   background: {},
   border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
@@ -83,6 +149,8 @@ const editorConfig = {
       width: {},
     },
   },
+  text: { ...textFldCssProps },
+  textarea: { ...textFldCssProps },
   title: {
     'fld-wrp': {
       states: ['hover'],

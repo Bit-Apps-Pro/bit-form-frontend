@@ -326,6 +326,10 @@ export const getElmDataBasedOnElement = (element) => {
     case 'subtitle':
       elementKey = 'sub-titl'
       break
+    case 'label':
+      elementKey = 'lbl'
+      classKey = 'lbl'
+      break
     case 'helper-text':
       elementKey = 'hlp-txt'
       break
