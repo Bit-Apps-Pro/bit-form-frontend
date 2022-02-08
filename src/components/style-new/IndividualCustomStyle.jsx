@@ -103,19 +103,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // for field opacity
   const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
-
-  // for width
   const [widthValue, widthUnit] = getStyleValueAndUnit('width')
-
-  // Z-Index
+  const [heightValue, heightUnit] = getStyleValueAndUnit('height')
   const [fldZIndex] = getStyleValueAndUnit('z-index')
-  const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
-
-  // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
-  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
+  const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -601,6 +594,38 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                     unit={widthUnit}
                     inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'width', widthUnit)}
                     sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'width', widthUnit)}
+                    options={['px', 'em', 'rem', '%']}
+                  />
+                </div>
+              </div>
+            )
+          }
+          {
+            existingProperties.includes('height') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => { delPropertyHandler('height') }}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
+                </div>
+                <ResetStyle
+                  propertyPath={getPropertyPath('height')}
+                  stateObjName="styles"
+                />
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('height')} />
+                  <SizeControl
+                    width="128px"
+                    value={Number(heightValue)}
+                    unit={heightUnit}
+                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit)}
+                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit)}
                     options={['px', 'em', 'rem', '%']}
                   />
                 </div>
