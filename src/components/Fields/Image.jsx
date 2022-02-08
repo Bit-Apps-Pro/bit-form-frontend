@@ -1,13 +1,15 @@
+import { useState } from 'react'
 import RenderStyle from '../style-new/RenderStyle'
 
 function Image({ fieldKey, attr, styleClasses }) {
+  const [wrap, setWrap] = useState()
+  const width = wrap?.clientWidth || 100
+  const height = wrap?.clientHeight || 80
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div className="drag">
-        <div className={`${fieldKey}-wrp`}>
-          <img className={`${fieldKey}-img`} src={attr?.bg_img || 'https://via.placeholder.com/150x75'} width="100%" height="100%" alt="bg" />
-        </div>
+      <div ref={setWrap} className={`${fieldKey}-fld-wrp drag`}>
+        <img className={`${fieldKey}-img`} src={attr?.bg_img || `https://via.placeholder.com/${width}x${height}`} width="100%" height="100%" alt="bg" />
       </div>
     </>
   )

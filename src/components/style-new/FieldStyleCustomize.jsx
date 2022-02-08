@@ -13,6 +13,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
@@ -34,8 +35,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, theme } = fldStyleObj
-
-  console.log(styles)
 
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme?.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
@@ -123,42 +122,11 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
-  const getElmDataBasedOnElement = () => {
-    let elementKey = ''
-    let classKey = ''
-    switch (element) {
-      case 'field-container':
-        elementKey = 'fld-wrp'
-        break
-      case 'label-subtitle-container':
-        elementKey = 'lbl-wrp'
-        break
-      case 'label':
-        elementKey = 'lbl'
-        break
-      case 'subtitle':
-        elementKey = 'sub-titl'
-        break
-      case 'helper-text':
-        elementKey = 'hlp-txt'
-        break
-      case 'error-message':
-        classKey = 'err-msg'
-        elementKey = 'err-msg'
-        break
-      default:
-        elementKey = ''
-        classKey = ''
-    }
-
-    return { elementKey, classKey }
-  }
-
   const renderIndividualCustomStyleComp = () => {
-    const { elementKey, classKey } = getElmDataBasedOnElement()
+    const { elementKey, classKey } = getElmDataBasedOnElement(element)
     return (
-      <div className={css(!checkExistElement(classKey || element) && cls.blur)}>
-        <IndividualCustomStyle elementKey={elementKey || element} fldKey={fieldKey} />
+      <div className={css(!checkExistElement(classKey) && cls.blur)}>
+        <IndividualCustomStyle elementKey={elementKey} fldKey={fieldKey} />
       </div>
     )
   }

@@ -17,6 +17,7 @@ import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 import TransitionControlMenu from '../../../style-new/TransitionControlMenu'
+import BorderImageControlMenu from './BorderImageControlMenu'
 import TextDecorationControlMenu from './TextDecorationControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
@@ -24,9 +25,10 @@ const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColor
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, defaultValue, objectPaths, id, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
+const RenderComponent = ({ component, action, value, defaultValue, objectPaths, state, id, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
   switch (component) {
-    case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
+    case 'border-style': return <BorderControlMenu objectPaths={objectPaths} state={state} />
+    case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -50,6 +52,7 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
 const setTitle = (component) => {
   switch (component) {
     case 'border-style': return 'Border'
+    case 'border-image': return 'Border Image'
     case 'color-picker': return 'Color picker'
     case 'background': return 'Background Control'
     case 'individual-shadow-control': return 'Shadow control'
@@ -72,7 +75,7 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, propertyArray, subtitle, action, value, defaultValue, objectPaths, id, fldKey, hslaPaths } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, propertyArray, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
@@ -97,7 +100,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} defaultValue={defaultValue} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} propertyArray={propertyArray} fldKey={fldKey} hslaPaths={hslaPaths} />
+            <RenderComponent component={component} action={action} value={value} defaultValue={defaultValue} objectPaths={objectPaths} state={state} id={id} stateObjName={stateObjName} propertyPath={propertyPath} propertyArray={propertyArray} fldKey={fldKey} hslaPaths={hslaPaths} />
           </Suspense>
         </div>
       </div>
