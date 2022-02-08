@@ -122,7 +122,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
                 value={borderRadVal}
                 unit={borderRadUnit}
-                width="110px"
+                width="128px"
                 options={['px', 'em', 'rem']}
               />
             </div>

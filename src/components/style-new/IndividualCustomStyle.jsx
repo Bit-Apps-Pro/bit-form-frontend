@@ -103,19 +103,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  // for field opacity
   const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
-
-  // for width
   const [widthValue, widthUnit] = getStyleValueAndUnit('width')
-
-  // Z-Index
+  const [heightValue, heightUnit] = getStyleValueAndUnit('height')
   const [fldZIndex] = getStyleValueAndUnit('z-index')
-  const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
-
-  // for font size
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
-  const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, 'font-size')
+  const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const setNewCssProp = (property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -607,6 +600,38 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             )
           }
+          {
+            existingProperties.includes('height') && (
+              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+                <div className={css(ut.flxc, ut.ml1)}>
+                  <button
+                    title="Delete Property"
+                    onClick={() => { delPropertyHandler('height') }}
+                    className={`${css(cls.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                  <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
+                </div>
+                <ResetStyle
+                  propertyPath={getPropertyPath('height')}
+                  stateObjName="styles"
+                />
+                <div className={css(ut.flxc, { cg: 3 })}>
+                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('height')} />
+                  <SizeControl
+                    width="128px"
+                    value={Number(heightValue)}
+                    unit={heightUnit}
+                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit)}
+                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit)}
+                    options={['px', 'em', 'rem', '%']}
+                  />
+                </div>
+              </div>
+            )
+          }
           {existingProperties.includes('text-align') && (
             <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
               <div className={css(ut.flxc, ut.ml1)}>
@@ -759,7 +784,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
               <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
               <div className={css(ut.flxc, { cg: 3 })}>
-                <Important propertyPath={getPropertyPath('font-size')} />
+                <Important className={css({ mr: 2 })} propertyPath={getPropertyPath('font-size')} />
                 <SizeControl
                   className={css({ w: 130 })}
                   inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit)}
@@ -795,7 +820,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
@@ -822,7 +847,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   onChange={val => fontPropertyUpdateHandler('font-style', val)}
                   w={130}
                   h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) || cls.warningBorder)}
+                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) ? cls.warningBorder : '')}
                 />
               </div>
             </div>
