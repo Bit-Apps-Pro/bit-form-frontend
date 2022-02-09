@@ -12,6 +12,7 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-divider`]: {
       margin: '0px 10px 0px 10px',
       width: '100%',
+      border: '',
       'border-bottom': 'solid',
       'border-width': '1',
       'border-color': 'var(--global-accent-color)',
