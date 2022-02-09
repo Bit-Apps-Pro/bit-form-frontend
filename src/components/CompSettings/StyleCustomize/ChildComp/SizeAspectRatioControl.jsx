@@ -44,7 +44,7 @@ export default function SizeAspectRatioControl({ options, className, valuChangeH
             className={css(ut.mt1)}
             label={opt.label}
             width="120px"
-            value={getNumFromStr(opt.value)}
+            value={getNumFromStr(opt.value) || 1}
             unit={getStrFromStr(opt.value)}
             inputHandler={({ unit, value }) => fldSizeHandler({ unit, value }, index)}
             sizeHandler={({ unitKey, unitValue }) => fldSizeHandler({ unit: unitKey, value: unitValue }, index)}
