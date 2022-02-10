@@ -8,11 +8,15 @@ import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
+import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault'
+import materialTheme from '../components/style-new/themes/2_material'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $styles } from '../GlobalStates/StylesState'
+import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
@@ -34,6 +38,8 @@ function FormDetails() {
   const { formType, formID } = useParams()
   const setReports = useSetRecoilState($reports)
   const setLay = useSetRecoilState($layouts)
+  const setStyles = useSetRecoilState($styles)
+  const themeVars = useRecoilValue($themeVars)
   const newFormId = useRecoilValue($newFormId)
   const setFormId = useSetRecoilState($formId)
   const setFields = useSetRecoilState($fields)
@@ -80,17 +86,29 @@ function FormDetails() {
     // if (formId === 'Blank') {
     if (formType === 'new') {
       const btnFld = {}
-      btnFld[`b${newFormId}-1`] = btnData
+      const btnFieldKey = `b${newFormId}-1`
+      btnFld[btnFieldKey] = btnData
       setFields(btnFld)
       setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = btnFld }))
       const btnLay = { lg: [], md: [], sm: [] }
-      const subBtnLay = { h: 40, i: `b${newFormId}-1`, minH: 20, w: 60, x: 0, y: 0 }
+      const subBtnLay = { h: 40, i: btnFieldKey, minH: 40, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)
       setLay(btnLay)
       setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = btnLay }))
       setisLoading(false)
+      setStyles(styles => produce(styles, draftStyle => {
+        const globalTheme = draftStyle.theme
+        if (globalTheme === 'bitformDefault') {
+          const fieldStyle = bitformDefaultTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+          draftStyle.fields[btnFieldKey] = fieldStyle
+        }
+        if (globalTheme === 'material') {
+          const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+          draftStyle.fields[btnFieldKey] = fieldStyle
+        }
+      }))
     }
   }
 
@@ -380,6 +398,10 @@ const btnData = {
   btnSiz: 'md',
   btnTyp: 'submit',
   txt: 'Submit',
-  align: 'right',
+  align: 'end',
+  icn: {
+    pos: '',
+    url: '',
+  },
   valid: {},
 }
