@@ -3,6 +3,15 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     [`.${fk}-fld-wrp`]:
       { height: '100%', width: '100%', 'background-color': 'white', overflow: 'auto', display: 'flex', 'flex-direction': 'column', 'align-items': 'start' },
+    [`.${fk}-fld-wrp.fld-hide::after`]: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      content: '""',
+      width: '100%',
+      height: '100%',
+      'background-color': 'rgba(0, 0, 0, 0.2)',
+    },
     [`.${fk}-btn`]:
     {
       'font-size': '16px',
