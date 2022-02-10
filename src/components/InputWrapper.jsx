@@ -39,7 +39,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   return (
     <div
       data-dev-fld-wrp={fieldKey}
-      className={`${fieldKey}-fld-wrp  ${styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
+      className={`${fieldKey}-fld-wrp  ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
       <div
