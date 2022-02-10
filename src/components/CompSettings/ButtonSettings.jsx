@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -31,6 +31,7 @@ export default function ButtonSettings() {
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { txt, align, fulW, btnSiz, btnTyp } = fieldData
+  const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const setBuilderHistory = useSetRecoilState($builderHistory)
@@ -38,6 +39,12 @@ export default function ButtonSettings() {
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const helperTxt = fieldData.helperTxt || ''
+
+  useEffect(() => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fldKey].classes[`.${fldKey}-fld-wrp`]['align-items'] = btnAlign
+    }))
+  }, [btnAlign])
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'start' },
@@ -72,9 +79,7 @@ export default function ButtonSettings() {
   }
 
   function setButtonAlign(e) {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-fld-wrp`]['align-items'] = e.target.value
-    }))
+    setBtnAlign(e.target.value)
     addToBuilderHistory(setBuilderHistory, { event: `Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } }, setUpdateBtn)
   }
 
@@ -220,7 +225,7 @@ export default function ButtonSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select className={css(FieldStyle.input)} name="" id="" value={align} onChange={setButtonAlign}>
+            <select className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
