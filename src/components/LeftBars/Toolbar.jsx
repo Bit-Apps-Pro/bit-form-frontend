@@ -435,6 +435,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         btnTyp: 'button',
         btnSiz: 'md',
         txt: __('Button'),
+        align: 'start',
         icn: {
           pos: '',
           url: '',

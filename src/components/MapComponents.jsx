@@ -58,29 +58,29 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'radio':
       return <RadioBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'select':
-      return <DropDown fieldKey={fieldKey} isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+      return <DropDown fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     // case 'dropdown':
     //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
-      return <FileUp fieldKey={fieldKey} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
+      return <FileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'ad-file-up':
-      return <AdvanceFileUp fieldKey={fieldKey} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
+      return <AdvanceFileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
-      return <SubmitBtn fieldKey={fieldKey} formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
+      return <SubmitBtn fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'hidden':
-      return <HiddenField fieldKey={fieldKey} formID={formID} attr={atts} />
+      return <HiddenField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'recaptcha':
-      return <ReCaptcha fieldKey={fieldKey} formID={formID} attr={atts} />
+      return <ReCaptcha fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'decision-box':
-      return <DecisionBox fieldKey={fieldKey} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
+      return <DecisionBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'html':
-      return <Html fieldKey={fieldKey} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
+      return <Html fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'button':
       return <Button fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'paypal':
-      return <Paypal isBuilder={isBuilder} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      return <Paypal isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'razorpay':
-      return <RazorPay fieldKey={fieldKey} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      return <RazorPay fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'title':
       return <TitleField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'image':
