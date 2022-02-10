@@ -9,8 +9,10 @@ import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
+import DividerIcn from '../../Icons/DividerIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
+import ImageIcn from '../../Icons/ImageIcn'
 import MailIcn from '../../Icons/MailIcn'
 import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
@@ -22,6 +24,7 @@ import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TimeIcn from '../../Icons/TimeIcn'
+import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
@@ -60,6 +63,12 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
 }
 const FieldIcon = icon => {
   switch (icon) {
+    case 'title':
+      return <TitleIcn w="14" />
+    case 'divider':
+      return <DividerIcn w="14" />
+    case 'image':
+      return <ImageIcn w="14" />
     case 'text':
       return <TextIcn size="14" />
     case 'username':
