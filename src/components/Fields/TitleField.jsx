@@ -1,9 +1,13 @@
+import { useRecoilValue } from 'recoil'
+import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 
-function TitleField({ fieldKey, attr, styleClasses }) {
-  const { logo, logoHide, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = attr
-  const fieldData = attr
+function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
+  const { logo, logoHide, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = fieldData
+  const breakpoint = useRecoilValue($breakpoint)
+  const { styleMode } = useRecoilValue($flags)
+  const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
   const titleGenerator = (tag, text, cls, preIcn, sufIcn) => {
     switch (tag) {
@@ -98,7 +102,7 @@ function TitleField({ fieldKey, attr, styleClasses }) {
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div className={`${fieldKey}-fld-wrp drag`}>
+      <div className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
         {logoHide && <img className={`${fieldKey}-logo`} src={logo} alt="img" width="40" height="40" />}
         <div className="title-wrp">
           {titleHide && titleGenerator(titleTag, title, '-title', titlePreIcn, titleSufIcn)}
