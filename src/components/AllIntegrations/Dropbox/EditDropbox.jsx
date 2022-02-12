@@ -12,7 +12,6 @@ import DropboxIntegLayout from './DropboxIntegLayout'
 function EditDropbox({ allIntegURL, formFields, integrations, setIntegration }) {
   const history = useHistory()
   const { id, formID } = useParams()
-
   const [dropboxConf, setDropboxConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })

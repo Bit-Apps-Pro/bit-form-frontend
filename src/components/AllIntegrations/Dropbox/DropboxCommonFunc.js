@@ -14,9 +14,10 @@ export const handleInput = (e, dropboxConf, setDropboxConf, setIsLoading, setSna
   setDropboxConf({ ...newConf })
 }
 
-export const getAllDropboxFolders = (formId, dropboxConf, setDropboxConf) => {
+export const getAllDropboxFolders = (formID = null, dropboxConf, setDropboxConf) => {
   const queryParams = {
-    formId,
+    formID,
+    id: dropboxConf.id ?? null,
     apiKey: dropboxConf.apiKey,
     apiSecret: dropboxConf.apiSecret,
     tokenDetails: dropboxConf.tokenDetails,
@@ -28,7 +29,6 @@ export const getAllDropboxFolders = (formId, dropboxConf, setDropboxConf) => {
         if (result.data.dropboxFoldersList) {
           newConf.foldersList = result.data.dropboxFoldersList
           newConf.tokenDetails = result.data.tokenDetails
-          console.log(result.data.dropboxFoldersList)
         }
 
         setDropboxConf(newConf)
@@ -44,7 +44,7 @@ export const getAllDropboxFolders = (formId, dropboxConf, setDropboxConf) => {
   })
 }
 
-export const handleAuthorize = (formId, confTmp, setConf, setIsAuthorized, setIsLoading) => {
+export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading) => {
   if (!confTmp.accessCode || !confTmp.apiKey || !confTmp.apiSecret) {
     toast.error(__('Dropbox ApiKey, ApiSecret & Access Code can\'t be empty', 'bitform'))
     return
@@ -52,7 +52,6 @@ export const handleAuthorize = (formId, confTmp, setConf, setIsAuthorized, setIs
   setIsLoading(true)
 
   const tokenRequestParams = {
-    formId,
     apiKey: confTmp.apiKey,
     apiSecret: confTmp.apiSecret,
     accessCode: confTmp.accessCode,

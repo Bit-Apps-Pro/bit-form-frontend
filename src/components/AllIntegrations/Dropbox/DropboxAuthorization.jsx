@@ -5,12 +5,12 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
 
-export default function DropboxAuthorization({ formId, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
+export default function DropboxAuthorization({ formID, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ apiKey: '', apiSecret: '' })
 
   const nextPage = () => {
-    getAllDropboxFolders(formId, dropboxConf, setDropboxConf, setIsLoading)
+    getAllDropboxFolders(formID, dropboxConf, setDropboxConf, setIsLoading)
     setStep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
@@ -37,9 +37,6 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dropboxConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
-      {/* <div className="mt-3"><b>{__('Redirect URIs:', 'bitform')}</b></div>
-      <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} /> */}
-
       <small className="d-blk mt-3">
         {__('To Get Api Key & Secret, Please Visit', 'bitform')}
         &nbsp;
@@ -57,7 +54,7 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
       <small className="d-blk mt-3">
         {__('To Get Access Code, Please Visit', 'bitform')}
         &nbsp;
-        <a className="btcd-link" rel="noreferrer" style={{ cursor: 'pointer' }} onClick={getAccessCode}>{__('Dropbox Access Code', 'bitform')}</a>
+        <span className="btcd-link" style={{ cursor: 'pointer' }} onClick={getAccessCode} aria-hidden="true">{__('Dropbox Access Code', 'bitform')}</span>
       </small>
 
       <div className="mt-3"><b>{__('Dropbox Access Code:', 'bitform')}</b></div>
@@ -66,7 +63,7 @@ export default function DropboxAuthorization({ formId, dropboxConf, setDropboxCo
 
       {!isInfo && (
         <>
-          <button onClick={() => handleAuthorize(formId, dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+          <button onClick={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
             {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
             {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
