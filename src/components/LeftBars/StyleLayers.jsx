@@ -68,7 +68,43 @@ export default function StyleLayers() {
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
               <ElementConfiguration fldKey={fldKey} />
-              {!fldData.typ.match(/^(button|divider|title|image|)$/) && (
+              {fldData.typ.match(/^(check)$/gi) && (
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="check-container"
+                    label="Check Container"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="check-wrapper"
+                    label="Check Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option-label"
+                    label="Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="check-box"
+                    label="Check Box"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                </>
+              )}
+              {!fldData.typ.match(/^(button|divider|title|image|check|)$/) && (
                 <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
               )}
             </LayerAccordion>

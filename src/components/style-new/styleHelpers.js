@@ -333,8 +333,10 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld') => {
     case 'image':
     case 'button':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
-    case 'dropdown':
+    // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
+    case 'check':
+      return Object.keys(editorConfig[fieldType][elementKey].properties)
 
     // eslint-disable-next-line no-fallthrough
     default:

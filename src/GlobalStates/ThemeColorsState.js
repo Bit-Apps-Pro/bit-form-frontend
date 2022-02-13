@@ -21,7 +21,7 @@ export const $lightThemeColors = atom({
     '--gbg-l': 100,
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
-    '--global-fld-bg-color': 'hsla(0, 40%, 67%, 100)', // field background color
+    '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
 
     '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-bdr': '', // field wrapper border
@@ -48,7 +48,7 @@ export const $lightThemeColors = atom({
 
     '--err-bg': 'hsla(0, 82%, 87%, 100)', // error messages background color
     '--err-c': 'hsla(0 , 68%, 35%, 100)', // error messages text color
-    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
+    '--err-sh': '0px 2px 8px 0px hsla(0, 0%, 39%, 20) ', // error messages box shadow
     '--err-bdr': 'solid hsla(0, 23%, 72%, 100)', // error message border
 
     '--pre-i-fltr': '', // prefix icon filter
@@ -90,6 +90,8 @@ export const $lightThemeColors = atom({
     '--err-txt-suf-i-fltr': '', // helper txt suffix icon filter
     '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
     '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
+
+    '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
   },
 })
 

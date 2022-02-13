@@ -25,7 +25,14 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
     let valu = ''
     if (objectPaths.object === 'themeVars') {
       if (margin) valu += `${m}: ${margin}; `
-      if (padding) valu += `${p}: ${padding}`
+      if (padding) valu += `${p}: ${padding};`
+    }
+    if (valu === '' || valu === null) {
+      if (val?.match(/(var)/gi)) {
+        const v = val.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+        valu = themeVars[v]
+      }
+      valu = val
     }
     return valu
   }

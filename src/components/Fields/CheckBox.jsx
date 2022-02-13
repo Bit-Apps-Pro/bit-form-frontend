@@ -69,6 +69,9 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
     validateForm({ input: { name, form, value: value.length ? value : '' } })
   }
 
+  // TODO remove unsed code
+  // input ~ label
+
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />

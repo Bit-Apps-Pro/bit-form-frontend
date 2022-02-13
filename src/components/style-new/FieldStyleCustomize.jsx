@@ -164,7 +164,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
 
-          {element !== 'quick-tweaks' && element !== 'fld' && renderIndividualCustomStyleComp(element, 'fld-wrp', 'field-container')}
+          {element !== 'quick-tweaks' && element !== 'fld' && renderIndividualCustomStyleComp()}
 
           {element === 'fld' && (
             <div className={css(!checkExistElement(element) && cls.blur)}>
