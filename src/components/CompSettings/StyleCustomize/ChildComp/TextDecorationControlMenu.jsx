@@ -17,25 +17,20 @@ export default function TextDecorationControlMenu({ objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
 
-  const { object, txtObjName, paths } = objectPaths
+  const { object, paths } = objectPaths
 
   const stateObj = getObjByKey(object, { themeVars, styles })
 
-  // const txtDcrtnStyleStateObj = getObjByKey(txtObjName, { themeVars, themeColors, styles })
-  // const textDcrtnStylePath = paths.textDecoration
-
-  // const textDecorationStyle = getValueByObjPath(txtDcrtnStyleStateObj, textDcrtnStylePath)
-  const textDcrtnLine = getValueByObjPath(stateObj, paths.textDecorationLine)
-  const textDcrtnStyle = getValueByObjPath(stateObj, paths.textDecorationStyle)
-  const textDcrtnColor = getValueByObjPath(stateObj, paths.textDecorationColor)
-  const textDcrtnThickness = getValueByObjPath(stateObj, paths.textDecorationThickness)
-  console.log('textDcrtnThickness', stateObj, textDcrtnThickness)
+  const textDcrtnLine = getValueByObjPath(stateObj, paths['text-decoration-line'])
+  const textDcrtnStyle = getValueByObjPath(stateObj, paths['text-decoration-style'])
+  const textDcrtnColor = getValueByObjPath(stateObj, paths['text-decoration-color'])
+  const textDcrtnThickness = getValueByObjPath(stateObj, paths['text-decoration-thickness'])
   const thicknesValue = getNumFromStr(textDcrtnThickness) || '0'
   const thicknesUnit = getStrFromStr(textDcrtnThickness) || 'px'
   const thicknessHandler = ({ value, unit }) => {
     const convertvalue = unitConverter(unit, value, thicknesUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, paths.textDecorationThickness, `${convertvalue}${unit}`)
+      assignNestedObj(drftStyle, paths['text-decoration-thickness'], `${convertvalue}${unit}`)
     }))
   }
 
@@ -63,7 +58,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
         <SimpleDropdown
           options={lineOptions}
           value={textDcrtnLine}
-          onChange={val => onValueChange(paths.textDecorationLine, val)}
+          onChange={val => onValueChange(paths['text-decoration-line'], val)}
           w={130}
           h={30}
         />
@@ -73,7 +68,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
         <SimpleDropdown
           options={styleOptions}
           value={textDcrtnStyle}
-          onChange={val => onValueChange(paths.textDecorationStyle, val)}
+          onChange={val => onValueChange(paths['text-decoration-style'], val)}
           w={130}
           h={30}
         />
@@ -81,7 +76,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
       <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
         <SimpleColorPickerTooltip
-          action={{ onChange: val => onValueChange(paths.textDecorationColor, val) }}
+          action={{ onChange: val => onValueChange(paths['text-decoration-color'], val) }}
           value={textDcrtnColor}
         />
       </div>

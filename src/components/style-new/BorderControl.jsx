@@ -22,26 +22,27 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
   const setThemeVars = useSetRecoilState($themeVars)
   const setThemeColors = useSetRecoilState($themeColors)
   const setStyles = useSetRecoilState($styles)
-
-  const { shadow, borderRadius, borderWidth, border } = objectPaths.paths
+  const { paths } = objectPaths
+  const borderProps = Object.keys(paths)
 
   const clearValue = () => {
-    switch (objectPaths.borderObjName) {
+    switch (objectPaths.object) {
       case 'themeColors':
       case 'themeVars':
         setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          drft[borderRadius] = ''
-          drft[borderWidth] = ''
+          drft[paths[borderProps[0]]] = ''
+          drft[paths['border-width']] = ''
+          drft[paths['border-radius']] = ''
         }))
         setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
-          drft[border] = ''
+          drft[paths['border-color']] = ''
         }))
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drft => {
-          assignNestedObj(drft, borderRadius, '')
-          assignNestedObj(drft, borderWidth, '')
-          assignNestedObj(drft, border, '')
+          borderProps.map(propName => {
+            assignNestedObj(drft, paths[propName], '')
+          })
         }))
         break
       default:
@@ -51,7 +52,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={shadow || borderRadius || borderWidth || border} />)}
+      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={paths[borderProps[0]]} />)}
       <div title={value} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}

@@ -1,8 +1,17 @@
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
+export default function buttonStyle_1_bitformDefault({ fk, type, direction, btnType = 'button' }) {
   return {
-    [`.${fk}-fld-wrp`]:
-      { height: '100%', width: '100%', 'background-color': 'white', overflow: 'auto', display: 'flex', 'flex-direction': 'column', 'align-items': 'start' },
+    [`.${fk}-fld-wrp`]: {
+      height: '100%',
+      width: '100%',
+      'background-color': 'white',
+      overflow: 'auto',
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'start',
+      ...btnType === 'submit' && { 'align-items': 'end' },
+    },
+
     [`.${fk}-fld-wrp.fld-hide::after`]: {
       position: 'absolute',
       top: 0,

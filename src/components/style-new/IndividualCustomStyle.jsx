@@ -42,32 +42,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const themeVars = useRecoilValue($themeVars)
   const { css } = useFela()
-  const [controller, setController] = useState('Default')
-
-  const options = [
-    { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
-    { label: 'Hover', icn: 'Hover', show: ['icn'], tip: 'Hover Style' },
-  ]
+  const [stateController, setStateController] = useState('')
 
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
+  const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {})
+  const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {}
+  const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
+
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
-  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state}->${cssProperty}`
-
-  const existingProps = (state = '') => {
-    const existingCssProperties = classes?.[`.${fldKey}-${elementKey}${state}`]
-    const existingProperties = Object.keys(existingCssProperties || {})
-    const addableCssProps = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existingProperties?.includes(x))
-    return [existingCssProperties, existingProperties, addableCssProps]
-  }
-
-  const [existingCssProperties, existingProperties, addableCssProps] = existingProps()
-  const [existingCssHoverProperties, existingHoverProperties, addableCssHoverProps] = existingProps(':hover')
+  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}->${cssProperty}`
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
 
@@ -110,16 +99,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
-  const setNewCssProp = (property, state = '') => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, getPropertyPath(property, state), '')
-    }))
-
-    addDynamicCssProps(property, state)
-  }
-
-  // new functio to add dynamic css props
-  const addDynamicCssProps = (property, state) => {
+  const addDynamicCssProps = (property, state = '') => {
     const configProperty = editorConfig[fieldType][elementKey].properties[property]
     if (typeof configProperty === 'object') {
       Object.keys(configProperty).map(prop => {
@@ -136,6 +116,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         assignNestedObj(drft, propPath, getValueByObjPath(styles, propPath))
       }))
     }
+  }
+
+  const setNewCssProp = (property, state = '') => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      assignNestedObj(drft, getPropertyPath(property, state), '')
+    }))
+    addDynamicCssProps(property, state)
   }
 
   const setAlign = (alignValue) => {
@@ -190,98 +177,650 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const propertyObjPath = (property, state = '') => (
-    {
+  const options = [
+    { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
+  ]
+  const { states } = editorConfig[fieldType][elementKey]
+  states?.map(state => {
+    const stateLabel = state ? `${state.slice(0, 1).toUpperCase()}${state.slice(1)}` : 'Default'
+    options.push({ label: stateLabel, icn: stateLabel, show: ['icn'], tip: `${stateLabel} Style` })
+  })
+
+  const setController = lblName => {
+    if (lblName === 'Default') setStateController('')
+    else setStateController(lblName)
+  }
+
+  const getCssPropertyMenu = (propName, state = '') => {
+    const objPaths = {
       object: 'styles',
-      paths: {
-        ...property === 'margin' && { margin: getPropertyPath('margin', state) },
-        ...property === 'padding' && { padding: getPropertyPath('padding', state) },
-      },
+      paths: {},
     }
-  )
 
-  // -- apply for temp test
-  const borderPropObj = editorConfig[fieldType][elementKey].properties.border
-  const fldBorderObjPath = {
-    object: 'styles',
-    borderObjName: 'styles',
-    paths: {
-      border: getPropertyPath('border'),
-      borderWidth: getPropertyPath('border-width'),
-      borderRadius: getPropertyPath('border-radius'),
-    },
-  }
-  const borderPropKeys = Object.keys(borderPropObj)
-  borderPropKeys.map(prop => {
-    fldBorderObjPath.paths[prop] = getPropertyPath(prop)
-  })
+    const configProperty = editorConfig[fieldType][elementKey].properties[propName]
+    if (typeof configProperty === 'object') {
+      Object.keys(configProperty).map(prop => {
+        objPaths.paths[prop] = getPropertyPath(prop, state)
+      })
+    } else {
+      objPaths.paths[propName] = getPropertyPath(propName, state)
+    }
+    switch (propName) {
+      case 'background':
+        return (
+          <BackgroundControl
+            title="Background"
+            subtitle="Background Color/Image"
+            value={existCssPropsObj?.['background-image']}
+            modalId="field-container-background"
+            stateObjName="styles"
+            objectPaths={objPaths}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('background', state)}
+            clearHandler={() => clearHandler('background', state)}
+            allowImportant
+          />
+        )
+      case 'border-image':
+        return (
+          <BorderImageControl
+            title="Border Image"
+            subtitle="Border Gradient Color/Image"
+            value={existCssPropsObj['border-image']}
+            modalId="field-border-image"
+            stateObjName="styles"
+            objectPaths={objPaths}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('border-image', state)}
+            clearHandler={() => clearHandler('border-image', state)}
+            allowImportant
+          />
+        )
+      case 'background-color':
+        return (
+          <SimpleColorPicker
+            title="Background Color"
+            subtitle="Background Color"
+            value={existCssPropsObj?.['background-color']}
+            modalId="field-container-backgroung"
+            stateObjName="styles"
+            propertyPath={objPaths.paths?.['background-color']}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('background-color', state)}
+            clearHandler={() => clearHandler('background-color', state)}
+            allowImportant
+          />
+        )
+      case 'color':
+        return (
+          <SimpleColorPicker
+            title="Color"
+            subtitle="Color"
+            value={existCssPropsObj?.color}
+            modalId="field-container-color"
+            stateObjName="styles"
+            propertyPath={objPaths.paths?.color}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('color', state)}
+            clearHandler={() => clearHandler('color', state)}
+            allowImportant
+          />
+        )
+      case 'border':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('border', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={[objPaths.paths?.border, objPaths.paths?.['border-width']]}
+              stateObjName="styles"
+            />
+            <BorderControl
+              allowImportant
+              subtitle="Field Container Border"
+              value={existCssPropsObj?.border}
+              objectPaths={objPaths}
+              id="fld-wrp-bdr"
+            />
+          </div>
+        )
+      case 'line-height':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('line-height', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Line-height', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.['line-height']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc)}>
+              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['line-height']} />
+              <SizeControl
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit, state)}
+                value={fldLineHeightVal || 0}
+                unit={fldLineHeightUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem']}
+                step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
+              />
+            </div>
+          </div>
+        )
+      case 'word-spacing':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('word-spacing', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Word-spacing', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.['word-spacing']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc)}>
+              <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['word-spacing']} />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'word-spacing', wordSpacingUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'word-spacing', wordSpacingUnit, state)}
+                value={wordSpacingVal || 0}
+                unit={wordSpacingUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem', '%']}
+                step={wordSpacingUnit !== 'px' ? '0.1' : 1}
+              />
+            </div>
+          </div>
+        )
+      case 'letter-spacing':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('letter-spacing', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Letter-spacing', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.['letter-spacing']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc)}>
+              <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['letter-spacing']} />
+              <SizeControl
+                min={0.1}
+                max={100}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'letter-spacing', letterSpacingUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'letter-spacing', letterSpacingUnit, state)}
+                value={letterSpacingVal || 0}
+                unit={letterSpacingUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem', '']}
+                step={letterSpacingUnit !== 'px' ? '0.1' : 1}
+              />
+            </div>
+          </div>
+        )
+      case 'margin':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('margin', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
+            </div>
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <SpacingControl
+                allowImportant
+                action={{ type: 'spacing-control' }}
+                subtitle="Margin control"
+                objectPaths={objPaths}
+                id="margin-control"
+              />
+            </div>
+          </div>
+        )
+      case 'padding':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('padding', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
+            </div>
+            <SpacingControl
+              allowImportant
+              action={{ type: 'spacing-control' }}
+              subtitle="Padding control"
+              objectPaths={objPaths}
+              id="padding-control"
+            />
+          </div>
+        )
+      case 'size':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => {
+                  delPropertyHandler('width', state)
+                  delPropertyHandler('height', state)
+                }}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Size', 'bitform')}</span>
+            </div>
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <SizeControler
+                action={{ type: 'size-control' }}
+                subtitle="Size control"
+                objectPaths={objPaths}
+                id="size-control"
+                width="128px"
+              />
+            </div>
+          </div>
+        )
+      case 'width':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => { delPropertyHandler('width', state) }}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Width', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.width}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.width} />
+              <SizeControl
+                width="128px"
+                value={Number(widthValue)}
+                unit={widthUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'width', widthUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'width', widthUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </div>
+        )
+      case 'height':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => { delPropertyHandler('height', state) }}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.height}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.height} />
+              <SizeControl
+                width="128px"
+                value={Number(heightValue)}
+                unit={heightUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </div>
+        )
+      case 'text-align':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('text-align', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Text align', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths?.['text-align']} stateObjName="styles" />
 
-  const fldBorderHoverObjPath = {
-    object: 'styles',
-    borderObjName: 'styles',
-    paths: {
-      border: getPropertyPath('border', ':hover'),
-      borderWidth: getPropertyPath('border-width', ':hover'),
-      borderRadius: getPropertyPath('border-radius', ':hover'),
-    },
-  }
-  borderPropKeys.map(prop => {
-    fldBorderHoverObjPath.paths[prop] = getPropertyPath(prop, ':hover')
-  })
-
-  const fldTxtDcrtnObjPath = {
-    object: 'styles',
-    txtObjName: 'styles',
-    paths: {
-      textDecorationLine: getPropertyPath('text-decoration-line'),
-      textDecorationStyle: getPropertyPath('text-decoration-style'),
-      textDecorationColor: getPropertyPath('text-decoration-color'),
-      textDecorationThickness: getPropertyPath('text-decoration-thickness'),
-    },
-  }
-
-  const fldSizeObjPath = {
-    object: 'styles',
-    sizeObjName: 'styles',
-    paths: {
-      width: getPropertyPath('width'),
-      height: getPropertyPath('height'),
-    },
-  }
-
-  const filterObjPath = {
-    object: 'styles',
-    sizeObjName: 'styles',
-    paths: { filter: getPropertyPath('filter') },
-  }
-
-  const fldBgObjPath = {
-    object: 'styles',
-    bgObjName: 'styles',
-    paths: {
-      'background-attachment': getPropertyPath('background-attachment'),
-      'background-blend-mode': getPropertyPath('background-blend-mode'),
-      'background-clip': getPropertyPath('background-clip'),
-      'background-color': getPropertyPath('background-color'),
-      'background-image': getPropertyPath('background-image'),
-      'background-origin': getPropertyPath('background-origin'),
-      'background-position': getPropertyPath('background-position'),
-      'background-repeat': getPropertyPath('background-repeat'),
-      'background-size': getPropertyPath('background-size'),
-      'backdrop-filter': getPropertyPath('backdrop-filter'),
-    },
-  }
-
-  const fldBrdrImgObjPath = {
-    object: 'styles',
-    bgObjName: 'styles',
-    paths: {
-      'border-image': getPropertyPath('border-image'),
-      'border-image-slice': getPropertyPath('border-image-slice'),
-      'border-image-width': getPropertyPath('border-image-width'),
-      'border-image-outset': getPropertyPath('border-image-outset'),
-      'border-image-repeat': getPropertyPath('border-image-repeat'),
-    },
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <StyleSegmentControl
+                className={css({ w: 130 })}
+                show={['icn']}
+                tipPlace="bottom"
+                options={[
+                  { icn: <TxtAlignLeftIcn size="17" />, label: 'left', tip: 'Left' },
+                  { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+                  { icn: <TxtAlignJustifyIcn size="17" />, label: 'justify', tip: 'Justify' },
+                  { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
+                ]}
+                onChange={e => setAlign(e)}
+                activeValue={txtAlignValue}
+              />
+            </div>
+          </div>
+        )
+      case 'text-decoration':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => {
+                  delPropertyHandler('text-decoration', state)
+                  delMultiPropertyHandler(Object.values(objPaths.paths))
+                }}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Text Decoration', 'bitform')}</span>
+            </div>
+            <ResetStyle
+              propertyPath={objPaths.paths?.['text-decoration-line']}
+              stateObjName="styles"
+            />
+            <TextDecorationControl
+              subtitle="text-decoration"
+              value={existCssPropsObj?.['text-decoration-line']}
+              objectPaths={objPaths}
+              id="fld-txt-dcrtn"
+            />
+          </div>
+        )
+      case 'text-shadow':
+        return (
+          <IndividualShadowControl
+            title="Text-shadow"
+            subtitle="text-shadow"
+            value={existCssPropsObj?.['text-shadow']}
+            defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
+            modalId="field-container-text-shadow"
+            stateObjName="styles"
+            propertyPath={objPaths.paths?.['text-shadow']}
+            propertyArray={['xOffset', 'yOffset', 'blur', 'color']}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('text-shadow', state)}
+            clearHandler={() => clearHandler('text-shadow', state)}
+            allowImportant
+            fldKey={fldKey}
+          />
+        )
+      case 'box-shadow':
+        return (
+          <IndividualShadowControl
+            title="Box-shadow"
+            subtitle="Box-shadow"
+            value={existCssPropsObj?.['box-shadow']}
+            modalId="field-container-box-shadow"
+            stateObjName="styles"
+            propertyPath={objPaths.paths['box-shadow']}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('box-shadow', state)}
+            clearHandler={() => clearHandler('box-shadow', state)}
+            allowImportant
+            fldKey={fldKey}
+          />
+        )
+      case 'transition':
+        return (
+          <TransitionControl
+            title="Transition"
+            subtitle="Transition"
+            value={existCssPropsObj?.transition}
+            modalId="field-container-transition"
+            stateObjName="styles"
+            propertyPath={objPaths.paths.transition}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('transition', state)}
+            clearHandler={() => clearHandler('transition', state)}
+            allowImportant
+          />
+        )
+      case 'filter':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('filter', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
+            </div>
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <FilterControler
+                action={{ type: 'filter-control' }}
+                subtitle="Filter control"
+                objectPaths={objPaths}
+                id="filter-control"
+                elementKey={elementKey}
+                fldKey={fldKey}
+              />
+            </div>
+          </div>
+        )
+      case 'font-size':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('font-size', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths['font-size']} stateObjName="styles" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important className={css({ mr: 2 })} propertyPath={objPaths.paths['font-size']} />
+              <SizeControl
+                className={css({ w: 130 })}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit, state)}
+                value={fldFSValue || 12}
+                unit={fldFSUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem']}
+                step={fldFSUnit !== 'px' ? '0.1' : 1}
+              />
+            </div>
+          </div>
+        )
+      case 'font-weight':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('font-weight', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths['font-weight']} stateObjName="styles" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important propertyPath={objPaths.paths['font-weight']} />
+              <SimpleDropdown
+                options={fontweightVariants}
+                value={String(existCssPropsObj?.['font-weight'])}
+                onChange={val => fontPropertyUpdateHandler('font-weight', val)}
+                w={130}
+                h={30}
+                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
+              />
+            </div>
+          </div>
+        )
+      case 'font-style':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('font-style', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths['font-style']} stateObjName="styles" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important propertyPath={objPaths.paths['font-style']} />
+              <SimpleDropdown
+                options={fontStyleVariants}
+                value={String(existCssPropsObj?.['font-style'])}
+                onChange={val => fontPropertyUpdateHandler('font-style', val)}
+                w={130}
+                h={30}
+                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
+              />
+            </div>
+          </div>
+        )
+      case 'opacity':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('opacity', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths.opacity} stateObjName="styles" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important className={css(cls.mr2)} propertyPath={objPaths.paths.opacity} />
+              <SizeControl
+                className={css({ w: 130 })}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'opacity', fldOpctyUnit, state)}
+                value={fldOpctyValue || 0}
+                unit={fldOpctyUnit}
+                min={0}
+                max={fldOpctyUnit === '' ? 1 : 100}
+                width="128px"
+                options={['', '%']}
+                step={fldOpctyUnit === '' ? 0.1 : 1}
+              />
+            </div>
+          </div>
+        )
+      case 'z-index':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('z-index', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Z-Index', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths['z-index']} stateObjName="styles" />
+            <Important propertyPath={objPaths.paths['z-index']} />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <div className={`${css(sizeControlStyle.container)}`}>
+                <CustomInputControl
+                  className={css(sizeControlStyle.input)}
+                  label=""
+                  value={fldZIndex || 0}
+                  min={0}
+                  max={100}
+                  step={1}
+                  width="130px"
+                  onChange={value => fldZIndexHandler(value)}
+                />
+              </div>
+            </div>
+          </div>
+        )
+      default:
+        break
+    }
   }
 
   return (
@@ -296,818 +835,31 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         onChange={lbl => setController(lbl)}
         show={['icn']}
         variant="lightgray"
-        activeValue={controller}
+        activeValue={stateController}
         width="100%"
         wideTab
       />
-      <Grow open={controller === 'Default'}>
+      <Grow open={stateController.toLowerCase() === ''}>
         <div className={css(cls.space)}>
           {
-            existingProperties.includes('background') && (
-              <BackgroundControl
-                title="Background"
-                subtitle="Background Color/Image"
-                value={existingCssProperties?.background}
-                modalId="field-container-background"
-                stateObjName="styles"
-                objectPaths={fldBgObjPath}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('background')}
-                clearHandler={() => clearHandler('background')}
-                allowImportant
-              />
-            )
+            existCssProps.map(propName => getCssPropertyMenu(propName))
           }
-          {
-            existingProperties.includes('border-image') && (
-              <BorderImageControl
-                title="Border Image"
-                subtitle="Border Gradient Color/Image"
-                value={existingCssProperties['border-image']}
-                modalId="field-border-image"
-                stateObjName="styles"
-                objectPaths={fldBrdrImgObjPath}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('border-image')}
-                clearHandler={() => clearHandler('border-image')}
-                allowImportant
-              />
-            )
-          }
-          {
-            existingProperties.includes('background-color') && (
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                value={existingCssProperties?.['background-color']}
-                modalId="field-container-backgroung"
-                stateObjName="styles"
-                propertyPath={getPropertyPath('background-color')}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('background-color')}
-                clearHandler={() => clearHandler('background-color')}
-                allowImportant
-              />
-            )
-          }
-          {
-            existingProperties.includes('color') && (
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                value={existingCssProperties?.color}
-                modalId="field-container-color"
-                stateObjName="styles"
-                propertyPath={getPropertyPath('color')}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('color')}
-                clearHandler={() => clearHandler('color')}
-                allowImportant
-              />
-            )
-          }
-          {existingProperties.includes('border') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('border')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
-                stateObjName="styles"
-              />
-              <BorderControl
-                allowImportant
-                subtitle="Field Container Border"
-                value={existingCssProperties?.border}
-                objectPaths={fldBorderObjPath}
-                id="fld-wrp-bdr"
-              />
-            </div>
-          )}
-          {existingProperties.includes('line-height') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('line-height')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Line-height', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={getPropertyPath('line-height')}
-                stateObjName="styles"
-              />
-              <div className={css(ut.flxc)}>
-                <Important className={css(cls.mr2)} propertyPath={getPropertyPath('line-height')} />
-                <SizeControl
-                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit)}
-                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit)}
-                  value={fldLineHeightVal || 0}
-                  unit={fldLineHeightUnit || 'px'}
-                  width="128px"
-                  options={['px', 'em', 'rem']}
-                  step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
-                />
-              </div>
-            </div>
-          )}
-          {existingProperties.includes('word-spacing') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('word-spacing')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Word-spacing', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={getPropertyPath('word-spacing')}
-                stateObjName="styles"
-              />
-              <div className={css(ut.flxc)}>
-                <Important className={css(ut.mr1)} propertyPath={getPropertyPath('word-spacing')} />
-                <SizeControl
-                  min={0.1}
-                  max={100}
-                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'word-spacing', wordSpacingUnit)}
-                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'word-spacing', wordSpacingUnit)}
-                  value={wordSpacingVal || 0}
-                  unit={wordSpacingUnit || 'px'}
-                  width="128px"
-                  options={['px', 'em', 'rem', '%']}
-                  step={wordSpacingUnit !== 'px' ? '0.1' : 1}
-                />
-              </div>
-            </div>
-          )}
-          {existingProperties.includes('letter-spacing') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('letter-spacing')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Letter-spacing', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={getPropertyPath('letter-spacing')}
-                stateObjName="styles"
-              />
-              <div className={css(ut.flxc)}>
-                <Important className={css(ut.mr1)} propertyPath={getPropertyPath('letter-spacing')} />
-                <SizeControl
-                  min={0.1}
-                  max={100}
-                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'letter-spacing', letterSpacingUnit)}
-                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'letter-spacing', letterSpacingUnit)}
-                  value={letterSpacingVal || 0}
-                  unit={letterSpacingUnit || 'px'}
-                  width="128px"
-                  options={['px', 'em', 'rem', '']}
-                  step={letterSpacingUnit !== 'px' ? '0.1' : 1}
-                />
-              </div>
-            </div>
-          )}
-          {
-            existingProperties.includes('margin') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('margin')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
-                </div>
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <SpacingControl
-                    allowImportant
-                    action={{ type: 'spacing-control' }}
-                    subtitle="Margin control"
-                    objectPaths={propertyObjPath('margin')}
-                    id="margin-control"
-                  />
-                </div>
-              </div>
-            )
-          }
-          {
-            existingProperties.includes('padding') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('padding')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
-                </div>
-                <SpacingControl
-                  allowImportant
-                  action={{ type: 'spacing-control' }}
-                  subtitle="Padding control"
-                  objectPaths={propertyObjPath('padding')}
-                  id="padding-control"
-                />
-              </div>
-            )
-          }
-          {
-            existingProperties.includes('size') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => {
-                      delPropertyHandler('width')
-                      delPropertyHandler('height')
-                    }}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Size', 'bitform')}</span>
-                </div>
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <SizeControler
-                    action={{ type: 'size-control' }}
-                    subtitle="Size control"
-                    objectPaths={fldSizeObjPath}
-                    id="size-control"
-                    width="128px"
-                  />
-                </div>
-              </div>
-            )
-          }
-          {
-            existingProperties.includes('width') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => { delPropertyHandler('width') }}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Width', 'bitform')}</span>
-                </div>
-                <ResetStyle
-                  propertyPath={getPropertyPath('width')}
-                  stateObjName="styles"
-                />
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('width')} />
-                  <SizeControl
-                    width="128px"
-                    value={Number(widthValue)}
-                    unit={widthUnit}
-                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'width', widthUnit)}
-                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'width', widthUnit)}
-                    options={['px', 'em', 'rem', '%']}
-                  />
-                </div>
-              </div>
-            )
-          }
-          {
-            existingProperties.includes('height') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => { delPropertyHandler('height') }}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
-                </div>
-                <ResetStyle
-                  propertyPath={getPropertyPath('height')}
-                  stateObjName="styles"
-                />
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('height')} />
-                  <SizeControl
-                    width="128px"
-                    value={Number(heightValue)}
-                    unit={heightUnit}
-                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit)}
-                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit)}
-                    options={['px', 'em', 'rem', '%']}
-                  />
-                </div>
-              </div>
-            )
-          }
-          {existingProperties.includes('text-align') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('text-align')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Text align', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('text-align')} stateObjName="styles" />
-
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <StyleSegmentControl
-                  className={css({ w: 130 })}
-                  show={['icn']}
-                  tipPlace="bottom"
-                  options={[
-                    { icn: <TxtAlignLeftIcn size="17" />, label: 'left', tip: 'Left' },
-                    { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
-                    { icn: <TxtAlignJustifyIcn size="17" />, label: 'justify', tip: 'Justify' },
-                    { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
-                  ]}
-                  onChange={e => setAlign(e)}
-                  activeValue={txtAlignValue}
-                />
-              </div>
-            </div>
-          )}
-
-          {existingProperties.includes('text-decoration') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => {
-                    delPropertyHandler('text-decoration')
-                    delMultiPropertyHandler(Object.values(fldTxtDcrtnObjPath.paths))
-                  }}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Text Decoration', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={getPropertyPath('text-decoration-line')}
-                stateObjName="styles"
-              />
-              <TextDecorationControl
-                subtitle="text-decoration"
-                value={existingCssProperties?.['text-decoration-line']}
-                objectPaths={fldTxtDcrtnObjPath}
-                id="fld-txt-dcrtn"
-              />
-            </div>
-          )}
-
-          {existingProperties.includes('text-shadow') && (
-            <IndividualShadowControl
-              title="Text-shadow"
-              subtitle="text-shadow"
-              value={existingCssProperties?.['text-shadow']}
-              defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
-              modalId="field-container-text-shadow"
-              stateObjName="styles"
-              propertyPath={getPropertyPath('text-shadow')}
-              propertyArray={['xOffset', 'yOffset', 'blur', 'color']}
-              deleteable
-              delPropertyHandler={() => delPropertyHandler('text-shadow')}
-              clearHandler={() => clearHandler('text-shadow')}
-              allowImportant
-              fldKey={fldKey}
-            />
-          )}
-
-          {existingProperties.includes('box-shadow') && (
-            <IndividualShadowControl
-              title="Box-shadow"
-              subtitle="Box-shadow"
-              value={existingCssProperties?.['box-shadow']}
-              modalId="field-container-box-shadow"
-              stateObjName="styles"
-              propertyPath={getPropertyPath('box-shadow')}
-              deleteable
-              delPropertyHandler={() => delPropertyHandler('box-shadow')}
-              clearHandler={() => clearHandler('box-shadow')}
-              allowImportant
-              fldKey={fldKey}
-            />
-          )}
-          {existingProperties.includes('transition') && (
-            <TransitionControl
-              title="Transition"
-              subtitle="Transition"
-              value={existingCssProperties?.transition}
-              modalId="field-container-transition"
-              stateObjName="styles"
-              propertyPath={getPropertyPath('transition')}
-              deleteable
-              delPropertyHandler={() => delPropertyHandler('transition')}
-              clearHandler={() => clearHandler('transition')}
-              allowImportant
-            />
-          )}
-          {
-            existingProperties.includes('filter') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('filter')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
-                </div>
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <FilterControler
-                    action={{ type: 'filter-control' }}
-                    subtitle="Filter control"
-                    objectPaths={filterObjPath}
-                    id="filter-control"
-                    elementKey={elementKey}
-                    fldKey={fldKey}
-                  />
-                </div>
-              </div>
-            )
-          }
-
-          {existingProperties.includes('font-size') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-size')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('font-size')} stateObjName="styles" />
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <Important className={css({ mr: 2 })} propertyPath={getPropertyPath('font-size')} />
-                <SizeControl
-                  className={css({ w: 130 })}
-                  inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit)}
-                  sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit)}
-                  value={fldFSValue || 12}
-                  unit={fldFSUnit || 'px'}
-                  width="128px"
-                  options={['px', 'em', 'rem']}
-                  step={fldFSUnit !== 'px' ? '0.1' : 1}
-                />
-              </div>
-            </div>
-          )}
-          {existingProperties.includes('font-weight') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-weight')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <Important propertyPath={getPropertyPath('font-weight')} />
-                <SimpleDropdown
-                  options={fontweightVariants}
-                  value={String(existingCssProperties?.['font-weight'])}
-                  onChange={val => fontPropertyUpdateHandler('font-weight', val)}
-                  w={130}
-                  h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssProperties?.['font-weight']))) ? cls.warningBorder : '')}
-                />
-              </div>
-            </div>
-          )}
-          {existingProperties.includes('font-style') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-style')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('font-style')} stateObjName="styles" />
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <Important propertyPath={getPropertyPath('font-style')} />
-                <SimpleDropdown
-                  options={fontStyleVariants}
-                  value={String(existingCssProperties?.['font-style'])}
-                  onChange={val => fontPropertyUpdateHandler('font-style', val)}
-                  w={130}
-                  h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssProperties['font-style'] && !styles.font.fontStyle.includes(existingCssProperties?.['font-style'])) ? cls.warningBorder : '')}
-                />
-              </div>
-            </div>
-          )}
-          {
-            existingProperties.includes('opacity') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('opacity')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
-                </div>
-                <ResetStyle propertyPath={getPropertyPath('opacity')} stateObjName="styles" />
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <Important className={css(cls.mr2)} propertyPath={getPropertyPath('opacity')} />
-                  <SizeControl
-                    className={css({ w: 130 })}
-                    inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit)}
-                    sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'opacity', fldOpctyUnit)}
-                    value={fldOpctyValue || 0}
-                    unit={fldOpctyUnit}
-                    min={0}
-                    max={fldOpctyUnit === '' ? 1 : 100}
-                    width="128px"
-                    options={['', '%']}
-                    step={fldOpctyUnit === '' ? 0.1 : 1}
-                  />
-                </div>
-              </div>
-            )
-          }
-
-          {
-            existingProperties.includes('z-index') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('z-index')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Z-Index', 'bitform')}</span>
-                </div>
-                <ResetStyle propertyPath={getPropertyPath('z-index')} stateObjName="styles" />
-                <Important propertyPath={getPropertyPath('z-index')} />
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <div className={`${css(sizeControlStyle.container)}`}>
-                    <CustomInputControl
-                      className={css(sizeControlStyle.input)}
-                      label=""
-                      value={fldZIndex || 0}
-                      min={0}
-                      max={100}
-                      step={1}
-                      width="130px"
-                      onChange={value => fldZIndexHandler(value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            )
-          }
-          <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
-        </div>
-
-      </Grow>
-      <Grow open={controller === 'Hover'}>
-        <div className={css(cls.space)}>
-          {
-            existingHoverProperties?.includes('background') && (
-              <SimpleColorPicker
-                title="Background"
-                subtitle="Background Color"
-                value={existingCssHoverProperties?.background}
-                modalId="field-container-backgroung"
-                stateObjName="styles"
-                propertyPath={getPropertyPath('background', ':hover')}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('background', ':hover')}
-                clearHandler={() => clearHandler('background', ':hover')}
-                allowImportant
-              />
-            )
-          }
-          {
-            existingHoverProperties?.includes('color') && (
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                value={existingCssHoverProperties?.color}
-                modalId="field-container-color"
-                stateObjName="styles"
-                propertyPath={getPropertyPath('color', ':hover')}
-                deleteable
-                delPropertyHandler={() => delPropertyHandler('color', ':hover')}
-                clearHandler={() => clearHandler('color', ':hover')}
-                allowImportant
-              />
-            )
-          }
-          {existingHoverProperties.includes('border') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('border', ':hover')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
-              </div>
-              <ResetStyle
-                propertyPath={[getPropertyPath('border', ':hover'), getPropertyPath('border-width', ':hover')]}
-                stateObjName="styles"
-              />
-              <BorderControl
-                allowImportant
-                subtitle="Field Container Border"
-                value={existingCssProperties?.border}
-                objectPaths={fldBorderHoverObjPath}
-                state=":hover"
-                id="fld-wrp-bdr"
-              />
-            </div>
-          )}
-          {
-            existingHoverProperties.includes('margin') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('margin', ':hover')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
-                </div>
-                <div className={css(ut.flxc, { cg: 3 })}>
-                  <SpacingControl
-                    allowImportant
-                    action={{ type: 'spacing-control' }}
-                    subtitle="Margin control"
-                    objectPaths={propertyObjPath('margin', ':hover')}
-                    id="margin-control"
-                  />
-                </div>
-              </div>
-            )
-          }
-          {
-            existingHoverProperties.includes('padding') && (
-              <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-                <div className={css(ut.flxc, ut.ml1)}>
-                  <button
-                    title="Delete Property"
-                    onClick={() => delPropertyHandler('padding', ':hover')}
-                    className={`${css(cls.delBtn)} delete-btn`}
-                    type="button"
-                  >
-                    <TrashIcn size="14" />
-                  </button>
-                  <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
-                </div>
-                <SpacingControl
-                  allowImportant
-                  action={{ type: 'spacing-control' }}
-                  subtitle="Padding control"
-                  objectPaths={propertyObjPath('padding', ':hover')}
-                  id="padding-control"
-                />
-              </div>
-            )
-          }
-          {existingHoverProperties.includes('box-shadow') && (
-            <IndividualShadowControl
-              title="Box-shadow"
-              subtitle="Box-shadow"
-              value={existingCssHoverProperties?.['box-shadow']}
-              modalId="field-container-box-shadow"
-              stateObjName="styles"
-              propertyPath={getPropertyPath('box-shadow')}
-              deleteable
-              delPropertyHandler={() => delPropertyHandler('box-shadow', ':hover')}
-              clearHandler={() => clearHandler('box-shadow', ':hover')}
-              allowImportant
-              fldKey={fldKey}
-            />
-          )}
-          {existingHoverProperties.includes('font-weight') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-weight', ':hover')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('font-weight')} stateObjName="styles" />
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <SimpleDropdown
-                  options={fontweightVariants}
-                  value={String(existingCssHoverProperties?.['font-weight'])}
-                  onChange={val => fontPropertyUpdateHandler('font-weight', val, ':hover')}
-                  w={130}
-                  h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssHoverProperties['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existingCssHoverProperties?.['font-weight']))) || cls.warningBorder)}
-                />
-              </div>
-            </div>
-          )}
-          {existingHoverProperties.includes('font-style') && (
-            <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-              <div className={css(ut.flxc, ut.ml1)}>
-                <button
-                  title="Delete Property"
-                  onClick={() => delPropertyHandler('font-style', ':hover')}
-                  className={`${css(cls.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn size="14" />
-                </button>
-                <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
-              </div>
-              <ResetStyle propertyPath={getPropertyPath('font-style', ':hover')} stateObjName="styles" />
-
-              <div className={css(ut.flxc, { cg: 3 })}>
-                <SimpleDropdown
-                  options={fontStyleVariants}
-                  value={String(existingCssHoverProperties?.['font-style'])}
-                  onChange={val => fontPropertyUpdateHandler('font-style', val, ':hover')}
-                  w={130}
-                  h={30}
-                  cls={css((styles.font.fontType === 'Google' && existingCssHoverProperties['font-style'] && !styles.font.fontStyle.includes(existingCssHoverProperties?.['font-style'])) || cls.warningBorder)}
-                />
-              </div>
-            </div>
-          )}
-          <CssPropertyList
-            properties={addableCssHoverProps}
-            setProperty={(prop) => setNewCssProp(prop, ':hover')}
-          />
+          {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} /> }
         </div>
       </Grow>
+      {
+        states.map((state, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Grow key={`grow-${i}`} open={stateController.toLowerCase() === state}>
+            <div className={css(cls.space)}>
+              {
+                existCssProps.map(propName => getCssPropertyMenu(propName, state))
+              }
+              {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} /> }
+            </div>
+          </Grow>
+        ))
+      }
     </>
   )
 }

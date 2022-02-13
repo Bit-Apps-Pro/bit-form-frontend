@@ -14,17 +14,16 @@ import SpaceControl from './SpaceControl'
 
 export default function BorderControlMenu({ objectPaths, state = '' }) {
   const { css } = useFela()
-  // -- apply for temp test
+
   const { fieldKey, element } = useParams()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
 
-  const { object, borderObjName, paths } = objectPaths
+  const { object, paths } = objectPaths
 
   const stateObj = getObjByKey(object, { themeVars, styles })
 
-  // -- apply for temp test
   const fldStyleObj = styles?.fields?.[fieldKey]
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { fieldType } = fldStyleObj
@@ -32,9 +31,9 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
   const borderPropObj = editorConfig[fieldType][elementKey].properties.border
   const borderPropKeys = Object.keys(borderPropObj)
   const border = getValueByObjPath(stateObj, paths[borderPropKeys[0]])
-  const borderColor = getValueByObjPath(stateObj, paths[borderPropKeys[1]])
-  const borderWidth = getValueByObjPath(stateObj, paths.borderWidth)
-  const borderRadius = getValueByObjPath(stateObj, paths?.borderRadius)
+  const borderColor = getValueByObjPath(stateObj, paths['border-color'])
+  const borderWidth = getValueByObjPath(stateObj, paths['border-width'])
+  const borderRadius = getValueByObjPath(stateObj, paths['border-radius'])
 
   const onSizeChange = (pathName, val) => {
     setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
@@ -66,21 +65,21 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
           />
         </div>
       )}
-      {borderPropObj[borderPropKeys[1]] && (
+      {borderPropObj['border-color'] && (
         <div className={css(ut.flxcb, ut.mb2)}>
           <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
           <SimpleColorPickerTooltip
-            action={{ onChange: val => onSizeChange(paths[borderPropKeys[1]], val) }}
+            action={{ onChange: val => onSizeChange(paths['border-color'], val) }}
             value={borderColor}
           />
         </div>
       )}
 
-      {paths.borderWidth && (
+      {borderPropObj['border-width'] && (
         <SpaceControl
           value={borderWidth}
           className={css(ut.mb2)}
-          onChange={val => onSizeChange(paths.borderWidth, val)}
+          onChange={val => onSizeChange(paths['border-width'], val)}
           title="Width"
           unitOption={['px', 'em', 'rem']}
           min="0"
@@ -89,11 +88,11 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
         />
       )}
 
-      {paths.borderRadius && (
+      {borderPropObj['border-radius'] && (
         <SpaceControl
           value={borderRadius}
           className={css(ut.mb2)}
-          onChange={val => onSizeChange(paths.borderRadius, val)}
+          onChange={val => onSizeChange(paths['border-radius'], val)}
           title="Radius"
           unitOption={['px', 'em', 'rem', '%']}
           min="0"

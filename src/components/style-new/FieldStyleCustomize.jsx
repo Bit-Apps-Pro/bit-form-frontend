@@ -18,7 +18,6 @@ import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
-import IndividualInputFldCustomStyle from './IndividualInputFldCustomStyle'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -164,13 +163,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
 
-          {element !== 'quick-tweaks' && element !== 'fld' && renderIndividualCustomStyleComp()}
+          {element !== 'quick-tweaks' && renderIndividualCustomStyleComp()}
 
-          {element === 'fld' && (
-            <div className={css(!checkExistElement(element) && cls.blur)}>
-              <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />
-            </div>
-          )}
           {element === 'bg-img' && (
             <h2>background image</h2>
             // <div className={css(!checkExistElement(element) && cls.blur)}>

@@ -1,8 +1,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
@@ -13,34 +14,35 @@ import { getObjByKey, getValueByObjPath, showDraggableModal } from './styleHelpe
 
 export default function TextDecorationControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
-
+  const setThemeColors = useSetRecoilState($themeColors)
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
 
   const stateObj = getObjByKey(objectPaths.object, { themeVars, styles })
+  const { paths } = objectPaths
 
-  const { textDecorationLine, textDecorationStyle, textDecorationColor, textDecorationThickness } = objectPaths.paths
-
-  const txtDcrtnValue = `${getValueByObjPath(stateObj, textDecorationLine)} ${getValueByObjPath(stateObj, textDecorationStyle)} ${getValueByObjPath(stateObj, textDecorationThickness)}`
+  const txtDcrtnValue = `${getValueByObjPath(stateObj, paths['text-decoration-line'])} ${getValueByObjPath(stateObj, paths['text-decoration-style'])} ${getValueByObjPath(stateObj, paths['text-decoration-thickness'])}`
 
   const clearValue = () => {
-    switch (objectPaths.txtObjName) {
+    switch (objectPaths.object) {
+      case 'themeColors':
       case 'themeVars':
         setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          assignNestedObj(drft, textDecorationLine, '')
-          assignNestedObj(drft, textDecorationStyle, '')
-          assignNestedObj(drft, textDecorationColor, '')
-          assignNestedObj(drft, textDecorationThickness, '')
+          assignNestedObj(drft, paths['text-decoration-line'], '')
+          assignNestedObj(drft, paths['text-decoration-style'], '')
+          assignNestedObj(drft, paths['text-decoration-thickness'], '')
+        }))
+        setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
+          assignNestedObj(drft, paths['text-decoration-color'], '')
         }))
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drft => {
-          assignNestedObj(drft, textDecorationLine, '')
-          assignNestedObj(drft, textDecorationStyle, '')
-          assignNestedObj(drft, textDecorationColor, '')
-          assignNestedObj(drft, textDecorationThickness, '')
+          Object.keys(paths).map(propPathKey => {
+            assignNestedObj(drft, paths[propPathKey], '')
+          })
         }))
         break
       default:
@@ -50,14 +52,14 @@ export default function TextDecorationControl({ subtitle, value, objectPaths, id
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={textDecorationLine} />)}
-      <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
+      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={paths['text-decoration-line']} />)}
+      <div title={txtDcrtnValue} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'text-decoration', subtitle, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
         >
-          <ColorPreview bg={getValueByObjPath(stateObj, textDecorationColor)?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
+          <ColorPreview bg={getValueByObjPath(stateObj, paths['text-decoration-color'])?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{txtDcrtnValue || 'Add Text Decoration Style'}</span>
         </button>
         {txtDcrtnValue && (
