@@ -319,7 +319,7 @@ export function arrDiff(arr1, arr2) {
     .concat(arr2.filter(x => !arr1.includes(x)))
 }
 
-export const addableCssPropsByField = (fieldType, elementKey = 'fld') => {
+export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
   switch (fieldType) {
     case 'text':
     case 'date':
