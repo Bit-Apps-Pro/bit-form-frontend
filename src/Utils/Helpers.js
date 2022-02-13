@@ -341,6 +341,22 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'img'
       elementKey = 'img'
       break
+    case 'check-wrapper':
+      classKey = 'cw'
+      elementKey = 'cw'
+      break
+    case 'check-container':
+      classKey = 'cc'
+      elementKey = 'cc'
+      break
+    case 'option-label':
+      classKey = 'cl'
+      elementKey = 'cl'
+      break
+    case 'check-box':
+      classKey = 'ck'
+      elementKey = 'ck'
+      break
     default:
       elementKey = element
       classKey = element

@@ -6,6 +6,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -34,12 +35,15 @@ function RadioCheckSettings() {
   const fieldName = fieldData.fieldName || fldKey
   const isRound = fieldData.round || false
   const isRadioRequired = fieldData.valid.req || false
+  const optionCol = fieldData?.optionCol === undefined ? '' : fieldData?.optionCol
+
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setStyles = useSetRecoilState($styles)
 
   let fieldObject = null
   let disabled = false
@@ -244,6 +248,40 @@ function RadioCheckSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
   }
 
+  function setColumn({ target: { value } }) {
+    if (value > options.length) return
+    if (value === '') {
+      delete fieldData.optionCol
+    } else {
+      fieldData.optionCol = value
+    }
+    const req = value ? 'Add' : 'Remove'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    let colStr = ''
+    for (let colindx = 0; colindx < value; colindx += 1) {
+      colStr += 'auto '
+    }
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const gridObj = {
+        display: 'grid',
+        'grid-template-columns': colStr,
+        width: '100%',
+        'grid-row-gap': '10px',
+        'column-gap': '10px',
+      }
+
+      const flxObj = {
+        display: 'flex',
+        'flex-wrap': 'wrap',
+        'margin-top': '8px',
+      }
+
+      drft.fields[fldKey].classes[`.${fldKey}-cc`] = value === '' ? flxObj : gridObj
+    }))
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
   return (
     <div className="">
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ === 'check' ? 'Check Box' : 'Radio'} fieldKey={fldKey} />
@@ -307,6 +345,16 @@ function RadioCheckSettings() {
         <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} />
       </div>
 
+      <hr className={css(FieldStyle.divider)} />
+      <SimpleAccordion
+        title={__('Options Column', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input aria-label="Option Column" className={css(FieldStyle.input)} type="number" value={optionCol} onChange={setColumn} />
+        </div>
+      </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
 
       {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
