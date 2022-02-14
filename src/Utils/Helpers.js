@@ -345,13 +345,17 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'cw'
       elementKey = 'cw'
       break
+    case 'option-wrapper':
+      classKey = 'cl'
+      elementKey = 'cl'
+      break
     case 'check-container':
       classKey = 'cc'
       elementKey = 'cc'
       break
     case 'option-label':
-      classKey = 'cl'
-      elementKey = 'cl'
+      classKey = 'ct'
+      elementKey = 'ct'
       break
     case 'check-box':
       classKey = 'ck'

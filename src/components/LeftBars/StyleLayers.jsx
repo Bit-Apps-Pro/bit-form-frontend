@@ -88,6 +88,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-wrapper"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option-label"
                     label="Option Label"
                     offset="2.5"
