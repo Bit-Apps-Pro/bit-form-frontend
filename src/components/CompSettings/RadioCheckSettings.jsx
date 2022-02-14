@@ -352,7 +352,7 @@ function RadioCheckSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Option Column" className={css(FieldStyle.input)} type="number" value={optionCol} onChange={setColumn} />
+          <input aria-label="Option Column" className={css(FieldStyle.input)} min="1" type="number" value={optionCol} onChange={setColumn} />
         </div>
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />

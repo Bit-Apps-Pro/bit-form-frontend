@@ -82,7 +82,7 @@ export default function SizeControlMenu({ objectPaths }) {
 
   return (
     <>
-      <div className={css(ut.flxcb, ut.mb2)}>
+      <div className={css(ut.flxcb, ut.mb2, { pt: 2 })}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Width</span>
         <SizeControl
           stateObjName={objectPaths.object}

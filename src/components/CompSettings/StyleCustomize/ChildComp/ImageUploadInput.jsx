@@ -6,6 +6,8 @@ import imageUploadInputStyle from '../../../../styles/imageUploadInput.style'
 export default function ImageUploadInput({ title, imageSrc, value, clickAction, setValue, clearAction }) {
   const { css } = useFela()
 
+  const placeholderImgUrl = 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='
+
   const resetValue = () => {
     setValue('')
   }
@@ -25,7 +27,6 @@ export default function ImageUploadInput({ title, imageSrc, value, clickAction, 
   //             )}
 
   //           </div>
-
   return (
     <div className={css(ut.flxcb)}>
       <span className={css(imageUploadInputStyle.title)}>{title}</span>
@@ -33,12 +34,14 @@ export default function ImageUploadInput({ title, imageSrc, value, clickAction, 
         <span
           className={css(imageUploadInputStyle.imagebox)}
         >
-          <img src={imageSrc} alt="" className={css(imageUploadInputStyle.image)} />
+          <img src={imageSrc || placeholderImgUrl} alt="" className={css(imageUploadInputStyle.image)} />
         </span>
-        <input className={css(imageUploadInputStyle.input)} value={value} type="text" readOnly placeholder="ex: Image.png" />
-        <button type="button" className={css(imageUploadInputStyle.button)} onClick={clearAction}>
-          <CloseIcn size={10} />
-        </button>
+        <input aria-label="Background image upload" className={css(imageUploadInputStyle.input)} value={value} type="text" readOnly placeholder="ex: Image.png" />
+        {imageSrc && (
+          <button type="button" className={css(imageUploadInputStyle.button)} onClick={clearAction}>
+            <CloseIcn size={10} />
+          </button>
+        )}
       </div>
     </div>
   )

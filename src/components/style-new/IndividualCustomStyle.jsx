@@ -822,7 +822,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         break
     }
   }
-
   return (
     <>
       <StyleSegmentControl
@@ -844,7 +843,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           {
             existCssProps.map(propName => getCssPropertyMenu(propName))
           }
-          {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} /> }
+          {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
         </div>
       </Grow>
       {
@@ -855,7 +854,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               {
                 existCssProps.map(propName => getCssPropertyMenu(propName, state))
               }
-              {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} /> }
+              {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}
             </div>
           </Grow>
         ))
