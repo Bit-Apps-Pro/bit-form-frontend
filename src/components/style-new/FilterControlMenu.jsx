@@ -80,11 +80,11 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
   }
 
   let filterValues = getValueByObjPath(styles, paths?.filter)
-  filterValues = filterValues.replace('none', '')
-  const filterNames = filterValues.trim() ? filterValues.trim().split(/\B\s+(?![^(]*\))/gi) : []
-  const filtersObjects = filterNames.map(filter => {
-    const name = filter.slice(0, filter.indexOf('('))
-    let value = filter.slice(filter.indexOf('(') + 1, filter.indexOf(')')).trim()
+  filterValues = filterValues?.replace('none', '')
+  const filterNames = filterValues?.trim() ? filterValues?.trim()?.split(/\B\s+(?![^(]*\))/gi) : []
+  const filtersObjects = filterNames?.map(filter => {
+    const name = filter?.slice(0, filter?.indexOf('('))
+    let value = filter?.slice(filter.indexOf('(') + 1, filter.indexOf(')'))?.trim()
     const unit = getStrFromStr(value) || ''
     if (value.indexOf(' ') < 0) value = getNumFromStr(value)
     const filterObject = getDfltFilterObject(name)

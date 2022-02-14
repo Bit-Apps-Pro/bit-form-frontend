@@ -12,12 +12,12 @@ export default function Important({ propertyPath, className }) {
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
   const isAlreadyImportant = styleValue?.match(/!important/gi)
-  const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue.match(/var/gi)
+  const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue?.match(/var/gi)
   const addOrRemoveImportant = () => {
     let newStyleValue
 
     if (isAlreadyImportant) {
-      newStyleValue = styleValue.replace(/!important/gi, '')
+      newStyleValue = styleValue?.replace(/!important/gi, '')
     } else {
       newStyleValue = `${styleValue} !important`
     }
