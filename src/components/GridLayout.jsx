@@ -19,7 +19,7 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitLayoutItems, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -63,16 +63,25 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
-  const { reRenderGridLayoutByRootLay, reCalculateFieldHeights } = builderHookStates
+  const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
+  const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode } = flags
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
-    const nl = fitLayoutItems(layouts)
+    const nl = fitAllLayoutItems(layouts)
     setLayouts(nl)
     setRootLayouts(nl)
   }, [styleMode, reCalculateFieldHeights])
+
+  useEffect(() => {
+    if (fieldKey) {
+      const nl = fitSpecificLayoutItem(layouts, fieldKey)
+      setLayouts(nl)
+      setRootLayouts(nl)
+    }
+  }, [fieldChangeCounter])
 
   useEffect(() => { margeNewData() }, [newData, fields])
   useEffect(() => {

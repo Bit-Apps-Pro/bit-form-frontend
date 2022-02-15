@@ -3,7 +3,6 @@
 import produce from 'immer'
 import { selectInGrid } from './globalHelpers'
 import { deepCopy } from './Helpers'
-import { __ } from './i18nwrap'
 
 /**
  * sort a layout array by x and y axis
@@ -391,11 +390,22 @@ const getElementTotalHeight = (elm) => {
   return 0
 }
 
-export const fitLayoutItems = (lays) => produce(lays, draftLayout => {
+export const fitAllLayoutItems = (lays) => produce(lays, draftLayout => {
   draftLayout.lg.map(fld => {
     const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fld-wrp`))
     if (height) {
       fld.h = Math.round(height / 2)
+    }
+  })
+})
+
+export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayout => {
+  draftLayout.lg.map(fld => {
+    if (fld.i === fieldKey) {
+      const height = getElementTotalHeight(selectInGrid(`.${fieldKey}-fld-wrp`))
+      if (height) {
+        fld.h = Math.round(height / 2)
+      }
     }
   })
 })
