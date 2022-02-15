@@ -9,8 +9,8 @@ function Divider({ fieldKey, styleClasses, formID, attr: fieldData }) {
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div className={`${fieldKey}-fld-wrp drag ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
-        <div className={`${fieldKey}-divider`} />
+      <div data-dev-fld-wrp={fieldKey} className={`${fieldKey}-fld-wrp drag ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
+        <div data-dev-divider={fieldKey} className={`${fieldKey}-divider`} />
       </div>
     </>
   )

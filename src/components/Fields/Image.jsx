@@ -13,8 +13,8 @@ function Image({ fieldKey, attr: fieldData, styleClasses }) {
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div ref={setWrap} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
-        <img className={`${fieldKey}-img`} src={fieldData?.bg_img || `https://via.placeholder.com/${width}x${height}`} width="100%" height="100%" alt="bg" />
+      <div data-dev-fld-wrp={fieldKey} ref={setWrap} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
+        <img data-dev-img={fieldKey} className={`${fieldKey}-img`} src={fieldData?.bg_img || `https://via.placeholder.com/${width}x${height}`} alt="bg" />
       </div>
     </>
   )

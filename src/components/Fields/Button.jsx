@@ -11,16 +11,17 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
+      <div data-dev-fld-wrp={fieldKey} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
         <button
+          data-dev-btn={fieldKey}
           className={`${fieldKey}-btn`}
           // eslint-disable-next-line react/button-has-type
           type={fieldData.btnTyp}
           {...fieldData.btnTyp === 'reset' && { onClick: handleReset }}
         >
-          {fieldData.btnPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-btn-pre-i`} src={fieldData.btnPreIcn} alt="" />}
+          {fieldData.btnPreIcn && <img data-dev-btn-pre-i={fieldKey} className={`${fieldKey}-btn-pre-i`} src={fieldData.btnPreIcn} alt="" />}
           {renderDOMObjectFromHTMLStr(fieldData.txt || '')}
-          {fieldData.btnSufIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-btn-suf-i`} src={fieldData.btnSufIcn} alt="" />}
+          {fieldData.btnSufIcn && <img data-dev-btn-suf-i={fieldKey} className={`${fieldKey}-btn-suf-i`} src={fieldData.btnSufIcn} alt="" />}
         </button>
         {
           (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (

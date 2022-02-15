@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import CopyIcn from '../../Icons/CopyIcn'
@@ -63,6 +63,7 @@ const style = {
     cur: 'pointer',
     tn: 'color 0.2s',
     cr: 'var(--white-0-61)',
+    flx: 'center-between',
     '&:hover': { cr: 'var(--b-50)' },
   },
 }

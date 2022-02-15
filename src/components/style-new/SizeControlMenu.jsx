@@ -6,8 +6,8 @@ import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
+import SizeAspectRatioControl from '../CompSettings/StyleCustomize/ChildComp/SizeAspectRatioControl'
+import { getNumFromStr, getValueByObjPath } from './styleHelpers'
 
 export default function SizeControlMenu({ objectPaths }) {
   const { css } = useFela()
@@ -16,6 +16,14 @@ export default function SizeControlMenu({ objectPaths }) {
   const tempStyles = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
+
+  const sizeRatioHandler = (value, unit, inputId) => {
+    if (inputId === 0) {
+      inputHandler({ value, unit }, paths?.width)
+    } else {
+      inputHandler({ value, unit }, paths?.height)
+    }
+  }
 
   const sizeHandler = (val, propertyPath) => {
     const tempValue = getNumFromStr(val.unitValue)
@@ -82,7 +90,7 @@ export default function SizeControlMenu({ objectPaths }) {
 
   return (
     <>
-      <div className={css(ut.flxcb, ut.mb2, { pt: 2 })}>
+      {/* <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Width</span>
         <SizeControl
           stateObjName={objectPaths.object}
@@ -110,7 +118,13 @@ export default function SizeControlMenu({ objectPaths }) {
           sizeHandler={val => sizeHandler(val, paths?.height)}
           inputHandler={val => inputHandler(val, paths?.height)}
         />
-      </div>
+      </div> */}
+      <SizeAspectRatioControl
+        className={css(ut.ml6, ut.mb2)}
+        options={[{ label: 'W', value: widthValue }, { label: 'H', value: heightValue }]}
+        unitOptions={['px', '%']}
+        valuChangeHandler={sizeRatioHandler}
+      />
     </>
   )
 }
