@@ -43,6 +43,7 @@ const fieldWrpCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
+  'background-color': '',
   border: {
     border: true,
     'border-color': true,
@@ -251,6 +252,13 @@ const editorConfig = {
     logo: {
       states: ['hover'],
       properties: { ...iconCssProps },
+    },
+    'titl-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        width: '',
+      },
     },
     title: {
       states: ['hover'],

@@ -6,7 +6,7 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
       'justify-content': 'center',
       height: '100%',
       width: '100%',
-      padding: '20px 0px',
+      padding: '10px 0px',
       'align-items': 'center',
     },
     [`.${fk}-fld-wrp.fld-hide::after`]: {
@@ -24,7 +24,7 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
       border: '',
       'border-bottom': 'solid',
       'border-width': '1',
-      'border-color': 'var(--global-accent-color)',
+      'border-color': '#9f9f9f',
     },
   }
 }

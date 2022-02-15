@@ -92,11 +92,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const [fldOpctyValue, fldOpctyUnit] = getStyleValueAndUnit('opacity')
-  const [widthValue, widthUnit] = getStyleValueAndUnit('width')
-  const [heightValue, heightUnit] = getStyleValueAndUnit('height')
-  const [fldZIndex] = getStyleValueAndUnit('z-index')
-  const [fldFSValue, fldFSUnit] = getStyleValueAndUnit('font-size')
+  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(existCssPropsObj?.opacity)]
+  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(existCssPropsObj?.width)]
+  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(existCssPropsObj?.height)]
+  const [fldZIndex] = [getNumFromStr(existCssPropsObj?.['z-index'])]
+  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(existCssPropsObj?.['font-size'])]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {
@@ -198,8 +198,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }
 
     const configProperty = editorConfig[fieldType][elementKey].properties[propName]
+    let propertyKeys = [propName]
     if (typeof configProperty === 'object') {
-      Object.keys(configProperty).map(prop => {
+      propertyKeys = Object.keys(configProperty)
+      propertyKeys.map(prop => {
         objPaths.paths[prop] = getPropertyPath(prop, state)
       })
     } else {
@@ -281,13 +283,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
             </div>
             <ResetStyle
-              propertyPath={[objPaths.paths?.border, objPaths.paths?.['border-width']]}
+              propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-color'], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
               stateObjName="styles"
             />
             <BorderControl
               allowImportant
               subtitle="Field Container Border"
-              value={existCssPropsObj?.border}
+              value={`${existCssPropsObj?.[propertyKeys[0]]} ${existCssPropsObj?.['border-color']} ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />
