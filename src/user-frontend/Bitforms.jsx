@@ -2,6 +2,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { resetCaptcha } from '../components/Fields/Recaptcha'
 import MapComponents from '../components/MapComponents'
+import { loadScript } from '../Utils/globalHelpers'
 import { deepCopy } from '../Utils/Helpers'
 import { checkLogic, replaceWithField } from './checkLogic'
 import validateForm from './validation'
@@ -16,6 +17,13 @@ export default function Bitforms(props) {
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
+
+  useEffect(() => {
+    if (!props.editMode && props.gRecaptchaVersion === 'v3' && props.gRecaptchaSiteKey) {
+      loadScript(`https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`, 'g-recaptcha-script')
+    }
+  }, [])
+
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape

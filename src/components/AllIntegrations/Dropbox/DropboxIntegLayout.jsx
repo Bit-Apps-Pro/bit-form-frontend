@@ -1,5 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap'
-// import DropboxActions from './DropboxActions'
+import DropboxActions from './DropboxActions'
 import { getAllDropboxFolders } from './DropboxCommonFunc'
 import DropboxFieldMap from './DropboxFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
@@ -32,12 +32,12 @@ export default function DropboxIntegLayout({ formID, formFields, dropboxConf, se
       </div>
       <br />
       <br />
-      {/* <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <DropboxActions
         dropboxConf={dropboxConf}
         setDropboxConf={setDropboxConf}
-      /> */}
+      />
     </>
   )
 }
