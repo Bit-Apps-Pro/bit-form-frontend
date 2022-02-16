@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -6,7 +5,6 @@ import { select } from '../../Utils/globalHelpers'
 import buttonStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import dividerStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
-// eslint-disable-next-line camelcase
 import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
