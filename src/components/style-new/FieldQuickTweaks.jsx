@@ -24,7 +24,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const { fieldType, classes, theme } = fldStyleObj
+  const { fieldType, classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
@@ -89,6 +89,30 @@ export default function FieldQuickTweaks({ fieldKey }) {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
   }
+
+  const fldTypWiseAccentColorObjName = () => {
+    let objName = ''
+    let objPath = ''
+    switch (fieldType) {
+      case 'text':
+        objName = 'field-accent-color'
+        objPath = '--global-accent-color'
+        break
+      case 'check':
+        objName = 'styles'
+        objPath = [
+          `fields->${fieldKey}->classes->.${fieldKey}-ci:checked ~ .${fieldKey}-cl .${fieldKey}-bx->border-color`,
+          `fields->${fieldKey}->classes->.${fieldKey}-ci:checked ~ .${fieldKey}-cl .${fieldKey}-bx->background`,
+        ]
+        break
+      default:
+        break
+    }
+    return [objName, objPath]
+  }
+  console.log(styles.fields[fieldKey])
+  const [objName, objPath] = fldTypWiseAccentColorObjName()
+  console.log(fldTypWiseAccentColorObjName(), objPath)
   return (
     <>
       {fieldType !== 'title' && (
@@ -97,10 +121,11 @@ export default function FieldQuickTweaks({ fieldKey }) {
             title="Accent Color"
             subtitle="Accent Color"
             value={accentColor}
-            stateObjName="field-accent-color"
-            propertyPath="--global-accent-color"
+            stateObjName={objName}
+            propertyPath={objPath}
             modalId="global-primary-clr"
             fldKey={fieldKey}
+          // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
           />
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>
