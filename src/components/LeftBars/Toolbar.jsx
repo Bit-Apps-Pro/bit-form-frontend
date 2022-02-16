@@ -175,6 +175,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ],
         valid: {},
         err: {},
+        optionCol: 1
       },
     },
     {
@@ -193,6 +194,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ],
         valid: {},
         err: {},
+        optionCol: 1
       },
     },
     {

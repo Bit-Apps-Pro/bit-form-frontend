@@ -15,14 +15,14 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
     },
     // checkbox container
     [`.${fk}-cc`]: {
-      display: 'flex',
-      'flex-wrap': 'wrap',
-      'margin-top': '8px',
-      // display: 'grid',
-      // 'grid-template-columns': 'auto auto auto',
-      // width: '50%',
-      // 'grid-row-gap': '10px',
-      // 'column-gap': '10px',
+      // display: 'flex',
+      // 'flex-wrap': 'wrap',
+      // 'margin-top': '8px',
+      display: 'grid',
+      'grid-template-columns': 'auto',
+      width: '50%',
+      'grid-row-gap': '10px',
+      'column-gap': '10px',
     },
     // checkbox wrapper
     [`.${fk}-cw`]: {
