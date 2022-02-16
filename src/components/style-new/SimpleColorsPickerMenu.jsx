@@ -68,19 +68,24 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
 
       case 'styles':
-        const styleColor = getValueByObjPath(styles, propertyPath)
-        // let c = styleColor
-        // if (styleColor.match(/var/gi)?.[0 === 'var']) {
-        //   const varClr = styleColor.replaceAll(/\(|var|,.*|\)/gi, '')
-        //   c = themeVars[varClr] ? themeVars[varClr] : $themeColors[varClr]
-        // }
-        // setColor(str2Color(c))
+        const pathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
+        console.log(pathArr)
+        const styleColor = getValueByObjPath(styles, pathArr)
+        let c = styleColor
+        if (styleColor?.match(/var/gi)?.[0] === 'var') {
+          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)/gi, '')
+          c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
+          console.log('c', c)
+        }
+        console.log('c', c)
+        setColor(str2Color(c))
         break
+
       case 'field-accent-color':
         const accColor = getValueByObjPath(themeColors, propertyPath)
         setColor(str2Color(accColor))
+        break
 
-      // eslint-disable-next-line no-fallthrough
       default:
         break
     }
@@ -111,21 +116,38 @@ function SimpleColorsPickerMenu({ stateObjName,
           }
         }))
         break
+      // case 'styles':
+      //   setStyles(prvState => produce(prvState, drftStyles => {
+      //     let hslaColor = hslaStr
+      //     const value = getValueByObjPath(drftStyles, propertyPath)
+      //     const checkExistImportant = value?.match(/!important/gi)?.[0]
+      //     if (checkExistImportant) hslaColor = `${hslaColor} !important`
+      //     assignNestedObj(drftStyles, propertyPath, hslaColor)
+      //   }))
+      //   break
+      case 'field-accent-color':
+        setStyles(prvState => produce(prvState, drftStyles => {
+          const v = `${hslaStr}!important`
+          const sc = `0 0 0 3px hsla(${h}, ${s}, ${l}, 0.30)!important`
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = v
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = v
+        }))
+        break
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
           let hslaColor = hslaStr
-          const value = getValueByObjPath(drftStyles, propertyPath)
+          const propertyPathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
+          const value = getValueByObjPath(drftStyles, propertyPathArr)
           const checkExistImportant = value?.match(/!important/gi)?.[0]
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
-          assignNestedObj(drftStyles, propertyPath, hslaColor)
-        }))
-        break
-      case 'field-accent-color':
-        setStyles(prvState => produce(prvState, drftStyles => {
-          const sc = `0 0 0 3px hsla(${h}, ${s}, ${l}, 0.30)!important`
-          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = `${hslaStr}!important`
-          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
-          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = `${hslaStr}!important`
+          if (Array.isArray(propertyPath)) {
+            propertyPath.forEach(path => assignNestedObj(drftStyles, path, hslaColor))
+          } else {
+            assignNestedObj(drftStyles, propertyPath, hslaColor)
+          }
+          // drftStyles.fields[fldKey].classes[`.${fldKey}-ci:checked ~ .${fldKey}-cl .${fldKey}-bx`]['border-color'] = `${hslaStr}!important`
+          // drftStyles.fields[fldKey].classes[`.${fldKey}-ci:checked ~ .${fldKey}-cl .${fldKey}-bx`].background = `${hslaStr}!important`
         }))
 
       // eslint-disable-next-line no-fallthrough

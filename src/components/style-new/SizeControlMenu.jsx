@@ -86,7 +86,7 @@ export default function SizeControlMenu({ objectPaths }) {
 
   const widthValue = getVal(paths?.width)
   const heightValue = getVal(paths?.height)
-  const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
+  // const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
 
   return (
     <>

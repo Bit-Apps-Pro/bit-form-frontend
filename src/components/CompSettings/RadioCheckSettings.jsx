@@ -249,7 +249,6 @@ function RadioCheckSettings() {
   }
 
   function setColumn({ target: { value } }) {
-    if (value > options.length) return
     if (value === '') {
       delete fieldData.optionCol
     } else {
@@ -262,7 +261,7 @@ function RadioCheckSettings() {
       colStr += 'auto '
     }
     setStyles(prvStyle => produce(prvStyle, drft => {
-      const gridObj = {
+      const gridStyle = {
         display: 'grid',
         'grid-template-columns': colStr,
         width: '100%',
@@ -270,13 +269,13 @@ function RadioCheckSettings() {
         'column-gap': '10px',
       }
 
-      const flxObj = {
+      const flxStyle = {
         display: 'flex',
         'flex-wrap': 'wrap',
         'margin-top': '8px',
       }
 
-      drft.fields[fldKey].classes[`.${fldKey}-cc`] = value === '' ? flxObj : gridObj
+      drft.fields[fldKey].classes[`.${fldKey}-cc`] = value === '' ? flxStyle : gridStyle
     }))
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } }, setUpdateBtn)
