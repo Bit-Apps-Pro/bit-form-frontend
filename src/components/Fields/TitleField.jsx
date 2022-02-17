@@ -24,7 +24,7 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
     <>
       <RenderStyle styleClasses={styleClasses} />
       <div data-dev-fld-wrp={fieldKey} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
-        {logo && <img data-dev-logo={fieldKey} className={`${fieldKey}-logo`} src={logo} alt="img" width="40" height="40" />}
+        {logo && <img data-dev-logo={fieldKey} className={`${fieldKey}-logo`} src={logo} alt="img" />}
         <div data-dev-titl-wrp={fieldKey} className={`${fieldKey}-titl-wrp`}>
           {!titleHide && titleGenerator(titleTag, title, '-title', titlePreIcn, titleSufIcn)}
 
