@@ -3,7 +3,7 @@ export default function inputWrapperClasses(fk) {
     [`.${fk}-fld-wrp`]: {
       display: 'var(--fld-wrp-dis, block)',
       'flex-direction': 'var(--fld-wrp-fdir, row)',
-      background: 'var(--fld-wrp-bg, transparent)',
+      'background-color': 'var(--fld-wrp-bg, transparent)',
       width: '100%',
       padding: 'var(--fld-wrp-p, 0)',
       margin: 'var(--fld-wrp-m, 0)',
@@ -27,10 +27,10 @@ export default function inputWrapperClasses(fk) {
       'align-self': 'var(--lbl-wrp-sa, auto)',
       margin: 'var(--lbl-wrp-m, 0)',
       padding: 'var(--lbl-wrp-p, 0)',
-      background: 'var(--lbl-wrp-bg, none)',
+      'background-color': 'var(--lbl-wrp-bg, none)',
     },
     [`.${fk}-lbl`]: {
-      background: 'var(--fld-lbl-bg, none)',
+      'background-color': 'var(--fld-lbl-bg, none)',
       color: 'var(--fld-lbl-c, inherit)',
       'font-size': 'var(--fld-lbl-fs)',
       display: 'flex',
@@ -47,7 +47,7 @@ export default function inputWrapperClasses(fk) {
       'font-style': 'var(--lbl-font-style)',
     },
     [`.${fk}-sub-titl`]: {
-      background: 'var(--sub-titl-bg, none)',
+      'background-color': 'var(--sub-titl-bg, none)',
       color: 'var(--sub-titl-c, inherit)',
       'font-size': 'var(--sub-titl-fs)',
       display: 'flex',
@@ -64,7 +64,7 @@ export default function inputWrapperClasses(fk) {
       'font-style': 'var(--sub-titl-font-style)',
     },
     [`.${fk}-hlp-txt`]: {
-      background: 'var(--hlp-txt-bg, none)',
+      'background-color': 'var(--hlp-txt-bg, none)',
       color: 'var(--hlp-txt-c, inherit)',
       'font-size': 'var(--hlp-txt-fs)',
       display: 'flex',
@@ -150,7 +150,7 @@ export default function inputWrapperClasses(fk) {
       filter: 'var(--hlp-txt-suf-i-fltr)',
     },
     [`.${fk}-err-msg`]: {
-      background: 'var(--err-bg, none)',
+      'background-color': 'var(--err-bg, none)',
       color: 'var(--err-c, inherit)',
       'font-size': 'var(--err-txt-fs)',
       display: 'flex',

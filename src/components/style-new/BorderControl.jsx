@@ -16,7 +16,7 @@ import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
 
-  const [, color] = splitValueBySpaces(value)
+  const [, color] = splitValueBySpaces(value.replaceAll('!important', ''))
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const setThemeVars = useSetRecoilState($themeVars)

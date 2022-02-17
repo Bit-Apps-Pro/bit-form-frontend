@@ -777,7 +777,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'opacity', fldOpctyUnit, state)}
-                value={fldOpctyValue || 0}
+                value={fldOpctyValue || 1}
                 unit={fldOpctyUnit}
                 min={0}
                 max={fldOpctyUnit === '' ? 1 : 100}

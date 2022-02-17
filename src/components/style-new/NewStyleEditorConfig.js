@@ -54,7 +54,8 @@ const fieldWrpCssProps = {
   padding: '5px',
   opacity: '100%',
   'box-shadow': '',
-  size: { width: '100%', height: '100%' },
+  width: '',
+  height: '',
 }
 
 const textFldCssProps = {
@@ -190,7 +191,6 @@ const editorConfig = {
       margin: '5px',
       padding: '5px',
       opacity: '100%',
-      size: { width: '100%', height: '100%' },
       'text-align': '',
       'text-decoration': {
         'text-decoration-line': true,
@@ -205,11 +205,11 @@ const editorConfig = {
       filter: '',
       'font-weight': '',
       'font-style': '',
-      height: '',
       'line-height': '',
       'word-spacing': '',
       'letter-spacing': '',
       'z-index': '',
+      height: '',
       width: '',
     },
   },
@@ -328,7 +328,7 @@ const editorConfig = {
       properties: { ...fieldWrpCssProps },
     },
     btn: {
-      states: ['hover'],
+      states: ['hover', 'focus'],
       properties: {
         background: {
           'background-image': true,
@@ -342,12 +342,18 @@ const editorConfig = {
         padding: '5px',
         opacity: '100%',
         'box-shadow': '',
-        size: { width: '100%', height: '100%' },
         'font-size': '',
         'font-weight': '',
+        width: '',
         height: '',
         color: '',
-        transition: {},
+        transition: '',
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
       },
     },
     'btn-pre-i': {
