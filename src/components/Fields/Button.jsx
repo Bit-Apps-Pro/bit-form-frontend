@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
-import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
+import { deepCopy, renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 /* eslint-disable react/jsx-props-no-spreading */
@@ -8,9 +8,11 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
+  const styleClassesForRender = deepCopy(styleClasses)
+  styleClassesForRender[`.${fieldKey}-fld-wrp`]['align-items'] = fieldData.align
   return (
     <>
-      <RenderStyle styleClasses={styleClasses} />
+      <RenderStyle styleClasses={styleClassesForRender} />
       <div data-dev-fld-wrp={fieldKey} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}>
         <button
           data-dev-btn={fieldKey}
@@ -24,7 +26,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
           {fieldData.btnSufIcn && <img data-dev-btn-suf-i={fieldKey} className={`${fieldKey}-btn-suf-i`} src={fieldData.btnSufIcn} alt="" />}
         </button>
         {
-          (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
+          (fieldData.helperTxt) && (
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
               {/* Prefix icon */}
               {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}

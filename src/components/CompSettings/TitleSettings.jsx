@@ -52,17 +52,21 @@ function TitleSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
   }
 
-  useEffect(() => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fieldKey].classes[wrpCLass]['background-image'] = `url(${fieldData?.bg_img || ''})`
-    }))
-  }, [fieldData?.bg_img])
+  // useEffect(() => {
+  //   setStyles(preStyle => produce(preStyle, drftStyle => {
+  //     drftStyle.fields[fieldKey].classes[wrpCLass]['background-image'] = `url(${fieldData?.bg_img || ''})`
+  //   }))
+  // }, [fieldData?.bg_img])
+
+  const setBuilderFldWrpHeight = () => {
+    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+  }
 
   const setIconModel = (typ) => {
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setFieldName(typ)
     setIcnMdl(true)
-    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+    setBuilderFldWrpHeight()
   }
 
   const removeIcon = (iconType) => {
@@ -82,7 +86,7 @@ function TitleSettings() {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+      setBuilderFldWrpHeight()
     }
   }
 
@@ -99,7 +103,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    setBuilderFldWrpHeight()
     addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `title_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -116,7 +120,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    setBuilderFldWrpHeight()
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -127,13 +131,14 @@ function TitleSettings() {
       delete fieldData[type]
     }
     setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
-    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+    setBuilderFldWrpHeight()
   }
 
   const flexDirectionHandle = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
+    setBuilderFldWrpHeight()
   }
 
   const positionHandle = (val, type) => {
@@ -146,6 +151,12 @@ function TitleSettings() {
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
     }))
   }
+
+  useEffect(() => {
+    if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTlePreIcn || fieldData?.subTleSufIcn) {
+      setBuilderFldWrpHeight()
+    }
+  }, [icnMdl])
 
   return (
     <>
@@ -160,6 +171,7 @@ function TitleSettings() {
           labelClass={css(style.logoLabel)}
           label="Logo"
           iconSrc={fieldData?.logo}
+          styleRoute="logo"
           setIcon={() => setIconModel('logo')}
           removeIcon={() => removeImage('logo')}
         />
@@ -216,8 +228,20 @@ function TitleSettings() {
               </select>
             </div>
           </div>
-          <FieldIconSettings label="Start Icon" iconSrc={fieldData?.titlePreIcn} setIcon={() => setIconModel('titlePreIcn')} removeIcon={() => removeIcon('titlePreIcn')} />
-          <FieldIconSettings label="End Icon" iconSrc={fieldData?.titleSufIcn} setIcon={() => setIconModel('titleSufIcn')} removeIcon={() => removeIcon('titleSufIcn')} />
+          <FieldIconSettings
+            label="Start Icon"
+            iconSrc={fieldData?.titlePreIcn}
+            styleRoute="title-pre-i"
+            setIcon={() => setIconModel('titlePreIcn')}
+            removeIcon={() => removeIcon('titlePreIcn')}
+          />
+          <FieldIconSettings
+            label="End Icon"
+            iconSrc={fieldData?.titleSufIcn}
+            styleRoute="title-suf-i"
+            setIcon={() => setIconModel('titleSufIcn')}
+            removeIcon={() => removeIcon('titleSufIcn')}
+          />
 
         </SimpleAccordion>
         <hr className={css(FieldStyle.divider)} />
@@ -275,8 +299,20 @@ function TitleSettings() {
               </select>
             </div>
           </div>
-          <FieldIconSettings label="Start Icon" iconSrc={fieldData?.subTlePreIcn} setIcon={() => setIconModel('subTlePreIcn')} removeIcon={() => removeIcon('subTlePreIcn')} />
-          <FieldIconSettings label="End Icon" iconSrc={fieldData?.subTleSufIcn} setIcon={() => setIconModel('subTleSufIcn')} removeIcon={() => removeIcon('subTleSufIcn')} />
+          <FieldIconSettings
+            label="Start Icon"
+            iconSrc={fieldData?.subTlePreIcn}
+            styleRoute="sub-titl-pre-i"
+            setIcon={() => setIconModel('subTlePreIcn')}
+            removeIcon={() => removeIcon('subTlePreIcn')}
+          />
+          <FieldIconSettings
+            label="End Icon"
+            iconSrc={fieldData?.subTleSufIcn}
+            styleRoute="sub-titl-suf-i"
+            setIcon={() => setIconModel('subTleSufIcn')}
+            removeIcon={() => removeIcon('subTleSufIcn')}
+          />
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
