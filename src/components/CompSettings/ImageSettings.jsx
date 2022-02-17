@@ -38,6 +38,7 @@ function ImageSettings() {
         labelClass={css(style.logoLabel)}
         label="Background Image"
         iconSrc={fieldData?.bg_img}
+        styleRoute="img"
         setIcon={() => setIcnMdl(true)}
         removeIcon={() => removeImage('bg_img')}
       />
