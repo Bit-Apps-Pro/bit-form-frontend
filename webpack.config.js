@@ -263,7 +263,7 @@ module.exports = (env, argv) => {
                     ['autoprefixer'],
                     postcssPresetEnv({
                       stage: 1,
-                      browsers: production ? '>0.2%' : 'Chrome >= 95',
+                      browsers: production ? '>0.1%' : 'Chrome >= 95',
                     }),
                   ],
                 },

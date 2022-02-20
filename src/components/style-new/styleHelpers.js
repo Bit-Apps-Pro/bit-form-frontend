@@ -99,7 +99,7 @@ export const unitConverter = (unit, value, prvUnit) => {
 
 export const getNumFromStr = (str = '') => {
   const num = str ? str?.match(/[-]?([0-9]*[.])?[0-9]+/gi) : 0
-  return num ? num[0] : 0
+  return num ? num[0] : ''
 }
 export const getStrFromStr = (str = '') => {
   const newStr = str ? str?.match(/([A-z]|%)+/gi)?.[0] : ''

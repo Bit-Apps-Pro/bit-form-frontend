@@ -27,7 +27,7 @@ export const $draggableModal = atom({ key: '$draggableModal', default: { show: f
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
 export const $isNewThemeStyleLoaded = atom({ key: '$isNewThemeStyleLoaded', default: false })
-export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0 } })
+export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
 export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
 
 // selectors

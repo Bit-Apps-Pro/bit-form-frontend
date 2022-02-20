@@ -5,14 +5,10 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import EditIcn from '../../Icons/EditIcn'
-import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import Modal from '../Utilities/Modal'
 import Icons from './Icons'
-import IconStyleBtn from './IconStyleBtn'
-import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function ImageSettings() {
@@ -37,37 +33,16 @@ function ImageSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
-      <br />
+      <FieldIconSettings
+        classNames={css(style.section)}
+        labelClass={css(style.logoLabel)}
+        label="Background Image"
+        iconSrc={fieldData?.bg_img}
+        styleRoute="img"
+        setIcon={() => setIcnMdl(true)}
+        removeIcon={() => removeImage('bg_img')}
+      />
 
-      <SimpleAccordion
-        title="Image"
-        className={css(ut.ml2, ut.mr2, ut.pb10)}
-        titleCls={css(ut.ml1)}
-      >
-        <div className={css(ut.pb10)}>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500, ut.ml2)}>Background Image</span>
-            <div className={css(ut.flxcb, ut.mr2)}>
-              {fieldData?.bg_img && (
-                <>
-                  <img src={fieldData?.bg_img} alt="icon" width="25" height="25" />
-                  <IconStyleBtn route="img" />
-                </>
-              )}
-              <button type="button" onClick={() => setIcnMdl(true)} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.bg_img && (
-                <button onClick={() => removeImage('bg_img')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-        </div>
-      </SimpleAccordion>
       <Modal
         md
         autoHeight
@@ -89,3 +64,17 @@ function ImageSettings() {
   )
 }
 export default ImageSettings
+
+const style = {
+  section: {
+    my: 5,
+    mx: 15,
+  },
+  logoLabel: {
+    flx: 'center-between',
+    ml: '0px !important',
+    my: 5,
+    brs: 8,
+    fw: '600 !important',
+  },
+}

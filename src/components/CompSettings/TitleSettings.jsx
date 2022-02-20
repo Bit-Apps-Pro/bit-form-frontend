@@ -11,8 +11,9 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
-import CloseIcn from '../../Icons/CloseIcn'
-import EditIcn from '../../Icons/EditIcn'
+import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
+import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -21,49 +22,57 @@ import { __ } from '../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
-import Tip from '../Utilities/Tip'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import Icons from './Icons'
-import IconStyleBtn from './IconStyleBtn'
 import SmartTags from './SmartTags'
+import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function TitleSettings() {
   const { css } = useFela()
-  const { fieldKey: fldKey } = useParams()
+  const { fieldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
-  const fieldData = deepCopy(fields[fldKey])
+  const fieldData = deepCopy(fields[fieldKey])
   const [styles, setStyles] = useRecoilState($styles)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderHookState = useSetRecoilState($builderHookStates)
-  const wrpCLass = `.${fldKey}-fld-wrp`
+  const fldStyleObj = styles?.fields?.[fieldKey]
+  const { fieldType, classes, theme } = fldStyleObj
+  const wrpCLass = `.${fieldKey}-fld-wrp`
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
+  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
   }
 
-  useEffect(() => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[wrpCLass]['background-image'] = `url(${fieldData?.bg_img || ''})`
-    }))
-  }, [fieldData?.bg_img])
+  // useEffect(() => {
+  //   setStyles(preStyle => produce(preStyle, drftStyle => {
+  //     drftStyle.fields[fieldKey].classes[wrpCLass]['background-image'] = `url(${fieldData?.bg_img || ''})`
+  //   }))
+  // }, [fieldData?.bg_img])
+
+  const setBuilderFldWrpHeight = () => {
+    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+  }
 
   const setIconModel = (typ) => {
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setFieldName(typ)
     setIcnMdl(true)
+    setBuilderFldWrpHeight()
   }
 
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
       setStyles(prvStyle => produce(prvStyle, draft => {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
@@ -75,60 +84,44 @@ function TitleSettings() {
   const removeImage = (name) => {
     if (fieldData[name]) {
       delete fieldData[name]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
+      setBuilderFldWrpHeight()
     }
-  }
-
-  const hideLogo = ({ target: { checked } }) => {
-    if (checked) {
-      fieldData.logo = 'logo'
-      fieldData.logoHide = true
-      addDefaultStyleClasses(selectedFieldId, 'logo', setStyles)
-    } else {
-      delete fieldData.logo
-      fieldData.logoHide = false
-    }
-    const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: `Logo ${req}:  ${fieldData.lbl || fldKey}`, type: `logo${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideTitle = ({ target: { checked } }) => {
     if (checked) {
       fieldData.title = 'Title'
-      fieldData.titleHide = true
+      fieldData.titleHide = false
       addDefaultStyleClasses(selectedFieldId, 'title', setStyles)
     } else {
       delete fieldData.title
-      fieldData.titleHide = false
+      fieldData.titleHide = true
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fldKey}`, type: `title_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    setBuilderFldWrpHeight()
+    addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `title_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
     if (checked) {
       fieldData.subtitle = 'Sub Title'
-      fieldData.subtitleHide = true
+      fieldData.subtitleHide = false
       addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
     } else {
       delete fieldData.subtitle
-      fieldData.subtitleHide = false
+      fieldData.subtitleHide = true
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    setBuilderFldWrpHeight()
+    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
   const inputHandler = (val, type) => {
@@ -137,8 +130,33 @@ function TitleSettings() {
     } else {
       delete fieldData[type]
     }
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    setBuilderFldWrpHeight()
   }
+
+  const flexDirectionHandle = (val, type) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
+    }))
+    setBuilderFldWrpHeight()
+  }
+
+  const positionHandle = (val, type) => {
+    let justifyContent = 'left'
+    if (val === 'center') justifyContent = 'center'
+    else if (val === 'flex-end') justifyContent = 'right'
+
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
+      drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
+    }))
+  }
+
+  useEffect(() => {
+    if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTlePreIcn || fieldData?.subTleSufIcn) {
+      setBuilderFldWrpHeight()
+    }
+  }, [icnMdl])
 
   return (
     <>
@@ -146,56 +164,30 @@ function TitleSettings() {
         <FieldSettingTitle
           title="Field Settings"
           subtitle={fieldData.typ}
-          fieldKey={fldKey}
+          fieldKey={fieldKey}
         />
-        <SimpleAccordion
-          title={__('Logo', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideLogo}
-          toggleChecked={fieldData?.logoHide}
-          open={fieldData?.logoHide}
-          disable={!fieldData?.logoHide}
-        >
-          <div className={css(ut.flxcb, ut.ml2)}>
-            <span className={css(ut.fw500)}>Image</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.logo && (
-                <>
-                  <img src={fieldData?.logo} alt="icon" width="25" height="25" />
-                  <Tip msg="Customize Style">
-                    <IconStyleBtn route="logo" />
-                  </Tip>
-                </>
-              )}
-              <Tip msg="Change Logo">
-                <button type="button" onClick={() => setIconModel('logo')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-              </Tip>
-              {fieldData?.logo && (
-                <Tip msg="Remove Logo">
-                  <button onClick={() => removeImage('logo')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                </Tip>
-              )}
-            </div>
-          </div>
-        </SimpleAccordion>
+        <FieldIconSettings
+          classNames={css(style.section)}
+          labelClass={css(style.logoLabel)}
+          label="Logo"
+          iconSrc={fieldData?.logo}
+          styleRoute="logo"
+          setIcon={() => setIconModel('logo')}
+          removeIcon={() => removeImage('logo')}
+        />
         <hr className={css(FieldStyle.divider)} />
         <SimpleAccordion
           title={__('Title', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideTitle}
-          toggleChecked={fieldData?.titleHide}
-          open={fieldData?.titleHide}
-          disable={!fieldData?.titleHide}
+          toggleChecked={!fieldData?.titleHide}
+          open={!fieldData?.titleHide}
+          disable={fieldData?.titleHide}
         >
-          <div className={css(FieldStyle.placeholder, ut.mt2, ut.ml1)}>
+          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
             <div className={css(style.title)}>
-              <label className={css(ut.fw500, ut.ml2, ut.mt2)}>Title</label>
+              <label className={css(ut.fw500)}>Title</label>
               <Downmenu>
                 <button
                   data-close
@@ -206,7 +198,7 @@ function TitleSettings() {
                   style={{ cursor: 'pointer' }}
                   title={__('More Options', 'bitform')}
                 >
-                  <BdrDottedIcn size="19" />
+                  <BdrDottedIcn size="16" />
                 </button>
                 <SmartTags
                   fieldName="title"
@@ -220,7 +212,7 @@ function TitleSettings() {
               changeAction={handleTitle}
             />
           </div>
-          <div className={css(ut.flxcb)}>
+          <div className={css(ut.flxcb, ut.mt1)}>
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
@@ -236,59 +228,21 @@ function TitleSettings() {
               </select>
             </div>
           </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.titlePreIcn && (
-                <>
-                  <img src={fieldData?.titlePreIcn} alt="start icon" width="18" height="18" />
-                  <Tip msg="Customize Style">
-                    <IconStyleBtn route="sub-titl-pre-i" />
-                  </Tip>
-                </>
-              )}
+          <FieldIconSettings
+            label="Start Icon"
+            iconSrc={fieldData?.titlePreIcn}
+            styleRoute="title-pre-i"
+            setIcon={() => setIconModel('titlePreIcn')}
+            removeIcon={() => removeIcon('titlePreIcn')}
+          />
+          <FieldIconSettings
+            label="End Icon"
+            iconSrc={fieldData?.titleSufIcn}
+            styleRoute="title-suf-i"
+            setIcon={() => setIconModel('titleSufIcn')}
+            removeIcon={() => removeIcon('titleSufIcn')}
+          />
 
-              <Tip msg="Change Icon">
-                <button type="button" onClick={() => setIconModel('titlePreIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-              </Tip>
-              {fieldData.titlePreIcn && (
-                <Tip msg="Remove Icon">
-                  <button onClick={() => removeIcon('titlePreIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                </Tip>
-              )}
-
-            </div>
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.titleSufIcn && (
-                <>
-                  <img src={fieldData?.titleSufIcn} alt="end icon" width="18" height="18" />
-                  <Tip msg="Customize Style">
-                    <IconStyleBtn route="sub-titl-suf-i" />
-                  </Tip>
-                </>
-              )}
-              <Tip msg="Edit Icon">
-                <button type="button" onClick={() => setIconModel('titleSufIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-              </Tip>
-              {fieldData.titleSufIcn && (
-                <Tip msg="Remove Icon">
-                  <button onClick={() => removeIcon('titleSufIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                </Tip>
-              )}
-
-            </div>
-          </div>
         </SimpleAccordion>
         <hr className={css(FieldStyle.divider)} />
 
@@ -297,30 +251,31 @@ function TitleSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideSubTitle}
-          toggleChecked={fieldData?.subtitleHide}
+          toggleChecked={!fieldData?.subtitleHide}
           open={fieldData?.subtitleHide}
-          disable={!fieldData?.subtitleHide}
+          disable={fieldData?.subtitleHide}
         >
-          <div className={css(style.title, ut.mt2)}>
-            <label className={css(ut.fw500, ut.ml2)}>Sub Title</label>
-            <Downmenu>
-              <button
-                data-close
-                type="button"
-                className={css(style.btn)}
-                unselectable="on"
-                draggable="false"
-                style={{ cursor: 'pointer' }}
-                title={__('Fields', 'bitform')}
-              >
-                <BdrDottedIcn size="19" />
-              </button>
-              <SmartTags
-                fieldName="subtitle"
-              />
-            </Downmenu>
-          </div>
-          <div className={css(FieldStyle.placeholder)}>
+          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
+            <div className={css(style.title)}>
+              <label className={css(ut.fw500, ut.flxcb)}>Sub Title</label>
+              <Downmenu>
+                <button
+                  data-close
+                  type="button"
+                  className={css(style.btn)}
+                  unselectable="on"
+                  draggable="false"
+                  style={{ cursor: 'pointer' }}
+                  title={__('Fields', 'bitform')}
+                >
+                  <BdrDottedIcn size="16" />
+                </button>
+                <SmartTags
+                  fieldName="subtitle"
+                />
+              </Downmenu>
+            </div>
+
             <AutoResizeInput
               placeholder="Sub Title..."
               name="subtitle"
@@ -328,7 +283,7 @@ function TitleSettings() {
               changeAction={handleTitle}
             />
           </div>
-          <div className={css(ut.flxcb)}>
+          <div className={css(ut.flxcb, ut.mt1)}>
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select className={css(style.select)} value={fieldData?.subTitleTag} onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}>
@@ -344,62 +299,55 @@ function TitleSettings() {
               </select>
             </div>
           </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.subTlePreIcn && (
-                <>
-                  <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
-                  <Tip msg="Customize Style">
-                    <IconStyleBtn route="sub-titl-pre-i" />
-                  </Tip>
-                </>
-              )}
-
-              <Tip msg="Edit Icon">
-                <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-              </Tip>
-              {fieldData.subTlePreIcn && (
-                <Tip msg="Remove Icon">
-                  <button onClick={() => removeIcon('subTlePreIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                </Tip>
-              )}
-
-            </div>
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.subTleSufIcn && (
-                <>
-                  <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
-                  <Tip msg="Customize Style">
-                    <IconStyleBtn route="sub-titl-suf-i" />
-                  </Tip>
-                </>
-              )}
-              <Tip msg="Edit Icon">
-                <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-              </Tip>
-              {fieldData.subTleSufIcn && (
-                <Tip msg="Remove Icon">
-                  <button onClick={() => removeIcon('subTleSufIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                </Tip>
-              )}
-
-            </div>
-          </div>
+          <FieldIconSettings
+            label="Start Icon"
+            iconSrc={fieldData?.subTlePreIcn}
+            styleRoute="sub-titl-pre-i"
+            setIcon={() => setIconModel('subTlePreIcn')}
+            removeIcon={() => removeIcon('subTlePreIcn')}
+          />
+          <FieldIconSettings
+            label="End Icon"
+            iconSrc={fieldData?.subTleSufIcn}
+            styleRoute="sub-titl-suf-i"
+            setIcon={() => setIconModel('subTleSufIcn')}
+            removeIcon={() => removeIcon('subTleSufIcn')}
+          />
         </SimpleAccordion>
 
+        <hr className={css(FieldStyle.divider)} />
+        <div className={css(style.section, style.main)}>
+          <span className={css(style.label)}>Label Alignment</span>
+          <StyleSegmentControl
+            show={['icn']}
+            tipPlace="bottom"
+            className={css(style.segment)}
+            options={[
+              { icn: <TxtAlignLeftIcn size="17" />, label: 'flex-start', tip: 'Left' },
+              { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+              { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
+            ]}
+            onChange={val => positionHandle(val, 'align-items')}
+            activeValue={position}
+          />
+        </div>
+        <hr className={css(FieldStyle.divider)} />
+        <div className={css(style.section, style.main)}>
+          <span className={css(style.label)}>Flex Direction</span>
+          <StyleSegmentControl
+            show={['icn']}
+            tipPlace="bottom"
+            className={css(style.segment)}
+            options={[
+              { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
+              { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
+              { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
+              { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
+            ]}
+            onChange={val => flexDirectionHandle(val, 'flex-direction')}
+            activeValue={flex}
+          />
+        </div>
         <hr className={css(FieldStyle.divider)} />
       </div>
       <Modal
@@ -424,12 +372,19 @@ function TitleSettings() {
 }
 
 const style = {
-  main: { flx: 'center-between' },
-  label: {
-    fw: 500,
-    ml: 10,
-    mt: 5,
+  section: {
+    my: 5,
+    mx: 15,
   },
+  logoLabel: {
+    flx: 'center-between',
+    ml: '0px !important',
+    my: 5,
+    brs: 8,
+    fw: '600 !important',
+  },
+  main: { flx: 'center-between' },
+  label: { fw: 600 },
   segment: {
     mr: 7,
     mt: 4,
@@ -437,6 +392,8 @@ const style = {
   title: {
     dy: 'flex',
     jc: 'space-between',
+    mx: 5,
+    mt: 5,
   },
   formfield: {
     brs: 8,
@@ -446,8 +403,8 @@ const style = {
   btn: {
     b: 0,
     brs: 5,
-    mr: 15,
     curp: 1,
+    flx: 'center-between',
   },
   spaceControl: { m: '9px 10px 0px 7px' },
   select: {
@@ -463,7 +420,6 @@ const style = {
     lh: '2 !important',
     px: 8,
     p: '0 !important',
-    mt: 10,
     mb: 3,
     bs: 'none !important',
     b: 'none !important',

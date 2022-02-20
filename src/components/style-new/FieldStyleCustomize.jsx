@@ -146,7 +146,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         {element?.replaceAll('-', ' ')}
       </h4>
       <div className={css(ut.flxc)}>
-        <h5 className={css(cls.subTitle)}>{fields[fieldKey].adminLbl}</h5>
+        <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
         <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
       </div>
       <div className={css(cls.divider)} />

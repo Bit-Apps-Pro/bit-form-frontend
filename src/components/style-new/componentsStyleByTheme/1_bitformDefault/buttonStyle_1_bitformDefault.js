@@ -1,15 +1,19 @@
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk, type, direction, btnType = 'button' }) {
+export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     [`.${fk}-fld-wrp`]: {
-      height: '100%',
-      width: '100%',
-      'background-color': 'white',
-      overflow: 'auto',
       display: 'flex',
       'flex-direction': 'column',
+      'background-color': 'var(--fld-wrp-bg, transparent)',
+      width: '100%',
+      padding: 'var(--fld-wrp-p, 0)',
+      margin: 'var(--fld-wrp-m, 0)',
+      position: 'relative',
+      'box-shadow': 'var(--fld-wrp-sh, none)',
+      border: 'var(--fld-wrp-bdr, medium none)',
+      'border-width': 'var(--fld-wrp-bdr-width, 0)',
+      'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
       'align-items': 'start',
-      ...btnType === 'submit' && { 'align-items': 'end' },
     },
 
     [`.${fk}-fld-wrp.fld-hide::after`]: {
@@ -25,21 +29,18 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction, btnT
     {
       'font-size': '16px',
       padding: '11px 20px',
-      background: '#0083f3',
+      'background-color': '#0083f3',
       color: '#fff',
       'font-weight': '700',
-      'text-decoration': 'none',
-      'text-transform': 'none',
       border: 'none',
+      'border-color': 'black',
       'border-radius': '5px',
       'box-shadow': '2px 2px 4px -2px rgba(0,0,0,.4)',
       cursor: 'pointer',
       'font-family': 'sans-serif',
-      height: 'auto',
       'line-height': '1',
-      margin: '10px 5px',
+      margin: '10px 0px',
       outline: 'none',
-      width: 'auto',
       display: 'flex',
       'justify-content': 'center',
       'align-items': 'center',
@@ -47,10 +48,12 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction, btnT
     [`.${fk}-btn-pre-i`]: {
       width: '20px',
       height: '20px',
+      margin: '0px 5px 0px 0px',
     },
     [`.${fk}-btn-suf-i`]: {
       width: '20px',
       height: '20px',
+      margin: '0px 0px 0px 5px',
     },
     [`.${fk}-hlp-txt`]: {
       background: 'var(--hlp-txt-bg, none)',

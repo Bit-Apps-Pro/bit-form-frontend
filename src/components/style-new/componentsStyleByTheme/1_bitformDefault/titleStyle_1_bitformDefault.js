@@ -4,9 +4,8 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',
       'justify-content': 'center',
-      'flex-direction': 'column',
-      'align-items': 'flex-start',
-      'background-image': '',
+      'flex-direction': 'row',
+      'align-items': 'center',
     },
     [`.${fk}-fld-wrp.fld-hide::after`]: {
       position: 'absolute',
@@ -17,9 +16,19 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
       height: '100%',
       'background-color': 'rgba(0, 0, 0, 0.2)',
     },
-    [`.${fk}-title`]: { margin: '0px' },
-    [`.${fk}-sub-titl`]: { margin: '0px' },
+    [`.${fk}-titl-wrp`]: { padding: '0px 5px' },
+    [`.${fk}-title`]: {
+      margin: '5px',
+      'text-align': 'center',
+      'word-break': 'break-all',
+    },
+    [`.${fk}-sub-titl`]: {
+      margin: '5px',
+      'text-align': 'center',
+      'word-break': 'break-all',
+    },
     [`.${fk}-logo`]: {
+      margin: '5px',
       width: '50px',
       height: '50px',
     },
