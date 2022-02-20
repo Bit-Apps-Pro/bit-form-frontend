@@ -41,7 +41,7 @@ import Icons from './Icons'
 import IconStyleBtn from './IconStyleBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import SubTitleSetting from './SubTitleSetting'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
