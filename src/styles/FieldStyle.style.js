@@ -28,6 +28,7 @@ const FieldStyle = {
     fs: 14,
     fw: 500,
     w: '100%',
+    h: 35,
     bd: 'var(--b-79-96) !important',
     oe: 'none !important',
     mx: 'auto',

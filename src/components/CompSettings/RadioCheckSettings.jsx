@@ -67,11 +67,17 @@ function RadioCheckSettings() {
   }
 
   function setRound(e) {
+    let bdr
     if (e.target.checked) {
       fieldData.round = true
+      bdr = '50%'
     } else {
       delete fieldData.round
+      bdr = '5px'
     }
+    setStyles(prvStyles => produce(prvStyles, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-ck`]['border-radius'] = bdr
+    }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
@@ -340,8 +346,8 @@ function RadioCheckSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
-        <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} />
+      <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
+        <SingleToggle title={__('Rounded', 'bitform')} action={setRound} isChecked={isRound} />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
