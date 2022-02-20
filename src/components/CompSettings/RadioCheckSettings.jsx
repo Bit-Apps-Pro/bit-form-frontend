@@ -20,7 +20,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import SubTitleSetting from './SubTitleSetting'
+import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
