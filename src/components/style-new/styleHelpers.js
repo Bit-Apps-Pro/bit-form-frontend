@@ -1,8 +1,10 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import buttonStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
+import checkboxNradioStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import dividerStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
@@ -463,6 +465,12 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const buttonStyleBitFormDefault = buttonStyle_1_bitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = buttonStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'check':
+        const checkBoxStyleBitFormDefault = checkboxNradioStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       default:
