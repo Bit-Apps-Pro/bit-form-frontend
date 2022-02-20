@@ -42,6 +42,7 @@ import IconStyleBtn from './IconStyleBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -162,7 +163,7 @@ function TextFieldSettings() {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
       fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hepTxt', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
     } else {
       fieldData.hlpTxtHide = false
       delete fieldData.helperTxt
@@ -522,70 +523,7 @@ function TextFieldSettings() {
 
         <hr className={css(FieldStyle.divider)} />
 
-        <SimpleAccordion
-          title={__('Helper Text', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideHelperTxt}
-          toggleChecked={fieldData?.hlpTxtHide}
-          open={fieldData?.hlpTxtHide}
-          disable={!fieldData?.hlpTxtHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <AutoResizeInput
-              aria-label="Helper text for this Field"
-              placeholder="Type Helper text here..."
-              value={helperTxt}
-              changeAction={setHelperTxt}
-            />
-          </div>
-          <div className={css(ut.mt2, { mx: 10 })}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Start Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.hlpPreIcn && (
-                  <>
-                    <img src={fieldData?.hlpPreIcn} alt="Hepler text start icon" width="18" height="18" />
-                    <IconStyleBtn route="hlp-txt-pre-i" />
-                  </>
-                )}
-
-                <button type="button" onClick={() => setIconModel('hlpPreIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.hlpPreIcn && (
-                  <button onClick={() => removeIcon('hlpPreIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>End Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.hlpSufIcn && (
-                  <>
-                    <img src={fieldData?.hlpSufIcn} alt="Hepler text end icon" width="18" height="18" />
-                    <IconStyleBtn route="hlp-txt-suf-i" />
-                  </>
-                )}
-
-                <button type="button" onClick={() => setIconModel('hlpSufIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.hlpSufIcn && (
-                  <button onClick={() => removeIcon('hlpSufIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-          </div>
-
-        </SimpleAccordion>
+        <HelperTxtSetting />
 
         <hr className={css(FieldStyle.divider)} />
 

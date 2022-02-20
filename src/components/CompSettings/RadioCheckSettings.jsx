@@ -21,6 +21,7 @@ import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -319,6 +320,10 @@ function RadioCheckSettings() {
       <hr className={css(FieldStyle.divider)} />
 
       <SubTitleSetting />
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <HelperTxtSetting />
 
       <hr className={css(FieldStyle.divider)} />
 
