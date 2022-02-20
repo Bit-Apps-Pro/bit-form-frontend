@@ -342,7 +342,7 @@ export default function ElementConfiguration({ fldKey }) {
           <>
             {!(fieldObj.hlpPreIcn || fieldObj.hlpSufIcn) && (
               <NavBtn
-                cssSelector={`.${fldKey}-${styleClasses.hepTxt[0]}`}
+                cssSelector={`.${fldKey}-${styleClasses.hlpTxt[0]}`}
                 subRoute={fldKey}
                 route="helper-text"
                 label="Helper Text"

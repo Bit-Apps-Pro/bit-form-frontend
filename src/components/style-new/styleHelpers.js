@@ -359,7 +359,7 @@ export const styleClasses = {
   divider: ['divider'],
   image: ['img'],
   button: ['btn'],
-  hepTxt: ['hlp-txt'],
+  hlpTxt: ['hlp-txt'],
   hlpPreIcn: ['hlp-txt-pre-i'],
   hlpSufIcn: ['hlp-txt-suf-i'],
   prefixIcn: ['pre-i'],
@@ -384,7 +384,7 @@ export const removeUnuseStyles = (fields, setStyles) => {
       if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
       if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
       if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
-      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
+      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hlpTxt, fldkey)
       if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
       if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
       if (!fld.err) deleteStyles(deftStyles, styleClasses.err, fldkey)
