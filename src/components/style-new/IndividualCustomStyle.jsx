@@ -92,11 +92,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(existCssPropsObj?.opacity)]
-  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(existCssPropsObj?.width)]
-  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(existCssPropsObj?.height)]
+  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.opacity))]
+  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.width))]
+  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.height))]
   const [fldZIndex] = [getNumFromStr(existCssPropsObj?.['z-index'])]
-  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(existCssPropsObj?.['font-size'])]
+  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.['font-size']))]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {
@@ -159,6 +159,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
   const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
+    console.log(value, unit, prop, prvUnit, state)
     const convertvalue = unitConverter(unit, value, prvUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       let v = `${convertvalue}${unit}`
