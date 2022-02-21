@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
+import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import CloseIcn from '../../../Icons/CloseIcn'
 import EditIcn from '../../../Icons/EditIcn'
@@ -25,21 +25,22 @@ export default function HelperTxtSetting() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { css } = useFela()
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const adminLabel = fieldData.adminLbl || ''
   const helperTxt = fieldData.helperTxt || ''
 
-  const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
-  const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
+  // const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
+  // const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
 
-  const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
-  const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
+  // const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
+  // const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
 
   const hideHelperTxt = ({ target: { checked } }) => {
     if (checked) {

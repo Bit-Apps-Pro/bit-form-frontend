@@ -68,7 +68,7 @@ export default function StyleLayers() {
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
               <ElementConfiguration fldKey={fldKey} />
-              {fldData.typ.match(/^(check)$/gi) && (
+              {fldData.typ.match(/^(check|radio)$/gi) && (
                 <>
                   <NavBtn
                     subRoute={fldKey}

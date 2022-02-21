@@ -149,6 +149,7 @@ const chackProps = {
   height: '',
   transition: '',
   shadow: '',
+  color: '',
 }
 const editorConfig = {
   formWrapper: {
@@ -216,6 +217,35 @@ const editorConfig = {
   text: { ...textFldCssProps },
   textarea: { ...textFldCssProps },
   check: {
+    ...textFldCssProps,
+    cw: {
+      states: ['hover'],
+      properties: { ...chackProps },
+    },
+    cc: {
+      states: ['hover'],
+      properties: { ...chackProps },
+    },
+    cl: {
+      states: ['hover'],
+      properties: {
+        ...chackProps,
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+      },
+    },
+    ck: {
+      states: ['hover', 'focus', 'checked'],
+      properties: { ...chackProps },
+    },
+    ct: {
+      states: ['hover', 'focus'],
+      properties: { ...chackProps },
+    },
+
+  },
+  radio: {
     ...textFldCssProps,
     cw: {
       states: ['hover'],

@@ -337,6 +337,8 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     // return Object.keys(editorConfig.texfieldStyle.properties)
     case 'check':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
+    case 'radio':
+      return Object.keys(editorConfig[fieldType][elementKey].properties)
 
     // eslint-disable-next-line no-fallthrough
     default:
@@ -468,6 +470,7 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         })
         break
       case 'check':
+      case 'radio':
         const checkBoxStyleBitFormDefault = checkboxNradioStyle_1_bitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]

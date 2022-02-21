@@ -184,7 +184,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Radio Button', 'bitform'),
       keywords: 'Radio button, button',
       icn: <RadioIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
+      pos: { h: 70, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'radio',
         lbl: __('Radio', 'bitform'),
