@@ -241,7 +241,15 @@ const editorConfig = {
     },
     ct: {
       states: ['hover', 'focus'],
-      properties: { ...chackProps },
+      properties: {
+        ...chackProps,
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        'line-height': '',
+        'word-spacing': '',
+        'letter-spacing': '',
+      },
     },
 
   },
@@ -270,7 +278,15 @@ const editorConfig = {
     },
     ct: {
       states: ['hover', 'focus'],
-      properties: { ...chackProps },
+      properties: {
+        ...chackProps,
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        'line-height': '',
+        'word-spacing': '',
+        'letter-spacing': '',
+      },
     },
 
   },
