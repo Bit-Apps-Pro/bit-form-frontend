@@ -9,7 +9,7 @@ import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -17,11 +17,11 @@ import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
+import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -67,21 +67,24 @@ function RadioCheckSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  function setRound(e) {
-    let bdr
-    if (e.target.checked) {
-      fieldData.round = true
-      bdr = '50%'
-    } else {
-      delete fieldData.round
-      bdr = '5px'
-    }
+  function setRound({ target: { checked } }) {
+    const fldClsSelector = fieldData.typ === 'radio' ? 'bx' : 'ck'
+    const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
     setStyles(prvStyles => produce(prvStyles, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-ck`]['border-radius'] = bdr
+      let bdr = '5px'
+      if (checked) {
+        fieldData.round = true
+        bdr = '50%'
+        assignNestedObj(drft, path, bdr)
+      } else {
+        delete fieldData.round
+        if (fieldData.typ === 'radio') deleteNestedObj(drft, path)
+        else assignNestedObj(drft, path, bdr)
+      }
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function rmvOpt(ind) {
