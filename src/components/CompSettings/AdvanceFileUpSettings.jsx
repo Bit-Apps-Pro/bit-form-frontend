@@ -30,7 +30,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
-function AdFileUpSettings() {
+function AdvanceFileUpSettings() {
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const { fieldKey: fldKey } = useParams()
@@ -745,4 +745,4 @@ function AdFileUpSettings() {
   )
 }
 
-export default memo(AdFileUpSettings)
+export default memo(AdvanceFileUpSettings)
