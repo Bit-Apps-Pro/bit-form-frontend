@@ -41,16 +41,41 @@ export default function EditOptions({ optionMdl, options, setOptions, type, lblK
   return (
     <div className={css(style.wrapper)}>
 
-      <StyleSegmentControl options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]} onChange={lbl => handleSegment(lbl)} activeValue={editOptionType} wideTab />
+      <StyleSegmentControl
+        options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
+        onChange={lbl => handleSegment(lbl)}
+        activeValue={editOptionType}
+        wideTab
+      />
 
       {editOptionType === 'Visual' && (
-        <VisualOptionsTab optKey={optKey} options={options} option={option} setOption={setOption} type={type} lblKey={lblKey} valKey={valKey} checkByDefault={checkByDefault} hasGroup={hasGroup} />
+        <VisualOptionsTab
+          optKey={optKey}
+          options={options}
+          option={option}
+          setOption={setOption}
+          type={type}
+          lblKey={lblKey}
+          valKey={valKey}
+          checkByDefault={checkByDefault}
+          hasGroup={hasGroup}
+        />
       )}
       {editOptionType === 'Text' && (
-        <TextOptionsTab options={options} optionTxt={optionTxt} setOptionTxt={setOptionTxt} lblKey={lblKey} valKey={valKey} />
+        <TextOptionsTab
+          options={options}
+          optionTxt={optionTxt}
+          setOptionTxt={setOptionTxt}
+          lblKey={lblKey}
+          valKey={valKey}
+        />
       )}
       {editOptionType === 'Import' && (
-        <ImportOptionsTab lblKey={lblKey} valKey={valKey} setEditOptionType={setEditOptionType} />
+        <ImportOptionsTab
+          lblKey={lblKey}
+          valKey={valKey}
+          setEditOptionType={setEditOptionType}
+        />
       )}
 
     </div>

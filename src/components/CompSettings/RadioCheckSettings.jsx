@@ -7,10 +7,9 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -18,6 +17,8 @@ import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
+import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -66,15 +67,24 @@ function RadioCheckSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  function setRound(e) {
-    if (e.target.checked) {
-      fieldData.round = true
-    } else {
-      delete fieldData.round
-    }
+  function setRound({ target: { checked } }) {
+    const fldClsSelector = fieldData.typ === 'radio' ? 'rdo' : 'ck'
+    const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
+    setStyles(prvStyles => produce(prvStyles, drft => {
+      let bdr = '5px'
+      if (checked) {
+        fieldData.round = true
+        bdr = '50%'
+        assignNestedObj(drft, path, bdr)
+      } else {
+        delete fieldData.round
+        if (fieldData.typ === 'radio') deleteNestedObj(drft, path)
+        else assignNestedObj(drft, path, bdr)
+      }
+    }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function rmvOpt(ind) {
@@ -164,7 +174,6 @@ function RadioCheckSettings() {
   }
 
   const openOptionModal = () => {
-    console.log(fieldData, 'aa')
     setOptionMdl(true)
   }
 
@@ -283,7 +292,11 @@ function RadioCheckSettings() {
 
   return (
     <div className="">
-      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ === 'check' ? 'Check Box' : 'Radio'} fieldKey={fldKey} />
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ === 'check' ? 'Check Box' : 'Radio'}
+        fieldKey={fldKey}
+      />
 
       <FieldLabelSettings />
 
@@ -302,10 +315,18 @@ function RadioCheckSettings() {
           <AutoResizeInput
             ariaLabel="Admin label"
             value={adminLabel}
-            changeAction={setAdminLabel}
+            changeAction={e => setAdminLabel(e)}
           />
         </div>
       </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SubTitleSetting />
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <HelperTxtSetting />
 
       <hr className={css(FieldStyle.divider)} />
 
@@ -315,7 +336,13 @@ function RadioCheckSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
+          <input
+            aria-label="Name for this Field"
+            placeholder="Type field name here..."
+            className={css(FieldStyle.input)}
+            value={fieldName}
+            onChange={handleFieldName}
+          />
         </div>
       </SimpleAccordion>
 
@@ -340,8 +367,12 @@ function RadioCheckSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
-        <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} />
+      <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
+        <SingleToggle
+          title={__('Rounded', 'bitform')}
+          action={e => setRound(e)}
+          isChecked={isRound}
+        />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
@@ -366,7 +397,6 @@ function RadioCheckSettings() {
           tipTitle="By enabling this feature, user will see the error message when required option is not checked"
         />
       )} */}
-      {/* <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" /> */}
       {
         fieldData.typ === 'check' && (
           <>

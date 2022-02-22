@@ -1,8 +1,10 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import buttonStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
+import checkboxNradioStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import dividerStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
@@ -335,6 +337,8 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     // return Object.keys(editorConfig.texfieldStyle.properties)
     case 'check':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
+    case 'radio':
+      return Object.keys(editorConfig[fieldType][elementKey].properties)
 
     // eslint-disable-next-line no-fallthrough
     default:
@@ -357,7 +361,7 @@ export const styleClasses = {
   divider: ['divider'],
   image: ['img'],
   button: ['btn'],
-  hepTxt: ['hlp-txt'],
+  hlpTxt: ['hlp-txt'],
   hlpPreIcn: ['hlp-txt-pre-i'],
   hlpSufIcn: ['hlp-txt-suf-i'],
   prefixIcn: ['pre-i'],
@@ -382,7 +386,7 @@ export const removeUnuseStyles = (fields, setStyles) => {
       if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
       if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
       if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
-      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
+      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hlpTxt, fldkey)
       if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
       if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
       if (!fld.err) deleteStyles(deftStyles, styleClasses.err, fldkey)
@@ -463,6 +467,13 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const buttonStyleBitFormDefault = buttonStyle_1_bitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = buttonStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'check':
+      case 'radio':
+        const checkBoxStyleBitFormDefault = checkboxNradioStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       default:

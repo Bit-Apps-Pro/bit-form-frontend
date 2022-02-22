@@ -150,7 +150,7 @@ export default function ButtonSettings() {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
       fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hepTxt', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
     } else {
       fieldData.hlpTxtHide = false
       delete fieldData.helperTxt

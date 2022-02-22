@@ -24,7 +24,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -40,8 +40,9 @@ import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
 import IconStyleBtn from './IconStyleBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
-import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -66,7 +67,6 @@ function TextFieldSettings() {
   // const adminLblHide = fieldData.adminLblHide || true
   // const subtitleHide = fieldData.subtitleHide || true
   // const hlpTxtHide = fieldData.hlpTxtHide || true
-  const subtitle = fieldData.subtitle || ''
   const helperTxt = fieldData.helperTxt || ''
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
@@ -80,14 +80,8 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  const subTlePreIcn = `.${fldKey}-sub-titl-pre-i`
-  const subTleSufIcn = `.${fldKey}-sub-titl-suf-i`
-
   const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
   const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
-
-  const { width: subPreIcnWidth, height: subPreIcnHeight } = styles?.fields[fldKey]?.classes[subTlePreIcn] || {}
-  const { width: subSufIcnWidth, height: subSufIcnHeight } = styles?.fields[fldKey]?.classes[subTleSufIcn] || {}
 
   const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
   const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
@@ -153,36 +147,6 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  const setSubTitle = ({ target: { value } }) => {
-    if (value === '') {
-      delete fieldData.subtitle
-      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    } else {
-      fieldData.subtitle = value
-    }
-
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const hideSubTitle = ({ target: { checked } }) => {
-    if (checked) {
-      fieldData.subtitle = 'Sub Title'
-      fieldData.subtitleHide = true
-      addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
-    } else {
-      delete fieldData.subtitle
-      fieldData.subtitleHide = false
-    }
-    const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
   const setHelperTxt = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.helperTxt
@@ -199,7 +163,7 @@ function TextFieldSettings() {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
       fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hepTxt', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
     } else {
       fieldData.hlpTxtHide = false
       delete fieldData.helperTxt
@@ -495,19 +459,6 @@ function TextFieldSettings() {
     setUpdateBtn({ unsaved: true })
   }
 
-  const icnWidthHandle = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-  const icnHeightHandle = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
   const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
   const style = {
     dotBtn: {
@@ -568,195 +519,11 @@ function TextFieldSettings() {
 
         <hr className={css(FieldStyle.divider)} />
 
-        <SimpleAccordion
-          title={__('Sub Title', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideSubTitle}
-          toggleChecked={fieldData?.subtitleHide}
-          open={fieldData?.subtitleHide}
-          disable={!fieldData?.subtitleHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <AutoResizeInput
-              ariaLabel="Sub title for this Field"
-              placeholder="Type sub title here..."
-              value={subtitle}
-              changeAction={setSubTitle}
-            />
-          </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.subTlePreIcn && (
-                <>
-                  <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
-                  <IconStyleBtn route="sub-titl-pre-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData.subTlePreIcn && (
-                <button onClick={() => removeIcon('subTlePreIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-          {fieldData?.subTlePreIcn && (
-            <>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Width</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnWidthHandle(val, subTlePreIcn, subPreIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnWidth)}
-                    value={getNumFromStr(subPreIcnWidth) || 10}
-                    unit={getStrFromStr(subPreIcnWidth) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Height</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnHeightHandle(val, subTlePreIcn, subPreIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnHeight)}
-                    value={getNumFromStr(subPreIcnHeight) || 10}
-                    unit={getStrFromStr(subPreIcnHeight) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-            </>
-          )}
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.subTleSufIcn && (
-                <>
-                  <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
-                  <IconStyleBtn route="sub-titl-suf-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData.subTleSufIcn && (
-                <button onClick={() => removeIcon('subTleSufIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-          {fieldData?.subTleSufIcn && (
-            <>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>End Icon Width</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnWidthHandle(val, subTleSufIcn, subSufIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnWidth)}
-                    value={getNumFromStr(subSufIcnWidth) || 10}
-                    unit={getStrFromStr(subSufIcnWidth) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>End Icon Height</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnHeightHandle(val, subTleSufIcn, subSufIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnHeight)}
-                    value={getNumFromStr(subSufIcnHeight) || 10}
-                    unit={getStrFromStr(subSufIcnHeight) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-            </>
-          )}
-
-        </SimpleAccordion>
+        <SubTitleSetting />
 
         <hr className={css(FieldStyle.divider)} />
 
-        <SimpleAccordion
-          title={__('Helper Text', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideHelperTxt}
-          toggleChecked={fieldData?.hlpTxtHide}
-          open={fieldData?.hlpTxtHide}
-          disable={!fieldData?.hlpTxtHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <AutoResizeInput
-              aria-label="Helper text for this Field"
-              placeholder="Type Helper text here..."
-              value={helperTxt}
-              changeAction={setHelperTxt}
-            />
-          </div>
-          <div className={css(ut.mt2, { mx: 10 })}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Start Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.hlpPreIcn && (
-                  <>
-                    <img src={fieldData?.hlpPreIcn} alt="Hepler text start icon" width="18" height="18" />
-                    <IconStyleBtn route="hlp-txt-pre-i" />
-                  </>
-                )}
-
-                <button type="button" onClick={() => setIconModel('hlpPreIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.hlpPreIcn && (
-                  <button onClick={() => removeIcon('hlpPreIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>End Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.hlpSufIcn && (
-                  <>
-                    <img src={fieldData?.hlpSufIcn} alt="Hepler text end icon" width="18" height="18" />
-                    <IconStyleBtn route="hlp-txt-suf-i" />
-                  </>
-                )}
-
-                <button type="button" onClick={() => setIconModel('hlpSufIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.hlpSufIcn && (
-                  <button onClick={() => removeIcon('hlpSufIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-          </div>
-
-        </SimpleAccordion>
+        <HelperTxtSetting />
 
         <hr className={css(FieldStyle.divider)} />
 

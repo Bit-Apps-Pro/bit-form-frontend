@@ -67,7 +67,7 @@ export default function FieldLabelSettings() {
     const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const removeIcon = (iconType) => {
@@ -79,6 +79,7 @@ export default function FieldLabelSettings() {
   }
 
   const setIconModel = (typ) => {
+    console.log(typ)
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIcnType(typ)
     setIcnMdl(true)
@@ -112,11 +113,13 @@ export default function FieldLabelSettings() {
         disable={fieldData.valid.hideLbl}
       >
 
-        <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label} />
+        <div className={css({ w: '97%', mx: 5 })}>
+          <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label} />
+        </div>
 
-        <div className={css(ut.mt2, { mx: 10 })}>
+        <div className={css(ut.mt1)}>
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
+            <span className={css(ut.fw500, { ml: 5 })}>Start Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.lblPreIcn && (
                 <>
@@ -169,7 +172,7 @@ export default function FieldLabelSettings() {
           )}
 
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
+            <span className={css(ut.fw500, { ml: 5 })}>End Icon</span>
             <div className={css(ut.flxcb)}>
               {fieldData?.lblSufIcn && (
                 <>
