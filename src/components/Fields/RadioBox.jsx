@@ -10,38 +10,38 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
   const [value, setvalue] = useState(attr.val || '')
   const radioRef = useRef([])
   radioRef.current = attr.opt.map((_, i) => radioRef.current[i] ?? createRef())
-  useEffect(() => {
-    if (attr.val && !attr.userinput) {
-      setvalue(attr.val)
-    } else if (!attr.val && !attr.userinput) {
-      let defaultChecked
-      if (attr.opt) {
-        attr.opt.forEach(radioElment => {
-          if (radioElment.check) {
-            defaultChecked = radioElment.lbl
-          }
-        })
-      }
-      setvalue(defaultChecked || '')
-    } else if (attr.conditional) {
-      setvalue(attr.val)
-    }
-  }, [attr.val, attr.userinput, attr.conditional, attr.opt])
-  useEffect(() => {
-    if (resetFieldValue) {
-      setvalue('')
-    }
-  }, [resetFieldValue])
-  useEffect(() => {
-    if (attr.hasWorkflow && attr.val === value && onBlurHandler && !attr.userinput) {
-      const radioElm = radioRef.current.find(elm => elm.current.checked && elm.current.value === value)
-      if (radioElm) {
-        const { current } = radioElm
-        onBlurHandler(current)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  // useEffect(() => {
+  //   if (attr.val && !attr.userinput) {
+  //     setvalue(attr.val)
+  //   } else if (!attr.val && !attr.userinput) {
+  //     let defaultChecked
+  //     if (attr.opt) {
+  //       attr.opt.forEach(radioElment => {
+  //         if (radioElment.check) {
+  //           defaultChecked = radioElment.lbl
+  //         }
+  //       })
+  //     }
+  //     setvalue(defaultChecked || '')
+  //   } else if (attr.conditional) {
+  //     setvalue(attr.val)
+  //   }
+  // }, [attr.val, attr.userinput, attr.conditional, attr.opt])
+  // useEffect(() => {
+  //   if (resetFieldValue) {
+  //     setvalue('')
+  //   }
+  // }, [resetFieldValue])
+  // useEffect(() => {
+  //   if (attr.hasWorkflow && attr.val === value && onBlurHandler && !attr.userinput) {
+  //     const radioElm = radioRef.current.find(elm => elm.current.checked && elm.current.value === value)
+  //     if (radioElm) {
+  //       const { current } = radioElm
+  //       onBlurHandler(current)
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [value])
 
   const onChangeHandler = (event) => {
     if (attr.valid.disabled) {
@@ -57,7 +57,6 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
     const { name, form } = e.target
     validateForm({ input: { name, form, value } })
   }
-
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -79,13 +78,19 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 {...itm.check && { checked: true }}
                 {...attr.valid.req && { required: true }}
                 {...'name' in attr && { name: attr.name }}
-                {...{ checked: value === (itm.val || itm.lbl) }}
+                // {...{ checked: value === (itm.val || itm.lbl) }}
                 // {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
+                checked={value === (itm.val || itm.lbl)}
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
               />
               <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <span data-bx className={`${fieldKey}-bx`} />
+                {/* <span data-bx className={`${fieldKey}-bx`} /> */}
+                <span data-bx className={`${fieldKey}-bx ${fieldKey}-rdo`}>
+                  <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
+                    <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
+                  </svg>
+                </span>
                 <span className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
               </label>
             </div>

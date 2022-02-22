@@ -361,6 +361,10 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'ck'
       elementKey = 'ck'
       break
+    case 'radio-box':
+      classKey = 'rdo'
+      elementKey = 'rdo'
+      break
     default:
       elementKey = element
       classKey = element

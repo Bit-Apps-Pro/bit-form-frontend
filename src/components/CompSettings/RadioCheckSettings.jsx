@@ -68,7 +68,7 @@ function RadioCheckSettings() {
   }
 
   function setRound({ target: { checked } }) {
-    const fldClsSelector = fieldData.typ === 'radio' ? 'bx' : 'ck'
+    const fldClsSelector = fieldData.typ === 'radio' ? 'rdo' : 'ck'
     const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
     setStyles(prvStyles => produce(prvStyles, drft => {
       let bdr = '5px'

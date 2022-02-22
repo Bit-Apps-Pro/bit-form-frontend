@@ -102,14 +102,27 @@ export default function StyleLayers() {
                     highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
                   />
-                  <NavBtn
-                    subRoute={fldKey}
-                    route="check-box"
-                    label="Check Box"
-                    offset="2.5"
-                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
-                  />
+                  {fldData.typ.match(/(check)/gi) && (
+                    <NavBtn
+                      subRoute={fldKey}
+                      route="check-box"
+                      label="Check Box"
+                      offset="2.5"
+                      highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    />
+                  )}
+                  {fldData.typ.match(/(radio)/gi) && (
+
+                    <NavBtn
+                      subRoute={fldKey}
+                      route="radio-box"
+                      label="Radio Box"
+                      offset="2.5"
+                      highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    />
+                  )}
                 </>
               )}
               {!fldData.typ.match(/^(button|divider|title|image|check|)$/) && (

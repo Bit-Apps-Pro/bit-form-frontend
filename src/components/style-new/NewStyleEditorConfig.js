@@ -264,7 +264,7 @@ const editorConfig = {
         'font-style': '',
       },
     },
-    ck: {
+    rdo: {
       states: ['hover', 'focus', 'checked'],
       properties: { ...chackProps },
     },
