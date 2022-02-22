@@ -327,7 +327,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       icn: <FileUploadIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, minW: 20 },
       elm: {
-        typ: 'ad-file-up',
+        typ: 'advance-file-up',
         lbl: __('File Upload', 'bitform'),
         upBtnTxt: 'Attach File',
         valid: {},

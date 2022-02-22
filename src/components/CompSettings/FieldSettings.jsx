@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import AdFileUpSettings from './AdFileUpSettings'
+import AdvanceFileUpSettings from './AdvanceFileUpSettings'
 import ButtonSettings from './ButtonSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
@@ -49,7 +49,7 @@ export default function FieldSettings() {
     case 'dropdown':
       return <SelectSettings />
     case 'file-up': return <FileUpSettings />
-    case 'ad-file-up': return <AdFileUpSettings />
+    case 'advance-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettigns />
     case 'decision-box': return <DecisionBoxSettings />
     case 'html': return <HtmlFieldSettings />
