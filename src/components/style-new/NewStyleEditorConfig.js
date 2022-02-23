@@ -23,6 +23,7 @@ const labelCssProps = {
   margin: '5px',
   padding: '5px',
   opacity: '100%',
+  transition: '',
 }
 const iconCssProps = {
   border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
@@ -33,6 +34,7 @@ const iconCssProps = {
   size: { width: '100%', height: '100%' },
   'box-shadow': '',
   filter: '',
+  transition: '',
 }
 
 const fieldWrpCssProps = {
@@ -56,6 +58,7 @@ const fieldWrpCssProps = {
   'box-shadow': '',
   width: '',
   height: '',
+  transition: '',
 }
 
 const textFldCssProps = {
@@ -355,6 +358,7 @@ const editorConfig = {
         margin: '5px',
         opacity: '100%',
         'box-shadow': '',
+        transition: '',
       },
     },
   },
@@ -419,6 +423,44 @@ const editorConfig = {
       properties: { ...iconCssProps },
     },
     'hlp-txt-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+  },
+  'advanced-file-up': {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    fld: {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'lbl-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    lbl: {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'lbl-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'lbl-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'err-msg': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'err-txt-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'err-txt-suf-i': {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
