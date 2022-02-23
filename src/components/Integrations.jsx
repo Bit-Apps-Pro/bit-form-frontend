@@ -61,7 +61,7 @@ function Integrations() {
   const history = useHistory()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
-  const { isPro } = bits
+  const { isPro, proPluginVersion } = bits
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks, pro: !isPro },
@@ -82,7 +82,7 @@ function Integrations() {
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Autonami', logo: autonami, pro: !isPro },
-    { type: 'Dropbox', logo: dropbox, pro: !isPro },
+    { type: 'Dropbox', logo: dropbox, pro: !isPro || proPluginVersion < '1.4.15' },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
