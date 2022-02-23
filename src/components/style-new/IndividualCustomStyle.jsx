@@ -34,7 +34,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import TextDecorationControl from './TextDecorationControl'
 import TransitionControl from './TransitionControl'
 
@@ -60,17 +60,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
 
-  const getValueFromThemeVar = (val) => {
-    if (val && val.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
-      return themeVars[getVarProperty]
-    }
-    return val
-  }
-
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
-    const themeVal = getValueFromThemeVar(getVlu?.replace('!important', ''))
+    const themeVal = getValueFromStateVar(themeVars, getVlu?.replace('!important', ''))
     const value = getNumFromStr(themeVal) || 0
     const unit = getStrFromStr(themeVal)
     return [value, unit]
@@ -92,11 +84,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.opacity))]
-  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.width))]
-  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.height))]
+  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity))]
+  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width))]
+  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height))]
   const [fldZIndex] = [getNumFromStr(existCssPropsObj?.['z-index'])]
-  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(getValueFromThemeVar(existCssPropsObj?.['font-size']))]
+  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size']))]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {

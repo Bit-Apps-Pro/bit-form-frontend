@@ -547,3 +547,17 @@ export const isValidURL = (string) => {
   const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g)
   return (res !== null)
 }
+
+/**
+ * @method getValueFromStateVar()
+ * @param {themeVars | themeColorVars} stateObj
+ * @param {var(cssVarName) | property value} val like (--margin) | 10px
+ * @returns property value like 10px
+ */
+export const getValueFromStateVar = (stateObj, val) => {
+  if (val && val.match(/var/g)?.[0] === 'var') {
+    const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+    return stateObj[getVarProperty]
+  }
+  return val
+}
