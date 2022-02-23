@@ -8,7 +8,7 @@ import ut from '../../../../styles/2.utilities'
 import { getElmDataBasedOnElement } from '../../../../Utils/Helpers'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getObjByKey, getValueByObjPath, setStyleStateObj } from '../../../style-new/styleHelpers'
+import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
@@ -30,10 +30,10 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
   const { elementKey, classKey } = getElmDataBasedOnElement(element)
   const borderPropObj = editorConfig[fieldType][elementKey].properties.border
   const borderPropKeys = Object.keys(borderPropObj)
-  const border = getValueByObjPath(stateObj, paths[borderPropKeys[0]])
-  const borderColor = getValueByObjPath(stateObj, paths['border-color'])
-  const borderWidth = getValueByObjPath(stateObj, paths['border-width'])
-  const borderRadius = getValueByObjPath(stateObj, paths['border-radius'])
+  const border = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths[borderPropKeys[0]]))
+  const borderColor = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-color']))
+  const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-width']))
+  const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-radius']))
 
   const onSizeChange = (pathName, val) => {
     setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
