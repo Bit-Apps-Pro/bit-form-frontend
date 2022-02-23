@@ -170,7 +170,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                 </div>
               </div>
               {!transitionFunc.includes(transitionObj.func) && (
-                <input type="text" aria-label="Custom transition" onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)} value={transitionObj.func} />
+                <input className={css(c.input)} type="text" aria-label="Custom transition" onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)} value={transitionObj.func} />
               )}
             </div>
           </SimpleAccordion>
@@ -237,6 +237,26 @@ const c = {
     ':active': { tm: 'scale(0.95)' },
   },
   overflowXhidden: { owx: 'hidden' },
+  input: {
+    fs: 14,
+    fw: 500,
+    w: '100%',
+    h: 35,
+    bd: 'var(--b-79-96) !important',
+    oe: 'none !important',
+    mx: 'auto',
+    dy: 'block',
+    lh: '2 !important',
+    px: 8,
+    mt: 10,
+    mb: 3,
+    bs: 'none !important',
+    brs: '8px !important',
+    tn: 'box-shadow .3s',
+    b: '1px solid #e6e6e6 !important',
+    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
+    ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
+  },
 }
 
 const transitionFunc = [

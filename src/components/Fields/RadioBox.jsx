@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect, createRef } from 'react'
+import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
