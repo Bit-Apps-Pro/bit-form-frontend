@@ -115,6 +115,8 @@ const FieldIcon = icon => {
       return <PaypalIcn w="14" />
     case 'razorpay':
       return <RazorPayIcn w="14" h="19" />
+    case 'advanced-file-up':
+      return <FileUploadIcn w="14" />
     default:
       return false
   }
