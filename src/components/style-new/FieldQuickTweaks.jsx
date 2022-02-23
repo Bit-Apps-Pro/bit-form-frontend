@@ -99,6 +99,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         objPath = '--global-accent-color'
         break
       case 'check':
+      case 'radio':
         objName = 'styles'
         objPath = [
           `fields->${fieldKey}->classes->.${fieldKey}-ci:checked ~ .${fieldKey}-cl .${fieldKey}-bx->border-color`,
@@ -110,9 +111,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
     }
     return [objName, objPath]
   }
-  console.log(styles.fields[fieldKey])
   const [objName, objPath] = fldTypWiseAccentColorObjName()
-  console.log(fldTypWiseAccentColorObjName(), objPath)
+
   return (
     <>
       {fieldType !== 'title' && (
@@ -120,7 +120,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <SimpleColorPicker
             title="Accent Color"
             subtitle="Accent Color"
-            value={accentColor}
+            value={getValueByObjPath(styles, objPath[0]) || accentColor}
             stateObjName={objName}
             propertyPath={objPath}
             modalId="global-primary-clr"

@@ -23,6 +23,9 @@ const labelCssProps = {
   margin: '5px',
   padding: '5px',
   opacity: '100%',
+  'line-height': '',
+  'word-spacing': '',
+  'letter-spacing': '',
 }
 const iconCssProps = {
   border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },

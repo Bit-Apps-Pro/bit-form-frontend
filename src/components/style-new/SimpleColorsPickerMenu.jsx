@@ -69,15 +69,12 @@ function SimpleColorsPickerMenu({ stateObjName,
 
       case 'styles':
         const pathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
-        console.log(pathArr)
         const styleColor = getValueByObjPath(styles, pathArr)
         let c = styleColor
         if (styleColor?.match(/var/gi)?.[0] === 'var') {
           const varClr = styleColor?.replaceAll(/\(|var|,.*|\)/gi, '')
           c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
-          console.log('c', c)
         }
-        console.log('c', c)
         setColor(str2Color(c))
         break
 
@@ -105,6 +102,7 @@ function SimpleColorsPickerMenu({ stateObjName,
           }
         }))
         break
+
       case 'themeVars':
         setThemeVars(prvState => produce(prvState, drftThmVar => {
           drftThmVar[propertyPath] = hslaStr
@@ -116,15 +114,7 @@ function SimpleColorsPickerMenu({ stateObjName,
           }
         }))
         break
-      // case 'styles':
-      //   setStyles(prvState => produce(prvState, drftStyles => {
-      //     let hslaColor = hslaStr
-      //     const value = getValueByObjPath(drftStyles, propertyPath)
-      //     const checkExistImportant = value?.match(/!important/gi)?.[0]
-      //     if (checkExistImportant) hslaColor = `${hslaColor} !important`
-      //     assignNestedObj(drftStyles, propertyPath, hslaColor)
-      //   }))
-      //   break
+
       case 'field-accent-color':
         setStyles(prvState => produce(prvState, drftStyles => {
           const v = `${hslaStr}!important`
@@ -134,6 +124,7 @@ function SimpleColorsPickerMenu({ stateObjName,
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = v
         }))
         break
+
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
           let hslaColor = hslaStr
@@ -146,11 +137,9 @@ function SimpleColorsPickerMenu({ stateObjName,
           } else {
             assignNestedObj(drftStyles, propertyPath, hslaColor)
           }
-          // drftStyles.fields[fldKey].classes[`.${fldKey}-ci:checked ~ .${fldKey}-cl .${fldKey}-bx`]['border-color'] = `${hslaStr}!important`
-          // drftStyles.fields[fldKey].classes[`.${fldKey}-ci:checked ~ .${fldKey}-cl .${fldKey}-bx`].background = `${hslaStr}!important`
         }))
+        break
 
-      // eslint-disable-next-line no-fallthrough
       default:
         break
     }
