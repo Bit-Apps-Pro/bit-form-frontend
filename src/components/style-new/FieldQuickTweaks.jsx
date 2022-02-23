@@ -14,7 +14,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -54,7 +54,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const borderRadHandler = ({ value, unit }) => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault' && fld.fieldType === 'text') {
+      if (fld.theme === 'bitformDefault' && fld.fieldType.match(/(text|date)/gi)) {
         assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), `${value}${unit}`)
       } else if (fld.theme === 'bitformDefault' && fld.fieldType === 'check') {
         assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), `${value}${unit}`)
@@ -63,16 +63,14 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const getBorderRadius = () => {
-    const elementKey = styles.fields[fieldKey].fieldType === 'text' ? 'fld' : 'ck'
+    const elementKey = styles.fields[fieldKey].fieldType.match(/(text|date)/gi) ? 'fld' : 'ck'
     let brsValue = getValueByObjPath(styles, propertyPath(elementKey, 'border-radius'))
-    if (brsValue?.match(/var/gi)?.[0]) {
-      brsValue = brsValue?.replaceAll(/\(|var|,.*|\)/gi, '')
-      brsValue = themeVars[brsValue] !== '' ? themeVars[brsValue] : '0px'
-    }
+    brsValue = getValueFromStateVar(themeVars, brsValue)
     if (!brsValue) brsValue = '0px'
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
   const [borderRadVal, borderRadUnit] = getBorderRadius()
+  
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
     if (val === 'center') justifyContent = 'center'
