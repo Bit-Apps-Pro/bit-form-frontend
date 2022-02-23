@@ -6,19 +6,16 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import CloseIcn from '../../../Icons/CloseIcn'
-import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
-import IconStyleBtn from '../IconStyleBtn'
+import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
-import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import AutoResizeInput from './AutoResizeInput'
 
 export default function FieldLabelSettings() {
@@ -35,12 +32,6 @@ export default function FieldLabelSettings() {
   const [styles, setStyles] = useRecoilState($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-
-  const lblPreIcnCls = `.${fldKey}-lbl-pre-i`
-  const lblSufIcnCls = `.${fldKey}-lbl-suf-i`
-
-  const { width: lblPreIcnWidth, height: lblPreIcnHeight } = styles?.fields[fldKey]?.classes[lblPreIcnCls] || {}
-  const { width: lblSufIcnWidth, height: lblSufIcnHeight } = styles?.fields[fldKey]?.classes[lblSufIcnCls] || {}
 
   function setLabel(e) {
     if (e.target.value === '') {
@@ -85,20 +76,6 @@ export default function FieldLabelSettings() {
     setIcnMdl(true)
   }
 
-  const lblWidthHandler = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
-  const lblHeightHandler = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
   return (
     <>
       <SimpleAccordion
@@ -117,111 +94,21 @@ export default function FieldLabelSettings() {
           <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label} />
         </div>
 
-        <div className={css(ut.mt1)}>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, { ml: 5 })}>Start Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.lblPreIcn && (
-                <>
-                  <img src={fieldData?.lblPreIcn} alt="start icon" width="18" height="18" />
-                  <IconStyleBtn route="lbl-pre-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('lblPreIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.lblPreIcn && (
-                <button onClick={() => removeIcon('lblPreIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-
-          {fieldData?.lblPreIcn && (
-            <>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Width</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => lblWidthHandler(val, lblPreIcnCls, lblPreIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblPreIcnCls, lblPreIcnWidth)}
-                    value={getNumFromStr(lblPreIcnWidth) || 10}
-                    unit={getStrFromStr(lblPreIcnWidth) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Height</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => lblHeightHandler(val, lblPreIcnCls, lblPreIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblPreIcnCls, lblPreIcnHeight)}
-                    value={getNumFromStr(lblPreIcnHeight) || 10}
-                    unit={getStrFromStr(lblPreIcnHeight) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-            </>
-          )}
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, { ml: 5 })}>End Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.lblSufIcn && (
-                <>
-                  <img src={fieldData?.lblSufIcn} alt="end icon" width="18" height="18" />
-                  <IconStyleBtn route="lbl-suf-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('lblSufIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.lblSufIcn && (
-                <button onClick={() => removeIcon('lblSufIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-          {fieldData?.lblSufIcn && (
-            <>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Width</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => lblWidthHandler(val, lblSufIcnCls, lblSufIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblSufIcnCls, lblSufIcnWidth)}
-                    value={getNumFromStr(lblSufIcnWidth) || 10}
-                    unit={getStrFromStr(lblSufIcnWidth) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Start Icon Height</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => lblHeightHandler(val, lblSufIcnCls, lblSufIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblSufIcnCls, lblSufIcnHeight)}
-                    value={getNumFromStr(lblSufIcnHeight) || 10}
-                    unit={getStrFromStr(lblSufIcnHeight) || 'px'}
-                    width="80px"
-                    options={['px', '%']}
-                  />
-                </div>
-              </div>
-            </>
-          )}
+        <div className={css(ut.mt2, { mx: 10 })}>
+          <FieldIconSettings
+            label="Start Icon"
+            iconSrc={fieldData?.lblPreIcn}
+            styleRoute="lbl-pre-i"
+            setIcon={() => setIconModel('lblPreIcn')}
+            removeIcon={() => removeIcon('lblPreIcn')}
+          />
+          <FieldIconSettings
+            label="End Icon"
+            iconSrc={fieldData?.lblSufIcn}
+            styleRoute="lbl-suf-i"
+            setIcon={() => setIconModel('lblSufIcn')}
+            removeIcon={() => removeIcon('lblSufIcn')}
+          />
         </div>
       </SimpleAccordion>
       <Modal
