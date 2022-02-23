@@ -49,7 +49,7 @@ export default function FieldSettings() {
     case 'dropdown':
       return <SelectSettings />
     case 'file-up': return <FileUpSettings />
-    case 'advance-file-up': return <AdvanceFileUpSettings />
+    case 'advanced-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettigns />
     case 'decision-box': return <DecisionBoxSettings />
     case 'html': return <HtmlFieldSettings />
