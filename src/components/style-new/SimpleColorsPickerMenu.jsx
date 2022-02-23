@@ -118,7 +118,7 @@ function SimpleColorsPickerMenu({ stateObjName,
       case 'field-accent-color':
         setStyles(prvState => produce(prvState, drftStyles => {
           const v = `${hslaStr}!important`
-          const sc = `0 0 0 3px hsla(${h}, ${s}, ${l}, 0.30)!important`
+          const sc = `0px 0px 0px 3px hsla(${h}, ${s}%, ${l}%, 0.30)!important`
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = v
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = v
@@ -131,9 +131,15 @@ function SimpleColorsPickerMenu({ stateObjName,
           const propertyPathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
           const value = getValueByObjPath(drftStyles, propertyPathArr)
           const checkExistImportant = value?.match(/!important/gi)?.[0]
+          const sc = `0px 0px 0px 3px hsla(${h}, ${s}%, ${l}%, 0.30) !important`
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
           if (Array.isArray(propertyPath)) {
-            propertyPath.forEach(path => assignNestedObj(drftStyles, path, hslaColor))
+            propertyPath.forEach(path => {
+              const pathArr = path.split('->')
+              const lastIndx = pathArr.length - 1
+              if (pathArr[lastIndx] === 'box-shadow') assignNestedObj(drftStyles, path, sc)
+              else assignNestedObj(drftStyles, path, hslaColor)
+            })
           } else {
             assignNestedObj(drftStyles, propertyPath, hslaColor)
           }

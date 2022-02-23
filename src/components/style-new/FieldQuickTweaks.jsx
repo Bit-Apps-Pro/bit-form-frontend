@@ -94,25 +94,32 @@ export default function FieldQuickTweaks({ fieldKey }) {
     let objName = ''
     let objPath = ''
     switch (fieldType) {
-      case 'text':
-        objName = 'field-accent-color'
-        objPath = '--global-accent-color'
-        break
       case 'check':
       case 'radio':
         objName = 'styles'
         objPath = [
           `fields->${fieldKey}->classes->.${fieldKey}-ci:checked ~ .${fieldKey}-cl .${fieldKey}-bx->border-color`,
           `fields->${fieldKey}->classes->.${fieldKey}-ci:checked ~ .${fieldKey}-cl .${fieldKey}-bx->background`,
+          `fields->${fieldKey}->classes->.${fieldKey}-ci:focus ~ .${fieldKey}-cl .${fieldKey}-bx->box-shadow`,
+        ]
+        break
+      case 'text':
+      case 'date':
+        objName = 'styles'
+        objPath = [
+          `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->border-color`,
+          `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->box-shadow`,
+          `fields->${fieldKey}->classes->.${fieldKey}-fld:hover->border-color`,
         ]
         break
       default:
+        // objName = 'field-accent-color'
+        // objPath = '--global-accent-color'
         break
     }
     return [objName, objPath]
   }
   const [objName, objPath] = fldTypWiseAccentColorObjName()
-
   return (
     <>
       {fieldType !== 'title' && (
