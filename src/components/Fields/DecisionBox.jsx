@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react'
-import validateForm from '../../user-frontend/validation'
+import { useState } from 'react'
+import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
-export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   let { checked } = attr.valid
-  const checkBoxRef = useRef(null)
   const defaultValue = attr.val || (checked ? attr.msg.checked : attr.msg.unchecked)
   const [value, setvalue] = useState(defaultValue)
   if (value === attr.msg.unchecked) {
@@ -14,19 +14,19 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
   } else if (value === attr.msg.checked) {
     checked = true
   }
-  useEffect(() => {
-    if (resetFieldValue) {
-      setvalue(defaultValue)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetFieldValue])
-  useEffect(() => {
-    if (attr.hasWorkflow && onBlurHandler && !attr.userinput) {
-      const { current } = checkBoxRef
-      onBlurHandler(current)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  // useEffect(() => {
+  //   if (resetFieldValue) {
+  //     setvalue(defaultValue)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [resetFieldValue])
+  // useEffect(() => {
+  //   if (attr.hasWorkflow && onBlurHandler && !attr.userinput) {
+  //     const { current } = checkBoxRef
+  //     onBlurHandler(current)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [value])
   const onChangeHandler = (event) => {
     if (attr.valid.disabled) {
       return
@@ -41,43 +41,62 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
     }
   }
 
-  const handleBlur = e => {
-    const { form } = e.target
-    validateForm({ input: { name: attr.name, form, value: e.target.checked ? attr.msg.checked : attr.msg.unchecked } })
-  }
+  // const handleBlur = e => {
+  //   const { form } = e.target
+  //   validateForm({
+  //     input: {
+  //       name: attr.name,
+  //       form,
+  //       value: e.target.checked ? attr.msg.checked : attr.msg.unchecked,
+  //     },
+  //   })
+  // }
+
   return (
-    <InputWrapper
-      formID={formID}
-      fieldKey={attr.name}
-      fieldData={attr}
-      noLabel
-    >
-      <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
-        <label className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
-          <span
-            className="decision-content"
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: attr.lbl || attr?.info?.lbl }}
-          />
-          <input type="hidden" value={value} {...'name' in attr && { name: attr.name }} />
-          <input
-            style={{
-              height: attr.valid.req && 1,
-              width: attr.valid.req && 1,
-            }}
-            type="checkbox"
-            ref={checkBoxRef}
-            disabled={attr?.valid?.disabled}
-            readOnly={attr?.valid?.readonly}
-            {...attr.valid.req && { required: true }}
-            {...{ checked }}
-            value={value}
-            onChange={onChangeHandler}
-            onBlur={handleBlur}
-          />
-          <span className="btcd-mrk ck" />
-        </label>
-      </div>
-    </InputWrapper>
+    <>
+      <RenderStyle styleClasses={styleClasses} />
+
+      <InputWrapper
+        formID={formID}
+        // fieldKey={attr.name}
+        fieldKey={fieldKey}
+        fieldData={attr}
+        noLabel
+      >
+        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc`}>
+          <svg className={`${fieldKey}-cks`}>
+            <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
+              <polyline
+                className={`${fieldKey}-ck-svgline`}
+                points="1.5 6 4.5 9 10.5 1"
+              />
+            </symbol>
+          </svg>
+
+          <div data-dev-cw={fieldKey} className={`${fieldKey}-cw`}>
+            <input
+              id={`${fieldKey}-decision`}
+              type="checkbox"
+              className={`${fieldKey}-ci`}
+              disabled={attr.valid.disabled}
+              defaultValue={attr?.info?.lbl}
+              required={attr.valid.req}
+              name={attr?.info?.lbl}
+              checked={checked}
+              value={value}
+              onChange={(e) => onChangeHandler(e)}
+            />
+            <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-decision`} className={`${fieldKey}-cl`}>
+              <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck`}>
+                <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
+                  <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
+                </svg>
+              </span>
+              <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(attr.lbl || attr?.info?.lbl)}</span>
+            </label>
+          </div>
+        </div>
+      </InputWrapper>
+    </>
   )
 }

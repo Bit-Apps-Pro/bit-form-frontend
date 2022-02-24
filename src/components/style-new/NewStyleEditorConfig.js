@@ -256,6 +256,43 @@ const editorConfig = {
     },
 
   },
+  'decision-box': {
+    ...textFldCssProps,
+    cw: {
+      states: ['hover'],
+      properties: { ...chackProps },
+    },
+    cc: {
+      states: ['hover'],
+      properties: { ...chackProps },
+    },
+    cl: {
+      states: ['hover'],
+      properties: {
+        ...chackProps,
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+      },
+    },
+    ck: {
+      states: ['hover', 'focus', 'checked'],
+      properties: { ...chackProps },
+    },
+    ct: {
+      states: ['hover', 'focus'],
+      properties: {
+        ...chackProps,
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        'line-height': '',
+        'word-spacing': '',
+        'letter-spacing': '',
+      },
+    },
+
+  },
   radio: {
     ...textFldCssProps,
     cw: {

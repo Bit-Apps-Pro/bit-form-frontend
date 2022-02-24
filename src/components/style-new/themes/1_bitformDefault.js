@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import buttonStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
+import decisionBoxStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/decisionBoxStyle_1_bitformDefault'
 import dividerStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
@@ -55,6 +56,14 @@ export default function bitformDefaultTheme(fk, type, direction) {
         // fieldThemeVars: {},
         overrideGlobalTheme: [],
         classes: textStyle_1_bitformDefault({ fk, type, direction }),
+      }
+    case 'decision-box':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        // fieldThemeVars: {},
+        overrideGlobalTheme: [],
+        classes: decisionBoxStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'check':
     case 'radio':

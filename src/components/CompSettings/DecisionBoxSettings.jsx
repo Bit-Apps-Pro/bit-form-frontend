@@ -81,7 +81,6 @@ export default function DecisionBoxSettings() {
 
   return (
     <div>
-
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
       {/*
@@ -98,8 +97,16 @@ export default function DecisionBoxSettings() {
         <div className="flx flx-between">
           <div className="flx">
             <b>Label: </b>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className="txt-body">{__('Edit your decision box label by clicking on edit icon', 'bitform')}</div>
+            <Cooltip
+              width={250}
+              icnSize={17}
+              className={css(ut.ml2)}
+            >
+              <div
+                className="txt-body"
+              >
+                {__('Edit your decision box label by clicking on edit icon', 'bitform')}
+              </div>
             </Cooltip>
           </div>
           <span
@@ -176,7 +183,13 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Checked value" className={css(FieldStyle.input)} type="text" value={fieldData.msg.checked || ''} onChange={e => setMsg(e.target.value, 'checked')} />
+          <input
+            aria-label="Checked value"
+            className={css(FieldStyle.input)}
+            type="text"
+            value={fieldData.msg.checked || ''}
+            onChange={e => setMsg(e.target.value, 'checked')}
+          />
         </div>
       </SimpleAccordion>
 
@@ -188,13 +201,23 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Uncheked value" className={css(FieldStyle.input)} type="text" value={fieldData.msg.unchecked || ''} onChange={e => setMsg(e.target.value, 'unchecked')} />
+          <input
+            aria-label="Uncheked value"
+            className={css(FieldStyle.input)}
+            type="text"
+            value={fieldData.msg.unchecked || ''}
+            onChange={e => setMsg(e.target.value, 'unchecked')}
+          />
         </div>
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={css(FieldStyle.fieldSection, ut.pr8)}>
-        <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={fieldData.valid.checked} />
+      <div className={css(FieldStyle.fieldSection, { pr: '10px !important' })}>
+        <SingleToggle
+          title={__('Checked by Default:', 'bitform')}
+          action={setChecked}
+          isChecked={fieldData.valid.checked}
+        />
       </div>
       <hr className={css(FieldStyle.divider)} />
       {/* <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={fieldData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} /> */}
