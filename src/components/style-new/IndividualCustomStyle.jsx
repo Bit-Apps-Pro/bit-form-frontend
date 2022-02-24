@@ -15,6 +15,7 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sizeControlStyle from '../../styles/sizeControl.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { ucFirst } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { staticFontStyleVariants, staticFontweightVariants } from '../../Utils/StaticData/fontvariant'
 import CustomInputControl from '../CompSettings/StyleCustomize/ChildComp/CustomInputControl'
@@ -77,9 +78,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       const preValue = getValueByObjPath(drft, propertyPath)
       const isAlreadyImportant = preValue?.match(/(!important)/gi)?.[0]
       let v = `${convertvalue}${unit}`
-      if (isAlreadyImportant) {
-        v = `${v} !important`
-      }
+      if (isAlreadyImportant) v = `${v} !important`
       assignNestedObj(drft, propertyPath, v)
     }))
   }
@@ -175,7 +174,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   ]
   const { states } = editorConfig[fieldType][elementKey]
   states?.map(state => {
-    const stateLabel = state ? `${state.slice(0, 1).toUpperCase()}${state.slice(1)}` : 'Default'
+    const stateLabel = state ? ucFirst(state) : 'Default'
     options.push({ label: stateLabel, icn: stateLabel, show: ['icn'], tip: `${stateLabel} Style` })
   })
 

@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 import ut from '../../../styles/2.utilities'
 import style from '../../../styles/FieldSettingTitle.style'
+import { ucFirst } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CoolCopy from '../../Utilities/CoolCopy'
 import Back2FldBtn from '../Back2FldBtn'
@@ -14,7 +15,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
         <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
         <div>
           <div className={css(style.mainTitle)}>{__(title, 'bitform')}</div>
-          <span className={css(style.subtitle, ut.fontBody)}>{__(subtitle[0].toUpperCase() + subtitle.slice(1), 'bitform')}</span>
+          <span className={css(style.subtitle, ut.fontBody)}>{__(ucFirst(subtitle), 'bitform')}</span>
         </div>
       </div>
 
