@@ -68,30 +68,14 @@ export default function StyleLayers() {
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
               <ElementConfiguration fldKey={fldKey} />
-              {fldData.typ.match(/^(check|radio)$/gi) && (
+              {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
                     route="check-container"
                     label="Check Container"
                     offset="2.5"
-                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
-                  />
-                  <NavBtn
-                    subRoute={fldKey}
-                    route="check-wrapper"
-                    label="Check Wrapper"
-                    offset="2.5"
-                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
-                  />
-                  <NavBtn
-                    subRoute={fldKey}
-                    route="option-wrapper"
-                    label="Option Wrapper"
-                    offset="2.5"
-                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    highlightSelector={`[data-dev-cc="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
                   />
                   <NavBtn
@@ -99,27 +83,49 @@ export default function StyleLayers() {
                     route="option-label"
                     label="Option Label"
                     offset="2.5"
-                    highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                    highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
                   />
-                  {fldData.typ.match(/(check)/gi) && (
-                    <NavBtn
-                      subRoute={fldKey}
-                      route="check-box"
-                      label="Check Box"
-                      offset="2.5"
-                      highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
-                      styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
-                    />
-                  )}
-                  {fldData.typ.match(/(radio)/gi) && (
+                </>
+              )}
 
+              {fldData.typ.match(/(check|decision-box)/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="check-box"
+                  label="Check Box"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-ck="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                />
+              )}
+              {fldData.typ.match(/^(check|radio)$/gi) && (
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="check-wrapper"
+                    label="Check Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-cw="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option-wrapper"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-cl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  />
+
+
+                  {fldData.typ.match(/(radio)/gi) && (
                     <NavBtn
                       subRoute={fldKey}
                       route="radio-box"
                       label="Radio Box"
                       offset="2.5"
-                      highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                      highlightSelector={`[data-dev-rdo="${fldKey}"]`}
                       styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
                     />
                   )}

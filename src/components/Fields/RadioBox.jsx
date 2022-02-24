@@ -65,9 +65,9 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div className={`${fieldKey}-cc`}>
+        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc`}>
           {attr.opt.map((itm, i) => (
-            <div key={`opr-${i + 22}`} className={`${fieldKey}-cw`}>
+            <div data-dev-cw={fieldKey} key={`opr-${i + 22}`} className={`${fieldKey}-cw`}>
               <input
                 id={`${fieldKey}-chk-${i}`}
                 type="radio"
@@ -84,14 +84,14 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
               />
-              <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
                 {/* <span data-bx className={`${fieldKey}-bx`} /> */}
-                <span data-bx className={`${fieldKey}-bx ${fieldKey}-rdo`}>
+                <span data-dev-rdo={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-rdo`}>
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
-                <span className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
+                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
               </label>
             </div>
           ))}

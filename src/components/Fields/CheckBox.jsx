@@ -97,7 +97,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldData={attr}
       >
         {/* cc for checkbox container */}
-        <div className={`${fieldKey}-cc`}>
+        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc`}>
           <svg className={`${fieldKey}-cks`}>
             <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
               <polyline
@@ -107,7 +107,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
             </symbol>
           </svg>
           {attr.opt.map((itm, i) => (
-            <div key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
+            <div data-dev-cw={fieldKey} key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
               <input
                 id={`${fieldKey}-chk-${i}`}
                 type="checkbox"
@@ -123,13 +123,13 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 checked={checkBoxes.checked.includes(i) || itm?.check}
                 onChange={(e) => onChangeHandler(e, i)}
               />
-              <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <span data-bx className={`${fieldKey}-bx ${fieldKey}-ck`}>
+              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+                <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck`}>
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
-                <span className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
+                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
               </label>
             </div>
           ))}
