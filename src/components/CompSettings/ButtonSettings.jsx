@@ -71,7 +71,7 @@ export default function ButtonSettings() {
       seterror({ btnTyp: '' })
     }
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].background = e.target.value === 'reset' ? '#ededf1' : '#0083f3'
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['background-color'] = e.target.value === 'reset' ? '#ededf1' : '#0083f3'
       drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = e.target.value === 'reset' ? '#23435f' : '#fff'
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
