@@ -19,6 +19,7 @@ export default function ElementConfiguration({ fldKey }) {
   const styleHandler = (route) => {
     history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
+  console.log('fieldObj', fieldObj)
   return (
     <>
       {fieldObj.logo && (
@@ -283,7 +284,101 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
+      {
+        fieldObj.typ.match(/^(advanced-file-up)/) && (
+          <LayerAccordion
+            childrenAccodin
+            onClick={() => styleHandler('fld-wrp .filepond--root')}
+            offset="2.5"
+            title="Filepond"
+            fldData={fieldObj}
+            key={fldKey}
+            open={fldKey === selectedFieldKey && (fieldObj.prefixIcn || fieldObj.suffixIcn)}
+            highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
+          >
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--root"
+              label="Root"
+              offset="3.1"
+              highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
+            />
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--drop-label"
+              label="Drop Label"
+              offset="3.1"
+              highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drop-label')}
+            />
 
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--label-action"
+              label="Label Action"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--label-action')}
+            />
+
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--panel-root"
+              label="Paenl Root"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--panel-root')}
+            />
+
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--item-panel"
+              label="Item Panel"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--item-panel')}
+            />
+
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--file-action-button"
+              label="File Action Button"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file-action-button')}
+            />
+
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--drip-blob"
+              label="Drip Blob"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drip-blob')}
+            />
+
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+              subRoute={fldKey}
+              route="fld-wrp .filepond--file"
+              label="File"
+              offset="3.1"
+              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file')}
+            />
+
+          </LayerAccordion>
+        )
+      }
       {fieldObj.typ.match(/^(button|)$/)
         && (
           <>
