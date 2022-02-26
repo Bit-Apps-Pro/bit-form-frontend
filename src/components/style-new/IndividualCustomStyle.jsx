@@ -37,6 +37,7 @@ import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import TextDecorationControl from './TextDecorationControl'
+import TransformControl from './TransformControl'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
@@ -811,6 +812,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </div>
             </div>
           </div>
+        )
+      case 'transform':
+        return (
+          <TransformControl
+            title="Transform"
+            subtitle="Transform"
+            value={existCssPropsObj?.transform}
+            modalId="field-container-transform"
+            stateObjName="styles"
+            propertyPath={objPaths.paths.transform}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('transform', state)}
+            clearHandler={() => clearHandler('transform', state)}
+            allowImportant
+          />
         )
       default:
         break

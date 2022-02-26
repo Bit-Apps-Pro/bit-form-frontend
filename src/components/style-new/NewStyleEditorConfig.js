@@ -26,6 +26,7 @@ const labelCssProps = {
   'line-height': '',
   'word-spacing': '',
   'letter-spacing': '',
+  transform: '',
 }
 const iconCssProps = {
   border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
@@ -59,6 +60,7 @@ const fieldWrpCssProps = {
   'box-shadow': '',
   width: '',
   height: '',
+  transform: '',
 }
 
 const textFldCssProps = {
@@ -215,6 +217,7 @@ const editorConfig = {
       'z-index': '',
       height: '',
       width: '',
+      transform: '',
     },
   },
   text: { ...textFldCssProps },

@@ -16,6 +16,7 @@ import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
+import TransformControlMenu from '../../../style-new/TransformControlMenu'
 import TransitionControlMenu from '../../../style-new/TransitionControlMenu'
 import BorderImageControlMenu from './BorderImageControlMenu'
 import TextDecorationControlMenu from './TextDecorationControlMenu'
@@ -44,6 +45,7 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
     case 'size-control': return <SizeControlMenu value={value} objectPaths={objectPaths} />
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     case 'transition-control': return <TransitionControlMenu stateObjName={stateObjName} propertyPath={propertyPath} />
+    case 'transform-control': return <TransformControlMenu stateObjName={stateObjName} propertyPath={propertyPath} />
     case 'filter-control': return <FilterControlMenu value={value} objectPaths={objectPaths} />
     default: return 'loading'
   }
@@ -67,6 +69,7 @@ const setTitle = (component) => {
     case 'size-control': return 'Width,Height Control'
     case 'shadow-control': return 'Shadow'
     case 'transition-control': return 'Transition'
+    case 'transform-control': return 'Transform Control'
     case 'filter-control': return 'Filter Control'
     default: return '...'
   }
