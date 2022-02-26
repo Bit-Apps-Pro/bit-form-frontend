@@ -14,7 +14,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -28,6 +28,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const wrpCLass = `.${fieldKey}-fld-wrp`
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
+
+  const getValueByPath = propPath => getValueFromStateVar(themeVars, getValueByObjPath(styles, propPath))
+
+  const btnBrdrRadiusValue = getValueByPath(propertyPath('btn', 'border-radius'))
 
   const setSizes = ({ target: { value } }) => {
     const commonStyleClasses = commonStyle(fieldKey, value)
@@ -51,6 +55,76 @@ export default function FieldQuickTweaks({ fieldKey }) {
       }
     }))
   }
+
+  const setMuptipleProperty = (propertyPaths, values) => {
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      propertyPaths.map((path, index) => {
+        assignNestedObj(drftStyle, path, values[index])
+      })
+    }))
+  }
+
+  const setBtnSize = (elementKey, value) => {
+    switch (value) {
+      case 'small-2':
+        setMuptipleProperty(
+          [
+            propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding'),
+          ],
+          ['12px', '7px 10px'],
+        )
+        break
+      case 'small-1':
+        setMuptipleProperty(
+          [propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding')],
+          ['14px', '9px 15px'],
+        )
+        break
+      case 'medium':
+        setMuptipleProperty(
+          [propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding'),
+          ],
+          ['16px', '11px 20px'],
+        )
+        break
+      case 'large':
+        setMuptipleProperty(
+          [
+            propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding')],
+          ['18px', '12px 22px'],
+        )
+        break
+      case 'large-1':
+        setMuptipleProperty(
+          [
+            propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding'),
+          ],
+          ['21px', '14px 24px'],
+        )
+        break
+      default:
+        setMuptipleProperty(
+          [
+            propertyPath(elementKey, 'font-size'),
+            propertyPath(elementKey, 'padding'),
+          ],
+          ['16px', '11px 20px'],
+        )
+        break
+    }
+  }
+
+  const setElementBrdrRadius = (elementKey, value) => {
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, propertyPath(elementKey, 'border-radius'), value)
+    }))
+  }
+
   const borderRadHandler = ({ value, unit }) => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
@@ -115,7 +189,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   console.log(fldTypWiseAccentColorObjName(), objPath)
   return (
     <>
-      {fieldType !== 'title' && (
+      {fieldType !== 'title' && fieldType.match(/^((?!button).)*$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"
@@ -149,6 +223,31 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 unit={borderRadUnit}
                 width="128px"
                 options={['px', 'em', 'rem']}
+              />
+            </div>
+          </div>
+        </>
+      )}
+      {fieldType.match(/^(button)/gi) && (
+        <>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Size</span>
+            <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
+              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+            </select>
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border Radius</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                min={0}
+                max={100}
+                inputHandler={valueObj => setElementBrdrRadius('btn', `${valueObj.value}${valueObj.unit}`)}
+                sizeHandler={({ unitKey, unitValue }) => setElementBrdrRadius('btn', `${unitValue}${unitKey}`)}
+                value={getNumFromStr(btnBrdrRadiusValue)}
+                unit={getStrFromStr(btnBrdrRadiusValue)}
+                width="128px"
+                options={['px', '%', 'em', 'rem']}
               />
             </div>
           </div>
