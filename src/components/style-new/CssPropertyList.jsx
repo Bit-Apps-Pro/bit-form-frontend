@@ -19,7 +19,7 @@ export default function CssPropertyList({ properties, setProperty, classNames })
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>
         <ul className={css(s.con)}>
-          {properties?.map((prop, indx) => (
+          {properties?.sort()?.map((prop, indx) => (
             <li key={`css-property- list-${indx * 2}`} className={css(s.item)}>
               <button
                 type="button"

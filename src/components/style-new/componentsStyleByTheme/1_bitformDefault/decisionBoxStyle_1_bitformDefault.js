@@ -20,9 +20,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, type, direction 
       'margin-top': '8px',
     },
     // checkbox wrapper
-    [`.${fk}-cw`]: {
-      margin: '0px 10px 0px 0px',
-    },
+    [`.${fk}-cw`]: { margin: '0px 10px 0px 0px' },
     // checkbox label
     [`.${fk}-cl`]: {
       cursor: 'pointer',
