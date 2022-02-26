@@ -48,6 +48,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
+  console.log('styles=', styles)
+
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {}
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
@@ -135,7 +137,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     setStyles(prvStyle => produce(prvStyle, drft => {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
-    Object.keys(editorConfig[fieldType][elementKey].properties[property])?.map(propName => {
+    Object.keys(editorConfig[fieldType][elementKey].properties[property] || {})?.map(propName => {
       setStyles(prvStyle => produce(prvStyle, drft => {
         deleteNestedObj(drft, getPropertyPath(propName, state))
       }))
@@ -453,6 +455,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 onClick={() => {
                   delPropertyHandler('width', state)
                   delPropertyHandler('height', state)
+                  delPropertyHandler('size', state)
                 }}
                 className={`${css(cls.delBtn)} delete-btn`}
                 type="button"

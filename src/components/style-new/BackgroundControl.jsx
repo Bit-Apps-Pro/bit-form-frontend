@@ -12,8 +12,6 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
-import Important from './Important'
-import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
 export default function BackgroundControl({ title,
@@ -34,6 +32,8 @@ export default function BackgroundControl({ title,
   const setThemeVars = useSetRecoilState($themeVars)
   const setThemeColors = useSetRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const { paths } = objectPaths
+  const backgroundProps = Object.keys(paths)
 
   const clearHandler = () => {
     switch (stateObjName) {
@@ -49,7 +49,9 @@ export default function BackgroundControl({ title,
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
-          assignNestedObj(drftStyles, propertyPath, '')
+          backgroundProps.map(propName => {
+            assignNestedObj(drftStyles, paths[propName], '')
+          })
         }))
         break
       default:
