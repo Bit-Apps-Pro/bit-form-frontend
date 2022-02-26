@@ -8,8 +8,8 @@ import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -35,10 +35,16 @@ function AdvanceFileUpSettings() {
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
   const adminLabel = fieldData.adminLbl || ''
   const { css } = useFela()
+
+  const setBuilderFldWrpHeight = () => {
+    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey: fldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+  }
+
   function setRequired(e) {
     if (e.target.checked) {
       const tmp = { ...fieldData.valid }
@@ -148,11 +154,14 @@ function AdvanceFileUpSettings() {
             ariaLabel="Admin label for this Field"
             placeholder="Type Admin label here..."
             value={adminLabel}
-            name="adminLabel"
+            name="adminLbl"
             changeAction={setFieldProperty}
           />
         </div>
       </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
       <SimpleAccordion
         title={__('Capture', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -169,7 +178,6 @@ function AdvanceFileUpSettings() {
         </select>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
       <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion

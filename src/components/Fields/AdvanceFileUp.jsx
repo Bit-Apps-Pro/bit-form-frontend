@@ -2,32 +2,29 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, memo } from 'react'
 import { create, registerPlugin, setOptions } from 'filepond'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
-import FilePondPluginImageResize from 'filepond-plugin-image-resize'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
-import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import FilePondPluginImageResize from 'filepond-plugin-image-resize'
 import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
-import { useParams } from 'react-router-dom'
-
+import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
+import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
+import 'filepond/dist/filepond.min.css'
+import { memo, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import 'filepond/dist/filepond.min.css'
-
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import { selectInGrid } from '../../Utils/globalHelpers'
+import { deepCopy } from '../../Utils/Helpers'
 // import 'filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.css'
 import InputWrapper from '../InputWrapper'
-import { deepCopy } from '../../Utils/Helpers'
-import { selectInGrid } from '../../Utils/globalHelpers'
+import RenderStyle from '../style-new/RenderStyle'
 
-function AdvanceFileUp({ attr, formID, fieldKey }) {
-  const { fieldKey: fldKey } = useParams()
+function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
-  const fieldData = deepCopy(fields[fldKey])
+  const fieldData = deepCopy(fields[fieldKey])
   useEffect(() => {
     registerPlugin(
       FilePondPluginImagePreview,
@@ -39,7 +36,6 @@ function AdvanceFileUp({ attr, formID, fieldKey }) {
       FilePondPluginMediaPreview,
       FilePondPluginImageTransform,
     )
-
     const pond = create(fieldData?.config)
     selectInGrid(`#${fieldKey}`).appendChild(pond.element)
     const uri = new URL(typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL)
@@ -89,10 +85,10 @@ function AdvanceFileUp({ attr, formID, fieldKey }) {
 
   return (
     <>
-      {/* <input type="file" className="filepond" name="filepond" /> */}
+      <RenderStyle styleClasses={styleClasses} />
       <InputWrapper
         formID={formID}
-        fieldKey={attr.name}
+        fieldKey={fieldKey}
         fieldData={attr}
       >
         <input
