@@ -88,9 +88,9 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
     const unit = getStrFromStr(value) || ''
     if (value.indexOf(' ') < 0) value = getNumFromStr(value)
     const filterObject = getDfltFilterObject(name)
-    let title = name.replace('-', ' ')
-    title = title.replace(title.slice(0, 1), title.slice(0, 1).toUpperCase())
-    return { title, name, value, unit, options: filterObject.units, min: filterObject.minValue, max: filterObject.maxValue }
+    let titl = name.replace('-', ' ')
+    titl = titl.replace(titl.slice(0, 1), titl.slice(0, 1).toUpperCase())
+    return { title: titl, name, value, unit, options: filterObject.units, min: filterObject.minValue, max: filterObject.maxValue }
   })
 
   const existFilterNames = filtersObjects.map(filter => filter.name)
