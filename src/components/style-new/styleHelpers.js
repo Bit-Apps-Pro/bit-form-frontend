@@ -3,12 +3,12 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
-import buttonStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
-import checkboxNradioStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
-import dividerStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
-import imageStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
-import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
-import titleStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
+import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
+import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
+import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
+import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
+import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -320,6 +320,7 @@ export function arrDiff(arr1, arr2) {
 }
 
 export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
+  console.log('fieldType =', fieldType, ' elementKey=', elementKey)
   switch (fieldType) {
     case 'text':
     case 'date':
@@ -332,14 +333,11 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'divider':
     case 'image':
     case 'button':
-      return Object.keys(editorConfig[fieldType][elementKey].properties)
-    // case 'dropdown':
-    // return Object.keys(editorConfig.texfieldStyle.properties)
     case 'check':
-      return Object.keys(editorConfig[fieldType][elementKey].properties)
+    case 'file-up':
+    case 'advanced-file-up':
     case 'radio':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
-
     // eslint-disable-next-line no-fallthrough
     default:
       break
@@ -440,38 +438,38 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
       case 'week':
       case 'color':
       case 'textarea':
-        const textStyleBitFormDefault = textStyle_1_bitformDefault({ fk, fldTyp })
+        const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'title':
-        const titleStyleBitFormDefault = titleStyle_1_bitformDefault({ fk, fldTyp })
+        const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = titleStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'divider':
-        const dividerStyleBitFormDefault = dividerStyle_1_bitformDefault({ fk, fldTyp })
+        const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dividerStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'image':
-        const imageStyleBitFormDefault = imageStyle_1_bitformDefault({ fk, fldTyp })
+        const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = imageStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'button':
-        const buttonStyleBitFormDefault = buttonStyle_1_bitformDefault({ fk, fldTyp })
+        const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = buttonStyleBitFormDefault[`.${fk}-${cls}`]
         })
         break
       case 'check':
       case 'radio':
-        const checkBoxStyleBitFormDefault = checkboxNradioStyle_1_bitformDefault({ fk, fldTyp })
+        const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
         })
@@ -546,4 +544,12 @@ export const ucFirst = (val) => val.charAt(0).toUpperCase() + val.slice(1)
 export const isValidURL = (string) => {
   const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g)
   return (res !== null)
+}
+
+export const getValueFromStateVar = (stateObj, val) => {
+  if (val && val.match(/var/g)?.[0] === 'var') {
+    const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+    return stateObj[getVarProperty]
+  }
+  return val
 }

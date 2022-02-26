@@ -132,6 +132,33 @@ const textFldCssProps = {
   },
 }
 
+const buttonCssProps = {
+  background: {
+    'background-image': true,
+    'background-position': true,
+    'background-repeat': true,
+    'background-size': true,
+    'backdrop-filter': true,
+  },
+  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  margin: '5px',
+  padding: '5px',
+  opacity: '100%',
+  'box-shadow': '',
+  'font-size': '',
+  'font-weight': '',
+  width: '',
+  height: '',
+  color: '',
+  transition: '',
+  'text-decoration': {
+    'text-decoration-line': true,
+    'text-decoration-style': true,
+    'text-decoration-color': true,
+    'text-decoration-thickness': true,
+  },
+}
+
 const chackProps = {
   margin: '',
   padding: '',
@@ -379,32 +406,7 @@ const editorConfig = {
     },
     btn: {
       states: ['hover', 'focus'],
-      properties: {
-        background: {
-          'background-image': true,
-          'background-position': true,
-          'background-repeat': true,
-          'background-size': true,
-          'backdrop-filter': true,
-        },
-        border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
-        margin: '5px',
-        padding: '5px',
-        opacity: '100%',
-        'box-shadow': '',
-        'font-size': '',
-        'font-weight': '',
-        width: '',
-        height: '',
-        color: '',
-        transition: '',
-        'text-decoration': {
-          'text-decoration-line': true,
-          'text-decoration-style': true,
-          'text-decoration-color': true,
-          'text-decoration-thickness': true,
-        },
-      },
+      properties: { ...buttonCssProps },
     },
     'btn-pre-i': {
       states: ['hover'],
@@ -463,6 +465,38 @@ const editorConfig = {
     'err-txt-suf-i': {
       states: ['hover'],
       properties: { ...iconCssProps },
+    },
+    'fld-wrp .filepond--root': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'fld-wrp .filepond--drop-label': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'fld-wrp .filepond--label-action': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'fld-wrp .filepond--panel-root': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'fld-wrp .filepond--item-panel': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'fld-wrp .filepond--file-action-button': {
+      states: ['hover'],
+      properties: { ...buttonCssProps },
+    },
+    'fld-wrp .filepond--drip-blob': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'fld-wrp .filepond--file': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
     },
   },
 }
