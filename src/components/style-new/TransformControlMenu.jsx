@@ -8,22 +8,22 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import { getNumFromStr, getStrFromStr } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 
-function TransformControlMenu({ stateObjName, propertyPath }) {
+function TransformControlMenu({ propertyPath }) {
   const title = 'Transform'
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let checkImportant = ''
-  const getTransformnStyleVal = () => {
-    // let transformValue = getValueByObjPath(styles, propertyPath)
-    let transformValue = 'perspective(500px) translateX(10px) rotateY(3deg)'
+  const getTransformStyleVal = () => {
+    let transformValue = getValueByObjPath(styles, propertyPath)
 
     if (transformValue?.match(/var/gi)?.[0] === 'var') {
       const themeVarTransition = transformValue?.replaceAll(/\(|var|,.*|\)/gi, '')
@@ -36,8 +36,10 @@ function TransformControlMenu({ stateObjName, propertyPath }) {
     return transformValue
   }
   const splitMultipleTransform = (transformString) => (transformString && transformString?.split(/(?!\(.*)\s(?![^(]*?\))/gi)) || []
-  const arrOfTransformStr = splitMultipleTransform(getTransformnStyleVal())
+  const arrOfTransformStr = splitMultipleTransform(getTransformStyleVal())
   const arrOfExtractedTransformObj = extractTransformValuesArr(arrOfTransformStr)
+  const transformNameArr = arrOfExtractedTransformObj.map(transformObj => transformObj.name)
+  const availableTransformVal = Object.keys(transformProps).filter(itm => !transformNameArr.includes(itm))
 
   const newTransformVal = (name, val, unit) => {
     val = `${name}(${val}${unit})`
@@ -58,55 +60,59 @@ function TransformControlMenu({ stateObjName, propertyPath }) {
     }))
   }
 
-  const addTransitionHandler = () => {
-    const getOldTransition = getTransformnStyleVal()
+  const addTransitionHandler = (name) => {
+    const getOldTransform = getTransformStyleVal()
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
-      assignNestedObj(drftStyles, propertyPath, newTransition)
+      const newTransition = () => {
+        const val = getOldTransform === undefined || getOldTransform === ''
+          ? newTransformVal(name, 0, transformProps[name].unit[0])
+          : `${getOldTransform} ${newTransformVal(name, 0, transformProps[name].unit[0])}${checkImportant}`
+        return val
+      }
+      assignNestedObj(drftStyles, propertyPath, newTransition())
     }))
   }
 
-  const deleteTransition = (indx) => {
+  const deleteTransform = (indx) => {
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldTransition = getTransformnStyleVal()
-      const transitionArr = splitMultipleTransform(getOldTransition)
-      if (transitionArr.length === 1) return
-      transitionArr.splice(indx, 1)
-      assignNestedObj(drftStyles, propertyPath, transitionArr.toString())
+      const getOldTransform = getTransformStyleVal()
+      const transformArr = splitMultipleTransform(getOldTransform)
+      if (transformArr.length === 1) return
+      transformArr.splice(indx, 1)
+      assignNestedObj(drftStyles, propertyPath, transformArr.join(' '))
     }))
-  }
-
-  const convartUnit = (vlu, unt, prvUnt) => {
-    let newVal
-    if (prvUnt === unt) newVal = vlu
-    else if (prvUnt === 'ms' && unt === 's') newVal = vlu / 1000
-    else if (prvUnt === 's' && unt === 'ms') newVal = vlu * 1000
-    return newVal
   }
 
   const sizeHandler = (v, prop, indx, prvUnit) => {
     const { unitKey: unit, unitValue: val } = v
-    const value = convartUnit(val, unit, prvUnit)
+    const value = unitConverter(unit, val, prvUnit)
     generateTransformValue(prop, { value, unit }, indx)
   }
 
-  const addFilterToCss = () => {
-    console.log('working')
-  }
   const getValue = (transObj, val) => (transObj?.name ? transformProps?.[transObj?.name][getStrFromStr(transObj.value)]?.[val] : '')
+
   return (
     <>
       <div className={css(ut.flxcb, ut.mb1)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>{title}</span>
-        <CssPropertyList properties={Object.keys(transformProps)} setProperty={addFilterToCss} classNames={css({ mt: '0px !important' })} />
+        <CssPropertyList properties={availableTransformVal} setProperty={addTransitionHandler} classNames={css({ mt: '0px !important' })} />
       </div>
       <div className={css(c.overflowXhidden)}>
         {arrOfExtractedTransformObj.map((transformObj, indx) => (
-          <div className={css(ut.p1)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fs12, ut.fw500)}>{ucFirst(transformObj.name)}</span>
+          <div key={`transformObj-${indx * 5}`} className={css(ut.p1, c.containerHover)}>
+            <div className={css(ut.flxcb, ut.mt1)}>
+              <span className={css(ut.flxcb, ut.fs12, ut.fw500)}>
+                {arrOfExtractedTransformObj.length > 1 && (
+                  <button onClick={() => deleteTransform(indx)} className={`${css(c.delBtn)} delete-btn`} type="button">
+                    <TrashIcn />
+                  </button>
+                )}
+                <span className={css({ ml: 15 })}>
+                  {ucFirst(transformObj.name)}
+                </span>
+              </span>
               <SizeControl
-                width="128px"
+                width="100px"
                 value={Number(getNumFromStr(transformObj.value) || 0)}
                 unit={getStrFromStr(transformObj.value) || ''}
                 inputHandler={valObj => generateTransformValue(transformObj.name, valObj, indx)}
@@ -151,8 +157,8 @@ const scale = {
   '': { min: '', max: '', step: '' },
 }
 const skew = {
-  unit: ['', 'deg', 'deg', 'turn'],
-  '': { min: '', max: '', step: '' },
+  unit: ['deg', 'rad', 'turn'],
+  // '': { min: '', max: '', step: '' },
   deg: { min: 1, max: 360, step: 1 },
   turn: { min: 0.1, max: 10, step: 0.1 },
   rad: { min: '', max: '', step: 0.1 },
@@ -179,6 +185,7 @@ const transformProps = {
 }
 
 const c = {
+  containerHover: { '&:hover .delete-btn': { tm: 'scale(1.1)' } },
   accordionHead: {
     w: 220,
     p: 3,
@@ -187,16 +194,6 @@ const c = {
     fs: 12,
   },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 3 },
-  delBtn: {
-    se: 18,
-    p: 1,
-    curp: 1,
-    bd: 'transparent',
-    oe: 'none',
-    b: 'none',
-    brs: '50%',
-    '&:hover': { bd: 'var(--white-0-86)' },
-  },
   footer: { flx: 'center', m: 5 },
   addBtn: {
     se: 25,
@@ -230,5 +227,21 @@ const c = {
     b: '1px solid #e6e6e6 !important',
     '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
     ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
+  },
+  delBtn: {
+    se: 20,
+    flx: 'center',
+    b: 'none',
+    p: 0,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    lt: 6,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
 }
