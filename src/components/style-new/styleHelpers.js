@@ -77,16 +77,22 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
   if (prvUnit === 'px' && unit === '%') return Number(value * 6.25)
   if (prvUnit === 'px' && unit === '') return Number(value)
+  if (prvUnit === 'px' && unit === 'cm') return Number(value * 0.026)
 
   if (prvUnit === 'em' && unit === 'px') return Number(value * 16)
   if (prvUnit === 'em' && unit === '') return Number(value * 16)
   if (prvUnit === 'em' && unit === 'rem') return Number(value)
   if (prvUnit === 'em' && unit === '%') return Number(value * 100)
+  if (prvUnit === 'em' && unit === 'cm') return Number(value * 0.423)
 
   if (prvUnit === 'rem' && unit === 'em') return Number(value)
   if (prvUnit === 'rem' && unit === 'px') return Number(value * 16)
   if (prvUnit === 'rem' && unit === '') return Number(value * 16)
   if (prvUnit === 'rem' && unit === '%') return Number(value * 100)
+  if (prvUnit === 'rem' && unit === 'cm') return Number(value * 0.423)
+
+  if (prvUnit === 'cm' && unit === 'rem') return Number(value * 2.362)
+  if (prvUnit === 'cm' && unit === 'px') return Number(value * 37.80)
 
   if (prvUnit === '%' && unit === 'px') return Number(value * 0.16)
   if (prvUnit === '%' && unit === '') return Number(value * 0.01)
@@ -97,6 +103,17 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === '' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
   if (prvUnit === '' && unit === '%') return Number(value * 100)
   if (prvUnit === '' && unit === 'px') return Number(value)
+
+  if (prvUnit === 'deg' && unit === 'rad') return Number(value * 0.0174533)
+  if (prvUnit === 'deg' && unit === 'turn') return Number(value * 0.00277778)
+
+  if (prvUnit === 'turn' && unit === 'rad') return Number(value * 6.28319)
+  if (prvUnit === 'turn' && unit === 'deg') return Number(value * 360)
+
+  // formula (1)rad / 2π = turn
+  if (prvUnit === 'rad' && unit === 'turn') return Number(value * 0.159155)
+  // formula (1)rad * 180/π = deg°
+  if (prvUnit === 'rad' && unit === 'deg') return Number(value * 57.2958)
 }
 
 export const getNumFromStr = (str = '') => {
@@ -336,8 +353,8 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'radio':
     case 'decision-box':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
-      // case 'dropdown':
-      // return Object.keys(editorConfig.texfieldStyle.properties)
+    // case 'dropdown':
+    // return Object.keys(editorConfig.texfieldStyle.properties)
     // eslint-disable-next-line no-fallthrough
     default:
       break
@@ -485,6 +502,7 @@ export const generateFontUrl = (font, string) => {
   const newParmrs = string !== '' ? `:ital,${string}` : ''
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
+
 export const findExistingFontStyleAndWeidth = (styles) => {
   const fontWeightVariant = []
   const fontStyleParam = []
@@ -509,6 +527,7 @@ export const findExistingFontStyleAndWeidth = (styles) => {
   }
   return [fontWeightVariant, fontStyleParam]
 }
+
 export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
   const fontWeightparam = []
   let string = ''
@@ -538,7 +557,6 @@ export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr
 export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
 
 export const isLabelOverrideStyles = (styles, fldKey, lblName) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.includes(lblName)
-
 
 export const isValidURL = (string) => {
   const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g)
