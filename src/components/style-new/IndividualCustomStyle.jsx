@@ -17,7 +17,7 @@ import sizeControlStyle from '../../styles/sizeControl.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { staticFontStyleVariants, staticFontweightVariants } from '../../Utils/StaticData/fontvariant'
+import { staticFontStyleVariants, staticFontweightVariants, staticWhiteSpaceVariants } from '../../Utils/StaticData/fontvariant'
 import CustomInputControl from '../CompSettings/StyleCustomize/ChildComp/CustomInputControl'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -748,6 +748,33 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 w={130}
                 h={30}
                 cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
+              />
+            </div>
+          </div>
+        )
+      case 'white-space':
+        return (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc, ut.ml1)}>
+              <button
+                title="Delete Property"
+                onClick={() => delPropertyHandler('white-space', state)}
+                className={`${css(cls.delBtn)} delete-btn`}
+                type="button"
+              >
+                <TrashIcn size="14" />
+              </button>
+              <span className={css(ut.fw500)}>{__('White space', 'bitform')}</span>
+            </div>
+            <ResetStyle propertyPath={objPaths.paths['white-space']} stateObjName="styles" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <Important propertyPath={objPaths.paths['white-space']} />
+              <SimpleDropdown
+                options={staticWhiteSpaceVariants}
+                value={String(existCssPropsObj?.['white-space'])}
+                onChange={val => fontPropertyUpdateHandler('white-space', val)}
+                w={130}
+                h={30}
               />
             </div>
           </div>

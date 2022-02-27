@@ -26,8 +26,9 @@ const labelCssProps = {
   'line-height': '',
   'word-spacing': '',
   'letter-spacing': '',
-  transform: '',
   transition: '',
+  'white-space': '',
+  transform: '',
 }
 const iconCssProps = {
   border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
@@ -81,7 +82,7 @@ const textFldCssProps = {
   },
   lbl: {
     states: ['hover'],
-    properties: { ...labelCssProps },
+    properties: { ...labelCssProps, 'white-space': '' },
   },
   'lbl-pre-i': {
     states: ['hover'],
@@ -248,6 +249,7 @@ const editorConfig = {
       height: '',
       width: '',
       transform: '',
+      'white-space': '',
     },
   },
   text: { ...textFldCssProps },

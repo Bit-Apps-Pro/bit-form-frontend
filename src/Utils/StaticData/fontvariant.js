@@ -18,3 +18,15 @@ export const staticFontStyleVariants = [
   { label: 'Italic', value: 'italic' },
   { label: 'Oblique', value: 'oblique' },
 ]
+export const staticWhiteSpaceVariants = [
+  { label: 'Normal', value: 'normal' },
+  { label: 'Nowrap', value: 'nowrap' },
+  { label: 'Pre', value: 'pre' },
+  { label: 'Pre wrap', value: 'pre-wrap' },
+  { label: 'Pre line', value: 'pre-line' },
+  { label: 'Break spaces', value: 'break-spaces' },
+  { label: 'Inherit', value: 'inherit' },
+  { label: 'Initial', value: 'initial' },
+  { label: 'Revert', value: 'revert' },
+  { label: 'Unset', value: 'unset' },
+]
