@@ -12,13 +12,13 @@ export default function SizeAspectRatioControl({ options, className, valuChangeH
   const fldSizeHandler = ({ value, unit }, inputId) => {
     if (aspectRatioMode) {
       if (inputId === 0) {
-        const oldH = getNumFromStr(options[1].value)
-        const oldW = getNumFromStr(options[0].value)
+        const oldH = getNumFromStr(options[1].value) || 1
+        const oldW = getNumFromStr(options[0].value) || 1
         const newH = Number((value * oldH) / oldW).toFixed(2)
         valuChangeHandler(newH, unit, 1)
       } else if (inputId === 1) {
-        const oldW = getNumFromStr(options[0].value)
-        const oldH = getNumFromStr(options[1].value)
+        const oldW = getNumFromStr(options[0].value) || 1
+        const oldH = getNumFromStr(options[1].value) || 1
         const newW = Number((value * oldW) / oldH).toFixed(2)
         valuChangeHandler(newW, unit, 0)
       }

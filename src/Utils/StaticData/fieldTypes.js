@@ -18,7 +18,7 @@ const fieldsTypes = {
   week: 'Week',
   select: 'Country',
   'file-up': 'File Upload',
-  'ad-file-up': 'Advanced File Upload',
+  'advanced-file-up': 'Advanced File Upload',
   url: 'URL',
   color: 'Color Picker',
   recaptcha: 'reCaptcha v2',

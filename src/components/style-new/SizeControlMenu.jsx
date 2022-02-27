@@ -1,75 +1,24 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
-import SizeAspectRatioControl from '../CompSettings/StyleCustomize/ChildComp/SizeAspectRatioControl'
-import { getNumFromStr, getValueByObjPath } from './styleHelpers'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SingleToggle from '../Utilities/SingleToggle'
+import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 
 export default function SizeControlMenu({ objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
+  const [aspectRatio, setAspectRation] = useState(true)
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
-
-  const sizeRatioHandler = (value, unit, inputId) => {
-    if (inputId === 0) {
-      inputHandler({ value, unit }, paths?.width)
-    } else {
-      inputHandler({ value, unit }, paths?.height)
-    }
-  }
-
-  const sizeHandler = (val, propertyPath) => {
-    const tempValue = getNumFromStr(val.unitValue)
-    if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[propertyPath] = `${tempValue}${val.unitKey}`
-      }))
-    }
-    if (object === 'styles') {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        const value = getValueByObjPath(drft, propertyPath)
-        const isAlreadyImportant = value?.match(/!important/gi)?.[0]
-        if (isAlreadyImportant) {
-          val = `${tempValue}${val.unitKey} !important`
-        }
-        assignNestedObj(drft, propertyPath, `${tempValue}${val.unitKey}`)
-      }))
-    }
-  }
-
-  const inputHandler = (val, propertyPath) => {
-    if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[propertyPath] = `${val.value}${val.unit}`
-      }))
-    }
-    if (object === 'styles') {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        const value = getValueByObjPath(drft, propertyPath)
-        const isAlreadyImportant = value?.match(/!important/gi)?.[0]
-        if (isAlreadyImportant) {
-          val = `${val.value}${val.unit} !important`
-        }
-        assignNestedObj(drft, propertyPath, `${val.value}${val.unit}`)
-      }))
-    }
-  }
-
-  const undoHandler = (v) => {
-    if (object === 'themeVars') {
-      // if (!tempThemeVars[v]) return
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[v] = tempThemeVars[v] || '0px'
-      }))
-    }
-  }
 
   const getVal = (propertyPath) => {
     if (object === 'themeVars') return themeVars[propertyPath]
@@ -86,11 +35,57 @@ export default function SizeControlMenu({ objectPaths }) {
 
   const widthValue = getVal(paths?.width)
   const heightValue = getVal(paths?.height)
-  // const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
+
+  const setStateValueHandler = (value, propertyPath) => {
+    if (object === 'themeVars') {
+      setThemeVars(preStyle => produce(preStyle, drftStyle => {
+        drftStyle[propertyPath] = `${value}`
+      }))
+    } else if (object === 'styles') {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        const prevValue = getValueByObjPath(drft, propertyPath)
+        const isAlreadyImportant = prevValue?.match(/!important/gi)?.[0]
+        if (isAlreadyImportant) {
+          value = `${value} !important`
+        }
+        assignNestedObj(drft, propertyPath, `${value}`)
+      }))
+    }
+  }
+
+  const ratioControl = (value, unit, propName) => {
+    if (aspectRatio) {
+      const oldW = getNumFromStr(widthValue) || 1
+      const oldWUnit = getStrFromStr(widthValue)
+
+      const oldH = getNumFromStr(heightValue) || 1
+      const oldHUnit = getStrFromStr(heightValue)
+      if (propName === 'width') {
+        const newH = Number((value * oldH) / oldW).toFixed(2)
+        setStateValueHandler(`${value}${unit}`, paths.width)
+        setStateValueHandler(`${newH}${oldHUnit}`, paths.height)
+      } else if (propName === 'height') {
+        const newW = Number((value * oldW) / oldH).toFixed(2)
+        setStateValueHandler(`${newW}${oldWUnit}`, paths.width)
+        setStateValueHandler(`${value}${unit}`, paths.height)
+      }
+    } else {
+      setStateValueHandler(`${value}${unit}`, paths[propName])
+    }
+  }
+
+  const undoHandler = (v) => {
+    if (object === 'themeVars') {
+      // if (!tempThemeVars[v]) return
+      setThemeVars(preStyle => produce(preStyle, drftStyle => {
+        drftStyle[v] = tempThemeVars[v] || '0px'
+      }))
+    }
+  }
 
   return (
     <>
-      {/* <div className={css(ut.flxcb, ut.mb2)}>
+      <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Width</span>
         <SizeControl
           stateObjName={objectPaths.object}
@@ -100,8 +95,8 @@ export default function SizeControlMenu({ objectPaths }) {
           title="width"
           width={100}
           unit={getStrFromStr(widthValue || 'px')}
-          sizeHandler={val => sizeHandler(val, paths?.width)}
-          inputHandler={val => inputHandler(val, paths?.width)}
+          sizeHandler={val => ratioControl(val.unitValue, val.unitKey, 'width')}
+          inputHandler={val => ratioControl(val.value, val.unit, 'width')}
         />
       </div>
 
@@ -115,15 +110,15 @@ export default function SizeControlMenu({ objectPaths }) {
           title="height"
           width={100}
           unit={getStrFromStr(heightValue || 'px')}
-          sizeHandler={val => sizeHandler(val, paths?.height)}
-          inputHandler={val => inputHandler(val, paths?.height)}
+          sizeHandler={val => ratioControl(val.unitValue, val.unitKey, 'height')}
+          inputHandler={val => ratioControl(val.value, val.unit, 'height')}
         />
-      </div> */}
-      <SizeAspectRatioControl
-        className={css(ut.ml6, ut.mb2)}
-        options={[{ label: 'W', value: widthValue }, { label: 'H', value: heightValue }]}
-        unitOptions={['px', '%']}
-        valuChangeHandler={sizeRatioHandler}
+      </div>
+      <SingleToggle
+        title="Follow Aspect Ratio"
+        action={() => setAspectRation(prevState => !prevState)}
+        isChecked={aspectRatio}
+        className={css({ fs: 12 })}
       />
     </>
   )

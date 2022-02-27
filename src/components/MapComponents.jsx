@@ -63,7 +63,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
       return <FileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
-    case 'ad-file-up':
+    case 'advanced-file-up':
       return <AdvanceFileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
       return <SubmitBtn fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
