@@ -358,11 +358,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     resetContextMenu()
   }
 
-  const navigateToStyle = typ => {
+  const navigateToStyle = fldKey => {
     // if (typ === 'paypal') history.replace(history.location.pathname.replace(/fields-list|style\/.+|style/g, 'style/fl/ppl'))
     // // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
     // else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
-    history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFieldId}`)
+    history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`)
     // history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
   }

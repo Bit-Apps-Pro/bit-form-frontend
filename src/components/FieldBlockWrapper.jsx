@@ -23,7 +23,7 @@ export default function FieldBlockWrapper({ layoutItem,
   navigateToStyle }) {
   const styleNavigation = e => {
     e.stopPropagation()
-    navigateToStyle(fields[layoutItem.i].typ)
+    navigateToStyle(layoutItem.i)
   }
 
   return (
