@@ -45,7 +45,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         <MultiSelect
           defaultValue={fluentCrmConf?.tags}
           className="btcd-paper-drpdwn w-5"
-          options={fluentCrmConf?.default?.fluentCrmTags && Object.keys(fluentCrmConf.default.fluentCrmTags).map(tag => ({ label: fluentCrmConf.default.fluentCrmTags[tag].title, value: fluentCrmConf.default.fluentCrmTags[tag].id }))}
+          options={fluentCrmConf?.default?.fluentCrmTags && Object.keys(fluentCrmConf.default.fluentCrmTags).map(tag => ({ label: fluentCrmConf.default.fluentCrmTags[tag].title, value: (fluentCrmConf.default.fluentCrmTags[tag].id).toString() }))}
           onChange={val => tags(val)}
         />
       </div>
