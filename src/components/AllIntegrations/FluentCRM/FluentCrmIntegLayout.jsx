@@ -11,7 +11,6 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     const newConf = { ...fluentCrmConf }
     if (val) {
       newConf.tags = val ? val.split(',') : []
-      refreshfluentCrmHeader(newConf, setFluentCrmConf, setisLoading, setSnackbar)
     } else {
       delete newConf.tags
     }
@@ -59,31 +58,28 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         }}
         />
       )}
-      {fluentCrmConf?.list_id
-        && (
-          <>
-            <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
-            </div>
-            <div className="btcd-hr mt-1" />
-            <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Fluent CRM Fields', 'bitform')}</b></div>
-            </div>
+      <div className="mt-4">
+        <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+      </div>
+      <div className="btcd-hr mt-1" />
+      <div className="flx flx-around mt-2 mb-1">
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Fluent CRM Fields', 'bitform')}</b></div>
+      </div>
 
-            {fluentCrmConf.field_map.map((itm, i) => (
-              <FluentCrmFieldMap
-                key={`fluentcrm-m-${i + 9}`}
-                i={i}
-                field={itm}
-                fluentCrmConf={fluentCrmConf}
-                formFields={formFields}
-                setFluentCrmConf={setFluentCrmConf}
-              />
-            ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(fluentCrmConf.field_map.length, fluentCrmConf, setFluentCrmConf)} className="icn-btn sh-sm" type="button">+</button></div>
+      {fluentCrmConf.field_map.map((itm, i) => (
+        <FluentCrmFieldMap
+          key={`fluentcrm-m-${i + 9}`}
+          i={i}
+          field={itm}
+          fluentCrmConf={fluentCrmConf}
+          formFields={formFields}
+          setFluentCrmConf={setFluentCrmConf}
+        />
+      ))}
+      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(fluentCrmConf.field_map.length, fluentCrmConf, setFluentCrmConf)} className="icn-btn sh-sm" type="button">+</button></div>
 
-            {/* {fluentCrmConf.actions?.customField && (
+      {/* {fluentCrmConf.actions?.customField && (
               <>
                 <div className="mt-4">
                   <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
@@ -109,17 +105,15 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
 
               </>
             )} */}
-            <br />
-            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
-            <div className="btcd-hr mt-1" />
-            <FluentCrmActions
-              fluentCrmConf={fluentCrmConf}
-              setFluentCrmConf={setFluentCrmConf}
-              setisLoading={setisLoading}
-              setSnackbar={setSnackbar}
-            />
-          </>
-        )}
+      <br />
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+      <div className="btcd-hr mt-1" />
+      <FluentCrmActions
+        fluentCrmConf={fluentCrmConf}
+        setFluentCrmConf={setFluentCrmConf}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
+      />
     </>
   )
 }
