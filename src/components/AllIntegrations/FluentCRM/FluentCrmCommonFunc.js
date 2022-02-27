@@ -17,7 +17,7 @@ export const refreshCrmList = (formID, fluentCrmConf, setFluentCrmConf, setisLoa
           newConf.default.fluentCrmTags = result.data.fluentCrmTags
         }
         setSnackbar({ show: true, msg: __('FluentCRM list refreshed', 'bitform') })
-        setFluentCrmConf({ ...newConf })
+        refreshfluentCrmHeader(newConf, setFluentCrmConf, setisLoading, setSnackbar)
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('FluentCRM list refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
@@ -35,8 +35,7 @@ export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setisLoa
         const newConf = { ...fluentCrmConf }
         if (result.data.fluentCrmFlelds) {
           newConf.default.fields = result.data.fluentCrmFlelds
-          const { fields } = newConf.default
-          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', fluentCRMField: f.key, required: true }))
+          newConf.field_map = mapNewRequiredFields(fluentCrmConf)
           setSnackbar({ show: true, msg: __('Fluent CRM fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Fluent CRM fields found. Try changing the header row number or try again', 'bitform') })
@@ -48,6 +47,22 @@ export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setisLoa
       setisLoading(false)
     })
     .catch(() => setisLoading(false))
+}
+
+export const mapNewRequiredFields = (fluentCrmConf) => {
+  const { field_map } = fluentCrmConf
+  const { fields } = fluentCrmConf.default
+  const required = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', fluentCRMField: f.key, required: true }))
+  const requiredFieldNotInFieldMap = required.filter(f => !field_map.find(m => m.fluentCRMField === f.fluentCRMField))
+  const notEmptyFieldMap = field_map.filter(f => f.fluentCRMField || f.formField)
+  const newFieldMap = notEmptyFieldMap.map(f => {
+    const field = fields[f.fluentCRMField]
+    if (field) {
+      return { ...f, formField: field.label }
+    }
+    return f
+  })
+  return [...requiredFieldNotInFieldMap, ...newFieldMap]
 }
 
 export const handleInput = (e, fluentCrmConf, setFluentCrmConf) => {
