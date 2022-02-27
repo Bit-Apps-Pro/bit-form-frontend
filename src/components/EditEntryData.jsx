@@ -35,7 +35,8 @@ export default function EditEntryData(props) {
       .then(res => {
         if (res !== undefined && res.success) {
           const tmp = { layout: res.data.layout, fields: res.data.fields, fieldToCheck: res.data.fieldToCheck, conditional: res.data.conditional, fieldsKey: res.data.fieldsKey }
-          const submitBtnKey = Object.entries(tmp.fields).find(fld => fld[1].btnTyp === 'submit')[0]
+          const submitBtn = Object.entries(tmp.fields).find(fld => fld[1].btnTyp === 'submit')
+          const submitBtnKey = submitBtn?.[0] || null
           if (submitBtnKey) {
             tmp.layout.lg = tmp.layout.lg.filter(lay => lay.i !== submitBtnKey)
             delete tmp.fields[submitBtnKey]
