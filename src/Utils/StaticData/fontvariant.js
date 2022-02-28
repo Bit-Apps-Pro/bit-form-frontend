@@ -13,11 +13,13 @@ export const staticFontweightVariants = [
   { label: 'Bolder', value: 'bolder' },
   { label: 'Lighter', value: 'lighter' },
 ]
+
 export const staticFontStyleVariants = [
   { label: 'Normal', value: 'normal' },
   { label: 'Italic', value: 'italic' },
   { label: 'Oblique', value: 'oblique' },
 ]
+
 export const staticWhiteSpaceVariants = [
   { label: 'Normal', value: 'normal' },
   { label: 'Nowrap', value: 'nowrap' },
@@ -29,4 +31,11 @@ export const staticWhiteSpaceVariants = [
   { label: 'Initial', value: 'initial' },
   { label: 'Revert', value: 'revert' },
   { label: 'Unset', value: 'unset' },
+]
+
+export const staticWordWrapVariants = [
+  { label: 'Normal', value: 'normal' },
+  { label: 'Break word', value: 'break-word' },
+  { label: 'Inherit', value: 'inherit' },
+  { label: 'Initial', value: 'initial' },
 ]

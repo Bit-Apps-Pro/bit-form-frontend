@@ -250,6 +250,7 @@ const editorConfig = {
       width: '',
       transform: '',
       'white-space': '',
+      'word-wrap': '',
     },
   },
   text: { ...textFldCssProps },
