@@ -52,7 +52,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={paths[borderProps[0]]} />)}
+      {allowImportant && (<Important className={css({ mr: 3 })} paths={paths} propertyPath={paths[borderProps[0]]} />)}
       <div title={value} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}

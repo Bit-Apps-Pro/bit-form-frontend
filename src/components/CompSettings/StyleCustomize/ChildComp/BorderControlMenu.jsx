@@ -36,7 +36,9 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
   const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-radius']))
 
   const onSizeChange = (pathName, val) => {
-    setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
+    const index = getValueByObjPath(stateObj, pathName).indexOf('!important')
+    const newVal = index >= 0 ? `${val} !important` : val
+    setStyleStateObj(object, pathName, newVal, { setThemeVars, setStyles })
   }
 
   const options = [
