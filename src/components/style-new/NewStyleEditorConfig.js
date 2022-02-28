@@ -251,7 +251,11 @@ const editorConfig = {
     },
   },
   text: { ...textFldCssProps },
+  date: { ...textFldCssProps },
+  number: { ...textFldCssProps },
+  username: { ...textFldCssProps },
   textarea: { ...textFldCssProps },
+  email: { ...textFldCssProps },
   check: {
     ...textFldCssProps,
     cw: {
