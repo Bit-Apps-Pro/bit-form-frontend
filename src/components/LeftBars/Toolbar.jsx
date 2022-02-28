@@ -55,7 +55,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Title', 'bitform'),
       keywords: 'title',
       icn: <TitleIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
+      pos: { h: 24, w: 60, i: 'shadow_block', minH: 20 },
       elm: {
         typ: 'title',
         titleImg: '',
