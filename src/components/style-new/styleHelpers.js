@@ -337,7 +337,6 @@ export function arrDiff(arr1, arr2) {
 }
 
 export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
-  console.log('fieldType =', fieldType, ' elementKey=', elementKey)
   switch (fieldType) {
     case 'text':
     case 'date':
@@ -567,8 +566,8 @@ export const isValidURL = (string) => {
 }
 
 export const getValueFromStateVar = (stateObj, val) => {
-  if (val && val.match(/var/g)?.[0] === 'var') {
-    const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+  if (val && val.match(/(var)/g)?.[0] === 'var') {
+    const getVarProperty = val.replaceAll(/\(|var|,.*|\)|(!important|\s)/gi, '')
     return stateObj[getVarProperty]
   }
   return val
