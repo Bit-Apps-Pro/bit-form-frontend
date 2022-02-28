@@ -14,7 +14,7 @@ import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
-import { showDraggableModal } from './styleHelpers'
+import { getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function SimpleColorPicker({ title,
   stateObjName,
@@ -32,7 +32,7 @@ export default function SimpleColorPicker({ title,
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
-  const setThemeColors = useSetRecoilState($themeColors)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const clearHandler = () => {
@@ -59,8 +59,8 @@ export default function SimpleColorPicker({ title,
 
   const checkVarValue = () => {
     let v = value
-    if (value?.match(/var/gi)?.[0]) v = value.replaceAll(/\(|var|\)/gi, '')
-    return v
+    v = getValueFromStateVar(themeColors, v)
+    return v === '' ? 'Configure' : v
   }
 
   return (
