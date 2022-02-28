@@ -1,6 +1,5 @@
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
-import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
@@ -35,7 +34,7 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
-        {styleOverride && <span className={css(ut.flxc, { px: 2 })} title="Theme styles overrided"><CheckMarkIcn cls="context-btn-color" size="15" /></span>}
+        {styleOverride && <span className={css(s.overrideIndicator)} title="Theme styles overrided" />}
       </div>
       <div className={css(s.navActionBtn)} data-action-btn>
         {cssSelector && (
@@ -118,5 +117,13 @@ const s = {
     fs: '12.5px',
     fw: 100,
     ff: '"Roboto", sans-serif',
+  },
+  overrideIndicator: {
+    w: '5px',
+    h: '5px',
+    brs: '50%',
+    bc: '#ffd64f',
+    ml: '3px',
+    px: 2,
   },
 }
