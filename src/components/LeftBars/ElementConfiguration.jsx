@@ -19,7 +19,7 @@ export default function ElementConfiguration({ fldKey }) {
   const styleHandler = (route) => {
     history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
-  console.log('fieldObj', fieldObj)
+  // console.log('fieldObj', fieldObj)
   return (
     <>
       {fieldObj.logo && (

@@ -50,8 +50,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
-  console.log('styles=', styles)
-
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {}
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
@@ -153,7 +151,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
   const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
-    console.log(value, unit, prop, prvUnit, state)
     const convertvalue = unitConverter(unit, value, prvUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       let v = `${convertvalue}${unit}`
