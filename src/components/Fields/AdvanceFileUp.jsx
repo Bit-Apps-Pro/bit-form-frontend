@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { create, registerPlugin, setOptions } from 'filepond'
+import { create, destroy, registerPlugin, setOptions } from 'filepond'
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
@@ -13,18 +13,20 @@ import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
 import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
 import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
 import 'filepond/dist/filepond.min.css'
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { selectInGrid } from '../../Utils/globalHelpers'
-import { deepCopy } from '../../Utils/Helpers'
 // import 'filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.css'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
-  const fieldData = deepCopy(fields[fieldKey])
+  const fieldData = fields[fieldKey]
+
+  const filePondRef = useRef(null)
+
   useEffect(() => {
     registerPlugin(
       FilePondPluginImagePreview,
@@ -36,8 +38,18 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       FilePondPluginMediaPreview,
       FilePondPluginImageTransform,
     )
-    const pond = create(fieldData?.config)
-    selectInGrid(`#${fieldKey}`).appendChild(pond.element)
+
+    const container = selectInGrid(`#filepond-${fieldKey}-container`)
+
+    if (filePondRef.current?.element) {
+      destroy(filePondRef.current.element)
+      if (container.firstChild) container.removeChild(container.firstChild)
+    }
+
+    filePondRef.current = create(fieldData?.config)
+
+    container.appendChild(filePondRef.current.element)
+
     const uri = new URL(typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_file_store')
     uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
@@ -49,7 +61,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
 
     setOptions({
       server: {
-        process: (fieldName, file, load, error, progress, abort) => {
+        process: (fieldName, file, metadata, load, error, progress, abort) => {
           const formData = new FormData()
           formData.append(`${fieldName}`, file, file.name)
           formData.append('form_id', formID)
@@ -81,7 +93,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
         revert: removeFile.href,
       },
     })
-  }, [])
+  }, [fieldData?.config])
 
   return (
     <>
@@ -93,12 +105,12 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       >
         <input
           hidden
-          id="filepond"
+          id={`filepond-${fieldKey}`}
           type="file"
           className="filepond"
           name="filepond"
         />
-        <div id={`${fieldKey}`} />
+        <div id={`filepond-${fieldKey}-container`} />
 
       </InputWrapper>
     </>
