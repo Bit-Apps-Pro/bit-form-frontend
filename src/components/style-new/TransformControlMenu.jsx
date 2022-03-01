@@ -141,12 +141,6 @@ const extractTransformValuesArr = (arrOfTransformStr) => {
   return transformArr
 }
 
-const rotate = {
-  unit: ['deg', 'turn', 'rad'],
-  deg: { min: 1, max: 360, step: 1 },
-  turn: { min: 0.1, max: 10, step: 0.1 },
-  rad: { min: '', max: '', step: 0.1 },
-}
 const translate = {
   unit: ['px', '%'],
   px: { min: 1, max: 100, step: 1 },
@@ -171,9 +165,12 @@ const transformProps = {
     rem: { min: 0.1, max: 500, step: 0.1 },
     cm: { min: 1, max: 500, step: 1 },
   },
-  rotateX: { ...rotate },
-  rotateY: { ...rotate },
-  rotateZ: { ...rotate },
+  rotate: {
+    unit: ['deg', 'turn', 'rad'],
+    deg: { min: 1, max: 360, step: 1 },
+    turn: { min: 0.1, max: 10, step: 0.1 },
+    rad: { min: '', max: '', step: 0.1 },
+  },
   translateX: { ...translate },
   translateY: { ...translate },
   translateZ: { ...translate },
