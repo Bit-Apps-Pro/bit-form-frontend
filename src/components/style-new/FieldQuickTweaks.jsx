@@ -144,7 +144,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
   const [borderRadVal, borderRadUnit] = getBorderRadius()
-  
+
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
     if (val === 'center') justifyContent = 'center'
@@ -194,7 +194,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [objName, objPath] = fldTypWiseAccentColorObjName()
   return (
     <>
-      {fieldType !== 'title' && fieldType.match(/^((?!button).)*$/gi) && (
+      {fieldType.match(/^((?!button|image|title|advanced-file-up).)*$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"

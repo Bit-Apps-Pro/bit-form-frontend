@@ -84,11 +84,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(existCssPropsObj?.opacity), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity))]
-  const [widthValue, widthUnit] = [getNumFromStr(existCssPropsObj?.width), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width))]
-  const [heightValue, heightUnit] = [getNumFromStr(existCssPropsObj?.height), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height))]
-  const [fldZIndex] = [getNumFromStr(existCssPropsObj?.['z-index'])]
-  const [fldFSValue, fldFSUnit] = [getNumFromStr(existCssPropsObj?.['font-size']), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size']))]
+  const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity))]
+  const [widthValue, widthUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width))]
+  const [heightValue, heightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height))]
+  const [fldZIndex] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['z-index']))]
+  const [fldFSValue, fldFSUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size']))]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {

@@ -7,12 +7,13 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
 import { getValueByObjPath } from './styleHelpers'
 
-export default function Important({ propertyPath, className }) {
+export default function Important({ paths = {}, propertyPath, className }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
   const isAlreadyImportant = styleValue?.match(/!important/gi)
   const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue?.match(/var/gi)
+  const props = Object.keys(paths)
   const addOrRemoveImportant = () => {
     let newStyleValue
 
@@ -23,6 +24,13 @@ export default function Important({ propertyPath, className }) {
     }
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, propertyPath, newStyleValue)
+      props.map(propName => {
+        if (isAlreadyImportant) {
+          assignNestedObj(drft, paths[propName], getValueByObjPath(styles, paths[propName]).replace(/!important/gi, ''))
+        } else {
+          assignNestedObj(drft, paths[propName], `${getValueByObjPath(styles, paths[propName])} !important`)
+        }
+      })
     }))
   }
 

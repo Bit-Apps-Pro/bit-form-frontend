@@ -4,7 +4,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import CloseIcn from '../../Icons/CloseIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
@@ -176,14 +176,14 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
           return (
             <>
               <SimpleAccordion
-                className={css(c.accordionHead)}
+                className={css(c.accordionHead, c.containerHover)}
                 open
                 titleCls={css({ fw: 500 })}
                 icnStrok={1}
                 title="Drop Shadow"
                 actionComponent={(
-                  <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
-                    <CloseIcn size="12" />
+                  <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn)} delete-btn`} type="button" aria-label="Clear Filter">
+                    <TrashIcn />
                   </button>
                 )}
               >
@@ -240,10 +240,11 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
         }
 
         return (
-          <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+          <div className={css(ut.flxcb, ut.mb2, ut.mt2, c.containerHover)}>
             <span className={css(ut.fs12, ut.fw500, { w: 85 })}>{filter.title}</span>
             <div className={css(ut.flxcb)}>
               <SizeControl
+                className={css({ mr: 15 })}
                 width="80px"
                 value={Number(filter.value)}
                 unit={filter.unit}
@@ -253,8 +254,8 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                 min={filter.min}
                 max={filter.max}
               />
-              <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
-                <CloseIcn size="12" />
+              <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn)} delete-btn`} type="button" aria-label="Clear Filter">
+                <TrashIcn />
               </button>
             </div>
           </div>
@@ -312,4 +313,21 @@ const c = {
       brs: '10px !important',
     },
   },
+  delBtn: {
+    se: 20,
+    flx: 'center',
+    b: 'none',
+    p: 0,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    rt: 5,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
+  },
+  containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
 }

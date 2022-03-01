@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
-import CheckMarkIcn from '../../../../Icons/CheckMarkIcn'
 import FocusIcn from '../../../../Icons/FocusIcn'
 import SortIcn from '../../../../Icons/SortIcn'
 import ut from '../../../../styles/2.utilities'
@@ -83,7 +82,7 @@ export default function LayerAccordion({ className,
               {tag && (
                 <span title={`Field key: ${tag}`} className={css(cls.titleTag)}>{tag}</span>
               )}
-              {styleOverride && <span className={css(ut.flxc, { px: 2 })} title="Theme styles override"><CheckMarkIcn cls="context-btn-color" size="15" /></span>}
+              {styleOverride && <span className={css(cls.overrideIndicator)} title="Theme styles override" />}
               {fldData && (
                 <Cooltip width={150} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
                   <div className={css(cls.tipBody)}>
@@ -212,5 +211,13 @@ const cls = {
     ai: 'center',
     dy: 'none',
     pl: 15,
+  },
+  overrideIndicator: {
+    w: '5px',
+    h: '5px',
+    brs: '50%',
+    bc: '#ffd64f',
+    ml: '3px',
+    px: 2,
   },
 }
