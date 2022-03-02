@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -14,22 +15,29 @@ import SpaceControl from './SpaceControl'
 
 export default function BorderControlMenu({ objectPaths, state = '' }) {
   const { css } = useFela()
-
   const { fieldKey, element } = useParams()
-
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
 
   const { object, paths } = objectPaths
-
   const stateObj = getObjByKey(object, { themeVars, styles })
-
   const fldStyleObj = styles?.fields?.[fieldKey]
-  if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
-  const { fieldType } = fldStyleObj
-  const { elementKey, classKey } = getElmDataBasedOnElement(element)
-  const borderPropObj = editorConfig[fieldType][elementKey].properties.border
+
+  let borderPropObj
+  try {
+    if (!fldStyleObj) {
+      borderPropObj = editorConfig.formWrapper.properties.border
+    } else {
+      const { fieldType } = fldStyleObj
+      const { elementKey } = getElmDataBasedOnElement(element)
+      borderPropObj = editorConfig[fieldType][elementKey].properties.border
+    }
+  } catch (error) {
+    console.log(error.message)
+    console.error('😅 no style object found according to this field')
+  }
   const borderPropKeys = Object.keys(borderPropObj)
+
   const border = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths[borderPropKeys[0]]))
   const borderColor = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-color']))
   const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-width']))

@@ -10,7 +10,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
 import { getValueByObjPath, showDraggableModal } from './styleHelpers'
 
-export default function SpacingControl({ subtitle, action, value, objectPaths, id, allowImportant }) {
+export default function SpacingControl({ mainTitle, subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
@@ -20,7 +20,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const margin = themeVars[paths?.margin]
   const padding = themeVars[paths?.padding]
   const val = getValueByObjPath(styles, paths?.margin || paths?.padding)
-  // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
+
   const getValue = (m = 'M', p = 'P') => {
     let valu = ''
     if (objectPaths.object === 'themeVars') {
@@ -47,10 +47,10 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && (<Important propertyPath={paths?.margin || paths?.padding} />)}
+      {allowImportant && val && (<Important propertyPath={paths?.margin || paths?.padding} />)}
       <div title={getValue('Margin', 'Padding')} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
           title={val}
@@ -74,6 +74,7 @@ const c = {
     mnw: 130,
     brs: 10,
     p: 7,
+    pr: '3px !important',
     flx: 'center-between',
     h: 30,
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },

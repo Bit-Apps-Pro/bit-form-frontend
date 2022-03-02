@@ -78,7 +78,7 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, propertyArray, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
@@ -88,12 +88,20 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   if (!show) return <></>
 
   return (
-    <Draggable ref={dragableRef} bounds="parent" handle=".draggable-modal-handle" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)} onStart={() => setBuilderPointerEventNone(true)} onStop={() => setBuilderPointerEventNone(false)}>
+    <Draggable
+      ref={dragableRef}
+      bounds="parent"
+      handle=".draggable-modal-handle"
+      position={pos !== null ? position : pos}
+      onMouseDown={() => setPos(null)}
+      onStart={() => setBuilderPointerEventNone(true)}
+      onStop={() => setBuilderPointerEventNone(false)}
+    >
       <div className={css(draggableModalStyle.container)} style={{ width, ...pos && { transition: 'transform .2s' } }}>
         {/* style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }} */}
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handle`}>
           <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
-            <span className={css(draggableModalStyle.title)}>{setTitle(component)}</span>
+            <span className={css(draggableModalStyle.title)}>{mainTitle || setTitle(component)}</span>
             <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
           </div>
           <button type="button" className={css(draggableModalStyle.button)} onClick={() => setDraggableModal({ show: false })}>
@@ -103,7 +111,20 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} defaultValue={defaultValue} objectPaths={objectPaths} state={state} id={id} stateObjName={stateObjName} propertyPath={propertyPath} propertyArray={propertyArray} fldKey={fldKey} hslaPaths={hslaPaths} />
+            <RenderComponent
+              component={component}
+              action={action}
+              value={value}
+              defaultValue={defaultValue}
+              objectPaths={objectPaths}
+              state={state}
+              id={id}
+              stateObjName={stateObjName}
+              propertyPath={propertyPath}
+              propertyArray={propertyArray}
+              fldKey={fldKey}
+              hslaPaths={hslaPaths}
+            />
           </Suspense>
         </div>
       </div>

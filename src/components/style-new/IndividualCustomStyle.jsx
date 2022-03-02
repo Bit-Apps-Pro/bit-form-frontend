@@ -199,6 +199,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     } else {
       objPaths.paths[propName] = getPropertyPath(propName, state)
     }
+    console.log(objPaths)
     switch (propName) {
       case 'background':
         return (

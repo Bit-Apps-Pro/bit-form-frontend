@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -10,7 +11,6 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
-import ColorPreview from './ColorPreview'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
@@ -57,7 +57,10 @@ export default function IndividualShadowControl({ title,
         break
     }
   }
-  const getValue = () => value?.replaceAll(/\(|var|\)/gi, '')
+  const getValue = () => {
+    if (value?.match(/(var)/gi)) return value?.replaceAll(/\(|var|\)/gi, '')
+    return value
+  }
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
@@ -71,7 +74,7 @@ export default function IndividualShadowControl({ title,
 
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
+        {allowImportant && getValue() && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 250, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey })}
@@ -100,6 +103,7 @@ const c = {
     mnw: 130,
     brs: 10,
     p: 7,
+    pr: '3px !important',
     flx: 'center-between',
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },

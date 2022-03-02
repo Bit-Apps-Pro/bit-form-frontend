@@ -79,8 +79,8 @@ export default function SimpleColorPicker({ title,
       </div>
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={checkVarValue()}>
+        {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
+        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={checkVarValue() || `Add ${title}`}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"

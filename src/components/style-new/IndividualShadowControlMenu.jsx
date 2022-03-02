@@ -103,6 +103,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
       {arrOfExtractedShadowObj.map((shadowObj, indx) => (
         <>
           <SimpleAccordion
+            key={`shadow-accordion-${indx + 12 * 23}`}
             className={css(c.accordionHead)}
             title={__(`Shadow ${indx + 1}`, 'bitform')}
             open={indx === 0}
@@ -119,7 +120,6 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                 </button>
               )
             }
-            key={`shadow-${indx * 2 * 4}`}
           >
             <div className={css(ut.p1)}>
               {

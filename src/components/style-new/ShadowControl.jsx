@@ -38,7 +38,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
         <span className={css(c.clrVal)}>{value || 'Add Shadow'}</span>
       </button>
       {value && (
-        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
+        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Shadow">
           <CloseIcn size="12" />
         </button>
       )}
@@ -53,6 +53,7 @@ const c = {
     mnw: 130,
     brs: 10,
     p: 3,
+    pr: '3px !important',
     flx: 'center-between',
   },
   preview: {
