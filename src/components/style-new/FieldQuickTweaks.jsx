@@ -194,7 +194,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [objName, objPath] = fldTypWiseAccentColorObjName()
   return (
     <>
-      {fieldType.match(/^((?!button|image|title|advanced-file-up).)*$/gi) && (
+      {fieldType.match(/^((?!button|image|title|advanced-file-up|html|).)*$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"

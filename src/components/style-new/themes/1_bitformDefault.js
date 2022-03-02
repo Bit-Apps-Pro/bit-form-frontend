@@ -7,6 +7,7 @@ import dividerStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefa
 import imageStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import htmlStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme(fk, type, direction) {
   switch (type) {
@@ -109,6 +110,13 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         overrideGlobalTheme: [],
         classes: advanceFileUpStyle1BitformDefault({ fk, type, direction }),
+      }
+    case 'html':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: htmlStyle1BitformDefault({ fk, type, direction }),
       }
     default:
       return {}

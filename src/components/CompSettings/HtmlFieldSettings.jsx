@@ -1,22 +1,24 @@
-import { useState } from 'react'
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import Back2FldBtn from './Back2FldBtn'
-import sc from '../../styles/commonStyleEditorStyle'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 
 export default function HtmlFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)
   const { css } = useFela()
@@ -26,6 +28,14 @@ export default function HtmlFieldSettings() {
     fdata.content = val
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
   }
+
+  const setBuilderFldWrpHeight = () => {
+    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey: fldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
+  }
+
+  useEffect(() => {
+    setBuilderFldWrpHeight()
+  }, [fieldData.content])
 
   return (
     <div>
@@ -63,9 +73,12 @@ export default function HtmlFieldSettings() {
           </span>
         </div>
         <div
-          // eslint-disable-next-line react/no-danger
+          role="button"
+          tabIndex="-1"
           dangerouslySetInnerHTML={{ __html: fieldData.content }}
-          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto' })}
+          onClick={() => setLabelModal(true)}
+          onKeyPress={() => setLabelModal(true)}
         />
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />

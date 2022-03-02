@@ -65,7 +65,7 @@ export default function StyleLayers() {
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
-              <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
+              {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
               <ElementConfiguration fldKey={fldKey} />
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
@@ -118,7 +118,6 @@ export default function StyleLayers() {
                     styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
                   />
 
-
                   {fldData.typ.match(/(radio)/gi) && (
                     <NavBtn
                       subRoute={fldKey}
@@ -131,7 +130,7 @@ export default function StyleLayers() {
                   )}
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
                 <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
               )}
             </LayerAccordion>

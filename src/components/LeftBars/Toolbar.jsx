@@ -424,7 +424,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'html',
-        lbl: 'HTML Content',
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
       },
