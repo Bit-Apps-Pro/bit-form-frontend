@@ -294,7 +294,7 @@ export default function ElementConfiguration({ fldKey }) {
             fldData={fieldObj}
             key={fldKey}
             open={fldKey === selectedFieldKey && (fieldObj.prefixIcn || fieldObj.suffixIcn)}
-            highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+            highlightSelector={`[data-dev-pond-root="${fldKey}"]`}
             styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
           >
             <NavBtn
@@ -303,7 +303,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--root"
               label="Root"
               offset="3.1"
-              highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-root="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
             />
             <NavBtn
@@ -312,7 +312,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--drop-label"
               label="Drop Label"
               offset="3.1"
-              highlightSelector={`[data-dev-inp-wrp="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-drop-lbl="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drop-label')}
             />
 
@@ -322,7 +322,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--label-action"
               label="Label Action"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-lbl-action="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--label-action')}
             />
 
@@ -332,7 +332,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--panel-root"
               label="Paenl Root"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-panel-root="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--panel-root')}
             />
 
@@ -342,7 +342,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--item-panel"
               label="Item Panel"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-item-panel="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--item-panel')}
             />
 
@@ -352,7 +352,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--file-action-button"
               label="File Action Button"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-action-btn="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file-action-button')}
             />
 
@@ -362,7 +362,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--drip-blob"
               label="Drip Blob"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-drip-blob="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drip-blob')}
             />
 
@@ -372,7 +372,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="fld-wrp .filepond--file"
               label="File"
               offset="3.1"
-              highlightSelector={`[data-dev-btn="${fldKey}"]`}
+              highlightSelector={`[data-dev-pond-file="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file')}
             />
 
