@@ -299,8 +299,6 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
   return ((y < x) ? -1 : ((y > x) ? 1 : 0))
 })
 
-export const firstLetterUpper = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-
 export const renderDOMObjectFromHTMLStr = str => {
   try {
     return (
@@ -373,4 +371,10 @@ export const getElmDataBasedOnElement = (element) => {
   return { elementKey, classKey }
 }
 
-export const ucFirst = (val) => val.charAt(0).toUpperCase() + val.slice(1)
+/**
+ * First letter uppercase
+ * @function ucFirst
+ * @param {String} str
+ * @returns String
+ */
+export const ucFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1)
