@@ -7,6 +7,8 @@ export async function isFormValidatedWithoutError(formContentId, handleFormValid
       reject(new Error('Form is not valid'))
     })
   }
+  const formParent = document.getElementById(`${contentID}`)
+  formParent.classList.add('pos-rel', 'form-loading')
   const formData = new FormData(document.getElementById(`form-${formContentId}`))
 
   const { bitFormsFront, grecaptcha } = window
@@ -25,6 +27,9 @@ export async function isFormValidatedWithoutError(formContentId, handleFormValid
     },
   )
   const data = await res.json()
+
+  formParent.classList.remove('pos-rel', 'form-loading')
+
   if (!data.success) {
     handleFormValidationErrorMessages(data)
     return new Promise((_, reject) => {
