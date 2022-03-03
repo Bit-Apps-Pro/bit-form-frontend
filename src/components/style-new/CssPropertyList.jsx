@@ -1,12 +1,12 @@
 import { useFela } from 'react-fela'
 import CloseIcn from '../../Icons/CloseIcn'
-import { firstLetterUpper } from '../../Utils/Helpers'
+import { ucFirst } from '../../Utils/Helpers'
 import Downmenu from '../Utilities/Downmenu'
 
 export default function CssPropertyList({ properties, setProperty, classNames }) {
   const { css } = useFela()
 
-  const decorateLabel = (label) => firstLetterUpper(label.split('-').join(' '))
+  const decorateLabel = (label) => ucFirst(label.split('-').join(' '))
 
   return (
     <div className={`${css(s.wrp)} ${classNames}`}>

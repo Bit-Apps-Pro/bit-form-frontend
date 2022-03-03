@@ -191,17 +191,16 @@ const editorConfig = {
   formWrapper: {
     states: ['hover'],
     properties: {
-      background: {
-        'background-image': true,
-        'background-position': true,
-        'background-repeat': true,
-        'background-size': true,
-        'backdrop-filter': true,
-      },
+      background: '',
       color: '',
       padding: '5px',
       margin: '5px',
-      border: '',
+      border: {
+        border: true,
+        'border-color': true,
+        'border-width': true,
+        'border-radius': true,
+      },
       'box-shadow': '',
       transition: '',
     },

@@ -4,11 +4,8 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $colorScheme } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
-import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
@@ -16,6 +13,7 @@ import editorConfig from './NewStyleEditorConfig'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
+import StylePropertyBlock from './StylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
 export default function FormWrapperCustomizer() {
@@ -47,185 +45,159 @@ export default function FormWrapperCustomizer() {
     }))
   }
 
-  const getStateNameAndPath = (property) => (
-    {
-      object: 'styles',
-      paths: {
-        ...property === 'margin' && { margin: getPropertyPath('margin') },
-        ...property === 'padding' && { padding: getPropertyPath('padding') },
-      },
-    }
-  )
-
   const clearHandler = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, getPropertyPath(property), '')
     }))
   }
 
-  const fwStylePathObj = {
-    object: 'styles',
-    borderObjName: 'styles',
-    paths: { border: getPropertyPath('border'), borderWidth: getPropertyPath('border-width') },
-  }
+  const getCssProps = (prop) => {
+    const objPaths = {
+      object: 'styles',
+      paths: {},
+    }
 
-  return (
-    <div className={css(ut.ml2, { pn: 'relative' })}>
-      {
-        formWrpStylesPropertiesArr.includes('background') && (
+    const configProperty = editorConfig.formWrapper.properties[prop]
+    let propertyKeys = [prop]
+    if (typeof configProperty === 'object') {
+      propertyKeys = Object.keys(configProperty)
+      propertyKeys.map(propName => {
+        objPaths.paths[propName] = getPropertyPath(propName)
+      })
+    } else {
+      objPaths.paths[prop] = getPropertyPath(prop)
+    }
+
+    switch (prop) {
+      case 'background':
+        return (
           <SimpleColorPicker
             title="Background"
-            subtitle="Background Color"
+            subtitle="Form wrapper background color"
             value={formWrpStylesObj?.background}
             modalId="field-container-backgroung"
             stateObjName="styles"
-            propertyPath={getPropertyPath('background')}
+            propertyPath={objPaths.paths.background}
             deleteable
             delPropertyHandler={() => delPropertyHandler('background')}
             clearHandler={() => clearHandler('background')}
             allowImportant
           />
         )
-      }
-      {
-        formWrpStylesPropertiesArr.includes('color') && (
+      case 'color':
+        return (
           <SimpleColorPicker
             title="Color"
-            subtitle="Color"
+            subtitle="Form wrapper color"
             value={formWrpStylesObj?.color}
             modalId="field-container-color"
             stateObjName="styles"
-            propertyPath={getPropertyPath('color')}
+            propertyPath={objPaths.paths.color}
             deleteable
             delPropertyHandler={() => delPropertyHandler('color')}
             clearHandler={() => clearHandler('color')}
             allowImportant
           />
         )
+      case 'padding':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('padding')}
+            title="Padding"
+          >
+            <SpacingControl
+              mainTitle="Padding Control"
+              allowImportant
+              action={{ type: 'spacing-control' }}
+              subtitle="Form wrapper padding"
+              objectPaths={objPaths}
+              id="padding-control"
+            />
+          </StylePropertyBlock>
+        )
+      case 'margin':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('margin')}
+            title="Margin"
+          >
+            <SpacingControl
+              mainTitle="Margin Control"
+              allowImportant
+              action={{ type: 'spacing-control' }}
+              subtitle="Form wrapper margin"
+              objectPaths={objPaths}
+              id="margin-control"
+            />
+          </StylePropertyBlock>
+        )
+      case 'box-shadow':
+        return (
+          <IndividualShadowControl
+            title="Box-shadow"
+            subtitle="Form wrapper box shadow"
+            value={formWrpStylesObj?.['box-shadow']}
+            modalId="field-container-box-shadow"
+            stateObjName="styles"
+            propertyPath={objPaths.paths['box-shadow']}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('box-shadow')}
+            clearHandler={() => clearHandler('box-shadow')}
+            allowImportant
+          />
+        )
+      case 'border':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('border')}
+            title="Border"
+          >
+            <span className={css(ut.flxc)}>
+              <ResetStyle
+                propertyPath={[String(Object.values(objPaths.paths))]}
+                stateObjName="styles"
+              />
+              <BorderControl
+                subtitle="Form wrapper border"
+                value={formWrpStylesObj?.border}
+                objectPaths={objPaths}
+                id="fld-wrp-bdr"
+              />
+            </span>
+          </StylePropertyBlock>
+        )
+      case 'trsansition':
+        return (
+          <TransitionControl
+            title="Transition"
+            subtitle="Form wrapper transition"
+            value={formWrpStylesObj?.transition}
+            modalId="field-container-transition"
+            stateObjName="styles"
+            propertyPath={getPropertyPath('transition')}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('transition')}
+            clearHandler={() => clearHandler('transition')}
+            allowImportant
+          />
+        )
+      default:
+        break
+    }
+  }
+  return (
+    <div className={css(ut.ml2, { pn: 'relative' })}>
+      {formWrpStylesPropertiesArr.map((prop, indx) => (
+        <div key={`css-property-${indx + 3 * 2}`}>
+          {getCssProps(prop)}
+        </div>
+      ))}
+      {
+        addableCssProps.length > 0
+        && (
+          <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
+        )
       }
-      {formWrpStylesPropertiesArr.includes('padding') && (
-        <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
-          <div className={css(ut.flxc, ut.ml1)}>
-            <button
-              title="Delete Property"
-              onClick={() => delPropertyHandler('padding')}
-              className={`${css(sc.propsDelBtn)} delete-btn`}
-              type="button"
-            >
-              <TrashIcn size="14" />
-            </button>
-            <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
-          </div>
-          <SpacingControl
-            allowImportant
-            action={{ type: 'spacing-control' }}
-            subtitle="Form wrapper padding"
-            objectPaths={getStateNameAndPath('padding')}
-            id="padding-control"
-          />
-        </div>
-      )}
-      {formWrpStylesPropertiesArr.includes('margin') && (
-        <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
-          <div className={css(ut.flxc, ut.ml1)}>
-            <button
-              title="Delete Property"
-              onClick={() => delPropertyHandler('margin')}
-              className={`${css(sc.propsDelBtn)} delete-btn`}
-              type="button"
-            >
-              <TrashIcn size="14" />
-            </button>
-            <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
-          </div>
-          <SpacingControl
-            allowImportant
-            action={{ type: 'spacing-control' }}
-            subtitle="Form wrapper margin"
-            objectPaths={getStateNameAndPath('margin')}
-            id="margin-control"
-          />
-        </div>
-      )}
-      {formWrpStylesPropertiesArr.includes('box-shadow') && (
-        <IndividualShadowControl
-          title="Box-shadow"
-          subtitle="Box-shadow"
-          value={formWrpStylesObj?.['box-shadow']}
-          modalId="field-container-box-shadow"
-          stateObjName="styles"
-          propertyPath={getPropertyPath('box-shadow')}
-          deleteable
-          delPropertyHandler={() => delPropertyHandler('box-shadow')}
-          clearHandler={() => clearHandler('box-shadow')}
-          allowImportant
-        />
-      )}
-      {formWrpStylesPropertiesArr.includes('border') && (
-        <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
-          <div className={css(ut.flxc, ut.ml1)}>
-            <button
-              title="Delete Property"
-              onClick={() => delPropertyHandler(['border', 'border-width'])}
-              className={`${css(sc.propsDelBtn)} delete-btn`}
-              type="button"
-            >
-              <TrashIcn size="14" />
-            </button>
-            <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
-          </div>
-          <span className={css(ut.flxc)}>
-            <ResetStyle
-              propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
-              stateObjName="styles"
-            />
-            <BorderControl
-              subtitle="Field Container Border"
-              value={formWrpStylesObj?.border}
-              objectPaths={fwStylePathObj}
-              id="fld-wrp-bdr"
-            />
-          </span>
-        </div>
-      )}
-      {formWrpStylesPropertiesArr.includes('transition') && (
-        <TransitionControl
-          title="Transition"
-          subtitle="Transition"
-          value={formWrpStylesObj?.transition}
-          modalId="field-container-transition"
-          stateObjName="styles"
-          propertyPath={getPropertyPath('transition')}
-          deleteable
-          delPropertyHandler={() => delPropertyHandler('transition')}
-          clearHandler={() => clearHandler('transition')}
-          allowImportant
-        />
-      )}
-
-      <div className={css(ut.m10)}>
-        {/* <SimpleColorPicker
-          title="Background colors"
-          subtitle="Field Background Color"
-          value={fwBg}
-          stateObjName="themeColors"
-          propertyPath="--fld-wrp-bg"
-          modalId="fld-wp-bg"
-        />
-        <div className={css(ut.flxcb, ut.mt2)}>
-          <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-          <SpacingControl
-            value={{ margin: wrpMagin, padding: wrpPadding }}
-            action={{ type: 'spacing-control' }}
-            subtitle="Spacing control"
-            objectPaths={fldWrapperObj}
-            id="spacing-control"
-          />
-        </div> */}
-      </div>
-
-      <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
-
     </div>
   )
 }
