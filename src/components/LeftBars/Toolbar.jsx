@@ -39,6 +39,7 @@ import ut from '../../styles/2.utilities'
 import Toolbars from '../../styles/Toolbars.style'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
+import currencyList from '../../Utils/StaticData/currencies.json'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
 
@@ -487,13 +488,24 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       },
     },
     {
-      name: __('Phone Number', 'bitform'),
-      keywords: 'Phone Number, Phone, Phone Number Field',
+      name: __('Currency', 'bitform'),
+      keywords: 'Currency, Currency Field, Amount',
       icn: <RazorPayIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
       elm: {
-        typ: 'phone',
-        lbl: __('Phone Number', 'bitform'),
+        typ: 'currency',
+        lbl: __('Currency Field', 'bitform'),
+        inputFormatOptions: {
+          formatter: 'browser',
+          showCurrencySymbol: true,
+          decimalSeparator: '.',
+        },
+        valueFormatOptions: {
+          formatter: 'browser',
+          showCurrencySymbol: true,
+          decimalSeparator: '.',
+        },
+        options: currencyList,
         valid: {},
         err: {},
       },
