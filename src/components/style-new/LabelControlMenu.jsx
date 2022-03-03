@@ -199,7 +199,7 @@ export default function LabelControlMenu() {
           width="100px"
         />
       </div>
-      <Grow open={openVarPos}>
+      <Grow open={openVarPos} overflw="visible">
         <div className={css(ut.mb2, mainStyle.main)}>
           <span className={css(mainStyle.label)}>Label Postion Vertical</span>
           <ResetStyle propertyPath="--lbl-wrp-sa" stateObjName="themeVars" />
