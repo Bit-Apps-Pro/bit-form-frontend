@@ -7,7 +7,7 @@ export async function isFormValidatedWithoutError(formContentId, handleFormValid
       reject(new Error('Form is not valid'))
     })
   }
-  const formParent = document.getElementById(`${contentID}`)
+  const formParent = document.getElementById(formContentId)
   formParent.classList.add('pos-rel', 'form-loading')
   const formData = new FormData(document.getElementById(`form-${formContentId}`))
 
