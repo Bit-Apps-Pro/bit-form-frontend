@@ -10,6 +10,7 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SimpleDropdown from '../Utilities/SimpleDropdown'
 import SingleToggle from '../Utilities/SingleToggle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
@@ -109,7 +110,7 @@ export default function ThemeQuickTweaksCustomizer() {
     <>
       <SimpleColorPicker
         title="Field Wrapper Background Color"
-        subtitle="Field Wrapper Background Color"
+        subtitle="Theme Quick Tweaks Background Color"
         value={globalBgColor}
         stateObjName="themeColors"
         propertyPath="--global-bg-color"
@@ -117,7 +118,7 @@ export default function ThemeQuickTweaksCustomizer() {
       />
       <SimpleColorPicker
         title="Accent Color"
-        subtitle="Accent Color"
+        subtitle="Theme Quick Tweaks Accent Color"
         value={globalPrimaryColor}
         stateObjName="themeColors"
         propertyPath="--global-accent-color"
@@ -127,7 +128,7 @@ export default function ThemeQuickTweaksCustomizer() {
       />
       <SimpleColorPicker
         title="Font Color"
-        subtitle="Font Color"
+        subtitle="Theme Quick Tweaks Font Color"
         value={globalFontColor}
         stateObjName="themeColors"
         propertyPath="--global-font-color"
@@ -135,7 +136,7 @@ export default function ThemeQuickTweaksCustomizer() {
       />
       <SimpleColorPicker
         title="Border Color"
-        subtitle="Border Color"
+        subtitle="Theme Quick Tweaks Border Color"
         value={globalFldBdrClr}
         stateObjName="themeColors"
         propertyPath="--global-fld-bdr-clr"
@@ -143,7 +144,7 @@ export default function ThemeQuickTweaksCustomizer() {
       />
       <SimpleColorPicker
         title="Field Background Color"
-        subtitle="Field Background Color"
+        subtitle="Theme Quick Tweaks Field Background Color"
         value={globalFldBgClr}
         stateObjName="themeColors"
         propertyPath="--global-fld-bg-color"
