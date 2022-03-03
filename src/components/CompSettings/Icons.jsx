@@ -236,6 +236,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     setModal(false)
   }
 
+  const handlePrefixIcon = e => {
+    setPrefix(e.currentTarget.firstChild.src)
+  }
+
   return (
     <div>
       <StyleSegmentControl
@@ -301,7 +305,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                 key={`${item.name} (${item.id})`}
                 title={`${item.name} (${item.id})`}
                 className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
-                onClick={(e) => setPrefix(e.target.src)}
+                onClick={handlePrefixIcon}
               >
                 <img src={`${url}${item.url}`} onError={errHandle} alt={item.name} className={css(s.img)} />
               </button>
@@ -350,7 +354,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                   <button type="button" className={`${css(s.delBtn)} trash`} title="Delete" onClick={() => delIcon(file)}>
                     <CloseIcn size={10} />
                   </button>
-                  <button onClick={(e) => setPrefix(e.target.src)} type="button" title={file.name} className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}>
+                  <button onClick={handlePrefixIcon} type="button" title={file.name} className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}>
                     <img src={`${bits.iconURL}/${file}`} alt={`icon ${file}`} width="40" height="30" />
                   </button>
                 </div>
