@@ -15,9 +15,11 @@ import SpaceControl from './SpaceControl'
 
 export default function BorderControlMenu({ objectPaths, state = '' }) {
   const { css } = useFela()
-  const { fieldKey, element } = useParams()
+  const { fieldKey, element, rightBar } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
+  const urlparams = useParams()
+  console.log('urlparams', urlparams)
 
   const { object, paths } = objectPaths
   const stateObj = getObjByKey(object, { themeVars, styles })
@@ -25,8 +27,8 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
 
   let borderPropObj
   try {
-    if (!fldStyleObj) {
-      borderPropObj = editorConfig.formWrapper.properties.border
+    if (!fldStyleObj && rightBar === 'theme-customize') {
+      borderPropObj = editorConfig[element].properties.border
     } else {
       const { fieldType } = fldStyleObj
       const { elementKey } = getElmDataBasedOnElement(element)
