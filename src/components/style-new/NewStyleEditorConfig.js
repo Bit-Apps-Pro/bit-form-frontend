@@ -187,23 +187,28 @@ const chackProps = {
   shadow: '',
   color: '',
 }
+const formCommonCssProps = {
+  background: '',
+  color: '',
+  padding: '5px',
+  margin: '5px',
+  border: {
+    border: true,
+    'border-color': true,
+    'border-width': true,
+    'border-radius': true,
+  },
+  'box-shadow': '',
+  transition: '',
+}
 const editorConfig = {
-  formWrapper: {
+  'form-wrappers': {
     states: ['hover'],
-    properties: {
-      background: '',
-      color: '',
-      padding: '5px',
-      margin: '5px',
-      border: {
-        border: true,
-        'border-color': true,
-        'border-width': true,
-        'border-radius': true,
-      },
-      'box-shadow': '',
-      transition: '',
-    },
+    properties: { ...formCommonCssProps },
+  },
+  'form-containers': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
   },
   defaultProps: {
     margin: '0px',
