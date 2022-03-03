@@ -3,9 +3,11 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+import advancedFileUp_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
+import htmlStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
@@ -354,6 +356,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'advanced-file-up':
     case 'radio':
     case 'decision-box':
+    case 'html':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
@@ -491,6 +494,18 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'advanced-file-up':
+        const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = advanceFileUpBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'html':
+        const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = htmlBitFormDefault[`.${fk}-${cls}`]
         })
         break
       default:

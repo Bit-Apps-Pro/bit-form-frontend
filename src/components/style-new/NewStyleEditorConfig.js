@@ -548,5 +548,11 @@ const editorConfig = {
       properties: { ...labelCssProps },
     },
   },
+  html: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
 }
 export default editorConfig

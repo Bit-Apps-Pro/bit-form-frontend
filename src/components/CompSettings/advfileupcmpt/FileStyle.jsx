@@ -24,7 +24,7 @@ function FileStyle({ action, value }) {
       </div>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={css(ut.dyb, ut.flxcb)}>
-          <label htmlFor="remove_btn" className={css(ut.fw500, ut.mr1)}>{__('Remove Buttom', 'bitform')}</label>
+          <label htmlFor="remove_btn" className={css(ut.fw500, ut.mr1)}>{__('Remove Button', 'bitform')}</label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
               The position of the remove item button

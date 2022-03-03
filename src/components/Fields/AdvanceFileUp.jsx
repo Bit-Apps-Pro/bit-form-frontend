@@ -50,6 +50,15 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
 
     container.appendChild(filePondRef.current.element)
 
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--root`)?.setAttribute('data-dev-pond-root', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--drop-label`)?.setAttribute('data-dev-pond-drop-lbl', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--label-action`)?.setAttribute('data-dev-pond-lbl-action', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--panel-root`)?.setAttribute('data-dev-pond-panel-root', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--item-panel`)?.setAttribute('data-dev-pond-item-panel', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--file-action-button`)?.setAttribute('data-dev-pond-action-btn', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--drip-blob`)?.setAttribute('data-dev-pond-drip-blob', fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
+
     const uri = new URL(typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_file_store')
     uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
