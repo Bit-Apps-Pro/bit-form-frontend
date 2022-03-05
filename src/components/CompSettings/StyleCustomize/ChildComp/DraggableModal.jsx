@@ -1,6 +1,7 @@
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
+import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../../../GlobalStates/GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
@@ -79,12 +80,15 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths } = draggableModal
+  const history = useHistory()
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
     setPos({ ...position })
   }, [position])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => history?.listen(() => setDraggableModal({ show: false })), [history])
   if (!show) return <></>
 
   return (
