@@ -19,7 +19,8 @@ export const showDraggableModal = (e, setDraggableModal, props) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
   const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - (props.width || 250))
-  const y = e.target.getBoundingClientRect().top - offset.top
+  const currentTargetTop = e.target.getBoundingClientRect().top
+  const y = currentTargetTop > 300 ? 200 : currentTargetTop - offset.top
   setDraggableModal({ show: true, position: { x, y }, ...props })
 }
 

@@ -102,10 +102,10 @@ export default function ThemeCustomize() {
         <div className={css(cls.divider)} />
 
         {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
-        {element === 'form-wrapper' && <FormWrapperCustomizer />}
-        {element === 'form-container' && <FormContainerCustomizer />}
-        {element === 'field-container' && <FieldContainerCustomizer />}
-        {element === 'label-container' && <LabelContainerCustomizer />}
+        {element === 'form-wrappers' && <FormWrapperCustomizer />}
+        {element === 'form-containers' && <FormContainerCustomizer />}
+        {element === 'field-containers' && <FieldContainerCustomizer />}
+        {element === 'label-containers' && <LabelContainerCustomizer />}
         {element === 'label' && <LabelCustomizer />}
         {element === 'subtitle' && <SubTitleCustomizer />}
         {element === 'helper-text' && <HelperTextCustomizer />}
