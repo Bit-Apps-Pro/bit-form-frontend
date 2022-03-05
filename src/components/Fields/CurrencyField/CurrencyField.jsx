@@ -1,34 +1,41 @@
 // import './currency-field-style.css'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
+import { selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import CurrencyFieldClass from './currency-field-script'
 
 const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, styleClasses }) => {
-  const countryWrap = useRef(null)
+  const [currencyWrapElmRef, setCurrencyWrapElmRef] = useState(null)
   const currencyFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
 
   useEffect(() => {
-    const currencyWrapElm = countryWrap.current
-    const { options, inputFormatOptions, valueFormatOptions } = fieldData
-    // console.log('useEffect', options)
-    // list.destroy()
-    if (currencyFieldRef.current && currencyWrapElm && 'destroy' in currencyFieldRef.current) {
-      // console.log('destroy', currencyWrapElm, currencyFieldRef.current)
+    if (!currencyWrapElmRef) return
+    if (currencyFieldRef.current && currencyWrapElmRef && 'destroy' in currencyFieldRef.current) {
       currencyFieldRef.current.destroy()
     }
-    console.log('useeffect running', attr)
-    currencyFieldRef.current = new CurrencyFieldClass(currencyWrapElm, {
-      fieldKey,
-      inputFormatOptions,
-      valueFormatOptions,
-      options,
-    })
-  }, [fieldData.options])
+    const fld = selectInGrid(`.${fieldKey}-currency-fld-wrp`)
+    setCurrencyWrapElmRef(fld)
+  }, [fieldData])
+
+  useEffect(() => {
+    if (!currencyWrapElmRef) return
+
+    const { options, inputFormatOptions, valueFormatOptions } = fieldData
+    currencyFieldRef.current = new CurrencyFieldClass(
+      currencyWrapElmRef,
+      {
+        fieldKey,
+        inputFormatOptions,
+        valueFormatOptions,
+        options,
+      },
+    )
+  }, [currencyWrapElmRef])
 
   return (
     <>
@@ -39,7 +46,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         fieldData={attr}
       >
         <div className={`${fieldKey}-currency-fld-container`}>
-          <div className={`${fieldKey}-currency-fld-wrp`} ref={countryWrap}>
+          <div className={`${fieldKey}-currency-fld-wrp`} ref={setCurrencyWrapElmRef}>
             <input name="currency-input" type="hidden" className={`${fieldKey}-currency-hidden-input`} />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div
