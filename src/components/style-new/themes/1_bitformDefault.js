@@ -126,6 +126,13 @@ export default function bitformDefaultTheme(fk, type, direction) {
         overrideGlobalTheme: [],
         classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
       }
+    case 'recaptcha':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
+      }
     default:
       return {}
   }
