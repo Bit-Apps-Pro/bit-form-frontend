@@ -1,4 +1,3 @@
-import produce from 'immer'
 import { observeElement } from '../../../Utils/globalHelpers'
 import VirtualizedList from './virtualized-list.min'
 
@@ -62,7 +61,6 @@ class CurrencyField {
 
     this.#options = [...this.#config.options]
     this.fieldKey = this.#config.fieldKey
-    console.log('options', this.#options)
 
     this.#initialCurrencyFieldHTML = this.#currencyNumberFieldWrapper.cloneNode(true)
 
@@ -79,8 +77,6 @@ class CurrencyField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-
-    console.log('re init', this.#initialCurrencyFieldHTML)
 
     this.#addEvent(this.#currencyNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
@@ -134,8 +130,6 @@ class CurrencyField {
 
     this.#currencyInputElm.value = formattedValue
 
-    console.log('valid format', formattedValue)
-
     this.value = this.#handleCurrencyFormat(numValue, valueFormatOptions)
   }
 
@@ -144,8 +138,6 @@ class CurrencyField {
     const { defaultCurrencyKey } = this.#config
     const { formatter, roundToClosestInteger, showCurrencySymbol, currencyPosition, symbolPosition } = formatOptions
     const currency = selected?.i || defaultCurrencyKey
-
-    console.log('valid selected', selected, showCurrencySymbol)
 
     if (roundToClosestInteger) {
       numValue = this.#roundNumbers(numValue)
@@ -181,8 +173,6 @@ class CurrencyField {
       formattedValue = `${formattedValue}${selected?.symbol || ''}`
     }
 
-    console.log('valid formatted', formattedValue)
-
     return formattedValue
   }
 
@@ -208,14 +198,11 @@ class CurrencyField {
       return p.value
     }).join('')
 
-    console.log('valid browser formatted', output)
-
     return output
   }
 
   #customFormatter(value, formatOptions) {
     const { decimalSeparator, roundToClosestFractionDigits, minimumFractionDigits, maximumFractionDigits, numberFormat } = formatOptions
-    console.log('numberFormat', decimalSeparator, value)
     const [numberPattern] = numberFormat.split(decimalSeparator)
 
     const [numberVal, decimalVal = ''] = value.toString().split('.') // type number field will only separate by decimal separator '.'
@@ -253,8 +240,6 @@ class CurrencyField {
     } else {
       output = numberFormatted
     }
-
-    console.log('numberFormat output', output)
 
     return output
   }
@@ -415,7 +400,6 @@ class CurrencyField {
   #handleHiddenInputValueChange(oldVal, newVal) {
     const searchedCurrencyCode = this.#detectCurrencyCodeByInputValue(newVal)
     const validCurrencyCode = this.#config.options.find(item => item.i === searchedCurrencyCode)
-    console.log({ validCurrencyCode, newVal, searchedCurrencyCode })
     if (((searchedCurrencyCode && validCurrencyCode) || !searchedCurrencyCode) && oldVal !== newVal) {
       this.setSelectedCurrencyItem(searchedCurrencyCode || this.#config.defaultCurrencyKey)
       const { decimalSeparator } = this.#config.valueFormatOptions
@@ -448,7 +432,6 @@ class CurrencyField {
   }
 
   #getSelectedCurrencyItem() {
-    console.log('tetst', this.#config.options, this.#selectedCurrencyCode)
     return this.#config.options.find(opt => opt.i === this.#selectedCurrencyCode)
   }
 
@@ -544,7 +527,6 @@ class CurrencyField {
   }
 
   setSelectedCurrencyItem(currencyKey) {
-    console.log('valid currency key', currencyKey)
     this.#selectedCurrencyCode = currencyKey
     if (!this.#selectedCurrencyCode) {
       this.#clearSelectedCurrency()
@@ -651,7 +633,7 @@ class CurrencyField {
 
   destroy() {
     const el = this.#currencyNumberFieldWrapper
-    // el.outerHTML = this.#initialCurrencyFieldHTML.outerHTML
+    el.outerHTML = this.#initialCurrencyFieldHTML.outerHTML
   }
 }
 
