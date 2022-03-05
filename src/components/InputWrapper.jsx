@@ -27,7 +27,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
     <div ref={fldWrapperElm} className={`fld-wrp fld-wrp-${formID} drag ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''}`}>
       {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
         <label title={fieldData.lbl} className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
-          {fieldData.lbl}
+          {fieldData.lbl.replaceAll('$_bf_$', '\\')}
           {fieldData.valid?.req && (
             <>
               {' '}
