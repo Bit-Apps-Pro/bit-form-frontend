@@ -14,15 +14,15 @@ export const SmartTagField = [
   },
   {
     name: '_bf_date.m/d/y',
-    label: 'Date(mm/dd/yyy)',
+    label: 'Date(mm/dd/yy)',
   },
   {
     name: '_bf_date.d/m/y',
-    label: 'Date(dd/mm/yyy)',
+    label: 'Date(dd/mm/yy)',
   },
   {
     name: '_bf_date.y/m/d',
-    label: 'Date(Y-m-d)',
+    label: 'Date(Y/m/d)',
   },
   {
     name: '_bf_time',
@@ -83,19 +83,19 @@ export const SmartTagField = [
   },
   {
     name: '_bf_user_url',
-    label: 'User Url',
+    label: 'User URL',
   },
   {
     name: '_bf_author_id',
-    label: 'Author Id',
+    label: 'Post Author ID',
   },
   {
     name: '_bf_author_display',
-    label: 'Author Display Name',
+    label: 'Post Author Display Name',
   },
   {
     name: '_bf_author_email',
-    label: 'Author Email',
+    label: 'Post Author Email',
   },
   {
     name: '_bf_site_title',
@@ -126,16 +126,27 @@ export const SmartTagField = [
     label: 'Embedded Page / Post Title',
   },
   {
+    name: '_bf_post_url',
+    label: 'Embedded Page / Post URL',
+  },
+  {
     name: '_bf_post_date',
-    label: 'Post publish date',
+    label: 'Post Publish Date',
   },
   {
     name: '_bf_post_modified_date',
     label: 'Post Modified Date',
   },
   {
-    name: '_bf_post_url',
-    label: 'Embedded Page / Post URL',
+    name: '_bf_query_param()',
+    label: 'URL Query Parameter',
   },
-
+  {
+    name: '_bf_user_meta_key()',
+    label: 'User Meta Key',
+  },
+  {
+    name: '_bf_custom_date_format()',
+    label: 'Custom Date Format',
+  }
 ]
