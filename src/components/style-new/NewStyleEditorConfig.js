@@ -281,6 +281,54 @@ const editorConfig = {
       width: '',
     },
   },
+  subtitle: {
+    states: ['hover'],
+    properties: {
+      'background-color': '',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      color: '',
+      'font-size': '',
+      'font-style': '',
+      'font-weight': '',
+      padding: '5px',
+      margin: '5px',
+      'box-shadow': '',
+    },
+  },
+  'sub-titl-pre-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
+  'sub-titl-suf-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
   defaultProps: {
     margin: '0px',
     padding: '0px',
