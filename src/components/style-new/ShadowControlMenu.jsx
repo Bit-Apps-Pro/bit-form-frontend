@@ -53,7 +53,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       <div className={css(ut.flxcb, ut.mb2, ut.pt1)}>
         <span className={css(ut.fs12, ut.fw500)}>X</span>
         <SizeControl
-          width="105px"
+          width="128px"
           value={Number(getNumFromStr(shadowValues.xOffset) || 0)}
           unit={getStrFromStr(shadowValues.xOffset) || 'px'}
           inputHandler={valObj => generateShadowValue('xOffset', valObj)}
@@ -66,7 +66,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Y</span>
         <SizeControl
-          width="105px"
+          width="128px"
           value={Number(getNumFromStr(shadowValues.yOffset) || 0)}
           unit={getStrFromStr(shadowValues.yOffset) || 'px'}
           inputHandler={valObj => generateShadowValue('yOffset', valObj)}
@@ -79,7 +79,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Blur</span>
         <SizeControl
-          width="105px"
+          width="128px"
           value={Number(getNumFromStr(shadowValues.blur) || 0)}
           unit={getStrFromStr(shadowValues.blur) || 'px'}
           inputHandler={valObj => generateShadowValue('blur', valObj)}
@@ -92,7 +92,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Spread</span>
         <SizeControl
-          width="105px"
+          width="128px"
           value={Number(getNumFromStr(shadowValues.spread) || 0)}
           unit={getStrFromStr(shadowValues.spread) || 'px'}
           inputHandler={valObj => generateShadowValue('spread', valObj)}
