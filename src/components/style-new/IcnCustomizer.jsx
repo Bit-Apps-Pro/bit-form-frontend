@@ -21,6 +21,12 @@ export default function IcnCustomizer({ elementKey }) {
   const weightVar = `--${elementKey}-w`
   const heightVar = `--${elementKey}-h`
 
+  const title = () => {
+    const value = elementKey.match(/(pre|suf)/gi)?.[0]
+    if (value === 'pre') return 'Prefix'
+    if (value === 'suf') return 'Suffix'
+  }
+
   const icnValue = (varName) => getNumFromStr(themeVars[varName])
   const icnUnit = (varName) => getStrFromStr(themeVars[varName])
 
@@ -52,41 +58,23 @@ export default function IcnCustomizer({ elementKey }) {
     object: 'themeColors',
     paths: { shadow: `--${elementKey}-sh` },
   }
-  const preIcnBdrObj = {
-    object: 'themeVars',
-    borderObjName: 'themeColors',
-    paths: {
-      border: `--${elementKey}-bdr`,
-      borderWidth: `--${elementKey}-bdr-width`,
-      borderRadius: `--${elementKey}-bdr-rad`,
+
+  const borderPathsObj = [
+    {
+      object: 'themeVars',
+      paths: {
+        'border-width': `--${elementKey}-bdr-width`,
+        'border-radius': `--${elementKey}-bdr-rad`,
+      },
     },
-  }
+    {
+      object: 'themeColors',
+      paths: { border: `--${elementKey}-bdr` },
+    },
+  ]
 
   return (
     <div className={css(ut.m10)}>
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-        <SpacingControl
-          action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
-          objectPaths={preIconSpacingObj}
-          id="pre-i-spacing-control"
-        />
-      </div>
-      <ThemeStylePropertyBlock label="Shadow">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={preIcnShObj.paths.shadow}
-            stateObjName={preIcnShObj.object}
-          />
-          <ShadowControl
-            subtitle="Prefix Icon Shadow"
-            value={themeColors[`--${elementKey}-sh`]}
-            objectPaths={preIcnShObj}
-            id="pre-i-sh"
-          />
-        </div>
-      </ThemeStylePropertyBlock>
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -94,29 +82,39 @@ export default function IcnCustomizer({ elementKey }) {
             stateObjName="themeVars"
           />
           <BorderControl
-            subtitle="Prefix Icon Border"
+            subtitle={`${title()} Icon Border Control`}
             value={themeColors[`--${elementKey}-bdr`]}
-            objectPaths={preIcnBdrObj}
+            objectPaths={borderPathsObj}
             id="pre-i-control"
           />
         </div>
       </ThemeStylePropertyBlock>
-      <ThemeStylePropertyBlock label="Width">
+
+      <div className={css(ut.flxcb, ut.mt2)}>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <SpacingControl
+          action={{ type: 'spacing-control' }}
+          subtitle={`${title()} Icon Spacing Control`}
+          objectPaths={preIconSpacingObj}
+          id="pre-i-spacing-control"
+        />
+      </div>
+
+      <ThemeStylePropertyBlock label="Shadow">
         <div className={css(ut.flxc)}>
           <ResetStyle
-            propertyPath={weightVar}
-            stateObjName="themeVars"
+            propertyPath={preIcnShObj.paths.shadow}
+            stateObjName={preIcnShObj.object}
           />
-          <SizeControl
-            width="128px"
-            value={Number(icnValue(weightVar))}
-            unit={icnUnit(weightVar)}
-            inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, weightVar)}
-            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, weightVar)}
-            options={['px', 'em', 'rem', '%']}
+          <ShadowControl
+            subtitle={`${title()} Icon Shadow Control`}
+            value={themeColors[`--${elementKey}-sh`]}
+            objectPaths={preIcnShObj}
+            id="pre-i-sh"
           />
         </div>
       </ThemeStylePropertyBlock>
+
       <ThemeStylePropertyBlock label="Height">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -133,6 +131,24 @@ export default function IcnCustomizer({ elementKey }) {
           />
         </div>
       </ThemeStylePropertyBlock>
+
+      <ThemeStylePropertyBlock label="Width">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={weightVar}
+            stateObjName="themeVars"
+          />
+          <SizeControl
+            width="128px"
+            value={Number(icnValue(weightVar))}
+            unit={icnUnit(weightVar)}
+            inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, weightVar)}
+            sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, weightVar)}
+            options={['px', 'em', 'rem', '%']}
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
     </div>
   )
 }
