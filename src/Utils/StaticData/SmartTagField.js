@@ -148,5 +148,5 @@ export const SmartTagField = [
   {
     name: '_bf_custom_date_format()',
     label: 'Custom Date Format',
-  }
+  },
 ]
