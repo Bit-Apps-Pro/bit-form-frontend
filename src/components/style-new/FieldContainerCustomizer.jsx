@@ -83,15 +83,7 @@ const fldwrpShPathObj = {
   object: 'themeColors',
   paths: { shadow: '--fld-wrp-sh' },
 }
-const fwStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: {
-    border: '--fld-wrp-bdr',
-    'border-width': '--fld-wrp-bdr-width',
-    'border-radius': '--fld-wrp-bdr-rad',
-  },
-}
+
 const borderPathsObj = [
   {
     object: 'themeVars',
