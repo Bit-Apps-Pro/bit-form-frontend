@@ -24,43 +24,13 @@ export default function HelperTextCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Background Color"
+        subtitle="Helper Text Background Color Control"
         value={htBg}
         stateObjName="themeColors"
         propertyPath="--hlp-txt-bg"
         modalId="hlp-txt-bg"
       />
-      <SimpleColorPicker
-        title="Text Color"
-        subtitle="Text Color"
-        value={htC}
-        stateObjName="themeColors"
-        propertyPath="--hlp-txt-c"
-        modalId="hlp-txt-c"
-      />
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-        <SpacingControl
-          action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
-          objectPaths={htSpacingObj}
-          id="hlp-spacing-control"
-        />
-      </div>
-      <ThemeStylePropertyBlock label="Shadow">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={hlpTxtShObj.paths.shadow}
-            stateObjName={hlpTxtShObj.object}
-          />
-          <ShadowControl
-            subtitle="Helper Text Shadow"
-            value={htSh}
-            objectPaths={hlpTxtShObj}
-            id="hlp-txt-sh"
-          />
-        </div>
-      </ThemeStylePropertyBlock>
+
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -69,20 +39,56 @@ export default function HelperTextCustomizer() {
             stateObjName="themeVars"
           />
           <BorderControl
-            subtitle="Helper Text Border"
+            subtitle="Helper Text Border Control"
             value={htBdr}
-            objectPaths={htStylePathObj}
+            objectPaths={borderPathsObj}
             id="hlp-txt-control"
           />
         </div>
       </ThemeStylePropertyBlock>
+
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--hlp-txt-fs"
       />
+
       <FontWeightAndStyleControl
         fontWeightVar="--hlp-txt-font-w"
         fontStyleVar="--hlp-txt-font-style"
+      />
+
+      <div className={css(ut.flxcb, ut.mt2)}>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <SpacingControl
+          action={{ type: 'spacing-control' }}
+          subtitle="Helper Text Spacing control"
+          objectPaths={htSpacingObj}
+          id="hlp-spacing-control"
+        />
+      </div>
+
+      <ThemeStylePropertyBlock label="Shadow">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={hlpTxtShObj.paths.shadow}
+            stateObjName={hlpTxtShObj.object}
+          />
+          <ShadowControl
+            subtitle="Helper Text Shadow Control"
+            value={htSh}
+            objectPaths={hlpTxtShObj}
+            id="hlp-txt-sh"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
+      <SimpleColorPicker
+        title="Text Color"
+        subtitle="Helper Text Text Color Control"
+        value={htC}
+        stateObjName="themeColors"
+        propertyPath="--hlp-txt-c"
+        modalId="hlp-txt-c"
       />
     </div>
   )
@@ -91,12 +97,22 @@ const htSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--hlp-txt-m', padding: '--hlp-txt-p' },
 }
-const htStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--hlp-txt-bdr', borderWidth: '--hlp-txt-bdr-width', borderRadius: '--hlp-txt-bdr-rad' },
-}
+
 const hlpTxtShObj = {
   object: 'themeColors',
   paths: { shadow: '--hlp-txt-sh' },
 }
+
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--hlp-txt-bdr-width',
+      'border-radius': '--hlp-txt-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--hlp-txt-bdr' },
+  },
+]
