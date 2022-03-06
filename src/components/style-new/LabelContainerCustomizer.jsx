@@ -21,7 +21,7 @@ export default function LabelContainerCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Subtitle Background Color"
+        subtitle="Label & Subtitle Container Background Color"
         value={lwBg}
         stateObjName="themeColors"
         propertyPath="--lbl-wrp-bg"
@@ -32,7 +32,7 @@ export default function LabelContainerCustomizer() {
         <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
+          subtitle="Label & Subtitle Container Spacing control"
           objectPaths={lWrapperObj}
           id="lbl-spacing-control"
         />
