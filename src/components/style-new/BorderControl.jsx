@@ -8,7 +8,6 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
@@ -16,43 +15,60 @@ import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
 
-  const [, color] = splitValueBySpaces(value.replaceAll('!important', ''))
+  const [, color] = splitValueBySpaces(value?.replaceAll('!important', ''))
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const setThemeVars = useSetRecoilState($themeVars)
   const setThemeColors = useSetRecoilState($themeColors)
   const setStyles = useSetRecoilState($styles)
-  const { paths } = objectPaths
-  const borderProps = Object.keys(paths)
+  /**
+   * objectPaths is Array
+   * 0 => themeVars
+   * 1 => themeColors
+   */
+  let borderPropsFirst
+  if (Array.isArray(objectPaths)) {
+    const propArr = Object.keys(objectPaths[0].paths)
+    borderPropsFirst = objectPaths[0].paths[propArr[0]]
+  } else {
+    const propArr = Object.keys(objectPaths.paths)
+    borderPropsFirst = objectPaths.paths[propArr[0]]
+  }
+  // const { paths } = objectPaths
+  // const borderProps = Object.keys(paths)
 
+  const assignValues = (arr, obj, val = '') => {
+    arr.map(propName => {
+      obj[propName] = val
+    })
+  }
   const clearValue = () => {
-    switch (objectPaths.object) {
-      case 'themeColors':
-      case 'themeVars':
-        setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-          drft[paths[borderProps[0]]] = ''
-          drft[paths['border-width']] = ''
-          drft[paths['border-radius']] = ''
-        }))
-        setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
-          drft[paths['border-color']] = ''
-        }))
-        break
-      case 'styles':
-        setStyles(prvState => produce(prvState, drft => {
-          borderProps.map(propName => {
-            assignNestedObj(drft, paths[propName], '')
-          })
-        }))
-        break
-      default:
-        break
+    if (Array.isArray(objectPaths)) {
+      objectPaths.map(obj => {
+        const { paths } = obj
+        const propArr = Object.keys(paths)
+        if (obj.object === 'themeVars') {
+          setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+            assignValues(propArr, drft)
+          }))
+        } else if (obj.object === 'themeColors') {
+          setThemeColors(prvThemeColor => produce(prvThemeColor, drft => {
+            assignValues(propArr, drft)
+          }))
+        }
+      })
+    } else {
+      const { paths } = objectPaths
+      const borderProps = Object.keys(paths)
+      setStyles(prvState => produce(prvState, drft => {
+        assignValues(borderProps, drft)
+      }))
     }
   }
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && value && (<Important className={css({ mr: 3 })} propertyPath={paths[borderProps[0]]} />)}
+      {allowImportant && value && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
       <div title={value || 'Add Border Style'} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}

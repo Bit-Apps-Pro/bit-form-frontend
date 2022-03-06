@@ -194,7 +194,6 @@ const formCommonCssProps = {
   margin: '5px',
   border: {
     border: true,
-    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -207,6 +206,10 @@ const editorConfig = {
     properties: { ...formCommonCssProps },
   },
   'form-containers': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
+  },
+  'field-containers': {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
