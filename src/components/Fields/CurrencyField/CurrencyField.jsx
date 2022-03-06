@@ -26,15 +26,18 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     if (!currencyWrapElmRef) return
 
     const { options, inputFormatOptions, valueFormatOptions } = fieldData
-    currencyFieldRef.current = new CurrencyFieldClass(
-      currencyWrapElmRef,
-      {
-        fieldKey,
-        inputFormatOptions,
-        valueFormatOptions,
-        options,
-      },
-    )
+
+    const configOptions = {
+      fieldKey,
+      inputFormatOptions,
+      valueFormatOptions,
+      options,
+    }
+
+    const alreadyChecked = options.find(opt => opt.check)
+    if (alreadyChecked) configOptions.defaultCurrencyKey = alreadyChecked.i
+
+    currencyFieldRef.current = new CurrencyFieldClass(currencyWrapElmRef, configOptions)
   }, [currencyWrapElmRef])
 
   return (
