@@ -237,6 +237,20 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  label: {
+    states: ['hover'],
+    properties: {
+      background: '',
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+    },
+  },
   defaultProps: {
     margin: '0px',
     padding: '0px',
