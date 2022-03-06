@@ -1,30 +1,28 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
+import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import { getElmDataBasedOnElement } from '../../../../Utils/Helpers'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
+import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
-export default function BorderControlMenu({ objectPaths, state = '' }) {
+export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
   const { fieldKey, element, rightBar } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
-  const urlparams = useParams()
-  console.log('urlparams', urlparams)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
-  const { object, paths } = objectPaths
-  const stateObj = getObjByKey(object, { themeVars, styles })
   const fldStyleObj = styles?.fields?.[fieldKey]
-
   let borderPropObj
   try {
     if (!fldStyleObj && rightBar === 'theme-customize') {
@@ -37,18 +35,70 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
   } catch (error) {
     console.log(error.message)
     console.error('😅 no style object found according to this field')
+    return <></>
   }
-  const borderPropKeys = Object.keys(borderPropObj)
 
-  const border = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths[borderPropKeys[0]]))
-  const borderColor = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-color']))
-  const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-width']))
-  const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj, paths['border-radius']))
+  const borderPropKeys = Object.keys(borderPropObj)
+  const stateObj = (objName) => getObjByKey(objName, { themeVars, styles, themeColors })
+
+  let borderPath
+  let borderWidthPath
+  let borderRadiusPath
+  const obj = {
+    border: '',
+    borderWidth: '',
+    borderRadius: '',
+  }
+
+  /**
+   * When objectPaths is Array
+   * 0 => ThemeVars {borderWidth, borderRadius}
+   * 1 => ThemeColors {border}
+   */
+  if (Array.isArray(objectPaths)) {
+    obj.borderWidth = objectPaths[0].object
+    obj.borderRadius = objectPaths[0].object
+    obj.border = objectPaths[1].object
+
+    // set state
+    borderWidthPath = objectPaths[0].paths['border-width']
+    borderRadiusPath = objectPaths[0].paths['border-radius']
+    borderPath = objectPaths[1].paths.border
+    console.log(objectPaths, borderWidthPath, borderRadiusPath, borderPath)
+  } else {
+    const { paths } = objectPaths
+    borderWidthPath = paths['border-width']
+    borderRadiusPath = paths['border-radius']
+    borderPath = paths.border
+
+    // set state
+    obj.borderWidth = objectPaths.object
+    obj.borderRadiusPath = objectPaths.object
+    obj.border = objectPaths.object
+  }
+
+  const border = getValueFromStateVar(stateObj(obj.border), getValueByObjPath(stateObj(obj.border), borderPath))
+  const borderWidth = getValueFromStateVar(stateObj(obj.borderWidth), getValueByObjPath(stateObj(obj.borderWidth), borderWidthPath))
+  const borderRadius = getValueFromStateVar(stateObj(obj.borderRadius), getValueByObjPath(stateObj(obj.borderRadius), borderRadiusPath))
+  const borderValue = extractBorderValue(border)
 
   const onSizeChange = (pathName, val) => {
-    const index = getValueByObjPath(stateObj, pathName).indexOf('!important')
+    const stateObjName = obj.borderWidth || obj.borderRadiusPath
+    const index = getValueByObjPath(stateObj(stateObjName), pathName).indexOf('!important')
     const newVal = index >= 0 ? `${val} !important` : val
-    setStyleStateObj(object, pathName, newVal, { setThemeVars, setStyles })
+    console.log('onsizechange', pathName, val, newVal, index)
+    setStyleStateObj(stateObjName, pathName, newVal, { setThemeVars, setStyles })
+  }
+
+  const borderHandler = (prop, val) => {
+    const stateObjName = obj.border
+    const newBorderStyleStr = Object.entries(borderValue).map(([shName, shVal]) => {
+      if (shName === prop) {
+        return val
+      }
+      return shVal
+    }).join(' ')
+    setStyleStateObj(stateObjName, borderPath, newBorderStyleStr, { setThemeColors, setStyles })
   }
 
   const options = [
@@ -66,32 +116,32 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
   return (
     <>
       {borderPropObj[borderPropKeys[0]] && (
-        <div className={css(ut.flxcb, ut.mb2)}>
-          <span className={css(ut.fs12, ut.fw500)}>Type</span>
-          <SimpleDropdown
-            options={options}
-            value={border}
-            onChange={val => onSizeChange(paths[borderPropKeys[0]], val)}
-            w={130}
-            h={30}
-          />
-        </div>
-      )}
-      {borderPropObj['border-color'] && (
-        <div className={css(ut.flxcb, ut.mb2)}>
-          <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
-          <SimpleColorPickerTooltip
-            action={{ onChange: val => onSizeChange(paths['border-color'], val) }}
-            value={borderColor}
-          />
-        </div>
+        <>
+          <div className={css(ut.flxcb, ut.mb2)}>
+            <span className={css(ut.fs12, ut.fw500)}>Type</span>
+            <SimpleDropdown
+              options={options}
+              value={borderValue.borderStyle}
+              onChange={val => borderHandler('borderStyle', val)}
+              w={130}
+              h={30}
+            />
+          </div>
+          <div className={css(ut.flxcb, ut.mb2)}>
+            <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
+            <SimpleColorPickerTooltip
+              action={{ onChange: val => borderHandler('borderColor', val) }}
+              value={borderValue.borderColor}
+            />
+          </div>
+        </>
       )}
 
       {borderPropObj['border-width'] && (
         <SpaceControl
           value={borderWidth}
           className={css(ut.mb2)}
-          onChange={val => onSizeChange(paths['border-width'], val)}
+          onChange={val => onSizeChange(borderWidthPath, val)}
           title="Width"
           unitOption={['px', 'em', 'rem']}
           min="0"
@@ -104,7 +154,7 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
         <SpaceControl
           value={borderRadius}
           className={css(ut.mb2)}
-          onChange={val => onSizeChange(paths['border-radius'], val)}
+          onChange={val => onSizeChange(borderRadiusPath, val)}
           title="Radius"
           unitOption={['px', 'em', 'rem', '%']}
           min="0"
@@ -114,4 +164,9 @@ export default function BorderControlMenu({ objectPaths, state = '' }) {
       )}
     </>
   )
+}
+
+const extractBorderValue = (border) => {
+  const [borderStyle, borderColor] = splitValueBySpaces(border)
+  return { borderStyle, borderColor }
 }
