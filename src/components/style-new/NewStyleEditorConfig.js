@@ -211,7 +211,31 @@ const editorConfig = {
   },
   'field-containers': {
     states: ['hover'],
-    properties: { ...formCommonCssProps },
+    properties: {
+      background: '',
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+    },
+  },
+  'label-containers': {
+    states: ['hover'],
+    properties: {
+      background: '',
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+    },
   },
   defaultProps: {
     margin: '0px',

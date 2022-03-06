@@ -61,7 +61,7 @@ export default function LabelContainerCustomizer() {
           <BorderControl
             subtitle="Label & Subtitle Container Border"
             value={lwBdr}
-            objectPaths={lwStylePathObj}
+            objectPaths={borderPathsObj}
             id="lbl-wrp-bdr"
           />
         </div>
@@ -78,8 +78,17 @@ const labwrpShObj = {
   object: 'themeColors',
   paths: { shadow: '--lbl-wrp-sh' },
 }
-const lwStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--lbl-wrp-bdr', borderWidth: '--lbl-wrp-bdr-width', borderRadius: '--lbl-wrp-bdr-rad' },
-}
+
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--lbl-wrp-bdr-width',
+      'border-radius': '--lbl-wrp-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--lbl-wrp-bdr' },
+  },
+]

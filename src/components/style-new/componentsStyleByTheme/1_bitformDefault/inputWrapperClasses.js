@@ -28,6 +28,10 @@ export default function inputWrapperClasses(fk) {
       margin: 'var(--lbl-wrp-m, 0)',
       padding: 'var(--lbl-wrp-p, 0)',
       'background-color': 'var(--lbl-wrp-bg, none)',
+      'box-shadow': 'var(--lbl-wrp-sh, none)',
+      'border-radius': 'var(--lbl-wrp-bdr-rad, 0)',
+      border: 'var(--lbl-wrp-bdr, medium none)',
+      'border-width': 'var(--lbl-wrp-bdr-width, 0)',
     },
     [`.${fk}-lbl`]: {
       'background-color': 'var(--fld-lbl-bg, none)',
