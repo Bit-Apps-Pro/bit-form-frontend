@@ -71,7 +71,7 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
                   value={telegramConf.body}
                   onChangeHandler={setFromField}
                   width="100%"
-                  toolbarMnu="bold italic underline strikethrough | link | code | addFormField"
+                  toolbarMnu="bold italic underline strikethrough | link | code | addFormField | addSmartField"
                 />
               ) : (
                 <>
