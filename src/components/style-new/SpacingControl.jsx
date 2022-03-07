@@ -8,13 +8,13 @@ import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
-import { getValueByObjPath, showDraggableModal } from './styleHelpers'
+import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function SpacingControl({ mainTitle, subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
-  const themeVars = useRecoilValue($themeVars)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
 
   const { object, paths } = objectPaths
   const margin = themeVars[paths?.margin]
@@ -28,36 +28,45 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
       if (padding) valu += `${p}: ${padding};`
     }
     if (valu === '' || valu === null) {
-      if (val?.match(/(var)/gi)) {
-        const v = val.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-        valu = themeVars[v]
-      }
-      valu = val
+      valu = getValueFromStateVar(themeVars, val)
     }
     return valu
   }
 
   const clearHandler = () => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      if (object === 'styles') {
-        assignNestedObj(drft, paths?.margin || paths?.padding, '')
-      }
-    }))
+    const pathKeys = Object.keys(paths)
+    switch (object) {
+      case 'styles':
+        setStyles(prvStyle => produce(prvStyle, drft => {
+          pathKeys.map(prop => {
+            assignNestedObj(drft, paths[prop], '')
+          })
+        }))
+        break
+      case 'themeVars':
+        setThemeVars(preVars => produce(preVars, drft => {
+          pathKeys.map(prop => {
+            assignNestedObj(drft, paths[prop], '')
+          })
+        }))
+        break
+      default:
+        break
+    }
   }
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
       {allowImportant && val && (<Important propertyPath={paths?.margin || paths?.padding} />)}
-      <div title={getValue('Margin', 'Padding')} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+      <div title={getValue('Margin', 'Padding') || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
-          title={val}
         >
           {getValue() || 'Configure'}
         </button>
-        {(val) && (
+        {getValue('Margin', 'Padding') && (
           <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
             <CloseIcn size="12" />
           </button>
