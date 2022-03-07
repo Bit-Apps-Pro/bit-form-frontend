@@ -1,6 +1,6 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -35,6 +35,7 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
 
   const clearHandler = () => {
     const pathKeys = Object.keys(paths)
+
     switch (object) {
       case 'styles':
         setStyles(prvStyle => produce(prvStyle, drft => {
