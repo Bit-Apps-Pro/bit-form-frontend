@@ -6,6 +6,7 @@ export function observeElement(element, property, callback, delay = 0) {
       property,
     )
     Object.defineProperty(element, property, {
+      configurable: true,
       get(...args) {
         return descriptor.get.apply(this, args)
       },

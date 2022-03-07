@@ -25,43 +25,13 @@ export default function SubTitleCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Subtitle Background Color"
+        subtitle="Subtitle Background Color Control"
         value={stBg}
         stateObjName="themeColors"
         propertyPath="--sub-titl-bg"
         modalId="sub-titl-bg"
       />
-      <SimpleColorPicker
-        title="Text Color"
-        subtitle="Text Color"
-        value={stC}
-        stateObjName="themeColors"
-        propertyPath="--sub-titl-c"
-        modalId="sub-titl-c"
-      />
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-        <SpacingControl
-          action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
-          objectPaths={stSpacingObj}
-          id="subtitle-spacing-control"
-        />
-      </div>
-      <ThemeStylePropertyBlock label="Shadow">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={subTitlShObj.paths.shadow}
-            stateObjName={subTitlShObj.object}
-          />
-          <ShadowControl
-            subtitle="Subtitle Shadow"
-            value={stSh}
-            objectPaths={subTitlShObj}
-            id="sub-titl-sh"
-          />
-        </div>
-      </ThemeStylePropertyBlock>
+
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -70,20 +40,56 @@ export default function SubTitleCustomizer() {
             stateObjName="themeVars"
           />
           <BorderControl
-            subtitle="Subtitle Border"
+            subtitle="Subtitle Border Control"
             value={stBdr}
-            objectPaths={stStylePathObj}
+            objectPaths={borderPathsObj}
             id="sub-title-width-bdr-control"
           />
         </div>
       </ThemeStylePropertyBlock>
+
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--sub-titl-fs"
       />
+
       <FontWeightAndStyleControl
         fontWeightVar="--sub-titl-font-w"
         fontStyleVar="--sub-titl-font-style"
+      />
+
+      <ThemeStylePropertyBlock label="Shadow">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={subTitlShObj.paths.shadow}
+            stateObjName={subTitlShObj.object}
+          />
+          <ShadowControl
+            subtitle="Subtitle Shadow Control"
+            value={stSh}
+            objectPaths={subTitlShObj}
+            id="sub-titl-sh"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
+      <div className={css(ut.flxcb, ut.mt2)}>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <SpacingControl
+          action={{ type: 'spacing-control' }}
+          subtitle="Subtitle Spacing Control"
+          objectPaths={stSpacingObj}
+          id="subtitle-spacing-control"
+        />
+      </div>
+
+      <SimpleColorPicker
+        title="Text Color"
+        subtitle="Subtitle Text Color Control"
+        value={stC}
+        stateObjName="themeColors"
+        propertyPath="--sub-titl-c"
+        modalId="sub-titl-c"
       />
     </div>
   )
@@ -92,12 +98,22 @@ const stSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--sub-titl-m', padding: '--sub-titl-p' },
 }
+
 const subTitlShObj = {
   object: 'themeColors',
   paths: { shadow: '--sub-titl-sh' },
 }
-const stStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--sub-titl-bdr', borderWidth: '--sub-titl-bdr-width', borderRadius: '--sub-titl-bdr-rad' },
-}
+
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--sub-titl-bdr-width',
+      'border-radius': '--sub-titl-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--sub-titl-bdr' },
+  },
+]

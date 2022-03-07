@@ -26,22 +26,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
   return (
     <>
-      <ThemeStylePropertyBlock label="Font Weight">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={fontWeightVar}
-            stateObjName="themeVars"
-          />
-          <SimpleDropdown
-            options={fontweightVariants}
-            value={String(themeVars[fontWeightVar])}
-            onChange={val => fontVarSetHandler(fontWeightVar, val)}
-            w={130}
-            h={30}
-            cls={css((styles.font.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
-          />
-        </div>
-      </ThemeStylePropertyBlock>
+
       <ThemeStylePropertyBlock label="Font Style">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -55,6 +40,22 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
             w={130}
             h={30}
             cls={css((styles.font.fontType === 'Google' && themeVars[fontStyleVar] && !styles.font.fontStyleVariants?.includes(Number(themeVars[fontStyleVar]))) ? cls.warningBorder : '')}
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+      <ThemeStylePropertyBlock label="Font Weight">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={fontWeightVar}
+            stateObjName="themeVars"
+          />
+          <SimpleDropdown
+            options={fontweightVariants}
+            value={String(themeVars[fontWeightVar])}
+            onChange={val => fontVarSetHandler(fontWeightVar, val)}
+            w={130}
+            h={30}
+            cls={css((styles.font.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
           />
         </div>
       </ThemeStylePropertyBlock>

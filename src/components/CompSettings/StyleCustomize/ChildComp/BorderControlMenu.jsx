@@ -15,6 +15,21 @@ import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj,
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
+/**
+ * @Function BorderControlMenu
+ * @param {objectPaths}  Array|Object
+ * @When BorderControlMenu are Array
+ * {
+ *    @index 0=> ThemVars
+ *    @index 1 => ThemeColors
+ *    @ThemeVars|@ThemeColors Object.paths 1st property is border
+ * }
+ * @When BorderControlMenu is object
+ * {
+ *   @Object.paths 1st property is border
+ * }
+ * @returns
+ */
 export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
   const { fieldKey, element, rightBar } = useParams()
@@ -63,17 +78,16 @@ export default function BorderControlMenu({ objectPaths }) {
     // set state
     borderWidthPath = objectPaths[0].paths['border-width']
     borderRadiusPath = objectPaths[0].paths['border-radius']
-    borderPath = objectPaths[1].paths.border
-    console.log(objectPaths, borderWidthPath, borderRadiusPath, borderPath)
+    borderPath = objectPaths[1].paths[borderPropKeys[0]]
   } else {
     const { paths } = objectPaths
     borderWidthPath = paths['border-width']
     borderRadiusPath = paths['border-radius']
-    borderPath = paths.border
+    borderPath = paths[borderPropKeys[0]]
 
     // set state
     obj.borderWidth = objectPaths.object
-    obj.borderRadiusPath = objectPaths.object
+    obj.borderRadius = objectPaths.object
     obj.border = objectPaths.object
   }
 
@@ -83,10 +97,9 @@ export default function BorderControlMenu({ objectPaths }) {
   const borderValue = extractBorderValue(border)
 
   const onSizeChange = (pathName, val) => {
-    const stateObjName = obj.borderWidth || obj.borderRadiusPath
+    const stateObjName = obj.borderWidth || obj.borderRadius
     const index = getValueByObjPath(stateObj(stateObjName), pathName).indexOf('!important')
     const newVal = index >= 0 ? `${val} !important` : val
-    console.log('onsizechange', pathName, val, newVal, index)
     setStyleStateObj(stateObjName, pathName, newVal, { setThemeVars, setStyles })
   }
 

@@ -95,6 +95,8 @@ class CurrencyField {
 
     this.#generateOptions()
 
+    if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
+
     if (this.#config.searchClearable) {
       this.#searchInputElm.style.paddingRight = '25px'
       this.#clearSearchBtnElm.style.display = 'block'

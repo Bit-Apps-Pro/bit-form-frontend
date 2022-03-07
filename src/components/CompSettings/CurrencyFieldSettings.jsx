@@ -84,7 +84,7 @@ const CurrencyFieldSettings = () => {
             setOptions={newOpts => handleOptions(newOpts)}
             lblKey="lbl"
             valKey="val"
-            type={fieldData.typ}
+            type="radio"
           />
         </div>
       </Modal>

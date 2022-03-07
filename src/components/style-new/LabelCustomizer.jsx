@@ -25,7 +25,7 @@ export default function LabelCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Subtitle Background Color"
+        subtitle="Label Background Color Control"
         value={flBg}
         stateObjName="themeColors"
         propertyPath="--fld-lbl-bg"
@@ -33,7 +33,7 @@ export default function LabelCustomizer() {
       />
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Text Color"
+        subtitle="Label Text Color Control"
         value={flc}
         stateObjName="themeColors"
         propertyPath="--fld-lbl-c"
@@ -43,7 +43,7 @@ export default function LabelCustomizer() {
         <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
+          subtitle="Label Spacing Control"
           objectPaths={flSpacingObj}
           id="lbl-spacing-control"
         />
@@ -55,7 +55,7 @@ export default function LabelCustomizer() {
             stateObjName={fldLblShObj.object}
           />
           <ShadowControl
-            subtitle="Label Shadow"
+            subtitle="Label Shadow Control"
             value={flSh}
             objectPaths={fldLblShObj}
             id="fld-lbl-sh"
@@ -70,9 +70,9 @@ export default function LabelCustomizer() {
             stateObjName="themeVars"
           />
           <BorderControl
-            subtitle="Label Border"
+            subtitle="Label Border Control"
             value={flBdr}
-            objectPaths={flStylePathObj}
+            objectPaths={borderPathsObj}
             id="fld-lbl-bdr-width"
           />
         </div>
@@ -97,8 +97,17 @@ const fldLblShObj = {
   object: 'themeColors',
   paths: { shadow: '--fld-lbl-sh' },
 }
-const flStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--fld-lbl-bdr', borderWidth: '--fld-lbl-bdr-width', borderRadius: '--fld-lbl-bdr-rad' },
-}
+
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--fld-lbl-bdr-width',
+      'border-radius': '--fld-lbl-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--fld-lbl-bdr' },
+  },
+]

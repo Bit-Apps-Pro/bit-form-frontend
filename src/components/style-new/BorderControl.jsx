@@ -8,6 +8,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
@@ -34,34 +35,31 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
     const propArr = Object.keys(objectPaths.paths)
     borderPropsFirst = objectPaths.paths[propArr[0]]
   }
-  // const { paths } = objectPaths
-  // const borderProps = Object.keys(paths)
 
-  const assignValues = (arr, obj, val = '') => {
-    arr.map(propName => {
-      obj[propName] = val
+  const assignValues = (paths, obj, val = '') => {
+    const propArray = Object.keys(paths)
+    propArray.map(prop => {
+      assignNestedObj(obj, paths[prop], val)
     })
   }
   const clearValue = () => {
     if (Array.isArray(objectPaths)) {
       objectPaths.map(obj => {
         const { paths } = obj
-        const propArr = Object.keys(paths)
         if (obj.object === 'themeVars') {
           setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
-            assignValues(propArr, drft)
+            assignValues(paths, drft)
           }))
         } else if (obj.object === 'themeColors') {
           setThemeColors(prvThemeColor => produce(prvThemeColor, drft => {
-            assignValues(propArr, drft)
+            assignValues(paths, drft)
           }))
         }
       })
     } else {
       const { paths } = objectPaths
-      const borderProps = Object.keys(paths)
       setStyles(prvState => produce(prvState, drft => {
-        assignValues(borderProps, drft)
+        assignValues(paths, drft)
       }))
     }
   }
