@@ -8,6 +8,7 @@ import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import BorderControl from './BorderControl'
+import FilterController from './FilterController'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SpacingControl from './SpacingControl'
@@ -58,6 +59,10 @@ export default function IcnCustomizer({ elementKey }) {
     object: 'themeColors',
     paths: { shadow: `--${elementKey}-sh` },
   }
+  const preIcnFltrObj = {
+    object: 'themeColors',
+    paths: { filter: `--${elementKey}-fltr` },
+  }
 
   const borderPathsObj = [
     {
@@ -86,6 +91,21 @@ export default function IcnCustomizer({ elementKey }) {
             value={themeColors[`--${elementKey}-bdr`]}
             objectPaths={borderPathsObj}
             id="pre-i-control"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
+      <ThemeStylePropertyBlock label="Filter">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={`--${elementKey}-fltr`}
+            stateObjName="themeColors"
+          />
+          <FilterController
+            action={{ type: 'filter-control' }}
+            subtitle={`${title()} Filter control`}
+            objectPaths={preIcnFltrObj}
+            id="filter-control"
           />
         </div>
       </ThemeStylePropertyBlock>
