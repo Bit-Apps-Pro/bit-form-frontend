@@ -377,6 +377,84 @@ const editorConfig = {
       width: '',
     },
   },
+  'error-messages': {
+    states: ['hover'],
+    properties: {
+      'background-color': '',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      color: '',
+      'font-size': '',
+      'font-style': '',
+      'font-weight': '',
+      padding: '5px',
+      margin: '5px',
+      'box-shadow': '',
+    },
+  },
+  'err-txt-pre-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
+  'err-txt-suf-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
+  'pre-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
+  'suf-i': {
+    states: ['hover'],
+    properties: {
+      padding: '5px',
+      margin: '5px',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      'box-shadow': '',
+      height: '',
+      width: '',
+    },
+  },
   defaultProps: {
     margin: '0px',
     padding: '0px',

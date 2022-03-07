@@ -49,6 +49,11 @@ export default function StyleLayers() {
             <NavBtn route="sub-titl-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
           </LayerAccordion>
 
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('pre-i')} offset="6" title="Input" highlightSelector="[data-dev-sub-titl]">
+            <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-pre-i]" />
+            <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-suf-i]" />
+          </LayerAccordion>
+
           <LayerAccordion childrenAccodin onClick={() => styleHandler('helper-text')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
             <NavBtn route="hlp-txt-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
             <NavBtn route="hlp-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
@@ -59,8 +64,7 @@ export default function StyleLayers() {
             <NavBtn route="err-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
           </LayerAccordion>
 
-          <NavBtn route="pre-i" label="Prefix Icon" offset="3" highlightSelector="[data-dev-pre-i]" />
-          <NavBtn route="suf-i" label="Suffix Icon" offset="3" highlightSelector="[data-dev-suf-i]" />
+
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
