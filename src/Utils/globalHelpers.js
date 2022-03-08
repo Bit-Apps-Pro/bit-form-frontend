@@ -6,6 +6,7 @@ export function observeElement(element, property, callback, delay = 0) {
       property,
     )
     Object.defineProperty(element, property, {
+      configurable: true,
       get(...args) {
         return descriptor.get.apply(this, args)
       },
@@ -22,12 +23,12 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = (src, integrity, type) => new Promise((resolve) => {
+export const loadScript = (src, integrity, id) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
   script.integrity = integrity
   script.crossOrigin = 'anonymous'
-  script.id = type
+  script.id = id
   script.onload = () => {
     resolve(true)
   }
