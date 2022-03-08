@@ -10,7 +10,6 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import SimpleDropdown from '../Utilities/SimpleDropdown'
 import SingleToggle from '../Utilities/SingleToggle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
@@ -221,6 +220,7 @@ const sizes = {
   'small-2': 'Small-2',
   'small-1': 'Small-1',
   medium: 'Medium',
-  large: 'Large',
+  // large: 'Large',
   'large-1': 'Large-1',
+  'large-2': 'Large-2',
 }

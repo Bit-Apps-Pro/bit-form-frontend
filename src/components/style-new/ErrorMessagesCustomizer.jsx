@@ -25,43 +25,13 @@ export default function ErrorMessagesCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Background Color"
+        subtitle="Error Messages Background Color"
         value={errBg}
         stateObjName="themeColors"
         propertyPath="--err-bg"
         modalId="err-bg"
       />
-      <SimpleColorPicker
-        title="Text Color"
-        subtitle="Text Color"
-        value={errC}
-        stateObjName="themeColors"
-        propertyPath="--err-c"
-        modalId="err-c"
-      />
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-        <SpacingControl
-          action={{ type: 'spacing-control' }}
-          subtitle="Spacing control"
-          objectPaths={errMsgSpacingObj}
-          id="err-spacing-control"
-        />
-      </div>
-      <ThemeStylePropertyBlock label="Shadow">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={errShObj.paths.shadow}
-            stateObjName={errShObj.object}
-          />
-          <ShadowControl
-            subtitle="Error Message Shadow"
-            value={errSh}
-            objectPaths={errShObj}
-            id="err-sh"
-          />
-        </div>
-      </ThemeStylePropertyBlock>
+
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           {/* <ResetStyle propertyPath={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateObjName="themeVars" /> */}
@@ -70,21 +40,58 @@ export default function ErrorMessagesCustomizer() {
             stateObjName="themeVars"
           />
           <BorderControl
-            subtitle="Error Message Border"
+            subtitle="Error Message Border Control"
             value={errB}
-            objectPaths={errStylePathObj}
+            objectPaths={borderPathsObj}
             id="err-control"
           />
         </div>
       </ThemeStylePropertyBlock>
+
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--err-txt-fs"
       />
+
       <FontWeightAndStyleControl
         fontWeightVar="--err-txt-font-w"
         fontStyleVar="--err-txt-font-style"
       />
+
+      <ThemeStylePropertyBlock label="Shadow">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={errShObj.paths.shadow}
+            stateObjName={errShObj.object}
+          />
+          <ShadowControl
+            subtitle="Error Messages Shadow Control"
+            value={errSh}
+            objectPaths={errShObj}
+            id="err-sh"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
+      <div className={css(ut.flxcb, ut.mt2)}>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <SpacingControl
+          action={{ type: 'spacing-control' }}
+          subtitle="Error Messages Spacing Control"
+          objectPaths={errMsgSpacingObj}
+          id="err-spacing-control"
+        />
+      </div>
+
+      <SimpleColorPicker
+        title="Text Color"
+        subtitle="Error Messages Text Color"
+        value={errC}
+        stateObjName="themeColors"
+        propertyPath="--err-c"
+        modalId="err-c"
+      />
+
     </div>
   )
 }
@@ -92,12 +99,22 @@ const errMsgSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' },
 }
+
 const errShObj = {
   object: 'themeColors',
   paths: { shadow: '--err-sh' },
 }
-const errStylePathObj = {
-  object: 'themeVars',
-  borderObjName: 'themeColors',
-  paths: { border: '--err-bdr', borderWidth: '--err-bdr-width', borderRadius: '--err-bdr-rad' },
-}
+
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--err-bdr-width',
+      'border-radius': '--err-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--err-bdr' },
+  },
+]

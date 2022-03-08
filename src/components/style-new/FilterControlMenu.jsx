@@ -1,24 +1,23 @@
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { useRecoilState } from 'recoil'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
+import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
+import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from './styleHelpers'
 
-export default function FilterControlMenu({ title = 'Filters', elementKey, fldKey, objectPaths }) {
+export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
   const { css } = useFela()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
-  const tempStyles = useRecoilValue($tempStyles)
-  const tempThemeVars = tempStyles.themeVars
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const { object, paths } = objectPaths
+
+  const getStateObj = () => getObjByKey(object, { styles, themeColors })
 
   const getDfltFilterObject = (filterName) => {
     let filterObject = {}
@@ -39,7 +38,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
         filterObject = {
           value: `${filterName}(2px)`,
           units: ['', 'px', 'em', 'rem'],
-          minValue: 0,
+          minValue: 0.1,
           maxValue: 100,
         }
         break
@@ -79,9 +78,17 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
     return filterObject
   }
 
-  let filterValues = getValueByObjPath(styles, paths?.filter)
+  let filterValues
+
+  if (object === 'themeColors') {
+    filterValues = themeColors[paths.filter]
+  } else {
+    const fltrVal = getValueByObjPath(styles, paths?.filter)
+    filterValues = getValueFromStateVar(themeColors, fltrVal)
+  }
   filterValues = filterValues?.replace('none', '')
   const filterNames = filterValues?.trim() ? filterValues?.trim()?.split(/\B\s+(?![^(]*\))/gi) : []
+
   const filtersObjects = filterNames?.map(filter => {
     const name = filter?.slice(0, filter?.indexOf('('))
     let value = filter?.slice(filter.indexOf('(') + 1, filter.indexOf(')'))?.trim()
@@ -96,56 +103,51 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
   const existFilterNames = filtersObjects.map(filter => filter.name)
 
   const setFilterValue = (filterName, { value, unit }, indexNo) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      let filterValue = getValueByObjPath(prvStyle, paths.filter)
-      const startPos = filterValue.indexOf(filterName)
-      const endPos = filterValue.indexOf(')', startPos) + 1
-      if (!unit) unit = ''
+    let filterValue = getValueByObjPath(getStateObj(), paths.filter)
+    const startPos = filterValue.indexOf(filterName)
+    const endPos = filterValue.indexOf(')', startPos) + 1
+    if (!unit) unit = ''
 
-      if (filterName === 'drop-shadow') {
-        const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
-        values[indexNo] = `${value}${unit}`
-        filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
-      } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
-      assignNestedObj(drft, paths.filter, filterValue.trim())
-    }))
+    if (filterName === 'drop-shadow') {
+      const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
+      values[indexNo] = `${value}${unit}`
+      filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
+    } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
+
+    setStyleStateObj(object, paths.filter, filterValue.trim(), { setThemeColors, setStyles })
   }
 
   const unitHandler = (filterName, unit, value, indexNo) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      let filterValue = getValueByObjPath(prvStyle, paths.filter)
-      const startPos = filterValue.indexOf(filterName)
-      const endPos = filterValue.indexOf(')', startPos) + 1
-      if (!unit) unit = ''
+    let filterValue = getValueByObjPath(getStateObj(), paths.filter)
+    const startPos = filterValue.indexOf(filterName)
+    const endPos = filterValue.indexOf(')', startPos) + 1
+    if (!unit) unit = ''
 
-      if (filterName === 'drop-shadow') {
-        const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
-        values[indexNo] = `${value}${unit}`
-        filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
-      } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
-      assignNestedObj(drft, paths.filter, filterValue.trim())
-    }))
+    if (filterName === 'drop-shadow') {
+      const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
+      values[indexNo] = `${value}${unit}`
+      filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
+    } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
+    setStyleStateObj(object, paths.filter, filterValue.trim(), { setThemeColors, setStyles })
   }
+
   const handleClearProperties = filterName => {
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      let value = getValueByObjPath(prvStyle, paths.filter)
-      const startPos = value.indexOf(filterName)
-      const endPos = value.indexOf(')', startPos) + 1
-      value = value.replace(value.slice(startPos, endPos), '').trim()
-      assignNestedObj(drftStyles, paths.filter, value)
-    }))
+    let value = getValueByObjPath(getStateObj(), paths.filter)
+    const startPos = value.indexOf(filterName)
+    const endPos = value.indexOf(')', startPos) + 1
+    value = value.replace(value.slice(startPos, endPos), '').trim()
+    setStyleStateObj(object, paths.filter, value, { setThemeColors, setStyles })
   }
 
   const addFilterToCss = (filterName) => {
-    // setStyles(prvStyle => produce(prvStyle, drft => {
-    //   drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property] = ''
-    // }))
     const filterValue = getDfltFilterObject(filterName).value
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const prevValue = getValueByObjPath(prvStyle, paths.filter)
-      if (filterValue === 'none') assignNestedObj(drftStyles, paths.filter, `${filterValue}`)
-      else assignNestedObj(drftStyles, paths.filter, `${prevValue.replace('none', '')} ${filterValue}`.trim())
-    }))
+    const prevValue = getValueByObjPath(getStateObj(), paths.filter)
+    if (filterValue === 'none') {
+      setStyleStateObj(object, paths.filter, `${filterValue}`, { setThemeColors, setStyles })
+    } else {
+      const val = `${prevValue.replace('none', '')} ${filterValue}`.trim()
+      setStyleStateObj(object, paths.filter, val, { setThemeColors, setStyles })
+    }
   }
 
   const filterProperties = {
@@ -162,7 +164,8 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
     none: {},
   }
 
-  const availableFilterProps = Object.keys(filterProperties).filter(filterName => !existFilterNames?.includes(filterName))
+  const availableFilterProps = Object.keys(filterProperties)
+    .filter(filterName => !existFilterNames?.includes(filterName))
 
   return (
     <>
@@ -191,7 +194,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>X</span>
                     <SizeControl
-                      width="105px"
+                      width="120px"
                       value={Number(getNumFromStr(valueArr[0]) || 0)}
                       unit={getStrFromStr(valueArr[0]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 0)}
@@ -204,7 +207,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Y</span>
                     <SizeControl
-                      width="105px"
+                      width="120px"
                       value={Number(getNumFromStr(valueArr[1]) || 0)}
                       unit={getStrFromStr(valueArr[1]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 1)}
@@ -217,7 +220,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Blur</span>
                     <SizeControl
-                      width="105px"
+                      width="120px"
                       value={Number(getNumFromStr(valueArr[2]) || 0)}
                       unit={getStrFromStr(valueArr[2]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 2)}
@@ -229,7 +232,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
                   </div>
                   <div className={css(ut.flxcb, ut.mb2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Color</span>
-                    <input aria-label="Filter image" width="105px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
+                    <input aria-label="Filter image" width="120px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
                     {/* <SimpleColorPickerTooltip action={{ onChange: val => setFilterValue('drop-shadow', { value: val }, 3) }} value={valueArr[3]} /> */}
                   </div>
                 </div>
@@ -245,7 +248,7 @@ export default function FilterControlMenu({ title = 'Filters', elementKey, fldKe
             <div className={css(ut.flxcb)}>
               <SizeControl
                 className={css({ mr: 15 })}
-                width="80px"
+                width="120px"
                 value={Number(filter.value)}
                 unit={filter.unit}
                 inputHandler={valObj => setFilterValue(filter.name, valObj)}
@@ -295,7 +298,7 @@ const c = {
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
   colorInput: {
-    w: 105,
+    w: 120,
     p: 0,
     brs: '8px !important',
     '-webkit-appearance': 'none',

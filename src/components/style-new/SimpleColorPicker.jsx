@@ -87,7 +87,7 @@ export default function SimpleColorPicker({ title,
             className={css(c.pickrBtn)}
           >
             <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{checkVarValue()}</span>
+            <span className={css(c.clrVal)}>{checkVarValue() || 'Configure Color'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">

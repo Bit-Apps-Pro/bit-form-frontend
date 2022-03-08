@@ -3,44 +3,69 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
-import { getValueByObjPath, showDraggableModal } from './styleHelpers'
+import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
-export default function FilterControler({ subtitle, action, value, objectPaths, id, allowImportant }) {
+export default function FilterController({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
   const { object, paths } = objectPaths
+  console.log(paths.filter)
 
   const val = getValueByObjPath(styles, paths?.filter)
 
+  const getValue = () => {
+    let valu = ''
+    if (object === 'themeColors') {
+      valu = themeColors[paths.filter]
+    }
+    if (valu === '' || valu === null) {
+      valu = getValueFromStateVar(themeColors, val)
+    }
+    return valu
+  }
+
   const clearHandler = () => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      if (object === 'styles') {
-        assignNestedObj(drft, paths?.filter, '')
-      }
-    }))
+    switch (object) {
+      case 'styles':
+        setStyles(prvStyle => produce(prvStyle, drft => {
+          assignNestedObj(drft, paths?.filter, '')
+        }))
+        break
+
+      case 'themeColors':
+        setThemeColors(prvThemeClr => produce(prvThemeClr, drft => {
+          assignNestedObj(drft, paths?.filter, '')
+        }))
+        break
+
+      default:
+        break
+    }
   }
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
       {allowImportant && (<Important propertyPath={paths?.filter} />)}
-      <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+      <div title={getValue() || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-control', width: 250, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
-          title={val}
+        // title={val}
         >
-          {val || 'Configure'}
+          {getValue() || 'Configure'}
         </button>
-        {(val) && (
+        {getValue() && (
           <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
-            <CloseIcn size="12" />
+            <CloseIcn size="10" />
           </button>
         )}
       </div>
@@ -69,14 +94,16 @@ const c = {
   },
   clearBtn: {
     brs: '50%',
-    w: 20,
-    h: 20,
+    p: 4,
+    pr: '3px !important',
+    w: 17,
+    h: 17,
     b: 'none',
     flx: 'center',
     bd: 'transparent',
     cr: 'var(--white-0-50)',
     curp: 1,
-    ':hover': { cr: 'var(--black-0)' },
+    ':hover': { cr: 'var(--black-0)', bd: '#d3d1d1' },
   },
   pickrBtn: {
     b: 'none',

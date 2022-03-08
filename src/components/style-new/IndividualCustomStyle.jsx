@@ -27,7 +27,7 @@ import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import BorderImageControl from './BorderImageControl'
 import CssPropertyList from './CssPropertyList'
-import FilterControler from './FilterControler'
+import FilterController from './FilterController'
 import Important from './Important'
 import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
@@ -652,7 +652,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
             </div>
             <div className={css(ut.flxc, { cg: 3 })}>
-              <FilterControler
+              <FilterController
                 action={{ type: 'filter-control' }}
                 subtitle="Filter control"
                 objectPaths={objPaths}
