@@ -9,7 +9,7 @@ import CurrencyField from './Fields/CurrencyField/CurrencyField'
 import DecisionBox from './Fields/DecisionBox'
 import Divider from './Fields/Divider'
 import DropDown from './Fields/DropDown'
-import FileUp from './Fields/FileUp'
+import FileUpload from './Fields/FileUpload/FileUpload'
 import HiddenField from './Fields/HiddenField'
 import Html from './Fields/Html'
 import Image from './Fields/Image'
@@ -63,7 +63,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     // case 'dropdown':
     //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
-      return <FileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
+      return <FileUpload fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'advanced-file-up':
       return <AdvanceFileUp fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
