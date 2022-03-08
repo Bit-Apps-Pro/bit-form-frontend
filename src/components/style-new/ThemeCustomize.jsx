@@ -41,12 +41,24 @@ export default function ThemeCustomize() {
   const genarateTitle = () => {
     switch (element) {
       case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case 'field-container': return 'Field Containers'
-      case 'label-container': return 'Label & Subtitle Containers'
+      case 'form-wrappers': return 'Form Wrappers'
+      case 'form-containers': return 'Form Containers'
+      case 'field-containers': return 'Field Containers'
+      case 'label-containers': return 'Label & Subtitle Containers'
       case 'label': return 'Labels'
+      case 'lbl-pre-i': return 'Label Prefix Icon'
+      case 'lbl-suf-i': return 'Label Suffix Icon'
       case 'subtitle': return 'Sub Titles'
+      case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
+      case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
+      case 'pre-i': return 'Input Prefix Icon'
+      case 'suf-i': return 'Input Suffix Icon'
       case 'helper-text': return 'Helper Texts'
+      case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
+      case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
       case 'error-messages': return 'Error Messages'
+      case 'err-txt-pre-i': return 'Error Text Prefix Icon'
+      case 'err-txt-suf-i': return 'Error Text Suffix Icon'
       default: return 'Theme Customization'
     }
   }
