@@ -5,6 +5,7 @@ import checkboxNradioStyle1BitformDefault from '../componentsStyleByTheme/1_bitf
 import currencyStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
 import decisionBoxStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/decisionBoxStyle_1_bitformDefault'
 import dividerStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
+import fileUploadStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
 import htmlStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 import imageStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import textStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
@@ -132,6 +133,13 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         overrideGlobalTheme: [],
         classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
+      }
+    case 'file-up':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: fileUploadStyle_1_BitformDefault({ fk, type, direction }),
       }
     default:
       return {}
