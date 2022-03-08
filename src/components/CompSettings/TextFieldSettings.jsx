@@ -14,8 +14,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
-import CloseIcn from '../../Icons/CloseIcn'
-import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -35,14 +33,14 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
+import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
+import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
-import IconStyleBtn from './IconStyleBtn'
+import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -536,51 +534,22 @@ function TextFieldSettings() {
         // disable={!fieldData?.adminLbl}
         >
           <div className={css(ut.mt2, { mx: 10 })}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Start icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.prefixIcn && (
-                  <>
-                    <img src={fieldData?.prefixIcn} alt="start icon" width="18" height="18" />
-                    <IconStyleBtn route="pre-i" />
-                  </>
+            <FieldIconSettings
+              label="Start Icon"
+              iconSrc={fieldData?.prefixIcn}
+              styleRoute="pre-i"
+              setIcon={() => setIconModel('prefixIcn')}
+              removeIcon={() => removeIcon('prefixIcn')}
+            />
 
-                )}
+            <FieldIconSettings
+              label="End Icon"
+              iconSrc={fieldData?.suffixIcn}
+              styleRoute="suf-i"
+              setIcon={() => setIconModel('suffixIcn')}
+              removeIcon={() => removeIcon('suffixIcn')}
+            />
 
-                <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.prefixIcn && (
-                  <button onClick={() => removeIcon('prefixIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-
-            <div className={css(ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>End icon</span>
-                <div className={css(ut.flxcb)}>
-                  {fieldData?.suffixIcn && (
-                    <>
-                      <img src={fieldData?.suffixIcn} alt="end icon" width="18" height="18" />
-                      <IconStyleBtn route="suf-i" />
-                    </>
-                  )}
-                  <button onClick={() => setIconModel('suffixIcn')} className={css(ut.icnBtn)} type="button">
-                    <EditIcn size={22} />
-                  </button>
-                  {fieldData?.suffixIcn && (
-                    <button onClick={() => removeIcon('suffixIcn')} className={css(ut.icnBtn)} type="button">
-                      <CloseIcn size="13" />
-                    </button>
-                  )}
-
-                </div>
-              </div>
-            </div>
           </div>
 
         </SimpleAccordion>
