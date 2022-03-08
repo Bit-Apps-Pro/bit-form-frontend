@@ -7,19 +7,18 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import CloseIcn from '../../../Icons/CloseIcn'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
-import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
+import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
 export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg }) {
@@ -119,15 +118,6 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
 
   return (
     <div className={`${css(ErrorMessages.wrapper)} err-msg-wrapper`}>
-      {/* <div className="flx flx-between ">
-        <h4 className="mt-2 mb-2 flx">
-          {__(title, 'bitform')}
-          <Cooltip width={250} icnSize={17} className="ml-2">
-            <div className="txt-body">{__(tipTitle, 'bitform')}</div>
-          </Cooltip>
-        </h4>
-        <SingleToggle name={type} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.show} />
-      </div> */}
       <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
         {/* flx flx-between mt-1 mb-1 mr-2 */}
         <div className={`${css(ErrorMessages.flx)}`}>
@@ -140,15 +130,6 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
             </div>
           </Cooltip>
         </div>
-        {/* <span
-          role="button"
-          tabIndex="-1"
-          className="cp"
-          onClick={openErrorModal}
-          onKeyPress={openErrorModal}
-        >
-          <EditIcn size={19} />
-        </span> */}
       </div>
       {fieldData?.err?.[type]?.show && (
         <>
@@ -180,105 +161,21 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
           />
 
           <div className={css(ut.mt2, { mx: 10 })}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Start Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.errPreIcn && (
-                  <img src={fieldData?.errPreIcn} alt="Icon" width="18" height="18" />
-                )}
+            <FieldIconSettings
+              label="Start Icon"
+              iconSrc={fieldData?.errPreIcn}
+              styleRoute="err-txt-pre-i"
+              setIcon={() => setIconModel('errPreIcn')}
+              removeIcon={() => removeIcon('errPreIcn')}
+            />
 
-                <button type="button" onClick={() => setIconModel('errPreIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.errPreIcn && (
-                  <button onClick={() => removeIcon('errPreIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-
-            {fieldData?.errPreIcn && (
-              <>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Width</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnWidthHandle(val, errPreIcnCls, errPreIcnWidth)}
-                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, errPreIcnCls, errPreIcnWidth)}
-                      value={getNumFromStr(errPreIcnWidth) || 10}
-                      unit={getStrFromStr(errPreIcnWidth) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Height</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnHeightHandle(val, errPreIcnCls, errPreIcnHeight)}
-                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, errPreIcnCls)}
-                      value={getNumFromStr(errPreIcnHeight) || 10}
-                      unit={getStrFromStr(errPreIcnHeight) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>End Icon</span>
-              <div className={css(ut.flxcb)}>
-                {fieldData?.errSufIcn && (
-                  <img src={fieldData?.errSufIcn} alt="Icon" width="18" height="18" />
-                )}
-
-                <button type="button" onClick={() => setIconModel('errSufIcn')} className={css(ut.icnBtn)}>
-                  <EditIcn size={22} />
-                </button>
-                {fieldData?.errSufIcn && (
-                  <button onClick={() => removeIcon('errSufIcn')} className={css(ut.icnBtn)} type="button">
-                    <CloseIcn size="13" />
-                  </button>
-                )}
-
-              </div>
-            </div>
-
-            {fieldData?.errSufIcn && (
-              <>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Width</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnWidthHandle(val, errSufIcnCls, errPreIcnWidth)}
-                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, errSufIcnCls, errSufIcnWidth)}
-                      value={getNumFromStr(errSufIcnWidth) || 10}
-                      unit={getStrFromStr(errSufIcnWidth) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-                <div className={css(ut.flxcb, ut.m10)}>
-                  <span className={css(ut.fw500)}>Start Icon Height</span>
-                  <div className={css(ut.flxc)}>
-                    <SizeControl
-                      inputHandler={val => icnHeightHandle(val, errSufIcnCls, errSufIcnHeight)}
-                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, errSufIcnCls, errSufIcnHeight)}
-                      value={getNumFromStr(errSufIcnHeight) || 10}
-                      unit={getStrFromStr(errSufIcnHeight) || 'px'}
-                      width="80px"
-                      options={['px', '%']}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+            <FieldIconSettings
+              label="End Icon"
+              iconSrc={fieldData?.errSufIcn}
+              styleRoute="err-txt-suf-i"
+              setIcon={() => setIconModel('errSufIcn')}
+              removeIcon={() => removeIcon('errSufIcn')}
+            />
           </div>
 
           <CustomErrorMessageModal

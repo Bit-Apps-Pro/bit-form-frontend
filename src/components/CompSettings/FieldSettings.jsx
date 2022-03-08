@@ -7,7 +7,7 @@ import ButtonSettings from './ButtonSettings'
 import CurrencyFieldSettings from './CurrencyFieldSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
-import FileUpSettings from './FileUpSettings'
+import FileUploadSettings from './FileUploadSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
 import ImageSettings from './ImageSettings'
 import PaypalFieldSettings from './PaypalFieldSettings'
@@ -49,7 +49,7 @@ export default function FieldSettings() {
     case 'select':
     case 'dropdown':
       return <SelectSettings />
-    case 'file-up': return <FileUpSettings />
+    case 'file-up': return <FileUploadSettings />
     case 'advanced-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettigns />
     case 'decision-box': return <DecisionBoxSettings />

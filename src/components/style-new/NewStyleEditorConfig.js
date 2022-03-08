@@ -92,6 +92,14 @@ const textFldCssProps = {
     states: ['hover'],
     properties: { ...iconCssProps },
   },
+  'pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  'suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
   'sub-titl': {
     states: ['hover'],
     properties: { ...labelCssProps },
