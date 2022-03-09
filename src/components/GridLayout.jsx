@@ -177,6 +177,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
 
+    // redirect to fields list
+    history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+
     // add to history
     const event = `${generateFieldLblForHistory(fldData)} removed`
     const type = 'remove_fld'
