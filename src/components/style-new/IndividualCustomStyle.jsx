@@ -7,7 +7,6 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import TrashIcn from '../../Icons/TrashIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
@@ -16,7 +15,6 @@ import ut from '../../styles/2.utilities'
 import sizeControlStyle from '../../styles/sizeControl.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import { staticFontStyleVariants, staticFontweightVariants, staticWhiteSpaceVariants, staticWordWrapVariants } from '../../Utils/StaticData/fontvariant'
 import CustomInputControl from '../CompSettings/StyleCustomize/ChildComp/CustomInputControl'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
@@ -36,6 +34,7 @@ import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
+import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'
 import TransformControl from './TransformControl'
 import TransitionControl from './TransitionControl'
@@ -62,6 +61,30 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
 
+  console.log(elementKey)
+  const getTitle = () => {
+    switch (elementKey) {
+      case 'fld-wrp': return 'Field Container'
+      case 'lbl-wrp': return 'Label & Subtitle Container'
+      case 'lbl': return 'Label Container'
+      case 'lbl-pre-i': return 'Label Prefix Icon'
+      case 'lbl-suf-i': return 'Label Suffix Icon'
+      case 'sub-titl': return 'Subtitle Container'
+      case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
+      case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
+      case 'fld': return 'Field Container'
+      case 'pre-i': return 'Field Prefix Icon'
+      case 'suf-i': return 'Field Suffix Icon'
+      case 'hlp-txt': return 'Helper Text Container'
+      case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
+      case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
+      case 'err-msg': return 'Error Messages Container'
+      default:
+        break
+    }
+  }
+
+  const fldTitle = getTitle()
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromStateVar(themeVars, getVlu?.replace('!important', ''))
@@ -204,7 +227,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         return (
           <BackgroundControl
             title="Background"
-            subtitle="Background Color/Image"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['background-image']}
             modalId="field-container-background"
             stateObjName="styles"
@@ -219,7 +242,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         return (
           <BorderImageControl
             title="Border Image"
-            subtitle="Border Gradient Color/Image"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj['border-image']}
             modalId="field-border-image"
             stateObjName="styles"
@@ -234,7 +257,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         return (
           <SimpleColorPicker
             title="Background Color"
-            subtitle="Background Color"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['background-color']}
             modalId="field-container-backgroung"
             stateObjName="styles"
@@ -248,8 +271,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'color':
         return (
           <SimpleColorPicker
-            title="Color"
-            subtitle="Color"
+            title="Text Color"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.color}
             modalId="field-container-color"
             stateObjName="styles"
@@ -262,51 +285,36 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         )
       case 'border':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('border', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Border', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('border', state)}
+            title="Border"
+          >
             <ResetStyle
               propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-color'], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
               stateObjName="styles"
             />
             <BorderControl
               allowImportant
-              subtitle="Field Container Border"
+              subtitle={`${fldTitle}`}
               value={`${existCssPropsObj?.[propertyKeys[0]]} ${existCssPropsObj?.['border-color']} ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />
-          </div>
+          </StylePropertyBlock>
         )
       case 'line-height':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('line-height', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Line-height', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('line-height', state)}
+            title="Line Height"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.['line-height']}
               stateObjName="styles"
             />
             <div className={css(ut.flxc)}>
-              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['line-height']} />
+              {fldLineHeightVal !== null
+                && <Important className={css({ mr: 5 })} propertyPath={objPaths.paths?.['line-height']} />}
               <SizeControl
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit, state)}
@@ -317,28 +325,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'word-spacing':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('word-spacing', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Word-spacing', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('word-spacing', state)}
+            title="Word Spacing"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.['word-spacing']}
               stateObjName="styles"
             />
             <div className={css(ut.flxc)}>
-              <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['word-spacing']} />
+              {wordSpacingVal !== null
+                && <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['word-spacing']} />}
               <SizeControl
                 min={0.1}
                 max={100}
@@ -351,28 +352,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 step={wordSpacingUnit !== 'px' ? '0.1' : 1}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'letter-spacing':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('letter-spacing', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Letter-spacing', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('letter-spacing', state)}
+            title="Letter-spacing"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.['letter-spacing']}
               stateObjName="styles"
             />
             <div className={css(ut.flxc)}>
-              <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['letter-spacing']} />
+              {letterSpacingVal !== null
+                && <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['letter-spacing']} />}
               <SizeControl
                 min={0.1}
                 max={100}
@@ -385,105 +379,71 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 step={letterSpacingUnit !== 'px' ? '0.1' : 1}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'margin':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('margin', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
-            </div>
-            <div className={css(ut.flxc, { cg: 3 })}>
-              <SpacingControl
-                allowImportant
-                action={{ type: 'spacing-control' }}
-                subtitle="Margin control"
-                objectPaths={objPaths}
-                id="margin-control"
-              />
-            </div>
-          </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('margin', state)}
+            title="Margin"
+          >
+            <SpacingControl
+              mainTitle="Margin Control"
+              allowImportant
+              action={{ type: 'spacing-control' }}
+              subtitle={`${fldTitle}`}
+              objectPaths={objPaths}
+              id="margin-control"
+            />
+          </StylePropertyBlock>
         )
       case 'padding':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('padding', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('padding', state)}
+            title="Padding"
+          >
             <SpacingControl
+              mainTitle="Padding Control"
               allowImportant
               action={{ type: 'spacing-control' }}
-              subtitle="Padding control"
+              subtitle={`${fldTitle}`}
               objectPaths={objPaths}
               id="padding-control"
             />
-          </div>
+          </StylePropertyBlock>
         )
       case 'size':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => {
-                  delPropertyHandler('width', state)
-                  delPropertyHandler('height', state)
-                  delPropertyHandler('size', state)
-                }}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Size', 'bitform')}</span>
-            </div>
-            <div className={css(ut.flxc, { cg: 3 })}>
-              <SizeControler
-                action={{ type: 'size-control' }}
-                subtitle="Size control"
-                objectPaths={objPaths}
-                id="size-control"
-                width="128px"
-              />
-            </div>
-          </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => {
+              delPropertyHandler('width', state)
+              delPropertyHandler('height', state)
+              delPropertyHandler('size', state)
+            }}
+            title="Size"
+          >
+            <SizeControler
+              action={{ type: 'size-control' }}
+              subtitle={`${fldTitle} Size Control`}
+              objectPaths={objPaths}
+              id="size-control"
+              width="128px"
+            />
+          </StylePropertyBlock>
         )
       case 'width':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => { delPropertyHandler('width', state) }}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Width', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('width', state)}
+            title="Width"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.width}
               stateObjName="styles"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.width} />
+              {widthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.width} />}
               <SizeControl
                 width="128px"
                 value={Number(widthValue)}
@@ -493,28 +453,20 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 options={['px', 'em', 'rem', '%']}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'height':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => { delPropertyHandler('height', state) }}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Height', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('height', state)}
+            title="Height"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.height}
               stateObjName="styles"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.height} />
+              {heightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.height} />}
               <SizeControl
                 width="128px"
                 value={Number(heightValue)}
@@ -524,24 +476,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 options={['px', 'em', 'rem', '%']}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'text-align':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('text-align', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Text align', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('text-align', state)}
+            title="Text Align"
+          >
             <ResetStyle propertyPath={objPaths.paths?.['text-align']} stateObjName="styles" />
-
             <div className={css(ut.flxc, { cg: 3 })}>
               <StyleSegmentControl
                 className={css({ w: 130 })}
@@ -557,42 +500,35 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 activeValue={txtAlignValue}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'text-decoration':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => {
-                  delPropertyHandler('text-decoration', state)
-                  delMultiPropertyHandler(Object.values(objPaths.paths))
-                }}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Text Decoration', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => {
+              delPropertyHandler('text-decoration', state)
+              delMultiPropertyHandler(Object.values(objPaths.paths))
+            }}
+            title="Text Decoration"
+          >
             <ResetStyle
               propertyPath={objPaths.paths?.['text-decoration-line']}
               stateObjName="styles"
             />
             <TextDecorationControl
-              subtitle="text-decoration"
+              subtitle={`${fldTitle}`}
               value={existCssPropsObj?.['text-decoration-line']}
               objectPaths={objPaths}
               id="fld-txt-dcrtn"
+              allowImportant
             />
-          </div>
+          </StylePropertyBlock>
         )
       case 'text-shadow':
         return (
           <IndividualShadowControl
             title="Text-shadow"
-            subtitle="text-shadow"
+            subtitle={`${fldTitle} Text Shadow Control`}
             value={existCssPropsObj?.['text-shadow']}
             defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
             modalId="field-container-text-shadow"
@@ -610,7 +546,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         return (
           <IndividualShadowControl
             title="Box-shadow"
-            subtitle="Box-shadow"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['box-shadow']}
             modalId="field-container-box-shadow"
             stateObjName="styles"
@@ -625,8 +561,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'transition':
         return (
           <TransitionControl
-            title="Transition"
-            subtitle="Transition"
+            title="Transition Control"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.transition}
             modalId="field-container-transition"
             stateObjName="styles"
@@ -639,47 +575,31 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         )
       case 'filter':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('filter', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Filter', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('filter', state)}
+            title="Filter"
+          >
             <div className={css(ut.flxc, { cg: 3 })}>
               <FilterController
                 action={{ type: 'filter-control' }}
-                subtitle="Filter control"
+                subtitle={`${fldTitle}`}
                 objectPaths={objPaths}
                 id="filter-control"
                 elementKey={elementKey}
                 fldKey={fldKey}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'font-size':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('font-size', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Font size', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('font-size', state)}
+            title="Font Size"
+          >
             <ResetStyle propertyPath={objPaths.paths['font-size']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important className={css({ mr: 2 })} propertyPath={objPaths.paths['font-size']} />
+              {fldFSValue && <Important className={css({ mr: 2 })} propertyPath={objPaths.paths['font-size']} />}
               <SizeControl
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
@@ -691,25 +611,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 step={fldFSUnit !== 'px' ? '0.1' : 1}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'font-weight':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('font-weight', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Font weight', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('font-weight', state)}
+            title="Font Weight"
+          >
             <ResetStyle propertyPath={objPaths.paths['font-weight']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important propertyPath={objPaths.paths['font-weight']} />
+              {existCssPropsObj?.['font-weight'] && <Important propertyPath={objPaths.paths['font-weight']} />}
               <SimpleDropdown
                 options={fontweightVariants}
                 value={String(existCssPropsObj?.['font-weight'])}
@@ -719,25 +631,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'font-style':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('font-style', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Font Style', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('font-style', state)}
+            title="Font Style"
+          >
             <ResetStyle propertyPath={objPaths.paths['font-style']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important propertyPath={objPaths.paths['font-style']} />
+              {existCssPropsObj?.['font-style'] && <Important propertyPath={objPaths.paths['font-style']} />}
               <SimpleDropdown
                 options={fontStyleVariants}
                 value={String(existCssPropsObj?.['font-style'])}
@@ -747,25 +651,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'white-space':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('white-space', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('White space', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('white-space', state)}
+            title="White Space"
+          >
             <ResetStyle propertyPath={objPaths.paths['white-space']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important propertyPath={objPaths.paths['white-space']} />
+              {existCssPropsObj?.['white-space'] && <Important propertyPath={objPaths.paths['white-space']} />}
               <SimpleDropdown
                 options={staticWhiteSpaceVariants}
                 value={String(existCssPropsObj?.['white-space'])}
@@ -774,25 +670,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 h={30}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'word-wrap':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('word-wrap', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Word Wrap', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('word-wrap', state)}
+            title="Word Wrap"
+          >
             <ResetStyle propertyPath={objPaths.paths['word-wrap']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important propertyPath={objPaths.paths['word-wrap']} />
+              {existCssPropsObj?.['word-wrap'] && <Important propertyPath={objPaths.paths['word-wrap']} />}
               <SimpleDropdown
                 options={staticWordWrapVariants}
                 value={String(existCssPropsObj?.['word-wrap'])}
@@ -801,25 +689,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 h={30}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'opacity':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('opacity', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Opacity', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('opacity', state)}
+            title="Opacity"
+          >
             <ResetStyle propertyPath={objPaths.paths.opacity} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              <Important className={css(cls.mr2)} propertyPath={objPaths.paths.opacity} />
+              {fldOpctyValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths.opacity} />}
               <SizeControl
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit, state)}
@@ -833,25 +713,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 step={fldOpctyUnit === '' ? 0.1 : 1}
               />
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'z-index':
         return (
-          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc, ut.ml1)}>
-              <button
-                title="Delete Property"
-                onClick={() => delPropertyHandler('z-index', state)}
-                className={`${css(cls.delBtn)} delete-btn`}
-                type="button"
-              >
-                <TrashIcn size="14" />
-              </button>
-              <span className={css(ut.fw500)}>{__('Z-Index', 'bitform')}</span>
-            </div>
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('z-index', state)}
+            title="Z-Index"
+          >
             <ResetStyle propertyPath={objPaths.paths['z-index']} stateObjName="styles" />
-            <Important propertyPath={objPaths.paths['z-index']} />
             <div className={css(ut.flxc, { cg: 3 })}>
+              {fldZIndex && <Important propertyPath={objPaths.paths['z-index']} className={css({ mr: 2 })} />}
               <div className={`${css(sizeControlStyle.container)}`}>
                 <CustomInputControl
                   className={css(sizeControlStyle.input)}
@@ -860,18 +732,18 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   min={0}
                   max={100}
                   step={1}
-                  width="130px"
+                  width="120px"
                   onChange={value => fldZIndexHandler(value)}
                 />
               </div>
             </div>
-          </div>
+          </StylePropertyBlock>
         )
       case 'transform':
         return (
           <TransformControl
             title="Transform"
-            subtitle="Transform"
+            subtitle={`${fldTitle}`}
             value={existCssPropsObj?.transform}
             modalId="field-container-transform"
             stateObjName="styles"
@@ -907,7 +779,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           {
             existCssProps.map(propName => getCssPropertyMenu(propName))
           }
-          {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
+          {(availableCssProp.length > 0)
+            && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
         </div>
       </Grow>
       {
@@ -918,7 +791,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               {
                 existCssProps.map(propName => getCssPropertyMenu(propName, state))
               }
-              {(availableCssProp.length > 0) && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}
+              {(availableCssProp.length > 0)
+                && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}
             </div>
           </Grow>
         ))
