@@ -10,10 +10,6 @@ export default class FileUploadField {
 
   #inpBtn = null
 
-  #btnIcn = null
-
-  #btnLabel = null
-
   #fileSelectStatus = null
 
   #maxSizeLabel = null
@@ -32,9 +28,6 @@ export default class FileUploadField {
   #config = {
     id: 'upload',
     name: 'upload',
-    fieldLbl: 'Upload File',
-    btnTxt: 'Upload 2',
-    btnIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
     required: true,
     multiple: false,
     maxSize: 0,
@@ -75,14 +68,12 @@ export default class FileUploadField {
   init() {
     this.#fieldLabel = this.#select(`.${this.fieldKey}-label`)
     this.#inpBtn = this.#select(`.${this.fieldKey}-inp-btn`)
-    this.#btnIcn = this.#select(`.${this.fieldKey}-btn-icn`)
-    this.#btnLabel = this.#select(`.${this.fieldKey}-btn-lbl`)
     this.#fileSelectStatus = this.#select(`.${this.fieldKey}-file-select-status`)
     this.#maxSizeLabel = this.#select(`.${this.fieldKey}-max-size-lbl`)
     this.#fileUploadInput = this.#select(`.${this.fieldKey}-file-upload-input`)
     this.#filesList = this.#select(`.${this.fieldKey}-files-list`)
     this.#errorWrap = this.#select(`.${this.fieldKey}-err-wrp`)
-    const { multiple, allowedFileType, accept, required, fieldLbl, showMaxSize, maxSize, sizeUnit, fileSelectStatus, btnIcn, btnTxt } = this.#config
+    const { multiple, allowedFileType, accept, required, showMaxSize, maxSize, sizeUnit, fileSelectStatus } = this.#config
 
     this.#fileUploadInput.multiple = multiple
     // this.#fileUploadInput.onchange = onchange
@@ -91,9 +82,6 @@ export default class FileUploadField {
     if (showMaxSize && maxSize) { this.#maxSizeLabel.innerText = `(Max ${maxSize}${sizeUnit.toUpperCase()})` } else { this.#maxSizeLabel.innerText = '' }
 
     this.#fileSelectStatus.innerText = fileSelectStatus
-
-    this.#btnIcn.src = btnIcn
-    this.#btnLabel.innerText = btnTxt
 
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
   }

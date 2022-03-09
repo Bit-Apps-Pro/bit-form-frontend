@@ -13,9 +13,10 @@ import { __ } from '../../Utils/i18nwrap'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import DropDown from '../Utilities/DropDown'
 import SingleToggle from '../Utilities/SingleToggle'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -32,7 +33,7 @@ export default function FileUploadSettings() {
   const { multiple, maxSize, sizeUnit, isItTotalMax, fileSelectStatus, allowedFileType, showFileList, showFileSize, duplicateAllow, minFile, maxFile } = fieldData.config
   const isRequired = fieldData.valid.req !== undefined
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
-  const { upBtnTxt } = fieldData
+  const { btnTxt, btnIcn } = fieldData
   const mxUp = fieldData.mxUp === undefined ? '' : fieldData.mxUp
   const exts = fieldData.exts === undefined ? [] : fieldData.exts.split(',._RF_,')
   const options = [
@@ -47,8 +48,9 @@ export default function FileUploadSettings() {
   ]
 
   function maxSizeHandler(unit, value) {
-    console.log('Unit=', unit)
-    console.log('Value=', value)
+    fieldData.config.maxSize = value
+    fieldData.config.sizeUnit = unit
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
   function setRequired(e) {
     if (e.target.checked) {
@@ -102,7 +104,7 @@ export default function FileUploadSettings() {
   }
 
   function setUpBtnTxt(e) {
-    fieldData.upBtnTxt = e.target.value
+    fieldData.btnTxt = e.target.value
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
@@ -128,8 +130,10 @@ export default function FileUploadSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
-  function setIsItTotalMax(value) {
-    console.log('total max value=', value)
+  function setIsItTotalMax(e) {
+    const { name, checked } = e.target
+    fieldData.config.isItTotalMax = checked
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (
@@ -142,9 +146,12 @@ export default function FileUploadSettings() {
 
       <FieldLabelSettings />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
-      <SimpleAccordion
+      <AdminLabelSettings />
+
+      <FieldSettingsDivider />
+      {/* <SimpleAccordion
         title={__('Admin Label', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
@@ -161,9 +168,9 @@ export default function FileUploadSettings() {
             changeAction={setAdminLabel}
           />
         </div>
-      </SimpleAccordion>
+      </SimpleAccordion> */}
 
-      <hr className={css(FieldStyle.divider)} />
+      {/* <hr className={css(FieldStyle.divider)} /> */}
       <SimpleAccordion
         title={__('Upload Button Text:', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -172,7 +179,7 @@ export default function FileUploadSettings() {
         <input
           className={css(FieldStyle.input)}
           type="text"
-          value={upBtnTxt}
+          value={btnTxt}
           onChange={setUpBtnTxt}
         />
       </SimpleAccordion>
@@ -180,7 +187,7 @@ export default function FileUploadSettings() {
 
       </div> */}
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
@@ -201,7 +208,7 @@ export default function FileUploadSettings() {
         />
       </SimpleAccordion>
       {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SingleToggle
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
@@ -210,7 +217,7 @@ export default function FileUploadSettings() {
         isChecked={multiple}
       />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Max Upload Size', 'bitform')}
@@ -222,32 +229,24 @@ export default function FileUploadSettings() {
             className={css(ut.w10, ut.mt1, ut.mb1)}
             inputHandler={({ unit, value }) => maxSizeHandler(unit, value)}
             sizeHandler={({ unitKey, unitValue }) => maxSizeHandler(unitKey, unitValue)}
-            value={12}
-            unit="MB"
+            value={maxSize}
+            unit={sizeUnit}
             width="128px"
             options={['Bytes', 'KB', 'MB', 'GB']}
             step={1}
             max={1024}
           />
           <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} checked={isItTotalMax} title={__('Total Maximum Size', 'bitform')} onChange={setIsItTotalMax} />
-          {/* <input
-            aria-label="File upload setting"
-            placeholder="Any Size"
-            type="number"
-            className={css(FieldStyle.input)}
-            value={mxUp}
-            onChange={setMxUp}
-          /> */}
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
         <DropDown className="w-10" titleClassName="title" title={__('Allowed File Type:', 'bitform')} isMultiple addable options={options} placeholder={__('Select File Type', 'bitform')} jsonValue action={setFileFilter} value={exts} />
       </div>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       {/* <div className="">
           <b>{__('Max Upload Size:', 'bitform')}</b>

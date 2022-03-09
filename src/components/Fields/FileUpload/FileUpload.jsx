@@ -14,14 +14,17 @@ export default function FileUpload({ fieldKey, formID, attr, entryID, resetField
   const fieldData = fields[fieldKey]
   const assetsUrl = bits.assetsURL
 
+  console.log('re render', fieldData)
+
   useEffect(() => {
+    console.log('config changed')
     if (!fileUploadWrapElmRef) return
     if (fileUploadFieldRef.current && fileUploadWrapElmRef && 'destroy' in fileUploadFieldRef.current) {
       fileUploadFieldRef.current.destroy()
     }
     const fld = selectInGrid(`.${fieldKey}-file-up-wrpr`)
     setFileUploadWrapElmRef(fld)
-  }, [fieldData])
+  }, [fieldData.config])
 
   useEffect(() => {
     if (!fileUploadWrapElmRef) return
@@ -65,8 +68,8 @@ export default function FileUpload({ fieldKey, formID, attr, entryID, resetField
             <div className={`${fieldKey}-file-input-wrpr`}>
               <div className={`${fieldKey}-btn-wrpr`}>
                 <button type="button" className={`${fieldKey}-inp-btn`}>
-                  <img className={`${fieldKey}-btn-icn`} src={`${assetsUrl}/../static/file-upload/upload.svg`} alt="Upload icon" srcSet="" />
-                  <span className={`${fieldKey}-btn-lbl`}>Upload</span>
+                  <img className={`${fieldKey}-btn-icn`} src={`${fieldData.btnIcn}`} alt="Upload icon" srcSet="" />
+                  <span className={`${fieldKey}-btn-lbl`}>{fieldData.btnTxt}</span>
                 </button>
                 <div className={`${fieldKey}-file-select-status`}>No Choosen File</div>
                 <small className={`${fieldKey}-max-size-lbl`}>Max 2MB</small>

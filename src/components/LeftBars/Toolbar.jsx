@@ -319,8 +319,9 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       elm: {
         typ: 'file-up',
         lbl: __('File Upload', 'bitform'),
-        upBtnTxt: 'Attach File',
+        btnTxt: 'Attach File',
         valid: {},
+        btnIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
         err: {},
         config: {
           multiple: true,
