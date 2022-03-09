@@ -68,7 +68,7 @@ const $themeVarsLg = atom({
     '--fld-m': '', // field margin
     '--fld-fs': '1rem', // field font size
 
-    '--fld-wrp-dis': '', // field wrapper display
+    '--fld-wrp-dis': 'block', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
