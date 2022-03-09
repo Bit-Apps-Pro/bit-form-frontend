@@ -75,7 +75,7 @@ export default function TransitionControl({ title,
             type="button"
             className={css(c.pickrBtn)}
           >
-            {value || 'Configure'}
+            <span className={css(c.clrVal)}>{value || 'Configure'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
@@ -134,7 +134,7 @@ const c = {
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
   clrVal: {
-    w: 73,
+    w: 80,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',

@@ -61,7 +61,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
 
-  console.log(elementKey)
   const getTitle = () => {
     switch (elementKey) {
       case 'fld-wrp': return 'Field Container'
@@ -561,7 +560,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'transition':
         return (
           <TransitionControl
-            title="Transition Control"
+            title="Transition"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.transition}
             modalId="field-container-transition"

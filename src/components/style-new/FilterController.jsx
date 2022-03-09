@@ -17,7 +17,6 @@ export default function FilterController({ subtitle, action, value, objectPaths,
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
   const { object, paths } = objectPaths
-
   const val = getValueByObjPath(styles, paths?.filter)
 
   const getValue = () => {
@@ -60,7 +59,7 @@ export default function FilterController({ subtitle, action, value, objectPaths,
           className={css(c.pickrBtn)}
         // title={val}
         >
-          {getValue() || 'Configure'}
+          <span className={css(c.clrVal)}>{getValue() || 'Configure'}</span>
         </button>
         {getValue() && (
           <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
@@ -119,7 +118,7 @@ const c = {
     ta: 'start',
   },
   clrVal: {
-    w: 90,
+    w: 80,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',

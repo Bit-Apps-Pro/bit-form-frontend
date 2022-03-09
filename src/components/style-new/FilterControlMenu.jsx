@@ -8,7 +8,6 @@ import ut from '../../styles/2.utilities'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
 import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from './styleHelpers'
 
 export default function FilterControlMenu({ title = 'Filters', objectPaths }) {

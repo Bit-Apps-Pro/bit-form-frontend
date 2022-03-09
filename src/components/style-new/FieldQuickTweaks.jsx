@@ -205,7 +205,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
   //   case 'color':
   //   case 'textarea':
   const [objName, objPath] = fldTypWiseAccentColorObjName()
-  console.log(fieldType)
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|)$/gi) && (
@@ -327,6 +326,7 @@ const sizes = {
   'small-2': 'Small-2',
   'small-1': 'Small-1',
   medium: 'Medium',
-  large: 'Large',
+  // large: 'Large',
   'large-1': 'Large-1',
+  'large-2': 'Large-2',
 }
