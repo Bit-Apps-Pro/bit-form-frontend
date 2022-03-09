@@ -17,7 +17,6 @@ export default function FilterController({ subtitle, action, value, objectPaths,
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
   const { object, paths } = objectPaths
-  console.log(paths.filter)
 
   const val = getValueByObjPath(styles, paths?.filter)
 
@@ -53,7 +52,7 @@ export default function FilterController({ subtitle, action, value, objectPaths,
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && (<Important propertyPath={paths?.filter} />)}
+      {allowImportant && getValue() && (<Important propertyPath={paths?.filter} />)}
       <div title={getValue() || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-control', width: 250, subtitle, action, value, objectPaths, id })}
@@ -80,6 +79,7 @@ const c = {
     mnw: 130,
     brs: 10,
     p: 7,
+    pr: '3px !important',
     flx: 'center-between',
     h: 30,
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
@@ -95,7 +95,7 @@ const c = {
   clearBtn: {
     brs: '50%',
     p: 4,
-    pr: '3px !important',
+    // pr: '1px !important',
     w: 17,
     h: 17,
     b: 'none',

@@ -52,7 +52,7 @@ export default function TextDecorationControl({ subtitle, value, objectPaths, id
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && (<Important className={css({ mr: 3 })} propertyPath={paths['text-decoration-line']} />)}
+      {allowImportant && value && (<Important className={css({ mr: 3 })} propertyPath={paths['text-decoration-line']} />)}
       <div title={txtDcrtnValue} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'text-decoration', subtitle, objectPaths, id })}

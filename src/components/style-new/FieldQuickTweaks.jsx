@@ -191,10 +191,24 @@ export default function FieldQuickTweaks({ fieldKey }) {
     }
     return [objName, objPath]
   }
+  // case 'text':
+  //   case 'number':
+  //   case 'password':
+  //   case 'username':
+  //   case 'email':
+  //   case 'url':
+  //   case 'date':
+  //   case 'datetime-local':
+  //   case 'time':
+  //   case 'month':
+  //   case 'week':
+  //   case 'color':
+  //   case 'textarea':
   const [objName, objPath] = fldTypWiseAccentColorObjName()
+  console.log(fieldType)
   return (
     <>
-      {fieldType.match(/^((?!button|image|title|advanced-file-up|html|).)*$/gi) && (
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|)$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"

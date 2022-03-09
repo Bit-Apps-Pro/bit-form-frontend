@@ -29,7 +29,7 @@ export default function SizeControler({ subtitle, action, value, objectPaths, id
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && (<Important propertyPath={paths?.width || paths?.height} />)}
+      {allowImportant && val && (<Important propertyPath={paths?.width || paths?.height} />)}
       <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'size-control', subtitle, action, value, objectPaths, id })}

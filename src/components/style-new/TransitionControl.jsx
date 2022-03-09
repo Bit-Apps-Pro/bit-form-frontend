@@ -68,7 +68,7 @@ export default function TransitionControl({ title,
 
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
+        {allowImportant && value && <Important stateObjName={stateObjName} propertyPath={propertyPath} className={css({ mr: 2 })} />}
         <div title={value || 'Configure'} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
