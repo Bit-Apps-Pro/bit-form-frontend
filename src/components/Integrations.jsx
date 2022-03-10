@@ -12,6 +12,7 @@ import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import autonami from '../resource/img/integ/autonami.svg'
 import dropbox from '../resource/img/integ/dropbox.svg'
+import oneDrive from '../resource/img/integ/OneDrive.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
@@ -83,6 +84,7 @@ function Integrations() {
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Autonami', logo: autonami, pro: !isPro },
     { type: 'Dropbox', logo: dropbox, pro: !isPro },
+    { type: 'OneDrive', logo: oneDrive, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
