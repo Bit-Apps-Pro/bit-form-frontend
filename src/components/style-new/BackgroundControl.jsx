@@ -12,6 +12,8 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
+import Important from './Important'
+import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
 export default function BackgroundControl({ title,
@@ -70,9 +72,9 @@ export default function BackgroundControl({ title,
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        {/* <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} /> */}
-        {/* {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />} */}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
+        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
+        {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
+        <div title={value} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'background', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"

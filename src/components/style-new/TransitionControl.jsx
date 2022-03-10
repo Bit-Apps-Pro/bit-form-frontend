@@ -68,14 +68,14 @@ export default function TransitionControl({ title,
 
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
+        {allowImportant && value && <Important stateObjName={stateObjName} propertyPath={propertyPath} className={css({ mr: 2 })} />}
         <div title={value || 'Configure'} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            {value || 'Configure'}
+            <span className={css(c.clrVal)}>{value || 'Configure'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
@@ -134,7 +134,7 @@ const c = {
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
   clrVal: {
-    w: 73,
+    w: 80,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',

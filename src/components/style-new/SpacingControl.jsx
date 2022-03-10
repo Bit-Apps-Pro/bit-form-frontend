@@ -58,7 +58,7 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && val && (<Important propertyPath={paths?.margin || paths?.padding} />)}
+      {allowImportant && getValue() && (<Important propertyPath={paths?.margin || paths?.padding} />)}
       <div title={getValue('Margin', 'Padding') || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id })}

@@ -70,7 +70,15 @@ const fieldWrpCssProps = {
 const textFldCssProps = {
   'fld-wrp': {
     states: ['hover'],
-    properties: { ...fieldWrpCssProps },
+    properties: {
+      ...fieldWrpCssProps,
+      'text-decoration': {
+        'text-decoration-line': true,
+        'text-decoration-style': true,
+        'text-decoration-color': true,
+        'text-decoration-thickness': true,
+      },
+    },
   },
   fld: {
     states: ['hover', 'focus'],

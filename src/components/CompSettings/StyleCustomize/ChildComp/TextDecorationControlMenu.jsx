@@ -53,7 +53,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
 
   return (
     <>
-      <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
+      <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Line</span>
         <SimpleDropdown
           options={lineOptions}
@@ -63,7 +63,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           h={30}
         />
       </div>
-      <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
+      <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Style</span>
         <SimpleDropdown
           options={styleOptions}
@@ -73,14 +73,14 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           h={30}
         />
       </div>
-      <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
+      <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
         <SimpleColorPickerTooltip
           action={{ onChange: val => onValueChange(paths['text-decoration-color'], val) }}
           value={textDcrtnColor}
         />
       </div>
-      <div className={css(ut.flxcb, ut.mb2, { w: 180 })}>
+      <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Thickness</span>
         <SizeControl
           min={0.1}
@@ -89,12 +89,11 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           sizeHandler={({ unitKey, unitValue }) => thicknessHandler({ unit: unitKey, value: unitValue })}
           value={thicknesValue || 0}
           unit={thicknesUnit || 'px'}
-          width="110px"
+          width="130px"
           options={['px', 'em', 'rem', '']}
           step={thicknesUnit !== 'px' ? '0.1' : 1}
         />
       </div>
-
     </>
   )
 }
