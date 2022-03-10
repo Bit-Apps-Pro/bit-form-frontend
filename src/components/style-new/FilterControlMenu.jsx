@@ -88,8 +88,8 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
   }
 
   const checkNStoreImportant = (fltVal) => {
-    if (fltVal.match(/(!important)/gi)) {
-      fltVal = fltVal.replaceAll(/(!important)/gi, '')
+    if (fltVal?.match(/(!important)/gi)) {
+      fltVal = fltVal?.replaceAll(/(!important)/gi, '')
       checkImportant = true
       return fltVal
     }
@@ -99,7 +99,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
 
   const checkNAddImportant = (fv) => {
     if (checkImportant) {
-      if (!fv.match(/(!important)/gi)) {
+      if (!fv?.match(/(!important)/gi)) {
         return `${fv}!important`
       }
       return fv
