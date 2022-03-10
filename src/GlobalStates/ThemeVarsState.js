@@ -119,17 +119,17 @@ const $themeVarsLg = atom({
     '--err-txt-font-w': 700, // helper text font weight
     '--err-txt-font-style': '', // helper text font style
 
-    '--pre-i-h': '20px', // fld prefix icon height
-    '--pre-i-w': '20px', // fld prefix icon width
-    '--pre-i-m': '5px', // fld prefix icon margin
-    '--pre-i-p': '', // fld prefix icon padding
+    '--pre-i-h': '40px', // fld prefix icon height
+    '--pre-i-w': '40px', // fld prefix icon width
+    '--pre-i-m': '', // fld prefix icon margin
+    '--pre-i-p': '7px', // fld prefix icon padding
     '--pre-i-bdr-width': '', // fld prefix icon border width
     '--pre-i-bdr-rad': '8px', // fld prefix icon message border radius
 
-    '--suf-i-h': '20px', // fld suffix icon height
-    '--suf-i-w': '20px', // fld suffix icon width
-    '--suf-i-m': '5px', // fld suffix icon margin
-    '--suf-i-p': '', // fld suffix icon padding
+    '--suf-i-h': '40px', // fld suffix icon height
+    '--suf-i-w': '40px', // fld suffix icon width
+    '--suf-i-m': '', // fld suffix icon margin
+    '--suf-i-p': '7px', // fld suffix icon padding
     '--suf-i-bdr-width': '', // fld suffix icon border width
     '--suf-i-bdr-rad': '8px', // fld suffix icon border radius
 
