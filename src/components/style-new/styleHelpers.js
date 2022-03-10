@@ -357,6 +357,7 @@ export function arrDiff(arr1, arr2) {
 }
 
 export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
+  // return Object.keys(editorConfig.texfieldStyle.properties)
   switch (fieldType) {
     case 'text':
     case 'date':
@@ -364,7 +365,6 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'username':
     case 'textarea':
     case 'email':
-      return Object.keys(editorConfig.texfieldStyle.properties)
     case 'title':
     case 'divider':
     case 'image':

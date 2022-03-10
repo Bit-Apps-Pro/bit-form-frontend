@@ -50,6 +50,8 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       top: '50%',
       padding: '7px',
       transform: 'translateY(-50%)',
+      width: '40px',
+      height: '40px',
     },
     [`.${fk}-suf-i`]: {
       position: 'absolute',
@@ -57,7 +59,8 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       right: '3px',
       top: '50%',
       transform: 'translateY(-50%)',
+      width: '40px',
+      height: '40px',
     },
-
   }
 }

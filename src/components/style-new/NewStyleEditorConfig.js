@@ -31,15 +31,27 @@ const labelCssProps = {
   transform: '',
 }
 const iconCssProps = {
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  border: {
+    border: true,
+    'border-width': true,
+    'border-radius': true,
+  },
   margin: '5px',
   padding: '5px',
   opacity: '100%',
   height: '',
+  width: '',
   size: { width: '100%', height: '100%' },
   'box-shadow': '',
   filter: '',
   transition: '',
+  background: {
+    'background-image': true,
+    'background-position': true,
+    'background-repeat': true,
+    'background-size': true,
+    'backdrop-filter': true,
+  },
 }
 
 const fieldWrpCssProps = {
@@ -162,7 +174,11 @@ const buttonCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  border: {
+    border: true,
+    'border-width': true,
+    'border-radius': true,
+  },
   margin: '5px',
   padding: '5px',
   opacity: '100%',
