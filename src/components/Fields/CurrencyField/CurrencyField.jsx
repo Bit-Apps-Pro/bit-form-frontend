@@ -8,22 +8,20 @@ import RenderStyle from '../../style-new/RenderStyle'
 import CurrencyFieldClass from './currency-field-script'
 
 const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, styleClasses }) => {
-  const [currencyWrapElmRef, setCurrencyWrapElmRef] = useState(null)
+  const currencyWrapElmRef = useRef(null)
   const currencyFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
 
   useEffect(() => {
-    if (!currencyWrapElmRef) return
-    if (currencyFieldRef.current && currencyWrapElmRef && 'destroy' in currencyFieldRef.current) {
-      currencyFieldRef.current.destroy()
+    if (!currencyWrapElmRef?.current) {
+      currencyWrapElmRef.current = selectInGrid(`.${fieldKey}-currency-fld-wrp`)
     }
-    const fld = selectInGrid(`.${fieldKey}-currency-fld-wrp`)
-    setCurrencyWrapElmRef(fld)
-  }, [fieldData])
-
-  useEffect(() => {
-    if (!currencyWrapElmRef) return
+    const fldConstructor = currencyFieldRef.current
+    const fldElm = currencyWrapElmRef.current
+    if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
+      fldConstructor.destroy()
+    }
 
     const { options, inputFormatOptions, valueFormatOptions } = fieldData
 
@@ -36,9 +34,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
 
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCurrencyKey = alreadyChecked.i
-
-    currencyFieldRef.current = new CurrencyFieldClass(currencyWrapElmRef, configOptions)
-  }, [currencyWrapElmRef])
+    currencyFieldRef.current = new CurrencyFieldClass(fldElm, configOptions)
+  }, [fieldData])
 
   return (
     <>
@@ -49,7 +46,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         fieldData={attr}
       >
         <div className={`${fieldKey}-currency-fld-container`}>
-          <div className={`${fieldKey}-currency-fld-wrp`} ref={setCurrencyWrapElmRef}>
+          <div className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
             <input name="currency-input" type="hidden" className={`${fieldKey}-currency-hidden-input`} />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div

@@ -49,7 +49,7 @@ class CurrencyField {
 
   #dropdownSearchTerm = ''
 
-  #initialCurrencyFieldHTML = null
+  #allEventListeners = []
 
   constructor(selector, config) {
     Object.assign(this.#config, config)
@@ -61,8 +61,6 @@ class CurrencyField {
 
     this.#options = [...this.#config.options]
     this.fieldKey = this.#config.fieldKey
-
-    this.#initialCurrencyFieldHTML = this.#currencyNumberFieldWrapper.cloneNode(true)
 
     this.init()
   }
@@ -278,6 +276,7 @@ class CurrencyField {
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
+    this.#allEventListeners.push({ selector, eventType, cb })
   }
 
   #handleDefaultCurrencyInputValue() {
@@ -633,9 +632,15 @@ class CurrencyField {
     return this.#currencyHiddenInputElm.value
   }
 
+  #detachAllEvents() {
+    this.#allEventListeners.forEach(({ selector, eventType, cb }) => {
+      selector.removeEventListener(eventType, cb)
+    })
+  }
+
   destroy() {
-    const el = this.#currencyNumberFieldWrapper
-    el.outerHTML = this.#initialCurrencyFieldHTML.outerHTML
+    this.#optionListElm.innerHTML = ''
+    this.#detachAllEvents()
   }
 }
 
