@@ -8,7 +8,7 @@ import ut from '../../styles/2.utilities'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from './styleHelpers'
+import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, unitConverter } from './styleHelpers'
 
 export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
   const { css } = useFela()
@@ -78,12 +78,33 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
   }
 
   let filterValues
+  let checkImportant = false
 
   if (object === 'themeColors') {
     filterValues = themeColors[paths.filter]
   } else {
     const fltrVal = getValueByObjPath(styles, paths?.filter)
     filterValues = getValueFromStateVar(themeColors, fltrVal)
+  }
+
+  const checkNStoreImportant = (fltVal) => {
+    if (fltVal.match(/(!important)/gi)) {
+      fltVal = fltVal.replaceAll(/(!important)/gi, '')
+      checkImportant = true
+      return fltVal
+    }
+    return fltVal
+  }
+  filterValues = checkNStoreImportant(filterValues)
+
+  const checkNAddImportant = (fv) => {
+    if (checkImportant) {
+      if (!fv.match(/(!important)/gi)) {
+        return `${fv}!important`
+      }
+      return fv
+    }
+    return fv
   }
   filterValues = filterValues?.replace('none', '')
   const filterNames = filterValues?.trim() ? filterValues?.trim()?.split(/\B\s+(?![^(]*\))/gi) : []
@@ -103,6 +124,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
 
   const setFilterValue = (filterName, { value, unit }, indexNo) => {
     let filterValue = getValueByObjPath(getStateObj(), paths.filter)
+    filterValue = checkNStoreImportant(filterValues)
     const startPos = filterValue.indexOf(filterName)
     const endPos = filterValue.indexOf(')', startPos) + 1
     if (!unit) unit = ''
@@ -113,40 +135,54 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
       filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
     } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
 
-    setStyleStateObj(object, paths.filter, filterValue.trim(), { setThemeColors, setStyles })
+    filterValue = checkNAddImportant(filterValue)
+    setStyleStateObj(object, paths.filter, filterValue?.trim(), { setThemeColors, setStyles })
   }
 
-  const unitHandler = (filterName, unit, value, indexNo) => {
+  const unitHandler = (filterName, currentUnit, value, indexNo, preUnit) => {
     let filterValue = getValueByObjPath(getStateObj(), paths.filter)
+    filterValue = checkNStoreImportant(filterValues)
     const startPos = filterValue.indexOf(filterName)
     const endPos = filterValue.indexOf(')', startPos) + 1
-    if (!unit) unit = ''
+    if (!currentUnit) currentUnit = ''
 
     if (filterName === 'drop-shadow') {
       const values = filterValue.slice(filterValue.indexOf('(', startPos) + 1, endPos - 1).split(/\s(?![^(]*\))/gi)
-      values[indexNo] = `${value}${unit}`
+      const convertValue = unitConverter(currentUnit, value, preUnit)
+      values[indexNo] = `${convertValue}${currentUnit}`
       filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${values.join(' ')})`)
-    } else filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${value}${unit})`)
+    } else {
+      const convertValue = unitConverter(currentUnit, value, preUnit)
+      filterValue = filterValue.replace(filterValue.slice(startPos, endPos), `${filterName}(${convertValue}${currentUnit})`)
+    }
+
+    filterValue = checkNAddImportant(filterValue)
     setStyleStateObj(object, paths.filter, filterValue.trim(), { setThemeColors, setStyles })
   }
 
   const handleClearProperties = filterName => {
     let value = getValueByObjPath(getStateObj(), paths.filter)
+    value = checkNStoreImportant(value)
     const startPos = value.indexOf(filterName)
     const endPos = value.indexOf(')', startPos) + 1
     value = value.replace(value.slice(startPos, endPos), '').trim()
+    value = checkNAddImportant(value)
+
     setStyleStateObj(object, paths.filter, value, { setThemeColors, setStyles })
   }
 
   const addFilterToCss = (filterName) => {
     const filterValue = getDfltFilterObject(filterName).value
-    const prevValue = getValueByObjPath(getStateObj(), paths.filter)
+    let prevValue = getValueByObjPath(getStateObj(), paths.filter)
+    prevValue = checkNStoreImportant(prevValue)
+    let fltVal
     if (filterValue === 'none') {
-      setStyleStateObj(object, paths.filter, `${filterValue}`, { setThemeColors, setStyles })
+      fltVal = `${filterValue}`
     } else {
-      const val = `${prevValue.replace('none', '')} ${filterValue}`.trim()
-      setStyleStateObj(object, paths.filter, val, { setThemeColors, setStyles })
+      fltVal = `${prevValue.replace('none', '')} ${filterValue}`.trim()
     }
+    fltVal = checkNAddImportant(fltVal)
+    setStyleStateObj(object, paths.filter, fltVal, { setThemeColors, setStyles })
   }
 
   const filterProperties = {
@@ -197,7 +233,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       value={Number(getNumFromStr(valueArr[0]) || 0)}
                       unit={getStrFromStr(valueArr[0]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 0)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 0, valueArr[0])}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 0, getStrFromStr(valueArr[0]))}
                       options={['px', 'mm', 'em', 'rem']}
                       min="-100"
                       max="100"
@@ -210,7 +246,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       value={Number(getNumFromStr(valueArr[1]) || 0)}
                       unit={getStrFromStr(valueArr[1]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 1)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 1, valueArr[1])}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 1, getStrFromStr(valueArr[1]))}
                       options={['px', 'mm', 'em', 'rem']}
                       min="-100"
                       max="100"
@@ -223,7 +259,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       value={Number(getNumFromStr(valueArr[2]) || 0)}
                       unit={getStrFromStr(valueArr[2]) || 'px'}
                       inputHandler={valObj => setFilterValue('drop-shadow', valObj, 2)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 2, valueArr[2])}
+                      sizeHandler={({ unitKey, unitValue }) => unitHandler('drop-shadow', unitKey, unitValue, 2, getStrFromStr(valueArr[2]))}
                       options={['px', 'mm', 'em', 'rem']}
                       min="0"
                       max="100"
@@ -232,7 +268,6 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                   <div className={css(ut.flxcb, ut.mb2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Color</span>
                     <input aria-label="Filter image" width="120px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
-                    {/* <SimpleColorPickerTooltip action={{ onChange: val => setFilterValue('drop-shadow', { value: val }, 3) }} value={valueArr[3]} /> */}
                   </div>
                 </div>
               </SimpleAccordion>
@@ -251,7 +286,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                 value={Number(filter.value)}
                 unit={filter.unit}
                 inputHandler={valObj => setFilterValue(filter.name, valObj)}
-                sizeHandler={({ unitKey, unitValue }) => unitHandler(filter.name, unitKey, unitValue)}
+                sizeHandler={({ unitKey, unitValue }) => unitHandler(filter.name, unitKey, unitValue, '', filter.unit)}
                 options={filter.options}
                 min={filter.min}
                 max={filter.max}
