@@ -83,18 +83,21 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === 'px' && unit === '%') return Number(value * 6.25)
   if (prvUnit === 'px' && unit === '') return Number(value)
   if (prvUnit === 'px' && unit === 'cm') return Number(value * 0.026)
+  if (prvUnit === 'px' && unit === 'mm') return Number(value * 0.26)
 
   if (prvUnit === 'em' && unit === 'px') return Number(value * 16)
   if (prvUnit === 'em' && unit === '') return Number(value * 16)
   if (prvUnit === 'em' && unit === 'rem') return Number(value)
   if (prvUnit === 'em' && unit === '%') return Number(value * 100)
   if (prvUnit === 'em' && unit === 'cm') return Number(value * 0.423)
+  if (prvUnit === 'em' && unit === 'cm') return Number(value * 4.233)
 
   if (prvUnit === 'rem' && unit === 'em') return Number(value)
   if (prvUnit === 'rem' && unit === 'px') return Number(value * 16)
   if (prvUnit === 'rem' && unit === '') return Number(value * 16)
   if (prvUnit === 'rem' && unit === '%') return Number(value * 100)
   if (prvUnit === 'rem' && unit === 'cm') return Number(value * 0.423)
+  if (prvUnit === 'rem' && unit === 'mm') return Number(value * 4.233)
 
   if (prvUnit === 'cm' && unit === 'rem') return Number(value * 2.362)
   if (prvUnit === 'cm' && unit === 'px') return Number(value * 37.80)
@@ -119,6 +122,11 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === 'rad' && unit === 'turn') return Number(value * 0.159155)
   // formula (1)rad * 180/π = deg°
   if (prvUnit === 'rad' && unit === 'deg') return Number(value * 57.2958)
+
+  // convert mm to (px, rem, em)
+  if (prvUnit === 'mm' && unit === 'px') return Number(value * 3.78)
+  if (prvUnit === 'mm' && unit === 'rem') return Number(value * 0.24)
+  if (prvUnit === 'mm' && unit === 'em') return Number(value * 0.24)
 }
 
 export const getNumFromStr = (str = '') => {
