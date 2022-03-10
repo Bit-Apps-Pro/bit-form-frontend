@@ -8,7 +8,7 @@ import RenderStyle from '../../style-new/RenderStyle'
 import FileUploadField from './file-upload'
 
 export default function FileUpload({ fieldKey, formID, attr, entryID, resetFieldValue, styleClasses }) {
-  const [fileUploadWrapElmRef, setFileUploadWrapElmRef] = useState(null)
+  const fileUploadWrapElmRef = useRef(null)
   const fileUploadFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
@@ -17,17 +17,14 @@ export default function FileUpload({ fieldKey, formID, attr, entryID, resetField
   console.log('re render', fieldData)
 
   useEffect(() => {
-    console.log('config changed')
-    if (!fileUploadWrapElmRef) return
-    if (fileUploadFieldRef.current && fileUploadWrapElmRef && 'destroy' in fileUploadFieldRef.current) {
-      fileUploadFieldRef.current.destroy()
+    if (!fileUploadWrapElmRef?.current) {
+      fileUploadWrapElmRef.current = selectInGrid(`.${fieldKey}-file-up-wrpr`)
     }
-    const fld = selectInGrid(`.${fieldKey}-file-up-wrpr`)
-    setFileUploadWrapElmRef(fld)
-  }, [fieldData.config])
-
-  useEffect(() => {
-    if (!fileUploadWrapElmRef) return
+    const fldConstructor = fileUploadFieldRef.current
+    const fldElm = fileUploadWrapElmRef.current
+    if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
+      fldConstructor.destroy()
+    }
 
     const { multiple, maxSize, sizeUnit, isItTotalMax, fileSelectStatus, allowedFileType, showFileList, showFileSize, duplicateAllow, accept, minFile, maxFile } = fieldData.config
 
@@ -47,9 +44,8 @@ export default function FileUpload({ fieldKey, formID, attr, entryID, resetField
       maxFile,
     }
 
-    console.log('multiple', multiple)
-    fileUploadFieldRef.current = new FileUploadField(fileUploadWrapElmRef, configOptions)
-  }, [fileUploadWrapElmRef])
+    fileUploadFieldRef.current = new FileUploadField(fldElm, configOptions)
+  }, [fieldData])
 
   return (
     <>
@@ -64,7 +60,7 @@ export default function FileUpload({ fieldKey, formID, attr, entryID, resetField
             File Upload
             <span className={`${fieldKey}-file-require-symbol`}>*</span>
           </label> */}
-          <div className={`${fieldKey}-file-up-wrpr`} ref={setFileUploadWrapElmRef}>
+          <div className={`${fieldKey}-file-up-wrpr`} ref={fileUploadWrapElmRef}>
             <div className={`${fieldKey}-file-input-wrpr`}>
               <div className={`${fieldKey}-btn-wrpr`}>
                 <button type="button" className={`${fieldKey}-inp-btn`}>

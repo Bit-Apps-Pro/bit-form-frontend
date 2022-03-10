@@ -22,7 +22,7 @@ export default class FileUploadField {
 
   #files = {}
 
-  #initialFileUploadFieldHTML = null
+  #allEventListeners = []
 
   // default config
   #config = {
@@ -61,7 +61,6 @@ export default class FileUploadField {
     }
     this.fieldKey = this.#config.fieldKey
 
-    this.#initialFileUploadFieldHTML = this.#fileUploadWrap.cloneNode(true)
     this.init()
   }
 
@@ -274,8 +273,8 @@ export default class FileUploadField {
   }
 
   #addEvent(element, eventType, eventAction) {
-    console.log('add event', typeof eventAction)
     element.addEventListener(eventType, eventAction)
+    this.#allEventListeners.push({ element, eventType, eventAction })
   }
 
   #addClass(element, className) {
@@ -308,9 +307,15 @@ export default class FileUploadField {
     }
   }
 
+  #detachAllEvents() {
+    this.#allEventListeners.forEach(({ element, eventType, eventAction }) => {
+      element.removeEventListener(eventType, eventAction)
+    })
+  }
+
   destroy() {
-    const el = this.#fileUploadWrap
-    el.outerHTML = this.#initialFileUploadFieldHTML.outerHTML
+    this.#filesList.innerHTML = ''
+    this.#detachAllEvents()
   }
 }
 
