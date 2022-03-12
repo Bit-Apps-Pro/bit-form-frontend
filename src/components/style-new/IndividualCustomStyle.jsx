@@ -578,14 +578,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('filter', state)}
             title="Filter"
           >
+            <ResetStyle
+              propertyPath={objPaths.paths?.filter}
+              stateObjName="styles"
+            />
             <div className={css(ut.flxc, { cg: 3 })}>
               <FilterController
                 action={{ type: 'filter-control' }}
                 subtitle={`${fldTitle}`}
                 objectPaths={objPaths}
                 id="filter-control"
-                elementKey={elementKey}
-                fldKey={fldKey}
+                allowImportant
               />
             </div>
           </StylePropertyBlock>
@@ -776,7 +779,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       <Grow open={stateController.toLowerCase() === ''}>
         <div className={css(cls.space)}>
           {
-            existCssProps.map(propName => getCssPropertyMenu(propName))
+            existCssProps.map((propName, indx) => (
+              <div key={`propName-${indx * 20}`}>
+                {getCssPropertyMenu(propName)}
+              </div>
+            ))
           }
           {(availableCssProp.length > 0)
             && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
