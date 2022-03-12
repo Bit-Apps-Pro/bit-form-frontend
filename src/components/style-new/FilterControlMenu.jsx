@@ -38,7 +38,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
           value: `${filterName}(2px)`,
           units: ['', 'px', 'em', 'rem'],
           minValue: 0.1,
-          maxValue: 100,
+          maxValue: 10,
         }
         break
       case 'drop-shadow':
@@ -117,7 +117,15 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
     const filterObject = getDfltFilterObject(name)
     let titl = name.replace('-', ' ')
     titl = titl.replace(titl.slice(0, 1), titl.slice(0, 1).toUpperCase())
-    return { title: titl, name, value, unit, options: filterObject.units, min: filterObject.minValue, max: filterObject.maxValue }
+    return {
+      title: titl,
+      name,
+      value,
+      unit,
+      options: filterObject.units,
+      min: filterObject.minValue,
+      max: filterObject.maxValue,
+    }
   })
 
   const existFilterNames = filtersObjects.map(filter => filter.name)
@@ -174,12 +182,14 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
   const addFilterToCss = (filterName) => {
     const filterValue = getDfltFilterObject(filterName).value
     let prevValue = getValueByObjPath(getStateObj(), paths.filter)
+    prevValue = getValueFromStateVar(getStateObj(), prevValue)
+
     prevValue = checkNStoreImportant(prevValue)
     let fltVal
     if (filterValue === 'none') {
       fltVal = `${filterValue}`
     } else {
-      fltVal = `${prevValue.replace('none', '')} ${filterValue}`.trim()
+      fltVal = `${prevValue?.replace('none', '')} ${filterValue}`.trim()
     }
     fltVal = checkNAddImportant(fltVal)
     setStyleStateObj(object, paths.filter, fltVal, { setThemeColors, setStyles })

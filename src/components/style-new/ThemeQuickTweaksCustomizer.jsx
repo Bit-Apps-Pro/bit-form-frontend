@@ -81,7 +81,7 @@ export default function ThemeQuickTweaksCustomizer() {
                 const mainStlVal = mainStlPropertiesObj[comnStlProperty]
                 const comStlVal = comStlPropertiesObj[comnStlProperty]
                 if (mainStlVal !== comStlVal) {
-                  if (mainStlVal?.match(/var/gi)) {
+                  if (mainStlVal?.match(/(var)/gi)) {
                     const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
                     if (tmpThemeVar[mainStateVar] !== comStlVal) {
                       tmpThemeVar[mainStateVar] = comStlVal
