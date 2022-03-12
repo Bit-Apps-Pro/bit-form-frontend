@@ -843,6 +843,10 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
+    'file-up-wrpr': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
     'btn-txt': {
       states: ['hover'],
       properties: { ...labelCssProps },

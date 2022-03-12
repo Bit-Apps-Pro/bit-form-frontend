@@ -382,6 +382,15 @@ export default function ElementConfiguration({ fldKey }) {
       {
         fieldObj.typ.match(/^(file-up)/) && (
           <>
+            <NavBtn
+              cssSelector={`.${fldKey}-file-up-wrpr`}
+              subRoute={fldKey}
+              route="file-up-wrpr"
+              label="Input Container"
+              offset="2.5"
+              highlightSelector={`[data-dev-file-up-wrpr="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-up-wrpr')}
+            />
             <LayerAccordion
               childrenAccodin
               onClick={() => styleHandler('inp-btn')}

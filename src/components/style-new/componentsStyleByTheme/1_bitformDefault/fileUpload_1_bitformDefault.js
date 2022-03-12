@@ -102,7 +102,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       display: 'flex',
       height: '40px',
       'margin-top': '10px',
-      width: '90%',
+      width: '100%',
     },
     [`.${fk}-file-preview`]: {
       'border-radius': '10px',
