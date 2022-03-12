@@ -814,6 +814,89 @@ const editorConfig = {
       properties: { ...labelCssProps },
     },
   },
+  'file-up': {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'lbl-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    lbl: {
+      states: ['hover'],
+      properties: { ...labelCssProps, 'white-space': '' },
+    },
+    'lbl-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'lbl-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'inp-btn': {
+      states: ['hover', 'focus'],
+      properties: { ...buttonCssProps },
+    },
+    'pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'btn-txt': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'file-select-status': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'max-size-lbl': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'files-list': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'file-wrpr': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+    'file-preview': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'file-title': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'file-size': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'cross-btn': {
+      states: ['hover'],
+      properties: { ...buttonCssProps },
+    },
+
+    'err-msg': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'err-txt-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'err-txt-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+  },
   html: {
     'fld-wrp': {
       states: ['hover'],

@@ -34,9 +34,11 @@ export default class FileUploadField {
     sizeUnit: 'KB',
     isItTotalMax: false,
     showMaxSize: true,
+    showSelectStatus: true,
     fileSelectStatus: 'No Choosen File',
     allowedFileType: '',
     showFileList: true,
+    showFilePreview: true,
     showFileSize: true,
     accept: '.pdf,.exe,.msi',
     duplicateAllow: false,
@@ -72,15 +74,20 @@ export default class FileUploadField {
     this.#fileUploadInput = this.#select(`.${this.fieldKey}-file-upload-input`)
     this.#filesList = this.#select(`.${this.fieldKey}-files-list`)
     this.#errorWrap = this.#select(`.${this.fieldKey}-err-wrp`)
-    const { multiple, allowedFileType, accept, required, showMaxSize, maxSize, sizeUnit, fileSelectStatus } = this.#config
+    const { multiple, allowedFileType, accept, required, showMaxSize, maxSize, sizeUnit, showSelectStatus, fileSelectStatus } = this.#config
 
     this.#fileUploadInput.multiple = multiple
     // this.#fileUploadInput.onchange = onchange
     this.#fileUploadInput.accept = allowedFileType ? `${allowedFileType}, ${accept}` : accept
 
-    if (showMaxSize && maxSize) { this.#maxSizeLabel.innerText = `(Max ${maxSize}${sizeUnit.toUpperCase()})` } else { this.#maxSizeLabel.innerText = '' }
+    if (showMaxSize && maxSize) {
+      this.#maxSizeLabel.innerText = `(Max ${maxSize}${sizeUnit.toUpperCase()})`
+    } else { this.#maxSizeLabel.remove() }
 
-    this.#fileSelectStatus.innerText = fileSelectStatus
+    if (showSelectStatus) this.#fileSelectStatus.innerText = fileSelectStatus
+    else this.#fileSelectStatus.remove()
+
+    if (!this.#config.showFileList) this.#filesList?.remove()
 
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
   }
@@ -88,7 +95,7 @@ export default class FileUploadField {
   #fileUploadAction(e) {
     const { files } = this.#fileUploadInput
 
-    const { sizeUnit, maxSize, isItTotalMax, multiple, showFileList, showFileSize, fileSelectStatus, minFile, maxFile } = this.#config
+    const { sizeUnit, maxSize, isItTotalMax, multiple, showFileList, showFilePreview, showFileSize, showSelectStatus, fileSelectStatus, minFile, maxFile } = this.#config
 
     const maxFileSize = this.#maxFileSize(sizeUnit, maxSize)
 
@@ -107,18 +114,19 @@ export default class FileUploadField {
     }
 
     for (const file of files) {
-      if (!this.#files[file.name]) {
+      const fileName = file.name.replaceAll(/( |\.)/g, '')
+      if (!this.#files[fileName]) {
         if (!maxSize || (file.size + totalFileSize) <= maxFileSize) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
-            this.#files[file.name] = file
+            this.#files[fileName] = file
             if (showFileList) {
-              this.#filesList.innerHTML += `<div id="file-wrp-${file.name.replaceAll(/( |\.)/g, '')}" class="${this.fieldKey}-file-wrpr">
-                <img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image" class="${this.fieldKey}-uploaded-image" />
+              this.#filesList.innerHTML += `<div id="file-wrp-${fileName}" data-dev-file-wrpr='${this.fieldKey}' class="${this.fieldKey}-file-wrpr">
+                ${ showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="${this.fieldKey}-file-preview" />` : ''}
                   <div class="${this.fieldKey}-file-details">
-                    <span class="${this.fieldKey}-file-title">${file.name}</span>
-                    ${showFileSize ? `<span class="${this.fieldKey}-file-size">${this.#returnFileSize(file.size)}</span>` : ''}
+                    <span data-dev-file-title='${this.fieldKey}' class="${this.fieldKey}-file-title">${file.name}</span>
+                    ${showFileSize ? `<span data-dev-file-size='${this.fieldKey}' class="${this.fieldKey}-file-size">${this.#returnFileSize(file.size)}</span>` : ''}
                   </div>
-                  <button data-file-id="${file.name.replaceAll(/( |\.)/g, '')}" class="${this.fieldKey}-cross-button">×</button>
+                  <button data-file-id="${fileName}" data-dev-cross-btn='${this.fieldKey}' class="${this.fieldKey}-cross-btn">×</button>
               </div>`
             }
             if (isItTotalMax) totalFileSize += file.size
@@ -133,13 +141,17 @@ export default class FileUploadField {
         error.push('File Allready Exist')
       }
     }
-    selectAllInGrid(`.${this.fieldKey}-cross-button`).forEach(element => {
-      console.log('element', element)
+    selectAllInGrid(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
     const fileLength = Object.keys(this.#files).length
-    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerText = fileSelectStatus }
+
+    if (fileLength && showSelectStatus) {
+      this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
+    } else if (showSelectStatus) {
+      this.#fileSelectStatus.innerText = fileSelectStatus
+    }
 
     if (minFile > 0 && fileLength < minFile) {
       this.#errorWrap.innerText = `You should add minmum ${minFile} File`
@@ -164,7 +176,6 @@ export default class FileUploadField {
 
   #removeAction = e => {
     const id = e.target.getAttribute('data-file-id')
-    console.log('id', id)
     selectInGrid(`#file-wrp-${id}`).remove()
 
     delete this.#files[id]
