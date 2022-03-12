@@ -379,6 +379,153 @@ export default function ElementConfiguration({ fldKey }) {
           </LayerAccordion>
         )
       }
+      {
+        fieldObj.typ.match(/^(file-up)/) && (
+          <>
+            <NavBtn
+              cssSelector={`.${fldKey}-file-up-wrpr`}
+              subRoute={fldKey}
+              route="file-up-wrpr"
+              label="Input Container"
+              offset="2.5"
+              highlightSelector={`[data-dev-file-up-wrpr="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-up-wrpr')}
+            />
+            <LayerAccordion
+              childrenAccodin
+              onClick={() => styleHandler('inp-btn')}
+              offset="2.5"
+              title="Button"
+              fldData={fieldObj}
+              key={`inp-${fldKey}`}
+              open={fldKey === selectedFieldKey && (fieldObj.prefixIcn || fieldObj.suffixIcn)}
+              highlightSelector={`[data-dev-inp-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-btn')}
+            >
+              {fieldObj.prefixIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.prefixIcn[0]}`}
+                  subRoute={fldKey}
+                  route="pre-i"
+                  label="Prefix Icon"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-pre-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'pre-i')}
+                />
+              )}
+              {fieldObj.btnTxt && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.btnTxt[0]}`}
+                  subRoute={fldKey}
+                  route="btn-txt"
+                  label="Text"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-btn-txt="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn-txt')}
+                />
+              )}
+              {fieldObj.suffixIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`}
+                  subRoute={fldKey}
+                  route="suf-i"
+                  label="Suffix Icon"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-suf-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')}
+                />
+              )}
+            </LayerAccordion>
+            {fieldObj.config.showSelectStatus && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.fileSelectStatus[0]}`}
+                subRoute={fldKey}
+                route="file-select-status"
+                label="File Select Status"
+                offset="2.5"
+                highlightSelector={`[data-dev-file-select-status="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-select-status')}
+              />
+            )}
+            {fieldObj.config.showMaxSize && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.maxSizeLbl[0]}`}
+                subRoute={fldKey}
+                route="max-size-lbl"
+                label="Max Size Label"
+                offset="2.5"
+                highlightSelector={`[data-dev-max-size-lbl="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'max-size-lbl')}
+              />
+            )}
+
+            {fieldObj.config.showFileList && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('files-list')}
+                offset="2.5"
+                title="Files list"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey}
+                highlightSelector={`[data-dev-files-list="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'files-list')}
+              >
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.fileWpr[0]}`}
+                  subRoute={fldKey}
+                  route="file-wrpr"
+                  label="File Wrapper"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-file-wrpr="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-wrpr')}
+                />
+
+                {fieldObj.config.showFilePreview && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.filePreview[0]}`}
+                    subRoute={fldKey}
+                    route="file-preview"
+                    label="File Preview"
+                    offset="3.1"
+                    highlightSelector={`[data-dev-file-preview="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-preview')}
+                  />
+                )}
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.fileTitl[0]}`}
+                  subRoute={fldKey}
+                  route="file-title"
+                  label="File Title"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-file-title="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-title')}
+                />
+                {fieldObj.config.showFileSize && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.fileSize[0]}`}
+                    subRoute={fldKey}
+                    route="file-size"
+                    label="File Size"
+                    offset="3.1"
+                    highlightSelector={`[data-dev-file-size="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'file-size')}
+                  />
+                )}
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.crossBtn[0]}`}
+                  subRoute={fldKey}
+                  route="cross-btn"
+                  label="Cross Button"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-cross-btn="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'cross-btn')}
+                />
+              </LayerAccordion>
+            )}
+          </>
+        )
+      }
       {fieldObj.typ.match(/^(button|)$/)
         && (
           <>
