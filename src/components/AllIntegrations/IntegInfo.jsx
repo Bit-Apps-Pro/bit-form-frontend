@@ -95,7 +95,7 @@ export default function IntegInfo({ allIntegURL }) {
       case 'Encharge':
         return <EnchargeAuthorization enchargeConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'OneDrive':
-        return <OneDriveAuthorization enchargeConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+        return <OneDriveAuthorization oneDriveConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

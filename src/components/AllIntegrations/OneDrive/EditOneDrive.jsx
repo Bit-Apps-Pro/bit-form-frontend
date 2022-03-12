@@ -40,7 +40,7 @@ function EditOneDrive({ allIntegURL, formFields, integrations, setIntegration })
       <br />
       <br />
 
-      <DropboxIntegLayout
+      <OneDriveIntegLayout
         formID={formID}
         formFields={formFields}
         oneDriveConf={oneDriveConf}

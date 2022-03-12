@@ -14,7 +14,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
       <br />
       <b className="wdt-100 d-in-b">Folder:</b>
       <select onChange={(e) => handleInput(e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar)} name="folder" value={oneDriveConf.folderMap[0] || oneDriveConf.folder} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Folder', 'bit-integration-pro')}</option>
+        <option value="">{__('Select Folder', 'bitform')}</option>
         {
           oneDriveConf?.default && Object.values(oneDriveConf.default).map(teamFolderApi => (
             <option key={teamFolderApi.id} value={teamFolderApi.id}>

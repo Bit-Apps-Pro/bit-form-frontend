@@ -32,7 +32,6 @@ function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {
     foldersList: [],
     actions: {},
   })
-
   useEffect(() => {
     window.opener && setGrantTokenResponse('oneDrive')
   }, [])

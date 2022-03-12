@@ -56,11 +56,22 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
 
     setActionMdl({ show: 'attachments' })
   }
+  const actionDeleteHandler = (e, type) => {
+    const newConf = { ...oneDriveConf }
+    if (type === 'deleteFile') {
+      if (e.target.checked) {
+        newConf.actions.delete_from_wp = true
+      } else {
+        delete newConf.actions.delete_from_wp
+      }
+    }
+    setOneDriveConf({ ...newConf })
+  }
 
   const getFileUpFields = () => formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.lbl, value: itm.key }))
 
   return (
-    <div className="pos-rel">
+    <div className="pos-rel d-flx w-5">
       <div className="pos-rel d-flx flx-col w-8">
         <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in oneDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files', 'bit-integration-pro')} subTitle={__('Add attachments from Bit-integration-pro to OneDrive folder.', 'bit-integration-pro')} />
         <small style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}>{__('This Required', 'bit-integrations')}</small>
@@ -83,6 +94,20 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
 
         </div>
       </Modal>
+
+      <div className="pos-rel d-flx flx-col w-8">
+        <TableCheckBox
+          checked={oneDriveConf.actions?.delete_from_wp || false}
+          onChange={(e) => actionDeleteHandler(e, 'deleteFile')}
+          className="mt-4 mr-2"
+          value="delete_from_wp"
+          title={__('Delete File From Wordpress', 'bit-integrations')}
+          subTitle={__(
+            'Delete file from Wordpress after upload in OneDrive',
+            'bit-integrations',
+          )}
+        />
+      </div>
 
     </div>
   )
