@@ -71,6 +71,8 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
             {...{ value }}
             onChange={onChangeHandler}
           />
+          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i`} height="90%" src={attr.prefixIcn} alt="" />}
+          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} height="90%" src={attr.suffixIcn} alt="" />}
         </div>
       </InputWrapper>
     </>
