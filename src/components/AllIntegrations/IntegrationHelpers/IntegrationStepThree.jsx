@@ -6,7 +6,7 @@ export default function IntegrationStepThree({ step, saveConfig, edit, disabled 
       ? (
         <div className="txt-center w-9 mt-3">
           <button onClick={saveConfig} id="secondary-update-btn" className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={disabled}>
-            {__('Save', 'bitform')}
+            {__('Update', 'bitform')}
           </button>
         </div>
       )
