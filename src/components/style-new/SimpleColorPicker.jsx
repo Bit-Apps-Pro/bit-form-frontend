@@ -32,7 +32,7 @@ export default function SimpleColorPicker({ title,
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
-  const setThemeColors = useSetRecoilState($themeColors)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const clearHandler = () => {
@@ -62,10 +62,15 @@ export default function SimpleColorPicker({ title,
   }
 
   const checkVarValue = () => {
-    let v = value
-    if (value?.match(/var/gi)?.[0]) v = value.replaceAll(/\(|var|\)/gi, '')
-    return v
+    let str = value
+    let val = value
+    if (value?.match(/var/gi)?.[0]) {
+      str = value.replaceAll(/\(|var|\)/gi, '')
+      val = themeColors[str]
+    }
+    return { str, val }
   }
+  const ColorStr = checkVarValue()
 
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
@@ -80,14 +85,14 @@ export default function SimpleColorPicker({ title,
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={checkVarValue() || `Add ${title}`}>
+        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={ColorStr.str || `Add ${title}`}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{checkVarValue() || 'Configure Color'}</span>
+            <ColorPreview bg={ColorStr.val} h={24} w={24} className={css(ut.mr2)} />
+            <span className={css(c.clrVal)}>{ColorStr.str || 'Configure Color'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
