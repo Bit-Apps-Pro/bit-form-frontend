@@ -17,21 +17,22 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
-      border: '1px solid rgba(199, 212, 221, 1)',
+      border: 'solid hsla(205, 24%, 82%, 100%)',
+      'border-width': '1px',
       transition: 'box-shadow .3s',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: { 'border-color': 'rgba(29, 158, 249, 1)' },
+    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: { 'border-color': 'hsla(0, 0%, 93%, 100%)' },
     [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open,.${fk}-disabled)`]: {
-      'border-color': 'rgba(29, 158, 249, 1)',
-      'box-shadow': '0 0 0 3px rgba(0, 132, 255, 0.26)',
+      'border-color': 'hsla(205, 95%, 55%, 100%)',
+      'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
     },
     [`.${fk}-menu-open`]: {
       'z-index': 999,
-      'box-shadow': '0px 1.2px 2.2px rgba(0, 0, 0, 0.032), 0px 2.9px 5.3px rgba(0, 0, 0, 0.045), 0px 5.4px 10px rgba(0, 0, 0, 0.054), 0px 9.6px 17.9px rgba(0, 0, 0, 0.062), 0px 18px 33.4px rgba(0, 0, 0, 0.073), 0px 43px 80px rgba(0, 0, 0, 0.1)',
-      'border-color': '#ddd',
+      'box-shadow': '0px 1.2px 2.2px hsla(0, 0%, 0%, 3%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 5%), 0px 5.4px 10px hsla(0, 0%, 0%, 5%), 0px 9.6px 17.9px hsla(0, 0%, 0%, 6%), 0px 18px 33.4px hsla(0, 0%, 0%, 7%), 0px 43px 80px hsla(0, 0%, 0%, 10%)',
+      'border-color': 'hsla(0, 0%, 87%, 100%)',
     },
     [`.${fk}-currency-inner-wrp`]: { display: 'flex' },
-    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px red inset' },
+    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
     [`.${fk}-dpd-wrp`]: {
       overflow: 'hidden',
       'border-radius': '7px',
@@ -47,7 +48,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'font-size': '12px',
       outline: 'none',
     },
-    [`.${fk}-dpd-wrp:hover`]: { 'background-color': '#f1f1f1' },
+    [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
     [`.${fk}-selected-currency-wrp`]: {
       display: 'flex',
       'align-items': 'center',
@@ -59,9 +60,9 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       height: '17px',
       width: '25px',
       'border-radius': '3px',
-      'box-shadow': '0 0 0 1px #e1e1e1',
+      'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       'margin-right': '10px',
-      'background-color': 'rgb(0 0 0 / 5%)',
+      'background-color': 'hsla(0, 0%, 0%, 5%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
     },
@@ -81,7 +82,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-radius': '50%',
     },
 
-    [`.${fk}-input-clear-btn:hover`]: { 'background-color': '#fafafa' },
+    [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
 
     [`.${fk}-input-clear-btn:focus-visible`]: {
       'box-shadow': '0 0 0 1.5px blue inset',
@@ -145,7 +146,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
 
     [`.${fk}-icn`]: {
       position: 'absolute',
-      stroke: '#afadad',
+      stroke: 'hsla(0, 1%, 68%, 100%)',
       top: '50%',
       transform: 'translateY(-50%)',
     },
@@ -161,11 +162,11 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       border: 'none',
       height: '35px',
       'border-radius': '8px',
-      'background-color': 'rgb(241, 242, 248)',
+      'background-color': 'hsla(231, 33%, 96%, 100%)',
       'font-size': '16px',
     },
 
-    [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'rgba(29, 158, 249, 1)' },
+    [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'hsla(205, 95%, 55%, 100%)' },
 
     [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
     [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
@@ -175,7 +176,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     [`.${fk}-search-clear-btn`]: {
       display: 'none',
       right: '6px',
-      padding: 0,
+      padding: '6px',
       margin: 0,
       background: 'transparent',
       border: 0,
@@ -188,10 +189,10 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-radius': '50%',
     },
 
-    [`.${fk}-search-clear-btn:hover`]: { 'background-color': '#fafafa' },
+    [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
 
     [`.${fk}-search-clear-btn:focus-visible`]: {
-      'box-shadow': '0 0 0 1.5px blue inset',
+      'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
       outline: 'none',
     },
 
@@ -203,13 +204,13 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
 
       /* firefox */
       'scrollbar-width': 'thin !important',
-      'scrollbar-color': 'rgba(0, 0, 0, 0.2) !important',
+      'scrollbar-color': 'hsla(0, 0%, 0%, 20%) !important',
     },
 
     [`.${fk}-option-list::-webkit-scrollbar`]: { width: '8px' },
 
     [`.${fk}-option-list::-webkit-scrollbar-thumb`]: {
-      'background-color': 'rgba(0, 0, 0, 0.1)',
+      'background-color': 'hsla(0, 0%, 0%, 10%)',
       'border-radius': '10px',
     },
 
@@ -226,19 +227,19 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'align-items': 'center',
     },
 
-    [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'rgb(236, 236, 236)' },
+    [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'hsl(0, 0%, 93%, 100%)' },
 
     [`.${fk}-option:focus-visible`]: {
-      'box-shadow': '0 0 0 1.5px hsl(216, 100%, 50%) inset',
+      'box-shadow': '0 0 0 1.5px hsla(216, 100%, 50%, 100%) inset',
       outline: 'none',
     },
 
     [`.${fk}-selected-opt`]: {
       color: 'white',
-      'background-color': 'hsl(216, 100%, 50%)',
+      'background-color': 'hsla(215, 100%, 50%, 100%)',
     },
 
-    [`.${fk}-selected-opt:focus-visible`]: { 'background-color': 'hsl(216, 100%, 40%)' },
+    [`.${fk}-selected-opt:focus-visible`]: { 'background-color': 'hsla(216, 100%, 40%, 100%)' },
 
     [`.${fk}-opt-not-found`]: {
       'text-align': 'center',
@@ -257,70 +258,16 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       height: '17px',
       width: '25px',
       'border-radius': '3px',
-      'box-shadow': '0 0 0 1px #e1e1e1',
+      'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
     },
 
     [`.${fk}-opt-suffix`]: {
-      color: 'rgb(3, 3, 3)',
+      color: 'hsla(0, 0%, 1%, 100%)',
       'font-size': '10px',
     },
 
     [`.${fk}-menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
-
-    // field style
-    [`.${fk}-fld`]: {
-      display: ' inline-block !important',
-      direction: 'inherit !important',
-      'max-width': '100% !important',
-      'font-family': 'sans-serif',
-      width: '100% !important',
-      outline: 'none !important',
-      'background-color': 'var(--global-fld-bg-color, transparent)!important',
-      'border-color': 'var(--global-fld-bdr-clr)!important',
-      'border-radius': 'var(--g-bdr-rad)!important',
-      'border-style': 'solid!important',
-      'border-width': 'var(--g-bdr-width)!important',
-      'font-size': 'var(--fld-fs)!important',
-      color: 'var(--global-font-color)!important',
-      padding: '10px 8px 10px 8px!important',
-      'line-height': '1.4 !important',
-      height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
-      ...type === 'textarea' && { resize: 'vertical' },
-    },
-    [`.${fk}-fld:focus`]: {
-      'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30)!important',
-      'border-color': 'var(--global-accent-color)!important',
-    },
-    [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
-    [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
-
-    // title icon
-    [`.${fk}-title-pre-i`]: {
-      width: '20px',
-      height: '20px',
-    },
-    [`.${fk}-title-suf-i`]: {
-      width: '20px',
-      height: '20px',
-    },
-
-    // field icon
-    [`.${fk}-pre-i`]: {
-      position: 'absolute',
-      left: '3px',
-      top: '50%',
-      padding: '7px',
-      transform: 'translateY(-50%)',
-    },
-    [`.${fk}-suf-i`]: {
-      position: 'absolute',
-      padding: '7px',
-      right: '3px',
-      top: '50%',
-      transform: 'translateY(-50%)',
-    },
-
   }
 }
