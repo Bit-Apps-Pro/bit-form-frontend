@@ -336,7 +336,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           showFilePreview: true,
           showFileSize: true,
           duplicateAllow: false,
-          accept: '.jpg, .png',
+          accept: '',
           minFile: 0,
           maxFile: 0,
         },

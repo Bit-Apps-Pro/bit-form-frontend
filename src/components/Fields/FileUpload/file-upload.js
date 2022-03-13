@@ -82,10 +82,12 @@ export default class FileUploadField {
 
     if (showMaxSize && maxSize) {
       this.#maxSizeLabel.innerText = `(Max ${maxSize}${sizeUnit.toUpperCase()})`
-    } else { this.#maxSizeLabel.remove() }
+    } else if (showMaxSize) {
+      this.#maxSizeLabel.innerText = ''
+    } else { this.#maxSizeLabel?.remove() }
 
     if (showSelectStatus) this.#fileSelectStatus.innerText = fileSelectStatus
-    else this.#fileSelectStatus.remove()
+    else this.#fileSelectStatus?.remove()
 
     if (!this.#config.showFileList) this.#filesList?.remove()
 
@@ -114,7 +116,7 @@ export default class FileUploadField {
     }
 
     for (const file of files) {
-      const fileName = file.name.replaceAll(/( |\.)/g, '')
+      const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
         if (!maxSize || (file.size + totalFileSize) <= maxFileSize) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
@@ -159,24 +161,25 @@ export default class FileUploadField {
     }
     error.map((err, errId) => {
       this.#filesList.insertAdjacentHTML('afterbegin', `
-      <div id='err-${errId}' class="err-wrp">
+      <div id='err-${errId}' class="${this.fieldKey}-err-wrp">
           <span>${err}</span>
       </div>`)
       const errorElemnt = this.#select(`#err-${errId}`)
+      console.log('error element ', errorElemnt)
       errorElemnt.classList.add('active')
 
       setTimeout(() => {
         errorElemnt.classList.remove('active')
       }, 3000)
       setTimeout(() => {
-        errorElemnt.remove()
+        errorElemnt?.remove()
       }, 5000)
     })
   }
 
   #removeAction = e => {
     const id = e.target.getAttribute('data-file-id')
-    selectInGrid(`#file-wrp-${id}`).remove()
+    selectInGrid(`#file-wrp-${id}`)?.remove()
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length
@@ -185,7 +188,7 @@ export default class FileUploadField {
 
   #select(selector) { return this.#fileUploadWrap.querySelector(selector) }
 
-  #remove(selector) { document.querySelector(selector).remove() }
+  #remove(selector) { document.querySelector(selector)?.remove() }
 
   #getPreviewUrl(file) {
     const extention = file.name.substring(file.name.lastIndexOf('.') + 1)
