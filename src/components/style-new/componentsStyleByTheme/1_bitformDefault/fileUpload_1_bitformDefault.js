@@ -12,16 +12,15 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       display: 'inline-block',
     },
 
-    [`.${fk}-file-input-wrpr`]: { position: 'relative' },
-
     [`.${fk}-btn-wrpr`]: {
       display: 'flex',
       'align-items': 'center',
+      position: 'relative',
     },
 
     [`.${fk}-inp-btn`]: {
       'align-items': 'center',
-      background: '#0083f3',
+      'background-color': '#0083f3',
       border: 'none',
       'border-radius': '8px',
       'box-shadow': 'none',
@@ -33,10 +32,15 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       padding: '5px 11px',
     },
 
-    [`.${fk}-btn-icn`]: {
+    [`.${fk}-pre-i`]: {
       width: '15px',
       height: '15px',
       'margin-right': '5px',
+    },
+    [`.${fk}-suf-i`]: {
+      width: '15px',
+      height: '15px',
+      'margin-left': '5px',
     },
 
     [`.${fk}-file-select-status`]: { 'font-size': '14px' },
@@ -62,9 +66,9 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       'line-height': '1',
       'margin-left': '5px',
     },
-    [`.${fk}-cross-button`]: {
+    [`.${fk}-cross-btn`]: {
       cursor: 'pointer',
-      background: '#e8e8e8',
+      'background-color': '#e8e8e8',
       border: 'none',
       'border-radius': '50px',
       'box-shadow': 'none',
@@ -83,7 +87,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
     [`.${fk}-file-upload-input`]: {
       display: 'block',
       width: '100%',
-      height: '42px',
+      height: '100%',
       border: 'none',
       position: 'absolute',
       top: '0',
@@ -93,15 +97,14 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
     },
     [`.${fk}-file-wrpr`]: {
       'align-items': 'center',
-      background: '#f8f8f8',
+      'background-color': '#f8f8f8',
       'border-radius': '10px',
       display: 'flex',
       height: '40px',
-      'margin-left': '10px',
       'margin-top': '10px',
-      width: '90%',
+      width: '100%',
     },
-    [`.${fk}-uploaded-image`]: {
+    [`.${fk}-file-preview`]: {
       'border-radius': '10px',
       height: '35px',
       'margin-right': '10px',
@@ -119,7 +122,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       transition: 'display 1s, opacity 1s',
       'justify-content': 'left',
       'align-items': 'center',
-      background: '#fff2f2',
+      'background-color': '#fff2f2',
       color: 'darkred',
       'border-radius': '10px',
       height: '40px',

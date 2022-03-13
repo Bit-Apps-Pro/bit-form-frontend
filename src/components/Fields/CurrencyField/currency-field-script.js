@@ -640,8 +640,43 @@ class CurrencyField {
 
   destroy() {
     this.#optionListElm.innerHTML = ''
+    this.value = ''
     this.#detachAllEvents()
   }
 }
 
 export default CurrencyField
+
+// const list = new CurrencyField('.currency-fld-wrp', {
+//   searchClearable: true,
+//   maxHeight: 400,
+//   placeholder: 'asdf',
+//   selectedFlagImage: false,
+//   inputFormatOptions: {
+//     formatter: 'browser', // browser, custom, none
+//     showCurrencySymbol: true, // all
+//     roundToClosestInteger: false, // all
+//     roundToClosestFractionDigits: true, // custom [based on minimum & maximum fraction digits]
+//     minimumFractionDigits: 0,// custom
+//     maximumFractionDigits: 2,// custom [0 means unlimited]
+//     numberFormat: '###,###,###', // custom
+//     decimalSeparator: '.', // custom
+//     currencyPosition: 'right', // custom & none
+//     symbolPosition: 'left-number', // custom & none
+//     // minValue: 0, // all
+//     // maxValue: 0, // all
+//   },
+//   valueFormatOptions: {
+//     showCurrencySymbol: true, // all
+//     roundToClosestInteger: false, // all
+//     roundToClosestFractionDigits: false, // custom [based on minimum & maximum fraction digits]
+//     minimumFractionDigits: 0,// custom
+//     maximumFractionDigits: 2,// custom [0 means unlimited]
+//     numberFormat: '###.###.###', // custom
+//     decimalSeparator: ',', // custom
+//     currencyPosition: 'right', // custom & none
+//     symbolPosition: 'left-number', // left-currency, right-currency, left-number, right-number
+//   },
+//   defaultCurrencyKey: 'INR',
+//   options: currencyList
+// })
