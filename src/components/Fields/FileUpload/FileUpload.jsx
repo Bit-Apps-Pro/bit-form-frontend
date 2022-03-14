@@ -7,7 +7,7 @@ import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import FileUploadField from './file-upload'
 
-export default function FileUpload({ fieldKey, formID, attr, entryID, resetFieldValue, styleClasses }) {
+export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
   const fileUploadFieldRef = useRef(null)
   const fields = useRecoilValue($fields)

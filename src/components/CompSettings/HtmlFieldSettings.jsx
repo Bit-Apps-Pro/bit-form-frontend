@@ -13,6 +13,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import Back2FldBtn from './Back2FldBtn'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 
 export default function HtmlFieldSettings() {
@@ -47,7 +48,7 @@ export default function HtmlFieldSettings() {
           <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
         </div>
       </div>
-      <hr className={css(style.divider)} />
+      <FieldSettingsDivider />
       {/*
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>

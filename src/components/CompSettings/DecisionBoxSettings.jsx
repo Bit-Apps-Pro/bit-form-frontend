@@ -127,7 +127,7 @@ export default function DecisionBoxSettings() {
         />
       </div>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <DecisionBoxLabelModal labelModal={labelModal} setLabelModal={setLabelModal} />
 
@@ -145,7 +145,7 @@ export default function DecisionBoxSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
@@ -164,7 +164,7 @@ export default function DecisionBoxSettings() {
         />
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={fieldData.adminLbl || ''} action={setAdminLabel} /> */}
       {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={fieldData.valid.req} className="mt-3" />
@@ -193,7 +193,7 @@ export default function DecisionBoxSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Unchecked Value:', 'bitform')}
@@ -210,7 +210,7 @@ export default function DecisionBoxSettings() {
           />
         </div>
       </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection, { pr: '10px !important' })}>
         <SingleToggle
@@ -219,7 +219,7 @@ export default function DecisionBoxSettings() {
           isChecked={fieldData.valid.checked}
         />
       </div>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       {/* <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={fieldData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} /> */}
       {/* <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={fieldData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} /> */}
       {/* <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={fieldData.valid.checked} className="mt-3" /> */}

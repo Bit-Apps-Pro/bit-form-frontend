@@ -16,6 +16,7 @@ import { addDefaultStyleClasses } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -198,7 +199,7 @@ export default function ButtonSettings() {
           />
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -233,7 +234,7 @@ export default function ButtonSettings() {
           />
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Button Align', 'bitform')}
@@ -247,7 +248,7 @@ export default function ButtonSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Button Type', 'bitform')}
@@ -262,19 +263,19 @@ export default function ButtonSettings() {
           {error.btnTyp && <span className={css({ cr: 'red', ml: 10 })}>{error.btnTyp}</span>}
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
           <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
         </div>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
           <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} />
         </div>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
       </div>
 

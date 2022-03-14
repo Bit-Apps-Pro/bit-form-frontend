@@ -33,6 +33,7 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 import UniqField from './CompSettingsUtils/UniqField'
@@ -494,7 +495,7 @@ function TextFieldSettings() {
 
         <FieldLabelSettings />
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Admin Label', 'bitform')}
@@ -515,15 +516,15 @@ function TextFieldSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SubTitleSetting />
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <HelperTxtSetting />
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Input Icons', 'bitform')}
@@ -554,7 +555,7 @@ function TextFieldSettings() {
 
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Placeholder', 'bitform')}
@@ -577,7 +578,7 @@ function TextFieldSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Default value', 'bitform')}
@@ -600,7 +601,7 @@ function TextFieldSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Suggestion', 'bitform')}
@@ -619,7 +620,7 @@ function TextFieldSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Auto Complete', 'bitform')}
@@ -655,7 +656,7 @@ function TextFieldSettings() {
 
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Name', 'bitform')}
@@ -673,7 +674,7 @@ function TextFieldSettings() {
           </div>
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         {
           fieldData.typ === 'text' && (
             <>
@@ -694,7 +695,7 @@ function TextFieldSettings() {
                   </select>
                 </div>
               </SimpleAccordion>
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
@@ -718,7 +719,7 @@ function TextFieldSettings() {
           />
         </SimpleAccordion>
         {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
             <>
@@ -780,16 +781,16 @@ function TextFieldSettings() {
                   )}
                 </>
               </SimpleAccordion>
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
 
         <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         <FieldReadOnlySettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
@@ -797,7 +798,7 @@ function TextFieldSettings() {
               <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
                 <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
               </div>
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
@@ -812,7 +813,7 @@ function TextFieldSettings() {
                 className={css(FieldStyle.fieldSection)}
                 isUnique="show"
               />
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
@@ -847,7 +848,7 @@ function TextFieldSettings() {
                   />
                 )}
               </SimpleAccordion>
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
@@ -900,7 +901,7 @@ function TextFieldSettings() {
                   )}
                 </div>
               </SimpleAccordion>
-              <hr className={css(FieldStyle.divider)} />
+              <FieldSettingsDivider />
             </>
           )
         }
@@ -916,7 +917,7 @@ function TextFieldSettings() {
                   tipTitle="Enabling this option will check from the user database whether its value is duplicate."
                   defaultMsg="The value is already taken. Try another."
                 />
-                <hr className={css(FieldStyle.divider)} />
+                <FieldSettingsDivider />
               </>
             )
           }

@@ -24,6 +24,7 @@ import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
 import SmartTags from './SmartTags'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
@@ -175,7 +176,7 @@ function TitleSettings() {
           setIcon={() => setIconModel('logo')}
           removeIcon={() => removeImage('logo')}
         />
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         <SimpleAccordion
           title={__('Title', 'bitform')}
           className={css(FieldStyle.fieldSection)}
@@ -244,7 +245,7 @@ function TitleSettings() {
           />
 
         </SimpleAccordion>
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           title={__('Sub Title', 'bitform')}
@@ -315,7 +316,7 @@ function TitleSettings() {
           />
         </SimpleAccordion>
 
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         <div className={css(style.section, style.main)}>
           <span className={css(style.label)}>Label Alignment</span>
           <StyleSegmentControl
@@ -331,7 +332,7 @@ function TitleSettings() {
             activeValue={position}
           />
         </div>
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
         <div className={css(style.section, style.main)}>
           <span className={css(style.label)}>Flex Direction</span>
           <StyleSegmentControl
@@ -348,7 +349,7 @@ function TitleSettings() {
             activeValue={flex}
           />
         </div>
-        <hr className={css(FieldStyle.divider)} />
+        <FieldSettingsDivider />
       </div>
       <Modal
         md

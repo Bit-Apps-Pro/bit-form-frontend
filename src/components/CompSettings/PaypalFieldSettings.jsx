@@ -16,6 +16,7 @@ import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldBtn from './Back2FldBtn'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function PaypalFieldSettings() {
@@ -143,7 +144,7 @@ export default function PaypalFieldSettings() {
           <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
         </div>
       </div>
-      <hr className={css(style.divider)} />
+      <FieldSettingsDivider />
 
       {/*
       <div className="mb-2">
@@ -160,7 +161,7 @@ export default function PaypalFieldSettings() {
           {getPaypalConfigs()}
         </select>
       </SimpleAccordion>
-      <hr className={css(style.divider)} />
+      <FieldSettingsDivider />
 
       {/* <div className="mt-3">
         <b>{__('Select Config', 'bitform')}</b>

@@ -27,6 +27,7 @@ import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -138,7 +139,7 @@ function AdvanceFileUpSettings() {
 
       <FieldLabelSettings />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Admin Label', 'bitform')}
@@ -160,7 +161,7 @@ function AdvanceFileUpSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Capture', 'bitform')}
@@ -178,7 +179,7 @@ function AdvanceFileUpSettings() {
         </select>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Name', 'bitform')}
@@ -189,14 +190,14 @@ function AdvanceFileUpSettings() {
           <input aria-label="Name for this Field" name="fieldName" value={fieldData?.fieldName} placeholder="Type field name here..." className={css(FieldStyle.input)} onChange={setFieldProperty} />
         </div>
       </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       <SimpleAccordion
         title="File Style"
         className={css(FieldStyle.fieldSection)}
       >
         <FileStyle action={setErrorMsg} value={fieldData?.config} />
       </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       <SimpleAccordion
         title={__('Basic', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -332,7 +333,7 @@ function AdvanceFileUpSettings() {
 
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('File size validation', 'bitform')}
@@ -348,7 +349,7 @@ function AdvanceFileUpSettings() {
         <FileTypeSize action={setErrorMsg} />
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       <SimpleAccordion
         title={__('File type validation', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -418,7 +419,7 @@ function AdvanceFileUpSettings() {
 
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       <SimpleAccordion
         title={__('Image Preview', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -489,7 +490,7 @@ function AdvanceFileUpSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip, FieldStyle.fieldSection)}>
         <div className={css(ut.flxb)}>
@@ -504,7 +505,7 @@ function AdvanceFileUpSettings() {
         <SingleToggle className={css(ut.mr30)} isChecked={fieldData?.config?.allowPreview} name="allowPreview" action={(e) => enablePlugin(e, 'allowPreview')} />
       </div>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Image Crop', 'bitform')}
@@ -539,7 +540,7 @@ function AdvanceFileUpSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Image Resize', 'bitform')}
@@ -608,7 +609,7 @@ function AdvanceFileUpSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Image Transform', 'bitform')}
@@ -689,7 +690,7 @@ function AdvanceFileUpSettings() {
           </div>
         </div>
       </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Image validate size', 'bitform')}
@@ -722,7 +723,7 @@ function AdvanceFileUpSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
@@ -743,11 +744,11 @@ function AdvanceFileUpSettings() {
         />
       </SimpleAccordion>
       {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
     </div>
   )

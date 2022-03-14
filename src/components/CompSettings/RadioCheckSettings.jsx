@@ -17,6 +17,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
 import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
 import EditOptions from './EditOptions/EditOptions'
@@ -300,7 +301,7 @@ function RadioCheckSettings() {
 
       <FieldLabelSettings />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Admin Label', 'bitform')}
@@ -320,15 +321,15 @@ function RadioCheckSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SubTitleSetting />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <HelperTxtSetting />
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Name', 'bitform')}
@@ -346,7 +347,7 @@ function RadioCheckSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
@@ -365,7 +366,7 @@ function RadioCheckSettings() {
         )}
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
         <SingleToggle
@@ -375,7 +376,7 @@ function RadioCheckSettings() {
         />
       </div>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
       <SimpleAccordion
         title={__('Options Column', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -385,7 +386,7 @@ function RadioCheckSettings() {
           <input aria-label="Option Column" className={css(FieldStyle.input)} min="1" type="number" value={optionCol} onChange={setColumn} />
         </div>
       </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
 
@@ -430,7 +431,7 @@ function RadioCheckSettings() {
               )}
             </SimpleAccordion>
 
-            <hr className={css(FieldStyle.divider)} />
+            <FieldSettingsDivider />
 
             <SimpleAccordion
               title={__('Maximum', 'bitform')}
@@ -455,7 +456,7 @@ function RadioCheckSettings() {
               )}
             </SimpleAccordion>
 
-            <hr className={css(FieldStyle.divider)} />
+            <FieldSettingsDivider />
 
             {/* <div>
               <div className="flx mt-2 mb-2">
@@ -505,7 +506,7 @@ function RadioCheckSettings() {
         />
       </div>
 
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       {/* <SimpleAccordion
         title={__('Options', 'bitform')}
@@ -545,7 +546,7 @@ function RadioCheckSettings() {
           </div>
         </>
       </SimpleAccordion> */}
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingsDivider />
 
       {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />

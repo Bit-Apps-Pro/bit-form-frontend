@@ -4,6 +4,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
@@ -37,11 +38,13 @@ export default function Captcha() {
 
   const onInput = (e, version) => {
     if (version === 'v2') {
-      reCaptchaV2[e.target.name] = e.target.value
-      setreCaptchaV2({ ...reCaptchaV2 })
+      const tmp = deepCopy(reCaptchaV2)
+      tmp[e.target.name] = e.target.value
+      setreCaptchaV2(tmp)
     } else if (version === 'v3') {
-      reCaptchaV3[e.target.name] = e.target.value
-      setreCaptchaV3({ ...reCaptchaV3 })
+      const tmpv3 = deepCopy(reCaptchaV3)
+      tmpv3[e.target.name] = e.target.value
+      setreCaptchaV3(tmpv3)
     }
   }
 

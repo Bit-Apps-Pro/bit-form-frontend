@@ -13,7 +13,7 @@ import ImageSettings from './ImageSettings'
 import PaypalFieldSettings from './PaypalFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import RazorpayFieldSettings from './RazorpayFieldSettings'
-import ReCaptchaSettigns from './ReCaptchaSettigns'
+import ReCaptchaSettings from './ReCaptchaSettings'
 import SelectSettings from './SelectSettings'
 import TextFieldSettings from './TextFieldSettings'
 import TitleSettings from './TitleSettings'
@@ -51,7 +51,7 @@ export default function FieldSettings() {
       return <SelectSettings />
     case 'file-up': return <FileUploadSettings />
     case 'advanced-file-up': return <AdvanceFileUpSettings />
-    case 'recaptcha': return <ReCaptchaSettigns />
+    case 'recaptcha': return <ReCaptchaSettings />
     case 'decision-box': return <DecisionBoxSettings />
     case 'html': return <HtmlFieldSettings />
     case 'button': return <ButtonSettings />
