@@ -6,6 +6,7 @@ import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
+import { ucFirst } from '../../Utils/Helpers'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { isFieldOverrideStyles, isLabelOverrideStyles } from '../style-new/styleHelpers'
@@ -19,7 +20,7 @@ export default function StyleLayers() {
   const history = useHistory()
   const { formID, formType } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
-  const showFldTitle = (typ) => fieldTypes[typ] || typ
+  const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
   const styleHandler = (route, fldKey = null) => {
@@ -132,9 +133,27 @@ export default function StyleLayers() {
                   )}
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
-                <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
+              {fldData.typ.match(/(currency)/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="currency-fld-wrp"
+                  label="Currency Field Wrapper"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-crncy-fld-wrp="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-fld-wrp')}
+                />
               )}
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="error-message"
+                  label="Error Message"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')}
+                />
+              )}
+
             </LayerAccordion>
           ))}
         </div>

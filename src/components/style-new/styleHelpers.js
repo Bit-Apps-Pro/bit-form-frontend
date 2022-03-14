@@ -375,6 +375,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'radio':
     case 'decision-box':
     case 'html':
+    case 'currency':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)

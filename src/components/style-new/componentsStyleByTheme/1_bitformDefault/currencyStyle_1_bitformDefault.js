@@ -21,9 +21,9 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-width': '1px',
       transition: 'box-shadow .3s',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: { 'border-color': 'hsla(0, 0%, 93%, 100%)' },
+    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: { border: 'solid hsla(0, 0%, 93%, 100%)' },
     [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open,.${fk}-disabled)`]: {
-      'border-color': 'hsla(205, 95%, 55%, 100%)',
+      border: 'solid hsla(205, 95%, 55%, 100%)',
       'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
     },
     [`.${fk}-menu-open`]: {
@@ -32,7 +32,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-color': 'hsla(0, 0%, 87%, 100%)',
     },
     [`.${fk}-currency-inner-wrp`]: { display: 'flex' },
-    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
+
     [`.${fk}-dpd-wrp`]: {
       overflow: 'hidden',
       'border-radius': '7px',
@@ -49,6 +49,8 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       outline: 'none',
     },
     [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
+
     [`.${fk}-selected-currency-wrp`]: {
       display: 'flex',
       'align-items': 'center',
@@ -246,6 +248,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'list-style': 'none',
       'margin-top': '5px',
     },
+    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-opt-lbl-wrp`]: {
       display: 'flex',
@@ -254,7 +257,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     },
 
     [`.${fk}-opt-icn`]: {
-      'margin-right': '10px',
+      margin: '0px 10px',
       height: '17px',
       width: '25px',
       'border-radius': '3px',

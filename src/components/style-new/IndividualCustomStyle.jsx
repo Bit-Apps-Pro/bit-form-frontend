@@ -45,12 +45,32 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
 
+  const getPseudoPath = (state = '') => {
+    switch (elementKey) {
+      case 'currency-fld-wrp':
+        if (state.toLowerCase() === 'hover') {
+          state = `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
+        } else if (state.toLowerCase() === 'focus') {
+          state = `focus-within:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
+        }
+        break
+
+      default:
+        return state
+    }
+    return state
+  }
+
+  console.log(elementKey)
+
+  console.log(styles)
+
   const fldStyleObj = styles?.fields?.[fldKey]
-  if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
+  if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
-  const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {})
-  const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${stateController.toLowerCase()}`}`] || {}
+  const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {})
+  const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {}
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
 
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
@@ -78,6 +98,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
       case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
       case 'err-msg': return 'Error Messages Container'
+      case 'currency-fld-wrp': return 'Currency Field Wrapper'
       default:
         break
     }
@@ -133,6 +154,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const setNewCssProp = (property, state = '') => {
+    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
@@ -146,6 +168,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const delPropertyHandler = (property, state = '') => {
+    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
@@ -156,13 +179,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     })
   }
   const delMultiPropertyHandler = (propertyPaths, state = '') => {
-    propertyPaths.map(propertyPath => {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+    state = getPseudoPath(state)
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      propertyPaths.map(propertyPath => {
         deleteNestedObj(drft, propertyPath, state)
-      }))
-    })
+      })
+    }))
   }
   const clearHandler = (property, state = '') => {
+    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, deleteNestedObj(property, state), '')
     }))
@@ -173,6 +198,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
   const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
+    state = getPseudoPath(state)
     const convertvalue = unitConverter(unit, value, prvUnit)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       let v = `${convertvalue}${unit}`
@@ -183,6 +209,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const fontPropertyUpdateHandler = (property, val, state = '') => {
+    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       let v = val
       const checkExistImportant = existImportant(getPropertyPath(property, state))
@@ -206,6 +233,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const getCssPropertyMenu = (propName, state = '') => {
+    state = getPseudoPath(state)
     const objPaths = {
       object: 'styles',
       paths: {},
@@ -795,7 +823,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <Grow key={`grow-${i}`} open={stateController.toLowerCase() === state}>
             <div className={css(cls.space)}>
               {
-                existCssProps.map(propName => getCssPropertyMenu(propName, state))
+                existCssProps.map((propName, indx) => (
+                  <div key={`propName-${indx * 20}`}>
+                    {getCssPropertyMenu(propName, state)}
+                  </div>
+                ))
               }
               {(availableCssProp.length > 0)
                 && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}

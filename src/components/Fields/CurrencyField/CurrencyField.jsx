@@ -1,5 +1,5 @@
 // import './currency-field-style.css'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { selectInGrid } from '../../../Utils/globalHelpers'
@@ -46,7 +46,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         fieldData={attr}
       >
         <div className={`${fieldKey}-currency-fld-container`}>
-          <div className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
+          <div data-dev-crncy-fld-wrp={fieldKey} className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
             <input name="currency-input" type="hidden" className={`${fieldKey}-currency-hidden-input`} />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div

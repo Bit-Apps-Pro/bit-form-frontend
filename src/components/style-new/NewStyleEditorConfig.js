@@ -6,7 +6,11 @@ const labelCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  border: {
+    border: true,
+    'border-width': true,
+    'border-radius': true,
+  },
   color: '',
   'font-size': '',
   'font-weight': '',
@@ -65,7 +69,6 @@ const fieldWrpCssProps = {
   'background-color': '',
   border: {
     border: true,
-    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -209,7 +212,6 @@ const chackProps = {
   },
   border: {
     border: true,
-    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -702,7 +704,6 @@ const editorConfig = {
       properties: {
         border: {
           'border-bottom': true,
-          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -921,6 +922,20 @@ const editorConfig = {
     'fld-wrp': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
+    },
+  },
+  currency: {
+    ...textFldCssProps,
+    'currency-fld-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        transition: '',
+      },
     },
   },
 }

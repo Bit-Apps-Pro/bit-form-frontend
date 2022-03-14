@@ -363,6 +363,10 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'rdo'
       elementKey = 'rdo'
       break
+    case 'currency-fld-wrp':
+      classKey = 'currency-fld-wrp'
+      elementKey = 'currency-fld-wrp'
+      break
     default:
       elementKey = element
       classKey = element
