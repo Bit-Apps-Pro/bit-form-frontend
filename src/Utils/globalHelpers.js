@@ -23,11 +23,13 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = (src, integrity, id) => new Promise((resolve) => {
+export const loadScript = (src, integrity, id, scriptInGrid = false) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
-  script.integrity = integrity
-  script.crossOrigin = 'anonymous'
+  if (integrity) {
+    script.integrity = integrity
+    script.crossOrigin = 'anonymous'
+  }
   script.id = id
   script.onload = () => {
     resolve(true)
@@ -35,7 +37,10 @@ export const loadScript = (src, integrity, id) => new Promise((resolve) => {
   script.onerror = () => {
     resolve(false)
   }
-  document.body.appendChild(script)
+
+  if (scriptInGrid) {
+    document.getElementById('bit-grid-layout')?.contentWindow?.document.body.appendChild(script)
+  } else document.body.appendChild(script)
 })
 
 export const select = (selector) => document.querySelector(selector)

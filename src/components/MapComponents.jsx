@@ -16,7 +16,7 @@ import Image from './Fields/Image'
 import Paypal from './Fields/Paypal'
 import RadioBox from './Fields/RadioBox'
 import RazorPay from './Fields/RazorPay'
-import ReCaptcha from './Fields/Recaptcha'
+import ReCaptchaV2 from './Fields/ReCaptchaV2/ReCaptchaV2'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
@@ -71,7 +71,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'hidden':
       return <HiddenField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'recaptcha':
-      return <ReCaptcha fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+      return <ReCaptchaV2 fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'decision-box':
       return <DecisionBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'html':

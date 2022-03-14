@@ -132,7 +132,7 @@ export default function StyleLayers() {
                   )}
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|recaptcha|)$/) && (
                 <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
               )}
             </LayerAccordion>

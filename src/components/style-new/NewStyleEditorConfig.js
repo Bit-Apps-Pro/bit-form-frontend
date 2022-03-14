@@ -917,6 +917,12 @@ const editorConfig = {
       properties: { ...iconCssProps },
     },
   },
+  recaptcha: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
   html: {
     'fld-wrp': {
       states: ['hover'],

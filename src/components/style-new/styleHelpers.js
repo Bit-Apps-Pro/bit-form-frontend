@@ -11,6 +11,7 @@ import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefau
 import fileUploadStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
+import recaptchaStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
 import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
@@ -375,6 +376,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'radio':
     case 'decision-box':
     case 'html':
+    case 'recaptcha':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
@@ -544,6 +546,12 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = fileUploadStyle1BitformDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'recaptcha':
+        const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = recaptchaStyle1BitformDefault[`.${fk}-${cls}`]
         })
         break
       default:

@@ -214,6 +214,24 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       },
     },
     {
+      name: __('Select', 'bitform'),
+      keywords: 'Select',
+      icn: <DropDownIcn w="23" />,
+      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      elm: {
+        typ: 'select',
+        lbl: __('Select', 'bitform'),
+        mul: false,
+        opt: [
+          { label: 'Option 1', value: 'Option 1' },
+          { label: 'Option 2', value: 'Option 2' },
+          { label: 'Option 3', value: 'Option 3' },
+        ],
+        valid: {},
+        err: {},
+      },
+    },
+    {
       name: __('Dropdown', 'bitform'),
       keywords: 'Dropdown',
       icn: <DropDownIcn w="23" />,
@@ -411,12 +429,15 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('reCaptcha v2', 'bitform'),
       keywords: 'ReCaptcha v2',
       icn: <ReCaptchaIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40, minW: 20 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, minW: 20 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
-        lbl: __('ReCaptcha', 'bitform'),
         valid: {},
+        config: {
+          theme: 'light',
+          size: 'normal',
+        },
       },
     },
     {
