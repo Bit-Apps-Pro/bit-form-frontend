@@ -232,7 +232,7 @@ export default function ElementConfiguration({ fldKey }) {
           styleOverride={isLabelOverrideStyles(styles, fldKey, 'image')}
         />
       )}
-      {fieldObj.typ.match(/^(text|number|password|username|email|url|date|datetime-local|time|month|week|color|textarea|)$/)
+      {fieldObj.typ.match(/^(text|number|password|username|email|url|date|datetime-local|time|month|week|color|textarea|html-select|)$/)
         && (
           <>
             {!(fieldObj.prefixIcn || fieldObj.suffixIcn) && (

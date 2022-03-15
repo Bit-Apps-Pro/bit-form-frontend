@@ -8,10 +8,12 @@ import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefaul
 import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import currencyStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
 import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
+import dropdownStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import recaptchaStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
+import selectStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
@@ -377,6 +379,9 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'decision-box':
     case 'html':
     case 'recaptcha':
+    case 'html-select':
+    case 'select':
+    case 'dropdown':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
@@ -552,6 +557,18 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = recaptchaStyle1BitformDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'html-select':
+        const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = selectStyle1BitformDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'select':
+        const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dropdownStyle1BitformDefault[`.${fk}-${cls}`]
         })
         break
       default:

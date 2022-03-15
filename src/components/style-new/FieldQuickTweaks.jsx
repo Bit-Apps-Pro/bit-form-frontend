@@ -207,7 +207,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [objName, objPath] = fldTypWiseAccentColorObjName()
   return (
     <>
-      {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|)$/gi) && (
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"

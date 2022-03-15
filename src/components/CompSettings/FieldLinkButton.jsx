@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
+import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
@@ -81,6 +82,8 @@ const FieldIcon = icon => {
       return <RadioIcn size="14" />
     case 'number':
       return <NumberIcn w="14" />
+    case 'html-select':
+      return <ChevronDownIcn size="14" />
     case 'select':
       return <DropDownIcn w="14" />
     case 'password':

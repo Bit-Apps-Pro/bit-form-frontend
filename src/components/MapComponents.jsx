@@ -17,6 +17,7 @@ import Paypal from './Fields/Paypal'
 import RadioBox from './Fields/RadioBox'
 import RazorPay from './Fields/RazorPay'
 import ReCaptchaV2 from './Fields/ReCaptchaV2/ReCaptchaV2'
+import Select from './Fields/Select/Select'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
@@ -58,6 +59,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       return <CheckBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'radio':
       return <RadioBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+    case 'html-select':
+      return <Select fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} isBuilder={isBuilder} formID={formID} attr={atts} />
     case 'select':
       return <DropDown fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     // case 'dropdown':

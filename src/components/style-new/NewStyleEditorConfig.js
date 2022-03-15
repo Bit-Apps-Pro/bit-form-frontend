@@ -785,6 +785,18 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
+    'hlp-txt': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'hlp-txt-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'hlp-txt-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
     'err-msg': {
       states: ['hover'],
       properties: { ...labelCssProps },
@@ -918,6 +930,13 @@ const editorConfig = {
     },
   },
   recaptcha: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
+  'html-select': { ...textFldCssProps },
+  select: {
     'fld-wrp': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },

@@ -9,6 +9,7 @@ import { useFela } from 'react-fela'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
+import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import DateIcn from '../../Icons/DateIcn'
@@ -216,17 +217,19 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Select', 'bitform'),
       keywords: 'Select',
-      icn: <DropDownIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      icn: <ChevronDownIcn size="23" />,
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
-        typ: 'select',
+        typ: 'html-select',
         lbl: __('Select', 'bitform'),
         mul: false,
         opt: [
-          { label: 'Option 1', value: 'Option 1' },
-          { label: 'Option 2', value: 'Option 2' },
-          { label: 'Option 3', value: 'Option 3' },
+          { lbl: 'Option 1', val: 'Option 1' },
+          { lbl: 'Option 2', val: 'Option 2' },
+          { lbl: 'Option 3', val: 'Option 3' },
         ],
+        ph: 'Select a option...',
+        phHide: true,
         valid: {},
         err: {},
       },
@@ -235,7 +238,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Dropdown', 'bitform'),
       keywords: 'Dropdown',
       icn: <DropDownIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
@@ -253,7 +256,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Country', 'bitform'),
       keywords: 'Country',
       icn: <FlagIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Select Country', 'bitform'),
