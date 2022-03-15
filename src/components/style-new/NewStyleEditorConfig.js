@@ -222,7 +222,13 @@ const chackProps = {
   color: '',
 }
 const formCommonCssProps = {
-  background: '',
+  background: {
+    'background-image': true,
+    'background-position': true,
+    'background-repeat': true,
+    'background-size': true,
+    'backdrop-filter': true,
+  },
   color: '',
   padding: '5px',
   margin: '5px',
@@ -246,7 +252,13 @@ const editorConfig = {
   'field-containers': {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -260,7 +272,13 @@ const editorConfig = {
   'label-containers': {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -274,7 +292,13 @@ const editorConfig = {
   label: {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -999,7 +1023,13 @@ const editorConfig = {
         margin: '',
         padding: '',
         'background-color': '',
-        background: '',
+        background: {
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+          'backdrop-filter': true,
+        },
         width: '',
         height: '',
         filter: '',
