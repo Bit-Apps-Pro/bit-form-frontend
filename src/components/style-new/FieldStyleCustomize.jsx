@@ -49,6 +49,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
+    console.log('element key', elmnt)
     if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
@@ -106,6 +107,74 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               const errMsg = getElementStyle.classes[`.${fieldKey}-err-msg`]
               assignNestedObj(drft, getPath('err-msg'), errMsg)
               deleteStyle(drft, 'err-msg', ':hover')
+              break
+
+            case 'currency-fld-wrp':
+              const curcyFldWrp = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp`]
+              const curcyFldWrpHover = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp:hover:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`]
+              const curcyFldWrpFocus = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp:focus-within:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`]
+              assignNestedObj(drft, getPath('currency-fld-wrp'), curcyFldWrp)
+              assignNestedObj(drft, getPath(`currency-fld-wrp:hover:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`), curcyFldWrpHover)
+              assignNestedObj(drft, getPath(`currency-fld-wrp:focus-within:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`), curcyFldWrpFocus)
+              break
+
+            case 'selected-currency-img':
+              const selectedCurncyImg = getElementStyle.classes[`.${fieldKey}-selected-currency-img`]
+              assignNestedObj(drft, getPath('selected-currency-img'), selectedCurncyImg)
+              break
+
+            case 'input-clear-btn':
+              const inputClrBtn = getElementStyle.classes[`.${fieldKey}-input-clear-btn`]
+              const inputClrBtnHvr = getElementStyle.classes[`.${fieldKey}-input-clear-btn:hover`]
+              const inputCltBtnFocus = getElementStyle.classes[`.${fieldKey}-input-clear-btn:focus-visible`]
+              assignNestedObj(drft, getPath('input-clear-btn'), inputClrBtn)
+              assignNestedObj(drft, getPath('input-clear-btn:hover'), inputClrBtnHvr)
+              assignNestedObj(drft, getPath('input-clear-btn:focus-visible'), inputCltBtnFocus)
+              break
+
+            case 'opt-search-input':
+              const optSearchInput = getElementStyle.classes[`.${fieldKey}-opt-search-input`]
+              assignNestedObj(drft, getPath('opt-search-input'), optSearchInput)
+              deleteStyle(drft, 'opt-search-input', ':hover')
+              deleteStyle(drft, 'opt-search-input', ':focus')
+              break
+
+            case 'opt-search-icn':
+              const optSearchIcn = getElementStyle.classes[`.${fieldKey}-opt-search-icn`]
+              assignNestedObj(drft, getPath('opt-search-icn'), optSearchIcn)
+              deleteStyle(drft, 'opt-search-icn', ':hover')
+              break
+
+            case 'search-clear-btn':
+              const seatchClrBtn = getElementStyle.classes[`.${fieldKey}-search-clear-btn`]
+              const searchClrBtnHrv = getElementStyle.classes[`.${fieldKey}-search-clear-btn:hover`]
+              const searchClrBtnFocus = getElementStyle.classes[`.${fieldKey}-search-clear-btn:focus-visible`]
+              assignNestedObj(drft, getPath('search-clear-btn'), seatchClrBtn)
+              assignNestedObj(drft, getPath('search-clear-btn:hover'), searchClrBtnHrv)
+              assignNestedObj(drft, getPath('search-clear-btn:focus-visible'), searchClrBtnFocus)
+              break
+
+            case 'currency-option':
+              const opt = getElementStyle.classes[`.${fieldKey}-option`]
+              const optHovr = getElementStyle.classes[`.${fieldKey}-option:hover:not(.selected-opt)`]
+              const optFocus = getElementStyle.classes[`.${fieldKey}-option:focus-visible`]
+              assignNestedObj(drft, getPath('option'), opt)
+              assignNestedObj(drft, getPath('option:hover:not(.selected-opt)'), optHovr)
+              assignNestedObj(drft, getPath('option:focus-visible'), optFocus)
+              break
+
+            case 'currency-option-icn':
+              const optIcn = getElementStyle.classes[`.${fieldKey}-opt-icn`]
+              assignNestedObj(drft, getPath('opt-icn'), optIcn)
+              break
+
+            case 'currency-option-lbl':
+              const optLbl = getElementStyle.classes[`.${fieldKey}-opt-lbl`]
+              assignNestedObj(drft, getPath('opt-lbl'), optLbl)
+              break
+            case 'currency-option-suf':
+              const optSuf = getElementStyle.classes[`.${fieldKey}-opt-suffix`]
+              assignNestedObj(drft, getPath('opt-suffix'), optSuf)
               break
 
             default:
