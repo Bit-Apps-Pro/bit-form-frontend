@@ -134,7 +134,7 @@ const c = {
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
   clrVal: {
-    w: 80,
+    w: 70,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',

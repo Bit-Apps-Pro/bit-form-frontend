@@ -115,7 +115,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                 </button>
               )
             }
-            key={`transition-${indx * 2 * 4}`}
+            key={`transition-${(indx * 2 * 4).toString()}`}
           >
             <div className={css(ut.p1)}>
               <div className={css(ut.flxcb, ut.mb2)}>
