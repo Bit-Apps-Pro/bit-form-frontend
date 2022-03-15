@@ -67,7 +67,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                 </button>
                 <div data-dev-file-select-status={fieldKey} className={`${fieldKey}-file-select-status`}>No Choosen File</div>
                 <small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl`}>Max 2MB</small>
-                <input type="file" className={`${fieldKey}-file-upload-input`} id="file-upload" name="file-upload" />
+                <input type="file" className={`${fieldKey}-file-upload-input`} id={fieldKey} name="file-upload" />
               </div>
               <div data-dev-files-list={fieldKey} className={`${fieldKey}-files-list`} />
             </div>
