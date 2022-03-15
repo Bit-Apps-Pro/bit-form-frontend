@@ -65,9 +65,11 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     [`.${fk}-selected-currency-img`]: {
       height: '17px',
       width: '25px',
+      border: 'none',
+      'border-width': '0px',
       'border-radius': '3px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
-      'margin-right': '10px',
+      margin: '0px 10px 0px 0px',
       'background-color': 'hsla(0, 0%, 0%, 5%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',

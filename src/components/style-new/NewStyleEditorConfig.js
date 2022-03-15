@@ -937,6 +937,22 @@ const editorConfig = {
         transition: '',
       },
     },
+    'selected-currency-img': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        height: '',
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        'backgound-color': '',
+      },
+    },
     'opt-search-input': {
       states: ['hover', 'focus'],
       properties: {

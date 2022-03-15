@@ -145,6 +145,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="selected-currency-img"
+                    label="Selected Currency Image"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-currency-img')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="input-clear-btn"
                     label="Input Clear Button"
                     offset="2.5"

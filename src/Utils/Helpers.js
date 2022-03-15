@@ -367,6 +367,10 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'currency-fld-wrp'
       elementKey = 'currency-fld-wrp'
       break
+    case 'selected-currency-img':
+      classKey = 'selected-currency-img'
+      elementKey = 'selected-currency-img'
+      break
     case 'input-clear-btn':
       classKey = 'input-clear-btn'
       elementKey = 'input-clear-btn'

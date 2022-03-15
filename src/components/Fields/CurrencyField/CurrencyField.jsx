@@ -60,6 +60,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
               >
                 <div className={`${fieldKey}-selected-currency-wrp`}>
                   <img
+                    data-dev-selected-crncy-img={fieldKey}
                     alt="Selected currency image"
                     aria-hidden="true"
                     className={`${fieldKey}-selected-currency-img`}
