@@ -21,9 +21,13 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-width': '1px',
       transition: 'box-shadow .3s',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: { 'border-color': 'hsla(0, 0%, 93%, 100%)' },
+    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: {
+      border: 'solid hsla(0, 0%, 93%, 100%)',
+      'border-width': '1px',
+    },
     [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open,.${fk}-disabled)`]: {
-      'border-color': 'hsla(205, 95%, 55%, 100%)',
+      border: 'solid hsla(205, 95%, 55%, 100%)',
+      'border-width': '1px',
       'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
     },
     [`.${fk}-menu-open`]: {
@@ -32,7 +36,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-color': 'hsla(0, 0%, 87%, 100%)',
     },
     [`.${fk}-currency-inner-wrp`]: { display: 'flex' },
-    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
+
     [`.${fk}-dpd-wrp`]: {
       overflow: 'hidden',
       'border-radius': '7px',
@@ -49,6 +53,8 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       outline: 'none',
     },
     [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
+
     [`.${fk}-selected-currency-wrp`]: {
       display: 'flex',
       'align-items': 'center',
@@ -59,9 +65,11 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     [`.${fk}-selected-currency-img`]: {
       height: '17px',
       width: '25px',
+      border: 'none',
+      'border-width': '0px',
       'border-radius': '3px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
-      'margin-right': '10px',
+      margin: '0px 10px 0px 0px',
       'background-color': 'hsla(0, 0%, 0%, 5%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
@@ -69,17 +77,17 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     [`.${fk}-input-clear-btn`]: {
       display: 'none',
       right: '6px',
-      padding: 0,
-      margin: 0,
+      padding: '0px',
+      margin: '0px 5px 0px 0px',
       background: 'transparent',
-      border: 0,
+      border: 'none',
+      'border-width': '0px',
+      'border-radius': '50%',
       outline: 0,
       cursor: 'pointer',
-      'margin-right': '5px',
       'place-content': 'center',
       width: '16px',
       height: '15px',
-      'border-radius': '50%',
     },
 
     [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
@@ -176,17 +184,18 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     [`.${fk}-search-clear-btn`]: {
       display: 'none',
       right: '6px',
-      padding: '6px',
-      margin: 0,
+      padding: '0px',
+      margin: '0px',
       background: 'transparent',
-      border: 0,
+      border: '',
+      'border-width': '0px',
+      'border-radius': '50%',
       outline: 0,
       cursor: 'pointer',
       'margin-right': '5px',
       'place-content': 'center',
       width: '16px',
       height: '16px',
-      'border-radius': '50%',
     },
 
     [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
@@ -246,6 +255,7 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'list-style': 'none',
       'margin-top': '5px',
     },
+    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-opt-lbl-wrp`]: {
       display: 'flex',
@@ -254,10 +264,11 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
     },
 
     [`.${fk}-opt-icn`]: {
-      'margin-right': '10px',
+      margin: '0px 10px',
       height: '17px',
       width: '25px',
       'border-radius': '3px',
+      'border-width': '1px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',

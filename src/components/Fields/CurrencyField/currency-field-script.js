@@ -96,7 +96,7 @@ class CurrencyField {
     if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '25px'
+      this.#searchInputElm.style.paddingRight = '30px'
       this.#clearSearchBtnElm.style.display = 'block'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }

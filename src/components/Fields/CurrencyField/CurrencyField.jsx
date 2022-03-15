@@ -1,5 +1,5 @@
 // import './currency-field-style.css'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { selectInGrid } from '../../../Utils/globalHelpers'
@@ -46,7 +46,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         fieldData={attr}
       >
         <div className={`${fieldKey}-currency-fld-container`}>
-          <div className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
+          <div data-dev-crncy-fld-wrp={fieldKey} className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
             <input name="currency-input" type="hidden" className={`${fieldKey}-currency-hidden-input`} />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div
@@ -60,6 +60,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
               >
                 <div className={`${fieldKey}-selected-currency-wrp`}>
                   <img
+                    data-dev-selected-crncy-img={fieldKey}
                     alt="Selected currency image"
                     aria-hidden="true"
                     className={`${fieldKey}-selected-currency-img`}
@@ -84,7 +85,12 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 </div>
               </div>
               <input aria-label="Currency Input" type="text" className={`${fieldKey}-currency-amount-input`} />
-              <button type="button" title="Clear value" className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}>
+              <button
+                data-dev-input-clear-btn={fieldKey}
+                type="button"
+                title="Clear value"
+                className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}
+              >
                 <svg
                   width="13"
                   height="13"
@@ -102,7 +108,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             </div>
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
-                <div className={`${fieldKey}-option-search-wrp`}>
+                <div data-dev-opt-search-input={fieldKey} className={`${fieldKey}-option-search-wrp`}>
                   <input
                     type="search"
                     className={`${fieldKey}-opt-search-input`}
@@ -112,6 +118,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   />
                   <svg
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn`}
+                    data-dev-opt-search-icn={fieldKey}
                     aria-hidden="true"
                     width="22"
                     height="22"
@@ -125,7 +132,13 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
-                  <button type="button" aria-label="Clear search" className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`} tabIndex="-1">
+                  <button
+                    data-dev-search-clear-btn={fieldKey}
+                    type="button"
+                    aria-label="Clear search"
+                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`}
+                    tabIndex="-1"
+                  >
                     <svg
                       width="16"
                       height="16"

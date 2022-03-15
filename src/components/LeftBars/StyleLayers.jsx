@@ -6,6 +6,7 @@ import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
+import { ucFirst } from '../../Utils/Helpers'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { isFieldOverrideStyles, isLabelOverrideStyles } from '../style-new/styleHelpers'
@@ -19,7 +20,7 @@ export default function StyleLayers() {
   const history = useHistory()
   const { formID, formType } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
-  const showFldTitle = (typ) => fieldTypes[typ] || typ
+  const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
   const styleHandler = (route, fldKey = null) => {
@@ -132,9 +133,102 @@ export default function StyleLayers() {
                   )}
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|recaptcha|)$/) && (
-                <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')} />
+
+              {fldData.typ.match(/(currency)/gi) && (
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-fld-wrp"
+                    label="Currency Field Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-crncy-fld-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-fld-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="selected-currency-img"
+                    label="Selected Currency Image"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-currency-img')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="input-clear-btn"
+                    label="Input Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-input-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'input-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-icn"
+                    label="Option Search Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="search-clear-btn"
+                    label="Search Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option"
+                    label="Currency Option"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-icn"
+                    label="Currency Option Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-lbl"
+                    label="Currency Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-suf"
+                    label="Currency Option Suffix"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-suf="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-suf')}
+                  />
+                </>
               )}
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="error-message"
+                  label="Error Message"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')}
+                />
+              )}
+
             </LayerAccordion>
           ))}
         </div>

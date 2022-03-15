@@ -12,9 +12,10 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -29,9 +30,11 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 
-  const getValueByPath = propPath => getValueFromStateVar(themeVars, getValueByObjPath(styles, propPath))
-
-  const btnBrdrRadiusValue = getValueByPath(propertyPath('btn', 'border-radius'))
+  const rtrCurrencyFld = () => {
+    const path = propertyPath('currency-inner-wrp', 'direction')
+    const value = getValueByObjPath(styles, path)
+    return value === 'rtl'
+  }
 
   const setSizes = ({ target: { value } }) => {
     const commonStyleClasses = commonStyle(fieldKey, value)
@@ -77,14 +80,16 @@ export default function FieldQuickTweaks({ fieldKey }) {
         break
       case 'small-1':
         setMuptipleProperty(
-          [propertyPath(elementKey, 'font-size'),
+          [
+            propertyPath(elementKey, 'font-size'),
             propertyPath(elementKey, 'padding')],
           ['14px', '9px 15px'],
         )
         break
       case 'medium':
         setMuptipleProperty(
-          [propertyPath(elementKey, 'font-size'),
+          [
+            propertyPath(elementKey, 'font-size'),
             propertyPath(elementKey, 'padding'),
           ],
           ['16px', '11px 20px'],
@@ -94,7 +99,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
         setMuptipleProperty(
           [
             propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding')],
+            propertyPath(elementKey, 'padding'),
+          ],
           ['18px', '12px 22px'],
         )
         break
@@ -119,31 +125,34 @@ export default function FieldQuickTweaks({ fieldKey }) {
     }
   }
 
-  const setElementBrdrRadius = (elementKey, value) => {
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, propertyPath(elementKey, 'border-radius'), value)
-    }))
-  }
-
-  const borderRadHandler = ({ value, unit }) => {
+  const borderRadHandler = ({ value, unit }, prvUnit) => {
+    const convertvalue = unitConverter(unit, value, prvUnit)
+    const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
       if (fld.theme === 'bitformDefault' && fld.fieldType.match(/(text|date)/gi)) {
-        assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), `${value}${unit}`)
+        assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), v)
       } else if (fld.theme === 'bitformDefault' && fld.fieldType === 'check') {
-        assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), `${value}${unit}`)
+        assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), v)
+      } else if (fld.fieldType === 'currency') {
+        assignNestedObj(drftStyle, propertyPath('currency-fld-wrp', 'border-radius'), v)
+      } else if (fld.fieldType === 'button') {
+        assignNestedObj(drftStyle, propertyPath('btn', 'border-radius'), v)
       }
     }))
   }
 
-  const getBorderRadius = () => {
-    const elementKey = styles.fields[fieldKey].fieldType.match(/(text|date)/gi) ? 'fld' : 'ck'
-    let brsValue = getValueByObjPath(styles, propertyPath(elementKey, 'border-radius'))
+  const getBorderRadius = (elemntKey) => {
+    let brsValue = getValueByObjPath(styles, propertyPath(elemntKey, 'border-radius'))
     brsValue = getValueFromStateVar(themeVars, brsValue)
     if (!brsValue) brsValue = '0px'
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
-  const [borderRadVal, borderRadUnit] = getBorderRadius()
+
+  const bdrRad = styles.fields[fieldKey].fieldType.match(/(text|date)/gi) ? 'fld' : 'ck'
+  const [borderRadVal, borderRadUnit] = getBorderRadius(bdrRad)
+  const [curcyBdrRadVal, curcyBdrRadUnit] = getBorderRadius('currency-fld-wrp')
+  const [btnBdrRadVal, btnBdrRadUnit] = getBorderRadius('btn')
 
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
@@ -205,6 +214,33 @@ export default function FieldQuickTweaks({ fieldKey }) {
   //   case 'color':
   //   case 'textarea':
   const [objName, objPath] = fldTypWiseAccentColorObjName()
+  const handleDir = () => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      if (!rtrCurrencyFld()) {
+        drft.fields[fieldKey].classes[`.${fieldKey}-currency-inner-wrp`].direction = 'rtl'
+        drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left = '6px'
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right
+        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`].direction = 'rtl'
+        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
+        drft.fields[fieldKey].classes[`.${fieldKey}-option-inner-wrp`].direction = 'rtl'
+        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '30px'
+        drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '16px'
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
+        drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]['margin-left'] = '10px'
+      } else {
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-currency-inner-wrp`].direction
+        drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right = '6px'
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`].direction
+        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-option-inner-wrp`].direction
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
+        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]['margin-left']
+        drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
+      }
+    }))
+  }
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|)$/gi) && (
@@ -235,8 +271,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
               <SizeControl
                 min={0}
                 max={20}
-                inputHandler={borderRadHandler}
-                sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, borderRadUnit)}
+                sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
                 value={borderRadVal}
                 unit={borderRadUnit}
                 width="128px"
@@ -260,10 +296,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
               <SizeControl
                 min={0}
                 max={100}
-                inputHandler={valueObj => setElementBrdrRadius('btn', `${valueObj.value}${valueObj.unit}`)}
-                sizeHandler={({ unitKey, unitValue }) => setElementBrdrRadius('btn', `${unitValue}${unitKey}`)}
-                value={getNumFromStr(btnBrdrRadiusValue)}
-                unit={getStrFromStr(btnBrdrRadiusValue)}
+                inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, btnBdrRadUnit)}
+                sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, btnBdrRadUnit)}
+                value={btnBdrRadVal || '0'}
+                unit={btnBdrRadUnit || 'px'}
                 width="128px"
                 options={['px', '%', 'em', 'rem']}
               />
@@ -303,6 +339,29 @@ export default function FieldQuickTweaks({ fieldKey }) {
               onChange={val => flexDirectionHandle(val, 'flex-direction')}
               activeValue={flex}
             />
+          </div>
+        </>
+      )}
+      {fieldType === 'currency' && (
+        <>
+          <div className={css(ut.flxcb, ut.mt3)}>
+            <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
+            <SingleToggle isChecked={rtrCurrencyFld()} action={handleDir} />
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border Radius</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                min={0}
+                max={20}
+                inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, curcyBdrRadUnit)}
+                sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, curcyBdrRadUnit)}
+                value={curcyBdrRadVal || 0}
+                unit={curcyBdrRadUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem']}
+              />
+            </div>
           </div>
         </>
       )}

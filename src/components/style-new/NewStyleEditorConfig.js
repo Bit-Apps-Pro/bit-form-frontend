@@ -6,7 +6,11 @@ const labelCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
-  border: { border: true, 'border-color': true, 'border-width': true, 'border-radius': true },
+  border: {
+    border: true,
+    'border-width': true,
+    'border-radius': true,
+  },
   color: '',
   'font-size': '',
   'font-weight': '',
@@ -65,7 +69,6 @@ const fieldWrpCssProps = {
   'background-color': '',
   border: {
     border: true,
-    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -209,7 +212,6 @@ const chackProps = {
   },
   border: {
     border: true,
-    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -220,7 +222,13 @@ const chackProps = {
   color: '',
 }
 const formCommonCssProps = {
-  background: '',
+  background: {
+    'background-image': true,
+    'background-position': true,
+    'background-repeat': true,
+    'background-size': true,
+    'backdrop-filter': true,
+  },
   color: '',
   padding: '5px',
   margin: '5px',
@@ -244,7 +252,13 @@ const editorConfig = {
   'field-containers': {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -258,7 +272,13 @@ const editorConfig = {
   'label-containers': {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -272,7 +292,13 @@ const editorConfig = {
   label: {
     states: ['hover'],
     properties: {
-      background: '',
+      background: {
+        'background-image': true,
+        'background-position': true,
+        'background-repeat': true,
+        'background-size': true,
+        'backdrop-filter': true,
+      },
       padding: '5px',
       margin: '5px',
       border: {
@@ -702,7 +728,6 @@ const editorConfig = {
       properties: {
         border: {
           'border-bottom': true,
-          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -927,6 +952,183 @@ const editorConfig = {
     'fld-wrp': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
+    },
+  },
+  currency: {
+    ...textFldCssProps,
+    'currency-fld-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        transition: '',
+      },
+    },
+    'selected-currency-img': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        height: '',
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        'backgound-color': '',
+      },
+    },
+    'opt-search-input': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
+    'opt-search-icn': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        filter: '',
+      },
+    },
+    'input-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        background: {
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+          'backdrop-filter': true,
+        },
+        width: '',
+        height: '',
+        filter: '',
+      },
+    },
+    'search-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        width: '',
+        height: '',
+        filter: '',
+      },
+    },
+    option: {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
+    'opt-icn': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        filter: '',
+      },
+    },
+    'opt-lbl': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        'backgound-color': '',
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        color: '',
+      },
+    },
+    'opt-suffix': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        'backgound-color': '',
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        color: '',
+      },
     },
   },
 }
