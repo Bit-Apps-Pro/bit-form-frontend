@@ -10,12 +10,14 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
+import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -65,6 +67,19 @@ export default function HtmlSelectSettings() {
 
       <FieldSettingsDivider />
 
+      <UniqFieldSettings
+        type="entryUnique"
+        title="Validate as Entry Unique"
+        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection)}
+        isUnique="show"
+      />
+      <FieldSettingsDivider />
+
+      <FieldHideSettings />
+
+      <FieldSettingsDivider />
+
       <div className={css(FieldStyle.fieldSection)}>
         <button onClick={() => setOptionMdl(true)} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
@@ -100,7 +115,8 @@ export default function HtmlSelectSettings() {
             setOptions={newOpts => handleOptions(newOpts)}
             lblKey="lbl"
             valKey="val"
-            type={fieldData.typ}
+            type="radio"
+            hasGroup
           />
         </div>
       </Modal>

@@ -17,7 +17,7 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import UniqField from './CompSettingsUtils/UniqField'
+import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -393,7 +393,7 @@ export default function SelectSettings() {
         />
       </div> */}
       <div className="pos-rel">
-        <UniqField
+        <UniqFieldSettings
           type="entryUnique"
           isUnique="isEntryUnique"
           title="Validate as Entry Unique"

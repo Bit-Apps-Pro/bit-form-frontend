@@ -30,6 +30,14 @@ const labelCssProps = {
   'white-space': '',
   transform: '',
 }
+const selectOptionCssProps = {
+  'background-color': '',
+  color: '',
+  'font-size': '',
+  'font-weight': '',
+  'font-style': '',
+  'text-align': '',
+}
 const iconCssProps = {
   border: {
     border: true,
@@ -935,7 +943,17 @@ const editorConfig = {
       properties: { ...fieldWrpCssProps },
     },
   },
-  'html-select': { ...textFldCssProps },
+  'html-select': {
+    ...textFldCssProps,
+    'slct-optn': {
+      states: ['hover', 'focus'],
+      properties: { ...selectOptionCssProps },
+    },
+    'slct-opt-grp': {
+      states: ['hover', 'focus'],
+      properties: { ...selectOptionCssProps },
+    },
+  },
   select: {
     'fld-wrp': {
       states: ['hover'],

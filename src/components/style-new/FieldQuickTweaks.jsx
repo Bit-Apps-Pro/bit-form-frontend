@@ -128,7 +128,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const borderRadHandler = ({ value, unit }) => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault' && fld.fieldType.match(/(text|date)/gi)) {
+      if (fld.theme === 'bitformDefault' && fld.fieldType.match(/(text|date|html-select|)/gi)) {
         assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), `${value}${unit}`)
       } else if (fld.theme === 'bitformDefault' && fld.fieldType === 'check') {
         assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), `${value}${unit}`)
@@ -137,7 +137,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const getBorderRadius = () => {
-    const elementKey = styles.fields[fieldKey].fieldType.match(/(text|date)/gi) ? 'fld' : 'ck'
+    const elementKey = styles.fields[fieldKey].fieldType.match(/(text|date|html-select|)/gi) ? 'fld' : 'ck'
     let brsValue = getValueByObjPath(styles, propertyPath(elementKey, 'border-radius'))
     brsValue = getValueFromStateVar(themeVars, brsValue)
     if (!brsValue) brsValue = '0px'
@@ -177,6 +177,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         break
       case 'text':
       case 'date':
+      case 'html-select':
         objName = 'styles'
         objPath = [
           `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->border-color`,

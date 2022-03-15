@@ -232,7 +232,7 @@ export default function ElementConfiguration({ fldKey }) {
           styleOverride={isLabelOverrideStyles(styles, fldKey, 'image')}
         />
       )}
-      {fieldObj.typ.match(/^(text|number|password|username|email|url|date|datetime-local|time|month|week|color|textarea|html-select|)$/)
+      {fieldObj.typ.match(/^(text|number|password|username|email|url|date|datetime-local|time|month|week|color|textarea|)$/)
         && (
           <>
             {!(fieldObj.prefixIcn || fieldObj.suffixIcn) && (
@@ -282,6 +282,38 @@ export default function ElementConfiguration({ fldKey }) {
                 )}
               </LayerAccordion>
             )}
+          </>
+        )}
+      {fieldObj.typ.match(/^(html-select|)$/)
+        && (
+          <>
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.fld[0]}`}
+              subRoute={fldKey}
+              route="fld"
+              label="Select"
+              offset="2.5"
+              highlightSelector={`[data-dev-fld="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld')}
+            />
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.prefixIcn[0]}`}
+              subRoute={fldKey}
+              route="slct-optn"
+              label="Options"
+              offset="2.5"
+              highlightSelector={`[data-dev-slct-optn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'slct-optn')}
+            />
+            <NavBtn
+              cssSelector={`.${fldKey}-${styleClasses.prefixIcn[0]}`}
+              subRoute={fldKey}
+              route="slct-opt-grp"
+              label="Options Group"
+              offset="2.5"
+              highlightSelector={`[data-dev-slct-opt-grp="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'slct-opt-grp')}
+            />
           </>
         )}
       {
