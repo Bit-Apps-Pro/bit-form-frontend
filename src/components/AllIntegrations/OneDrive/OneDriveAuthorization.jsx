@@ -13,7 +13,7 @@ export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriv
   const bits = useRecoilValue($bits)
 
   const nextPage = () => {
-    getAllOneDriveFolders(flowID, oneDriveConf, setOneDriveConf, setIsLoading)
+    getAllOneDriveFolders(flowID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)
     setStep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
@@ -37,7 +37,7 @@ export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriv
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b></div>
       {/* <CopyText value={redirectLocation || `${bits.api.base}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} setSnackbar={setSnackbar} /> */}
-<CopyText value={redirectLocation || `${bits.oneDriveRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+      <CopyText value={redirectLocation || `${bits.oneDriveRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
       <small className="d-blk mt-3">
         {__('To Get Client Id & Secret, Please Visit', 'bit-integrations')}
         &nbsp;
