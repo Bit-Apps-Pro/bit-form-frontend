@@ -5,9 +5,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import CloseIcn from '../../../Icons/CloseIcn'
-import EditIcn from '../../../Icons/EditIcn'
-import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -15,11 +12,11 @@ import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
-import IconStyleBtn from '../IconStyleBtn'
+import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import AutoResizeInput from './AutoResizeInput'
 
-export default function HelperTxtSetting() {
+export default function HelperTxtSettings() {
   console.log('%cRander Helper Text Setting', 'background:green;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
@@ -109,51 +106,20 @@ export default function HelperTxtSetting() {
             changeAction={setHelperTxt}
           />
         </div>
-        <div className={css(ut.mt2, { mx: 10 })}>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Start Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.hlpPreIcn && (
-                <>
-                  <img src={fieldData?.hlpPreIcn} alt="Hepler text start icon" width="18" height="18" />
-                  <IconStyleBtn route="hlp-txt-pre-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('hlpPreIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.hlpPreIcn && (
-                <button onClick={() => removeIcon('hlpPreIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>End Icon</span>
-            <div className={css(ut.flxcb)}>
-              {fieldData?.hlpSufIcn && (
-                <>
-                  <img src={fieldData?.hlpSufIcn} alt="Hepler text end icon" width="18" height="18" />
-                  <IconStyleBtn route="hlp-txt-suf-i" />
-                </>
-              )}
-
-              <button type="button" onClick={() => setIconModel('hlpSufIcn')} className={css(ut.icnBtn)}>
-                <EditIcn size={22} />
-              </button>
-              {fieldData?.hlpSufIcn && (
-                <button onClick={() => removeIcon('hlpSufIcn')} className={css(ut.icnBtn)} type="button">
-                  <CloseIcn size="13" />
-                </button>
-              )}
-
-            </div>
-          </div>
-        </div>
+        <FieldIconSettings
+          label="Start Icon"
+          iconSrc={fieldData?.hlpPreIcn}
+          styleRoute="hlp-txt-pre-i"
+          setIcon={() => setIconModel('hlpPreIcn')}
+          removeIcon={() => removeIcon('hlpPreIcn')}
+        />
+        <FieldIconSettings
+          label="End Icon"
+          iconSrc={fieldData?.hlpSufIcn}
+          styleRoute="hlp-txt-suf-i"
+          setIcon={() => setIconModel('hlpSufIcn')}
+          removeIcon={() => removeIcon('hlpSufIcn')}
+        />
 
       </SimpleAccordion>
       <Modal

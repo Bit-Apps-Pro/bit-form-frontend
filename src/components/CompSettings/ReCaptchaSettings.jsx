@@ -49,16 +49,6 @@ export default function ReCaptchaSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
-      {/* <SimpleAccordion
-        title="Theme"
-        className={css(FieldStyle.fieldSection)}
-      >
-        <select onChange={onInput} name="theme" value={fieldData.theme} className={css(FieldStyle.input, ut.w10)}>
-          <option value="dark">{__('Dark', 'bitform')}</option>
-          <option value="light">{__('Light', 'bitform')}</option>
-        </select>
-      </SimpleAccordion>
-      <FieldSettingsDivider /> */}
 
       <SimpleAccordion
         title={__('Theme', 'bitform')}

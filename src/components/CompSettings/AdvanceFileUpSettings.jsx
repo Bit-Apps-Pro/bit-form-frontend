@@ -24,10 +24,11 @@ import FileStyle from './advfileupcmpt/FileStyle'
 import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import ImageValidateoMdl from './advfileupcmpt/ImageValidateoMdl'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
-import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -725,25 +726,12 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
-        title={__('Required', 'bitform')}
-        // eslint-disable-next-line react/jsx-no-bind
-        toggleAction={setRequired}
-        toggleChecked={isRequired}
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        switching
-        tip="By enabling this feature, user will see the error message when input is empty"
-        tipProps={{ width: 200, icnSize: 17 }}
-        open={isRequired}
-        disable={!isRequired}
-      >
-        <ErrorMessageSettings
-          type="req"
-          title="Error Message"
-          tipTitle="By enabling this feature, user will see the error message when input is empty"
-        />
-      </SimpleAccordion>
-      {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
+      <RequiredSettings />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
+
       <FieldSettingsDivider />
 
       <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />

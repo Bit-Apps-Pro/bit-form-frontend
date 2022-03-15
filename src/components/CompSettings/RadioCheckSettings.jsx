@@ -14,12 +14,13 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -303,7 +304,7 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
+      {/* <SimpleAccordion
         title={__('Admin Label', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
@@ -319,15 +320,16 @@ function RadioCheckSettings() {
             changeAction={e => setAdminLabel(e)}
           />
         </div>
-      </SimpleAccordion>
+      </SimpleAccordion> */}
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <SubTitleSetting />
+      <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSetting />
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 

@@ -18,9 +18,10 @@ import DropDown from '../Utilities/DropDown'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
-import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -195,24 +196,11 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
-        title={__('Required', 'bitform')}
-        // eslint-disable-next-line react/jsx-no-bind
-        toggleAction={setRequired}
-        toggleChecked={isRequired}
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        switching
-        tip="By enabling this feature, user will see the error message when input is empty"
-        tipProps={{ width: 200, icnSize: 17 }}
-        open={isRequired}
-        disable={!isRequired}
-      >
-        <ErrorMessageSettings
-          type="req"
-          title="Error Message"
-          tipTitle="By enabling this feature, user will see the error message when input is empty"
-        />
-      </SimpleAccordion>
+      <RequiredSettings />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
@@ -251,12 +239,6 @@ export default function FileUploadSettings() {
         </div>
       </SimpleAccordion>
 
-      {/* <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Allow Multiple:', 'bitform')}
-        action={e => setConfigToogleValue('multiple', e.target.checked)}
-        isChecked={multiple}
-      /> */}
 
       <FieldSettingsDivider />
 

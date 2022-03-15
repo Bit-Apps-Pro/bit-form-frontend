@@ -21,7 +21,7 @@ import IconStyleBtn from '../IconStyleBtn'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 
-export default function SubTitleSetting() {
+export default function SubTitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const { fieldKey: fldKey } = useParams()
   const selectedFieldId = useRecoilValue($selectedFieldId)

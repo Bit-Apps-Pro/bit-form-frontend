@@ -34,8 +34,9 @@ import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
@@ -518,11 +519,11 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        <SubTitleSetting />
+        <SubTitleSettings />
 
         <FieldSettingsDivider />
 
-        <HelperTxtSetting />
+        <HelperTxtSettings />
 
         <FieldSettingsDivider />
 
@@ -700,7 +701,7 @@ function TextFieldSettings() {
           )
         }
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Required', 'bitform')}
           // eslint-disable-next-line react/jsx-no-bind
           toggleAction={setRequired}
@@ -717,7 +718,8 @@ function TextFieldSettings() {
             title="Error Message"
             tipTitle="By enabling this feature, user will see the error message when input is empty"
           />
-        </SimpleAccordion>
+        </SimpleAccordion> */}
+        <RequiredSettings />
         {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
         <FieldSettingsDivider />
         {
