@@ -367,6 +367,22 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'currency-fld-wrp'
       elementKey = 'currency-fld-wrp'
       break
+    case 'opt-search-input':
+      classKey = 'opt-search-input'
+      elementKey = 'opt-search-input'
+      break
+    case 'search-clear-btn':
+      classKey = 'search-clear-btn'
+      elementKey = 'search-clear-btn'
+      break
+    case 'currency-option':
+      classKey = 'option'
+      elementKey = 'option'
+      break
+    case 'currency-option-icn':
+      classKey = 'opt-icn'
+      elementKey = 'opt-icn'
+      break
     default:
       elementKey = element
       classKey = element

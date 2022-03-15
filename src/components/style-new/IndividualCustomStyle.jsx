@@ -46,12 +46,26 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [stateController, setStateController] = useState('')
 
   const getPseudoPath = (state = '') => {
+    state = state.toLowerCase()
     switch (elementKey) {
       case 'currency-fld-wrp':
-        if (state.toLowerCase() === 'hover') {
+        if (state === 'hover') {
           state = `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
-        } else if (state.toLowerCase() === 'focus') {
+        } else if (state === 'focus') {
           state = `focus-within:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
+        }
+        break
+      case 'search-clear-btn':
+        if (state === 'focus') {
+          state = 'focus-visible'
+        }
+        break
+      case 'option':
+        if (state === 'hover') {
+          state = 'hover:not(.selected-opt)'
+        }
+        if (state === 'focus') {
+          state = 'focus-visible'
         }
         break
 
@@ -72,7 +86,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {}
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
-
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
@@ -114,7 +127,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const updateHandler = (value, unit, styleUnit, property) => {
-    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit.replaceAll(/(undefined)/gi, '')
+    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit?.replaceAll(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
     const propertyPath = getPropertyPath(property)
 
@@ -265,6 +278,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             allowImportant
           />
         )
+      // case 'stroke':
+      //   return (
+      //     <BackgroundControl
+      //       title="Stroke"
+      //       subtitle={`${fldTitle}`}
+      //       value={existCssPropsObj?.stroke}
+      //       modalId="field-container-stroke"
+      //       stateObjName="styles"
+      //       objectPaths={objPaths}
+      //       deleteable
+      //       delPropertyHandler={() => delPropertyHandler('stroke', state)}
+      //       clearHandler={() => clearHandler('stroke', state)}
+      //       allowImportant
+      //     />
+      //   )
       case 'border-image':
         return (
           <BorderImageControl

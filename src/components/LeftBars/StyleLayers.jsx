@@ -134,14 +134,56 @@ export default function StyleLayers() {
                 </>
               )}
               {fldData.typ.match(/(currency)/gi) && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="currency-fld-wrp"
-                  label="Currency Field Wrapper"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-crncy-fld-wrp="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-fld-wrp')}
-                />
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-fld-wrp"
+                    label="Currency Field Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-crncy-fld-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-fld-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-icn"
+                    label="Option Search Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="search-clear-btn"
+                    label="Search Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option"
+                    label="Currency Option"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-icn"
+                    label="Currency Option Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-icn')}
+                  />
+                </>
               )}
               {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
                 <NavBtn

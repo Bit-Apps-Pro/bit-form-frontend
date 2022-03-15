@@ -937,6 +937,87 @@ const editorConfig = {
         transition: '',
       },
     },
+    'opt-search-input': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
+    'opt-search-icn': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+      },
+    },
+    'search-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        background: '',
+        stroke: '',
+        width: '',
+        height: '',
+      },
+    },
+    option: {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
+    'opt-icn': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
   },
 }
 export default editorConfig
