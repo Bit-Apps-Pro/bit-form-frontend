@@ -68,6 +68,14 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           state = 'focus-visible'
         }
         break
+      case 'input-clear-btn':
+        if (state === 'hover') {
+          state = 'hover'
+        }
+        if (state === 'focus') {
+          state = 'focus-visible'
+        }
+        break
 
       default:
         return state

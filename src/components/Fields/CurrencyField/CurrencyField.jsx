@@ -84,7 +84,12 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 </div>
               </div>
               <input aria-label="Currency Input" type="text" className={`${fieldKey}-currency-amount-input`} />
-              <button type="button" title="Clear value" className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}>
+              <button
+                data-dev-input-clear-btn={fieldKey}
+                type="button"
+                title="Clear value"
+                className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}
+              >
                 <svg
                   width="13"
                   height="13"

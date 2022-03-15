@@ -145,6 +145,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="input-clear-btn"
+                    label="Input Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-input-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'input-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="opt-search-input"
                     label="Option Search Input"
                     offset="2.5"
@@ -182,6 +190,22 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-currency-option-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-lbl"
+                    label="Currency Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="currency-option-suf"
+                    label="Currency Option Suffix"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-currency-option-suf="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-suf')}
                   />
                 </>
               )}
