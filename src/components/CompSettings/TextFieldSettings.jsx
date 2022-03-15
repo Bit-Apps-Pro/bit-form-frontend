@@ -37,7 +37,7 @@ import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
-import UniqField from './CompSettingsUtils/UniqField'
+import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
@@ -788,7 +788,7 @@ function TextFieldSettings() {
           )
         }
 
-        <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
+        <FieldHideSettings />
         <FieldSettingsDivider />
         <FieldReadOnlySettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
 
@@ -808,7 +808,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <>
-              <UniqField
+              <UniqFieldSettings
                 type="entryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
