@@ -11,13 +11,16 @@ export default function Important({ paths = {}, propertyPath, className }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
-  const isAlreadyImportant = styleValue?.match(/!important/gi)
-  const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue?.match(/var/gi)
+  const isAlreadyImportant = () => {
+    if (styleValue?.match(/(!important)/gi)?.[0]) return true
+    return false
+  }
+  const isStyleValueEmptyOrCssVar = () => (styleValue === '' || styleValue?.match(/(var)/gi)) ?? false
   const props = Object.keys(paths)
   const addOrRemoveImportant = () => {
     let newStyleValue
 
-    if (isAlreadyImportant) {
+    if (isAlreadyImportant()) {
       newStyleValue = styleValue?.replace(/!important/gi, '')
     } else {
       newStyleValue = `${styleValue} !important`
@@ -25,7 +28,7 @@ export default function Important({ paths = {}, propertyPath, className }) {
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, propertyPath, newStyleValue)
       props.map(propName => {
-        if (isAlreadyImportant) {
+        if (isAlreadyImportant()) {
           assignNestedObj(drft, paths[propName], getValueByObjPath(styles, paths[propName]).replace(/!important/gi, ''))
         } else {
           assignNestedObj(drft, paths[propName], `${getValueByObjPath(styles, paths[propName])} !important`)
@@ -37,8 +40,8 @@ export default function Important({ paths = {}, propertyPath, className }) {
   return (
     <Tip msg="Set style as !important">
       <button
-        style={{ visibility: isStyleValueEmptyOrCssVar ? 'visible' : 'visible' }}
-        className={`${css(cls.btn, isAlreadyImportant && cls.active)} ${className}`}
+        style={{ visibility: isStyleValueEmptyOrCssVar() ? 'visible' : 'visible' }}
+        className={`${css(cls.btn, isAlreadyImportant() && cls.active)} ${className}`}
         type="button"
         onClick={addOrRemoveImportant}
       >
