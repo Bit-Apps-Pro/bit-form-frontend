@@ -17,6 +17,7 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -201,38 +202,7 @@ export default function ButtonSettings() {
 
         <FieldSettingsDivider />
 
-        <SimpleAccordion
-          title={__('Helper Text', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideHelperTxt}
-          toggleChecked={fieldData?.hlpTxtHide}
-          open={fieldData?.hlpTxtHide}
-          disable={!fieldData?.hlpTxtHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <AutoResizeInput
-              aria-label="Helper text for this Field"
-              placeholder="Type Helper text here..."
-              value={helperTxt}
-              changeAction={setHelperTxt}
-            />
-          </div>
-          <FieldIconSettings
-            label="Start Icon"
-            iconSrc={fieldData?.hlpPreIcn}
-            styleRoute="hlp-txt-pre-i"
-            setIcon={() => setIconModel('hlpPreIcn')}
-            removeIcon={() => removeIcon('hlpPreIcn')}
-          />
-          <FieldIconSettings
-            label="End Icon"
-            iconSrc={fieldData?.hlpSufIcn}
-            styleRoute="hlp-txt-suf-i"
-            setIcon={() => setIconModel('hlpSufIcn')}
-            removeIcon={() => removeIcon('hlpSufIcn')}
-          />
-        </SimpleAccordion>
+        <HelperTxtSettings />
 
         <FieldSettingsDivider />
 

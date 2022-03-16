@@ -15,9 +15,10 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
-import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -131,7 +132,8 @@ export default function DecisionBoxSettings() {
 
       <DecisionBoxLabelModal labelModal={labelModal} setLabelModal={setLabelModal} />
 
-      <SimpleAccordion
+      <AdminLabelSettings />
+      {/* <SimpleAccordion
         title={__('Admin Label', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
@@ -143,11 +145,11 @@ export default function DecisionBoxSettings() {
             changeAction={setAdminLabel}
           />
         </div>
-      </SimpleAccordion>
+      </SimpleAccordion> */}
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
+      {/* <SimpleAccordion
         title={__('Required', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={setRequired}
@@ -162,7 +164,8 @@ export default function DecisionBoxSettings() {
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
         />
-      </SimpleAccordion>
+      </SimpleAccordion> */}
+      <RequiredSettings />
 
       <FieldSettingsDivider />
 

@@ -16,7 +16,7 @@ import Cooltip from '../../Utilities/Cooltip'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function UniqField({ type, title, tipTitle, isUnique, className }) {
+export default function UniqFieldSettings({ type, title, tipTitle, isUnique, className }) {
   const bits = useRecoilValue($bits)
   const { css } = useFela()
   const [errorModal, setErrorModal] = useState(false)

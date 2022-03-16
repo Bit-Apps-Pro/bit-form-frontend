@@ -7,14 +7,13 @@ import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
-import Back2FldBtn from './Back2FldBtn'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function HtmlFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -41,14 +40,19 @@ export default function HtmlFieldSettings() {
   return (
     <div>
 
-      <div className={css(style.section, style.flxColumn)}>
+      {/* <div className={css(style.section, style.flxColumn)}>
         <Back2FldBtn size="20" className={css(style.btn)} />
         <div>
           <div className={css(style.mainTitle)}>{__('Field Settings', 'bitform')}</div>
           <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
         </div>
-      </div>
-      <FieldSettingsDivider />
+      </div> */}
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ}
+        fieldKey={fldKey}
+      />
+
       {/*
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>

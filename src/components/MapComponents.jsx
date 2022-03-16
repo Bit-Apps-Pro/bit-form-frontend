@@ -12,6 +12,7 @@ import DropDown from './Fields/DropDown'
 import FileUpload from './Fields/FileUpload/FileUpload'
 import HiddenField from './Fields/HiddenField'
 import Html from './Fields/Html'
+import HtmlSelect from './Fields/HtmlSelect/HtmlSelect'
 import Image from './Fields/Image'
 import Paypal from './Fields/Paypal'
 import RadioBox from './Fields/RadioBox'
@@ -58,6 +59,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       return <CheckBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'radio':
       return <RadioBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+    case 'html-select':
+      return <HtmlSelect fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} isBuilder={isBuilder} formID={formID} attr={atts} />
     case 'select':
       return <DropDown fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     // case 'dropdown':

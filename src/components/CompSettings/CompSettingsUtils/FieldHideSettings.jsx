@@ -1,8 +1,10 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
@@ -14,6 +16,7 @@ export default function FieldHideSettings({ cls }) {
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const isHidden = fields[fldKey].hidden?.includes(breakpoint) || false
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const { css } = useFela()
   const setHidden = e => {
     const { checked } = e.target
 
@@ -33,7 +36,7 @@ export default function FieldHideSettings({ cls }) {
   }
 
   return (
-    <div className={cls}>
+    <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} />
     </div>
   )

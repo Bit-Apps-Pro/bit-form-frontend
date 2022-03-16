@@ -34,6 +34,14 @@ const labelCssProps = {
   'white-space': '',
   transform: '',
 }
+const selectOptionCssProps = {
+  'background-color': '',
+  color: '',
+  'font-size': '',
+  'font-weight': '',
+  'font-style': '',
+  'text-align': '',
+}
 const iconCssProps = {
   border: {
     border: true,
@@ -810,6 +818,18 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
+    'hlp-txt': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'hlp-txt-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'hlp-txt-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
     'err-msg': {
       states: ['hover'],
       properties: { ...labelCssProps },
@@ -943,6 +963,23 @@ const editorConfig = {
     },
   },
   recaptcha: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
+  'html-select': {
+    ...textFldCssProps,
+    'slct-optn': {
+      states: ['hover', 'focus'],
+      properties: { ...selectOptionCssProps },
+    },
+    'slct-opt-grp': {
+      states: ['hover', 'focus'],
+      properties: { ...selectOptionCssProps },
+    },
+  },
+  select: {
     'fld-wrp': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },

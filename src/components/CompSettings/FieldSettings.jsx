@@ -9,6 +9,7 @@ import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
 import FileUploadSettings from './FileUploadSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
+import HtmlSelectSettings from './HtmlSelectSettings'
 import ImageSettings from './ImageSettings'
 import PaypalFieldSettings from './PaypalFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -46,6 +47,8 @@ export default function FieldSettings() {
     case 'check':
     case 'radio':
       return <RadioCheckSettings />
+    case 'html-select':
+      return <HtmlSelectSettings />
     case 'select':
     case 'dropdown':
       return <SelectSettings />

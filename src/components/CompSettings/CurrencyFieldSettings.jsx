@@ -12,12 +12,10 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
-import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -48,13 +46,11 @@ const CurrencyFieldSettings = () => {
     fieldData[config][name] = val
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
 
-    console.log('handleConfigChange', val, name, config);
+    console.log('handleConfigChange', val, name, config)
   }
 
-  console.log('fieldData', fieldData)
-
   return (
-    <div>
+    <>
       <FieldSettingTitle
         title="Field Settings"
         subtitle={fieldData.typ}
@@ -69,11 +65,11 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <SubTitleSetting />
+      <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSetting />
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
@@ -145,7 +141,7 @@ const CurrencyFieldSettings = () => {
         </div>
       </Modal>
 
-    </div>
+    </>
   )
 }
 

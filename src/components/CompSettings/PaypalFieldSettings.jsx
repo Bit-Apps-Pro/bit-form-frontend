@@ -5,8 +5,6 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import ut from '../../styles/2.utilities'
-import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy } from '../../Utils/Helpers'
@@ -15,9 +13,9 @@ import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/pa
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldBtn from './Back2FldBtn'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function PaypalFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -137,14 +135,11 @@ export default function PaypalFieldSettings() {
   return (
     <div>
 
-      <div className={css(style.section, style.flxColumn)}>
-        <Back2FldBtn size="20" className={css(style.btn)} />
-        <div>
-          <div className={css(style.mainTitle)}>{__('Field Settings', 'bitform')}</div>
-          <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
-        </div>
-      </div>
-      <FieldSettingsDivider />
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ}
+        fieldKey={fldKey}
+      />
 
       {/*
       <div className="mb-2">

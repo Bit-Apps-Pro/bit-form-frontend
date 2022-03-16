@@ -34,9 +34,10 @@ import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import HelperTxtSetting from './CompSettingsUtils/HelperTxtSetting'
-import SubTitleSetting from './CompSettingsUtils/SubTitleSetting'
-import UniqField from './CompSettingsUtils/UniqField'
+import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
+import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
@@ -518,11 +519,11 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        <SubTitleSetting />
+        <SubTitleSettings />
 
         <FieldSettingsDivider />
 
-        <HelperTxtSetting />
+        <HelperTxtSettings />
 
         <FieldSettingsDivider />
 
@@ -700,7 +701,7 @@ function TextFieldSettings() {
           )
         }
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Required', 'bitform')}
           // eslint-disable-next-line react/jsx-no-bind
           toggleAction={setRequired}
@@ -717,7 +718,8 @@ function TextFieldSettings() {
             title="Error Message"
             tipTitle="By enabling this feature, user will see the error message when input is empty"
           />
-        </SimpleAccordion>
+        </SimpleAccordion> */}
+        <RequiredSettings />
         {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
         <FieldSettingsDivider />
         {
@@ -786,7 +788,7 @@ function TextFieldSettings() {
           )
         }
 
-        <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
+        <FieldHideSettings />
         <FieldSettingsDivider />
         <FieldReadOnlySettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
 
@@ -806,7 +808,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <>
-              <UniqField
+              <UniqFieldSettings
                 type="entryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."

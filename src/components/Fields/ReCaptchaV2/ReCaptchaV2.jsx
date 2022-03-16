@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHookStates, $fields, $flags } from '../../../GlobalStates/GlobalStates'
+import { $bits, $breakpoint, $builderHookStates, $fields, $flags } from '../../../GlobalStates/GlobalStates'
 import { loadScript, selectInGrid } from '../../../Utils/globalHelpers'
 import RenderStyle from '../../style-new/RenderStyle'
 import RecaptchaField from './re-captchaV2'
 
 export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
+  const bits = useRecoilValue($bits)
   const recaptchaWrapElmRef = useRef(null)
   const recaptchaFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
