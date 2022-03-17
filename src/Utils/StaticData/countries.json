@@ -1,1532 +1,1526 @@
 [
   {
-    "label": "Afghanistan",
-    "value": "Afghanistan",
-    "code": "AF",
-    "prefix_img": "/../static/countries/af.png"
+    "i": "AF",
+    "lbl": "Afghanistan",
+    "val": "Afghanistan",
+    "img": "/../static/countries/af.png"
   },
   {
-    "label": "Albania",
-    "value": "Albania",
-    "code": "AL",
-    "prefix_img": "/../static/countries/al.png"
+    "i": "AL",
+    "lbl": "Albania",
+    "val": "Albania",
+    "img": "/../static/countries/al.png"
   },
   {
-    "label": "Algeria",
-    "value": "Algeria",
-    "code": "DZ",
-    "prefix_img": "/../static/countries/dz.png"
+    "i": "DZ",
+    "lbl": "Algeria",
+    "val": "Algeria",
+    "img": "/../static/countries/dz.png"
   },
   {
-    "label": "American Samoa",
-    "value": "American Samoa",
-    "code": "AS",
-    "prefix_img": "/../static/countries/as.png"
+    "i": "AS",
+    "lbl": "American Samoa",
+    "val": "American Samoa",
+    "img": "/../static/countries/as.png"
   },
   {
-    "label": "Andorra",
-    "value": "Andorra",
-    "code": "AD",
-    "prefix_img": "/../static/countries/ad.png"
+    "i": "AD",
+    "lbl": "Andorra",
+    "val": "Andorra",
+    "img": "/../static/countries/ad.png"
   },
   {
-    "label": "Angola",
-    "value": "Angola",
-    "code": "AO",
-    "prefix_img": "/../static/countries/ao.png"
+    "i": "AO",
+    "lbl": "Angola",
+    "val": "Angola",
+    "img": "/../static/countries/ao.png"
   },
   {
-    "label": "Anguilla",
-    "value": "Anguilla",
-    "code": "AI",
-    "prefix_img": "/../static/countries/ai.png"
+    "i": "AI",
+    "lbl": "Anguilla",
+    "val": "Anguilla",
+    "img": "/../static/countries/ai.png"
   },
   {
-    "label": "Antarctica",
-    "value": "Antarctica",
-    "code": "AQ",
-    "prefix_img": "/../static/countries/aq.png"
+    "i": "AQ",
+    "lbl": "Antarctica",
+    "val": "Antarctica",
+    "img": "/../static/countries/aq.png"
   },
   {
-    "label": "Antigua and Barbuda",
-    "value": "Antigua and Barbuda",
-    "code": "AG",
-    "prefix_img": "/../static/countries/ag.png"
+    "i": "AG",
+    "lbl": "Antigua and Barbuda",
+    "val": "Antigua and Barbuda",
+    "img": "/../static/countries/ag.png"
   },
   {
-    "label": "Argentina",
-    "value": "Argentina",
-    "code": "AR",
-    "prefix_img": "/../static/countries/ar.png"
+    "i": "AR",
+    "lbl": "Argentina",
+    "val": "Argentina",
+    "img": "/../static/countries/ar.png"
   },
   {
-    "label": "Armenia",
-    "value": "Armenia",
-    "code": "AM",
-    "prefix_img": "/../static/countries/am.png"
+    "i": "AM",
+    "lbl": "Armenia",
+    "val": "Armenia",
+    "img": "/../static/countries/am.png"
   },
   {
-    "label": "Aruba",
-    "value": "Aruba",
-    "code": "AW",
-    "prefix_img": "/../static/countries/aw.png"
+    "i": "AW",
+    "lbl": "Aruba",
+    "val": "Aruba",
+    "img": "/../static/countries/aw.png"
   },
   {
-    "label": "Australia",
-    "value": "Australia",
-    "code": "AU",
-    "prefix_img": "/../static/countries/au.png"
+    "i": "AU",
+    "lbl": "Australia",
+    "val": "Australia",
+    "img": "/../static/countries/au.png"
   },
   {
-    "label": "Austria",
-    "value": "Austria",
-    "code": "AT",
-    "prefix_img": "/../static/countries/at.png"
+    "i": "AT",
+    "lbl": "Austria",
+    "val": "Austria",
+    "img": "/../static/countries/at.png"
   },
   {
-    "label": "Azerbaijan",
-    "value": "Azerbaijan",
-    "code": "AZ",
-    "prefix_img": "/../static/countries/az.png"
+    "i": "AZ",
+    "lbl": "Azerbaijan",
+    "val": "Azerbaijan",
+    "img": "/../static/countries/az.png"
   },
   {
-    "label": "Bahamas",
-    "value": "Bahamas",
-    "code": "BS",
-    "prefix_img": "/../static/countries/bs.png"
+    "i": "BS",
+    "lbl": "Bahamas (the)",
+    "val": "Bahamas (the)",
+    "img": "/../static/countries/bs.png"
   },
   {
-    "label": "Bahrain",
-    "value": "Bahrain",
-    "code": "BH",
-    "prefix_img": "/../static/countries/bh.png"
+    "i": "BH",
+    "lbl": "Bahrain",
+    "val": "Bahrain",
+    "img": "/../static/countries/bh.png"
   },
   {
-    "label": "Bangladesh",
-    "value": "Bangladesh",
-    "code": "BD",
-    "prefix_img": "/../static/countries/bd.png"
+    "i": "BD",
+    "lbl": "Bangladesh",
+    "val": "Bangladesh",
+    "img": "/../static/countries/bd.png"
   },
   {
-    "label": "Barbados",
-    "value": "Barbados",
-    "code": "BB",
-    "prefix_img": "/../static/countries/bb.png"
+    "i": "BB",
+    "lbl": "Barbados",
+    "val": "Barbados",
+    "img": "/../static/countries/bb.png"
   },
   {
-    "label": "Belarus",
-    "value": "Belarus",
-    "code": "BY",
-    "prefix_img": "/../static/countries/by.png"
+    "i": "BY",
+    "lbl": "Belarus",
+    "val": "Belarus",
+    "img": "/../static/countries/by.png"
   },
   {
-    "label": "Belgium",
-    "value": "Belgium",
-    "code": "BE",
-    "prefix_img": "/../static/countries/be.png"
+    "i": "BE",
+    "lbl": "Belgium",
+    "val": "Belgium",
+    "img": "/../static/countries/be.png"
   },
   {
-    "label": "Belize",
-    "value": "Belize",
-    "code": "BZ",
-    "prefix_img": "/../static/countries/bz.png"
+    "i": "BZ",
+    "lbl": "Belize",
+    "val": "Belize",
+    "img": "/../static/countries/bz.png"
   },
   {
-    "label": "Benin",
-    "value": "Benin",
-    "code": "BJ",
-    "prefix_img": "/../static/countries/bj.png"
+    "i": "BJ",
+    "lbl": "Benin",
+    "val": "Benin",
+    "img": "/../static/countries/bj.png"
   },
   {
-    "label": "Bermuda",
-    "value": "Bermuda",
-    "code": "BM",
-    "prefix_img": "/../static/countries/bm.png"
+    "i": "BM",
+    "lbl": "Bermuda",
+    "val": "Bermuda",
+    "img": "/../static/countries/bm.png"
   },
   {
-    "label": "Bhutan",
-    "value": "Bhutan",
-    "code": "BT",
-    "prefix_img": "/../static/countries/bt.png"
+    "i": "BT",
+    "lbl": "Bhutan",
+    "val": "Bhutan",
+    "img": "/../static/countries/bt.png"
   },
   {
-    "label": "Bolivia, Plurinational State of",
-    "value": "Bolivia, Plurinational State of",
-    "code": "BO",
-    "prefix_img": "/../static/countries/bo.png"
+    "i": "BO",
+    "lbl": "Bolivia (Plurinational State of)",
+    "val": "Bolivia (Plurinational State of)",
+    "img": "/../static/countries/bo.png"
   },
   {
-    "label": "Bosnia and Herzegovina",
-    "value": "Bosnia and Herzegovina",
-    "code": "BA",
-    "prefix_img": "/../static/countries/ba.png"
+    "i": "BQ",
+    "lbl": "Bonaire, Sint Eustatius and Saba",
+    "val": "Bonaire, Sint Eustatius and Saba",
+    "img": "/../static/countries/bq.png"
   },
   {
-    "label": "Botswana",
-    "value": "Botswana",
-    "code": "BW",
-    "prefix_img": "/../static/countries/bw.png"
+    "i": "BA",
+    "lbl": "Bosnia and Herzegovina",
+    "val": "Bosnia and Herzegovina",
+    "img": "/../static/countries/ba.png"
   },
   {
-    "label": "Bouvet Island",
-    "value": "Bouvet Island",
-    "code": "BV",
-    "prefix_img": "/../static/countries/bv.png"
+    "i": "BW",
+    "lbl": "Botswana",
+    "val": "Botswana",
+    "img": "/../static/countries/bw.png"
   },
   {
-    "label": "Brazil",
-    "value": "Brazil",
-    "code": "BR",
-    "prefix_img": "/../static/countries/br.png"
+    "i": "BV",
+    "lbl": "Bouvet Island",
+    "val": "Bouvet Island",
+    "img": "/../static/countries/bv.png"
   },
   {
-    "label": "British Indian Ocean Territory",
-    "value": "British Indian Ocean Territory",
-    "code": "IO",
-    "prefix_img": "/../static/countries/io.png"
+    "i": "BR",
+    "lbl": "Brazil",
+    "val": "Brazil",
+    "img": "/../static/countries/br.png"
   },
   {
-    "label": "Brunei Darussalam",
-    "value": "Brunei Darussalam",
-    "code": "BN",
-    "prefix_img": "/../static/countries/bn.png"
+    "i": "IO",
+    "lbl": "British Indian Ocean Territory (the)",
+    "val": "British Indian Ocean Territory (the)",
+    "img": "/../static/countries/io.png"
   },
   {
-    "label": "Bulgaria",
-    "value": "Bulgaria",
-    "code": "BG",
-    "prefix_img": "/../static/countries/bg.png"
+    "i": "BN",
+    "lbl": "Brunei Darussalam",
+    "val": "Brunei Darussalam",
+    "img": "/../static/countries/bn.png"
   },
   {
-    "label": "Burkina Faso",
-    "value": "Burkina Faso",
-    "code": "BF",
-    "prefix_img": "/../static/countries/bf.png"
+    "i": "BG",
+    "lbl": "Bulgaria",
+    "val": "Bulgaria",
+    "img": "/../static/countries/bg.png"
   },
   {
-    "label": "Burundi",
-    "value": "Burundi",
-    "code": "BI",
-    "prefix_img": "/../static/countries/bi.png"
+    "i": "BF",
+    "lbl": "Burkina Faso",
+    "val": "Burkina Faso",
+    "img": "/../static/countries/bf.png"
   },
   {
-    "label": "Cambodia",
-    "value": "Cambodia",
-    "code": "KH",
-    "prefix_img": "/../static/countries/kh.png"
+    "i": "BI",
+    "lbl": "Burundi",
+    "val": "Burundi",
+    "img": "/../static/countries/bi.png"
   },
   {
-    "label": "Cameroon",
-    "value": "Cameroon",
-    "code": "CM",
-    "prefix_img": "/../static/countries/cm.png"
+    "i": "CV",
+    "lbl": "Cabo Verde",
+    "val": "Cabo Verde",
+    "img": "/../static/countries/cv.png"
   },
   {
-    "label": "Canada",
-    "value": "Canada",
-    "code": "CA",
-    "prefix_img": "/../static/countries/ca.png"
+    "i": "KH",
+    "lbl": "Cambodia",
+    "val": "Cambodia",
+    "img": "/../static/countries/kh.png"
   },
   {
-    "label": "Cape Verde",
-    "value": "Cape Verde",
-    "code": "CV",
-    "prefix_img": "/../static/countries/cv.png"
+    "i": "CM",
+    "lbl": "Cameroon",
+    "val": "Cameroon",
+    "img": "/../static/countries/cm.png"
   },
   {
-    "label": "Caribbean Netherlands",
-    "value": "Caribbean Netherlands",
-    "code": "BQ",
-    "prefix_img": "/../static/countries/bq.png"
+    "i": "CA",
+    "lbl": "Canada",
+    "val": "Canada",
+    "img": "/../static/countries/ca.png"
   },
   {
-    "label": "Cayman Islands",
-    "value": "Cayman Islands",
-    "code": "KY",
-    "prefix_img": "/../static/countries/ky.png"
+    "i": "KY",
+    "lbl": "Cayman Islands (the)",
+    "val": "Cayman Islands (the)",
+    "img": "/../static/countries/ky.png"
   },
   {
-    "label": "Central African Republic",
-    "value": "Central African Republic",
-    "code": "CF",
-    "prefix_img": "/../static/countries/cf.png"
+    "i": "CF",
+    "lbl": "Central African Republic (the)",
+    "val": "Central African Republic (the)",
+    "img": "/../static/countries/cf.png"
   },
   {
-    "label": "Chad",
-    "value": "Chad",
-    "code": "TD",
-    "prefix_img": "/../static/countries/td.png"
+    "i": "TD",
+    "lbl": "Chad",
+    "val": "Chad",
+    "img": "/../static/countries/td.png"
   },
   {
-    "label": "Chile",
-    "value": "Chile",
-    "code": "CL",
-    "prefix_img": "/../static/countries/cl.png"
+    "i": "CL",
+    "lbl": "Chile",
+    "val": "Chile",
+    "img": "/../static/countries/cl.png"
   },
   {
-    "label": "China (People's Republic of China)",
-    "value": "China (People's Republic of China)",
-    "code": "CN",
-    "prefix_img": "/../static/countries/cn.png"
+    "i": "CN",
+    "lbl": "China",
+    "val": "China",
+    "img": "/../static/countries/cn.png"
   },
   {
-    "label": "Christmas Island",
-    "value": "Christmas Island",
-    "code": "CX",
-    "prefix_img": "/../static/countries/cx.png"
+    "i": "CX",
+    "lbl": "Christmas Island",
+    "val": "Christmas Island",
+    "img": "/../static/countries/cx.png"
   },
   {
-    "label": "Cocos (Keeling) Islands",
-    "value": "Cocos (Keeling) Islands",
-    "code": "CC",
-    "prefix_img": "/../static/countries/cc.png"
+    "i": "CC",
+    "lbl": "Cocos (Keeling) Islands (the)",
+    "val": "Cocos (Keeling) Islands (the)",
+    "img": "/../static/countries/cc.png"
   },
   {
-    "label": "Colombia",
-    "value": "Colombia",
-    "code": "CO",
-    "prefix_img": "/../static/countries/co.png"
+    "i": "CO",
+    "lbl": "Colombia",
+    "val": "Colombia",
+    "img": "/../static/countries/co.png"
   },
   {
-    "label": "Comoros",
-    "value": "Comoros",
-    "code": "KM",
-    "prefix_img": "/../static/countries/km.png"
+    "i": "KM",
+    "lbl": "Comoros (the)",
+    "val": "Comoros (the)",
+    "img": "/../static/countries/km.png"
   },
   {
-    "label": "Congo, the Democratic Republic of the",
-    "value": "Congo, the Democratic Republic of the",
-    "code": "CD",
-    "prefix_img": "/../static/countries/cd.png"
+    "i": "CD",
+    "lbl": "Congo (the Democratic Republic of the)",
+    "val": "Congo (the Democratic Republic of the)",
+    "img": "/../static/countries/cd.png"
   },
   {
-    "label": "Cook Islands",
-    "value": "Cook Islands",
-    "code": "CK",
-    "prefix_img": "/../static/countries/ck.png"
+    "i": "CG",
+    "lbl": "Congo (the)",
+    "val": "Congo (the)",
+    "img": "/../static/countries/cg.png"
   },
   {
-    "label": "Costa Rica",
-    "value": "Costa Rica",
-    "code": "CR",
-    "prefix_img": "/../static/countries/cr.png"
+    "i": "CK",
+    "lbl": "Cook Islands (the)",
+    "val": "Cook Islands (the)",
+    "img": "/../static/countries/ck.png"
   },
   {
-    "label": "Croatia",
-    "value": "Croatia",
-    "code": "HR",
-    "prefix_img": "/../static/countries/hr.png"
+    "i": "CR",
+    "lbl": "Costa Rica",
+    "val": "Costa Rica",
+    "img": "/../static/countries/cr.png"
   },
   {
-    "label": "Cuba",
-    "value": "Cuba",
-    "code": "CU",
-    "prefix_img": "/../static/countries/cu.png"
+    "i": "HR",
+    "lbl": "Croatia",
+    "val": "Croatia",
+    "img": "/../static/countries/hr.png"
   },
   {
-    "label": "Curaçao",
-    "value": "Curaçao",
-    "code": "CW",
-    "prefix_img": "/../static/countries/cw.png"
+    "i": "CU",
+    "lbl": "Cuba",
+    "val": "Cuba",
+    "img": "/../static/countries/cu.png"
   },
   {
-    "label": "Cyprus",
-    "value": "Cyprus",
-    "code": "CY",
-    "prefix_img": "/../static/countries/cy.png"
+    "i": "CW",
+    "lbl": "Curaçao",
+    "val": "Curaçao",
+    "img": "/../static/countries/cw.png"
   },
   {
-    "label": "Czech Republic",
-    "value": "Czech Republic",
-    "code": "CZ",
-    "prefix_img": "/../static/countries/cz.png"
+    "i": "CY",
+    "lbl": "Cyprus",
+    "val": "Cyprus",
+    "img": "/../static/countries/cy.png"
   },
   {
-    "label": "Côte d'Ivoire",
-    "value": "Côte d'Ivoire",
-    "code": "CI",
-    "prefix_img": "/../static/countries/ci.png"
+    "i": "CZ",
+    "lbl": "Czechia",
+    "val": "Czechia",
+    "img": "/../static/countries/cz.png"
   },
   {
-    "label": "Denmark",
-    "value": "Denmark",
-    "code": "DK",
-    "prefix_img": "/../static/countries/dk.png"
+    "i": "CI",
+    "lbl": "Côte d'Ivoire",
+    "val": "Côte d'Ivoire",
+    "img": "/../static/countries/ci.png"
   },
   {
-    "label": "Djibouti",
-    "value": "Djibouti",
-    "code": "DJ",
-    "prefix_img": "/../static/countries/dj.png"
+    "i": "DK",
+    "lbl": "Denmark",
+    "val": "Denmark",
+    "img": "/../static/countries/dk.png"
   },
   {
-    "label": "Dominica",
-    "value": "Dominica",
-    "code": "DM",
-    "prefix_img": "/../static/countries/dm.png"
+    "i": "DJ",
+    "lbl": "Djibouti",
+    "val": "Djibouti",
+    "img": "/../static/countries/dj.png"
   },
   {
-    "label": "Dominican Republic",
-    "value": "Dominican Republic",
-    "code": "DO",
-    "prefix_img": "/../static/countries/do.png"
+    "i": "DM",
+    "lbl": "Dominica",
+    "val": "Dominica",
+    "img": "/../static/countries/dm.png"
   },
   {
-    "label": "Ecuador",
-    "value": "Ecuador",
-    "code": "EC",
-    "prefix_img": "/../static/countries/ec.png"
+    "i": "DO",
+    "lbl": "Dominican Republic (the)",
+    "val": "Dominican Republic (the)",
+    "img": "/../static/countries/do.png"
   },
   {
-    "label": "Egypt",
-    "value": "Egypt",
-    "code": "EG",
-    "prefix_img": "/../static/countries/eg.png"
+    "i": "EU",
+    "lbl": "Drapeau européen",
+    "val": "Drapeau européen",
+    "img": "/../static/countries/eu.png"
   },
   {
-    "label": "El Salvador",
-    "value": "El Salvador",
-    "code": "SV",
-    "prefix_img": "/../static/countries/sv.png"
+    "i": "EC",
+    "lbl": "Ecuador",
+    "val": "Ecuador",
+    "img": "/../static/countries/ec.png"
   },
   {
-    "label": "England",
-    "value": "England",
-    "code": "GB-ENG",
-    "prefix_img": "/../static/countries/gb-eng.png"
+    "i": "EG",
+    "lbl": "Egypt",
+    "val": "Egypt",
+    "img": "/../static/countries/eg.png"
   },
   {
-    "label": "Equatorial Guinea",
-    "value": "Equatorial Guinea",
-    "code": "GQ",
-    "prefix_img": "/../static/countries/gq.png"
+    "i": "GB-ENG",
+    "lbl": "England",
+    "val": "England",
+    "img": "/../static/countries/gb-eng.png"
   },
   {
-    "label": "Eritrea",
-    "value": "Eritrea",
-    "code": "ER",
-    "prefix_img": "/../static/countries/er.png"
+    "i": "SV",
+    "lbl": "El Salvador",
+    "val": "El Salvador",
+    "img": "/../static/countries/sv.png"
   },
   {
-    "label": "Estonia",
-    "value": "Estonia",
-    "code": "EE",
-    "prefix_img": "/../static/countries/ee.png"
+    "i": "GQ",
+    "lbl": "Equatorial Guinea",
+    "val": "Equatorial Guinea",
+    "img": "/../static/countries/gq.png"
   },
   {
-    "label": "Ethiopia",
-    "value": "Ethiopia",
-    "code": "ET",
-    "prefix_img": "/../static/countries/et.png"
+    "i": "ER",
+    "lbl": "Eritrea",
+    "val": "Eritrea",
+    "img": "/../static/countries/er.png"
   },
   {
-    "label": "Europe",
-    "value": "Europe",
-    "code": "EU",
-    "prefix_img": "/../static/countries/eu.png"
+    "i": "EE",
+    "lbl": "Estonia",
+    "val": "Estonia",
+    "img": "/../static/countries/ee.png"
   },
   {
-    "label": "Falkland Islands (Malvinas)",
-    "value": "Falkland Islands (Malvinas)",
-    "code": "FK",
-    "prefix_img": "/../static/countries/fk.png"
+    "i": "SZ",
+    "lbl": "Eswatini",
+    "val": "Eswatini",
+    "img": "/../static/countries/sz.png"
   },
   {
-    "label": "Faroe Islands",
-    "value": "Faroe Islands",
-    "code": "FO",
-    "prefix_img": "/../static/countries/fo.png"
+    "i": "ET",
+    "lbl": "Ethiopia",
+    "val": "Ethiopia",
+    "img": "/../static/countries/et.png"
   },
   {
-    "label": "Fiji",
-    "value": "Fiji",
-    "code": "FJ",
-    "prefix_img": "/../static/countries/fj.png"
+    "i": "FK",
+    "lbl": "Falkland Islands (the) [Malvinas]",
+    "val": "Falkland Islands (the) [Malvinas]",
+    "img": "/../static/countries/fk.png"
   },
   {
-    "label": "Finland",
-    "value": "Finland",
-    "code": "FI",
-    "prefix_img": "/../static/countries/fi.png"
+    "i": "FO",
+    "lbl": "Faroe Islands (the)",
+    "val": "Faroe Islands (the)",
+    "img": "/../static/countries/fo.png"
   },
   {
-    "label": "France",
-    "value": "France",
-    "code": "FR",
-    "prefix_img": "/../static/countries/fr.png"
+    "i": "FJ",
+    "lbl": "Fiji",
+    "val": "Fiji",
+    "img": "/../static/countries/fj.png"
   },
   {
-    "label": "French Guiana",
-    "value": "French Guiana",
-    "code": "GF",
-    "prefix_img": "/../static/countries/gf.png"
+    "i": "FI",
+    "lbl": "Finland",
+    "val": "Finland",
+    "img": "/../static/countries/fi.png"
   },
   {
-    "label": "French Polynesia",
-    "value": "French Polynesia",
-    "code": "PF",
-    "prefix_img": "/../static/countries/pf.png"
+    "i": "FR",
+    "lbl": "France",
+    "val": "France",
+    "img": "/../static/countries/fr.png"
   },
   {
-    "label": "French Southern Territories",
-    "value": "French Southern Territories",
-    "code": "TF",
-    "prefix_img": "/../static/countries/tf.png"
+    "i": "GF",
+    "lbl": "French Guiana",
+    "val": "French Guiana",
+    "img": "/../static/countries/gf.png"
   },
   {
-    "label": "Gabon",
-    "value": "Gabon",
-    "code": "GA",
-    "prefix_img": "/../static/countries/ga.png"
+    "i": "PF",
+    "lbl": "French Polynesia",
+    "val": "French Polynesia",
+    "img": "/../static/countries/pf.png"
   },
   {
-    "label": "Gambia",
-    "value": "Gambia",
-    "code": "GM",
-    "prefix_img": "/../static/countries/gm.png"
+    "i": "TF",
+    "lbl": "French Southern Territories (the)",
+    "val": "French Southern Territories (the)",
+    "img": "/../static/countries/tf.png"
   },
   {
-    "label": "Georgia",
-    "value": "Georgia",
-    "code": "GE",
-    "prefix_img": "/../static/countries/ge.png"
+    "i": "GA",
+    "lbl": "Gabon",
+    "val": "Gabon",
+    "img": "/../static/countries/ga.png"
   },
   {
-    "label": "Germany",
-    "value": "Germany",
-    "code": "DE",
-    "prefix_img": "/../static/countries/de.png"
+    "i": "GM",
+    "lbl": "Gambia (the)",
+    "val": "Gambia (the)",
+    "img": "/../static/countries/gm.png"
   },
   {
-    "label": "Ghana",
-    "value": "Ghana",
-    "code": "GH",
-    "prefix_img": "/../static/countries/gh.png"
+    "i": "GE",
+    "lbl": "Georgia",
+    "val": "Georgia",
+    "img": "/../static/countries/ge.png"
   },
   {
-    "label": "Gibraltar",
-    "value": "Gibraltar",
-    "code": "GI",
-    "prefix_img": "/../static/countries/gi.png"
+    "i": "DE",
+    "lbl": "Germany",
+    "val": "Germany",
+    "img": "/../static/countries/de.png"
   },
   {
-    "label": "Greece",
-    "value": "Greece",
-    "code": "GR",
-    "prefix_img": "/../static/countries/gr.png"
+    "i": "GH",
+    "lbl": "Ghana",
+    "val": "Ghana",
+    "img": "/../static/countries/gh.png"
   },
   {
-    "label": "Greenland",
-    "value": "Greenland",
-    "code": "GL",
-    "prefix_img": "/../static/countries/gl.png"
+    "i": "GI",
+    "lbl": "Gibraltar",
+    "val": "Gibraltar",
+    "img": "/../static/countries/gi.png"
   },
   {
-    "label": "Grenada",
-    "value": "Grenada",
-    "code": "GD",
-    "prefix_img": "/../static/countries/gd.png"
+    "i": "GR",
+    "lbl": "Greece",
+    "val": "Greece",
+    "img": "/../static/countries/gr.png"
   },
   {
-    "label": "Guadeloupe",
-    "value": "Guadeloupe",
-    "code": "GP",
-    "prefix_img": "/../static/countries/gp.png"
+    "i": "GL",
+    "lbl": "Greenland",
+    "val": "Greenland",
+    "img": "/../static/countries/gl.png"
   },
   {
-    "label": "Guam",
-    "value": "Guam",
-    "code": "GU",
-    "prefix_img": "/../static/countries/gu.png"
+    "i": "GD",
+    "lbl": "Grenada",
+    "val": "Grenada",
+    "img": "/../static/countries/gd.png"
   },
   {
-    "label": "Guatemala",
-    "value": "Guatemala",
-    "code": "GT",
-    "prefix_img": "/../static/countries/gt.png"
+    "i": "GP",
+    "lbl": "Guadeloupe",
+    "val": "Guadeloupe",
+    "img": "/../static/countries/gp.png"
   },
   {
-    "label": "Guernsey",
-    "value": "Guernsey",
-    "code": "GG",
-    "prefix_img": "/../static/countries/gg.png"
+    "i": "GU",
+    "lbl": "Guam",
+    "val": "Guam",
+    "img": "/../static/countries/gu.png"
   },
   {
-    "label": "Guinea",
-    "value": "Guinea",
-    "code": "GN",
-    "prefix_img": "/../static/countries/gn.png"
+    "i": "GT",
+    "lbl": "Guatemala",
+    "val": "Guatemala",
+    "img": "/../static/countries/gt.png"
   },
   {
-    "label": "Guinea-Bissau",
-    "value": "Guinea-Bissau",
-    "code": "GW",
-    "prefix_img": "/../static/countries/gw.png"
+    "i": "GG",
+    "lbl": "Guernsey",
+    "val": "Guernsey",
+    "img": "/../static/countries/gg.png"
   },
   {
-    "label": "Guyana",
-    "value": "Guyana",
-    "code": "GY",
-    "prefix_img": "/../static/countries/gy.png"
+    "i": "GN",
+    "lbl": "Guinea",
+    "val": "Guinea",
+    "img": "/../static/countries/gn.png"
   },
   {
-    "label": "Haiti",
-    "value": "Haiti",
-    "code": "HT",
-    "prefix_img": "/../static/countries/ht.png"
+    "i": "GW",
+    "lbl": "Guinea-Bissau",
+    "val": "Guinea-Bissau",
+    "img": "/../static/countries/gw.png"
   },
   {
-    "label": "Heard Island and McDonald Islands",
-    "value": "Heard Island and McDonald Islands",
-    "code": "HM",
-    "prefix_img": "/../static/countries/hm.png"
+    "i": "GY",
+    "lbl": "Guyana",
+    "val": "Guyana",
+    "img": "/../static/countries/gy.png"
   },
   {
-    "label": "Holy See (Vatican City State)",
-    "value": "Holy See (Vatican City State)",
-    "code": "VA",
-    "prefix_img": "/../static/countries/va.png"
+    "i": "HT",
+    "lbl": "Haiti",
+    "val": "Haiti",
+    "img": "/../static/countries/ht.png"
   },
   {
-    "label": "Honduras",
-    "value": "Honduras",
-    "code": "HN",
-    "prefix_img": "/../static/countries/hn.png"
+    "i": "HM",
+    "lbl": "Heard Island and McDonald Islands",
+    "val": "Heard Island and McDonald Islands",
+    "img": "/../static/countries/hm.png"
   },
   {
-    "label": "Hong Kong",
-    "value": "Hong Kong",
-    "code": "HK",
-    "prefix_img": "/../static/countries/hk.png"
+    "i": "VA",
+    "lbl": "Holy See (the)",
+    "val": "Holy See (the)",
+    "img": "/../static/countries/va.png"
   },
   {
-    "label": "Hungary",
-    "value": "Hungary",
-    "code": "HU",
-    "prefix_img": "/../static/countries/hu.png"
+    "i": "HN",
+    "lbl": "Honduras",
+    "val": "Honduras",
+    "img": "/../static/countries/hn.png"
   },
   {
-    "label": "Iceland",
-    "value": "Iceland",
-    "code": "IS",
-    "prefix_img": "/../static/countries/is.png"
+    "i": "HK",
+    "lbl": "Hong Kong",
+    "val": "Hong Kong",
+    "img": "/../static/countries/hk.png"
   },
   {
-    "label": "India",
-    "value": "India",
-    "code": "IN",
-    "prefix_img": "/../static/countries/in.png"
+    "i": "HU",
+    "lbl": "Hungary",
+    "val": "Hungary",
+    "img": "/../static/countries/hu.png"
   },
   {
-    "label": "Indonesia",
-    "value": "Indonesia",
-    "code": "ID",
-    "prefix_img": "/../static/countries/id.png"
+    "i": "IS",
+    "lbl": "Iceland",
+    "val": "Iceland",
+    "img": "/../static/countries/is.png"
   },
   {
-    "label": "Iran, Islamic Republic of",
-    "value": "Iran, Islamic Republic of",
-    "code": "IR",
-    "prefix_img": "/../static/countries/ir.png"
+    "i": "IN",
+    "lbl": "India",
+    "val": "India",
+    "img": "/../static/countries/in.png"
   },
   {
-    "label": "Iraq",
-    "value": "Iraq",
-    "code": "IQ",
-    "prefix_img": "/../static/countries/iq.png"
+    "i": "ID",
+    "lbl": "Indonesia",
+    "val": "Indonesia",
+    "img": "/../static/countries/id.png"
   },
   {
-    "label": "Ireland",
-    "value": "Ireland",
-    "code": "IE",
-    "prefix_img": "/../static/countries/ie.png"
+    "i": "IR",
+    "lbl": "Iran (Islamic Republic of)",
+    "val": "Iran (Islamic Republic of)",
+    "img": "/../static/countries/ir.png"
   },
   {
-    "label": "Isle of Man",
-    "value": "Isle of Man",
-    "code": "IM",
-    "prefix_img": "/../static/countries/im.png"
+    "i": "IQ",
+    "lbl": "Iraq",
+    "val": "Iraq",
+    "img": "/../static/countries/iq.png"
   },
   {
-    "label": "Israel",
-    "value": "Israel",
-    "code": "IL",
-    "prefix_img": "/../static/countries/il.png"
+    "i": "IE",
+    "lbl": "Ireland",
+    "val": "Ireland",
+    "img": "/../static/countries/ie.png"
   },
   {
-    "label": "Italy",
-    "value": "Italy",
-    "code": "IT",
-    "prefix_img": "/../static/countries/it.png"
+    "i": "IM",
+    "lbl": "Isle of Man",
+    "val": "Isle of Man",
+    "img": "/../static/countries/im.png"
   },
   {
-    "label": "Jamaica",
-    "value": "Jamaica",
-    "code": "JM",
-    "prefix_img": "/../static/countries/jm.png"
+    "i": "IL",
+    "lbl": "Israel",
+    "val": "Israel",
+    "img": "/../static/countries/il.png"
   },
   {
-    "label": "Japan",
-    "value": "Japan",
-    "code": "JP",
-    "prefix_img": "/../static/countries/jp.png"
+    "i": "IT",
+    "lbl": "Italy",
+    "val": "Italy",
+    "img": "/../static/countries/it.png"
   },
   {
-    "label": "Jersey",
-    "value": "Jersey",
-    "code": "JE",
-    "prefix_img": "/../static/countries/je.png"
+    "i": "JM",
+    "lbl": "Jamaica",
+    "val": "Jamaica",
+    "img": "/../static/countries/jm.png"
   },
   {
-    "label": "Jordan",
-    "value": "Jordan",
-    "code": "JO",
-    "prefix_img": "/../static/countries/jo.png"
+    "i": "JP",
+    "lbl": "Japan",
+    "val": "Japan",
+    "img": "/../static/countries/jp.png"
   },
   {
-    "label": "Kazakhstan",
-    "value": "Kazakhstan",
-    "code": "KZ",
-    "prefix_img": "/../static/countries/kz.png"
+    "i": "JE",
+    "lbl": "Jersey",
+    "val": "Jersey",
+    "img": "/../static/countries/je.png"
   },
   {
-    "label": "Kenya",
-    "value": "Kenya",
-    "code": "KE",
-    "prefix_img": "/../static/countries/ke.png"
+    "i": "JO",
+    "lbl": "Jordan",
+    "val": "Jordan",
+    "img": "/../static/countries/jo.png"
   },
   {
-    "label": "Kiribati",
-    "value": "Kiribati",
-    "code": "KI",
-    "prefix_img": "/../static/countries/ki.png"
+    "i": "KZ",
+    "lbl": "Kazakhstan",
+    "val": "Kazakhstan",
+    "img": "/../static/countries/kz.png"
   },
   {
-    "label": "Korea, Democratic People's Republic of",
-    "value": "Korea, Democratic People's Republic of",
-    "code": "KP",
-    "prefix_img": "/../static/countries/kp.png"
+    "i": "KE",
+    "lbl": "Kenya",
+    "val": "Kenya",
+    "img": "/../static/countries/ke.png"
   },
   {
-    "label": "Korea, Republic of",
-    "value": "Korea, Republic of",
-    "code": "KR",
-    "prefix_img": "/../static/countries/kr.png"
+    "i": "KI",
+    "lbl": "Kiribati",
+    "val": "Kiribati",
+    "img": "/../static/countries/ki.png"
   },
   {
-    "label": "Kosovo",
-    "value": "Kosovo",
-    "code": "XK",
-    "prefix_img": "/../static/countries/xk.png"
+    "i": "KP",
+    "lbl": "Korea (the Democratic People's Republic of)",
+    "val": "Korea (the Democratic People's Republic of)",
+    "img": "/../static/countries/kp.png"
   },
   {
-    "label": "Kuwait",
-    "value": "Kuwait",
-    "code": "KW",
-    "prefix_img": "/../static/countries/kw.png"
+    "i": "KR",
+    "lbl": "Korea (the Republic of)",
+    "val": "Korea (the Republic of)",
+    "img": "/../static/countries/kr.png"
   },
   {
-    "label": "Kyrgyzstan",
-    "value": "Kyrgyzstan",
-    "code": "KG",
-    "prefix_img": "/../static/countries/kg.png"
+    "i": "KW",
+    "lbl": "Kuwait",
+    "val": "Kuwait",
+    "img": "/../static/countries/kw.png"
   },
   {
-    "label": "Laos (Lao People's Democratic Republic)",
-    "value": "Laos (Lao People's Democratic Republic)",
-    "code": "LA",
-    "prefix_img": "/../static/countries/la.png"
+    "i": "KG",
+    "lbl": "Kyrgyzstan",
+    "val": "Kyrgyzstan",
+    "img": "/../static/countries/kg.png"
   },
   {
-    "label": "Latvia",
-    "value": "Latvia",
-    "code": "LV",
-    "prefix_img": "/../static/countries/lv.png"
+    "i": "LA",
+    "lbl": "Lao People's Democratic Republic (the)",
+    "val": "Lao People's Democratic Republic (the)",
+    "img": "/../static/countries/la.png"
   },
   {
-    "label": "Lebanon",
-    "value": "Lebanon",
-    "code": "LB",
-    "prefix_img": "/../static/countries/lb.png"
+    "i": "LV",
+    "lbl": "Latvia",
+    "val": "Latvia",
+    "img": "/../static/countries/lv.png"
   },
   {
-    "label": "Lesotho",
-    "value": "Lesotho",
-    "code": "LS",
-    "prefix_img": "/../static/countries/ls.png"
+    "i": "LB",
+    "lbl": "Lebanon",
+    "val": "Lebanon",
+    "img": "/../static/countries/lb.png"
   },
   {
-    "label": "Liberia",
-    "value": "Liberia",
-    "code": "LR",
-    "prefix_img": "/../static/countries/lr.png"
+    "i": "LS",
+    "lbl": "Lesotho",
+    "val": "Lesotho",
+    "img": "/../static/countries/ls.png"
   },
   {
-    "label": "Libya",
-    "value": "Libya",
-    "code": "LY",
-    "prefix_img": "/../static/countries/ly.png"
+    "i": "LR",
+    "lbl": "Liberia",
+    "val": "Liberia",
+    "img": "/../static/countries/lr.png"
   },
   {
-    "label": "Liechtenstein",
-    "value": "Liechtenstein",
-    "code": "LI",
-    "prefix_img": "/../static/countries/li.png"
+    "i": "LY",
+    "lbl": "Libya",
+    "val": "Libya",
+    "img": "/../static/countries/ly.png"
   },
   {
-    "label": "Lithuania",
-    "value": "Lithuania",
-    "code": "LT",
-    "prefix_img": "/../static/countries/lt.png"
+    "i": "LI",
+    "lbl": "Liechtenstein",
+    "val": "Liechtenstein",
+    "img": "/../static/countries/li.png"
   },
   {
-    "label": "Luxembourg",
-    "value": "Luxembourg",
-    "code": "LU",
-    "prefix_img": "/../static/countries/lu.png"
+    "i": "LT",
+    "lbl": "Lithuania",
+    "val": "Lithuania",
+    "img": "/../static/countries/lt.png"
   },
   {
-    "label": "Macao",
-    "value": "Macao",
-    "code": "MO",
-    "prefix_img": "/../static/countries/mo.png"
+    "i": "LU",
+    "lbl": "Luxembourg",
+    "val": "Luxembourg",
+    "img": "/../static/countries/lu.png"
   },
   {
-    "label": "Macedonia, the former Yugoslav Republic of",
-    "value": "Macedonia, the former Yugoslav Republic of",
-    "code": "MK",
-    "prefix_img": "/../static/countries/mk.png"
+    "i": "MO",
+    "lbl": "Macao",
+    "val": "Macao",
+    "img": "/../static/countries/mo.png"
   },
   {
-    "label": "Madagascar",
-    "value": "Madagascar",
-    "code": "MG",
-    "prefix_img": "/../static/countries/mg.png"
+    "i": "MG",
+    "lbl": "Madagascar",
+    "val": "Madagascar",
+    "img": "/../static/countries/mg.png"
   },
   {
-    "label": "Malawi",
-    "value": "Malawi",
-    "code": "MW",
-    "prefix_img": "/../static/countries/mw.png"
+    "i": "MW",
+    "lbl": "Malawi",
+    "val": "Malawi",
+    "img": "/../static/countries/mw.png"
   },
   {
-    "label": "Malaysia",
-    "value": "Malaysia",
-    "code": "MY",
-    "prefix_img": "/../static/countries/my.png"
+    "i": "MY",
+    "lbl": "Malaysia",
+    "val": "Malaysia",
+    "img": "/../static/countries/my.png"
   },
   {
-    "label": "Maldives",
-    "value": "Maldives",
-    "code": "MV",
-    "prefix_img": "/../static/countries/mv.png"
+    "i": "MV",
+    "lbl": "Maldives",
+    "val": "Maldives",
+    "img": "/../static/countries/mv.png"
   },
   {
-    "label": "Mali",
-    "value": "Mali",
-    "code": "ML",
-    "prefix_img": "/../static/countries/ml.png"
+    "i": "ML",
+    "lbl": "Mali",
+    "val": "Mali",
+    "img": "/../static/countries/ml.png"
   },
   {
-    "label": "Malta",
-    "value": "Malta",
-    "code": "MT",
-    "prefix_img": "/../static/countries/mt.png"
+    "i": "MT",
+    "lbl": "Malta",
+    "val": "Malta",
+    "img": "/../static/countries/mt.png"
   },
   {
-    "label": "Marshall Islands",
-    "value": "Marshall Islands",
-    "code": "MH",
-    "prefix_img": "/../static/countries/mh.png"
+    "i": "MH",
+    "lbl": "Marshall Islands (the)",
+    "val": "Marshall Islands (the)",
+    "img": "/../static/countries/mh.png"
   },
   {
-    "label": "Martinique",
-    "value": "Martinique",
-    "code": "MQ",
-    "prefix_img": "/../static/countries/mq.png"
+    "i": "MQ",
+    "lbl": "Martinique",
+    "val": "Martinique",
+    "img": "/../static/countries/mq.png"
   },
   {
-    "label": "Mauritania",
-    "value": "Mauritania",
-    "code": "MR",
-    "prefix_img": "/../static/countries/mr.png"
+    "i": "MR",
+    "lbl": "Mauritania",
+    "val": "Mauritania",
+    "img": "/../static/countries/mr.png"
   },
   {
-    "label": "Mauritius",
-    "value": "Mauritius",
-    "code": "MU",
-    "prefix_img": "/../static/countries/mu.png"
+    "i": "MU",
+    "lbl": "Mauritius",
+    "val": "Mauritius",
+    "img": "/../static/countries/mu.png"
   },
   {
-    "label": "Mayotte",
-    "value": "Mayotte",
-    "code": "YT",
-    "prefix_img": "/../static/countries/yt.png"
+    "i": "YT",
+    "lbl": "Mayotte",
+    "val": "Mayotte",
+    "img": "/../static/countries/yt.png"
   },
   {
-    "label": "Mexico",
-    "value": "Mexico",
-    "code": "MX",
-    "prefix_img": "/../static/countries/mx.png"
+    "i": "MX",
+    "lbl": "Mexico",
+    "val": "Mexico",
+    "img": "/../static/countries/mx.png"
   },
   {
-    "label": "Micronesia, Federated States of",
-    "value": "Micronesia, Federated States of",
-    "code": "FM",
-    "prefix_img": "/../static/countries/fm.png"
+    "i": "FM",
+    "lbl": "Micronesia (Federated States of)",
+    "val": "Micronesia (Federated States of)",
+    "img": "/../static/countries/fm.png"
   },
   {
-    "label": "Moldova, Republic of",
-    "value": "Moldova, Republic of",
-    "code": "MD",
-    "prefix_img": "/../static/countries/md.png"
+    "i": "MD",
+    "lbl": "Moldova (the Republic of)",
+    "val": "Moldova (the Republic of)",
+    "img": "/../static/countries/md.png"
   },
   {
-    "label": "Monaco",
-    "value": "Monaco",
-    "code": "MC",
-    "prefix_img": "/../static/countries/mc.png"
+    "i": "MC",
+    "lbl": "Monaco",
+    "val": "Monaco",
+    "img": "/../static/countries/mc.png"
   },
   {
-    "label": "Mongolia",
-    "value": "Mongolia",
-    "code": "MN",
-    "prefix_img": "/../static/countries/mn.png"
+    "i": "MN",
+    "lbl": "Mongolia",
+    "val": "Mongolia",
+    "img": "/../static/countries/mn.png"
   },
   {
-    "label": "Montenegro",
-    "value": "Montenegro",
-    "code": "ME",
-    "prefix_img": "/../static/countries/me.png"
+    "i": "ME",
+    "lbl": "Montenegro",
+    "val": "Montenegro",
+    "img": "/../static/countries/me.png"
   },
   {
-    "label": "Montserrat",
-    "value": "Montserrat",
-    "code": "MS",
-    "prefix_img": "/../static/countries/ms.png"
+    "i": "MS",
+    "lbl": "Montserrat",
+    "val": "Montserrat",
+    "img": "/../static/countries/ms.png"
   },
   {
-    "label": "Morocco",
-    "value": "Morocco",
-    "code": "MA",
-    "prefix_img": "/../static/countries/ma.png"
+    "i": "MA",
+    "lbl": "Morocco",
+    "val": "Morocco",
+    "img": "/../static/countries/ma.png"
   },
   {
-    "label": "Mozambique",
-    "value": "Mozambique",
-    "code": "MZ",
-    "prefix_img": "/../static/countries/mz.png"
+    "i": "MZ",
+    "lbl": "Mozambique",
+    "val": "Mozambique",
+    "img": "/../static/countries/mz.png"
   },
   {
-    "label": "Myanmar",
-    "value": "Myanmar",
-    "code": "MM",
-    "prefix_img": "/../static/countries/mm.png"
+    "i": "MM",
+    "lbl": "Myanmar",
+    "val": "Myanmar",
+    "img": "/../static/countries/mm.png"
   },
   {
-    "label": "Namibia",
-    "value": "Namibia",
-    "code": "NA",
-    "prefix_img": "/../static/countries/na.png"
+    "i": "NA",
+    "lbl": "Namibia",
+    "val": "Namibia",
+    "img": "/../static/countries/na.png"
   },
   {
-    "label": "Nauru",
-    "value": "Nauru",
-    "code": "NR",
-    "prefix_img": "/../static/countries/nr.png"
+    "i": "NR",
+    "lbl": "Nauru",
+    "val": "Nauru",
+    "img": "/../static/countries/nr.png"
   },
   {
-    "label": "Nepal",
-    "value": "Nepal",
-    "code": "NP",
-    "prefix_img": "/../static/countries/np.png"
+    "i": "NP",
+    "lbl": "Nepal",
+    "val": "Nepal",
+    "img": "/../static/countries/np.png"
   },
   {
-    "label": "Netherlands",
-    "value": "Netherlands",
-    "code": "NL",
-    "prefix_img": "/../static/countries/nl.png"
+    "i": "NL",
+    "lbl": "Netherlands (the)",
+    "val": "Netherlands (the)",
+    "img": "/../static/countries/nl.png"
   },
   {
-    "label": "New Caledonia",
-    "value": "New Caledonia",
-    "code": "NC",
-    "prefix_img": "/../static/countries/nc.png"
+    "i": "NC",
+    "lbl": "New Caledonia",
+    "val": "New Caledonia",
+    "img": "/../static/countries/nc.png"
   },
   {
-    "label": "New Zealand",
-    "value": "New Zealand",
-    "code": "NZ",
-    "prefix_img": "/../static/countries/nz.png"
+    "i": "NZ",
+    "lbl": "New Zealand",
+    "val": "New Zealand",
+    "img": "/../static/countries/nz.png"
   },
   {
-    "label": "Nicaragua",
-    "value": "Nicaragua",
-    "code": "NI",
-    "prefix_img": "/../static/countries/ni.png"
+    "i": "NI",
+    "lbl": "Nicaragua",
+    "val": "Nicaragua",
+    "img": "/../static/countries/ni.png"
   },
   {
-    "label": "Niger",
-    "value": "Niger",
-    "code": "NE",
-    "prefix_img": "/../static/countries/ne.png"
+    "i": "NE",
+    "lbl": "Niger (the)",
+    "val": "Niger (the)",
+    "img": "/../static/countries/ne.png"
   },
   {
-    "label": "Nigeria",
-    "value": "Nigeria",
-    "code": "NG",
-    "prefix_img": "/../static/countries/ng.png"
+    "i": "NG",
+    "lbl": "Nigeria",
+    "val": "Nigeria",
+    "img": "/../static/countries/ng.png"
   },
   {
-    "label": "Niue",
-    "value": "Niue",
-    "code": "NU",
-    "prefix_img": "/../static/countries/nu.png"
+    "i": "NU",
+    "lbl": "Niue",
+    "val": "Niue",
+    "img": "/../static/countries/nu.png"
   },
   {
-    "label": "Norfolk Island",
-    "value": "Norfolk Island",
-    "code": "NF",
-    "prefix_img": "/../static/countries/nf.png"
+    "i": "NF",
+    "lbl": "Norfolk Island",
+    "val": "Norfolk Island",
+    "img": "/../static/countries/nf.png"
   },
   {
-    "label": "Northern Ireland",
-    "value": "Northern Ireland",
-    "code": "GB-NIR",
-    "prefix_img": "/../static/countries/gb-nir.png"
+    "i": "GB-NIR",
+    "lbl": "Northern Ireland",
+    "val": "Northern Ireland",
+    "img": "/../static/countries/gb-nir.png"
   },
   {
-    "label": "Northern Mariana Islands",
-    "value": "Northern Mariana Islands",
-    "code": "MP",
-    "prefix_img": "/../static/countries/mp.png"
+    "i": "MP",
+    "lbl": "Northern Mariana Islands (the)",
+    "val": "Northern Mariana Islands (the)",
+    "img": "/../static/countries/mp.png"
   },
   {
-    "label": "Norway",
-    "value": "Norway",
-    "code": "NO",
-    "prefix_img": "/../static/countries/no.png"
+    "i": "NO",
+    "lbl": "Norway",
+    "val": "Norway",
+    "img": "/../static/countries/no.png"
   },
   {
-    "label": "Oman",
-    "value": "Oman",
-    "code": "OM",
-    "prefix_img": "/../static/countries/om.png"
+    "i": "OM",
+    "lbl": "Oman",
+    "val": "Oman",
+    "img": "/../static/countries/om.png"
   },
   {
-    "label": "Pakistan",
-    "value": "Pakistan",
-    "code": "PK",
-    "prefix_img": "/../static/countries/pk.png"
+    "i": "PK",
+    "lbl": "Pakistan",
+    "val": "Pakistan",
+    "img": "/../static/countries/pk.png"
   },
   {
-    "label": "Palau",
-    "value": "Palau",
-    "code": "PW",
-    "prefix_img": "/../static/countries/pw.png"
+    "i": "PW",
+    "lbl": "Palau",
+    "val": "Palau",
+    "img": "/../static/countries/pw.png"
   },
   {
-    "label": "Palestine",
-    "value": "Palestine",
-    "code": "PS",
-    "prefix_img": "/../static/countries/ps.png"
+    "i": "PS",
+    "lbl": "Palestine, State of",
+    "val": "Palestine, State of",
+    "img": "/../static/countries/ps.png"
   },
   {
-    "label": "Panama",
-    "value": "Panama",
-    "code": "PA",
-    "prefix_img": "/../static/countries/pa.png"
+    "i": "PA",
+    "lbl": "Panama",
+    "val": "Panama",
+    "img": "/../static/countries/pa.png"
   },
   {
-    "label": "Papua New Guinea",
-    "value": "Papua New Guinea",
-    "code": "PG",
-    "prefix_img": "/../static/countries/pg.png"
+    "i": "PG",
+    "lbl": "Papua New Guinea",
+    "val": "Papua New Guinea",
+    "img": "/../static/countries/pg.png"
   },
   {
-    "label": "Paraguay",
-    "value": "Paraguay",
-    "code": "PY",
-    "prefix_img": "/../static/countries/py.png"
+    "i": "PY",
+    "lbl": "Paraguay",
+    "val": "Paraguay",
+    "img": "/../static/countries/py.png"
   },
   {
-    "label": "Peru",
-    "value": "Peru",
-    "code": "PE",
-    "prefix_img": "/../static/countries/pe.png"
+    "i": "PE",
+    "lbl": "Peru",
+    "val": "Peru",
+    "img": "/../static/countries/pe.png"
   },
   {
-    "label": "Philippines",
-    "value": "Philippines",
-    "code": "PH",
-    "prefix_img": "/../static/countries/ph.png"
+    "i": "PH",
+    "lbl": "Philippines (the)",
+    "val": "Philippines (the)",
+    "img": "/../static/countries/ph.png"
   },
   {
-    "label": "Pitcairn",
-    "value": "Pitcairn",
-    "code": "PN",
-    "prefix_img": "/../static/countries/pn.png"
+    "i": "PN",
+    "lbl": "Pitcairn",
+    "val": "Pitcairn",
+    "img": "/../static/countries/pn.png"
   },
   {
-    "label": "Poland",
-    "value": "Poland",
-    "code": "PL",
-    "prefix_img": "/../static/countries/pl.png"
+    "i": "PL",
+    "lbl": "Poland",
+    "val": "Poland",
+    "img": "/../static/countries/pl.png"
   },
   {
-    "label": "Portugal",
-    "value": "Portugal",
-    "code": "PT",
-    "prefix_img": "/../static/countries/pt.png"
+    "i": "PT",
+    "lbl": "Portugal",
+    "val": "Portugal",
+    "img": "/../static/countries/pt.png"
   },
   {
-    "label": "Puerto Rico",
-    "value": "Puerto Rico",
-    "code": "PR",
-    "prefix_img": "/../static/countries/pr.png"
+    "i": "PR",
+    "lbl": "Puerto Rico",
+    "val": "Puerto Rico",
+    "img": "/../static/countries/pr.png"
   },
   {
-    "label": "Qatar",
-    "value": "Qatar",
-    "code": "QA",
-    "prefix_img": "/../static/countries/qa.png"
+    "i": "QA",
+    "lbl": "Qatar",
+    "val": "Qatar",
+    "img": "/../static/countries/qa.png"
   },
   {
-    "label": "Republic of the Congo",
-    "value": "Republic of the Congo",
-    "code": "CG",
-    "prefix_img": "/../static/countries/cg.png"
+    "i": "MK",
+    "lbl": "Republic of North Macedonia",
+    "val": "Republic of North Macedonia",
+    "img": "/../static/countries/mk.png"
   },
   {
-    "label": "Romania",
-    "value": "Romania",
-    "code": "RO",
-    "prefix_img": "/../static/countries/ro.png"
+    "i": "RO",
+    "lbl": "Romania",
+    "val": "Romania",
+    "img": "/../static/countries/ro.png"
   },
   {
-    "label": "Russian Federation",
-    "value": "Russian Federation",
-    "code": "RU",
-    "prefix_img": "/../static/countries/ru.png"
+    "i": "RU",
+    "lbl": "Russian Federation (the)",
+    "val": "Russian Federation (the)",
+    "img": "/../static/countries/ru.png"
   },
   {
-    "label": "Rwanda",
-    "value": "Rwanda",
-    "code": "RW",
-    "prefix_img": "/../static/countries/rw.png"
+    "i": "RW",
+    "lbl": "Rwanda",
+    "val": "Rwanda",
+    "img": "/../static/countries/rw.png"
   },
   {
-    "label": "Réunion",
-    "value": "Réunion",
-    "code": "RE",
-    "prefix_img": "/../static/countries/re.png"
+    "i": "RE",
+    "lbl": "Réunion",
+    "val": "Réunion",
+    "img": "/../static/countries/re.png"
   },
   {
-    "label": "Saint Barthélemy",
-    "value": "Saint Barthélemy",
-    "code": "BL",
-    "prefix_img": "/../static/countries/bl.png"
+    "i": "BL",
+    "lbl": "Saint Barthélemy",
+    "val": "Saint Barthélemy",
+    "img": "/../static/countries/bl.png"
   },
   {
-    "label": "Saint Helena, Ascension and Tristan da Cunha",
-    "value": "Saint Helena, Ascension and Tristan da Cunha",
-    "code": "SH",
-    "prefix_img": "/../static/countries/sh.png"
+    "i": "SH",
+    "lbl": "Saint Helena, Ascension and Tristan da Cunha",
+    "val": "Saint Helena, Ascension and Tristan da Cunha",
+    "img": "/../static/countries/sh.png"
   },
   {
-    "label": "Saint Kitts and Nevis",
-    "value": "Saint Kitts and Nevis",
-    "code": "KN",
-    "prefix_img": "/../static/countries/kn.png"
+    "i": "KN",
+    "lbl": "Saint Kitts and Nevis",
+    "val": "Saint Kitts and Nevis",
+    "img": "/../static/countries/kn.png"
   },
   {
-    "label": "Saint Lucia",
-    "value": "Saint Lucia",
-    "code": "LC",
-    "prefix_img": "/../static/countries/lc.png"
+    "i": "LC",
+    "lbl": "Saint Lucia",
+    "val": "Saint Lucia",
+    "img": "/../static/countries/lc.png"
   },
   {
-    "label": "Saint Martin",
-    "value": "Saint Martin",
-    "code": "MF",
-    "prefix_img": "/../static/countries/mf.png"
+    "i": "MF",
+    "lbl": "Saint Martin (French part)",
+    "val": "Saint Martin (French part)",
+    "img": "/../static/countries/mf.png"
   },
   {
-    "label": "Saint Pierre and Miquelon",
-    "value": "Saint Pierre and Miquelon",
-    "code": "PM",
-    "prefix_img": "/../static/countries/pm.png"
+    "i": "PM",
+    "lbl": "Saint Pierre and Miquelon",
+    "val": "Saint Pierre and Miquelon",
+    "img": "/../static/countries/pm.png"
   },
   {
-    "label": "Saint Vincent and the Grenadines",
-    "value": "Saint Vincent and the Grenadines",
-    "code": "VC",
-    "prefix_img": "/../static/countries/vc.png"
+    "i": "VC",
+    "lbl": "Saint Vincent and the Grenadines",
+    "val": "Saint Vincent and the Grenadines",
+    "img": "/../static/countries/vc.png"
   },
   {
-    "label": "Samoa",
-    "value": "Samoa",
-    "code": "WS",
-    "prefix_img": "/../static/countries/ws.png"
+    "i": "WS",
+    "lbl": "Samoa",
+    "val": "Samoa",
+    "img": "/../static/countries/ws.png"
   },
   {
-    "label": "San Marino",
-    "value": "San Marino",
-    "code": "SM",
-    "prefix_img": "/../static/countries/sm.png"
+    "i": "SM",
+    "lbl": "San Marino",
+    "val": "San Marino",
+    "img": "/../static/countries/sm.png"
   },
   {
-    "label": "Sao Tome and Principe",
-    "value": "Sao Tome and Principe",
-    "code": "ST",
-    "prefix_img": "/../static/countries/st.png"
+    "i": "ST",
+    "lbl": "Sao Tome and Principe",
+    "val": "Sao Tome and Principe",
+    "img": "/../static/countries/st.png"
   },
   {
-    "label": "Saudi Arabia",
-    "value": "Saudi Arabia",
-    "code": "SA",
-    "prefix_img": "/../static/countries/sa.png"
+    "i": "SA",
+    "lbl": "Saudi Arabia",
+    "val": "Saudi Arabia",
+    "img": "/../static/countries/sa.png"
   },
   {
-    "label": "Scotland",
-    "value": "Scotland",
-    "code": "GB-SCT",
-    "prefix_img": "/../static/countries/gb-sct.png"
+    "i": "GB-SCT",
+    "lbl": "Scotland",
+    "val": "Scotland",
+    "img": "/../static/countries/gb-sct.png"
   },
   {
-    "label": "Senegal",
-    "value": "Senegal",
-    "code": "SN",
-    "prefix_img": "/../static/countries/sn.png"
+    "i": "SN",
+    "lbl": "Senegal",
+    "val": "Senegal",
+    "img": "/../static/countries/sn.png"
   },
   {
-    "label": "Serbia",
-    "value": "Serbia",
-    "code": "RS",
-    "prefix_img": "/../static/countries/rs.png"
+    "i": "RS",
+    "lbl": "Serbia",
+    "val": "Serbia",
+    "img": "/../static/countries/rs.png"
   },
   {
-    "label": "Seychelles",
-    "value": "Seychelles",
-    "code": "SC",
-    "prefix_img": "/../static/countries/sc.png"
+    "i": "SC",
+    "lbl": "Seychelles",
+    "val": "Seychelles",
+    "img": "/../static/countries/sc.png"
   },
   {
-    "label": "Sierra Leone",
-    "value": "Sierra Leone",
-    "code": "SL",
-    "prefix_img": "/../static/countries/sl.png"
+    "i": "SL",
+    "lbl": "Sierra Leone",
+    "val": "Sierra Leone",
+    "img": "/../static/countries/sl.png"
   },
   {
-    "label": "Singapore",
-    "value": "Singapore",
-    "code": "SG",
-    "prefix_img": "/../static/countries/sg.png"
+    "i": "SG",
+    "lbl": "Singapore",
+    "val": "Singapore",
+    "img": "/../static/countries/sg.png"
   },
   {
-    "label": "Sint Maarten (Dutch part)",
-    "value": "Sint Maarten (Dutch part)",
-    "code": "SX",
-    "prefix_img": "/../static/countries/sx.png"
+    "i": "SX",
+    "lbl": "Sint Maarten (Dutch part)",
+    "val": "Sint Maarten (Dutch part)",
+    "img": "/../static/countries/sx.png"
   },
   {
-    "label": "Slovakia",
-    "value": "Slovakia",
-    "code": "SK",
-    "prefix_img": "/../static/countries/sk.png"
+    "i": "SK",
+    "lbl": "Slovakia",
+    "val": "Slovakia",
+    "img": "/../static/countries/sk.png"
   },
   {
-    "label": "Slovenia",
-    "value": "Slovenia",
-    "code": "SI",
-    "prefix_img": "/../static/countries/si.png"
+    "i": "SI",
+    "lbl": "Slovenia",
+    "val": "Slovenia",
+    "img": "/../static/countries/si.png"
   },
   {
-    "label": "Solomon Islands",
-    "value": "Solomon Islands",
-    "code": "SB",
-    "prefix_img": "/../static/countries/sb.png"
+    "i": "SB",
+    "lbl": "Solomon Islands",
+    "val": "Solomon Islands",
+    "img": "/../static/countries/sb.png"
   },
   {
-    "label": "Somalia",
-    "value": "Somalia",
-    "code": "SO",
-    "prefix_img": "/../static/countries/so.png"
+    "i": "SO",
+    "lbl": "Somalia",
+    "val": "Somalia",
+    "img": "/../static/countries/so.png"
   },
   {
-    "label": "South Africa",
-    "value": "South Africa",
-    "code": "ZA",
-    "prefix_img": "/../static/countries/za.png"
+    "i": "ZA",
+    "lbl": "South Africa",
+    "val": "South Africa",
+    "img": "/../static/countries/za.png"
   },
   {
-    "label": "South Georgia and the South Sandwich Islands",
-    "value": "South Georgia and the South Sandwich Islands",
-    "code": "GS",
-    "prefix_img": "/../static/countries/gs.png"
+    "i": "GS",
+    "lbl": "South Georgia and the South Sandwich Islands",
+    "val": "South Georgia and the South Sandwich Islands",
+    "img": "/../static/countries/gs.png"
   },
   {
-    "label": "South Sudan",
-    "value": "South Sudan",
-    "code": "SS",
-    "prefix_img": "/../static/countries/ss.png"
+    "i": "SS",
+    "lbl": "South Sudan",
+    "val": "South Sudan",
+    "img": "/../static/countries/ss.png"
   },
   {
-    "label": "Spain",
-    "value": "Spain",
-    "code": "ES",
-    "prefix_img": "/../static/countries/es.png"
+    "i": "ES",
+    "lbl": "Spain",
+    "val": "Spain",
+    "img": "/../static/countries/es.png"
   },
   {
-    "label": "Sri Lanka",
-    "value": "Sri Lanka",
-    "code": "LK",
-    "prefix_img": "/../static/countries/lk.png"
+    "i": "LK",
+    "lbl": "Sri Lanka",
+    "val": "Sri Lanka",
+    "img": "/../static/countries/lk.png"
   },
   {
-    "label": "Sudan",
-    "value": "Sudan",
-    "code": "SD",
-    "prefix_img": "/../static/countries/sd.png"
+    "i": "SD",
+    "lbl": "Sudan (the)",
+    "val": "Sudan (the)",
+    "img": "/../static/countries/sd.png"
   },
   {
-    "label": "Suriname",
-    "value": "Suriname",
-    "code": "SR",
-    "prefix_img": "/../static/countries/sr.png"
+    "i": "SR",
+    "lbl": "Suriname",
+    "val": "Suriname",
+    "img": "/../static/countries/sr.png"
   },
   {
-    "label": "Svalbard and Jan Mayen Islands",
-    "value": "Svalbard and Jan Mayen Islands",
-    "code": "SJ",
-    "prefix_img": "/../static/countries/sj.png"
+    "i": "SJ",
+    "lbl": "Svalbard and Jan Mayen",
+    "val": "Svalbard and Jan Mayen",
+    "img": "/../static/countries/sj.png"
   },
   {
-    "label": "Swaziland",
-    "value": "Swaziland",
-    "code": "SZ",
-    "prefix_img": "/../static/countries/sz.png"
+    "i": "SE",
+    "lbl": "Sweden",
+    "val": "Sweden",
+    "img": "/../static/countries/se.png"
   },
   {
-    "label": "Sweden",
-    "value": "Sweden",
-    "code": "SE",
-    "prefix_img": "/../static/countries/se.png"
+    "i": "CH",
+    "lbl": "Switzerland",
+    "val": "Switzerland",
+    "img": "/../static/countries/ch.png"
   },
   {
-    "label": "Switzerland",
-    "value": "Switzerland",
-    "code": "CH",
-    "prefix_img": "/../static/countries/ch.png"
+    "i": "SY",
+    "lbl": "Syrian Arab Republic",
+    "val": "Syrian Arab Republic",
+    "img": "/../static/countries/sy.png"
   },
   {
-    "label": "Syrian Arab Republic",
-    "value": "Syrian Arab Republic",
-    "code": "SY",
-    "prefix_img": "/../static/countries/sy.png"
+    "i": "TW",
+    "lbl": "Taiwan (Province of China)",
+    "val": "Taiwan (Province of China)",
+    "img": "/../static/countries/tw.png"
   },
   {
-    "label": "Taiwan (Republic of China)",
-    "value": "Taiwan (Republic of China)",
-    "code": "TW",
-    "prefix_img": "/../static/countries/tw.png"
+    "i": "TJ",
+    "lbl": "Tajikistan",
+    "val": "Tajikistan",
+    "img": "/../static/countries/tj.png"
   },
   {
-    "label": "Tajikistan",
-    "value": "Tajikistan",
-    "code": "TJ",
-    "prefix_img": "/../static/countries/tj.png"
+    "i": "TZ",
+    "lbl": "Tanzania, United Republic of",
+    "val": "Tanzania, United Republic of",
+    "img": "/../static/countries/tz.png"
   },
   {
-    "label": "Tanzania, United Republic of",
-    "value": "Tanzania, United Republic of",
-    "code": "TZ",
-    "prefix_img": "/../static/countries/tz.png"
+    "i": "TH",
+    "lbl": "Thailand",
+    "val": "Thailand",
+    "img": "/../static/countries/th.png"
   },
   {
-    "label": "Thailand",
-    "value": "Thailand",
-    "code": "TH",
-    "prefix_img": "/../static/countries/th.png"
+    "i": "TL",
+    "lbl": "Timor-Leste",
+    "val": "Timor-Leste",
+    "img": "/../static/countries/tl.png"
   },
   {
-    "label": "Timor-Leste",
-    "value": "Timor-Leste",
-    "code": "TL",
-    "prefix_img": "/../static/countries/tl.png"
+    "i": "TG",
+    "lbl": "Togo",
+    "val": "Togo",
+    "img": "/../static/countries/tg.png"
   },
   {
-    "label": "Togo",
-    "value": "Togo",
-    "code": "TG",
-    "prefix_img": "/../static/countries/tg.png"
+    "i": "TK",
+    "lbl": "Tokelau",
+    "val": "Tokelau",
+    "img": "/../static/countries/tk.png"
   },
   {
-    "label": "Tokelau",
-    "value": "Tokelau",
-    "code": "TK",
-    "prefix_img": "/../static/countries/tk.png"
+    "i": "TO",
+    "lbl": "Tonga",
+    "val": "Tonga",
+    "img": "/../static/countries/to.png"
   },
   {
-    "label": "Tonga",
-    "value": "Tonga",
-    "code": "TO",
-    "prefix_img": "/../static/countries/to.png"
+    "i": "TT",
+    "lbl": "Trinidad and Tobago",
+    "val": "Trinidad and Tobago",
+    "img": "/../static/countries/tt.png"
   },
   {
-    "label": "Trinidad and Tobago",
-    "value": "Trinidad and Tobago",
-    "code": "TT",
-    "prefix_img": "/../static/countries/tt.png"
+    "i": "TN",
+    "lbl": "Tunisia",
+    "val": "Tunisia",
+    "img": "/../static/countries/tn.png"
   },
   {
-    "label": "Tunisia",
-    "value": "Tunisia",
-    "code": "TN",
-    "prefix_img": "/../static/countries/tn.png"
+    "i": "TR",
+    "lbl": "Turkey",
+    "val": "Turkey",
+    "img": "/../static/countries/tr.png"
   },
   {
-    "label": "Turkey",
-    "value": "Turkey",
-    "code": "TR",
-    "prefix_img": "/../static/countries/tr.png"
+    "i": "TM",
+    "lbl": "Turkmenistan",
+    "val": "Turkmenistan",
+    "img": "/../static/countries/tm.png"
   },
   {
-    "label": "Turkmenistan",
-    "value": "Turkmenistan",
-    "code": "TM",
-    "prefix_img": "/../static/countries/tm.png"
+    "i": "TC",
+    "lbl": "Turks and Caicos Islands (the)",
+    "val": "Turks and Caicos Islands (the)",
+    "img": "/../static/countries/tc.png"
   },
   {
-    "label": "Turks and Caicos Islands",
-    "value": "Turks and Caicos Islands",
-    "code": "TC",
-    "prefix_img": "/../static/countries/tc.png"
+    "i": "TV",
+    "lbl": "Tuvalu",
+    "val": "Tuvalu",
+    "img": "/../static/countries/tv.png"
   },
   {
-    "label": "Tuvalu",
-    "value": "Tuvalu",
-    "code": "TV",
-    "prefix_img": "/../static/countries/tv.png"
+    "i": "UG",
+    "lbl": "Uganda",
+    "val": "Uganda",
+    "img": "/../static/countries/ug.png"
   },
   {
-    "label": "Uganda",
-    "value": "Uganda",
-    "code": "UG",
-    "prefix_img": "/../static/countries/ug.png"
+    "i": "UA",
+    "lbl": "Ukraine",
+    "val": "Ukraine",
+    "img": "/../static/countries/ua.png"
   },
   {
-    "label": "Ukraine",
-    "value": "Ukraine",
-    "code": "UA",
-    "prefix_img": "/../static/countries/ua.png"
+    "i": "AE",
+    "lbl": "United Arab Emirates (the)",
+    "val": "United Arab Emirates (the)",
+    "img": "/../static/countries/ae.png"
   },
   {
-    "label": "United Arab Emirates",
-    "value": "United Arab Emirates",
-    "code": "AE",
-    "prefix_img": "/../static/countries/ae.png"
+    "i": "GB",
+    "lbl": "United Kingdom",
+    "val": "United Kingdom",
+    "img": "/../static/countries/gb.png"
   },
   {
-    "label": "United Kingdom",
-    "value": "United Kingdom",
-    "code": "GB",
-    "prefix_img": "/../static/countries/gb.png"
+    "i": "UM",
+    "lbl": "United States Minor Outlying Islands (the)",
+    "val": "United States Minor Outlying Islands (the)",
+    "img": "/../static/countries/um.png"
   },
   {
-    "label": "United States",
-    "value": "United States",
-    "code": "US",
-    "prefix_img": "/../static/countries/us.png"
+    "i": "US",
+    "lbl": "United States of America (the)",
+    "val": "United States of America (the)",
+    "img": "/../static/countries/us.png"
   },
   {
-    "label": "Uruguay",
-    "value": "Uruguay",
-    "code": "UY",
-    "prefix_img": "/../static/countries/uy.png"
+    "i": "UY",
+    "lbl": "Uruguay",
+    "val": "Uruguay",
+    "img": "/../static/countries/uy.png"
   },
   {
-    "label": "US Minor Outlying Islands",
-    "value": "US Minor Outlying Islands",
-    "code": "UM",
-    "prefix_img": "/../static/countries/um.png"
+    "i": "UZ",
+    "lbl": "Uzbekistan",
+    "val": "Uzbekistan",
+    "img": "/../static/countries/uz.png"
   },
   {
-    "label": "Uzbekistan",
-    "value": "Uzbekistan",
-    "code": "UZ",
-    "prefix_img": "/../static/countries/uz.png"
+    "i": "VU",
+    "lbl": "Vanuatu",
+    "val": "Vanuatu",
+    "img": "/../static/countries/vu.png"
   },
   {
-    "label": "Vanuatu",
-    "value": "Vanuatu",
-    "code": "VU",
-    "prefix_img": "/../static/countries/vu.png"
+    "i": "VE",
+    "lbl": "Venezuela (Bolivarian Republic of)",
+    "val": "Venezuela (Bolivarian Republic of)",
+    "img": "/../static/countries/ve.png"
   },
   {
-    "label": "Venezuela, Bolivarian Republic of",
-    "value": "Venezuela, Bolivarian Republic of",
-    "code": "VE",
-    "prefix_img": "/../static/countries/ve.png"
+    "i": "VN",
+    "lbl": "Viet Nam",
+    "val": "Viet Nam",
+    "img": "/../static/countries/vn.png"
   },
   {
-    "label": "Vietnam",
-    "value": "Vietnam",
-    "code": "VN",
-    "prefix_img": "/../static/countries/vn.png"
+    "i": "VG",
+    "lbl": "Virgin Islands (British)",
+    "val": "Virgin Islands (British)",
+    "img": "/../static/countries/vg.png"
   },
   {
-    "label": "Virgin Islands, British",
-    "value": "Virgin Islands, British",
-    "code": "VG",
-    "prefix_img": "/../static/countries/vg.png"
+    "i": "VI",
+    "lbl": "Virgin Islands (U.S.)",
+    "val": "Virgin Islands (U.S.)",
+    "img": "/../static/countries/vi.png"
   },
   {
-    "label": "Virgin Islands, U.S.",
-    "value": "Virgin Islands, U.S.",
-    "code": "VI",
-    "prefix_img": "/../static/countries/vi.png"
+    "i": "WF",
+    "lbl": "Wallis and Futuna",
+    "val": "Wallis and Futuna",
+    "img": "/../static/countries/wf.png"
   },
   {
-    "label": "Wales",
-    "value": "Wales",
-    "code": "GB-WLS",
-    "prefix_img": "/../static/countries/gb-wls.png"
+    "i": "GB-WLS",
+    "lbl": "Wales",
+    "val": "Wales",
+    "img": "/../static/countries/gb-wls.png"
   },
   {
-    "label": "Wallis and Futuna Islands",
-    "value": "Wallis and Futuna Islands",
-    "code": "WF",
-    "prefix_img": "/../static/countries/wf.png"
+    "i": "EH",
+    "lbl": "Western Sahara",
+    "val": "Western Sahara",
+    "img": "/../static/countries/eh.png"
   },
   {
-    "label": "Western Sahara",
-    "value": "Western Sahara",
-    "code": "EH",
-    "prefix_img": "/../static/countries/eh.png"
+    "i": "YE",
+    "lbl": "Yemen",
+    "val": "Yemen",
+    "img": "/../static/countries/ye.png"
   },
   {
-    "label": "Yemen",
-    "value": "Yemen",
-    "code": "YE",
-    "prefix_img": "/../static/countries/ye.png"
+    "i": "ZM",
+    "lbl": "Zambia",
+    "val": "Zambia",
+    "img": "/../static/countries/zm.png"
   },
   {
-    "label": "Zambia",
-    "value": "Zambia",
-    "code": "ZM",
-    "prefix_img": "/../static/countries/zm.png"
+    "i": "ZW",
+    "lbl": "Zimbabwe",
+    "val": "Zimbabwe",
+    "img": "/../static/countries/zw.png"
   },
   {
-    "label": "Zimbabwe",
-    "value": "Zimbabwe",
-    "code": "ZW",
-    "prefix_img": "/../static/countries/zw.png"
-  },
-  {
-    "label": "Åland Islands",
-    "value": "Åland Islands",
-    "code": "AX",
-    "prefix_img": "/../static/countries/ax.png"
+    "i": "AX",
+    "lbl": "Åland Islands",
+    "val": "Åland Islands",
+    "img": "/../static/countries/ax.png"
   }
 ]

@@ -12,6 +12,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -73,6 +74,10 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
+      <FieldHideSettings />
+
+      <FieldSettingsDivider />
+
       <SimpleAccordion
         title={__('Input Format Options', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -116,10 +121,12 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <button onClick={openOptionModal} className={css(app.btn)} type="button">
-        &nbsp;
-        {__('Edit Options', 'bitform')}
-      </button>
+      <div className={css(FieldStyle.fieldSection)}>
+        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+          &nbsp;
+          {__('Edit Options', 'bitform')}
+        </button>
+      </div>
 
       <Modal
         md

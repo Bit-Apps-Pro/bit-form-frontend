@@ -2,6 +2,7 @@
 import advanceFileUpStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
+import countryStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/countryStyle_1_bitformDefault'
 import currencyStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
 import decisionBoxStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/decisionBoxStyle_1_bitformDefault'
 import dividerStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
@@ -129,6 +130,13 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         overrideGlobalTheme: [],
         classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
+      }
+    case 'country':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: countryStyle_1_BitformDefault({ fk, type, direction }),
       }
     case 'recaptcha':
       return {

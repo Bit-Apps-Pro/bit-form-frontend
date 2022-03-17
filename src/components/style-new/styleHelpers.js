@@ -6,6 +6,7 @@ import { select } from '../../Utils/globalHelpers'
 import advancedFileUp_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
+import countryStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/countryStyle_1_bitformDefault'
 import currencyStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
 import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 import dropdownStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/dropdownStyle_1_bitformDefault'
@@ -380,6 +381,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'html':
     case 'recaptcha':
     case 'currency':
+    case 'country':
     case 'html-select':
     case 'select':
     case 'dropdown':
@@ -546,6 +548,12 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = currencyStyle1BitformDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'country':
+        const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = countryStyle1BitformDefault[`.${fk}-${cls}`]
         })
         break
       case 'file-up':

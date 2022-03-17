@@ -5,6 +5,7 @@ import '../resource/sass/components.scss'
 import AdvanceFileUp from './Fields/AdvanceFileUp'
 import Button from './Fields/Button'
 import CheckBox from './Fields/CheckBox'
+import CountryField from './Fields/CountryField/CountryField'
 import CurrencyField from './Fields/CurrencyField/CurrencyField'
 import DecisionBox from './Fields/DecisionBox'
 import Divider from './Fields/Divider'
@@ -94,6 +95,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       return <Divider fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'currency':
       return <CurrencyField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
+    case 'country':
+      return <CountryField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'phone-number':
       return <PhoneNumberField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'blank':
