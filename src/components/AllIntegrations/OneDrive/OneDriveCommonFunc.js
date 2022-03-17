@@ -12,7 +12,6 @@ export const handleInput = (e, oneDriveConf, setOneDriveConf, formID, setIsLoadi
   } else {
     delete newConf[name]
   }
-  // new
 
   newConf[e.target.name] = e.target.value
   switch (e.target.name) {
@@ -23,7 +22,6 @@ export const handleInput = (e, oneDriveConf, setOneDriveConf, formID, setIsLoadi
     default:
       break
   }
-  // end
   setOneDriveConf({ ...newConf })
 }
 
@@ -32,38 +30,39 @@ export const folderChange = (oneDriveConf, formID, setOneDriveConf, setIsLoading
   delete newConf.teamType
 
   if (newConf.folder && !newConf.default?.folders?.[newConf.folder]) {
-    if (newConf.default?.teamFolders?.[newConf.team]?.[newConf.folder]?.type === 'private') {
-      newConf.teamType = 'private'
-    }
     getSingleOneDriveFolders(formID, newConf, setOneDriveConf, setIsLoading, setSnackbar)
   } else if (newConf.folder && newConf.folder !== newConf.folderMap[newConf.folderMap.length - 1]) newConf.folderMap.push(newConf.folder)
 
   return newConf
 }
 
-export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf) => {
+export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
   const queryParams = {
     flowID: flowID ?? null,
     clientId: oneDriveConf.clientId,
     clientSecret: oneDriveConf.clientSecret,
     tokenDetails: oneDriveConf.tokenDetails,
-    // redirectURI: `${btcbi.api.base}/redirect`,
   }
   const loadPostTypes = bitsFetch(queryParams, 'bitforms_oneDrive_get_all_folders')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...oneDriveConf }
+        if (!newConf.default) newConf.default = {}
         if (result.data.oneDriveFoldersList) {
-          newConf.default = result.data.oneDriveFoldersList
+          newConf.default.rootFolders = result.data.oneDriveFoldersList
           newConf.tokenDetails = result.data.tokenDetails
         }
 
         setOneDriveConf(newConf)
+        setIsLoading(false)
         return 'OneDrive Folders List refreshed successfully'
       } else {
+        setIsLoading(false)
         return 'OneDrive Folders List refresh failed. please try again'
       }
     })
+    .catch(() => setIsLoading(false))
   toast.promise(loadPostTypes, {
     success: data => data,
     error: __('Error Occurred', 'bit-integrations'),
@@ -73,6 +72,7 @@ export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf) => 
 
 export const getSingleOneDriveFolders = (formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, ind) => {
   const folder = ind ? oneDriveConf.folderMap[ind] : oneDriveConf.folder
+  setIsLoading(true)
   const refreshSubFoldersRequestParams = {
     formID,
     dataCenter: oneDriveConf.dataCenter,

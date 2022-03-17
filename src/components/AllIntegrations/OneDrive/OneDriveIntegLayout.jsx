@@ -1,37 +1,31 @@
 import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
+import Loader from '../../Loaders/Loader'
 import OneDriveActions from './OneDriveActions'
-import { getSingleOneDriveFolders, handleInput } from './OneDriveCommonFunc'
+import { getAllOneDriveFolders, getSingleOneDriveFolders, handleInput } from './OneDriveCommonFunc'
 
 export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, setOneDriveConf, isLoading, setIsLoading, setSnackbar }) {
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    oneDriveConf?.folder && getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)
-  }, [oneDriveConf?.folder])
-
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">Folder:</b>
+      <b className="wdt-150 d-in-b mr-2">Folder:</b>
       <select onChange={(e) => handleInput(e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar)} name="folder" value={oneDriveConf.folderMap[0] || oneDriveConf.folder} className="btcd-paper-inp w-7">
         <option value="">{__('Select Folder', 'bitform')}</option>
         {
-          oneDriveConf?.default && Object.values(oneDriveConf.default).map(teamFolderApi => (
+          oneDriveConf?.default?.rootFolders && oneDriveConf.default.rootFolders.map(teamFolderApi => (
             <option key={teamFolderApi.id} value={teamFolderApi.id}>
               {teamFolderApi.name}
             </option>
           ))
         }
       </select>
-      <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh On Team Folders', 'bit-integration-pro')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-      <br />
-
+      <button onClick={() => getAllOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh All oneDrive Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       {oneDriveConf.folderMap.map((folder, i) => (
         <div key={folder}>
           <br />
           <div className="flx">
-            <b className="wdt-100 d-in-b" />
+            <b className="wdt-150 d-in-b mr-2" />
             <div className="d-in-b" style={{ width: (i + 1) * 10, marginLeft: 1, marginRight: 2, height: 58, marginTop: -60 }}>
               <div className="sub-tree" />
             </div>
@@ -46,17 +40,29 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
                   ))
                 }
               </select>
-              <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bit-integration-pro')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <div className="tooltip-box">
+                <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              </div>
             </div>
           </div>
         </div>
       ))}
       <br />
       <br />
+      {isLoading && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
 
       {oneDriveConf.folder && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integration-pro')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
           <div className="btcd-hr mt-1" />
           <OneDriveActions
             oneDriveConf={oneDriveConf}
