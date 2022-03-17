@@ -5,7 +5,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import { selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
-import FileUploadField from './file-upload'
+import FileUploadField from './file-upload-script'
 
 export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
@@ -65,8 +65,8 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   <span data-dev-btn-txt={fieldKey} className={`${fieldKey}-btn-txt`}>{fieldData.btnTxt}</span>
                   { fieldData.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} src={`${fieldData.suffixIcn}`} alt="Upload icon" srcSet="" />}
                 </button>
-                <div data-dev-file-select-status={fieldKey} className={`${fieldKey}-file-select-status`}>No Choosen File</div>
-                <small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl`}>Max 2MB</small>
+                { fieldData.config.showSelectStatus && <div data-dev-file-select-status={fieldKey} className={`${fieldKey}-file-select-status`}>No Choosen File</div>}
+                { fieldData.config.showMaxSize && fieldData.config.maxSize && (<small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl`}>Max 2MB</small>)}
                 <input type="file" className={`${fieldKey}-file-upload-input`} id={fieldKey} name="file-upload" />
               </div>
               <div data-dev-files-list={fieldKey} className={`${fieldKey}-files-list`} />
