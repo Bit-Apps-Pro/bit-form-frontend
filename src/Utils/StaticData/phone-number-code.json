@@ -1,0 +1,2173 @@
+[
+  {
+    "i": "AD",
+    "lbl": "Andorra",
+    "val": "Andorra",
+    "img": "../static/countries/ad.png",
+    "code": "+376",
+    "ex": "312345",
+    "frmt": "+c ## ### ### ##",
+    "ptrn": "690\\d{6}|[356]\\d{5}"
+  },
+  {
+    "i": "AE",
+    "lbl": "United Arab Emirates (the)",
+    "val": "United Arab Emirates (the)",
+    "img": "../static/countries/ae.png",
+    "code": "+971",
+    "ex": "501234567",
+    "ptrn": "5[024-68]\\d{7}"
+  },
+  {
+    "i": "AF",
+    "lbl": "Afghanistan",
+    "val": "Afghanistan",
+    "img": "../static/countries/af.png",
+    "code": "+93",
+    "ex": "701234567",
+    "ptrn": "7\\d{8}"
+  },
+  {
+    "i": "AG",
+    "lbl": "Antigua and Barbuda",
+    "val": "Antigua and Barbuda",
+    "img": "../static/countries/ag.png",
+    "code": "+1",
+    "ex": "2684641234",
+    "ptrn": "268(?:464|7(?:1[3-9]|[28]\\d|3[0246]|64|7[0-689]))\\d{4}"
+  },
+  {
+    "i": "AI",
+    "lbl": "Anguilla",
+    "val": "Anguilla",
+    "img": "../static/countries/ai.png",
+    "code": "+1",
+    "ex": "2642351234",
+    "ptrn": "264(?:235|4(?:69|76)|5(?:3[6-9]|8[1-4])|7(?:29|72))\\d{4}"
+  },
+  {
+    "i": "AL",
+    "lbl": "Albania",
+    "val": "Albania",
+    "img": "../static/countries/al.png",
+    "code": "+355",
+    "ex": "672123456",
+    "ptrn": "6(?:[78][2-9]|9\\d)\\d{6}"
+  },
+  {
+    "i": "AM",
+    "lbl": "Armenia",
+    "val": "Armenia",
+    "img": "../static/countries/am.png",
+    "code": "+374",
+    "ex": "77123456",
+    "ptrn": "(?:33|4[1349]|55|77|88|9[13-9])\\d{6}"
+  },
+  {
+    "i": "AO",
+    "lbl": "Angola",
+    "val": "Angola",
+    "img": "../static/countries/ao.png",
+    "code": "+244",
+    "ex": "923123456",
+    "ptrn": "9[1-49]\\d{7}"
+  },
+  {
+    "i": "AR",
+    "lbl": "Argentina",
+    "val": "Argentina",
+    "img": "../static/countries/ar.png",
+    "code": "+54",
+    "ex": "91123456789",
+    "ptrn": "93888[013-9]\\d{5}|9(?:29(?:54|66)|3(?:777|865))[2-8]\\d{5}|93(?:7(?:1[15]|81)|8(?:21|4[16]|69|9[12]))[46]\\d{5}|9(?:2(?:2(?:2[59]|44|52)|3(?:26|44)|473|9(?:[07]2|2[26]|34|46))|3327)[45]\\d{5}|9(?:2(?:284|302|657|920)|3(?:4(?:8[27]|92)|541|755|878))[2-7]\\d{5}|9(?:2(?:(?:26|62)2|32[03]|477|9(?:42|83))|3(?:329|4(?:[47]6|62|89)|564))[2-6]\\d{5}|(?:675\\d|9(?:11[1-8]\\d|2(?:2(?:0[45]|1[2-6]|3[3-6])|3(?:[06]4|7[45])|494|6(?:04|1[2-8]|[36][45]|4[3-6])|80[45]|9(?:[17][4-6]|[48][45]|9[3-6]))|3(?:364|4(?:1[2-7]|[235][4-6]|84)|5(?:1[2-8]|[38][4-6])|6(?:2[45]|44)|7[069][45]|8(?:[03][45]|[17][2-6]|[58][3-6]))))\\d{6}|92(?:2(?:21|4[23]|6[145]|7[1-4]|8[356]|9[267])|3(?:16|3[13-8]|43|5[346-8]|9[3-5])|475|6(?:2[46]|4[78]|5[1568])|9(?:03|2[1457-9]|3[1356]|4[08]|[56][23]|82))4\\d{5}|9(?:2(?:2(?:57|81)|3(?:24|46|92)|9(?:01|23|64))|3(?:4(?:42|71)|5(?:25|37|4[347]|71)|7(?:18|5[17])))[3-6]\\d{5}|9(?:2(?:2(?:02|2[3467]|4[156]|5[45]|6[6-8]|91)|3(?:1[47]|25|[45][25]|96)|47[48]|625|932)|3(?:38[2578]|4(?:0[0-24-9]|3[78]|4[457]|58|6[03-9]|72|83|9[136-8])|5(?:2[124]|[368][23]|4[2689]|7[2-6])|7(?:16|2[15]|3[145]|4[13]|5[468]|7[2-5]|8[26])|8(?:2[5-7]|3[278]|4[3-5]|5[78]|6[1-378]|[78]7|94)))[4-6]\\d{5}"
+  },
+  {
+    "i": "AS",
+    "lbl": "American Samoa",
+    "val": "American Samoa",
+    "img": "../static/countries/as.png",
+    "code": "+1",
+    "ex": "6847331234",
+    "ptrn": "684(?:2(?:48|5[2468]|72)|7(?:3[13]|70|82))\\d{4}"
+  },
+  {
+    "i": "AT",
+    "lbl": "Austria",
+    "val": "Austria",
+    "img": "../static/countries/at.png",
+    "code": "+43",
+    "ex": "664123456",
+    "ptrn": "6(?:5[0-3579]|6[013-9]|[7-9]\\d)\\d{4,10}"
+  },
+  {
+    "i": "AU",
+    "lbl": "Australia",
+    "val": "Australia",
+    "img": "../static/countries/au.png",
+    "code": "+61",
+    "ex": "412345678",
+    "ptrn": "4(?:83[0-38]|93[0-6])\\d{5}|4(?:[0-3]\\d|4[047-9]|5[0-25-9]|6[06-9]|7[02-9]|8[0-24-9]|9[0-27-9])\\d{6}"
+  },
+  {
+    "i": "AW",
+    "lbl": "Aruba",
+    "val": "Aruba",
+    "img": "../static/countries/aw.png",
+    "code": "+297",
+    "ex": "5601234",
+    "ptrn": "(?:290|5[69]\\d|6(?:[03]0|22|4[0-2]|[69]\\d)|7(?:[34]\\d|7[07])|9(?:6[45]|9[4-8]))\\d{4}"
+  },
+  {
+    "i": "AX",
+    "lbl": "Åland Islands",
+    "val": "Åland Islands",
+    "img": "../static/countries/ax.png",
+    "code": "+358",
+    "ex": "412345678",
+    "ptrn": "4946\\d{2,6}|(?:4[0-8]|50)\\d{4,8}"
+  },
+  {
+    "i": "AZ",
+    "lbl": "Azerbaijan",
+    "val": "Azerbaijan",
+    "img": "../static/countries/az.png",
+    "code": "+994",
+    "ex": "401234567",
+    "ptrn": "36554\\d{4}|(?:[16]0|4[04]|5[015]|7[07]|99)\\d{7}"
+  },
+  {
+    "i": "BA",
+    "lbl": "Bosnia and Herzegovina",
+    "val": "Bosnia and Herzegovina",
+    "img": "../static/countries/ba.png",
+    "code": "+387",
+    "ex": "61123456",
+    "ptrn": "6040\\d{5}|6(?:03|[1-356]|44|7\\d)\\d{6}"
+  },
+  {
+    "i": "BB",
+    "lbl": "Barbados",
+    "val": "Barbados",
+    "img": "../static/countries/bb.png",
+    "code": "+1",
+    "ex": "2462501234",
+    "ptrn": "246(?:2(?:[3568]\\d|4[0-57-9])|45\\d|69[5-7]|8(?:[2-5]\\d|83))\\d{4}"
+  },
+  {
+    "i": "BD",
+    "lbl": "Bangladesh",
+    "val": "Bangladesh",
+    "img": "../static/countries/bd.png",
+    "code": "+880",
+    "ex": "1812345678",
+    "ptrn": "(?:1[13-9]\\d|644)\\d{7}|(?:3[78]|44|66)[02-9]\\d{7}"
+  },
+  {
+    "i": "BE",
+    "lbl": "Belgium",
+    "val": "Belgium",
+    "img": "../static/countries/be.png",
+    "code": "+32",
+    "ex": "470123456",
+    "ptrn": "4[5-9]\\d{7}"
+  },
+  {
+    "i": "BF",
+    "lbl": "Burkina Faso",
+    "val": "Burkina Faso",
+    "img": "../static/countries/bf.png",
+    "code": "+226",
+    "ex": "70123456",
+    "ptrn": "(?:0[1267]|5[1-8]|[67]\\d)\\d{6}"
+  },
+  {
+    "i": "BG",
+    "lbl": "Bulgaria",
+    "val": "Bulgaria",
+    "img": "../static/countries/bg.png",
+    "code": "+359",
+    "ex": "48123456",
+    "ptrn": "43[07-9]\\d{5}|(?:48|8[7-9]\\d|9(?:8\\d|9[69]))\\d{6}"
+  },
+  {
+    "i": "BH",
+    "lbl": "Bahrain",
+    "val": "Bahrain",
+    "img": "../static/countries/bh.png",
+    "code": "+973",
+    "ex": "36001234",
+    "ptrn": "(?:3(?:[1-79]\\d|8[0-47-9])\\d|6(?:3(?:00|33|6[16])|6(?:3[03-9]|[69]\\d|7[0-6])))\\d{4}"
+  },
+  {
+    "i": "BI",
+    "lbl": "Burundi",
+    "val": "Burundi",
+    "img": "../static/countries/bi.png",
+    "code": "+257",
+    "ex": "79561234",
+    "ptrn": "(?:29|31|6[1289]|7[125-9])\\d{6}"
+  },
+  {
+    "i": "BJ",
+    "lbl": "Benin",
+    "val": "Benin",
+    "img": "../static/countries/bj.png",
+    "code": "+229",
+    "ex": "90011234",
+    "ptrn": "(?:5[1-35-8]|6\\d|9[013-9])\\d{6}"
+  },
+  {
+    "i": "BL",
+    "lbl": "Saint Barthélemy",
+    "val": "Saint Barthélemy",
+    "img": "../static/countries/bl.png",
+    "code": "+590",
+    "ex": "690001234",
+    "ptrn": "69(?:0\\d\\d|1(?:2[2-9]|3[0-5]))\\d{4}"
+  },
+  {
+    "i": "BM",
+    "lbl": "Bermuda",
+    "val": "Bermuda",
+    "img": "../static/countries/bm.png",
+    "code": "+1",
+    "ex": "4413701234",
+    "ptrn": "441(?:[2378]\\d|5[0-39])\\d{5}"
+  },
+  {
+    "i": "BN",
+    "lbl": "Brunei Darussalam",
+    "val": "Brunei Darussalam",
+    "img": "../static/countries/bn.png",
+    "code": "+673",
+    "ex": "7123456",
+    "ptrn": "(?:22[89]|[78]\\d\\d)\\d{4}"
+  },
+  {
+    "i": "BO",
+    "lbl": "Bolivia (Plurinational State of)",
+    "val": "Bolivia (Plurinational State of)",
+    "img": "../static/countries/bo.png",
+    "code": "+591",
+    "ex": "71234567",
+    "ptrn": "[67]\\d{7}"
+  },
+  {
+    "i": "BQ",
+    "lbl": "Bonaire, Sint Eustatius and Saba",
+    "val": "Bonaire, Sint Eustatius and Saba",
+    "img": "../static/countries/bq.png",
+    "code": "+599",
+    "ex": "3181234",
+    "ptrn": "(?:31(?:8[14-8]|9[14578])|416[14-9]|7(?:0[01]|7[07]|8\\d|9[056])\\d)\\d{3}"
+  },
+  {
+    "i": "BR",
+    "lbl": "Brazil",
+    "val": "Brazil",
+    "img": "../static/countries/br.png",
+    "code": "+55",
+    "ex": "11961234567",
+    "ptrn": "(?:[14689][1-9]|2[12478]|3[1-578]|5[13-5]|7[13-579])(?:7|9\\d)\\d{7}"
+  },
+  {
+    "i": "BS",
+    "lbl": "Bahamas (the)",
+    "val": "Bahamas (the)",
+    "img": "../static/countries/bs.png",
+    "code": "+1",
+    "ex": "2423591234",
+    "ptrn": "242(?:3(?:5[79]|7[56]|95)|4(?:[23][1-9]|4[1-35-9]|5[1-8]|6[2-8]|7\\d|81)|5(?:2[45]|3[35]|44|5[1-46-9]|65|77)|6[34]6|7(?:27|38)|8(?:0[1-9]|1[02-9]|2\\d|[89]9))\\d{4}"
+  },
+  {
+    "i": "BT",
+    "lbl": "Bhutan",
+    "val": "Bhutan",
+    "img": "../static/countries/bt.png",
+    "code": "+975",
+    "ex": "17123456",
+    "ptrn": "(?:1[67]|77)\\d{6}"
+  },
+  {
+    "i": "BW",
+    "lbl": "Botswana",
+    "val": "Botswana",
+    "img": "../static/countries/bw.png",
+    "code": "+267",
+    "ex": "71123456",
+    "ptrn": "(?:321|7(?:[1-7]\\d|8[01]))\\d{5}"
+  },
+  {
+    "i": "BY",
+    "lbl": "Belarus",
+    "val": "Belarus",
+    "img": "../static/countries/by.png",
+    "code": "+375",
+    "ex": "294911911",
+    "ptrn": "(?:2(?:5[5-79]|9[1-9])|(?:33|44)\\d)\\d{6}"
+  },
+  {
+    "i": "BZ",
+    "lbl": "Belize",
+    "val": "Belize",
+    "img": "../static/countries/bz.png",
+    "code": "+501",
+    "ex": "6221234",
+    "ptrn": "6[0-35-7]\\d{5}"
+  },
+  {
+    "i": "CA",
+    "lbl": "Canada",
+    "val": "Canada",
+    "img": "../static/countries/ca.png",
+    "code": "+1",
+    "ex": "5062345678"
+  },
+  {
+    "i": "CC",
+    "lbl": "Cocos (Keeling) Islands (the)",
+    "val": "Cocos (Keeling) Islands (the)",
+    "img": "../static/countries/cc.png",
+    "code": "+61",
+    "ex": "412345678",
+    "ptrn": "4(?:83[0-38]|93[0-6])\\d{5}|4(?:[0-3]\\d|4[047-9]|5[0-25-9]|6[06-9]|7[02-9]|8[0-24-9]|9[0-27-9])\\d{6}"
+  },
+  {
+    "i": "CD",
+    "lbl": "Congo (the Democratic Republic of the)",
+    "val": "Congo (the Democratic Republic of the)",
+    "img": "../static/countries/cd.png",
+    "code": "+243",
+    "ex": "991234567",
+    "ptrn": "88\\d{5}|(?:8[0-59]|9[017-9])\\d{7}"
+  },
+  {
+    "i": "CF",
+    "lbl": "Central African Republic (the)",
+    "val": "Central African Republic (the)",
+    "img": "../static/countries/cf.png",
+    "code": "+236",
+    "ex": "70012345",
+    "ptrn": "7[0257]\\d{6}"
+  },
+  {
+    "i": "CG",
+    "lbl": "Congo (the)",
+    "val": "Congo (the)",
+    "img": "../static/countries/cg.png",
+    "code": "+242",
+    "ex": "061234567",
+    "ptrn": "026(?:1[0-5]|6[6-9])\\d{4}|0(?:[14-6]\\d\\d|2(?:40|5[5-8]|6[07-9]))\\d{5}"
+  },
+  {
+    "i": "CH",
+    "lbl": "Switzerland",
+    "val": "Switzerland",
+    "img": "../static/countries/ch.png",
+    "code": "+41",
+    "ex": "781234567",
+    "ptrn": "7[35-9]\\d{7}"
+  },
+  {
+    "i": "CI",
+    "lbl": "Côte d'Ivoire",
+    "val": "Côte d'Ivoire",
+    "img": "../static/countries/ci.png",
+    "code": "+225",
+    "ex": "0123456789",
+    "ptrn": "0704[0-7]\\d{5}|0(?:[15]\\d\\d|7(?:0[0-37-9]|[4-9][7-9]))\\d{6}"
+  },
+  {
+    "i": "CK",
+    "lbl": "Cook Islands (the)",
+    "val": "Cook Islands (the)",
+    "img": "../static/countries/ck.png",
+    "code": "+682",
+    "ex": "71234",
+    "ptrn": "[578]\\d{4}"
+  },
+  {
+    "i": "CL",
+    "lbl": "Chile",
+    "val": "Chile",
+    "img": "../static/countries/cl.png",
+    "code": "+56",
+    "ex": "221234567"
+  },
+  {
+    "i": "CM",
+    "lbl": "Cameroon",
+    "val": "Cameroon",
+    "img": "../static/countries/cm.png",
+    "code": "+237",
+    "ex": "671234567",
+    "ptrn": "(?:24[23]|6[5-9]\\d)\\d{6}"
+  },
+  {
+    "i": "CN",
+    "lbl": "China",
+    "val": "China",
+    "img": "../static/countries/cn.png",
+    "code": "+86",
+    "ex": "13123456789",
+    "ptrn": "1740[0-5]\\d{6}|1(?:[38]\\d|4[57]|5[0-35-9]|6[25-7]|7[0-35-8]|9[0135-9])\\d{8}"
+  },
+  {
+    "i": "CO",
+    "lbl": "Colombia",
+    "val": "Colombia",
+    "img": "../static/countries/co.png",
+    "code": "+57",
+    "ex": "3211234567",
+    "ptrn": "3333(?:0(?:0\\d|1[0-5])|[4-9]\\d\\d)\\d{3}|(?:3(?:24[2-6]|3(?:00|3[0-24-9]))|9101)\\d{6}|3(?:0[0-5]|1\\d|2[0-3]|5[01]|70)\\d{7}"
+  },
+  {
+    "i": "CR",
+    "lbl": "Costa Rica",
+    "val": "Costa Rica",
+    "img": "../static/countries/cr.png",
+    "code": "+506",
+    "ex": "83123456",
+    "ptrn": "(?:3005\\d|6500[01])\\d{3}|(?:5[07]|6[0-4]|7[0-3]|8[3-9])\\d{6}"
+  },
+  {
+    "i": "CU",
+    "lbl": "Cuba",
+    "val": "Cuba",
+    "img": "../static/countries/cu.png",
+    "code": "+53",
+    "ex": "51234567",
+    "ptrn": "5\\d{7}"
+  },
+  {
+    "i": "CV",
+    "lbl": "Cabo Verde",
+    "val": "Cabo Verde",
+    "img": "../static/countries/cv.png",
+    "code": "+238",
+    "ex": "9911234",
+    "ptrn": "(?:[34][36]|5[1-389]|9\\d)\\d{5}"
+  },
+  {
+    "i": "CW",
+    "lbl": "Curaçao",
+    "val": "Curaçao",
+    "img": "../static/countries/cw.png",
+    "code": "+599",
+    "ex": "95181234",
+    "ptrn": "953[01]\\d{4}|9(?:5[12467]|6[5-9])\\d{5}"
+  },
+  {
+    "i": "CX",
+    "lbl": "Christmas Island",
+    "val": "Christmas Island",
+    "img": "../static/countries/cx.png",
+    "code": "+61",
+    "ex": "412345678",
+    "ptrn": "4(?:83[0-38]|93[0-6])\\d{5}|4(?:[0-3]\\d|4[047-9]|5[0-25-9]|6[06-9]|7[02-9]|8[0-24-9]|9[0-27-9])\\d{6}"
+  },
+  {
+    "i": "CY",
+    "lbl": "Cyprus",
+    "val": "Cyprus",
+    "img": "../static/countries/cy.png",
+    "code": "+357",
+    "ex": "96123456",
+    "ptrn": "9[4-79]\\d{6}"
+  },
+  {
+    "i": "CZ",
+    "lbl": "Czechia",
+    "val": "Czechia",
+    "img": "../static/countries/cz.png",
+    "code": "+420",
+    "ex": "601123456",
+    "ptrn": "(?:60[1-8]|7(?:0[2-5]|[2379]\\d))\\d{6}"
+  },
+  {
+    "i": "DE",
+    "lbl": "Germany",
+    "val": "Germany",
+    "img": "../static/countries/de.png",
+    "code": "+49",
+    "ex": "15123456789",
+    "ptrn": "15[0-25-9]\\d{8}|1(?:6[023]|7\\d)\\d{7,8}"
+  },
+  {
+    "i": "DJ",
+    "lbl": "Djibouti",
+    "val": "Djibouti",
+    "img": "../static/countries/dj.png",
+    "code": "+253",
+    "ex": "77831001",
+    "ptrn": "77\\d{6}"
+  },
+  {
+    "i": "DK",
+    "lbl": "Denmark",
+    "val": "Denmark",
+    "img": "../static/countries/dk.png",
+    "code": "+45",
+    "ex": "32123456"
+  },
+  {
+    "i": "DM",
+    "lbl": "Dominica",
+    "val": "Dominica",
+    "img": "../static/countries/dm.png",
+    "code": "+1",
+    "ex": "7672251234",
+    "ptrn": "767(?:2(?:[2-4689]5|7[5-7])|31[5-7]|61[1-8]|70[1-6])\\d{4}"
+  },
+  {
+    "i": "DO",
+    "lbl": "Dominican Republic (the)",
+    "val": "Dominican Republic (the)",
+    "img": "../static/countries/do.png",
+    "code": "+1",
+    "ex": "8092345678",
+    "ptrn": "8[024]9[2-9]\\d{6}"
+  },
+  {
+    "i": "DZ",
+    "lbl": "Algeria",
+    "val": "Algeria",
+    "img": "../static/countries/dz.png",
+    "code": "+213",
+    "ex": "551234567",
+    "ptrn": "(?:5(?:4[0-29]|5\\d|6[0-2])|6(?:[569]\\d|7[0-6])|7[7-9]\\d)\\d{6}"
+  },
+  {
+    "i": "EC",
+    "lbl": "Ecuador",
+    "val": "Ecuador",
+    "img": "../static/countries/ec.png",
+    "code": "+593",
+    "ex": "991234567",
+    "ptrn": "964[0-2]\\d{5}|9(?:39|[57][89]|6[0-36-9]|[89]\\d)\\d{6}"
+  },
+  {
+    "i": "EE",
+    "lbl": "Estonia",
+    "val": "Estonia",
+    "img": "../static/countries/ee.png",
+    "code": "+372",
+    "ex": "51234567",
+    "ptrn": "5(?:[0-35-9]\\d{6}|4(?:[0-57-9]\\d{5}|6(?:[0-24-9]\\d{4}|3(?:[0-35-9]\\d{3}|4000))))|8(?:1(?:0(?:000|[3-9]\\d\\d)|(?:1(?:0[236]|1\\d)|(?:23|[3-79]\\d)\\d)\\d)|2(?:0(?:000|(?:19|[24-7]\\d)\\d)|(?:(?:[124-6]\\d|3[5-9])\\d|7(?:[679]\\d|8[13-9])|8(?:[2-6]\\d|7[01]))\\d)|[349]\\d{4})\\d\\d|5(?:(?:[02]\\d|5[0-478])\\d|1(?:[0-8]\\d|95)|6(?:4[0-4]|5[1-589]))\\d{3}"
+  },
+  {
+    "i": "EG",
+    "lbl": "Egypt",
+    "val": "Egypt",
+    "img": "../static/countries/eg.png",
+    "code": "+20",
+    "ex": "1001234567",
+    "ptrn": "1[0-25]\\d{8}"
+  },
+  {
+    "i": "EH",
+    "lbl": "Western Sahara",
+    "val": "Western Sahara",
+    "img": "../static/countries/eh.png",
+    "code": "+212",
+    "ex": "650123456",
+    "ptrn": "(?:6(?:[0-79]\\d|8[0-247-9])|7(?:0\\d|1[0-5]|6[1267]|7[0-57]))\\d{6}"
+  },
+  {
+    "i": "ER",
+    "lbl": "Eritrea",
+    "val": "Eritrea",
+    "img": "../static/countries/er.png",
+    "code": "+291",
+    "ex": "7123456",
+    "ptrn": "(?:17[1-3]|7\\d\\d)\\d{4}"
+  },
+  {
+    "i": "ES",
+    "lbl": "Spain",
+    "val": "Spain",
+    "img": "../static/countries/es.png",
+    "code": "+34",
+    "ex": "612345678",
+    "ptrn": "(?:590[16]00\\d|9(?:6906(?:09|10)|7390\\d\\d))\\d\\d|(?:6\\d|7[1-48])\\d{7}"
+  },
+  {
+    "i": "ET",
+    "lbl": "Ethiopia",
+    "val": "Ethiopia",
+    "img": "../static/countries/et.png",
+    "code": "+251",
+    "ex": "911234567",
+    "ptrn": "9\\d{8}"
+  },
+  {
+    "i": "FI",
+    "lbl": "Finland",
+    "val": "Finland",
+    "img": "../static/countries/fi.png",
+    "code": "+358",
+    "ex": "412345678",
+    "ptrn": "4946\\d{2,6}|(?:4[0-8]|50)\\d{4,8}"
+  },
+  {
+    "i": "FJ",
+    "lbl": "Fiji",
+    "val": "Fiji",
+    "img": "../static/countries/fj.png",
+    "code": "+679",
+    "ex": "7012345",
+    "ptrn": "(?:[279]\\d|45|5[01568]|8[034679])\\d{5}"
+  },
+  {
+    "i": "FK",
+    "lbl": "Falkland Islands (the) [Malvinas]",
+    "val": "Falkland Islands (the) [Malvinas]",
+    "img": "../static/countries/fk.png",
+    "code": "+500",
+    "ex": "51234",
+    "ptrn": "[56]\\d{4}"
+  },
+  {
+    "i": "FM",
+    "lbl": "Micronesia (Federated States of)",
+    "val": "Micronesia (Federated States of)",
+    "img": "../static/countries/fm.png",
+    "code": "+691",
+    "ex": "3501234",
+    "ptrn": "31(?:00[67]|208|309)\\d\\d|(?:3(?:[2357]0[1-9]|602|804|905)|(?:820|9[2-7]\\d)\\d)\\d{3}"
+  },
+  {
+    "i": "FO",
+    "lbl": "Faroe Islands (the)",
+    "val": "Faroe Islands (the)",
+    "img": "../static/countries/fo.png",
+    "code": "+298",
+    "ex": "211234",
+    "ptrn": "(?:[27][1-9]|5\\d|91)\\d{4}"
+  },
+  {
+    "i": "FR",
+    "lbl": "France",
+    "val": "France",
+    "img": "../static/countries/fr.png",
+    "code": "+33",
+    "ex": "612345678",
+    "ptrn": "(?:6(?:[0-24-8]\\d|3[0-8]|9[589])|7(?:00|[3-9]\\d))\\d{6}"
+  },
+  {
+    "i": "GA",
+    "lbl": "Gabon",
+    "val": "Gabon",
+    "img": "../static/countries/ga.png",
+    "code": "+241",
+    "ex": "06031234",
+    "ptrn": "(?:0[2-7]|6[256]|7[47])\\d{6}|[2-7]\\d{6}"
+  },
+  {
+    "i": "GB",
+    "lbl": "United Kingdom of Great Britain and Northern Ireland (the)",
+    "val": "United Kingdom of Great Britain and Northern Ireland (the)",
+    "img": "../static/countries/gb.png",
+    "code": "+44",
+    "ex": "7400123456",
+    "ptrn": "7(?:457[0-57-9]|700[01]|911[028])\\d{5}|7(?:[1-3]\\d\\d|4(?:[0-46-9]\\d|5[0-689])|5(?:0[0-8]|[13-9]\\d|2[0-35-9])|7(?:0[1-9]|[1-7]\\d|8[02-9]|9[0-689])|8(?:[014-9]\\d|[23][0-8])|9(?:[024-9]\\d|1[02-9]|3[0-689]))\\d{6}"
+  },
+  {
+    "i": "GD",
+    "lbl": "Grenada",
+    "val": "Grenada",
+    "img": "../static/countries/gd.png",
+    "code": "+1",
+    "ex": "4734031234",
+    "ptrn": "473(?:4(?:0[2-79]|1[04-9]|2[0-5]|58)|5(?:2[01]|3[3-8])|901)\\d{4}"
+  },
+  {
+    "i": "GE",
+    "lbl": "Georgia",
+    "val": "Georgia",
+    "img": "../static/countries/ge.png",
+    "code": "+995",
+    "ex": "555123456",
+    "ptrn": "5(?:(?:0555|1177)[5-9]|757(?:7[7-9]|8[01]))\\d{3}|5(?:0070|(?:11|33)33|[25]222)[0-4]\\d{3}|5(?:00(?:0\\d|50)|11(?:00|1\\d|2[0-4])|5200|75(?:00|[57]5)|8(?:0(?:[01]\\d|2[0-4])|58[89]|8(?:55|88)))\\d{4}|(?:5(?:[14]4|5[0157-9]|68|7[0147-9]|9[1-35-9])|790)\\d{6}"
+  },
+  {
+    "i": "GF",
+    "lbl": "French Guiana",
+    "val": "French Guiana",
+    "img": "../static/countries/gf.png",
+    "code": "+594",
+    "ex": "694201234",
+    "ptrn": "694(?:[0-249]\\d|3[0-48])\\d{4}"
+  },
+  {
+    "i": "GG",
+    "lbl": "Guernsey",
+    "val": "Guernsey",
+    "img": "../static/countries/gg.png",
+    "code": "+44",
+    "ex": "7781123456",
+    "ptrn": "7(?:(?:781|839)\\d|911[17])\\d{5}"
+  },
+  {
+    "i": "GH",
+    "lbl": "Ghana",
+    "val": "Ghana",
+    "img": "../static/countries/gh.png",
+    "code": "+233",
+    "ex": "231234567",
+    "ptrn": "(?:2(?:[0346-8]\\d|5[67])|5(?:[0457]\\d|6[01]|9[1-9]))\\d{6}"
+  },
+  {
+    "i": "GI",
+    "lbl": "Gibraltar",
+    "val": "Gibraltar",
+    "img": "../static/countries/gi.png",
+    "code": "+350",
+    "ex": "57123456",
+    "ptrn": "(?:5[146-8]\\d|606)\\d{5}"
+  },
+  {
+    "i": "GL",
+    "lbl": "Greenland",
+    "val": "Greenland",
+    "img": "../static/countries/gl.png",
+    "code": "+299",
+    "ex": "221234",
+    "ptrn": "[245]\\d{5}"
+  },
+  {
+    "i": "GM",
+    "lbl": "Gambia (the)",
+    "val": "Gambia (the)",
+    "img": "../static/countries/gm.png",
+    "code": "+220",
+    "ex": "3012345",
+    "ptrn": "(?:[23679]\\d|5[0-389])\\d{5}"
+  },
+  {
+    "i": "GN",
+    "lbl": "Guinea",
+    "val": "Guinea",
+    "img": "../static/countries/gn.png",
+    "code": "+224",
+    "ex": "601123456",
+    "ptrn": "6[0-356]\\d{7}"
+  },
+  {
+    "i": "GP",
+    "lbl": "Guadeloupe",
+    "val": "Guadeloupe",
+    "img": "../static/countries/gp.png",
+    "code": "+590",
+    "ex": "690001234",
+    "ptrn": "69(?:0\\d\\d|1(?:2[2-9]|3[0-5]))\\d{4}"
+  },
+  {
+    "i": "GQ",
+    "lbl": "Equatorial Guinea",
+    "val": "Equatorial Guinea",
+    "img": "../static/countries/gq.png",
+    "code": "+240",
+    "ex": "222123456",
+    "ptrn": "(?:222|55\\d)\\d{6}"
+  },
+  {
+    "i": "GR",
+    "lbl": "Greece",
+    "val": "Greece",
+    "img": "../static/countries/gr.png",
+    "code": "+30",
+    "ex": "6912345678",
+    "ptrn": "68[57-9]\\d{7}|(?:69|94)\\d{8}"
+  },
+  {
+    "i": "GT",
+    "lbl": "Guatemala",
+    "val": "Guatemala",
+    "img": "../static/countries/gt.png",
+    "code": "+502",
+    "ex": "51234567",
+    "ptrn": "[3-5]\\d{7}"
+  },
+  {
+    "i": "GU",
+    "lbl": "Guam",
+    "val": "Guam",
+    "img": "../static/countries/gu.png",
+    "code": "+1",
+    "ex": "6713001234"
+  },
+  {
+    "i": "GW",
+    "lbl": "Guinea-Bissau",
+    "val": "Guinea-Bissau",
+    "img": "../static/countries/gw.png",
+    "code": "+245",
+    "ex": "955012345",
+    "ptrn": "9(?:5\\d|6[569]|77)\\d{6}"
+  },
+  {
+    "i": "GY",
+    "lbl": "Guyana",
+    "val": "Guyana",
+    "img": "../static/countries/gy.png",
+    "code": "+592",
+    "ex": "6091234",
+    "ptrn": "6\\d{6}"
+  },
+  {
+    "i": "HK",
+    "lbl": "Hong Kong",
+    "val": "Hong Kong",
+    "img": "../static/countries/hk.png",
+    "code": "+852",
+    "ex": "51234567",
+    "ptrn": "(?:46(?:[07][0-7]|1[0-6]|4[0-57-9]|5[0-8]|6[0-4])|5730|6(?:26[013-7]|66[0-3])|70(?:7[1-5]|8[0-4])|848[015-9]|929[03-9])\\d{4}|(?:46[238]|5(?:[1-59][0-46-9]|6[0-4689]|7[0-2469])|6(?:0[1-9]|[13-59]\\d|[268][0-57-9]|7[0-79])|84[09]|9(?:0[1-9]|1[02-9]|[2358][0-8]|[467]\\d))\\d{5}"
+  },
+  {
+    "i": "HN",
+    "lbl": "Honduras",
+    "val": "Honduras",
+    "img": "../static/countries/hn.png",
+    "code": "+504",
+    "ex": "91234567",
+    "ptrn": "[37-9]\\d{7}"
+  },
+  {
+    "i": "HR",
+    "lbl": "Croatia",
+    "val": "Croatia",
+    "img": "../static/countries/hr.png",
+    "code": "+385",
+    "ex": "921234567",
+    "ptrn": "9(?:751\\d{5}|8\\d{6,7})|9(?:0[1-9]|[1259]\\d|7[0679])\\d{6}"
+  },
+  {
+    "i": "HT",
+    "lbl": "Haiti",
+    "val": "Haiti",
+    "img": "../static/countries/ht.png",
+    "code": "+509",
+    "ex": "34101234",
+    "ptrn": "[34]\\d{7}"
+  },
+  {
+    "i": "HU",
+    "lbl": "Hungary",
+    "val": "Hungary",
+    "img": "../static/countries/hu.png",
+    "code": "+36",
+    "ex": "201234567",
+    "ptrn": "(?:[257]0|3[01])\\d{7}"
+  },
+  {
+    "i": "ID",
+    "lbl": "Indonesia",
+    "val": "Indonesia",
+    "img": "../static/countries/id.png",
+    "code": "+62",
+    "ex": "812345678",
+    "ptrn": "8[1-35-9]\\d{7,10}"
+  },
+  {
+    "i": "IE",
+    "lbl": "Ireland",
+    "val": "Ireland",
+    "img": "../static/countries/ie.png",
+    "code": "+353",
+    "ex": "850123456",
+    "ptrn": "8(?:22|[35-9]\\d)\\d{6}"
+  },
+  {
+    "i": "IL",
+    "lbl": "Israel",
+    "val": "Israel",
+    "img": "../static/countries/il.png",
+    "code": "+972",
+    "ex": "502345678",
+    "ptrn": "5(?:(?:[02368]\\d|[19][2-9]|4[1-9])\\d|5(?:01|1[79]|2[2-9]|3[0-3]|4[34]|5[015689]|6[6-8]|7[0-267]|8[7-9]|9[1-9]))\\d{5}"
+  },
+  {
+    "i": "IM",
+    "lbl": "Isle of Man",
+    "val": "Isle of Man",
+    "img": "../static/countries/im.png",
+    "code": "+44",
+    "ex": "7924123456",
+    "ptrn": "76245[06]\\d{4}|7(?:4576|[59]24\\d|624[0-4689])\\d{5}"
+  },
+  {
+    "i": "IN",
+    "lbl": "India",
+    "val": "India",
+    "img": "../static/countries/in.png",
+    "code": "+91",
+    "ex": "8123456789",
+    "ptrn": "(?:61279|7(?:887[02-9]|9(?:313|79[07-9]))|8(?:079[04-9]|(?:84|91)7[02-8]))\\d{5}|(?:6(?:12|[2-47]1|5[17]|6[13]|80)[0189]|7(?:1(?:2[0189]|9[0-5])|2(?:[14][017-9]|8[0-59])|3(?:2[5-8]|[34][017-9]|9[016-9])|4(?:1[015-9]|[29][89]|39|8[389])|5(?:[15][017-9]|2[04-9]|9[7-9])|6(?:0[0-47]|1[0-257-9]|2[0-4]|3[19]|5[4589])|70[0289]|88[089]|97[02-8])|8(?:0(?:6[67]|7[02-8])|70[017-9]|84[01489]|91[0-289]))\\d{6}|(?:7(?:31|4[47])|8(?:16|2[014]|3[126]|6[136]|7[78]|83))(?:[0189]\\d|7[02-8])\\d{5}|(?:6(?:[09]\\d|1[04679]|2[03689]|3[05-9]|4[0489]|50|6[069]|7[07]|8[7-9])|7(?:0\\d|2[0235-79]|3[05-8]|40|5[0346-8]|6[6-9]|7[1-9]|8[0-79]|9[089])|8(?:0[01589]|1[0-57-9]|2[235-9]|3[03-57-9]|[45]\\d|6[02457-9]|7[1-69]|8[0-25-9]|9[02-9])|9\\d\\d)\\d{7}|(?:6(?:(?:1[1358]|2[2457]|3[2-4]|4[235-7]|5[2-689]|6[24578]|8[124-6])\\d|7(?:[235689]\\d|4[0189]))|7(?:1(?:[013-8]\\d|9[6-9])|28[6-8]|3(?:2[0-49]|9[2-5])|4(?:1[2-4]|[29][0-7]|3[0-8]|[56]\\d|8[0-24-7])|5(?:2[1-3]|9[0-6])|6(?:0[5689]|2[5-9]|3[02-8]|4\\d|5[0-367])|70[13-7]|881))[0189]\\d{5}"
+  },
+  {
+    "i": "IO",
+    "lbl": "British Indian Ocean Territory (the)",
+    "val": "British Indian Ocean Territory (the)",
+    "img": "../static/countries/io.png",
+    "code": "+246",
+    "ex": "3801234",
+    "ptrn": "38\\d{5}"
+  },
+  {
+    "i": "IQ",
+    "lbl": "Iraq",
+    "val": "Iraq",
+    "img": "../static/countries/iq.png",
+    "code": "+964",
+    "ex": "7912345678",
+    "ptrn": "7[3-9]\\d{8}"
+  },
+  {
+    "i": "IR",
+    "lbl": "Iran (Islamic Republic of)",
+    "val": "Iran (Islamic Republic of)",
+    "img": "../static/countries/ir.png",
+    "code": "+98",
+    "ex": "9123456789",
+    "ptrn": "9(?:(?:0(?:[0-35]\\d|4[4-6])|(?:[13]\\d|2[0-3])\\d)\\d|9(?:(?:[0-3]\\d|4[0145])\\d|5[15]0|8(?:1\\d|88)|9(?:0[013]|[19]\\d|21|77|8[7-9])))\\d{5}"
+  },
+  {
+    "i": "IS",
+    "lbl": "Iceland",
+    "val": "Iceland",
+    "img": "../static/countries/is.png",
+    "code": "+354",
+    "ex": "6111234",
+    "ptrn": "(?:38[589]\\d\\d|6(?:1[1-8]|2[0-6]|3[027-9]|4[014679]|5[0159]|6[0-69]|70|8[06-8]|9\\d)|7(?:5[057]|[6-9]\\d)|8(?:2[0-59]|[3-69]\\d|8[28]))\\d{4}"
+  },
+  {
+    "i": "IT",
+    "lbl": "Italy",
+    "val": "Italy",
+    "img": "../static/countries/it.png",
+    "code": "+39",
+    "ex": "3123456789",
+    "ptrn": "3[1-9]\\d{8}|3[2-9]\\d{7}"
+  },
+  {
+    "i": "JE",
+    "lbl": "Jersey",
+    "val": "Jersey",
+    "img": "../static/countries/je.png",
+    "code": "+44",
+    "ex": "7797712345",
+    "ptrn": "7(?:(?:(?:50|82)9|937)\\d|7(?:00[378]|97[7-9]))\\d{5}"
+  },
+  {
+    "i": "JM",
+    "lbl": "Jamaica",
+    "val": "Jamaica",
+    "img": "../static/countries/jm.png",
+    "code": "+1",
+    "ex": "8762101234",
+    "ptrn": "(?:658295|876(?:2(?:0[6-9]|[14-9]\\d|2[013-9]|3[7-9])|[348]\\d\\d|5(?:0[1-9]|[1-9]\\d)|6(?:4[89]|6[67])|7(?:0[07]|7\\d|8[1-47-9]|9[0-36-9])|9(?:[01]9|9[0579])))\\d{4}"
+  },
+  {
+    "i": "JO",
+    "lbl": "Jordan",
+    "val": "Jordan",
+    "img": "../static/countries/jo.png",
+    "code": "+962",
+    "ex": "790123456",
+    "ptrn": "7(?:[78][0-25-9]|9\\d)\\d{6}"
+  },
+  {
+    "i": "JP",
+    "lbl": "Japan",
+    "val": "Japan",
+    "img": "../static/countries/jp.png",
+    "code": "+81",
+    "ex": "9012345678",
+    "ptrn": "[7-9]0[1-9]\\d{7}"
+  },
+  {
+    "i": "KE",
+    "lbl": "Kenya",
+    "val": "Kenya",
+    "img": "../static/countries/ke.png",
+    "code": "+254",
+    "ex": "712123456",
+    "ptrn": "(?:1(?:0[0-6]|1[0-5]|2[014])|7\\d\\d)\\d{6}"
+  },
+  {
+    "i": "KG",
+    "lbl": "Kyrgyzstan",
+    "val": "Kyrgyzstan",
+    "img": "../static/countries/kg.png",
+    "code": "+996",
+    "ex": "700123456",
+    "ptrn": "312(?:58\\d|973)\\d{3}|(?:2(?:0[0-35]|2\\d)|5[0-24-7]\\d|7(?:[07]\\d|55)|880|99[05-9])\\d{6}"
+  },
+  {
+    "i": "KH",
+    "lbl": "Cambodia",
+    "val": "Cambodia",
+    "img": "../static/countries/kh.png",
+    "code": "+855",
+    "ex": "91234567",
+    "ptrn": "(?:(?:1[28]|3[18]|9[67])\\d|6[016-9]|7(?:[07-9]|[16]\\d)|8(?:[013-79]|8\\d))\\d{6}|(?:1\\d|9[0-57-9])\\d{6}|(?:2[3-6]|3[2-6]|4[2-4]|[5-7][2-5])48\\d{5}"
+  },
+  {
+    "i": "KI",
+    "lbl": "Kiribati",
+    "val": "Kiribati",
+    "img": "../static/countries/ki.png",
+    "code": "+686",
+    "ex": "72001234",
+    "ptrn": "(?:63\\d{3}|73(?:0[0-5]\\d|140))\\d{3}|[67]200[01]\\d{3}"
+  },
+  {
+    "i": "KM",
+    "lbl": "Comoros (the)",
+    "val": "Comoros (the)",
+    "img": "../static/countries/km.png",
+    "code": "+269",
+    "ex": "3212345",
+    "ptrn": "[34]\\d{6}"
+  },
+  {
+    "i": "KN",
+    "lbl": "Saint Kitts and Nevis",
+    "val": "Saint Kitts and Nevis",
+    "img": "../static/countries/kn.png",
+    "code": "+1",
+    "ex": "8697652917",
+    "ptrn": "869(?:48[89]|55[6-8]|66\\d|76[02-7])\\d{4}"
+  },
+  {
+    "i": "KP",
+    "lbl": "Korea (the Democratic People's Republic of)",
+    "val": "Korea (the Democratic People's Republic of)",
+    "img": "../static/countries/kp.png",
+    "code": "+850",
+    "ex": "1921234567",
+    "ptrn": "19[1-3]\\d{7}"
+  },
+  {
+    "i": "KR",
+    "lbl": "Korea (the Republic of)",
+    "val": "Korea (the Republic of)",
+    "img": "../static/countries/kr.png",
+    "code": "+82",
+    "ex": "1020000000",
+    "ptrn": "1(?:05(?:[0-8]\\d|9[0-6])|22[13]\\d)\\d{4,5}|1(?:0[1-46-9]|[16-9]\\d|2[013-9])\\d{6,7}"
+  },
+  {
+    "i": "KW",
+    "lbl": "Kuwait",
+    "val": "Kuwait",
+    "img": "../static/countries/kw.png",
+    "code": "+965",
+    "ex": "50012345",
+    "ptrn": "(?:5(?:2(?:22|5[25])|7(?:55|77)|88[58])|6(?:222|333|444|70[013-9]|888|93[039])|9(?:11[01]|3(?:00|33)|500))\\d{4}|(?:5(?:[05]\\d|1[0-7]|6[56])|6(?:0[034679]|5[015-9]|6\\d|7[67]|9[069])|9(?:0[09]|22|[4679]\\d|55|8[057-9]))\\d{5}"
+  },
+  {
+    "i": "KY",
+    "lbl": "Cayman Islands (the)",
+    "val": "Cayman Islands (the)",
+    "img": "../static/countries/ky.png",
+    "code": "+1",
+    "ex": "3453231234",
+    "ptrn": "345(?:32[1-9]|42[0-4]|5(?:1[67]|2[5-79]|4[6-9]|50|76)|649|9(?:1[679]|2[2-9]|3[06-9]|90))\\d{4}"
+  },
+  {
+    "i": "KZ",
+    "lbl": "Kazakhstan",
+    "val": "Kazakhstan",
+    "img": "../static/countries/kz.png",
+    "code": "+7",
+    "ex": "7710009998",
+    "ptrn": "7(?:0[0-25-8]|47|6[0-4]|7[15-8]|85)\\d{7}"
+  },
+  {
+    "i": "LA",
+    "lbl": "Lao People's Democratic Republic (the)",
+    "val": "Lao People's Democratic Republic (the)",
+    "img": "../static/countries/la.png",
+    "code": "+856",
+    "ex": "2023123456",
+    "ptrn": "(?:20(?:[239]\\d|5[24-9]|7[6-8])|302\\d)\\d{6}"
+  },
+  {
+    "i": "LB",
+    "lbl": "Lebanon",
+    "val": "Lebanon",
+    "img": "../static/countries/lb.png",
+    "code": "+961",
+    "ex": "71123456",
+    "ptrn": "793(?:[01]\\d|2[0-4])\\d{3}|(?:(?:3|81)\\d|7(?:[01]\\d|6[013-9]|8[89]|9[12]))\\d{5}"
+  },
+  {
+    "i": "LC",
+    "lbl": "Saint Lucia",
+    "val": "Saint Lucia",
+    "img": "../static/countries/lc.png",
+    "code": "+1",
+    "ex": "7582845678",
+    "ptrn": "758(?:28[4-7]|384|4(?:6[01]|8[4-9])|5(?:1[89]|20|84)|7(?:1[2-9]|2\\d|3[0-3])|812)\\d{4}"
+  },
+  {
+    "i": "LI",
+    "lbl": "Liechtenstein",
+    "val": "Liechtenstein",
+    "img": "../static/countries/li.png",
+    "code": "+423",
+    "ex": "660234567",
+    "ptrn": "(?:6(?:4(?:69|[7-9]\\d)|5[0-4]\\d|6(?:[024]\\d|[17]0|3[7-9]))\\d|7(?:[37-9]\\d|42|56))\\d{4}"
+  },
+  {
+    "i": "LK",
+    "lbl": "Sri Lanka",
+    "val": "Sri Lanka",
+    "img": "../static/countries/lk.png",
+    "code": "+94",
+    "ex": "712345678",
+    "ptrn": "7(?:[0-25-8]\\d|4[01])\\d{6}"
+  },
+  {
+    "i": "LR",
+    "lbl": "Liberia",
+    "val": "Liberia",
+    "img": "../static/countries/lr.png",
+    "code": "+231",
+    "ex": "770123456",
+    "ptrn": "(?:(?:330|555|(?:77|88)\\d)\\d|4[67])\\d{5}|[56]\\d{6}"
+  },
+  {
+    "i": "LS",
+    "lbl": "Lesotho",
+    "val": "Lesotho",
+    "img": "../static/countries/ls.png",
+    "code": "+266",
+    "ex": "50123456",
+    "ptrn": "[56]\\d{7}"
+  },
+  {
+    "i": "LT",
+    "lbl": "Lithuania",
+    "val": "Lithuania",
+    "img": "../static/countries/lt.png",
+    "code": "+370",
+    "ex": "61234567",
+    "ptrn": "6\\d{7}"
+  },
+  {
+    "i": "LU",
+    "lbl": "Luxembourg",
+    "val": "Luxembourg",
+    "img": "../static/countries/lu.png",
+    "code": "+352",
+    "ex": "628123456",
+    "ptrn": "6(?:[269][18]|5[1568]|7[189]|81)\\d{6}"
+  },
+  {
+    "i": "LV",
+    "lbl": "Latvia",
+    "val": "Latvia",
+    "img": "../static/countries/lv.png",
+    "code": "+371",
+    "ex": "21234567",
+    "ptrn": "2\\d{7}"
+  },
+  {
+    "i": "LY",
+    "lbl": "Libya",
+    "val": "Libya",
+    "img": "../static/countries/ly.png",
+    "code": "+218",
+    "ex": "912345678",
+    "ptrn": "9[1-6]\\d{7}"
+  },
+  {
+    "i": "MA",
+    "lbl": "Morocco",
+    "val": "Morocco",
+    "img": "../static/countries/ma.png",
+    "code": "+212",
+    "ex": "650123456",
+    "ptrn": "(?:6(?:[0-79]\\d|8[0-247-9])|7(?:0\\d|1[0-5]|6[1267]|7[0-57]))\\d{6}"
+  },
+  {
+    "i": "MC",
+    "lbl": "Monaco",
+    "val": "Monaco",
+    "img": "../static/countries/mc.png",
+    "code": "+377",
+    "ex": "612345678",
+    "ptrn": "4(?:[46]\\d|5[1-9])\\d{5}|(?:3|6\\d)\\d{7}"
+  },
+  {
+    "i": "MD",
+    "lbl": "Moldova (the Republic of)",
+    "val": "Moldova (the Republic of)",
+    "img": "../static/countries/md.png",
+    "code": "+373",
+    "ex": "62112345",
+    "ptrn": "562\\d{5}|(?:6\\d|7[16-9])\\d{6}"
+  },
+  {
+    "i": "ME",
+    "lbl": "Montenegro",
+    "val": "Montenegro",
+    "img": "../static/countries/me.png",
+    "code": "+382",
+    "ex": "67622901",
+    "ptrn": "6(?:[07-9]\\d|3[024]|6[0-25])\\d{5}"
+  },
+  {
+    "i": "MF",
+    "lbl": "Saint Martin (French part)",
+    "val": "Saint Martin (French part)",
+    "img": "../static/countries/mf.png",
+    "code": "+590",
+    "ex": "690001234",
+    "ptrn": "69(?:0\\d\\d|1(?:2[2-9]|3[0-5]))\\d{4}"
+  },
+  {
+    "i": "MG",
+    "lbl": "Madagascar",
+    "val": "Madagascar",
+    "img": "../static/countries/mg.png",
+    "code": "+261",
+    "ex": "321234567",
+    "ptrn": "3[2-489]\\d{7}"
+  },
+  {
+    "i": "MH",
+    "lbl": "Marshall Islands (the)",
+    "val": "Marshall Islands (the)",
+    "img": "../static/countries/mh.png",
+    "code": "+692",
+    "ex": "2351234",
+    "ptrn": "(?:(?:23|54)5|329|45[56])\\d{4}"
+  },
+  {
+    "i": "MK",
+    "lbl": "Republic of North Macedonia",
+    "val": "Republic of North Macedonia",
+    "img": "../static/countries/mk.png",
+    "code": "+389",
+    "ex": "72345678",
+    "ptrn": "7(?:3555|4(?:60\\d|747)|94(?:[01]\\d|2[0-4]))\\d{3}|7(?:[0-25-8]\\d|3[2-4]|42|9[23])\\d{5}"
+  },
+  {
+    "i": "ML",
+    "lbl": "Mali",
+    "val": "Mali",
+    "img": "../static/countries/ml.png",
+    "code": "+223",
+    "ex": "65012345",
+    "ptrn": "2(?:0(?:01|79)|17\\d)\\d{4}|(?:5[01]|[679]\\d|8[239])\\d{6}"
+  },
+  {
+    "i": "MM",
+    "lbl": "Myanmar",
+    "val": "Myanmar",
+    "img": "../static/countries/mm.png",
+    "code": "+95",
+    "ex": "92123456",
+    "ptrn": "(?:17[01]|9(?:2(?:[0-4]|[56]\\d\\d)|(?:3(?:[0-36]|4\\d)|(?:6\\d|8[89]|9[4-8])\\d|7(?:3|40|[5-9]\\d))\\d|4(?:(?:[0245]\\d|[1379])\\d|88)|5[0-6])\\d)\\d{4}|9[69]1\\d{6}|9(?:[68]\\d|9[089])\\d{5}"
+  },
+  {
+    "i": "MN",
+    "lbl": "Mongolia",
+    "val": "Mongolia",
+    "img": "../static/countries/mn.png",
+    "code": "+976",
+    "ex": "88123456",
+    "ptrn": "(?:83[01]|920)\\d{5}|(?:5[05]|8[05689]|9[013-9])\\d{6}"
+  },
+  {
+    "i": "MO",
+    "lbl": "Macao",
+    "val": "Macao",
+    "img": "../static/countries/mo.png",
+    "code": "+853",
+    "ex": "66123456",
+    "ptrn": "6800[0-79]\\d{3}|6(?:[235]\\d\\d|6(?:0[0-5]|[1-9]\\d)|8(?:0[1-9]|[14-8]\\d|2[5-9]|[39][0-4]))\\d{4}"
+  },
+  {
+    "i": "MP",
+    "lbl": "Northern Mariana Islands (the)",
+    "val": "Northern Mariana Islands (the)",
+    "img": "../static/countries/mp.png",
+    "code": "+1",
+    "ex": "6702345678"
+  },
+  {
+    "i": "MQ",
+    "lbl": "Martinique",
+    "val": "Martinique",
+    "img": "../static/countries/mq.png",
+    "code": "+596",
+    "ex": "696201234",
+    "ptrn": "69(?:6(?:[0-46-9]\\d|5[0-6])|727)\\d{4}"
+  },
+  {
+    "i": "MR",
+    "lbl": "Mauritania",
+    "val": "Mauritania",
+    "img": "../static/countries/mr.png",
+    "code": "+222",
+    "ex": "22123456",
+    "ptrn": "[2-4][0-46-9]\\d{6}"
+  },
+  {
+    "i": "MS",
+    "lbl": "Montserrat",
+    "val": "Montserrat",
+    "img": "../static/countries/ms.png",
+    "code": "+1",
+    "ex": "6644923456",
+    "ptrn": "664(?:3(?:49|9[1-6])|49[2-6])\\d{4}"
+  },
+  {
+    "i": "MT",
+    "lbl": "Malta",
+    "val": "Malta",
+    "img": "../static/countries/mt.png",
+    "code": "+356",
+    "ex": "96961234",
+    "ptrn": "(?:7(?:210|[79]\\d\\d)|9(?:[29]\\d\\d|69[67]|8(?:1[1-3]|89|97)))\\d{4}"
+  },
+  {
+    "i": "MU",
+    "lbl": "Mauritius",
+    "val": "Mauritius",
+    "img": "../static/countries/mu.png",
+    "code": "+230",
+    "ex": "52512345",
+    "ptrn": "5(?:4(?:2[1-389]|7[1-9])|87[15-8])\\d{4}|5(?:2[5-9]|4[3-589]|[57]\\d|8[0-689]|9[0-8])\\d{5}"
+  },
+  {
+    "i": "MV",
+    "lbl": "Maldives",
+    "val": "Maldives",
+    "img": "../static/countries/mv.png",
+    "code": "+960",
+    "ex": "7712345",
+    "ptrn": "46[46]\\d{4}|(?:7\\d|9[13-9])\\d{5}"
+  },
+  {
+    "i": "MW",
+    "lbl": "Malawi",
+    "val": "Malawi",
+    "img": "../static/countries/mw.png",
+    "code": "+265",
+    "ex": "991234567",
+    "ptrn": "111\\d{6}|(?:31|77|88|9[89])\\d{7}"
+  },
+  {
+    "i": "MX",
+    "lbl": "Mexico",
+    "val": "Mexico",
+    "img": "../static/countries/mx.png",
+    "code": "+52",
+    "ex": "12221234567",
+    "ptrn": "6571\\d{6}|(?:1(?:2(?:2[1-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|3\\d|7[1-8]|9[1-5])|4(?:1[1-57-9]|[24-7][1-9]|3[1-8]|8[1-35-9]|9[2-689])|5(?:[56]\\d|88|9[1-79])|6(?:1[2-68]|[2-4][1-9]|5[1-3689]|6[1-57-9]|7[1-7]|8[67]|9[4-8])|7(?:[1-467][1-9]|5[13-9]|8[1-69]|9[17])|8(?:1\\d|2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|[69][1-9]|7[12]|8[1-8]))|2(?:2[1-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|3\\d|7[1-8]|9[1-5])|4(?:1[1-57-9]|[25-7][1-9]|3[1-8]|4\\d|8[1-35-9]|9[2-689])|5(?:[56]\\d|88|9[1-79])|6(?:1[2-68]|[2-4][1-9]|5[1-3689]|6[1-57-9]|7[1-7]|8[67]|9[4-8])|7(?:[1-467][1-9]|5[13-9]|8[1-69]|9[17])|8(?:1\\d|2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|6[1-9]|7[12]|8[1-8]|9\\d))\\d{7}"
+  },
+  {
+    "i": "MY",
+    "lbl": "Malaysia",
+    "val": "Malaysia",
+    "img": "../static/countries/my.png",
+    "code": "+60",
+    "ex": "123456789",
+    "ptrn": "1(?:1888[69]|4400|8(?:47|8[27])[0-4])\\d{4}|1(?:0(?:[23568]\\d|4[0-6]|7[016-9]|9[0-8])|1(?:[1-5]\\d\\d|6(?:0[5-9]|[1-9]\\d)|7(?:[0134]\\d|2[1-9]|5[0-6]))|(?:(?:[269]|59)\\d|[37][1-9]|4[235-9])\\d|8(?:1[23]|[236]\\d|4[06]|5[7-9]|7[016-9]|8[01]|9[0-8]))\\d{5}"
+  },
+  {
+    "i": "MZ",
+    "lbl": "Mozambique",
+    "val": "Mozambique",
+    "img": "../static/countries/mz.png",
+    "code": "+258",
+    "ex": "821234567",
+    "ptrn": "8[2-79]\\d{7}"
+  },
+  {
+    "i": "NA",
+    "lbl": "Namibia",
+    "val": "Namibia",
+    "img": "../static/countries/na.png",
+    "code": "+264",
+    "ex": "811234567",
+    "ptrn": "(?:60|8[1245])\\d{7}"
+  },
+  {
+    "i": "NC",
+    "lbl": "New Caledonia",
+    "val": "New Caledonia",
+    "img": "../static/countries/nc.png",
+    "code": "+687",
+    "ex": "751234",
+    "ptrn": "(?:5[0-4]|[79]\\d|8[0-79])\\d{4}"
+  },
+  {
+    "i": "NE",
+    "lbl": "Niger (the)",
+    "val": "Niger (the)",
+    "img": "../static/countries/ne.png",
+    "code": "+227",
+    "ex": "93123456",
+    "ptrn": "(?:23|7[04]|[89]\\d)\\d{6}"
+  },
+  {
+    "i": "NF",
+    "lbl": "Norfolk Island",
+    "val": "Norfolk Island",
+    "img": "../static/countries/nf.png",
+    "code": "+672",
+    "ex": "381234",
+    "ptrn": "(?:14|3[58])\\d{4}"
+  },
+  {
+    "i": "NG",
+    "lbl": "Nigeria",
+    "val": "Nigeria",
+    "img": "../static/countries/ng.png",
+    "code": "+234",
+    "ex": "8021234567",
+    "ptrn": "(?:702[0-24-9]|8(?:01|19)[01])\\d{6}|(?:70[13-689]|8(?:0[2-9]|1[0-8])|9(?:0[1-9]|1[2356]))\\d{7}"
+  },
+  {
+    "i": "NI",
+    "lbl": "Nicaragua",
+    "val": "Nicaragua",
+    "img": "../static/countries/ni.png",
+    "code": "+505",
+    "ex": "81234567",
+    "ptrn": "(?:5(?:5[0-7]|[78]\\d)|6(?:20|3[035]|4[045]|5[05]|77|8[1-9]|9[059])|(?:7[5-8]|8\\d)\\d)\\d{5}"
+  },
+  {
+    "i": "NL",
+    "lbl": "Netherlands (the)",
+    "val": "Netherlands (the)",
+    "img": "../static/countries/nl.png",
+    "code": "+31",
+    "ex": "612345678",
+    "ptrn": "6[1-58]\\d{7}"
+  },
+  {
+    "i": "NO",
+    "lbl": "Norway",
+    "val": "Norway",
+    "img": "../static/countries/no.png",
+    "code": "+47",
+    "ex": "40612345",
+    "ptrn": "(?:4[015-8]|59|9\\d)\\d{6}"
+  },
+  {
+    "i": "NP",
+    "lbl": "Nepal",
+    "val": "Nepal",
+    "img": "../static/countries/np.png",
+    "code": "+977",
+    "ex": "9841234567",
+    "ptrn": "9(?:6[0-3]|7[245]|8[0-24-68])\\d{7}"
+  },
+  {
+    "i": "NR",
+    "lbl": "Nauru",
+    "val": "Nauru",
+    "img": "../static/countries/nr.png",
+    "code": "+674",
+    "ex": "5551234",
+    "ptrn": "(?:55[3-9]|666|8\\d\\d)\\d{4}"
+  },
+  {
+    "i": "NU",
+    "lbl": "Niue",
+    "val": "Niue",
+    "img": "../static/countries/nu.png",
+    "code": "+683",
+    "ex": "8884012",
+    "ptrn": "888[4-9]\\d{3}"
+  },
+  {
+    "i": "NZ",
+    "lbl": "New Zealand",
+    "val": "New Zealand",
+    "img": "../static/countries/nz.png",
+    "code": "+64",
+    "ex": "211234567",
+    "ptrn": "2[0-27-9]\\d{7,8}|21\\d{6}"
+  },
+  {
+    "i": "OM",
+    "lbl": "Oman",
+    "val": "Oman",
+    "img": "../static/countries/om.png",
+    "code": "+968",
+    "ex": "92123456",
+    "ptrn": "1505\\d{4}|(?:7(?:[1289]\\d|70)|9(?:0[1-9]|[1-9]\\d))\\d{5}"
+  },
+  {
+    "i": "PA",
+    "lbl": "Panama",
+    "val": "Panama",
+    "img": "../static/countries/pa.png",
+    "code": "+507",
+    "ex": "61234567",
+    "ptrn": "(?:1[16]1|21[89]|6(?:[02-9]\\d|1[0-8])\\d|8(?:1[01]|7[23]))\\d{4}"
+  },
+  {
+    "i": "PE",
+    "lbl": "Peru",
+    "val": "Peru",
+    "img": "../static/countries/pe.png",
+    "code": "+51",
+    "ex": "912345678",
+    "ptrn": "9\\d{8}"
+  },
+  {
+    "i": "PF",
+    "lbl": "French Polynesia",
+    "val": "French Polynesia",
+    "img": "../static/countries/pf.png",
+    "code": "+689",
+    "ex": "87123456",
+    "ptrn": "8[7-9]\\d{6}"
+  },
+  {
+    "i": "PG",
+    "lbl": "Papua New Guinea",
+    "val": "Papua New Guinea",
+    "img": "../static/countries/pg.png",
+    "code": "+675",
+    "ex": "70123456",
+    "ptrn": "(?:7\\d|8[18])\\d{6}"
+  },
+  {
+    "i": "PH",
+    "lbl": "Philippines (the)",
+    "val": "Philippines (the)",
+    "img": "../static/countries/ph.png",
+    "code": "+63",
+    "ex": "9051234567",
+    "ptrn": "(?:8(?:1[37]|9[5-8])|9(?:0[5-9]|1[0-24-9]|[2357]\\d|4[2-9]|6[0-35-9]|8[135-9]|9[1-9]))\\d{7}"
+  },
+  {
+    "i": "PK",
+    "lbl": "Pakistan",
+    "val": "Pakistan",
+    "img": "../static/countries/pk.png",
+    "code": "+92",
+    "ex": "3012345678",
+    "ptrn": "3(?:[014]\\d|2[0-5]|3[0-7]|55|64)\\d{7}"
+  },
+  {
+    "i": "PL",
+    "lbl": "Poland",
+    "val": "Poland",
+    "img": "../static/countries/pl.png",
+    "code": "+48",
+    "ex": "512345678",
+    "ptrn": "211(?:1\\d|3[1-5])\\d{4}|(?:45|5[0137]|6[069]|7[2389]|88)\\d{7}"
+  },
+  {
+    "i": "PM",
+    "lbl": "Saint Pierre and Miquelon",
+    "val": "Saint Pierre and Miquelon",
+    "img": "../static/countries/pm.png",
+    "code": "+508",
+    "ex": "551234",
+    "ptrn": "(?:4[02-4]|5[05])\\d{4}"
+  },
+  {
+    "i": "PR",
+    "lbl": "Puerto Rico",
+    "val": "Puerto Rico",
+    "img": "../static/countries/pr.png",
+    "code": "+1",
+    "ex": "7872345678"
+  },
+  {
+    "i": "PS",
+    "lbl": "Palestine, State of",
+    "val": "Palestine, State of",
+    "img": "../static/countries/ps.png",
+    "code": "+970",
+    "ex": "599123456",
+    "ptrn": "5[69]\\d{7}"
+  },
+  {
+    "i": "PT",
+    "lbl": "Portugal",
+    "val": "Portugal",
+    "img": "../static/countries/pt.png",
+    "code": "+351",
+    "ex": "912345678",
+    "ptrn": "6[0356]92(?:30|9\\d)\\d{3}|(?:(?:16|6[0356])93|9(?:[1-36]\\d\\d|480))\\d{5}"
+  },
+  {
+    "i": "PW",
+    "lbl": "Palau",
+    "val": "Palau",
+    "img": "../static/countries/pw.png",
+    "code": "+680",
+    "ex": "6201234",
+    "ptrn": "(?:46[0-5]|6[2-4689]0)\\d{4}|(?:45|77|88)\\d{5}"
+  },
+  {
+    "i": "PY",
+    "lbl": "Paraguay",
+    "val": "Paraguay",
+    "img": "../static/countries/py.png",
+    "code": "+595",
+    "ex": "961456789",
+    "ptrn": "9(?:51|6[129]|[78][1-6]|9[1-5])\\d{6}"
+  },
+  {
+    "i": "QA",
+    "lbl": "Qatar",
+    "val": "Qatar",
+    "img": "../static/countries/qa.png",
+    "code": "+974",
+    "ex": "33123456",
+    "ptrn": "(?:28|[35-7]\\d)\\d{6}"
+  },
+  {
+    "i": "RE",
+    "lbl": "Réunion",
+    "val": "Réunion",
+    "img": "../static/countries/re.png",
+    "code": "+262",
+    "ex": "692123456",
+    "ptrn": "(?:69(?:2\\d\\d|3(?:[06][0-46]|1[013]|2[0-2]|3[0-39]|4\\d|5[0-5]|7[0-27]|8[0-8]|9[0-479]))|9769\\d)\\d{4}"
+  },
+  {
+    "i": "RO",
+    "lbl": "Romania",
+    "val": "Romania",
+    "img": "../static/countries/ro.png",
+    "code": "+40",
+    "ex": "712034567",
+    "ptrn": "7020\\d{5}|7(?:0[013-9]|1[0-2]|[2-7]\\d|8[03-8]|9[019])\\d{6}"
+  },
+  {
+    "i": "RS",
+    "lbl": "Serbia",
+    "val": "Serbia",
+    "img": "../static/countries/rs.png",
+    "code": "+381",
+    "ex": "601234567",
+    "ptrn": "6(?:[0-689]|7\\d)\\d{6,7}"
+  },
+  {
+    "i": "RU",
+    "lbl": "Russian Federation (the)",
+    "val": "Russian Federation (the)",
+    "img": "../static/countries/ru.png",
+    "code": "+7",
+    "ex": "9123456789",
+    "ptrn": "9\\d{9}"
+  },
+  {
+    "i": "RW",
+    "lbl": "Rwanda",
+    "val": "Rwanda",
+    "img": "../static/countries/rw.png",
+    "code": "+250",
+    "ex": "720123456",
+    "ptrn": "7[2389]\\d{7}"
+  },
+  {
+    "i": "SA",
+    "lbl": "Saudi Arabia",
+    "val": "Saudi Arabia",
+    "img": "../static/countries/sa.png",
+    "code": "+966",
+    "ex": "512345678",
+    "ptrn": "579[01]\\d{5}|5(?:[013-689]\\d|7[0-36-8])\\d{6}"
+  },
+  {
+    "i": "SB",
+    "lbl": "Solomon Islands",
+    "val": "Solomon Islands",
+    "img": "../static/countries/sb.png",
+    "code": "+677",
+    "ex": "7421234",
+    "ptrn": "48\\d{3}|(?:(?:7[1-9]|8[4-9])\\d|9(?:1[2-9]|2[013-9]|3[0-2]|[46]\\d|5[0-46-9]|7[0-689]|8[0-79]|9[0-8]))\\d{4}"
+  },
+  {
+    "i": "SC",
+    "lbl": "Seychelles",
+    "val": "Seychelles",
+    "img": "../static/countries/sc.png",
+    "code": "+248",
+    "ex": "2510123",
+    "ptrn": "2[5-8]\\d{5}"
+  },
+  {
+    "i": "SD",
+    "lbl": "Sudan (the)",
+    "val": "Sudan (the)",
+    "img": "../static/countries/sd.png",
+    "code": "+249",
+    "ex": "911231234",
+    "ptrn": "(?:1[0-2]|9[0-3569])\\d{7}"
+  },
+  {
+    "i": "SE",
+    "lbl": "Sweden",
+    "val": "Sweden",
+    "img": "../static/countries/se.png",
+    "code": "+46",
+    "ex": "701234567",
+    "ptrn": "7[02369]\\d{7}"
+  },
+  {
+    "i": "SG",
+    "lbl": "Singapore",
+    "val": "Singapore",
+    "img": "../static/countries/sg.png",
+    "code": "+65",
+    "ex": "81234567",
+    "ptrn": "(?:8(?:0(?:[13]\\d|2[013-9]|4[0-35-7])|[1-8]\\d\\d|9(?:[0-4]\\d|5[0-2]))|9[0-8]\\d\\d)\\d{4}"
+  },
+  {
+    "i": "SH",
+    "lbl": "Saint Helena, Ascension and Tristan da Cunha",
+    "val": "Saint Helena, Ascension and Tristan da Cunha",
+    "img": "../static/countries/sh.png",
+    "code": "+290",
+    "ex": "51234",
+    "ptrn": "[56]\\d{4}"
+  },
+  {
+    "i": "SI",
+    "lbl": "Slovenia",
+    "val": "Slovenia",
+    "img": "../static/countries/si.png",
+    "code": "+386",
+    "ex": "31234567",
+    "ptrn": "65(?:1\\d|55|[67]0)\\d{4}|(?:[37][01]|4[0139]|51|6[489])\\d{6}"
+  },
+  {
+    "i": "SJ",
+    "lbl": "Svalbard and Jan Mayen",
+    "val": "Svalbard and Jan Mayen",
+    "img": "../static/countries/sj.png",
+    "code": "+47",
+    "ex": "41234567",
+    "ptrn": "(?:4[015-8]|59|9\\d)\\d{6}"
+  },
+  {
+    "i": "SK",
+    "lbl": "Slovakia",
+    "val": "Slovakia",
+    "img": "../static/countries/sk.png",
+    "code": "+421",
+    "ex": "912123456",
+    "ptrn": "909[1-9]\\d{5}|9(?:0[1-8]|1[0-24-9]|4[03-57-9]|5\\d)\\d{6}"
+  },
+  {
+    "i": "SL",
+    "lbl": "Sierra Leone",
+    "val": "Sierra Leone",
+    "img": "../static/countries/sl.png",
+    "code": "+232",
+    "ex": "25123456",
+    "ptrn": "(?:25|3[0-5]|66|7[3-9]|8[08]|9[09])\\d{6}"
+  },
+  {
+    "i": "SM",
+    "lbl": "San Marino",
+    "val": "San Marino",
+    "img": "../static/countries/sm.png",
+    "code": "+378",
+    "ex": "66661212",
+    "ptrn": "6[16]\\d{6}"
+  },
+  {
+    "i": "SN",
+    "lbl": "Senegal",
+    "val": "Senegal",
+    "img": "../static/countries/sn.png",
+    "code": "+221",
+    "ex": "701234567",
+    "ptrn": "75(?:01|[38]3)\\d{5}|7(?:[06-8]\\d|21|5[4-7]|90)\\d{6}"
+  },
+  {
+    "i": "SO",
+    "lbl": "Somalia",
+    "val": "Somalia",
+    "img": "../static/countries/so.png",
+    "code": "+252",
+    "ex": "71123456",
+    "ptrn": "(?:(?:15|(?:3[59]|4[89]|79|8[08])\\d|6(?:0[5-7]|[1-9]\\d)|9(?:0\\d|[2-9]))\\d|2(?:4\\d|8))\\d{5}|(?:6\\d|7[1-9])\\d{6}"
+  },
+  {
+    "i": "SR",
+    "lbl": "Suriname",
+    "val": "Suriname",
+    "img": "../static/countries/sr.png",
+    "code": "+597",
+    "ex": "7412345",
+    "ptrn": "(?:7[124-7]|8[124-9])\\d{5}"
+  },
+  {
+    "i": "SS",
+    "lbl": "South Sudan",
+    "val": "South Sudan",
+    "img": "../static/countries/ss.png",
+    "code": "+211",
+    "ex": "977123456",
+    "ptrn": "(?:12|9[1257-9])\\d{7}"
+  },
+  {
+    "i": "ST",
+    "lbl": "Sao Tome and Principe",
+    "val": "Sao Tome and Principe",
+    "img": "../static/countries/st.png",
+    "code": "+239",
+    "ex": "9812345",
+    "ptrn": "900[5-9]\\d{3}|9(?:0[1-9]|[89]\\d)\\d{4}"
+  },
+  {
+    "i": "SV",
+    "lbl": "El Salvador",
+    "val": "El Salvador",
+    "img": "../static/countries/sv.png",
+    "code": "+503",
+    "ex": "70123456",
+    "ptrn": "66(?:[02-9]\\d\\d|1(?:[02-9]\\d|16))\\d{3}|(?:6[0-57-9]|7\\d)\\d{6}"
+  },
+  {
+    "i": "SX",
+    "lbl": "Sint Maarten (Dutch part)",
+    "val": "Sint Maarten (Dutch part)",
+    "img": "../static/countries/sx.png",
+    "code": "+1",
+    "ex": "7215205678",
+    "ptrn": "7215(?:1[02]|2\\d|5[034679]|8[014-8])\\d{4}"
+  },
+  {
+    "i": "SY",
+    "lbl": "Syrian Arab Republic",
+    "val": "Syrian Arab Republic",
+    "img": "../static/countries/sy.png",
+    "code": "+963",
+    "ex": "944567890",
+    "ptrn": "9(?:22|[3-689]\\d)\\d{6}"
+  },
+  {
+    "i": "SZ",
+    "lbl": "Eswatini",
+    "val": "Eswatini",
+    "img": "../static/countries/sz.png",
+    "code": "+268",
+    "ex": "76123456",
+    "ptrn": "7[6-9]\\d{6}"
+  },
+  {
+    "i": "TC",
+    "lbl": "Turks and Caicos Islands (the)",
+    "val": "Turks and Caicos Islands (the)",
+    "img": "../static/countries/tc.png",
+    "code": "+1",
+    "ex": "6492311234",
+    "ptrn": "649(?:2(?:3[129]|4[1-79])|3\\d\\d|4[34][1-3])\\d{4}"
+  },
+  {
+    "i": "TD",
+    "lbl": "Chad",
+    "val": "Chad",
+    "img": "../static/countries/td.png",
+    "code": "+235",
+    "ex": "63012345",
+    "ptrn": "(?:6[023568]|77|9\\d)\\d{6}"
+  },
+  {
+    "i": "TG",
+    "lbl": "Togo",
+    "val": "Togo",
+    "img": "../static/countries/tg.png",
+    "code": "+228",
+    "ex": "90112345",
+    "ptrn": "(?:7[09]|9[0-36-9])\\d{6}"
+  },
+  {
+    "i": "TH",
+    "lbl": "Thailand",
+    "val": "Thailand",
+    "img": "../static/countries/th.png",
+    "code": "+66",
+    "ex": "812345678",
+    "ptrn": "671[0-3]\\d{5}|(?:14|6[1-6]|[89]\\d)\\d{7}"
+  },
+  {
+    "i": "TJ",
+    "lbl": "Tajikistan",
+    "val": "Tajikistan",
+    "img": "../static/countries/tj.png",
+    "code": "+992",
+    "ex": "917123456",
+    "ptrn": "41[18]\\d{6}|(?:[034]0|11|2[02]|5[05]|7[07]|8[08]|9\\d)\\d{7}"
+  },
+  {
+    "i": "TK",
+    "lbl": "Tokelau",
+    "val": "Tokelau",
+    "img": "../static/countries/tk.png",
+    "code": "+690",
+    "ex": "7290",
+    "ptrn": "7[2-4]\\d{2,5}"
+  },
+  {
+    "i": "TL",
+    "lbl": "Timor-Leste",
+    "val": "Timor-Leste",
+    "img": "../static/countries/tl.png",
+    "code": "+670",
+    "ex": "77212345",
+    "ptrn": "7[2-8]\\d{6}"
+  },
+  {
+    "i": "TM",
+    "lbl": "Turkmenistan",
+    "val": "Turkmenistan",
+    "img": "../static/countries/tm.png",
+    "code": "+993",
+    "ex": "66123456",
+    "ptrn": "6\\d{7}"
+  },
+  {
+    "i": "TN",
+    "lbl": "Tunisia",
+    "val": "Tunisia",
+    "img": "../static/countries/tn.png",
+    "code": "+216",
+    "ex": "20123456",
+    "ptrn": "3(?:001|[12]40)\\d{4}|(?:(?:[259]\\d|4[0-7])\\d|3(?:1[1-35]|6[0-4]|91))\\d{5}"
+  },
+  {
+    "i": "TO",
+    "lbl": "Tonga",
+    "val": "Tonga",
+    "img": "../static/countries/to.png",
+    "code": "+676",
+    "ex": "7715123",
+    "ptrn": "(?:55[4-6]|6(?:[09]\\d|3[02]|8[15-9])|(?:7\\d|8[46-9])\\d|999)\\d{4}"
+  },
+  {
+    "i": "TR",
+    "lbl": "Turkey",
+    "val": "Turkey",
+    "img": "../static/countries/tr.png",
+    "code": "+90",
+    "ex": "5012345678",
+    "ptrn": "56161\\d{5}|5(?:0[15-7]|1[06]|24|[34]\\d|5[1-59]|9[46])\\d{7}"
+  },
+  {
+    "i": "TT",
+    "lbl": "Trinidad and Tobago",
+    "val": "Trinidad and Tobago",
+    "img": "../static/countries/tt.png",
+    "code": "+1",
+    "ex": "8682911234",
+    "ptrn": "868(?:(?:2[5-9]|3\\d)\\d|4(?:3[0-6]|[6-9]\\d)|6(?:20|78|8\\d)|7(?:0[1-9]|1[02-9]|[2-9]\\d))\\d{4}"
+  },
+  {
+    "i": "TV",
+    "lbl": "Tuvalu",
+    "val": "Tuvalu",
+    "img": "../static/countries/tv.png",
+    "code": "+688",
+    "ex": "901234",
+    "ptrn": "(?:7[01]\\d|90)\\d{4}"
+  },
+  {
+    "i": "TW",
+    "lbl": "Taiwan (Province of China)",
+    "val": "Taiwan (Province of China)",
+    "img": "../static/countries/tw.png",
+    "code": "+886",
+    "ex": "912345678",
+    "ptrn": "(?:40001[0-2]|9[0-8]\\d{4})\\d{3}"
+  },
+  {
+    "i": "TZ",
+    "lbl": "Tanzania, United Republic of",
+    "val": "Tanzania, United Republic of",
+    "img": "../static/countries/tz.png",
+    "code": "+255",
+    "ex": "621234567",
+    "ptrn": "77[2-9]\\d{6}|(?:6[1-9]|7[1-689])\\d{7}"
+  },
+  {
+    "i": "UA",
+    "lbl": "Ukraine",
+    "val": "Ukraine",
+    "img": "../static/countries/ua.png",
+    "code": "+380",
+    "ex": "501234567",
+    "ptrn": "(?:50|6[36-8]|7[1-3]|9[1-9])\\d{7}"
+  },
+  {
+    "i": "UG",
+    "lbl": "Uganda",
+    "val": "Uganda",
+    "img": "../static/countries/ug.png",
+    "code": "+256",
+    "ex": "712345678",
+    "ptrn": "726[01]\\d{5}|7(?:[0157-9]\\d|20|36|[46][0-4])\\d{6}"
+  },
+  {
+    "i": "US",
+    "lbl": "United States of America (the)",
+    "val": "United States of America (the)",
+    "img": "../static/countries/us.png",
+    "code": "+1",
+    "ex": "2015550123"
+  },
+  {
+    "i": "UY",
+    "lbl": "Uruguay",
+    "val": "Uruguay",
+    "img": "../static/countries/uy.png",
+    "code": "+598",
+    "ex": "94231234",
+    "ptrn": "9[1-9]\\d{6}"
+  },
+  {
+    "i": "UZ",
+    "lbl": "Uzbekistan",
+    "val": "Uzbekistan",
+    "img": "../static/countries/uz.png",
+    "code": "+998",
+    "ex": "912345678",
+    "ptrn": "(?:(?:33|88|9[0-57-9])\\d{3}|55(?:50[013]|90\\d)|6(?:1(?:2(?:2[01]|98)|35[0-4]|50\\d|61[23]|7(?:[01][017]|4\\d|55|9[5-9]))|2(?:(?:11|7\\d)\\d|2(?:[12]1|9[01379])|5(?:[126]\\d|3[0-4]))|5(?:19[01]|2(?:27|9[26])|(?:30|59|7\\d)\\d)|6(?:2(?:1[5-9]|2[0367]|38|41|52|60)|(?:3[79]|9[0-3])\\d|4(?:56|83)|7(?:[07]\\d|1[017]|3[07]|4[047]|5[057]|67|8[0178]|9[79]))|7(?:2(?:24|3[237]|4[5-9]|7[15-8])|5(?:7[12]|8[0589])|7(?:0\\d|[39][07])|9(?:0\\d|7[079]))|9(?:2(?:1[1267]|3[01]|5\\d|7[0-4])|(?:5[67]|7\\d)\\d|6(?:2[0-26]|8\\d)))|7(?:[07]\\d{3}|1(?:13[01]|6(?:0[47]|1[67]|66)|71[3-69]|98\\d)|2(?:2(?:2[79]|95)|3(?:2[5-9]|6[0-6])|57\\d|7(?:0\\d|1[17]|2[27]|3[37]|44|5[057]|66|88))|3(?:2(?:1[0-6]|21|3[469]|7[159])|(?:33|9[4-6])\\d|5(?:0[0-4]|5[579]|9\\d)|7(?:[0-3579]\\d|4[0467]|6[67]|8[078]))|4(?:2(?:29|5[0257]|6[0-7]|7[1-57])|5(?:1[0-4]|8\\d|9[5-9])|7(?:0\\d|1[024589]|2[0-27]|3[0137]|[46][07]|5[01]|7[5-9]|9[079])|9(?:7[015-9]|[89]\\d))|5(?:112|2(?:0\\d|2[29]|[49]4)|3[1568]\\d|52[6-9]|7(?:0[01578]|1[017]|[23]7|4[047]|[5-7]\\d|8[78]|9[079]))|6(?:2(?:2[1245]|4[2-4])|39\\d|41[179]|5(?:[349]\\d|5[0-2])|7(?:0[017]|[13]\\d|22|44|55|67|88))|9(?:22[128]|3(?:2[0-4]|7\\d)|57[02569]|7(?:2[05-9]|3[37]|4\\d|60|7[2579]|87|9[07]))))\\d{4}"
+  },
+  {
+    "i": "VA",
+    "lbl": "Holy See (the)",
+    "val": "Holy See (the)",
+    "img": "../static/countries/va.png",
+    "code": "+39",
+    "ex": "3123456789",
+    "ptrn": "3[1-9]\\d{8}|3[2-9]\\d{7}"
+  },
+  {
+    "i": "VC",
+    "lbl": "Saint Vincent and the Grenadines",
+    "val": "Saint Vincent and the Grenadines",
+    "img": "../static/countries/vc.png",
+    "code": "+1",
+    "ex": "7844301234",
+    "ptrn": "784(?:4(?:3[0-5]|5[45]|89|9[0-8])|5(?:2[6-9]|3[0-4])|720)\\d{4}"
+  },
+  {
+    "i": "VE",
+    "lbl": "Venezuela (Bolivarian Republic of)",
+    "val": "Venezuela (Bolivarian Republic of)",
+    "img": "../static/countries/ve.png",
+    "code": "+58",
+    "ex": "4121234567",
+    "ptrn": "4(?:1[24-8]|2[46])\\d{7}"
+  },
+  {
+    "i": "VG",
+    "lbl": "Virgin Islands (British)",
+    "val": "Virgin Islands (British)",
+    "img": "../static/countries/vg.png",
+    "code": "+1",
+    "ex": "2843001234",
+    "ptrn": "284496[6-9]\\d{3}|284(?:245|3(?:0[0-3]|4[0-7]|68|9[34])|4(?:4[0-6]|68|99)|5(?:4[0-7]|68|9[69]))\\d{4}"
+  },
+  {
+    "i": "VI",
+    "lbl": "Virgin Islands (U.S.)",
+    "val": "Virgin Islands (U.S.)",
+    "img": "../static/countries/vi.png",
+    "code": "+1",
+    "ex": "3406421234"
+  },
+  {
+    "i": "VN",
+    "lbl": "Viet Nam",
+    "val": "Viet Nam",
+    "img": "../static/countries/vn.png",
+    "code": "+84",
+    "ex": "912345678",
+    "ptrn": "(?:5(?:2[238]|59)|89[689]|99[013-9])\\d{6}|(?:3\\d|5[689]|7[06-9]|8[1-8]|9[0-8])\\d{7}"
+  },
+  {
+    "i": "VU",
+    "lbl": "Vanuatu",
+    "val": "Vanuatu",
+    "img": "../static/countries/vu.png",
+    "code": "+678",
+    "ex": "5912345",
+    "ptrn": "(?:[58]\\d|7[013-7])\\d{5}"
+  },
+  {
+    "i": "WF",
+    "lbl": "Wallis and Futuna",
+    "val": "Wallis and Futuna",
+    "img": "../static/countries/wf.png",
+    "code": "+681",
+    "ex": "821234",
+    "ptrn": "(?:72|8[23])\\d{4}"
+  },
+  {
+    "i": "WS",
+    "lbl": "Samoa",
+    "val": "Samoa",
+    "img": "../static/countries/ws.png",
+    "code": "+685",
+    "ex": "7212345",
+    "ptrn": "(?:7[1-35-7]|8(?:[3-7]|9\\d{3}))\\d{5}"
+  },
+  {
+    "i": "YE",
+    "lbl": "Yemen",
+    "val": "Yemen",
+    "img": "../static/countries/ye.png",
+    "code": "+967",
+    "ex": "712345678",
+    "ptrn": "7[0137]\\d{7}"
+  },
+  {
+    "i": "YT",
+    "lbl": "Mayotte",
+    "val": "Mayotte",
+    "img": "../static/countries/yt.png",
+    "code": "+262",
+    "ex": "639012345",
+    "ptrn": "639(?:0[0-79]|1[019]|[267]\\d|3[09]|40|5[05-9]|9[04-79])\\d{4}"
+  },
+  {
+    "i": "ZA",
+    "lbl": "South Africa",
+    "val": "South Africa",
+    "img": "../static/countries/za.png",
+    "code": "+27",
+    "ex": "711234567",
+    "ptrn": "(?:1(?:3492[0-25]|4495[0235]|549(?:20|5[01]))|4[34]492[01])\\d{3}|8[1-4]\\d{3,7}|(?:2[27]|47|54)4950\\d{3}|(?:1(?:049[2-4]|9[12]\\d\\d)|(?:6\\d|7[0-46-9])\\d{3}|8(?:5\\d{3}|7(?:08[67]|158|28[5-9]|310)))\\d{4}|(?:1[6-8]|28|3[2-69]|4[025689]|5[36-8])4920\\d{3}|(?:12|[2-5]1)492\\d{4}"
+  },
+  {
+    "i": "ZM",
+    "lbl": "Zambia",
+    "val": "Zambia",
+    "img": "../static/countries/zm.png",
+    "code": "+260",
+    "ex": "955123456",
+    "ptrn": "(?:7[679]|9[5-8])\\d{7}"
+  },
+  {
+    "i": "ZW",
+    "lbl": "Zimbabwe",
+    "val": "Zimbabwe",
+    "img": "../static/countries/zw.png",
+    "code": "+263",
+    "ex": "712345678",
+    "ptrn": "7(?:[178]\\d|3[1-9])\\d{6}"
+  }
+]

@@ -28,6 +28,7 @@ import ColorPickerIcn from '../Icons/ColorPickerIcn'
 import ConditionalIcn from '../Icons/ConditionalIcn'
 import CopyIcn from '../Icons/CopyIcn'
 import CPTIcn from '../Icons/CPTIcn'
+import CurrencyIcn from '../Icons/CurrencyIcn'
 import DarkIcn from '../Icons/DarkIcn'
 import DateIcn from '../Icons/DateIcn'
 import DateTimeIcn from '../Icons/DateTimeIcn'
@@ -88,6 +89,7 @@ import OneIcn from '../Icons/OneIcn'
 import PasswordIcn from '../Icons/PasswordIcn'
 import PaymentsIcn from '../Icons/PaymentsIcn'
 import PaypalIcn from '../Icons/PaypalIcn'
+import PhoneNumberIcn from '../Icons/PhoneNumberIcn'
 import QuestionIcn from '../Icons/QuestionIcn'
 import RadioIcn from '../Icons/RadioIcn'
 import RazorPayIcn from '../Icons/RazorPayIcn'
@@ -764,6 +766,16 @@ export default function ShowIcon() {
       key: 'External-Link Icon',
       icon: <ExternalLinkIcn size={20} />,
       com: '<ExternalLinkIcn size={18} />',
+    },
+    {
+      key: 'Phone number Icon',
+      icon: <PhoneNumberIcn />,
+      com: '<PhoneNumberIcn />',
+    },
+    {
+      key: 'Currency doller Icon',
+      icon: <CurrencyIcn />,
+      com: '<CurrencyIcn />',
     },
 
   ]

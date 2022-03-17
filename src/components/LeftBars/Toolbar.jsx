@@ -12,6 +12,7 @@ import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
+import CurrencyIcn from '../../Icons/CurrencyIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
@@ -25,6 +26,7 @@ import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
 import PasswordIcn from '../../Icons/PasswordIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
+import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
@@ -41,6 +43,7 @@ import Toolbars from '../../styles/Toolbars.style'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import currencyList from '../../Utils/StaticData/currencies.json'
+import phoneNumberList from '../../Utils/StaticData/phone-number-code.json'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
 
@@ -545,7 +548,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Currency', 'bitform'),
       keywords: 'Currency, Currency Field, Amount',
-      icn: <RazorPayIcn w="23" />,
+      icn: <CurrencyIcn size={20} />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
       elm: {
         typ: 'currency',
@@ -561,6 +564,23 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           decimalSeparator: '.',
         },
         options: currencyList,
+        valid: {},
+        err: {},
+      },
+    },
+    {
+      name: __('Phone Number', 'bitform'),
+      keywords: 'Phone number, Number',
+      icn: <PhoneNumberIcn size={20} />,
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
+      elm: {
+        typ: 'phone-number',
+        lbl: __('Phone Number', 'bitform'),
+        config: {
+          inputFormat: '',
+          valueFormat: '',
+        },
+        options: phoneNumberList,
         valid: {},
         err: {},
       },

@@ -16,6 +16,7 @@ import Html from './Fields/Html'
 import HtmlSelect from './Fields/HtmlSelect/HtmlSelect'
 import Image from './Fields/Image'
 import Paypal from './Fields/Paypal'
+import PhoneNumberField from './Fields/PhoneNumberField/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
 import RazorPay from './Fields/RazorPay'
 import ReCaptchaV2 from './Fields/ReCaptchaV2/ReCaptchaV2'
@@ -96,6 +97,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       return <CurrencyField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'country':
       return <CountryField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
+    case 'phone-number':
+      return <PhoneNumberField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
