@@ -7,6 +7,7 @@ import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
+import CurrencyIcn from '../../Icons/CurrencyIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
@@ -19,6 +20,7 @@ import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
 import PasswordIcn from '../../Icons/PasswordIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
+import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
@@ -120,6 +122,10 @@ const FieldIcon = icon => {
       return <RazorPayIcn w="14" h="19" />
     case 'advanced-file-up':
       return <FileUploadIcn w="14" />
+    case 'currency':
+      return <CurrencyIcn size="15" />
+    case 'phone-number':
+      return <PhoneNumberIcn size="15" />
     default:
       return false
   }

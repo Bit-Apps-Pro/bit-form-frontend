@@ -37,6 +37,8 @@ class PhoneNumberField {
 
   #countrySelectedFromList = false
 
+  #allEventListeners = []
+
   #config = {
     maxHeight: 370,
     detectCountryByIp: false,
@@ -100,12 +102,14 @@ class PhoneNumberField {
     }
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+    console.log(this.#allEventListeners)
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
+    this.#allEventListeners.push({ selector, eventType, cb })
   }
 
   #handleDefaultPhoneInputValue() {
@@ -605,6 +609,18 @@ class PhoneNumberField {
 
   get value() {
     return this.#phoneHiddenInputElm.value
+  }
+
+  #detachAllEvents() {
+    this.#allEventListeners.forEach(({ selector, eventType, cb }) => {
+      selector.removeEventListener(eventType, cb)
+    })
+  }
+
+  destroy() {
+    this.#optionListElm.innerHTML = ''
+    this.value = ''
+    this.#detachAllEvents()
   }
 }
 export default PhoneNumberField
