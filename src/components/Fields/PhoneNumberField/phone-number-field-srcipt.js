@@ -643,3 +643,23 @@ export default PhoneNumberField
 // TODO option tabindex prblm - done
 // TODO set variables for redundent this.#select - done
 // TODO catchable classname - done
+
+// placeholderImage
+// searchCountryPlaceholder
+// noCountryFoundText
+// placeholder
+// selectedFlagImage
+// detectCountryByGeo
+// detectCountryByIp
+// inputFormat
+// valueFormat
+
+// c - country code
+// # - number (0 - 9)
+
+// +c #### ### ###
+// +880 1826 696 318
+
+// +8801826696318
+
+// valueFormat: #### ### ###

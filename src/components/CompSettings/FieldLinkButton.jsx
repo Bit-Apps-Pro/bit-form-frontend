@@ -31,6 +31,7 @@ import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
+import { ucFirst } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
@@ -50,7 +51,7 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
             {typeof icn === 'string' ? FieldIcon(icn) : icn}
           </span>
           <div className="w-nwrp o-h">
-            <div className="txt-o o-h mb-1">{title}</div>
+            <div className="txt-o o-h mb-1">{ucFirst(title)}</div>
             {subTitle && (
               <small>
                 {__('Key:', 'bitform')}
