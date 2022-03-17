@@ -4,6 +4,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import AdvanceFileUpSettings from './AdvanceFileUpSettings'
 import ButtonSettings from './ButtonSettings'
+import CountryFieldSettings from './CountryFieldSettings'
 import CurrencyFieldSettings from './CurrencyFieldSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
@@ -64,6 +65,7 @@ export default function FieldSettings() {
     case 'image': return <ImageSettings />
     case 'divider': return <DividerSettings />
     case 'currency': return <CurrencyFieldSettings />
+    case 'country': return <CountryFieldSettings />
 
     default: return <>No field found with this key.</>
   }

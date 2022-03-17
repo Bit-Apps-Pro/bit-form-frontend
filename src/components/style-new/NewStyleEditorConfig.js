@@ -1168,5 +1168,19 @@ const editorConfig = {
       },
     },
   },
+  country: {
+    ...textFldCssProps,
+    'country-fld-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        transition: '',
+      },
+    },
+  },
 }
 export default editorConfig

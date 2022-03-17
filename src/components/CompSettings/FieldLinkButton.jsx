@@ -13,6 +13,7 @@ import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
 import DividerIcn from '../../Icons/DividerIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
+import FlagIcn from '../../Icons/FlagIcn'
 import ImageIcn from '../../Icons/ImageIcn'
 import MailIcn from '../../Icons/MailIcn'
 import MonthIcn from '../../Icons/MonthIcn'
@@ -120,6 +121,8 @@ const FieldIcon = icon => {
       return <RazorPayIcn w="14" h="19" />
     case 'advanced-file-up':
       return <FileUploadIcn w="14" />
+    case 'country':
+      return <FlagIcn size="14" />
     default:
       return false
   }
