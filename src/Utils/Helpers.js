@@ -399,6 +399,10 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'opt-suffix'
       elementKey = 'opt-suffix'
       break
+    case 'selected-country-clear-btn':
+      classKey = 'inp-clr-btn'
+      elementKey = 'inp-clr-btn'
+      break
     default:
       elementKey = element
       classKey = element

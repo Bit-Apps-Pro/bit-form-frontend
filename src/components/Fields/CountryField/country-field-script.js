@@ -154,7 +154,7 @@ class CountryField {
       if (e.key === 'ArrowDown' || (!e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#select('.option:not(.disabled-opt)')
+          focussableEl = this.#select(`.${this.fieldKey}-option:not(.disabled-opt)`)
         } else if (activeEl.classList.contains('option')) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
@@ -216,7 +216,7 @@ class CountryField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`.${this.fieldKey}-option-list .option[data-index="${index}"]`)
+    return this.#select(`.${this.fieldKey}-option-list .${this.fieldKey}-option[data-index="${index}"]`)
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -330,12 +330,12 @@ class CountryField {
           this.#setClassName(li, 'opt-not-found')
           return li
         }
-        this.#setClassName(li, 'option')
+        this.#setClassName(li, `${this.fieldKey}-option`)
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
-          this.#setClassName(img, 'opt-icn')
+          this.#setClassName(img, `${this.fieldKey}-opt-icn`)
           img.src = `${bits.assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
           img.loading = 'lazy'
@@ -343,7 +343,7 @@ class CountryField {
           lblimgbox.append(img)
         }
         const lbl = this.#createElm('span')
-        this.#setClassName(lbl, 'opt-lbl')
+        this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)
         const prefix = this.#createElm('span')

@@ -53,7 +53,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         fieldData={attr}
       >
         <div className={`${fieldKey}-country-fld-container`}>
-          <div className={`${fieldKey}-country-fld-wrp`}>
+          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp`}>
             <input name="country-name" type="hidden" className={`${fieldKey}-country-hidden-input`} />
             <div
               className={`${fieldKey}-dpd-wrp`}
@@ -66,6 +66,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
               <div className={`${fieldKey}-selected-country-wrp`}>
                 {fieldData.config.selectedFlagImage && (
                   <img
+                    data-dev-selected-country-img={fieldKey}
                     className={`${fieldKey}-selected-country-img`}
                     aria-hidden="true"
                     alt="selected country flag"
@@ -75,7 +76,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <span className={`${fieldKey}-selected-country-lbl`}>Select a country</span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
-                <button type="button" title="Clear selected country value" className={`${fieldKey}-selected-country-clear-btn`}>
+                <button
+                  type="button"
+                  title="Clear selected country value"
+                  data-dev-selected-country-clear-btn={fieldKey}
+                  className={`${fieldKey}-selected-country-clear-btn`}
+                >
                   <svg
                     width="15"
                     height="15"
@@ -113,12 +119,14 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <div className={`${fieldKey}-option-search-wrp`}>
                   <input
                     type="search"
+                    data-dev-opt-search-input={fieldKey}
                     className={`${fieldKey}-opt-search-input`}
                     placeholder={fieldData.config.searchPlaceholder}
                     autoComplete="country-name"
                     tabIndex="-1"
                   />
                   <svg
+                    data-dev-opt-search-icn={fieldKey}
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn`}
                     aria-hidden="true"
                     width="22"
@@ -135,7 +143,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
-                  <button type="button" title="Clear search" className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`} tabIndex="-1">
+                  <button type="button" title="Clear search" data-dev-search-clear-btn={fieldKey} className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`} tabIndex="-1">
                     <svg
                       width="15"
                       height="15"

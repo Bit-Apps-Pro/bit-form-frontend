@@ -215,7 +215,7 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
 
     [`.${fk}-search-clear-btn:hover`]: { 'background-color': '#fafafa' },
 
-    '.option': {
+    [`.${fk}-option`]: {
       margin: '0 5px',
       transition: 'background 0.2s',
       'border-radius': '6px',
@@ -229,7 +229,7 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
       'justify-content': 'space-between',
     },
 
-    '.option:hover:not(.selected-opt)': { 'background-color': 'rgb(236, 236, 236)' },
+    [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'rgb(236, 236, 236)' },
 
     '.selected-opt': {
       color: 'white',
@@ -244,7 +244,7 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
       'margin-top': '5px',
     },
 
-    '.option:focus-visible': {
+    [`.${fk}-option:focus-visible`]: {
       'box-shadow': '0 0 0 2px hsl(216, 100%, 50%) inset',
       outline: 'none',
     },
@@ -264,7 +264,7 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
       'align-items': 'center',
     },
 
-    '.opt-icn': {
+    [`.${fk}-opt-icn`]: {
       'margin-right': '10px',
       height: '17px',
       width: '25px',
