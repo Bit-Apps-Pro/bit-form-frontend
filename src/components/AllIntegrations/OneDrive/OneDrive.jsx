@@ -5,13 +5,10 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-// import { setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
-// import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import OneDriveAuthorization from './OneDriveAuthorization'
-// import { handleInput } from './OneDriveCommonFunc'
 import OneDriveIntegLayout from './OneDriveIntegLayout'
 
 function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {

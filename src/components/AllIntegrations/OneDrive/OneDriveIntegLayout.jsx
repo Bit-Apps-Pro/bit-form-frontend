@@ -8,7 +8,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">Folder:</b>
+      <b className="wdt-150 d-in-b mr-2">Folder:</b>
       <select onChange={(e) => handleInput(e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar)} name="folder" value={oneDriveConf.folderMap[0] || oneDriveConf.folder} className="btcd-paper-inp w-7">
         <option value="">{__('Select Folder', 'bitform')}</option>
         {
@@ -19,13 +19,13 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
           ))
         }
       </select>
-      <button onClick={() => getAllOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh On Team Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => getAllOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh All oneDrive Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       {oneDriveConf.folderMap.map((folder, i) => (
         <div key={folder}>
           <br />
           <div className="flx">
-            <b className="wdt-100 d-in-b" />
+            <b className="wdt-150 d-in-b mr-2" />
             <div className="d-in-b" style={{ width: (i + 1) * 10, marginLeft: 1, marginRight: 2, height: 58, marginTop: -60 }}>
               <div className="sub-tree" />
             </div>
@@ -40,7 +40,9 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
                   ))
                 }
               </select>
-              <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <div className="tooltip-box">
+                <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              </div>
             </div>
           </div>
         </div>

@@ -78,15 +78,6 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
         { !oneDriveConf.actions.attachments && <small style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}>{__('This action is required.', 'bit-integrations')}</small>}
       </div>
 
-      {/* className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt="Ok"
-        show={actionMdl.show === 'attachments'}
-        close={() => setActionMdl({ show: false })}
-        action={() => setActionMdl({ show: false })}
-        title={__('Select Attachment', 'bitform')} */}
-
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
@@ -97,13 +88,14 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
         action={() => setActionMdl({ show: false })}
         title={__('Select Attachment', 'bitform')}
       >
-        <div className="o-a" style={{ height: '95%' }}>
+        <div style={{ height: '95%' }}>
           <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
           <MultiSelect
             defaultValue={oneDriveConf.actions.attachments}
             className="mt-2 w-10 mb-25"
             options={getFileUpFields()}
             onChange={(val) => actionHandler(val, 'attachments')}
+            height={300}
           />
 
         </div>

@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
@@ -25,7 +24,7 @@ function EditOneDrive({ allIntegURL, formFields, integrations, setIntegration })
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-200 d-in-b">
+        <b className="wdt-150 d-in-b mr-2">
           {__('Integration Name:', 'bitform')}
         </b>
         <input
