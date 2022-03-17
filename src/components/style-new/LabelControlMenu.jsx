@@ -51,7 +51,7 @@ export default function LabelControlMenu() {
   const lblWidthUnit = getStrFromStr(lblWidth)
 
   const activeLabelPosition = () => {
-    if (fwDis === '') return 'top'
+    if (fwDis === 'block') return 'top'
     if (fwDis === 'flex' && fwFdir === '') return 'inline'
     if (fwDis === 'flex' && fwFdir === 'row-reverse') return 'inline-rev'
   }
@@ -60,7 +60,7 @@ export default function LabelControlMenu() {
     switch (name) {
       case 'top':
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle['--fld-wrp-dis'] = ''
+          drftStyle['--fld-wrp-dis'] = 'block'
           drftStyle['--lbl-wrp-width'] = ''
           drftStyle['--inp-wrp-width'] = ''
           drftStyle['--lbl-wrp-sa'] = ''
