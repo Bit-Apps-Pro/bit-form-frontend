@@ -20,6 +20,7 @@ import Icons from '../Icons'
 import IconStyleBtn from '../IconStyleBtn'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
+import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 
 export default function SubTitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
@@ -125,108 +126,21 @@ export default function SubTitleSettings() {
           />
         </div>
 
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
-          <div className={css(ut.flxcb)}>
-            {fieldData?.subTlePreIcn && (
-              <>
-                <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
-                <IconStyleBtn route="sub-titl-pre-i" />
-              </>
-            )}
+        <FieldIconSettings
+          label="Prefix Icon"
+          iconSrc={fieldData?.subTlePreIcn}
+          styleRoute="sub-titl-pre-i"
+          setIcon={() => setIconModel('subTlePreIcn')}
+          removeIcon={() => removeIcon('subTlePreIcn')}
+        />
 
-            <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
-              <EditIcn size={22} />
-            </button>
-            {fieldData.subTlePreIcn && (
-              <button onClick={() => removeIcon('subTlePreIcn')} className={css(ut.icnBtn)} type="button">
-                <CloseIcn size="13" />
-              </button>
-            )}
-
-          </div>
-        </div>
-        {fieldData?.subTlePreIcn && (
-          <>
-            <div className={css(ut.flxcb, ut.m10)}>
-              <span className={css(ut.fw500)}>Start Icon Width</span>
-              <div className={css(ut.flxc)}>
-                <SizeControl
-                  inputHandler={val => icnWidthHandle(val, subTlePreIcn, subPreIcnWidth)}
-                  sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnWidth)}
-                  value={getNumFromStr(subPreIcnWidth) || 10}
-                  unit={getStrFromStr(subPreIcnWidth) || 'px'}
-                  width="80px"
-                  options={['px', '%']}
-                />
-              </div>
-            </div>
-            <div className={css(ut.flxcb, ut.m10)}>
-              <span className={css(ut.fw500)}>Start Icon Height</span>
-              <div className={css(ut.flxc)}>
-                <SizeControl
-                  inputHandler={val => icnHeightHandle(val, subTlePreIcn, subPreIcnHeight)}
-                  sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnHeight)}
-                  value={getNumFromStr(subPreIcnHeight) || 10}
-                  unit={getStrFromStr(subPreIcnHeight) || 'px'}
-                  width="80px"
-                  options={['px', '%']}
-                />
-              </div>
-            </div>
-          </>
-        )}
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
-          <div className={css(ut.flxcb)}>
-            {fieldData?.subTleSufIcn && (
-              <>
-                <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
-                <IconStyleBtn route="sub-titl-suf-i" />
-              </>
-            )}
-
-            <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
-              <EditIcn size={22} />
-            </button>
-            {fieldData.subTleSufIcn && (
-              <button onClick={() => removeIcon('subTleSufIcn')} className={css(ut.icnBtn)} type="button">
-                <CloseIcn size="13" />
-              </button>
-            )}
-
-          </div>
-        </div>
-        {fieldData?.subTleSufIcn && (
-          <>
-            <div className={css(ut.flxcb, ut.m10)}>
-              <span className={css(ut.fw500)}>End Icon Width</span>
-              <div className={css(ut.flxc)}>
-                <SizeControl
-                  inputHandler={val => icnWidthHandle(val, subTleSufIcn, subSufIcnWidth)}
-                  sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnWidth)}
-                  value={getNumFromStr(subSufIcnWidth) || 10}
-                  unit={getStrFromStr(subSufIcnWidth) || 'px'}
-                  width="80px"
-                  options={['px', '%']}
-                />
-              </div>
-            </div>
-            <div className={css(ut.flxcb, ut.m10)}>
-              <span className={css(ut.fw500)}>End Icon Height</span>
-              <div className={css(ut.flxc)}>
-                <SizeControl
-                  inputHandler={val => icnHeightHandle(val, subTleSufIcn, subSufIcnHeight)}
-                  sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnHeight)}
-                  value={getNumFromStr(subSufIcnHeight) || 10}
-                  unit={getStrFromStr(subSufIcnHeight) || 'px'}
-                  width="80px"
-                  options={['px', '%']}
-                />
-              </div>
-            </div>
-          </>
-        )}
+        <FieldIconSettings
+          label="Suffix Icon"
+          iconSrc={fieldData?.subTleSufIcn}
+          styleRoute="sub-titl-suf-i"
+          setIcon={() => setIconModel('subTleSufIcn')}
+          removeIcon={() => removeIcon('subTleSufIcn')}
+        />
 
       </SimpleAccordion>
       <Modal
