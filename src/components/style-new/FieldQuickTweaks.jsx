@@ -136,6 +136,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
         assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), v)
       } else if (fld.fieldType === 'currency') {
         assignNestedObj(drftStyle, propertyPath('currency-fld-wrp', 'border-radius'), v)
+      } else if (fld.fieldType === 'country') {
+        assignNestedObj(drftStyle, propertyPath('country-fld-wrp', 'border-radius'), v)
       } else if (fld.fieldType === 'button') {
         assignNestedObj(drftStyle, propertyPath('btn', 'border-radius'), v)
       }
@@ -153,6 +155,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const bdrRad = styles.fields[fieldKey].fieldType.match(/(text|date)/gi) ? 'fld' : 'ck'
   const [borderRadVal, borderRadUnit] = getBorderRadius(bdrRad)
   const [curcyBdrRadVal, curcyBdrRadUnit] = getBorderRadius('currency-fld-wrp')
+  const [cntryBdrRadVal, cntryBdrRadUnit] = getBorderRadius('country-fld-wrp')
   const [btnBdrRadVal, btnBdrRadUnit] = getBorderRadius('btn')
 
   const positionHandle = (val, type) => {
@@ -366,6 +369,23 @@ export default function FieldQuickTweaks({ fieldKey }) {
             </div>
           </div>
         </>
+      )}
+      {fieldType === 'country' && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Border Radius</span>
+          <div className={css(ut.flxc)}>
+            <SizeControl
+              min={0}
+              max={20}
+              inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, curcyBdrRadUnit)}
+              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, curcyBdrRadUnit)}
+              value={cntryBdrRadVal || 0}
+              unit={cntryBdrRadUnit || 'px'}
+              width="128px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+        </div>
       )}
     </>
   )
