@@ -7,11 +7,15 @@ import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
-import { $fields, $fieldsArr } from '../../GlobalStates'
+import { $bits, $fields, $fieldsArr } from '../../GlobalStates'
+import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
-function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
+function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField, actionType = null }) {
   const fields = useRecoilValue($fields)
   const formFields = useRecoilValue($fieldsArr)
+
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   let type = ''
   let fldType = ''
@@ -41,6 +45,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
 
     return options
   }
+  const customSmartTags = ['_bf_custom_date_format()', '_bf_user_meta_key()', '_bf_query_param()']
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
@@ -52,7 +57,20 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
         <option value="">{__('Select Form Field', 'bitform')}</option>
-        {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+        {/* {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)} */}
+        <optgroup label="Form Fields">
+          {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+        </optgroup>
+        {!actionType?.match(/^(oninput)$/) && (
+          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+            {isPro && SmartTagField?.map(f => !customSmartTags.includes(f.name) && (
+              <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                {f.label}
+              </option>
+            ))}
+          </optgroup>
+        )}
+
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
