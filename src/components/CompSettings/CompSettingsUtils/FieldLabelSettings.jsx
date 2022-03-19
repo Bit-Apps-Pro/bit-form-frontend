@@ -96,14 +96,14 @@ export default function FieldLabelSettings() {
 
         <div className={css(ut.mt2, { mx: 10 })}>
           <FieldIconSettings
-            label="Start Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.lblPreIcn}
             styleRoute="lbl-pre-i"
             setIcon={() => setIconModel('lblPreIcn')}
             removeIcon={() => removeIcon('lblPreIcn')}
           />
           <FieldIconSettings
-            label="End Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.lblSufIcn}
             styleRoute="lbl-suf-i"
             setIcon={() => setIconModel('lblSufIcn')}

@@ -8,6 +8,19 @@ const FieldStyle = {
     fw: 600,
   },
 
+  logoLabel: {
+    flx: 'center-between',
+    ml: '0px !important',
+    my: 5,
+    brs: 8,
+    fw: '600 !important',
+  },
+
+  sec: {
+    my: 5,
+    mx: 15,
+  },
+
   title: { fs: 14, fw: 500, mx: 10 },
 
   fieldSection: {

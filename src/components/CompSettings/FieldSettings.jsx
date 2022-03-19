@@ -13,6 +13,7 @@ import HtmlFieldSettings from './HtmlFieldSettings'
 import HtmlSelectSettings from './HtmlSelectSettings'
 import ImageSettings from './ImageSettings'
 import PaypalFieldSettings from './PaypalFieldSettings'
+import PhoneNumberFieldSettings from './PhoneNumberFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import RazorpayFieldSettings from './RazorpayFieldSettings'
 import ReCaptchaSettings from './ReCaptchaSettings'
@@ -66,6 +67,7 @@ export default function FieldSettings() {
     case 'divider': return <DividerSettings />
     case 'currency': return <CurrencyFieldSettings />
     case 'country': return <CountryFieldSettings />
+    case 'phone-number': return <PhoneNumberFieldSettings />
 
     default: return <>No field found with this key.</>
   }

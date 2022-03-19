@@ -24,13 +24,15 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     }
 
     const { options } = fieldData
-    const configOptions = { fieldKey, options }
+    const configOptions = { fieldKey, options, inputFormat: '+c #### ### ###' }
 
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i
     phoneNumberFieldRef.current = new PhoneNumberFieldClass(fldElm, configOptions)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldData])
+
+  console.log(fieldData)
 
   return (
     <>
