@@ -134,7 +134,7 @@ export default function StyleLayers() {
                 </>
               )}
 
-              {fldData.typ.match(/(currency)/gi) && (
+              {fldData.typ === 'currency' && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
@@ -215,6 +215,90 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-currency-option-suf="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-suf')}
+                  />
+                </>
+              )}
+              {fldData.typ === 'phone-number' && (
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="phone-fld-wrp"
+                    label="Phone Field Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-phone-fld-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-fld-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="selected-phone-img"
+                    label="Selected Phone Image"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-phone-img')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="input-clear-btn"
+                    label="Input Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-input-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-input-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-opt-search-input')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-icn"
+                    label="Option Search Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="search-clear-btn"
+                    label="Search Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="phone-option"
+                    label="phone Option"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-phone-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="phone-option-icn"
+                    label="phone Option Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-phone-option-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="phone-option-lbl"
+                    label="phone Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-phone-option-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="phone-option-suf"
+                    label="phone Option Suffix"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-phone-option-suf="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-suf')}
                   />
                 </>
               )}

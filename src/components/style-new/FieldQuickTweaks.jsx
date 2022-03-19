@@ -287,7 +287,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           </div>
         </>
       )}
-      {fieldType.match(/^(button)/gi) && (
+      {fieldType === 'button' && (
         <>
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>

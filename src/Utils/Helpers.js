@@ -403,6 +403,30 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'inp-clr-btn'
       elementKey = 'inp-clr-btn'
       break
+    case 'phone-fld-wrp':
+      classKey = 'phone-fld-wrp'
+      elementKey = 'phone-fld-wrp'
+      break
+    case 'phone-option':
+      classKey = 'option'
+      elementKey = 'option'
+      break
+    case 'phone-option-icn':
+      classKey = 'opt-icn'
+      elementKey = 'opt-icn'
+      break
+    case 'phone-option-lbl':
+      classKey = 'opt-lbl'
+      elementKey = 'opt-lbl'
+      break
+    case 'phone-option-suf':
+      classKey = 'opt-suffix'
+      elementKey = 'opt-suffix'
+      break
+    case 'selected-phone-img':
+      classKey = 'selected-phone-img'
+      elementKey = 'selected-phone-img'
+      break
     default:
       elementKey = element
       classKey = element
