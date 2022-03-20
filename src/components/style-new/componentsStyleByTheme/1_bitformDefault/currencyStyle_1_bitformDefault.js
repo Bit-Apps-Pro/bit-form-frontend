@@ -21,11 +21,11 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-width': '1px',
       transition: 'box-shadow .3s',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open,.${fk}-disabled)`]: {
+    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(0, 0%, 93%, 100%)',
       'border-width': '1px',
     },
-    [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open,.${fk}-disabled)`]: {
+    [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(205, 95%, 55%, 100%)',
       'border-width': '1px',
       'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',

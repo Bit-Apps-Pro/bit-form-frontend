@@ -1181,7 +1181,7 @@ const editorConfig = {
         transition: '',
       },
     },
-    'selected-phone-img': {
+    'selected-country-img': {
       states: [],
       properties: {
         border: {
@@ -1324,7 +1324,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'opt-suffix': {
+    'opt-prefix': {
       states: [],
       properties: {
         border: {
