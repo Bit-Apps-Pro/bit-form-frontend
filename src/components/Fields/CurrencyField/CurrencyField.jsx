@@ -46,8 +46,16 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         fieldData={attr}
       >
         <div className={`${fieldKey}-currency-fld-container`}>
-          <div data-dev-crncy-fld-wrp={fieldKey} className={`${fieldKey}-currency-fld-wrp`} ref={currencyWrapElmRef}>
-            <input name="currency-input" type="hidden" className={`${fieldKey}-currency-hidden-input`} />
+          <div
+            data-dev-crncy-fld-wrp={fieldKey}
+            className={`${fieldKey}-currency-fld-wrp`}
+            ref={currencyWrapElmRef}
+          >
+            <input
+              name="currency-input"
+              type="hidden"
+              className={`${fieldKey}-currency-hidden-input`}
+            />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div
                 className={`${fieldKey}-dpd-wrp`}
@@ -84,7 +92,11 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   </svg>
                 </div>
               </div>
-              <input aria-label="Currency Input" type="text" className={`${fieldKey}-currency-amount-input`} />
+              <input
+                aria-label="Currency Input"
+                type="text"
+                className={`${fieldKey}-currency-amount-input`}
+              />
               <button
                 data-dev-input-clear-btn={fieldKey}
                 type="button"
@@ -108,7 +120,10 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             </div>
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
-                <div data-dev-opt-search-input={fieldKey} className={`${fieldKey}-option-search-wrp`}>
+                <div
+                  data-dev-opt-search-input={fieldKey}
+                  className={`${fieldKey}-option-search-wrp`}
+                >
                   <input
                     type="search"
                     className={`${fieldKey}-opt-search-input`}
@@ -154,7 +169,12 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     </svg>
                   </button>
                 </div>
-                <ul className={`${fieldKey}-option-list`} tabIndex="-1" role="listbox" aria-label="currency list" />
+                <ul
+                  className={`${fieldKey}-option-list`}
+                  tabIndex="-1"
+                  role="listbox"
+                  aria-label="currency list"
+                />
               </div>
             </div>
           </div>

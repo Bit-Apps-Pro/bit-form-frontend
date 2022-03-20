@@ -233,7 +233,7 @@ export default function StyleLayers() {
                     route="selected-country-img"
                     label="Selected Country Image"
                     offset="2.5"
-                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
+                    highlightSelector={`[data-dev-selected-phone-img="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-country-img')}
                   />
                   <NavBtn

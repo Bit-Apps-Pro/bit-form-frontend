@@ -32,8 +32,6 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldData])
 
-  console.log(fieldData)
-
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -43,7 +41,11 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         fieldData={attr}
       >
         <div className={`${fieldKey}-phone-fld-container`}>
-          <div className={`${fieldKey}-phone-fld-wrp`} ref={phoneNumberWrapElmRef}>
+          <div
+            data-dev-phone-fld-wrp={fieldKey}
+            className={`${fieldKey}-phone-fld-wrp`}
+            ref={phoneNumberWrapElmRef}
+          >
             <input name="country-name" type="hidden" className={`${fieldKey}-phone-hidden-input`} />
             <div className={`${fieldKey}-phone-inner-wrp`}>
               <div
@@ -56,6 +58,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
               >
                 <div className={`${fieldKey}-selected-country-wrp`}>
                   <img
+                    data-dev-selected-phone-img={fieldKey}
                     alt="Selected Country image"
                     aria-hidden="true"
                     className={`${fieldKey}-selected-country-img`}
@@ -86,6 +89,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 autoComplete="tel"
               />
               <button
+                data-dev-input-clear-btn={fieldKey}
                 type="button"
                 title="Clear value"
                 className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}
@@ -107,7 +111,10 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
             </div>
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
-                <div className={`${fieldKey}-option-search-wrp`}>
+                <div
+                  data-dev-opt-search-input={fieldKey}
+                  className={`${fieldKey}-option-search-wrp`}
+                >
                   <input
                     aria-label="Search for countries"
                     type="search"
@@ -118,6 +125,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   />
                   <svg
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn`}
+                    data-dev-opt-search-icn={fieldKey}
                     aria-hidden="true"
                     width="22"
                     height="22"
@@ -135,6 +143,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                     type="button"
                     aria-label="Clear search"
                     className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`}
+                    data-dev-search-clear-btn={fieldKey}
                     tabIndex="-1"
                   >
                     <svg
