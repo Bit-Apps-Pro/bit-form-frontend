@@ -271,7 +271,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option"
-                    label="phone Option"
+                    label="Phone Option"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option')}
@@ -279,7 +279,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option-icn"
-                    label="phone Option Icon"
+                    label="Phone Option Icon"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-icn')}
@@ -287,7 +287,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option-lbl"
-                    label="phone Option Label"
+                    label="Phone Option Label"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option-lbl="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-lbl')}
@@ -295,7 +295,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option-prefix"
-                    label="phone Option Prefix"
+                    label="Phone Option Prefix"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option-pre="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-prefix')}
