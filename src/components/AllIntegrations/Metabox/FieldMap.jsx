@@ -1,9 +1,15 @@
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './MetaboxHelperFunction'
 
 export default function FieldMap({ i, type, formFields, field, dataConf, setDataConf, customFields, fieldType }) {
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
+
   const fldType = {
     metabox: {
       propName: 'metabox_map',
@@ -34,21 +40,37 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}>
           <option value="">{__('Select Field', 'bitform')}</option>
-          {type === 'post' ? (
-            <>
-              {formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
-              <option value="custom">{__('Custom...', 'bitform')}</option>
-            </>
-          ) : (
-            <>
-              {
-                fieldType === 'file'
-                  ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-                  : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-              }
-              {fieldType !== 'file' && <option value="custom">{__('Custom...', 'bitform')}</option>}
-            </>
-          )}
+          <optgroup label="Form Fields">
+
+            {type === 'post' ? (
+              <>
+
+                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+
+                <option value="custom">{__('Custom...', 'bitform')}</option>
+              </>
+            ) : (
+              <>
+                {
+                  fieldType === 'file'
+                    ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+                    : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+                }
+                {fieldType !== 'file' && <option value="custom">{__('Custom...', 'bitform')}</option>}
+              </>
+            )}
+          </optgroup>
+          {fieldType !== 'file'
+            && (
+              <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                {isPro && SmartTagField?.map(f => (
+                  <option key={`ff-rm-${f.name}`} value={f.name}>
+                    {f.label}
+                  </option>
+                ))}
+              </optgroup>
+            )}
+
         </select>
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
         <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>

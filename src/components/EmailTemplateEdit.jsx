@@ -4,11 +4,12 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { SmartTagField } from '../Utils/StaticData/SmartTagField'
 import TinyMCE from './Utilities/TinyMCE'
 
 function EmailTemplateEdit() {
@@ -18,6 +19,9 @@ function EmailTemplateEdit() {
   const [mailTemp, setMailTem] = useRecoilState($mailTemplates)
   const formFields = useRecoilValue($fieldsArr)
   const { css } = useFela()
+
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   const handleTitle = e => {
     const mailTem = deepCopy(mailTemp)
@@ -71,8 +75,17 @@ function EmailTemplateEdit() {
           <b style={{ width: 100 }}>{__('Subject:', 'bitform')}</b>
           <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder={__('Email Subject Here', 'bitform')} value={mailTemp[id].sub} />
           <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
-            <option value="">{__('Add form field', 'bitform')}</option>
-            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
+            <option value="">{__('Add field', 'bitform')}</option>
+            <optgroup label="Form Fields">
+              {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
+            </optgroup>
+            <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+              {isPro && SmartTagField?.map(f => (
+                <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                  {f.label}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </div>
 

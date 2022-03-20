@@ -34,10 +34,11 @@ export default function FieldLabelSettings() {
   const [icnType, setIcnType] = useState('')
 
   function setLabel(e) {
-    if (e.target.value === '') {
+    const { value } = e.target
+    if (value === '') {
       delete fieldData.lbl
     } else {
-      fieldData.lbl = e.target.value
+      fieldData.lbl = value.replaceAll('\\', '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
@@ -91,7 +92,7 @@ export default function FieldLabelSettings() {
       >
 
         <div className={css({ w: '97%', mx: 5 })}>
-          <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label} />
+          <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label.replaceAll('$_bf_$', '\\')} />
         </div>
 
         <div className={css(ut.mt2, { mx: 10 })}>

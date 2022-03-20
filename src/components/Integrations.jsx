@@ -14,6 +14,7 @@ import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import autonami from '../resource/img/integ/autonami.svg'
 import dropbox from '../resource/img/integ/dropbox.svg'
+import oneDrive from '../resource/img/integ/OneDrive.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
@@ -52,6 +53,7 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
+import CopyIcn from '../Icons/CopyIcn'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -87,6 +89,7 @@ function Integrations() {
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Autonami', logo: autonami, pro: !isPro },
     { type: 'Dropbox', logo: dropbox, pro: !isPro },
+    { type: 'OneDrive', logo: oneDrive, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
@@ -165,6 +168,31 @@ function Integrations() {
     setAvailableIntegs(filtered)
   }
 
+  const inteCloneConf = i => {
+    confMdl.btnTxt = __('Clone', 'bitform')
+    confMdl.body = __('Are you sure to clone this integration?', 'bitform')
+    confMdl.btnClass = ''
+    confMdl.action = () => { inteClone(i); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
+  const inteClone = (i) => {
+    const existInteg = { ...integrations[i] }
+    const tmpInteg = [...integrations]
+    toast.loading('cloneing...')
+    bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
+      .then(response => {
+        if (response && response.success) {
+          tmpInteg.push(existInteg)
+          setIntegration(tmpInteg)
+          toast.success('Integration clone successfully done.')
+        } else {
+          toast.error(`${__('Integration clone failed Cause', 'bitform')}: ${response.data} ${__('please try again', 'bitform')}`)
+        }
+      }).catch(() => toast.error(__('Integration clone failed.', 'bitform')))
+  }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -227,11 +255,15 @@ function Integrations() {
                   <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <TrashIcn />
                   </button>
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone', 'bitform')}'` }} onClick={() => inteCloneConf(i)} type="button">
+                    <CopyIcn size="15" />
+                  </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                     <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <InfoIcn />
                     </Link>
                   )}
+
                 </div>
                 <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
                   <div className="int-name">{inte.name}</div>

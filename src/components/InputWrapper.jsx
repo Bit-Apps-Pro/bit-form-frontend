@@ -55,7 +55,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
             >
               {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
-              {renderDOMObjectFromHTMLStr(fieldData.lbl)}
+              {renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
               {fieldData.valid?.req && (
                 <>
                   {' '}

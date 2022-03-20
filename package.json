@@ -73,7 +73,7 @@
     "pda": "npm run pd && npm run fpd",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
     "i18n:json": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x",
-    "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bitform",
+    "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bitform;wp i18n make-pot ../ --include=*.php --skip-js --slug=bitform --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",

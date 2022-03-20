@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -11,11 +11,12 @@ export default function FormEntryPayments({ formID, rowDtl }) {
   const allLabels = useRecoilValue($fieldLabels)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const [paymentInfo, setPaymentInfo] = useState([])
+  const [paymentInfo, setPaymentInfo] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
-  const payFld = paymentFields.find(field => rowDtl[field.key])
+  const payFld = paymentFields.find(field => rowDtl[field.key]) || {}
+  const payInfoFound = useRef(0) // 1 - found, 2 - not found
 
   useEffect(() => {
     if (isPro) {
@@ -23,20 +24,29 @@ export default function FormEntryPayments({ formID, rowDtl }) {
       const transactionID = rowDtl?.[payFld?.key]
       bitsFetch({ formID, transactionID }, 'bitforms_payment_details')
         .then(result => {
-          setPaymentInfo(result.data)
+          if (result.success && result.data.length === 1) {
+            setPaymentInfo(result.data[0])
+            payInfoFound.current = 1
+          } else {
+            payInfoFound.current = 2
+          }
+        })
+        .finally(() => {
           setIsLoading(false)
         })
     }
-    return () => setPaymentInfo([])
+    return () => setPaymentInfo({})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log('paymentInfo', paymentInfo);
 
   const showPaymentInfo = () => {
     switch (payFld?.type) {
       case 'paypal':
-        return <PaypalInfo paymentInfo={paymentInfo} />
+        return <PaypalInfo paymentInfo={paymentInfo} payInfoFound={payInfoFound} />
       case 'razorpay':
-        return <RazorpayInfo paymentInfo={paymentInfo} />
+        return <RazorpayInfo paymentInfo={paymentInfo} payInfoFound={payInfoFound} fldKey={payFld?.key} transactionID={rowDtl?.[payFld?.key]} />
       default:
         return <h1>{__('No Payment Info Found!', 'bitform')}</h1>
     }

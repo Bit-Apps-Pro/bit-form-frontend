@@ -9,14 +9,16 @@ import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
-import TableCheckBox from './Utilities/TableCheckBox'
+import LoaderSm from './Loaders/LoaderSm'
 import CustomFileUpload from './Utilities/CustomFileUpload'
+import TableCheckBox from './Utilities/TableCheckBox'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
   const setForms = useSetRecoilState($forms)
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
   const { css } = useFela()
+  const [isLoading, setLoading] = useState(false)
   const handleChange = (ev) => {
     if (error[ev.target.name]) {
       setError({ ...error, [ev.target.name]: '' })
@@ -96,7 +98,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
         }
       })
     }
-
+    setLoading(true)
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
@@ -107,6 +109,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       } else if (response?.data) {
         setSnackbar({ show: true, msg: response.data })
       }
+      setLoading(false)
     })
   }
 
@@ -137,7 +140,10 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       </div>
       <div className={css(cls.btnContainer)}>
         <button onClick={() => setModal(false)} className={`${css(app.btn)}`} type="button"> Cancel </button>
-        <button onClick={handleImport} className={`${css(app.btn, app.blueGrd)}`} type="button"> Import </button>
+        <button onClick={handleImport} className={`${css(app.btn, app.blueGrd)}`} type="button">
+          Import
+          {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+        </button>
       </div>
     </div>
   )

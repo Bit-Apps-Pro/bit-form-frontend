@@ -442,3 +442,50 @@ export const getElmDataBasedOnElement = (element) => {
  * @returns String
  */
 export const ucFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+const divide = (dividend, divisor) => {
+  let returnValue = ''
+  let remainder = 0
+  let currentDividend = 0
+  let currentQuotient
+
+  dividend.split('').forEach((digit, index) => {
+    // use classical digit by digit division
+    if (currentDividend !== 0) {
+      currentDividend *= 10
+    }
+    currentDividend += Number(digit)
+
+    if (currentDividend >= divisor) {
+      currentQuotient = Math.floor(currentDividend / divisor)
+      currentDividend -= currentQuotient * divisor
+      returnValue += currentQuotient.toString()
+    } else if (returnValue.length > 0) {
+      returnValue += '0'
+    }
+
+    if (index === dividend.length - 1) {
+      remainder = currentDividend
+    }
+  })
+
+  return {
+    quotient: returnValue.length === 0 ? '0' : returnValue,
+    remainder,
+  }
+}
+
+export const number2Ipv6 = ipNumber => {
+  const base = 16
+  const blocks = []
+  const blockSize = Math.pow(2, 16)
+
+  while (blocks.length < 8) {
+    const divisionResult = divide(ipNumber, blockSize)
+
+    blocks.unshift(divisionResult.remainder.toString(base))
+
+    ipNumber = divisionResult.quotient
+  }
+
+  return blocks.join(':')
+}

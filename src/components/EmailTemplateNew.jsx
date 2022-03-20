@@ -3,15 +3,17 @@
 
 import produce from 'immer'
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { useFela } from 'react-fela'
-import { $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
+// import '../resource/css/tinymce.css'
 import BackIcn from '../Icons/BackIcn'
+import app from '../styles/app.style'
 import { __ } from '../Utils/i18nwrap'
+import { SmartTagField } from '../Utils/StaticData/SmartTagField'
 import Modal from './Utilities/Modal'
 import TinyMCE from './Utilities/TinyMCE'
-import app from '../styles/app.style'
 
 function EmailTemplateNew() {
   console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -22,6 +24,9 @@ function EmailTemplateNew() {
   const { formType, formID } = useParams()
   const history = useHistory()
   const { css } = useFela()
+
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   const handleBody = value => {
     setTem(prevState => produce(prevState, draft => {
@@ -75,8 +80,17 @@ function EmailTemplateNew() {
         <b style={{ width: 100 }}>Subject:</b>
         <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
-          <option value="">{__('Add form field', 'bitform')}</option>
-          {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
+          <option value="">{__('Add field', 'bitform')}</option>
+          <optgroup label="Form Fields">
+            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
+          </optgroup>
+          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+            {isPro && SmartTagField?.map(f => (
+              <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                {f.label}
+              </option>
+            ))}
+          </optgroup>
         </select>
       </div>
 
