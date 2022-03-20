@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -35,18 +35,18 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
             }
           </optgroup>
           {!uploadFields
-          && (
-            <>
-              <option value="custom">{__('Custom...', 'bitform')}</option>
-              <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-                {isPro && SmartTagField?.map(f => (
-                  <option key={`ff-rm-${f.name}`} value={f.name}>
-                    {f.label}
-                  </option>
-                ))}
-              </optgroup>
-            </>
-          )}
+            && (
+              <>
+                <option value="custom">{__('Custom...', 'bitform')}</option>
+                <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                  {isPro && SmartTagField?.map(f => (
+                    <option key={`ff-rm-${f.name}`} value={f.name}>
+                      {f.label}
+                    </option>
+                  ))}
+                </optgroup>
+              </>
+            )}
         </select>
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, crmConf, setCrmConf, tab)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}

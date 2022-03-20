@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'

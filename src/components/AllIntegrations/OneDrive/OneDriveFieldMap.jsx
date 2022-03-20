@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { $btcbi } from '../../../GlobalStates'
+import { $btcbi } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { SpecialTagField } from '../../../Utils/StaticData/SpecialTagField'

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -42,7 +42,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
           <optgroup label="Form Fields">
             {type === 'post' ? (
               <>
-                { formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+                {formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
                 <option value="custom">{__('Custom...', 'bitform')}</option>
               </>
             ) : (
