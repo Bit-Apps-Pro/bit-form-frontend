@@ -110,17 +110,19 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             case 'currency-fld-wrp':
-              const curcyFldWrp = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp`]
-              const curcyFldWrpHover = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp:hover:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`]
-              const curcyFldWrpFocus = getElementStyle.classes[`.${fieldKey}-currency-fld-wrp:focus-within:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`]
-              assignNestedObj(drft, getPath('currency-fld-wrp'), curcyFldWrp)
-              assignNestedObj(drft, getPath(`currency-fld-wrp:hover:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`), curcyFldWrpHover)
-              assignNestedObj(drft, getPath(`currency-fld-wrp:focus-within:not(.${fieldKey}-menu-open,.${fieldKey}-disabled)`), curcyFldWrpFocus)
+            case 'phone-fld-wrp':
+              const curcyFldWrp = getElementStyle.classes[`.${fieldKey}-${elmnt}`]
+              const curcyFldWrpHover = getElementStyle.classes[`.${fieldKey}-${elmnt}:hover:not(.${fieldKey}-menu-open, .${fieldKey}-disabled)`]
+              const curcyFldWrpFocus = getElementStyle.classes[`.${fieldKey}-${elmnt}:focus-within:not(.${fieldKey}-menu-open, .${fieldKey}-disabled)`]
+              assignNestedObj(drft, getPath(`${elmnt}`), curcyFldWrp)
+              assignNestedObj(drft, getPath(`${elmnt}:hover:not(.${fieldKey}-menu-open, .${fieldKey}-disabled)`), curcyFldWrpHover)
+              assignNestedObj(drft, getPath(`${elmnt}:focus-within:not(.${fieldKey}-menu-open, .${fieldKey}-disabled)`), curcyFldWrpFocus)
               break
 
             case 'selected-currency-img':
-              const selectedCurncyImg = getElementStyle.classes[`.${fieldKey}-selected-currency-img`]
-              assignNestedObj(drft, getPath('selected-currency-img'), selectedCurncyImg)
+            case 'selected-country-img':
+              const selectedCurncyImg = getElementStyle.classes[`.${fieldKey}-${elmnt}`]
+              assignNestedObj(drft, getPath(elmnt), selectedCurncyImg)
               break
 
             case 'input-clear-btn':
@@ -155,6 +157,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             case 'currency-option':
+            case 'phone-option':
               const opt = getElementStyle.classes[`.${fieldKey}-option`]
               const optHovr = getElementStyle.classes[`.${fieldKey}-option:hover:not(.selected-opt)`]
               const optFocus = getElementStyle.classes[`.${fieldKey}-option:focus-visible`]
@@ -164,17 +167,23 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             case 'currency-option-icn':
+            case 'phone-option-icn':
               const optIcn = getElementStyle.classes[`.${fieldKey}-opt-icn`]
               assignNestedObj(drft, getPath('opt-icn'), optIcn)
               break
 
             case 'currency-option-lbl':
+            case 'phone-option-lbl':
               const optLbl = getElementStyle.classes[`.${fieldKey}-opt-lbl`]
               assignNestedObj(drft, getPath('opt-lbl'), optLbl)
               break
             case 'currency-option-suf':
               const optSuf = getElementStyle.classes[`.${fieldKey}-opt-suffix`]
               assignNestedObj(drft, getPath('opt-suffix'), optSuf)
+              break
+            case 'phone-option-prefix':
+              const optPrefix = getElementStyle.classes[`.${fieldKey}-opt-prefix`]
+              assignNestedObj(drft, getPath('opt-prefix'), optPrefix)
               break
 
             default:

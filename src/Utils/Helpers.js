@@ -419,13 +419,13 @@ export const getElmDataBasedOnElement = (element) => {
       classKey = 'opt-lbl'
       elementKey = 'opt-lbl'
       break
-    case 'phone-option-suf':
-      classKey = 'opt-suffix'
-      elementKey = 'opt-suffix'
+    case 'phone-option-prefix':
+      classKey = 'opt-prefix'
+      elementKey = 'opt-prefix'
       break
-    case 'selected-phone-img':
-      classKey = 'selected-phone-img'
-      elementKey = 'selected-phone-img'
+    case 'selected-country-img':
+      classKey = 'selected-country-img'
+      elementKey = 'selected-country-img'
       break
     default:
       elementKey = element

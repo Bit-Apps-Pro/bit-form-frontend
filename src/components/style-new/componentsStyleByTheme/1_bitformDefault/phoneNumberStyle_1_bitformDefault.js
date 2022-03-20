@@ -23,12 +23,12 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       transition: 'box-shadow .3s',
     },
 
-    [`.${fk}-phone-fld-wrp:hover:not(.menu-open, .disabled)`]: {
+    [`.${fk}-phone-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(205, 95%, 55%, 100%)',
       'border-width': '1px',
     },
 
-    [`.${fk}-phone-fld-wrp:focus-within:not(.menu-open, .disabled)`]: {
+    [`.${fk}-phone-fld-wrp:focus-within:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(205, 95%, 55%, 100%)',
       'border-width': '1px',
       'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
@@ -118,6 +118,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       padding: '8px 26px 8px 8px',
       'font-size': '16px',
     },
+
+    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-option-wrp`]: {
       height: '0px',

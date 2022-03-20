@@ -49,6 +49,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     state = state.toLowerCase()
     switch (elementKey) {
       case 'currency-fld-wrp':
+      case 'phone-fld-wrp':
         if (state === 'hover') {
           state = `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
         } else if (state === 'focus') {

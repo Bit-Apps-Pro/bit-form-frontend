@@ -230,11 +230,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="selected-phone-img"
-                    label="Selected Phone Image"
+                    route="selected-country-img"
+                    label="Selected Country Image"
                     offset="2.5"
                     highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-phone-img')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-country-img')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -294,11 +294,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option-suf"
-                    label="phone Option Suffix"
+                    route="phone-option-prefix"
+                    label="phone Option Prefix"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option-suf="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-suf')}
+                    highlightSelector={`[data-dev-phone-option-pre="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-prefix')}
                   />
                 </>
               )}
