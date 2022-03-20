@@ -71,14 +71,15 @@ export default function BorderControlMenu({ objectPaths }) {
    * 1 => ThemeColors {border}
    */
   if (Array.isArray(objectPaths)) {
-    obj.borderWidth = objectPaths[0].object
-    obj.borderRadius = objectPaths[0].object
-    obj.border = objectPaths[1].object
+    const [themeVarsObj, themeColorsObj] = objectPaths
+    obj.borderWidth = themeVarsObj.object
+    obj.borderRadius = themeVarsObj.object
+    obj.border = themeColorsObj.object
 
     // set state
-    borderWidthPath = objectPaths[0].paths['border-width']
-    borderRadiusPath = objectPaths[0].paths['border-radius']
-    borderPath = objectPaths[1].paths[borderPropKeys[0]]
+    borderWidthPath = themeVarsObj.paths['border-width']
+    borderRadiusPath = themeVarsObj.paths['border-radius']
+    borderPath = themeColorsObj.paths[borderPropKeys[0]]
   } else {
     const { paths } = objectPaths
     borderWidthPath = paths['border-width']
