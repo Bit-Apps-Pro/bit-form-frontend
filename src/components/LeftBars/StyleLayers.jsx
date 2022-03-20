@@ -231,7 +231,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="selected-phone-img"
-                    label="Selected Phone Image"
+                    label="Selected Country Image"
                     offset="2.5"
                     highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-phone-img')}

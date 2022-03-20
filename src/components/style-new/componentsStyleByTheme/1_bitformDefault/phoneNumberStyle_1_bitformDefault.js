@@ -119,6 +119,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       'font-size': '16px',
     },
 
+    [`.${fk}-opt-lbl`]: {},
+
     [`.${fk}-option-wrp`]: {
       height: '0px',
       margin: 'auto',
