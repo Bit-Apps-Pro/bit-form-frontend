@@ -27,6 +27,7 @@ import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
+
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
@@ -73,11 +74,11 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const setThemeVars = useSetRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const setTempStyles = useSetRecoilState($tempStyles)
-  const setStyle = useSetRecoilState($styles)
-  const setLightThemeColors = useSetRecoilState($lightThemeColors)
-  const setDarkThemeColors = useSetRecoilState($darkThemeColors)
+  const [styles, setStyle] = useRecoilState($styles)
+  const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
+  const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -113,6 +114,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
     } else {
       setOldExistingStyle()
+      setTempStyles(preStyle => produce(preStyle, drft => {
+        drft.themeVars = { ...themeVars }
+        drft.lightThemeColors = { ...lightThemeColors }
+        drft.darkThemeColors = { ...darkThemeColors }
+        drft.styles = { ...styles }
+      }))
     }
   }, [fetchedBuilderHelperStates])
 
