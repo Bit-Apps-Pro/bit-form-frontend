@@ -180,6 +180,8 @@ function Integrations() {
     bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
       .then(response => {
         if (response && response.success) {
+          existInteg.id = response.data
+          existInteg.name = `Duplicate of ${existInteg.name}`
           tmpInteg.push(existInteg)
           setIntegration(tmpInteg)
           toast.success('Integration clone successfully done.')
