@@ -142,6 +142,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
           case 'check':
             assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), v)
             break
+          case 'radio':
+            assignNestedObj(drftStyle, propertyPath('rdo', 'border-radius'), v)
+            break
           case 'button':
             assignNestedObj(drftStyle, propertyPath('btn', 'border-radius'), v)
             break
@@ -179,6 +182,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
         break
       case 'check':
         elementKey = 'ck'
+        break
+      case 'radio':
+        elementKey = 'rdo'
         break
       case 'button':
         elementKey = 'btn'
@@ -375,13 +381,13 @@ export default function FieldQuickTweaks({ fieldKey }) {
         <div className={css(ut.flxc)}>
           <SizeControl
             min={0}
-            max={20}
+            max={50}
             inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, borderRadUnit)}
             sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
             value={borderRadVal || 0}
             unit={borderRadUnit || 'px'}
             width="128px"
-            options={['px', 'em', 'rem']}
+            options={['px', 'em', 'rem', '%']}
           />
         </div>
       </div>

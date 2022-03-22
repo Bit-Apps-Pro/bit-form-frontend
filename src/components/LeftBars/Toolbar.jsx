@@ -518,7 +518,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           layout: 'vertical',
           color: 'gold',
           shape: 'rect',
-          label: 'paypal',
+          // label: 'paypal',
         },
         valid: {},
       },
