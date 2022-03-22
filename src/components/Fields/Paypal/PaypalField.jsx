@@ -10,14 +10,24 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
 
-  const paypalFieldWrpRef = useRef(null)
+  const paypalElemnRaf = useRef(null)
+  const paypalFldWrapRef = useRef(null)
 
   useEffect(() => {
-    if (!paypalFieldWrpRef.current) {
-      paypalFieldWrpRef.current = selectInGrid('#paypal-wrp')
+    const src = 'https://www.paypal.com/sdk/js?client-id=AVCn9xOgLFK538FYxLaG0JloQQWeTEroTLur6Qm-j9-G8AvKKxqTD9LE1Td12RvXGYkSmrrNfJusYtSq'
+    loadScript(src, '', 'paypal-bf', true)
+    console.log('load script')
+  }, [])
+
+  useEffect(() => {
+    if (!paypalElemnRaf?.current) {
+      paypalElemnRaf.current = selectInGrid(`#${fieldKey}-paypal-wrp`)
     }
-    const fldElemnt = paypalFieldWrpRef.current
-    console.log('fldElemnt', fldElemnt)
+    const fldConstructor = paypalFldWrapRef.current
+    const fldElemnt = paypalElemnRaf.current
+    if (fldConstructor && fldElemnt && 'destroy' in fldConstructor) {
+      fldConstructor.destroy()
+    }
 
     const { style, currency } = fieldData
 
@@ -28,10 +38,8 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       shipping: 0,
       tax: 0,
     }
-    const src = 'https://www.paypal.com/sdk/js?client-id=AVCn9xOgLFK538FYxLaG0JloQQWeTEroTLur6Qm-j9-G8AvKKxqTD9LE1Td12RvXGYkSmrrNfJusYtSq'
-    loadScript(src, '', 'paypal-bf', true)
 
-    paypalFieldWrpRef.current = new PayPalField(fldElemnt, config)
+    paypalFldWrapRef.current = new PayPalField(fldElemnt, config)
   }, [fieldData])
   return (
     <>
@@ -43,7 +51,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
         isBuilder={isBuilder}
       >
         <div className={`${fieldKey}-paypal-wrp`}>
-          <div ref={paypalFieldWrpRef} id="paypal-wrp" />
+          <div ref={paypalElemnRaf} id={`${fieldKey}-paypal-wrp`} />
         </div>
       </InputWrapper>
     </>
