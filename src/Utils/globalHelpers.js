@@ -23,7 +23,7 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = (src, integrity, id, scriptInGrid = false) => new Promise((resolve) => {
+export const loadScript = (src, integrity, id, scriptInGrid = false, callback = null) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
   if (integrity) {
@@ -33,15 +33,36 @@ export const loadScript = (src, integrity, id, scriptInGrid = false) => new Prom
   script.id = id
   script.onload = () => {
     resolve(true)
+    if (callback) callback()
   }
   script.onerror = () => {
     resolve(false)
   }
 
+  removeScript(id, scriptInGrid)
+
+  let bodyElm = document.body
+
   if (scriptInGrid) {
-    document.getElementById('bit-grid-layout')?.contentWindow?.document.body.appendChild(script)
-  } else document.body.appendChild(script)
+    bodyElm = document.getElementById('bit-grid-layout')?.contentWindow?.document.body
+  }
+
+  bodyElm.appendChild(script)
 })
+
+export const removeScript = (id, scriptInGrid = false) => {
+  let bodyElm = document.body
+
+  if (scriptInGrid) {
+    bodyElm = document.getElementById('bit-grid-layout')?.contentWindow?.document.body
+  }
+
+  const alreadyExistScriptElm = bodyElm ? bodyElm.querySelector(`#${id}`) : null
+
+  if (alreadyExistScriptElm) {
+    bodyElm.removeChild(alreadyExistScriptElm)
+  }
+}
 
 export const select = (selector) => document.querySelector(selector)
 export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelector(selector)
