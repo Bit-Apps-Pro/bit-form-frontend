@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { loadScript, selectInGrid } from '../../../Utils/globalHelpers'
+import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
-import PayPalField from './paypal-field-script'
 import RenderStyle from '../../style-new/RenderStyle'
+import PayPalField from './paypal-field-script'
 
 export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
   const fields = useRecoilValue($fields)
@@ -12,14 +12,21 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
 
   const paypalElemnRaf = useRef(null)
   const paypalFldWrapRef = useRef(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const src = 'https://www.paypal.com/sdk/js?client-id=AVCn9xOgLFK538FYxLaG0JloQQWeTEroTLur6Qm-j9-G8AvKKxqTD9LE1Td12RvXGYkSmrrNfJusYtSq'
-    loadScript(src, '', 'paypal-bf', true)
-    console.log('load script')
+    loadScript(src, '', 'bf-paypal-script', false, () => {
+      setLoaded(true)
+    })
+
+    return () => {
+      removeScript('bf-paypal-script')
+    }
   }, [])
 
   useEffect(() => {
+    if (!loaded) return
     if (!paypalElemnRaf?.current) {
       paypalElemnRaf.current = selectInGrid(`#${fieldKey}-paypal-wrp`)
     }
@@ -40,7 +47,8 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
     }
 
     paypalFldWrapRef.current = new PayPalField(fldElemnt, config)
-  }, [fieldData])
+  }, [loaded, fieldData])
+
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
