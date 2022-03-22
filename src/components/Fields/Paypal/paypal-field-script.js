@@ -111,6 +111,15 @@ class PayPalField {
 
     return style
   }
+
+  destroy() {
+    this.#paypalWrpSelector.innerHTML = ''
+    Object.keys(window).forEach((key) => {
+      if (/paypal|zoid|post_robot/.test(key)) {
+        delete window[key]
+      }
+    })
+  }
 }
 
 export default PayPalField
