@@ -375,22 +375,23 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <SingleToggle isChecked={rtrCurrencyFld()} action={handleDir} />
         </div>
       )}
-
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Border Radius</span>
-        <div className={css(ut.flxc)}>
-          <SizeControl
-            min={0}
-            max={50}
-            inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, borderRadUnit)}
-            sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
-            value={borderRadVal || 0}
-            unit={borderRadUnit || 'px'}
-            width="128px"
-            options={['px', 'em', 'rem', '%']}
-          />
+      {!(fieldType === 'paypal' || fieldType === 'razorpay') && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Border Radius</span>
+          <div className={css(ut.flxc)}>
+            <SizeControl
+              min={0}
+              max={50}
+              inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, borderRadUnit)}
+              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
+              value={borderRadVal || 0}
+              unit={borderRadUnit || 'px'}
+              width="128px"
+              options={['px', 'em', 'rem', '%']}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
