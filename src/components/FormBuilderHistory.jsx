@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import HistoryIcn from '../Icons/HistoryIcn'
 import RedoIcon from '../Icons/RedoIcon'
@@ -15,6 +16,7 @@ import Tip from './Utilities/Tip'
 
 export function handleUndoRedoShortcut(e) {
   if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
+    e.preventDefault()
     if (e.key.toLowerCase() === 'z') {
       const undoBtn = document.querySelector('#builder-undo-btn')
       undoBtn.click()
@@ -31,6 +33,7 @@ export default function FormBuilderHistory() {
   const [showHistory, setShowHistory] = useState(null)
   const [fields, setFields] = useRecoilState($fields)
   const [layouts, setLayouts] = useRecoilState($layouts)
+  const setThemeColors = useSetRecoilState($themeColors)
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
@@ -90,31 +93,38 @@ export default function FormBuilderHistory() {
     if (indx < 0 || disabled) return
 
     const { state } = histories[indx]
-
+    console.log('histories', histories);
     setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
     if (state.layouts) {
       setLayouts(state.layouts)
       // setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
     } else {
-      checkedState(indx, setLayouts, 'layouts')
+      checkForPreviousState(indx, setLayouts, 'layouts')
     }
-    setBuilderHooks(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
 
     if (state.fields) {
       setFields(state.fields)
     } else {
-      checkedState(indx, setFields, 'fields')
+      checkForPreviousState(indx, setFields, 'fields')
+    }
+
+    if (state.themeColors) {
+      console.log('state.themeColors', state.themeColors)
+      setThemeColors(state.themeColors)
+    } else {
+      checkForPreviousState(indx, setThemeColors, 'themeColors')
     }
 
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
+    setBuilderHooks(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
     setDisabled(false)
   }
 
-  const checkedState = (indx, setState, layer) => {
+  const checkForPreviousState = (indx, setState, stateName) => {
     for (let i = indx - 1; i >= 0; i -= 1) {
-      if (layer in histories[i].state) {
-        setState(histories[i].state[layer])
+      if (stateName in histories[i].state) {
+        setState(histories[i].state[stateName])
         break
       }
     }
