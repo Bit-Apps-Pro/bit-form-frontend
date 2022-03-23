@@ -89,14 +89,15 @@ function FormDetails() {
       const btnFieldKey = `b${newFormId}-1`
       btnFld[btnFieldKey] = btnData
       setFields(btnFld)
-      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = btnFld }))
       const btnLay = { lg: [], md: [], sm: [] }
       const subBtnLay = { h: 40, i: btnFieldKey, minH: 40, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)
       setLay(btnLay)
-      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = btnLay }))
+      setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+        draft.histories[0].state = { fields: btnFld, layouts: btnLay }
+      }))
       setisLoading(false)
       setStyles(styles => produce(styles, draftStyle => {
         const globalTheme = draftStyle.theme
@@ -193,7 +194,10 @@ function FormDetails() {
         .then(res => {
           if (res?.success && componentMounted) {
             const responseData = res.data
-            if (responseData.form_content.layout !== undefined) setLay(responseData.form_content.layout)
+            if (responseData.form_content.layout !== undefined) {
+              setLay(responseData.form_content.layout)
+              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
+            }
             // experimental start
             // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
             //   const l = responseData.form_content.layout
