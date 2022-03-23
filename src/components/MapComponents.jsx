@@ -19,6 +19,7 @@ import PaypalField from './Fields/Paypal/PaypalField'
 import PhoneNumberField from './Fields/PhoneNumberField/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
 import RazorPay from './Fields/RazorPay'
+import RazorpayField from './Fields/Razorpay/RazorpayField'
 import ReCaptchaV2 from './Fields/ReCaptchaV2/ReCaptchaV2'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
@@ -88,7 +89,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       // return <Paypal isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
       return <PaypalField isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'razorpay':
-      return <RazorPay fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      // return <RazorPay fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      return <RazorpayField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'title':
       return <TitleField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'image':

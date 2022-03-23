@@ -12,6 +12,7 @@ import htmlStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault
 import imageStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
 import paypalStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
+import razorpayStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/razorpayStyle_1_BitformDefault'
 import selectStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
@@ -181,6 +182,14 @@ export default function bitformDefaultTheme(fk, type, direction) {
         overrideGlobalTheme: [],
         classes: paypalStyle_1_BitformDefault({ fk }),
       }
+    case 'razorpay':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        overrideGlobalTheme: [],
+        classes: razorpayStyle_1_BitformDefault({ fk }),
+      }
+
     default:
       return {}
   }
