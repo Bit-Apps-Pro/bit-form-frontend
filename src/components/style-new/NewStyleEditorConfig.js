@@ -979,12 +979,6 @@ const editorConfig = {
       properties: { ...selectOptionCssProps },
     },
   },
-  select: {
-    'fld-wrp': {
-      states: ['hover'],
-      properties: { ...fieldWrpCssProps },
-    },
-  },
   html: {
     'fld-wrp': {
       states: ['hover'],
@@ -1372,6 +1366,197 @@ const editorConfig = {
         padding: '',
         'box-shadow': '',
         'backgound-color': '',
+      },
+    },
+    'selected-country-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        width: '',
+        height: '',
+        filter: '',
+      },
+    },
+    'opt-search-input': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
+    'opt-search-icn': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        filter: '',
+      },
+    },
+    'inp-clr-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        background: {
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+          'backdrop-filter': true,
+        },
+        width: '',
+        height: '',
+        filter: '',
+      },
+    },
+    'search-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        width: '',
+        height: '',
+        filter: '',
+      },
+    },
+    option: {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
+    'opt-icn': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        filter: '',
+      },
+    },
+    'opt-lbl': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        'backgound-color': '',
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        color: '',
+      },
+    },
+  },
+  select: {
+    ...textFldCssProps,
+    'dpd-fld-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        transition: '',
+      },
+    },
+    'selected-opt-img': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        height: '',
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        'backgound-color': '',
+      },
+    },
+    'selected-opt-clear-btn': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        stroke: '',
+        width: '',
+        height: '',
+        filter: '',
       },
     },
     'opt-search-input': {

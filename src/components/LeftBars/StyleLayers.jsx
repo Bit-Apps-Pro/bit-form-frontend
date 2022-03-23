@@ -378,6 +378,82 @@ export default function StyleLayers() {
                   />
                 </>
               )}
+              {fldData.typ.match(/(select)/gi) && (
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="dpd-fld-wrp"
+                    label="Dropdown Field Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-dpd-fld-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'dpd-fld-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="selected-opt-img"
+                    label="Selected Option Image"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-opt-img="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-opt-img')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="selected-opt-clear-btn"
+                    label="Input Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-opt-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-opt-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-icn"
+                    label="Option Search Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="search-clear-btn"
+                    label="Search Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option"
+                    label="Option"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-icn"
+                    label="Option Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-lbl"
+                    label="Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl')}
+                  />
+                </>
+              )}
               {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
                 <NavBtn
                   subRoute={fldKey}

@@ -53,7 +53,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         fieldData={attr}
       >
         <div className={`${fieldKey}-country-fld-container`}>
-          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp`}>
+          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp`} ref={countryWrapElmRef}>
             <input name="country-name" type="hidden" className={`${fieldKey}-country-hidden-input`} />
             <div
               className={`${fieldKey}-dpd-wrp`}
@@ -103,6 +103,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     width="15"
                     height="15"
                     viewBox="0 0 24 24"
+                    title="Cross icon"
+                    role="img"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"

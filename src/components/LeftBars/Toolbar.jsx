@@ -246,11 +246,49 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
         mul: false,
-        opt: [
-          { label: 'Option 1', value: 'Option 1' },
-          { label: 'Option 2', value: 'Option 2' },
-          { label: 'Option 3', value: 'Option 3' },
+        options: [
+          { lbl: 'Option 1', val: 'Option 1' },
+          { lbl: 'Option 2', val: 'Option 2' },
+          { lbl: 'Option 3', val: 'Option 3' },
         ],
+        optionsList: [
+          {
+            'List-1': [
+              { lbl: 'Option 1 1', val: 'Option 1 1' },
+              { lbl: 'Option 1 2', val: 'Option 1 2' },
+              { lbl: 'Option 1 3', val: 'Option 1 3' },
+            ],
+          },
+          {
+            'List-2': [
+              { lbl: 'Option 2 1', val: 'Option 2 1' },
+              { lbl: 'Option 2 2', val: 'Option 2 2' },
+              { lbl: 'Option 2 3', val: 'Option 2 3' },
+            ],
+          },
+          {
+            'List-3': [
+              { lbl: 'Option 3 1', val: 'Option 3 1' },
+              { lbl: 'Option 3 2', val: 'Option 3 2' },
+              { lbl: 'Option 3 3', val: 'Option 3 3' },
+            ],
+          },
+        ],
+        config: {
+          selectedOptImage: false,
+          selectedOptClearable: true,
+          searchClearable: true,
+          optionIcon: false,
+          placeholder: 'Select an option',
+          searchPlaceholder: 'Search option',
+          maxHeight: 400,
+          multipleSelect: true,
+          selectedOptImgSrc: 'test.png',
+          closeOnSelect: false,
+          activeList: 0,
+          // dropdownIcn: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>",
+          // onChange: val => { console.log(val) },
+        },
         valid: {},
         err: {},
       },
