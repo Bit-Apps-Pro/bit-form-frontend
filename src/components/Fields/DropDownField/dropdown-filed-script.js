@@ -210,9 +210,7 @@ class DropdownField {
   }
 
   #generateOptionsObjFromHtml() {
-    console.log('active option list=', this.#activeOptionList())
     const allOptionsElms = Array.from(this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option`))
-    console.log('allOptionsElms=', allOptionsElms)
 
     const generateOptObjFromElm = opt => {
       const obj = {}

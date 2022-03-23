@@ -13,7 +13,7 @@ export default function FieldReadOnlySettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const isReadOnly = fields[fldKey].readOnly || false
+  const isReadOnly = fields[fldKey].readonly || false
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
   const setReadOnly = e => {
@@ -22,9 +22,9 @@ export default function FieldReadOnlySettings({ cls }) {
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if (checked) {
-        fldData.readOnly = true
+        fldData.readonly = true
       } else {
-        delete fldData.readOnly
+        delete fldData.readonly
       }
     })
     const req = checked ? 'on' : 'off'

@@ -118,6 +118,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
           type="file"
           className="filepond"
           name="filepond"
+          {...'disabled' in fieldData && { disabled: fieldData.disabled }}
         />
         <div id={`filepond-${fieldKey}-container`} />
 
