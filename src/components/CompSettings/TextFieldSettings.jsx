@@ -30,6 +30,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
@@ -790,7 +791,12 @@ function TextFieldSettings() {
 
         <FieldHideSettings />
         <FieldSettingsDivider />
-        <FieldReadOnlySettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
+
+        <FieldReadOnlySettings />
+
+        <FieldSettingsDivider />
+
+        <FieldDisabledSettings />
 
         <FieldSettingsDivider />
 

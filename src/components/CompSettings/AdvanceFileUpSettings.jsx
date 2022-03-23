@@ -24,8 +24,10 @@ import FileStyle from './advfileupcmpt/FileStyle'
 import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import ImageValidateoMdl from './advfileupcmpt/ImageValidateoMdl'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
@@ -731,6 +733,10 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 

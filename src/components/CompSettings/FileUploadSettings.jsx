@@ -18,7 +18,9 @@ import DropDown from '../Utilities/DropDown'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
@@ -201,6 +203,10 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 

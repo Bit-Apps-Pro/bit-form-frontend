@@ -11,6 +11,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -87,6 +88,12 @@ export default function HtmlFieldSettings() {
         />
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
+
+      <FieldSettingsDivider />
     </div>
   )
 }

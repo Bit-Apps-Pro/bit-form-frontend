@@ -15,13 +15,14 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
-import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -84,6 +85,14 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 

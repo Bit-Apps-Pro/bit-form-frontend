@@ -17,7 +17,9 @@ import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
@@ -330,6 +332,14 @@ function RadioCheckSettings() {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+      
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 

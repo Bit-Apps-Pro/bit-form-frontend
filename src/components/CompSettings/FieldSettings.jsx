@@ -8,6 +8,7 @@ import CountryFieldSettings from './CountryFieldSettings'
 import CurrencyFieldSettings from './CurrencyFieldSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
+import DropdownSettings from './DropdownFieldSettings'
 import FileUploadSettings from './FileUploadSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
 import HtmlSelectSettings from './HtmlSelectSettings'
@@ -17,7 +18,6 @@ import PhoneNumberFieldSettings from './PhoneNumberFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import RazorpayFieldSettings from './RazorpayFieldSettings'
 import ReCaptchaSettings from './ReCaptchaSettings'
-import SelectSettings from './SelectSettings'
 import TextFieldSettings from './TextFieldSettings'
 import TitleSettings from './TitleSettings'
 
@@ -53,7 +53,7 @@ export default function FieldSettings() {
       return <HtmlSelectSettings />
     case 'select':
     case 'dropdown':
-      return <SelectSettings />
+      return <DropdownSettings />
     case 'file-up': return <FileUploadSettings />
     case 'advanced-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettings />

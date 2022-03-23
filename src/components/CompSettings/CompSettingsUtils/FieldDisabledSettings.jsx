@@ -9,32 +9,32 @@ import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldReadOnlySettings({ cls }) {
+export default function FieldDisabledSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const isReadOnly = fields[fldKey].readOnly || false
+  const isDiasabled = fields[fldKey].diasabled || false
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
-  const setReadOnly = e => {
+  const setDiasabled = e => {
     const { checked } = e.target
 
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if (checked) {
-        fldData.readOnly = true
+        fldData.diasabled = true
       } else {
-        delete fldData.readOnly
+        delete fldData.diasabled
       }
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Read only field ${req}`, type: `read_only_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Disabled field ${req}`, type: `disabled_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
-      <SingleToggle title={__('Read only Field:', 'bitform')} action={setReadOnly} isChecked={isReadOnly} />
+      <SingleToggle title={__('Disabled Field:', 'bitform')} action={setDiasabled} isChecked={isDiasabled} />
     </div>
   )
 }

@@ -17,6 +17,7 @@ import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -166,6 +167,10 @@ export default function DecisionBoxSettings() {
         />
       </SimpleAccordion> */}
       <RequiredSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 

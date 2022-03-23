@@ -16,6 +16,7 @@ import { addDefaultStyleClasses } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import Icons from './Icons'
@@ -206,6 +207,9 @@ export default function ButtonSettings() {
 
         <FieldSettingsDivider />
 
+        <FieldDisabledSettings />
+
+        <FieldSettingsDivider />
         <SimpleAccordion
           title={__('Button Align', 'bitform')}
           className={css(FieldStyle.fieldSection)}

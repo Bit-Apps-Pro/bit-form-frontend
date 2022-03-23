@@ -12,7 +12,10 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
@@ -102,6 +105,14 @@ const CountryFieldSettings = () => {
 
       <FieldSettingsDivider />
 
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
+
+      <FieldSettingsDivider />
+
       <PlaceholderSettings />
 
       <FieldSettingsDivider />
@@ -183,12 +194,18 @@ const CountryFieldSettings = () => {
 
       <FieldSettingsDivider />
 
+      <FieldHideSettings />
+
+      <FieldSettingsDivider />
+
       <div className={css(FieldStyle.fieldSection)}>
         <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>
       </div>
+
+      <FieldSettingsDivider />
 
       <Modal
         md
