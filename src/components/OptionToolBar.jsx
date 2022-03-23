@@ -39,27 +39,29 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const selectedFldId = useRecoilValue($selectedFieldId)
 
   const styleModeHandler = ({ target: { checked } }) => {
-    console.log(checked)
+    setFlags(prv => ({ ...prv, styleMode: checked }))
     if (checked) {
       if (selectedFldId) {
-        history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-theme-customize).*/g, `field-settings/${selectedFldId}`))
+        history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
       } else {
-        history.replace(history.location.pathname.replace(/(theme-customize|style|themes|field-theme-customize|field-settings).*/g, 'fields-list'))
+        history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
       }
+    } else if (selectedFldId) {
+      history.replace(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`)
     } else {
-      history.replace(history.location.pathname.replace(/(field-theme-customize|style|fields-list|themes|field-settings).*/g, 'theme-customize/quick-tweaks'))
+      history.replace(`/form/builder/${formType}/${formID}/fields-list`)
     }
-    setFlags(prv => ({ ...prv, styleMode: checked }))
   }
+
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
       if (prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: true }
     })
-    if (selectedFldId !== null) {
-      history.replace(history.location.pathname.replace(/(theme-customize|style|fields-list|themes|field-settings).*/g, `field-theme-customize/quick-tweaks/${selectedFldId}`))
+    if (selectedFldId) {
+      history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
     } else {
-      history.replace(history.location.pathname.replace(/(field-theme-customize|style|fields-list|themes|field-settings).*/g, 'theme-customize/quick-tweaks'))
+      history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
     }
     removeUnuseStyles(fields, setStyles)
   }
@@ -68,7 +70,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: false }
     })
-    history.replace(history.location.pathname.replace(/(field-theme-customize|style|theme-customize|themes|field-settings).*/g, 'fields-list'))
+    history.replace(`/form/builder/${formType}/${formID}/fields-list`)
     removeUnuseStyles(fields, setStyles)
   }
 
