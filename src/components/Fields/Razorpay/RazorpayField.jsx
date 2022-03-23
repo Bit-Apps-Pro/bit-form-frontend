@@ -40,16 +40,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
     const config = {
       clientId: 'rzp_test_Sw0MZlz8H4gPfa',
       fieldKey,
-      options: {
-        name: 'Test Razorpay',
-        description: 'wowowowowowo',
-        amount: 200.00,
-        amountType: 'dynamic',
-        amountFld: 'bf-2',
-        theme: { color: 'RED', backdrop_color: 'BLUE' },
-        prefill: { name: 'bf-1' },
-        modal: { confirm_close: false },
-      },
+      options: fieldData.options,
       onPaymentSuccess: resp => { console.log('success') },
       onPaymentFailed: () => { console.log('failed') },
     }
@@ -76,7 +67,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
                 <path d="M1.455 14.308L0 20h7.202L10.149 8.42l-8.694 5.887z" fill="#fff" />
               </svg>
               <div className={`${fieldKey}-btn-text`}>
-                <span className={`${fieldKey}-btn-title`}>Pay Now</span>
+                <span className={`${fieldKey}-btn-title`}>{fieldData.btnTxt}</span>
                 <span className={`${fieldKey}-btn-sub-title`}>Secured by Razorpay</span>
               </div>
             </button>
