@@ -6,13 +6,14 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsva2hsla } from './colorHelpers'
@@ -44,6 +45,8 @@ function SimpleColorsPickerMenu({ stateObjName,
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -90,9 +93,16 @@ function SimpleColorsPickerMenu({ stateObjName,
 
   const handleColor = (_h, _s, _v, _a) => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
+
+    const event = `color changed`
+    const type = propertyPath
+    console.log(fldKey);
+    const state = { fldKey: stateObjName }
+    const historyData = { event, type, state }
+
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prvState => produce(prvState, drftThmClr => {
+        const newThemeColors = produce(themeColors, drftThmClr => {
           drftThmClr[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmClr[hslaPaths.h] = h }
@@ -100,7 +110,10 @@ function SimpleColorsPickerMenu({ stateObjName,
             if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = l }
             if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = a }
           }
-        }))
+        })
+        setThemeColors(newThemeColors)
+        historyData.state.themeColors = newThemeColors
+        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
         break
 
       case 'themeVars':
@@ -149,12 +162,17 @@ function SimpleColorsPickerMenu({ stateObjName,
       default:
         break
     }
+
+    console.log('color change')
   }
 
   const setColorState = (colorObj) => {
+    console.log('colorObj', colorObj);
     setColor(colorObj)
     handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
   }
+
+  console.log('hi')
 
   return (
     <div className={css(c.preview_wrp)}>

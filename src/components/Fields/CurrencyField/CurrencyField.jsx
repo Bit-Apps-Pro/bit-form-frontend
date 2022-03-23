@@ -52,7 +52,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             ref={currencyWrapElmRef}
           >
             <input
-              name="currency-input"
+              name={fieldKey}
               type="hidden"
               className={`${fieldKey}-currency-hidden-input`}
             />

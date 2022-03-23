@@ -2,6 +2,7 @@
 export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     [`.${fk}-fld-wrp`]: {
+      height: '100%',
       display: 'flex',
       'justify-content': 'center',
       'flex-direction': 'row',
