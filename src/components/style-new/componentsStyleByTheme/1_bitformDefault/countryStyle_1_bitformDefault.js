@@ -110,6 +110,8 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
       'align-items': 'center',
     },
 
+    [`.${fk}-opt-lbl`]: {},
+
     [`.${fk}-option-wrp`]: {
       height: '0',
       margin: 'auto',

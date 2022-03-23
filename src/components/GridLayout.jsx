@@ -218,6 +218,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const generateFieldLblForHistory = fldData => {
     if (fldData.typ === 'button') return fldData.txt
     if (fldData.typ === 'decision-box') return 'Decision Box'
+    if (fldData.typ === 'title') return 'Title Field'
     return fldData.lbl
   }
 

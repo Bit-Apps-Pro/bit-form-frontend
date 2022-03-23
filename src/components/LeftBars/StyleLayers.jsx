@@ -79,7 +79,7 @@ export default function StyleLayers() {
                     label="Check Container"
                     offset="2.5"
                     highlightSelector={`[data-dev-cc="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-container')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -87,7 +87,7 @@ export default function StyleLayers() {
                     label="Option Label"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-label')}
                   />
                 </>
               )}
@@ -99,7 +99,7 @@ export default function StyleLayers() {
                   label="Check Box"
                   offset="2.5"
                   highlightSelector={`[data-dev-ck="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-box')}
                 />
               )}
               {fldData.typ.match(/^(check|radio)$/gi) && (
@@ -110,7 +110,7 @@ export default function StyleLayers() {
                     label="Check Wrapper"
                     offset="2.5"
                     highlightSelector={`[data-dev-cw="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-wrapper')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -118,7 +118,7 @@ export default function StyleLayers() {
                     label="Option Wrapper"
                     offset="2.5"
                     highlightSelector={`[data-dev-cl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrapper')}
                   />
 
                   {fldData.typ.match(/(radio)/gi) && (
@@ -128,7 +128,7 @@ export default function StyleLayers() {
                       label="Radio Box"
                       offset="2.5"
                       highlightSelector={`[data-dev-rdo="${fldKey}"]`}
-                      styleOverride={isLabelOverrideStyles(styles, fldKey, '')}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'radio-box')}
                     />
                   )}
                 </>
@@ -230,11 +230,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="selected-phone-img"
-                    label="Selected Phone Image"
+                    route="selected-country-img"
+                    label="Selected Country Image"
                     offset="2.5"
-                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-phone-img')}
+                    highlightSelector={`[data-dev-selected-phone-img="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-selected-country-img')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -271,7 +271,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option"
-                    label="phone Option"
+                    label="Phone Option"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option')}
@@ -279,7 +279,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option-icn"
-                    label="phone Option Icon"
+                    label="Phone Option Icon"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-icn')}
@@ -287,18 +287,18 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="phone-option-lbl"
-                    label="phone Option Label"
+                    label="Phone Option Label"
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-option-lbl="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-lbl')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option-suf"
-                    label="phone Option Suffix"
+                    route="phone-option-prefix"
+                    label="Phone Option Prefix"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option-suf="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-suf')}
+                    highlightSelector={`[data-dev-phone-option-pre="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-prefix')}
                   />
                 </>
               )}

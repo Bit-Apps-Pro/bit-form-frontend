@@ -49,6 +49,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     state = state.toLowerCase()
     switch (elementKey) {
       case 'currency-fld-wrp':
+      case 'phone-fld-wrp':
         if (state === 'hover') {
           state = `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
         } else if (state === 'focus') {
@@ -353,13 +354,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Border"
           >
             <ResetStyle
-              propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-color'], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
+              propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
               stateObjName="styles"
             />
             <BorderControl
               allowImportant
               subtitle={`${fldTitle}`}
-              value={`${existCssPropsObj?.[propertyKeys[0]]} ${existCssPropsObj?.['border-color']} ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
+              value={`${existCssPropsObj?.[propertyKeys[0]]}  ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />

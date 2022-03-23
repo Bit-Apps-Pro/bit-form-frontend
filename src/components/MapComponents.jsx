@@ -15,7 +15,7 @@ import HiddenField from './Fields/HiddenField'
 import Html from './Fields/Html'
 import HtmlSelect from './Fields/HtmlSelect/HtmlSelect'
 import Image from './Fields/Image'
-import Paypal from './Fields/Paypal'
+import PaypalField from './Fields/Paypal/PaypalField'
 import PhoneNumberField from './Fields/PhoneNumberField/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
 import RazorPay from './Fields/RazorPay'
@@ -41,6 +41,7 @@ mul: multiple
 
 function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages }) {
   const styles = useRecoilValue($styles)
+  console.log(styles)
   switch (atts?.typ) {
     case 'text':
     case 'number':
@@ -84,7 +85,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'button':
       return <Button fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'paypal':
-      return <Paypal isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      // return <Paypal isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
+      return <PaypalField isBuilder={isBuilder} styleClasses={styles.fields[fieldKey]?.classes} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'razorpay':
       return <RazorPay fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} handleFormValidationErrorMessages={handleFormValidationErrorMessages} />
     case 'title':
