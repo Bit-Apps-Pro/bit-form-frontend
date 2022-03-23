@@ -271,6 +271,7 @@ export default function DropdownSettings() {
       <SimpleAccordion
         title="Lists & Options"
         className={css(FieldStyle.fieldSection)}
+        open
       >
         <div className={css({ p: '5px 10px' })}>
           <span>Options Lists</span>
