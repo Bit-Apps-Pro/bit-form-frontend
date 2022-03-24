@@ -548,8 +548,10 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Razorpay', 'bitform'),
         btnSiz: 'md',
         fulW: false,
-        align: 'left',
+        subTitl: true,
+        align: 'center',
         btnTxt: 'Pay Now',
+        btnTheme: 'dark',
         // options: {
         //   currency: 'INR',
         //   theme: {},

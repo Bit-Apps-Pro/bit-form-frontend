@@ -68,7 +68,9 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
               </svg>
               <div className={`${fieldKey}-btn-text`}>
                 <span className={`${fieldKey}-btn-title`}>{fieldData.btnTxt}</span>
-                <span className={`${fieldKey}-btn-sub-title`}>Secured by Razorpay</span>
+                {fieldData.subTitl && (
+                  <span className={`${fieldKey}-btn-sub-title`}>Secured by Razorpay</span>
+                )}
               </div>
             </button>
           </div>
