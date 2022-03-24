@@ -45,6 +45,13 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       'justify-content': 'center',
       'align-items': 'center',
     },
+
+    [`.${fk}-btn:disabled`]: {
+      cursor: 'default',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
     [`.${fk}-btn-pre-i`]: {
       width: '20px',
       height: '20px',

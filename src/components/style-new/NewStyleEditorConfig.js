@@ -104,7 +104,7 @@ const textFldCssProps = {
     },
   },
   fld: {
-    states: ['hover', 'focus'],
+    states: ['hover', 'focus', 'disabled', 'read-only'],
     properties: { ...fieldWrpCssProps },
   },
   'lbl-wrp': {
