@@ -80,12 +80,6 @@ export default class FileUploadField {
     // this.#fileUploadInput.onchange = onchange
     this.#fileUploadInput.accept = allowedFileType ? `${allowedFileType}, ${accept}` : accept
 
-    if (showMaxSize && maxSize) {
-      this.#maxSizeLabel.innerText = `(Max ${maxSize}${sizeUnit.toUpperCase()})`
-    } else if (showMaxSize) {
-      this.#maxSizeLabel.innerText = ''
-    } else { this.#maxSizeLabel?.remove() }
-
     if (showSelectStatus) this.#fileSelectStatus.innerText = fileSelectStatus
     else this.#fileSelectStatus?.remove()
 
@@ -135,6 +129,9 @@ export default class FileUploadField {
           } else {
             this.#errorWrap.innerText = 'Maximum File Limit Exceeded'
             this.#addClass(this.#errorWrap, 'active')
+            setTimeout(() => {
+              this.#removeClass(this.#errorWrap, 'active')
+            }, 3000)
           }
         } else {
           error.push('Max Upload Size Exceeded')
@@ -165,7 +162,6 @@ export default class FileUploadField {
           <span>${err}</span>
       </div>`)
       const errorElemnt = this.#select(`#err-${errId}`)
-      console.log('error element ', errorElemnt)
       errorElemnt.classList.add('active')
 
       setTimeout(() => {

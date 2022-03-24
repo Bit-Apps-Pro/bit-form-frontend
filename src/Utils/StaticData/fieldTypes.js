@@ -16,7 +16,7 @@ const fieldsTypes = {
   time: 'Time',
   month: 'Month',
   week: 'Week',
-  select: 'Country',
+  select: 'Drop Down',
   'file-up': 'File Upload',
   'advanced-file-up': 'Advanced File Upload',
   url: 'URL',

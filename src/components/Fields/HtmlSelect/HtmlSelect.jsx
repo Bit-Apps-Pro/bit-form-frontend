@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import InputWrapper from '../../InputWrapper'
@@ -15,7 +16,12 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
         fieldKey={fieldKey}
         fieldData={fieldData}
       >
-        <select data-dev-fld={fieldKey} id={fieldKey} className={`${fieldKey}-fld no-drg`}>
+        <select
+          data-dev-fld={fieldKey}
+          id={fieldKey}
+          className={`${fieldKey}-fld no-drg`}
+          {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+        >
           {fieldData.phHide && <option className={`${fieldKey}-slct-optn`} value="">{fieldData.ph}</option>}
           {
             fieldData.opt.map(opt => {

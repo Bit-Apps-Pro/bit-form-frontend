@@ -31,6 +31,18 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       'border-color': 'var(--global-accent-color)!important',
     },
     [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
+    [`.${fk}-fld:disabled`]: {
+      cursor: 'default',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+    [`.${fk}-fld:read-only`]: {
+      cursor: 'default',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
     [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
 
     // title icon

@@ -20,6 +20,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
           // eslint-disable-next-line react/button-has-type
           type={fieldData.btnTyp}
           {...fieldData.btnTyp === 'reset' && { onClick: handleReset }}
+          {...'disabled' in fieldData && { disabled: fieldData.disabled }}
         >
           {fieldData.btnPreIcn && <img data-dev-btn-pre-i={fieldKey} className={`${fieldKey}-btn-pre-i`} src={fieldData.btnPreIcn} alt="" />}
           {renderDOMObjectFromHTMLStr(fieldData.txt || '')}

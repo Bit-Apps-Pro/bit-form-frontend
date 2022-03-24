@@ -66,8 +66,15 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   { fieldData.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} src={`${fieldData.suffixIcn}`} alt="Upload icon" srcSet="" />}
                 </button>
                 { fieldData.config.showSelectStatus && <div data-dev-file-select-status={fieldKey} className={`${fieldKey}-file-select-status`}>No Choosen File</div>}
-                { fieldData.config.showMaxSize && fieldData.config.maxSize && (<small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl`}>Max 2MB</small>)}
-                <input type="file" className={`${fieldKey}-file-upload-input`} id={fieldKey} name="file-upload" />
+                { fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (<small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl`}>{`(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}</small>)}
+                <input
+                  type="file"
+                  className={`${fieldKey}-file-upload-input`}
+                  id={fieldKey}
+                  name="file-upload"
+                  fieldData
+                  {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+                />
               </div>
               <div data-dev-files-list={fieldKey} className={`${fieldKey}-files-list`} />
             </div>

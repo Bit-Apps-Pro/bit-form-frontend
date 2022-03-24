@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect, memo } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -64,8 +64,8 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             className={`${fieldKey}-fld no-drg`}
             type={type}
             {...'req' in attr.valid && { required: attr.valid.req }}
-            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-            {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
+            {...'disabled' in attr && { disabled: attr.disabled }}
+            {...'readonly' in attr && { readOnly: attr.readonly }}
             {...'ph' in attr && { placeholder: attr.ph }}
             {...'mn' in attr && { min: attr.mn }}
             {...'mx' in attr && { max: attr.mx }}
