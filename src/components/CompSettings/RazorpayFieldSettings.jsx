@@ -1,8 +1,9 @@
 import produce from 'immer'
 import { useContext, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
@@ -12,8 +13,9 @@ import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import ut from '../../styles/2.utilities'
 
 export default function RazorpayFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -21,6 +23,7 @@ export default function RazorpayFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
   const { payments } = useContext(AppSettings)
+  const { css } = useFela()
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicAmount = fieldData.options.amountType === 'dynamic'
@@ -152,11 +155,11 @@ export default function RazorpayFieldSettings() {
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldBtn />
-      <div className="mb-2">
-        <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
-        {__('Razor Pay', 'bitform')}
-      </div>
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ}
+        fieldKey={fldKey}
+      />
 
       <div className="mt-3">
         <b>{__('Select Config', 'bitform')}</b>
@@ -177,7 +180,7 @@ export default function RazorpayFieldSettings() {
           {!isSubscription && (
             <>
               <div>
-                <div className="mt-2">
+                <div className={css(ut.ml2)}>
                   <b>{__('Amount Type', 'bitform')}</b>
                   <br />
                   <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
