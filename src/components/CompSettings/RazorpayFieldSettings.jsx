@@ -113,9 +113,6 @@ export default function RazorpayFieldSettings() {
 
   const setSubTitl = (e) => {
     fieldData.subTitl = e.target.checked
-
-    console.log(fieldData)
-
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
@@ -185,46 +182,6 @@ export default function RazorpayFieldSettings() {
     return razorpayConfigs.map(razor => (
       <option key={razor.id} value={razor.id}>{razor.name}</option>
     ))
-  }
-
-  const handBtnTheme = (e) => {
-    const themeValue = e.target.value
-    fieldData.btnTheme = themeValue
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      switch (themeValue) {
-        case 'dark':
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].background = 'hsla(216, 85%, 18%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].border = 'solid hsla(216, 85%, 18%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-btn-text`].color = 'hsla(0, 0%, 100%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn::before`].background = 'hsla(224, 68%, 37%, 100%)'
-
-          break
-        case 'light':
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].background = 'hsla(0, 0%, 100%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].border = 'solid hsla(0, 0%, 100%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-btn-text`].color = 'hsla(216, 85%, 18%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn::before`].background = 'hsla(224, 68%, 37%, 100%)'
-
-          break
-        case 'outline':
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].background = 'hsla(216, 91%, 96%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].border = 'solid hsla(216, 85%, 18%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-btn-text`].color = 'hsla(216, 85%, 18%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn::before`].background = 'hsla(224, 68%, 37%, 100%)'
-
-          break
-        case 'brand':
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].background = 'hsl(241, 100%, 50%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].border = 'solid hsl(241, 100%, 50%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-btn-text`].color = 'hsla(0, 0%, 100%, 100%)'
-          drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn::before`].background = 'hsla(241, 100%, 50%, 100%)'
-          break
-        default:
-          break
-      }
-    }))
   }
 
   return (
@@ -329,15 +286,6 @@ export default function RazorpayFieldSettings() {
                 options={pos}
                 value={fieldData.align}
                 action={handleBtnStyle}
-                name="align"
-                cls={css(FieldStyle.input)}
-              />
-              <SelectBox2
-                className={css({ pr: 1 })}
-                title={__('Button Theme:', 'bitform')}
-                options={btnTheme}
-                value={fieldData.btnTheme}
-                action={handBtnTheme}
                 name="align"
                 cls={css(FieldStyle.input)}
               />

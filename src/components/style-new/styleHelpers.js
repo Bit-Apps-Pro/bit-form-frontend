@@ -386,6 +386,7 @@ export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
     case 'select':
     case 'dropdown':
     case 'phone-number':
+    case 'razorpay':
       return Object.keys(editorConfig[fieldType][elementKey].properties)
     // case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)

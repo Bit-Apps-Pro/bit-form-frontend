@@ -134,6 +134,17 @@ export default function StyleLayers() {
                 </>
               )}
 
+              {fldData.typ === 'razorpay' && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="razorpay-btn"
+                  label="Razorpay Button"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
+                />
+              )}
+
               {fldData.typ === 'currency' && (
                 <>
                   <NavBtn
@@ -454,7 +465,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="error-message"

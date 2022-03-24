@@ -1339,6 +1339,39 @@ const editorConfig = {
       },
     },
   },
+  razorpay: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
+      },
+    },
+    'razorpay-btn': {
+      states: ['before'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        ' min-width': '',
+        height: '',
+        'border-radius': '',
+        'text-align': '',
+        'font-style': '',
+        'background-color': '',
+        'box-shadow': '',
+        width: '',
+        // transform: 'skew(-15deg, 0)',
+      },
+    },
+  },
   country: {
     ...textFldCssProps,
     'country-fld-wrp': {

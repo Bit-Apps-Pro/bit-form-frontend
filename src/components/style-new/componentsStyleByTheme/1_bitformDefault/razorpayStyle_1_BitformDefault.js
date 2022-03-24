@@ -15,7 +15,7 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       'text-align': 'center',
       'font-style': 'italic',
       overflow: 'hidden',
-      background: 'hsla(216, 85%, 18%, 100%)',
+      'background-color': 'hsla(216, 85%, 18%, 100%)',
       border: 'solid hsla(216, 85%, 18%, 100%)',
       'border-width': '1px',
       // color: 'hsla(0, 0%, 100%, 100%)',
@@ -29,7 +29,7 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       top: 0,
       width: '46px',
       height: '100%',
-      background: 'hsla(224, 68%, 37%, 100%)',
+      'background-color': 'hsla(224, 68%, 37%, 100%)',
       'border-radius': '2px 0 0 2px',
       transform: 'skew(-15deg, 0)',
     },
@@ -41,13 +41,13 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       margin: '9px 11px',
     },
 
-    [`.${fk}-btn-text`]: {
+    [`.${fk}-razorpay-btn-text`]: {
       padding: '4px 28px 4px 60px',
-      margin: '1px 0',
+      margin: '1px 0px',
       color: 'hsla(0, 0%, 100%, 100%)',
     },
 
-    [`.${fk}-btn-title`]: {
+    [`.${fk}-razorpay-btn-title`]: {
       display: 'block',
       'min-height': '18px',
       'line-height': '18px',
@@ -56,7 +56,7 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       opacity: '.95',
     },
 
-    [`.${fk}-btn-sub-title`]: {
+    [`.${fk}-razorpay-btn-sub-title`]: {
       opacity: '.6',
       'font-size': '8px',
     },

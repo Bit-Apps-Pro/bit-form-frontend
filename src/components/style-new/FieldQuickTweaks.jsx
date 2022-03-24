@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -11,6 +12,7 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -24,6 +26,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const themeVars = useRecoilValue($themeVars)
   const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
@@ -297,6 +301,47 @@ export default function FieldQuickTweaks({ fieldKey }) {
       }
     }))
   }
+
+  const handBtnTheme = (e) => {
+    const themeValue = e.target.value
+    fieldData.btnTheme = themeValue
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      switch (themeValue) {
+        case 'dark':
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'background'), 'hsla(216, 85%, 18%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), 'solid hsla(216, 85%, 18%, 100%)')
+          assignNestedObj(drft, propertyPath('btn-text', 'color'), 'hsla(0, 0%, 100%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background'), 'hsla(224, 68%, 37%, 100%)')
+          break
+
+        case 'light':
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'background'), 'hsla(0, 0%, 100%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), 'solid hsla(0, 0%, 100%, 100%)')
+          assignNestedObj(drft, propertyPath('btn-text', 'color'), 'hsla(216, 85%, 18%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background'), 'hsla(224, 68%, 37%, 100%)')
+          break
+
+        case 'outline':
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'background'), 'hsla(216, 91%, 96%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), 'solid hsla(216, 85%, 18%, 100%)')
+          assignNestedObj(drft, propertyPath('btn-text', 'color'), 'hsla(216, 85%, 18%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background'), 'hsla(224, 68%, 37%, 100%)')
+          break
+
+        case 'brand':
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'background'), 'hsla(241, 100%, 50%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), 'solid hsla(241, 100%, 50%, 100%)')
+          assignNestedObj(drft, propertyPath('btn-text', 'color'), 'hsla(0, 0%, 100%, 100%)')
+          assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background'), 'hsla(241, 100%, 50%, 100%)')
+          break
+
+        default:
+          break
+      }
+    }))
+  }
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
@@ -390,6 +435,17 @@ export default function FieldQuickTweaks({ fieldKey }) {
               options={['px', 'em', 'rem', '%']}
             />
           </div>
+        </div>
+      )}
+      {fieldType === 'razorpay' && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Button Theme</span>
+          <select onChange={handBtnTheme} className={css(sc.select)} value={fieldData.btnTheme}>
+            <option value="dark">Razorpay Dark</option>
+            <option value="light">Razorpay Light</option>
+            <option value="outline">Razorpay Outline</option>
+            <option value="brand">Brand Color</option>
+          </select>
         </div>
       )}
     </>
