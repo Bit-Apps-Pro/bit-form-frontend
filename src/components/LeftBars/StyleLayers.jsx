@@ -121,7 +121,7 @@ export default function StyleLayers() {
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrapper')}
                   />
 
-                  {fldData.typ.match(/(radio)/gi) && (
+                  {fldData.typ === 'radio' && (
                     <NavBtn
                       subRoute={fldKey}
                       route="radio-box"
@@ -313,7 +313,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {fldData.typ.match(/(country)/gi) && (
+              {fldData.typ === 'country' && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
@@ -389,7 +389,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {fldData.typ.match(/(select)/gi) && (
+              {fldData.typ === 'select' && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
