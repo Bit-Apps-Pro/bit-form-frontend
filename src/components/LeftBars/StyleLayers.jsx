@@ -136,14 +136,40 @@ export default function StyleLayers() {
               )}
 
               {fldData.typ === 'razorpay' && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="razorpay-btn"
-                  label="Razorpay Button"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
-                />
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn"
+                    label="Razorpay Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-text"
+                    label="Button Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-text="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-text')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-title"
+                    label="Button Title"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-title="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-title')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-sub-title"
+                    label="Button Subtitle"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-sub-title="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-sub-title')}
+                  />
+                </>
               )}
 
               {fldData.typ === 'currency' && (
