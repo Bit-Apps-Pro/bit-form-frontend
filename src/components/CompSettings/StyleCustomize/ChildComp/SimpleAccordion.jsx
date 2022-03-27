@@ -118,7 +118,7 @@ export default function SimpleAccordion({ className,
           onExit={el => setH(el.offsetHeight)}
           onExiting={() => setH(0)}
           unmountOnExit
-          style={{ overflow: tgl ? 'auto' : 'hidden' }}
+        // style={{ overflow: tgl ? 'auto' : 'hidden' }}
         >
           <div className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
             {children}
