@@ -21,6 +21,7 @@ export default function ElementConfiguration({ fldKey }) {
   }
   // console.log('fieldObj', fieldObj)
   return (
+
     <>
       {fieldObj.logo && (
         <NavBtn
@@ -150,7 +151,7 @@ export default function ElementConfiguration({ fldKey }) {
           </>
         )}
       {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
-        && !fieldObj.typ.match(/^(decision-box)$/gi)?.[0] && (
+        && !fieldObj.typ.match(/^(decision-box|razorpay)$/gi)?.[0] && (
         <>
           <NavBtn
             cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}

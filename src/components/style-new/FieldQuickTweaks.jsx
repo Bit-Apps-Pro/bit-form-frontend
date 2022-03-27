@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -11,6 +12,7 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -24,6 +26,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const themeVars = useRecoilValue($themeVars)
   const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
@@ -127,41 +131,49 @@ export default function FieldQuickTweaks({ fieldKey }) {
     }
   }
 
-  const borderRadHandler = ({ value, unit }, prvUnit) => {
+  const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
       if (fld.theme === 'bitformDefault') {
+        let elemntKey
         switch (fld.fieldType) {
           case 'text':
           case 'date':
           case 'html-select':
-            assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), v)
+            elemntKey = fld
             break
+
           case 'check':
-            assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), v)
+            elemntKey = 'ck'
             break
+
           case 'radio':
-            assignNestedObj(drftStyle, propertyPath('rdo', 'border-radius'), v)
+            elemntKey = 'rdo'
             break
+
           case 'button':
-            assignNestedObj(drftStyle, propertyPath('btn', 'border-radius'), v)
+            elemntKey = 'btn'
             break
+
           case 'currency':
           case 'country':
-            assignNestedObj(drftStyle, propertyPath(`${fld.fieldType}-fld-wrp`, 'border-radius'), v)
+            elemntKey = `${fld.fieldType}-fld-wrp`
             break
+
           case 'phone-number':
-            assignNestedObj(drftStyle, propertyPath('phone-fld-wrp', 'border-radius'), v)
+            elemntKey = 'phone-fld-wrp'
             break
+
           default:
             break
         }
+        assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
       }
     }))
   }
-  const getBorderRadius = () => {
+  const getPropValue = (prop = 'border-radius') => {
     const fldType = styles.fields[fieldKey].fieldType
     let elementKey = ''
     switch (fldType) {
@@ -199,13 +211,14 @@ export default function FieldQuickTweaks({ fieldKey }) {
       default:
         break
     }
-    let brsValue = getValueByObjPath(styles, propertyPath(elementKey, 'border-radius'))
+    let brsValue = getValueByObjPath(styles, propertyPath(elementKey, prop))
     brsValue = getValueFromStateVar(themeVars, brsValue)
     if (!brsValue) brsValue = '0px'
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
 
-  const [borderRadVal, borderRadUnit] = getBorderRadius()
+  const [borderRadVal, borderRadUnit] = getPropValue()
+  const [btnWidthVal, btnRadUnit] = getPropValue('width')
 
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
@@ -297,6 +310,55 @@ export default function FieldQuickTweaks({ fieldKey }) {
       }
     }))
   }
+
+  const razorpayBtnThemeHandler = (e) => {
+    const themeValue = e.target.value
+    fieldData.btnTheme = themeValue
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      let btnBg
+      let border
+      let color
+      let btnBeforeBg
+      switch (themeValue) {
+        case 'dark':
+          btnBg = 'hsla(216, 85%, 18%, 100%)'
+          border = 'solid hsla(216, 85%, 18%, 100%)'
+          color = 'hsla(0, 0%, 100%, 100%)'
+          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
+          break
+
+        case 'light':
+          btnBg = 'hsla(0, 0%, 100%, 100%)'
+          border = 'solid hsla(0, 0%, 100%, 100%)'
+          color = 'hsla(224, 68%, 37%, 100%)'
+          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
+          break
+
+        case 'outline':
+          btnBg = 'hsla(216, 91%, 96%, 100%)'
+          border = 'solid hsla(216, 85%, 18%, 100%)'
+          color = 'hsla(216, 85%, 18%, 100%)'
+          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
+          break
+
+        case 'brand':
+          btnBg = 'hsla(241, 100%, 50%, 100%)'
+          border = 'solid hsla(241, 100%, 50%, 100%)'
+          color = 'hsla(0, 0%, 100%, 100%)'
+          btnBeforeBg = 'hsla(241, 100%, 50%, 100%)'
+          break
+
+        default:
+          break
+      }
+      assignNestedObj(drft, propertyPath('razorpay-btn', 'background-color'), btnBg)
+      assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), border)
+      assignNestedObj(drft, propertyPath('razorpay-btn-text', 'color'), color)
+      assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
+    }))
+  }
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
@@ -325,12 +387,29 @@ export default function FieldQuickTweaks({ fieldKey }) {
       )}
 
       {fieldType === 'button' && (
-        <div className={css(ut.flxcb, ut.mt2)}>
-          <span className={css(ut.fw500)}>Size</span>
-          <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
-            {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
-          </select>
-        </div>
+        <>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Size</span>
+            <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
+              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+            </select>
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Width</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                min={0}
+                max={100}
+                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, btnRadUnit, 'width')}
+                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, btnRadUnit, 'width')}
+                value={btnWidthVal || 0}
+                unit={btnRadUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </div>
+        </>
       )}
 
       {fieldType === 'title' && (
@@ -382,14 +461,25 @@ export default function FieldQuickTweaks({ fieldKey }) {
             <SizeControl
               min={0}
               max={50}
-              inputHandler={({ unit, value }) => borderRadHandler({ unit, value }, borderRadUnit)}
-              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
+              inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, borderRadUnit)}
+              sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
               value={borderRadVal || 0}
               unit={borderRadUnit || 'px'}
               width="128px"
               options={['px', 'em', 'rem', '%']}
             />
           </div>
+        </div>
+      )}
+      {fieldType === 'razorpay' && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Button Theme</span>
+          <select onChange={razorpayBtnThemeHandler} className={css(sc.select)} value={fieldData.btnTheme}>
+            <option value="dark">Razorpay Dark</option>
+            <option value="light">Razorpay Light</option>
+            <option value="outline">Razorpay Outline</option>
+            <option value="brand">Brand Color</option>
+          </select>
         </div>
       )}
     </>

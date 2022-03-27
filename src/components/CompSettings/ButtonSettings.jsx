@@ -107,22 +107,6 @@ export default function ButtonSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  function setBtnSiz(e) {
-    if (e.target.checked) {
-      fieldData.btnSiz = 'sm'
-    } else {
-      fieldData.btnSiz = 'md'
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['font-size'] = e.target.checked ? '13px' : '16px'
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].padding = e.target.checked ? '7px 10px' : '11px 20px'
-    }))
-    setBuilderFldWrpHeight()
-    addToBuilderHistory(setBuilderHistory, { event: `Size updated to ${e.target.checked ? 'small' : 'medium'}`, type: 'set_btn_size', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
   const setIconModel = (typ) => {
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIcnType(typ)
@@ -241,12 +225,6 @@ export default function ButtonSettings() {
 
         <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
           <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
-        </div>
-
-        <FieldSettingsDivider />
-
-        <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
-          <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} />
         </div>
 
         <FieldSettingsDivider />

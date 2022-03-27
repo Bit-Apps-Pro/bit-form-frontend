@@ -376,6 +376,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
+    if (styleMode) return
     history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
 

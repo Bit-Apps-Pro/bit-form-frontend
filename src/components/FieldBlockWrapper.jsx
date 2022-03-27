@@ -39,7 +39,7 @@ export default function FieldBlockWrapper({ layoutItem,
         </button>
         <button
           type="button"
-          className="g-c curp us-n no-drg blk-wrp-btn"
+          className="g-c drag curp us-n no-drg blk-wrp-btn"
           title={__('Style', 'bitform')}
           onClick={styleNavigation}
         >
@@ -47,14 +47,14 @@ export default function FieldBlockWrapper({ layoutItem,
         </button>
         <button
           type="button"
-          className="g-c curp us-n no-drg blk-wrp-btn"
+          className="g-c drag curp us-n no-drg blk-wrp-btn"
           title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
         >
           <EditIcn size="20" />
         </button>
         <FieldDeleteButton
-          className="g-c us-n no-drg blk-wrp-btn"
+          className="g-c drag us-n no-drg blk-wrp-btn"
           removeLayoutItem={removeLayoutItem}
           fieldId={layoutItem.i}
         />

@@ -77,6 +77,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           state = 'focus-visible'
         }
         break
+      case 'razorpay-btn':
+        if (state === 'before') {
+          state = ':before'
+        }
+        break
 
       default:
         return state

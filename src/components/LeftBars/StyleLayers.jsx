@@ -122,7 +122,7 @@ export default function StyleLayers() {
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrapper')}
                   />
 
-                  {fldData.typ.match(/(radio)/gi) && (
+                  {fldData.typ === 'radio' && (
                     <NavBtn
                       subRoute={fldKey}
                       route="radio-box"
@@ -133,6 +133,17 @@ export default function StyleLayers() {
                     />
                   )}
                 </>
+              )}
+
+              {fldData.typ === 'razorpay' && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="razorpay-btn"
+                  label="Razorpay Button"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
+                />
               )}
 
               {fldData.typ === 'currency' && (
@@ -303,7 +314,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {fldData.typ.match(/(country)/gi) && (
+              {fldData.typ === 'country' && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
@@ -379,7 +390,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {fldData.typ.match(/(select)/gi) && (
+              {fldData.typ === 'select' && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
@@ -455,7 +466,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="error-message"
