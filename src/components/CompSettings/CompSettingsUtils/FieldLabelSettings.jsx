@@ -90,26 +90,27 @@ export default function FieldLabelSettings() {
         open={!fieldData.valid.hideLbl}
         disable={fieldData.valid.hideLbl}
       >
+        <div>
+          <div className={css({ w: '97%', mx: 5 })}>
+            <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label.replaceAll('$_bf_$', '\\')} />
+          </div>
 
-        <div className={css({ w: '97%', mx: 5 })}>
-          <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label.replaceAll('$_bf_$', '\\')} />
-        </div>
-
-        <div className={css(ut.mt2, { mx: 10 })}>
-          <FieldIconSettings
-            label="Prefix Icon"
-            iconSrc={fieldData?.lblPreIcn}
-            styleRoute="lbl-pre-i"
-            setIcon={() => setIconModel('lblPreIcn')}
-            removeIcon={() => removeIcon('lblPreIcn')}
-          />
-          <FieldIconSettings
-            label="Suffix Icon"
-            iconSrc={fieldData?.lblSufIcn}
-            styleRoute="lbl-suf-i"
-            setIcon={() => setIconModel('lblSufIcn')}
-            removeIcon={() => removeIcon('lblSufIcn')}
-          />
+          <div className={css(ut.mt2, { mx: 10 })}>
+            <FieldIconSettings
+              label="Prefix Icon"
+              iconSrc={fieldData?.lblPreIcn}
+              styleRoute="lbl-pre-i"
+              setIcon={() => setIconModel('lblPreIcn')}
+              removeIcon={() => removeIcon('lblPreIcn')}
+            />
+            <FieldIconSettings
+              label="Suffix Icon"
+              iconSrc={fieldData?.lblSufIcn}
+              styleRoute="lbl-suf-i"
+              setIcon={() => setIconModel('lblSufIcn')}
+              removeIcon={() => removeIcon('lblSufIcn')}
+            />
+          </div>
         </div>
       </SimpleAccordion>
       <Modal

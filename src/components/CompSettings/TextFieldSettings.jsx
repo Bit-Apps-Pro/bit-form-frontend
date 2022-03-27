@@ -538,7 +538,7 @@ function TextFieldSettings() {
         >
           <div className={css(ut.mt2, { mx: 10 })}>
             <FieldIconSettings
-              label="Start Icon"
+              label="Prefix Icon"
               iconSrc={fieldData?.prefixIcn}
               styleRoute="pre-i"
               setIcon={() => setIconModel('prefixIcn')}
@@ -546,7 +546,7 @@ function TextFieldSettings() {
             />
 
             <FieldIconSettings
-              label="End Icon"
+              label="Suffix Icon"
               iconSrc={fieldData?.suffixIcn}
               styleRoute="suf-i"
               setIcon={() => setIconModel('suffixIcn')}
@@ -774,7 +774,18 @@ function TextFieldSettings() {
                       changeAction={setRegexr}
                     />
                   </div>
-                  <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" cls={css(FieldStyle.input)} disabled={!bits.isPro} />
+                  <div className={css({ mr: 5 })}>
+
+                    <SingleInput
+                      inpType="text"
+                      title={__('Flags:', 'bitform')}
+                      value={flags}
+                      action={setFlags}
+                      placeholder="e.g. g"
+                      cls={css(FieldStyle.input)}
+                      disabled={!bits.isPro}
+                    />
+                  </div>
                   {regexr && (
                     <ErrorMessageSettings
                       type="regexr"
