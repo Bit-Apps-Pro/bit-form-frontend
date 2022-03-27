@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // import './currency-field-style.css'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
@@ -48,13 +49,15 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         <div className={`${fieldKey}-currency-fld-container`}>
           <div
             data-dev-crncy-fld-wrp={fieldKey}
-            className={`${fieldKey}-currency-fld-wrp`}
+            className={`${fieldKey}-currency-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
             ref={currencyWrapElmRef}
           >
             <input
               name={fieldKey}
               type="hidden"
               className={`${fieldKey}-currency-hidden-input`}
+              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
             />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div
@@ -64,7 +67,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 aria-live="assertive"
                 aria-labelledby="currency-label-2"
                 aria-expanded="false"
-                tabIndex="0"
+                tabIndex={fieldData.disabled ? '-1' : '0'}
               >
                 <div className={`${fieldKey}-selected-currency-wrp`}>
                   <img
@@ -96,6 +99,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 aria-label="Currency Input"
                 type="text"
                 className={`${fieldKey}-currency-amount-input`}
+                tabIndex={fieldData.disabled ? '-1' : '0'}
               />
               <button
                 data-dev-input-clear-btn={fieldKey}

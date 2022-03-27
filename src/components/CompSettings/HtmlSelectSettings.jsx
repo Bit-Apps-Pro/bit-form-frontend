@@ -82,6 +82,10 @@ export default function HtmlSelectSettings() {
 
       <FieldSettingsDivider />
 
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
       <FieldDisabledSettings />
 
       <FieldSettingsDivider />

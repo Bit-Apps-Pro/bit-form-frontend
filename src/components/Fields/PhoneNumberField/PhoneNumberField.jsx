@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
@@ -43,18 +44,24 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         <div className={`${fieldKey}-phone-fld-container`}>
           <div
             data-dev-phone-fld-wrp={fieldKey}
-            className={`${fieldKey}-phone-fld-wrp`}
+            className={`${fieldKey}-phone-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
             ref={phoneNumberWrapElmRef}
           >
-            <input name="country-name" type="hidden" className={`${fieldKey}-phone-hidden-input`} />
-            <div className={`${fieldKey}-phone-inner-wrp`}>
+            <input
+              name={fieldKey}
+              type="hidden"
+              className={`${fieldKey}-phone-hidden-input`}
+              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+            />
+            <div className={`${fieldKey}-phone-inner-wrp`} tabIndex={fieldData.disabled ? '-1' : '0'}>
               <div
                 className={`${fieldKey}-dpd-wrp`}
                 role="combobox"
                 aria-live="assertive"
                 aria-labelledby="country-label-2"
                 aria-expanded="false"
-                tabIndex="0"
+                tabIndex={fieldData.disabled ? '-1' : '0'}
               >
                 <div className={`${fieldKey}-selected-country-wrp`}>
                   <img
@@ -87,6 +94,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 type="tel"
                 className={`${fieldKey}-phone-number-input`}
                 autoComplete="tel"
+                tabIndex={fieldData.disabled ? '-1' : '0'}
               />
               <button
                 data-dev-input-clear-btn={fieldKey}

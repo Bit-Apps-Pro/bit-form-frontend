@@ -19,8 +19,9 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
         <select
           data-dev-fld={fieldKey}
           id={fieldKey}
-          className={`${fieldKey}-fld no-drg`}
+          className={`${fieldKey}-fld no-drg ${fieldData.readonly ? 'readonly' : ''}`}
           {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+          {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
         >
           {fieldData.phHide && <option className={`${fieldKey}-slct-optn`} value="">{fieldData.ph}</option>}
           {

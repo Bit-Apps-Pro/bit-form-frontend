@@ -15,11 +15,8 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
@@ -334,14 +331,14 @@ function RadioCheckSettings() {
       <HelperTxtSettings />
 
       <FieldSettingsDivider />
-      
-      <FieldReadOnlySettings />
+
+      {/* <FieldReadOnlySettings />
 
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
 
-      <FieldSettingsDivider />
+      <FieldSettingsDivider /> */}
 
       <SimpleAccordion
         title={__('Name', 'bitform')}

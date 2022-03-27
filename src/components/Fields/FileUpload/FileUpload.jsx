@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
@@ -57,7 +58,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
         fieldData={fieldData}
       >
         <div className={`${fieldKey}-file-up-container`}>
-          <div data-dev-file-up-wrpr={fieldKey} className={`${fieldKey}-file-up-wrpr`} ref={fileUploadWrapElmRef}>
+          <div data-dev-file-up-wrpr={fieldKey} className={`${fieldKey}-file-up-wrpr ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} ref={fileUploadWrapElmRef}>
             <div data-dev-file-input-wrpr={fieldKey} className={`${fieldKey}-file-input-wrpr`}>
               <div data-dev-btn-wrpr={fieldKey} className={`${fieldKey}-btn-wrpr`}>
                 <button data-dev-inp-btn={fieldKey} type="button" className={`${fieldKey}-inp-btn`}>
@@ -74,6 +75,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   name="file-upload"
                   fieldData
                   {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+                  {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
                 />
               </div>
               <div data-dev-files-list={fieldKey} className={`${fieldKey}-files-list`} />

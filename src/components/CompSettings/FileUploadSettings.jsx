@@ -206,6 +206,10 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
       <FieldDisabledSettings />
 
       <FieldSettingsDivider />
@@ -244,7 +248,6 @@ export default function FileUploadSettings() {
 
         </div>
       </SimpleAccordion>
-
 
       <FieldSettingsDivider />
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-plusplus */
 import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -54,8 +55,14 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
         fieldData={attr}
       >
         <div className={`${fieldKey}-dpd-fld-container`}>
-          <div data-dev-dpd-fld-wrp={fieldKey} className={`${fieldKey}-dpd-fld-wrp`} ref={dropdownWrapElmRef}>
-            <input name="dpd-name" type="hidden" className={`${fieldKey}-dpd-hidden-input`} />
+          <div data-dev-dpd-fld-wrp={fieldKey} className={`${fieldKey}-dpd-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} ref={dropdownWrapElmRef}>
+            <input
+              name={fieldKey}
+              type="hidden"
+              className={`${fieldKey}-dpd-hidden-input`}
+              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+            />
             <div
               className={`${fieldKey}-dpd-wrp`}
               role="combobox"
@@ -189,7 +196,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               return (
                                 <>
                                   <li data-index={dataIndex++} className={`${fieldKey}-option ${fieldKey}-opt-group-title`}>
-                                    <span className="opt-lbl">{opt.lbl}</span>
+                                    <span className="opt-lbl">{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
                                     <li data-index={dataIndex++} data-value={opt2.val} className={`${fieldKey}-option ${fieldKey}-opt-group-child`} role="option" aria-selected="false" tabIndex="-1">

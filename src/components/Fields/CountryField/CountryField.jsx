@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
@@ -53,15 +54,21 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         fieldData={attr}
       >
         <div className={`${fieldKey}-country-fld-container`}>
-          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp`} ref={countryWrapElmRef}>
-            <input name="country-name" type="hidden" className={`${fieldKey}-country-hidden-input`} />
+          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} ref={countryWrapElmRef}>
+            <input
+              name="country-name"
+              type="hidden"
+              className={`${fieldKey}-country-hidden-input`}
+              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+            />
             <div
               className={`${fieldKey}-dpd-wrp`}
               aria-live="assertive"
               aria-label="Select a Country"
               role="combobox"
               aria-expanded="false"
-              tabIndex="0"
+              tabIndex={fieldData.disabled ? '-1' : '0'}
             >
               <div className={`${fieldKey}-selected-country-wrp`}>
                 {fieldData.config.selectedFlagImage && (

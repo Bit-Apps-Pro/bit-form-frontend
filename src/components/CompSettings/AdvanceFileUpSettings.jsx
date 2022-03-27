@@ -736,6 +736,10 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
 
+      <FieldReadOnlySettings />
+
+      <FieldSettingsDivider />
+
       <FieldDisabledSettings />
 
       <FieldSettingsDivider />
