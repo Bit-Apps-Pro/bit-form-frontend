@@ -348,6 +348,7 @@ export default function DropdownSettings() {
             lblKey="lbl"
             valKey="val"
             type="radio"
+            hasGroup
           />
         </div>
       </Modal>
