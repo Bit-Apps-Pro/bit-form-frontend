@@ -381,7 +381,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   return (
-    <div style={{ width: gridWidth + 6 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
+    <div style={{ width: gridWidth + 10 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
@@ -391,7 +391,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
             <div className={`_frm-${formID}`}>
               {!styleMode ? (
                 <ResponsiveReactGridLayout
-                  width={Math.round(builderWidth)}
+                  width={Math.round(builderWidth - 10)}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
