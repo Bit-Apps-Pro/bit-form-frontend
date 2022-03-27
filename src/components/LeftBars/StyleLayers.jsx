@@ -70,7 +70,7 @@ export default function StyleLayers() {
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
-              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
+              {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />}
               <ElementConfiguration fldKey={fldKey} />
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>
@@ -136,14 +136,40 @@ export default function StyleLayers() {
               )}
 
               {fldData.typ === 'razorpay' && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="razorpay-btn"
-                  label="Razorpay Button"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
-                />
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn"
+                    label="Razorpay Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-text"
+                    label="Button Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-text="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-text')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-title"
+                    label="Button Title"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-title="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-title')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="razorpay-btn-sub-title"
+                    label="Button Subtitle"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-razorpay-btn-sub-title="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'razorpay-btn-sub-title')}
+                  />
+                </>
               )}
 
               {fldData.typ === 'currency' && (
@@ -466,7 +492,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="error-message"

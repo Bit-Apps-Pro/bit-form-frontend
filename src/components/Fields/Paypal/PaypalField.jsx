@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
+import { AppSettings } from '../../../Utils/AppSettingsContext'
 import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import PayPalField from './paypal-field-script'
 
 export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
+  const appSettingsContext = useContext(AppSettings)
+  const [clientID, setClientID] = useState('')
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
 
@@ -15,7 +18,19 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const src = 'https://www.paypal.com/sdk/js?client-id=AVCn9xOgLFK538FYxLaG0JloQQWeTEroTLur6Qm-j9-G8AvKKxqTD9LE1Td12RvXGYkSmrrNfJusYtSq'
+    let key = ''
+    if (!key && typeof bits !== 'undefined') {
+      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
+      if (payInteg) {
+        key = payInteg.clientID
+      }
+    }
+    setClientID(key)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attr.payIntegID])
+
+  useEffect(() => {
+    const src = `https://www.paypal.com/sdk/js?client-id=${clientID}&namespace=${fieldKey}`
     loadScript(src, '', 'bf-paypal-script', false, () => {
       setLoaded(true)
     })
@@ -23,7 +38,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
     return () => {
       removeScript('bf-paypal-script')
     }
-  }, [])
+  }, [clientID])
 
   useEffect(() => {
     if (!loaded) return
@@ -39,6 +54,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
     const { style, currency } = fieldData
 
     const config = {
+      namespace: fieldKey,
       style,
       currency,
       payType: 'payment',

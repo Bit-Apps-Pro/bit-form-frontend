@@ -73,7 +73,7 @@ export default function FieldBlockWrapper({ layoutItem,
           <FieldContextMenu
             layoutItem={layoutItem}
             navigateToFieldSettings={navigateToFieldSettings}
-            navigateToStyle={navigateToStyle}
+            navigateToStyle={styleNavigation}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
           />

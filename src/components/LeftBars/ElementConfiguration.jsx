@@ -19,7 +19,7 @@ export default function ElementConfiguration({ fldKey }) {
   const styleHandler = (route) => {
     history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
-  // console.log('fieldObj', fieldObj)
+  console.log('fieldObj', fieldObj)
   return (
 
     <>
@@ -151,7 +151,7 @@ export default function ElementConfiguration({ fldKey }) {
           </>
         )}
       {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
-        && !fieldObj.typ.match(/^(decision-box|razorpay)$/gi)?.[0] && (
+        && !fieldObj.typ.match(/^(decision-box|razorpay|paypal)$/gi)?.[0] && (
         <>
           <NavBtn
             cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}

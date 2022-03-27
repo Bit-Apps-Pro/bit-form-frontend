@@ -65,10 +65,10 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
                 <path d="M7.077 6.476l-.988 3.569 5.65-3.589-3.695 13.54 3.752.004 5.457-20L7.077 6.476z" fill="#fff" />
                 <path d="M1.455 14.308L0 20h7.202L10.149 8.42l-8.694 5.887z" fill="#fff" />
               </svg>
-              <div className={`${fieldKey}-razorpay-btn-text`}>
-                <span className={`${fieldKey}-razorpay-btn-title`}>{fieldData.btnTxt}</span>
+              <div data-dev-razorpay-btn-text={fieldKey} className={`${fieldKey}-razorpay-btn-text`}>
+                <span data-dev-razorpay-btn-title={fieldKey} className={`${fieldKey}-razorpay-btn-title`}>{fieldData.btnTxt}</span>
                 {fieldData.subTitl && (
-                  <span className={`${fieldKey}-razorpay-btn-sub-title`}>Secured by Razorpay</span>
+                  <span data-dev-razorpay-btn-sub-title={fieldKey} className={`${fieldKey}-razorpay-btn-sub-title`}>Secured by Razorpay</span>
                 )}
               </div>
             </button>

@@ -25,20 +25,23 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
     [`.${fk}-razorpay-btn::before`]: {
       content: '""',
       position: 'absolute',
-      left: '-6px',
+      left: '-1em',
       top: 0,
       width: '46px',
       height: '100%',
       'background-color': 'hsla(224, 68%, 37%, 100%)',
       'border-radius': '2px 0 0 2px',
-      transform: 'skew(-15deg, 0)',
+      transform: 'skewX(-15deg)',
     },
 
     [`.${fk}-razorpay-btn svg`]: {
       position: 'absolute',
       left: 0,
-      top: 0,
-      margin: '9px 11px',
+      top: '50%',
+      margin: '0px 7px',
+      transform: 'translateY(-50%)',
+      width: '23px',
+      height: '25px',
     },
 
     [`.${fk}-razorpay-btn-text`]: {
@@ -52,12 +55,12 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       'min-height': '18px',
       'line-height': '18px',
       'font-size': '16px',
-      'font-weight': 800,
-      opacity: '.95',
+      'font-weight': '800',
+      opacity: '0.95',
     },
 
     [`.${fk}-razorpay-btn-sub-title`]: {
-      opacity: '.6',
+      opacity: '0.6',
       'font-size': '8px',
     },
 
