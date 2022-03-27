@@ -47,7 +47,8 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
     },
 
     [`.${fk}-btn:disabled`]: {
-      cursor: 'default',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
       'background-color': 'rgba(239, 239, 239, 0.3) !important',
       color: 'rgb(84, 84, 84) !important',
       'border-color': 'rgba(118, 118, 118, 0.3) !important',

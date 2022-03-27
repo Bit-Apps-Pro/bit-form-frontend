@@ -23,6 +23,20 @@ export default function dropdownStyle_1_BitformDefault({ fk, type, direction }) 
       transition: 'box-shadow .3s',
     },
 
+    [`.disabled .${fk}-dpd-wrp`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+    [`.readonly .${fk}-dpd-wrp`]: {
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+
     [`.${fk}-dpd-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'rgba(29, 158, 249, 1)' },
 
     [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open,.disabled)`]: {

@@ -22,6 +22,35 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       'border-width': '1px',
       transition: 'box-shadow .3s',
     },
+    [`.disabled .${fk}-phone-inner-wrp`]: {
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
+    [`.readonly .${fk}-phone-inner-wrp`]: {
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
+
+    [`.disabled .${fk}-phone-number-input`]: {
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
+    [`.readonly .${fk}-phone-number-input`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
 
     [`.${fk}-phone-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(205, 95%, 55%, 100%)',

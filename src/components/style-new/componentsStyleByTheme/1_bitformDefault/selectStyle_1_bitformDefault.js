@@ -29,14 +29,15 @@ export default function selectStyle_1_BitformDefault({ fk, type, direction }) {
       'border-color': 'var(--global-accent-color)!important',
     },
     [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
-    [`.${fk}-fld:disabled`]: {
-      cursor: 'default',
+    [`.${fk}-fld.readonly`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      color: 'rgb(84, 84, 84)',
       'background-color': 'rgba(239, 239, 239, 0.3) !important',
-      color: 'rgb(84, 84, 84) !important',
-      'border-color': 'rgba(118, 118, 118, 0.3) !important',
     },
-    [`.${fk}-fld:read-only`]: {
-      cursor: 'default',
+    [`.${fk}-fld:disabled`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
       'background-color': 'rgba(239, 239, 239, 0.3) !important',
       color: 'rgb(84, 84, 84) !important',
       'border-color': 'rgba(118, 118, 118, 0.3) !important',

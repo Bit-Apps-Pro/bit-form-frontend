@@ -21,6 +21,35 @@ export default function currencyStyle_1_BitformDefault({ fk, type, direction }) 
       'border-width': '1px',
       transition: 'box-shadow .3s',
     },
+    [`.disabled .${fk}-currency-inner-wrp`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+    [`.readonly .${fk}-currency-inner-wrp`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+
+    [`.disabled .${fk}-currency-amount-input`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+    [`.readonly .${fk}-currency-amount-input`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
     [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       border: 'solid hsla(0, 0%, 93%, 100%)',
       'border-width': '1px',

@@ -24,6 +24,21 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
       transition: 'box-shadow .3s',
     },
 
+    [`.${fk}-country-fld-wrp.disabled .${fk}-dpd-wrp`]: {
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
+    [`.${fk}-country-fld-wrp.readonly .${fk}-dpd-wrp`]: {
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'rgb(84, 84, 84) !important',
+      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+    },
+
     [`.${fk}-country-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'rgba(29, 158, 249, 1)' },
 
     [`.${fk}-country-fld-wrp:focus-within:not(.menu-open,.disabled)`]: {
@@ -284,12 +299,6 @@ export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
     },
 
     [`.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
-
-    [`.disabled .${fk}-dpd-wrp`]: {
-      'background-color': 'rgba(239, 239, 239, 0.3)',
-      cursor: 'not-allowed',
-      'pointer-events': 'none',
-    },
 
     [`.disabled .${fk}-selected-country-lbl`]: { color: 'rgb(84, 84, 84) !important' },
 

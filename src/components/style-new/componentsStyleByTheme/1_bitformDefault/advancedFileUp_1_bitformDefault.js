@@ -4,6 +4,16 @@ import inputWrapperClasses from './inputWrapperClasses'
 export default function advancedFileUp_1_bitformDefault({ fk, type, direction }) {
   return {
     ...inputWrapperClasses(fk),
+    [`.filepond-${fk}-container.readonly`]: {
+      opacity: '.7',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
+    [`.filepond-${fk}-container.disabled`]: {
+      opacity: '.5',
+      cursor: 'not-allowed',
+      'pointer-events': 'none',
+    },
 
     [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
 
