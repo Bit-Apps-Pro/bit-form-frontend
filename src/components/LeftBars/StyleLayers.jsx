@@ -70,7 +70,7 @@ export default function StyleLayers() {
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
-              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />
+              {!fldData.typ === 'paypal' && <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />}
               <ElementConfiguration fldKey={fldKey} />
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>
@@ -466,7 +466,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="error-message"

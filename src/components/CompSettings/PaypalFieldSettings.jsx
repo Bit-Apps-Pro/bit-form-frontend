@@ -5,6 +5,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy } from '../../Utils/Helpers'
@@ -169,13 +170,21 @@ export default function PaypalFieldSettings() {
 
       {fieldData.payIntegID && (
         <>
-          <div className="mt-2">
+          <div className={css(ut.ml2, ut.mr2, ut.p1)}>
             <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
-            {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={fieldData.planId || ''} action={e => handleInput('planId', e.target.value)} />}
+            {isSubscription && (
+              <SingleInput
+                inpType="text"
+                title={__('Plan Id', 'bitform')}
+                value={fieldData.planId || ''}
+                action={e => handleInput('planId', e.target.value)}
+                cls={css(FieldStyle.input)}
+              />
+            )}
           </div>
           {!isSubscription && (
             <>
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Language', 'bitform')}</b>
                 <MultiSelect
                   className="w-10 btcd-paper-drpdwn mt-1"
@@ -185,7 +194,7 @@ export default function PaypalFieldSettings() {
                   singleSelect
                 />
               </div>
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Disable Card', 'bitform')}</b>
                 <MultiSelect
                   className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
@@ -193,58 +202,108 @@ export default function PaypalFieldSettings() {
                   onChange={val => handleInput('disableFunding', val)}
                 />
               </div>
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Amount Type', 'bitform')}</b>
                 <br />
                 <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
                 <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
               </div>
-              {!isDynamicAmount && <SingleInput inpType="number" title={__('Amount', 'bitform')} value={fieldData.amount || ''} action={e => handleInput('amount', e.target.value)} />}
+              {!isDynamicAmount && (
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
+                  <SingleInput
+                    cls={css(FieldStyle.input)}
+                    inpType="number"
+                    title={__('Amount', 'bitform')}
+                    value={fieldData.amount || ''}
+                    action={e => handleInput('amount', e.target.value)}
+                  />
+                </div>
+              )}
               {isDynamicAmount && (
-                <div className="mt-3">
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1" value={fieldData.amountFld}>
+                  <select
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="amountFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.amountFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
                 </div>
               )}
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Shipping Amount', 'bitform')}</b>
                 <br />
                 <CheckBox onChange={setShippingType} radio checked={!isDynamicShipping} title={__('Fixed', 'bitform')} />
                 <CheckBox onChange={setShippingType} radio checked={isDynamicShipping} title={__('Dynamic', 'bitform')} value="dynamic" />
               </div>
-              {!isDynamicShipping && <SingleInput inpType="number" title={__('Shipping Cost', 'bitform')} value={fieldData.shipping || ''} action={e => handleInput('shipping', e.target.value)} />}
+              {!isDynamicShipping && (
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
+                  <SingleInput
+                    cls={css(FieldStyle.input)}
+                    inpType="number"
+                    title={__('Shipping Cost', 'bitform')}
+                    value={fieldData.shipping || ''}
+                    action={e => handleInput('shipping', e.target.value)}
+                  />
+                </div>
+              )}
               {isDynamicShipping && (
-                <div className="mt-3">
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Shipping Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="shippingFld" className="btcd-paper-inp mt-1" value={fieldData.shippingFld}>
+                  <select
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="shippingFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.shippingFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
                 </div>
               )}
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Tax Amount Type', 'bitform')}</b>
                 <br />
                 <CheckBox onChange={setTaxType} radio checked={!isDynamicTax} title={__('Fixed', 'bitform')} />
                 <CheckBox onChange={setTaxType} radio checked={isDynamicTax} title={__('Dynamic', 'bitform')} value="dynamic" />
               </div>
-              {!isDynamicTax && <SingleInput inpType="number" title={__('Tax (%)', 'bitform')} value={fieldData.tax || ''} action={e => handleInput('tax', e.target.value)} />}
+              {!isDynamicTax && (
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
+                  <SingleInput
+                    cls={css(FieldStyle.input)}
+                    inpType="number"
+                    title={__('Tax (%)', 'bitform')}
+                    value={fieldData.tax || ''}
+                    action={e => handleInput('tax', e.target.value)}
+                  />
+                </div>
+              )}
               {isDynamicTax && (
-                <div className="mt-3">
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="taxFld" className="btcd-paper-inp mt-1" value={fieldData.taxFld}>
+                  <select
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="taxFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.taxFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
                 </div>
               )}
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <label htmlFor="recap-thm">
                   <b>{__('Currency', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={fieldData.currency} className="btcd-paper-inp mt-1">
+                  <select
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="currency"
+                    value={fieldData.currency}
+                    className={css(FieldStyle.input)}
+                  >
                     {currencyCodes.map(itm => (
                       <option key={itm.currency} value={itm.code}>
                         {`${itm.currency} - ${itm.code}`}
@@ -253,17 +312,33 @@ export default function PaypalFieldSettings() {
                   </select>
                 </label>
               </div>
-              <div className="mt-2">
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Description', 'bitform')}</b>
                 <br />
                 <CheckBox onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static', 'bitform')} />
                 <CheckBox onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic', 'bitform')} value="dynamic" />
               </div>
-              {!isDynamicDesc && <textarea className="mt-1 btcd-paper-inp" placeholder="Order Description" name="description" rows="5" onChange={e => handleInput(e.target.name, e.target.value)} />}
+              {!isDynamicDesc
+                && (
+                  <div className={css(ut.ml2, ut.mr2, ut.p1)}>
+                    <textarea
+                      className="mt-1 btcd-paper-inp"
+                      placeholder="Order Description"
+                      name="description"
+                      rows="5"
+                      onChange={e => handleInput(e.target.name, e.target.value)}
+                    />
+                  </div>
+                )}
               {isDynamicDesc && (
-                <div className="mt-1">
+                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Description Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="descFld" className="btcd-paper-inp mt-1" value={fieldData.descFld}>
+                  <select
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="descFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.descFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getDescFields()}
                   </select>

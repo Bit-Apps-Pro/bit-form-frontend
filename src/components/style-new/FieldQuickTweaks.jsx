@@ -166,6 +166,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
             elemntKey = 'phone-fld-wrp'
             break
 
+          case 'paypal':
+            elemntKey = 'paypal-wrp'
+            break
+
           default:
             break
         }
@@ -208,6 +212,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'phone-number':
         elementKey = 'phone-fld-wrp'
         break
+      case 'paypal':
+        elementKey = 'paypal-wrp'
+        break
+
       default:
         break
     }
@@ -219,6 +227,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
   const [borderRadVal, borderRadUnit] = getPropValue()
   const [btnWidthVal, btnRadUnit] = getPropValue('width')
+  const [paypalFldWidthVal, paypalFldWidthUnit] = getPropValue('width')
 
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
@@ -465,6 +474,23 @@ export default function FieldQuickTweaks({ fieldKey }) {
               sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, borderRadUnit)}
               value={borderRadVal || 0}
               unit={borderRadUnit || 'px'}
+              width="128px"
+              options={['px', 'em', 'rem', '%']}
+            />
+          </div>
+        </div>
+      )}
+      {(fieldType === 'paypal') && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Width</span>
+          <div className={css(ut.flxc)}>
+            <SizeControl
+              min={150}
+              max={750}
+              inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, paypalFldWidthUnit, 'width')}
+              sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, paypalFldWidthUnit, 'width')}
+              value={paypalFldWidthVal || 0}
+              unit={paypalFldWidthUnit || 'px'}
               width="128px"
               options={['px', 'em', 'rem', '%']}
             />
