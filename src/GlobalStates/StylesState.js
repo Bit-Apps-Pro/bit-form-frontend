@@ -25,7 +25,7 @@ export const $stylesLg = atom({
     form: {
       light: {
         _frm: { background: 'var(--global-bg-color)' },
-        '_frm-bg': { padding: '10px' },
+        '_frm-bg': { padding: '10px', border: '1px solid hsla(215, 20%, 93%, 100%)' },
       },
       dark: {
         _frm: { background: 'var(--global-bg-color)' },

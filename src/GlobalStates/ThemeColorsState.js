@@ -15,7 +15,7 @@ export const $lightThemeColors = atom({
     '--gfs': '0%', // global fonst color saaturation
     '--gfl': '14%',
     '--gfa': 100,
-    '--global-bg-color': 'hsla(0, 0%, 95%, 100)', // background color
+    '--global-bg-color': '', // background color
     '--gbg-h': 0,
     '--gbg-s': 0,
     '--gbg-l': 100,
