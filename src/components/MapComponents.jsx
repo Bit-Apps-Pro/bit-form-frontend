@@ -42,7 +42,7 @@ mul: multiple
 
 function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages }) {
   const styles = useRecoilValue($styles)
-  console.log(styles)
+  // console.log(styles)
   switch (atts?.typ) {
     case 'text':
     case 'number':
