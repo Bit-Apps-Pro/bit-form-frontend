@@ -142,7 +142,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           case 'text':
           case 'date':
           case 'html-select':
-            elemntKey = fld
+            elemntKey = 'fld'
             break
 
           case 'check':
