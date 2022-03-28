@@ -50,7 +50,14 @@ export default function RazorPay_old({ fieldKey, contentID, formID, attr, button
 
   const loadRazorpayScript = async () => {
     if (!document.getElementById('razorpaysrc')) {
-      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js', 'sha256-WaK8tHBbvmUh/aQh4KOXqmWuNplM3g9ygIfpkPkb+aw=', 'razorpaysrc')
+      const src = 'https://checkout.razorpay.com/v1/checkout.js'
+      const srcData = {
+        src,
+        integrity: 'sha256-WaK8tHBbvmUh/aQh4KOXqmWuNplM3g9ygIfpkPkb+aw=',
+        id: 'razorpaysrc',
+        scriptInGrid: false,
+      }
+      const res = await loadScript(srcData)
       if (!res) {
         // eslint-disable-next-line no-console
         console.warn('Is your internet working properly to load razorpay script?')

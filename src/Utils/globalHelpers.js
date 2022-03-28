@@ -23,7 +23,7 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = (src, integrity, id, scriptInGrid = false, callback = null) => new Promise((resolve) => {
+export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr, callback = null }) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
   if (integrity) {
@@ -31,6 +31,11 @@ export const loadScript = (src, integrity, id, scriptInGrid = false, callback = 
     script.crossOrigin = 'anonymous'
   }
   script.id = id
+  if (attr) {
+    Object.entries(attr).forEach(([key, val]) => {
+      script.setAttribute(key, val)
+    })
+  }
   script.onload = () => {
     resolve(true)
     if (callback) callback()
