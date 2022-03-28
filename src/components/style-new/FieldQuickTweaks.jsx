@@ -4,7 +4,6 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
@@ -22,9 +21,7 @@ import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
-  const themeColors = useRecoilValue($themeColors)
   const themeVars = useRecoilValue($themeVars)
-  const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fieldKey])
@@ -289,13 +286,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const [objName, objPath] = fldTypWiseAccentColorObjName()
-  console.log(objName, objPath, accentColor)
-
-  // const getAccentColor = () => {
-  //   const accentColorValue = getValueByObjPath(styles, objPath[0])
-  // }
-
-  console.log(getValueByObjPath(styles, objPath[0]))
 
   const handleDir = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
