@@ -20,7 +20,16 @@ export default function Bitforms(props) {
 
   useEffect(() => {
     if (!props.editMode && props.gRecaptchaVersion === 'v3' && props.gRecaptchaSiteKey) {
-      loadScript(`https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`, 'g-recaptcha-script')
+      const src = `https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`
+      const srcData = {
+        src,
+        integrity: '',
+        id: 'g-recaptcha-script',
+        scriptInGrid: false,
+
+      }
+      loadScript(srcData)
+      // loadScript(`https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`, 'g-recaptcha-script')
     }
   }, [])
 

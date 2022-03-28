@@ -30,10 +30,19 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   }, [attr.payIntegID])
 
   useEffect(() => {
-    const src = `https://www.paypal.com/sdk/js?client-id=${clientID}&namespace=${fieldKey}`
-    loadScript(src, '', 'bf-paypal-script', false, () => {
-      setLoaded(true)
-    })
+    if (!clientID) return
+    const src = `https://www.paypal.com/sdk/js?client-id=${clientID}`
+    const srcData = {
+      src,
+      integrity: '',
+      id: `bf-paypal-script-${fieldKey}`,
+      scriptInGrid: false,
+      attr: { 'data-namespace': fieldKey },
+      callback: () => {
+        setLoaded(true)
+      },
+    }
+    loadScript(srcData)
 
     return () => {
       removeScript('bf-paypal-script')

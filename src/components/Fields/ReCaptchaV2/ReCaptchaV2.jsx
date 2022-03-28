@@ -36,8 +36,15 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
       size,
     }
     recaptchaFieldRef.current = new RecaptchaField(fldElm, configOptions)
+    const src = 'https://www.google.com/recaptcha/api.js'
+    const srcData = {
+      src,
+      integrity: '',
+      id: 'bf-recaptcha-script',
+      scriptInGrid: true,
+    }
 
-    loadScript('https://www.google.com/recaptcha/api.js', '', 'bf-recaptcha-script', true).then(() => {
+    loadScript(srcData).then(() => {
       setBuilderFldWrpHeight()
     })
   }, [fieldData])

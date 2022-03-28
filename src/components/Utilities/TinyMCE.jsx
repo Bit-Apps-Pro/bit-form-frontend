@@ -11,7 +11,14 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
 
   const loadTinyMceScript = async () => {
     if (typeof tinymce === 'undefined') {
-      const res = await loadScript('https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js', 'sha256-SnRzknLClR3GaNw9oN4offMGFiPbXQTP7q0yFLPPwgY=', 'tinymceCDN')
+      const src = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js'
+      const srcData = {
+        src,
+        integrity: 'sha256-SnRzknLClR3GaNw9oN4offMGFiPbXQTP7q0yFLPPwgY=',
+        id: 'tinymceCDN',
+        scriptInGrid: false,
+      }
+      const res = await loadScript(srcData)
       if (!res) {
         // eslint-disable-next-line no-console
         console.warn('Is your internet working properly to load script?')

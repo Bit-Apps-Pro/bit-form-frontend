@@ -16,10 +16,19 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
 
   useEffect(() => {
     const src = 'https://checkout.razorpay.com/v1/checkout.js'
-    const integrity = 'sha256-mWVOHiJZZO+kIH4HbXErt4iqurxCChBNfsMxkk8UCBI='
-    loadScript(src, integrity, 'bf-razorpay-script', false, () => {
-      setLoaded(true)
-    })
+    const srcData = {
+      src,
+      integrity: 'sha256-mWVOHiJZZO+kIH4HbXErt4iqurxCChBNfsMxkk8UCBI=',
+      id: `bf-razorpay-script-${fieldKey}`,
+      scriptInGrid: false,
+      callback: () => {
+        setLoaded(true)
+      },
+    }
+    loadScript(srcData)
+    // loadScript(src, integrity, 'bf-razorpay-script', false, () => {
+    //   setLoaded(true)
+    // })
 
     return () => {
       removeScript('bf-razorpay-script')
