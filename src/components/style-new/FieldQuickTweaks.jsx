@@ -4,7 +4,6 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
@@ -22,9 +21,7 @@ import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
-  const themeColors = useRecoilValue($themeColors)
   const themeVars = useRecoilValue($themeVars)
-  const { '--global-accent-color': accentColor } = themeColors
   const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fieldKey])
@@ -262,6 +259,17 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'text':
       case 'date':
       case 'html-select':
+      case 'number':
+      case 'password':
+      case 'username':
+      case 'email':
+      case 'url':
+      case 'datetime-local':
+      case 'time':
+      case 'month':
+      case 'week':
+      case 'color':
+      case 'textarea':
         objName = 'styles'
         objPath = [
           `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->border-color`,
@@ -276,46 +284,36 @@ export default function FieldQuickTweaks({ fieldKey }) {
     }
     return [objName, objPath]
   }
-  //   case 'text':
-  //   case 'number':
-  //   case 'password':
-  //   case 'username':
-  //   case 'email':
-  //   case 'url':
-  //   case 'date':
-  //   case 'datetime-local':
-  //   case 'time':
-  //   case 'month':
-  //   case 'week':
-  //   case 'color':
-  //   case 'textarea':
+
   const [objName, objPath] = fldTypWiseAccentColorObjName()
+
   const handleDir = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       const fldType = prvStyle.fields[fieldKey].fieldType
       const clsName = fldType === 'phone-number' ? 'phone' : fldType
+      const { classes: clss } = drft.fields[fieldKey]
       if (!rtrCurrencyFld()) {
-        drft.fields[fieldKey].classes[`.${fieldKey}-${clsName}-inner-wrp`].direction = 'rtl'
-        drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left = '6px'
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right
-        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`].direction = 'rtl'
-        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
-        drft.fields[fieldKey].classes[`.${fieldKey}-option-inner-wrp`].direction = 'rtl'
-        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '30px'
-        drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '16px'
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
-        drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]['margin-left'] = '10px'
+        clss[`.${fieldKey}-${clsName}-inner-wrp`].direction = 'rtl'
+        clss[`.${fieldKey}-input-clear-btn`].left = '6px'
+        delete clss[`.${fieldKey}-input-clear-btn`].right
+        clss[`.${fieldKey}-opt-search-input`].direction = 'rtl'
+        clss[`.${fieldKey}-opt-search-icn`].right = '13px'
+        clss[`.${fieldKey}-option-inner-wrp`].direction = 'rtl'
+        clss[`.${fieldKey}-opt-search-input`]['padding-right'] = '30px'
+        clss[`.${fieldKey}-search-clear-btn`].left = '16px'
+        delete clss[`.${fieldKey}-search-clear-btn`].right
+        clss[`.${fieldKey}-opt-lbl`]['margin-left'] = '10px'
       } else {
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-${clsName}-inner-wrp`].direction
-        drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right = '6px'
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`].direction
-        drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-option-inner-wrp`].direction
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
-        delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]['margin-left']
-        drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
+        delete clss[`.${fieldKey}-${clsName}-inner-wrp`].direction
+        clss[`.${fieldKey}-input-clear-btn`].right = '6px'
+        delete clss[`.${fieldKey}-input-clear-btn`].left
+        delete clss[`.${fieldKey}-opt-search-input`].direction
+        clss[`.${fieldKey}-opt-search-icn`].left = '13px'
+        delete clss[`.${fieldKey}-opt-search-icn`].right
+        delete clss[`.${fieldKey}-option-inner-wrp`].direction
+        delete clss[`.${fieldKey}-search-clear-btn`].left
+        delete clss[`.${fieldKey}-opt-lbl`]['margin-left']
+        clss[`.${fieldKey}-search-clear-btn`].right = '6px'
       }
     }))
   }
@@ -375,10 +373,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <SimpleColorPicker
             title="Accent Color"
             subtitle="Accent Color"
-            value={getValueByObjPath(styles, objPath[0]) || accentColor}
+            value={getValueByObjPath(styles, objPath[0])}
             stateObjName={objName}
             propertyPath={objPath}
-            modalId="global-primary-clr"
+            modalId="accent-color"
             fldKey={fieldKey}
           // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
           />

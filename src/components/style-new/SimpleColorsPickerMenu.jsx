@@ -89,14 +89,14 @@ function SimpleColorsPickerMenu({ stateObjName,
       default:
         break
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   const handleColor = (_h, _s, _v, _a) => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
-    const event = `color changed`
+    const event = 'color changed'
     const type = propertyPath
-    console.log(fldKey);
     const state = { fldKey: stateObjName }
     const historyData = { event, type, state }
 
@@ -162,17 +162,12 @@ function SimpleColorsPickerMenu({ stateObjName,
       default:
         break
     }
-
-    console.log('color change')
   }
 
   const setColorState = (colorObj) => {
-    console.log('colorObj', colorObj);
     setColor(colorObj)
     handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
   }
-
-  console.log('hi')
 
   return (
     <div className={css(c.preview_wrp)}>
