@@ -732,7 +732,7 @@ function TextFieldSettings() {
                 open
               >
                 <>
-                  <div className={css(ut.mr2, ut.mt3)}>
+                  <div className={css(ut.mr2, ut.mt3, ut.pl1)}>
                     <div className={css(ut.flxcb, ut.ml1)}>
                       <h4 className={css(ut.m0, FieldStyle.title)}>
                         {__('Expression', 'bitform')}
@@ -774,7 +774,7 @@ function TextFieldSettings() {
                       changeAction={setRegexr}
                     />
                   </div>
-                  <div className={css({ mr: 5 })}>
+                  <div className={css({ mr: 5 }, ut.pl1)}>
 
                     <SingleInput
                       inpType="text"

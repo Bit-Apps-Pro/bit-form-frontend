@@ -17,6 +17,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
   const { optionsList } = fieldData
   const { activeList, optionIcon } = fieldData.config
 
+  console.log('options list', optionsList)
   useEffect(() => {
     if (!dropdownWrapElmRef?.current) {
       dropdownWrapElmRef.current = selectInGrid(`.${fieldKey}-dpd-fld-wrp`)
@@ -73,13 +74,15 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               aria-label="Dropdown"
             >
               <div className={`${fieldKey}-selected-opt-wrp`}>
-                <img
-                  data-dev-selected-opt-img={fieldKey}
-                  className={`${fieldKey}-selected-opt-img`}
-                  aria-hidden="true"
-                  alt="selected option icon"
-                  src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                />
+                {fieldData.config.selectedOptImage && (
+                  <img
+                    data-dev-selected-opt-img={fieldKey}
+                    className={`${fieldKey}-selected-opt-img`}
+                    aria-hidden="true"
+                    alt="selected option icon"
+                    src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                  />
+                )}
                 <span className={`${fieldKey}-selected-opt-lbl`}>Select an option</span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
@@ -212,7 +215,14 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                             } return (
                               <li data-index={dataIndex++} data-value={opt.val} className={`${fieldKey}-option`} role="option" aria-selected="false" tabIndex="-1">
                                 <span className={`${fieldKey}-opt-lbl-wrp`}>
-                                  {optionIcon && <img className={`${fieldKey}-opt-icn`} src="test2.jpg" alt="BD" loading="lazy" />}
+                                  {optionIcon && (
+                                    <img
+                                      className={`${fieldKey}-opt-icn`}
+                                      src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                                      alt="BD"
+                                      loading="lazy"
+                                    />
+                                  )}
                                   <span className="opt-lbl">{opt.lbl}</span>
                                 </span>
                                 <span className="opt-prefix" />
@@ -225,160 +235,6 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     )
                   })
                 }
-                {/* <ul
-                  className={`${fieldKey}-option-list active-list`}
-                  aria-hidden="true"
-                  aria-label="Option List"
-                  data-list="dp1"
-                  tabIndex="-1"
-                  role="listbox"
-                >
-                  <li data-index="0" data-value="Option 1" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <img className="opt-icn" src="test2.jpg" alt="BD" loading="lazy" />
-                      <span className="opt-lbl">Option 1</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="1" data-value="Option 2" className="option disabled-opt" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 2</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="2" data-value="Option 3" className="option disabled-opt" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 3</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="3" className="option opt-group-title">
-                    <span className="opt-lbl">Group 1</span>
-                  </li>
-                  <li data-index="4" data-value="Option 4" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 4</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="5" data-value="Option 5" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 5</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="6" data-value="Option 6" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 6</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="7" className="option opt-group-title">
-                    <span className="opt-lbl">Group 2</span>
-                  </li>
-                  <li
-                    data-index="8"
-                    data-value="Option 7"
-                    className="option disabled-opt opt-group-child"
-                    role="option"
-                    aria-selected="false"
-                    tabIndex="-1"
-                  >
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-icn">😎</span>
-                      <span className="opt-lbl">Option 7</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li
-                    data-index="9"
-                    data-value="Option 8"
-                    className="option disabled-opt opt-group-child"
-                    role="option"
-                    aria-selected="false"
-                    tabIndex="-1"
-                  >
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 8</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="10" className="option opt-group-title">
-                    <span className="opt-lbl">Countries</span>
-                  </li>
-                  <li data-index="11" data-value="Bangladesh" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Bangladesh</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="12" data-value="India" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">India</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="10" className="option opt-group-title">
-                    <span className="opt-lbl">Countries</span>
-                  </li>
-                  <li data-index="11" data-value="Bangladesh2" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Bangladesh</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="12" data-value="India2" className="option opt-group-child" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">India</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                </ul>
-                <ul
-                  className={`${fieldKey}-option-list`}
-                  aria-hidden="true"
-                  aria-label="Option List"
-                  data-list="dp2"
-                  tabIndex="-1"
-                  role="listbox"
-                >
-                  <li data-index="0" data-value="Option 1" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 1</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="1" data-value="Option 2" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 2</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="2" data-value="Option 3" className="option disabled-opt" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 3</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="4" data-value="Option 4" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 4</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="5" data-value="Option 5" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 5</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                  <li data-index="6" data-value="Option 6" className="option" role="option" aria-selected="false" tabIndex="-1">
-                    <span className="opt-lbl-wrp">
-                      <span className="opt-lbl">Option 6</span>
-                    </span>
-                    <span className="opt-prefix" />
-                  </li>
-                </ul> */}
               </div>
             </div>
           </div>

@@ -492,7 +492,7 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal|recaptcha)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="error-message"
