@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
+import { createRef, memo, useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -16,7 +16,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
-import { $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
 import { $styles, $tempStyles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -79,6 +79,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [styles, setStyle] = useRecoilState($styles)
   const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+
+  console.log('gridWidth', gridWidth);
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -100,11 +103,19 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
       setStyle(parseStyle.style)
       setBreakpointSize(parseStyle.breakpointSize)
-      setTempStyles(preStyle => produce(preStyle, drft => {
-        drft.themeVars = parseStyle?.themeVars
-        drft.lightThemeColors = parseStyle.themeColors?.lightThemeColors
-        drft.darkThemeColors = parseStyle.themeColors?.darkThemeColors
-        drft.styles = parseStyle.style
+      const allStyleStates = {
+        themeVars: parseStyle.themeVars,
+        lightThemeColors: parseStyle.themeColors?.lightThemeColors,
+        darkThemeColors: parseStyle.themeColors?.darkThemeColors,
+        styles: parseStyle.styles,
+      }
+      setTempStyles(allStyleStates)
+      setBuilderHistory(prevHistory => produce(prevHistory, drft => {
+        const { state } = drft.histories[0]
+        drft.histories[0].state = {
+          ...state,
+          ...allStyleStates,
+        }
       }))
       setThemeVars(parseStyle.themeVars)
       if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
@@ -114,13 +125,24 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
     } else {
       setOldExistingStyle()
-      setTempStyles(preStyle => produce(preStyle, drft => {
-        drft.themeVars = { ...themeVars }
-        drft.lightThemeColors = { ...lightThemeColors }
-        drft.darkThemeColors = { ...darkThemeColors }
-        drft.styles = { ...styles }
+      const allStyleStates = {
+        themeVars: { ...themeVars },
+        lightThemeColors: { ...lightThemeColors },
+        darkThemeColors: { ...darkThemeColors },
+        themeColors: merge(lightThemeColors, darkThemeColors),
+        styles: { ...styles },
+      }
+      setTempStyles(allStyleStates)
+      setBuilderHistory(prevHistory => produce(prevHistory, drft => {
+        const { state } = drft.histories[0]
+        drft.histories[0].state = {
+          ...state,
+          ...allStyleStates,
+        }
       }))
     }
+    console.log('gridWidth fetch', window.innerWidth, gridWidth)
+    // setGridWidth(863)
   }, [fetchedBuilderHelperStates])
 
   useEffect(() => {
@@ -270,6 +292,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setGrWidth = (paneWidth) => {
     clearTimeout(debounce)
     setDebounce(setTimeout(() => {
+      console.log('gridWidth PaneWidth', paneWidth);
       setGridWidth(paneWidth)
       let w = 0
       if (!isNewThemeStyleLoaded) {
@@ -290,6 +313,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       }
     }, styleMode ? 0 : 100))
   }
+
+  const innerRef = useRef(null)
+
+  useEffect(() => {
+
+    console.log('gridWidth innerRef current', innerRef.current, innerRef.current?.offsetWidth);
+  }, [])
 
   return (
     <>
@@ -326,7 +356,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <Section
           onSizeChanged={setGrWidth}
           minSize={notIE && 320}
-          defaultSize={gridWidth}
+          defaultSize={gridWidth - 28}
+          innerRef={innerRef}
         >
           {!isLoading && !styleLoading ? (
             <RenderPortal

@@ -64,9 +64,12 @@ export default function SimpleColorPicker({ title,
   const checkVarValue = () => {
     let str = value
     let val = value
-    if (value?.match(/var/gi)?.[0]) {
-      str = value.replaceAll(/\(|var|\)/gi, '')
+    if (value?.match(/(var|!important)/gi)?.[0]) {
+      str = value.replaceAll(/\(|var|\)|(!important)/gi, '')
       val = themeColors[str]
+    }
+    if (val?.match(/(!important)/gi)) {
+      val = val?.replaceAll(/(!important)/gi, '')
     }
     return { str, val }
   }
@@ -85,14 +88,14 @@ export default function SimpleColorPicker({ title,
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={ColorStr.str || `Add ${title}`}>
+        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={ColorStr.val || `Add ${title}`}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
             <ColorPreview bg={ColorStr.val} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{ColorStr.str || 'Configure Color'}</span>
+            <span className={css(c.clrVal)}>{ColorStr.val || 'Configure Color'}</span>
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
