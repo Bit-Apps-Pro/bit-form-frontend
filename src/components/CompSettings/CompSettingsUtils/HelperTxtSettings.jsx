@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
@@ -53,7 +53,7 @@ export default function HelperTxtSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    reCalculateFieldHeights(setBuilderHookState)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -61,7 +61,7 @@ export default function HelperTxtSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+      reCalculateFieldHeights(setBuilderHookState)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -84,6 +84,7 @@ export default function HelperTxtSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
+      reCalculateFieldHeights(setBuilderHookState)
     }
   }
 

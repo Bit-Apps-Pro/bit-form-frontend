@@ -5,11 +5,11 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -46,6 +46,7 @@ function RadioCheckSettings() {
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setStyles = useSetRecoilState($styles)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
 
   let fieldObject = null
   let disabled = false
@@ -256,6 +257,7 @@ function RadioCheckSettings() {
 
   const handleOptions = newOpts => {
     setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
+    reCalculateFieldHeights(setBuilderHookStates)
   }
 
   function setColumn({ target: { value } }) {

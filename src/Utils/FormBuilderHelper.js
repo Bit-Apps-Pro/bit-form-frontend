@@ -479,3 +479,7 @@ export const propertyValueSumY = (propertyValue = '') => {
 }
 
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
+
+export const reCalculateFieldHeights = setBuilderHookStates => {
+  setBuilderHookStates(oldHooks => produce(oldHooks, draft => { draft.reCalculateFieldHeights += 1 }))
+}

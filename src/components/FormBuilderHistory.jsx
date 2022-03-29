@@ -11,6 +11,7 @@ import UndoIcon from '../Icons/UndoIcon'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
+import { reCalculateFieldHeights } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 
@@ -37,7 +38,7 @@ export default function FormBuilderHistory() {
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
-  const setBuilderHooks = useSetRecoilState($builderHookStates)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   // const [scrolIndex, setScrolIndex] = useState(0)
 
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function FormBuilderHistory() {
     }
 
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
-    setBuilderHooks(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
+    reCalculateFieldHeights(setBuilderHookStates)
     setDisabled(false)
   }
 
