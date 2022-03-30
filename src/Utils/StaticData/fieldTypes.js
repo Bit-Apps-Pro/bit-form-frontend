@@ -27,5 +27,9 @@ const fieldsTypes = {
   button: 'Button',
   paypal: 'Paypal',
   razorpay: 'Razorpay',
+  'html-select': 'HTML Select',
+  country: 'Country',
+  currency: 'Currency',
+  'phone-number': 'Phone Number',
 }
 export default fieldsTypes
