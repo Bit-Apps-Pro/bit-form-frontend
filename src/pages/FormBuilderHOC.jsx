@@ -81,8 +81,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
   const setBuilderHistory = useSetRecoilState($builderHistory)
 
-  console.log('gridWidth', gridWidth);
-
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
   const { forceBuilderWidthToLG } = builderHookStates
@@ -251,7 +249,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [])
 
   const onResizeActivate = useCallback(() => {
-    console.log('resize active')
     setBuilderPointerEventNone(true)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 0ms'
   }, [])
@@ -292,7 +289,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setGrWidth = (paneWidth) => {
     clearTimeout(debounce)
     setDebounce(setTimeout(() => {
-      console.log('gridWidth PaneWidth', paneWidth);
       setGridWidth(paneWidth)
       let w = 0
       if (!isNewThemeStyleLoaded) {
@@ -313,13 +309,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       }
     }, styleMode ? 0 : 100))
   }
-
-  const innerRef = useRef(null)
-
-  useEffect(() => {
-
-    console.log('gridWidth innerRef current', innerRef.current, innerRef.current?.offsetWidth);
-  }, [])
 
   return (
     <>
@@ -357,7 +346,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           onSizeChanged={setGrWidth}
           minSize={notIE && 320}
           defaultSize={gridWidth - 28}
-          innerRef={innerRef}
         >
           {!isLoading && !styleLoading ? (
             <RenderPortal
