@@ -95,7 +95,13 @@ function TransformControlMenu({ propertyPath }) {
     <>
       <div className={css(ut.flxcb, ut.mb1)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>{title}</span>
-        <CssPropertyList properties={availableTransformVal} setProperty={addTransitionHandler} classNames={css({ mt: '0px !important' })} />
+        {availableTransformVal.length > 0 && (
+          <CssPropertyList
+            properties={availableTransformVal}
+            setProperty={addTransitionHandler}
+            classNames={css({ mt: '0px !important' })}
+          />
+        )}
       </div>
       <div className={css(c.overflowXhidden)}>
         {arrOfExtractedTransformObj.map((transformObj, indx) => (
@@ -107,7 +113,7 @@ function TransformControlMenu({ propertyPath }) {
                     <TrashIcn />
                   </button>
                 )}
-                <span className={css({ ml: 15 })}>
+                <span className={css({ ml: 20 })}>
                   {ucFirst(transformObj.name)}
                 </span>
               </span>
@@ -182,7 +188,10 @@ const transformProps = {
 }
 
 const c = {
-  containerHover: { '&:hover .delete-btn': { tm: 'scale(1.1)' } },
+  containerHover: {
+    pn: 'relative',
+    '&:hover .delete-btn': { tm: 'scale(1.1)' },
+  },
   accordionHead: {
     w: 220,
     p: 3,
@@ -238,7 +247,7 @@ const c = {
     bd: 'none',
     cr: 'var(--red-100-61)',
     pn: 'absolute',
-    lt: 6,
+    lt: 1,
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
 }
