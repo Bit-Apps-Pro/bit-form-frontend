@@ -93,21 +93,21 @@ const $themeVarsLg = atom({
     '--fld-font-style': '', // field font style
 
     '--sub-titl-m': '', // subtitle margin
-    '--sub-titl-p': '', // subtitle padding
+    '--sub-titl-p': '3px 0', // subtitle padding
     '--sub-titl-al': '', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
     '--sub-titl-bdr-width': '', // subtitle border width
     '--sub-titl-bdr-rad': '', // subtitle border radius
-    '--sub-titl-font-w': 700, // sub title font weight
+    '--sub-titl-font-w': 500, // sub title font weight
     '--sub-titl-font-style': '', // subtitle font style
 
     '--hlp-txt-m': '', // helper text margin
-    '--hlp-txt-p': '', // hepler text padding
+    '--hlp-txt-p': '3px 0', // hepler text padding
     '--hlp-txt-fs': '12px', // hepler text font size
     '--hlp-txt-al': '', // helper text align
     '--hlp-txt-bdr-width': '', // helper text border width
     '--hlp-txt-bdr-rad': '', // helper text border radius
-    '--hlp-txt-font-w': 700, // helper text font weight
+    '--hlp-txt-font-w': 400, // helper text font weight
     '--hlp-txt-font-style': '', // helper text font style
 
     '--err-m': '1px', // error messages margin
@@ -116,7 +116,7 @@ const $themeVarsLg = atom({
     '--err-bdr-rad': '8px', // error message border radius
     '--err-txt-al': '', // error text align
     '--err-txt-fs': '12px', // error text font size
-    '--err-txt-font-w': 700, // helper text font weight
+    '--err-txt-font-w': 400, // helper text font weight
     '--err-txt-font-style': '', // helper text font style
 
     '--pre-i-h': '40px', // fld prefix icon height
@@ -135,7 +135,7 @@ const $themeVarsLg = atom({
 
     '--lbl-pre-i-h': '20px', // label prefix icon height
     '--lbl-pre-i-w': '20px', // label prefix icon width
-    '--lbl-pre-i-m': '5px', // label prefix icon margin
+    '--lbl-pre-i-m': '0 5px 0 0', // label prefix icon margin
     '--lbl-pre-i-p': '', // label prefix icon padding
     '--lbl-pre-i-bdr-width': '', // label prefix icon border width
     '--lbl-pre-i-bdr-rad': '8px', // label prefix icon message border radius

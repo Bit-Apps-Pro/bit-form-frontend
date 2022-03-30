@@ -36,12 +36,12 @@ export const $lightThemeColors = atom({
     '--fld-lbl-sh': '', // field label box shadow
     '--fld-lbl-bdr': '', // field label border
 
-    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
-    '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
+    '--sub-titl-bg': '', // sub title background color
+    '--sub-titl-c': '', // sub title color
     '--sub-titl-sh': '', // subtitle box shadow
     '--sub-titl-bdr': '', // subtitle border
 
-    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
+    '--hlp-txt-bg': '', // helper text background color
     '--hlp-txt-c': '', // helpertext color
     '--hlp-txt-sh': '', // helper text box shadow
     '--hlp-txt-bdr': '', // helper text border
