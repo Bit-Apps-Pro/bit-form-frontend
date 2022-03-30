@@ -64,6 +64,7 @@ const iconCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
+  'color(filter)': { filter: '', 'icon-color': '' },
 }
 
 const fieldWrpCssProps = {

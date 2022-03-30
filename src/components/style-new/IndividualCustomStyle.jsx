@@ -25,6 +25,7 @@ import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import BorderImageControl from './BorderImageControl'
 import CssPropertyList from './CssPropertyList'
+import FilterColorPicker from './FilterColorPicker'
 import FilterController from './FilterController'
 import Important from './Important'
 import IndividualShadowControl from './IndividualShadowControl'
@@ -823,6 +824,22 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             deleteable
             delPropertyHandler={() => delPropertyHandler('transform', state)}
             clearHandler={() => clearHandler('transform', state)}
+            allowImportant
+          />
+        )
+      case 'color(filter)':
+        return (
+          <FilterColorPicker
+            title="Color"
+            subtitle={`${fldTitle}`}
+            value={existCssPropsObj?.['icon-color']}
+            modalId="field-container-backgroung"
+            stateObjName="styles"
+            propertyPath={objPaths.paths?.['icon-color']}
+            objectPaths={objPaths}
+            deleteable
+            delPropertyHandler={() => delMultiPropertyHandler([getPropertyPath('color(filter)', state), objPaths.paths['icon-color']], state)}
+            clearHandler={() => clearHandler('icon-color', state)}
             allowImportant
           />
         )
