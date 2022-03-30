@@ -154,7 +154,7 @@ function TitleSettings() {
   }
 
   useEffect(() => {
-    if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTlePreIcn || fieldData?.subTleSufIcn) {
+    if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
       setBuilderFldWrpHeight()
     }
   }, [icnMdl])
@@ -302,17 +302,17 @@ function TitleSettings() {
           </div>
           <FieldIconSettings
             label="Start Icon"
-            iconSrc={fieldData?.subTlePreIcn}
+            iconSrc={fieldData?.subTitlPreIcn}
             styleRoute="sub-titl-pre-i"
-            setIcon={() => setIconModel('subTlePreIcn')}
-            removeIcon={() => removeIcon('subTlePreIcn')}
+            setIcon={() => setIconModel('subTitlPreIcn')}
+            removeIcon={() => removeIcon('subTitlPreIcn')}
           />
           <FieldIconSettings
             label="End Icon"
-            iconSrc={fieldData?.subTleSufIcn}
+            iconSrc={fieldData?.subTitlSufIcn}
             styleRoute="sub-titl-suf-i"
-            setIcon={() => setIconModel('subTleSufIcn')}
-            removeIcon={() => removeIcon('subTleSufIcn')}
+            setIcon={() => setIconModel('subTitlSufIcn')}
+            removeIcon={() => removeIcon('subTitlSufIcn')}
           />
         </SimpleAccordion>
 

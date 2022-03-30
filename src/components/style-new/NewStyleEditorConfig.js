@@ -897,6 +897,18 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
+    'sub-titl': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'sub-titl-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'sub-titl-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
     'inp-btn': {
       states: ['hover', 'focus'],
       properties: { ...buttonCssProps },

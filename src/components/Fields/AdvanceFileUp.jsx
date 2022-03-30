@@ -114,7 +114,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       >
         <input
           hidden
-          id={`filepond-${fieldKey}`}
+          id={fieldKey}
           type="file"
           className="filepond"
           name="filepond"

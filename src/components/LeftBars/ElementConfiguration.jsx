@@ -34,7 +34,7 @@ export default function ElementConfiguration({ fldKey }) {
           styleOverride={isLabelOverrideStyles(styles, fldKey, 'logo')}
         />
       )}
-      {(fieldObj.title || fieldObj.titlePreIcn || fieldObj.titleSufIcn || fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
+      {(fieldObj.title || fieldObj.titlePreIcn || fieldObj.titleSufIcn || fieldObj.subtitle || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)
         && (
           <NavBtn
             cssSelector={`.${fldKey}-titl-wrp`}
@@ -98,10 +98,10 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
-      {(fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
+      {(fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)
         && (
           <>
-            {!(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn) && (
+            {!(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
               <NavBtn
                 cssSelector={`.${fldKey}-${styleClasses.subTitl[0]}`}
                 subRoute={fldKey}
@@ -112,7 +112,7 @@ export default function ElementConfiguration({ fldKey }) {
                 styleOverride={isLabelOverrideStyles(styles, fldKey, 'subtitle')}
               />
             )}
-            {(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn) && (
+            {(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
               <LayerAccordion
                 childrenAccodin
                 onClick={() => styleHandler('subtitle')}
@@ -120,11 +120,11 @@ export default function ElementConfiguration({ fldKey }) {
                 title="Subtitle"
                 fldData={fieldObj}
                 key={fldKey}
-                open={fldKey === selectedFieldKey && (fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)}
+                open={fldKey === selectedFieldKey && (fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)}
                 highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
                 styleOverride={isLabelOverrideStyles(styles, fldKey, 'subtitle')}
               >
-                {fieldObj.subTlePreIcn && (
+                {(fieldObj.subTlePreIcn || fieldObj.subTitlPreIcn) && (
                   <NavBtn
                     cssSelector={`.${fldKey}-${styleClasses.subTlePreIcn[0]}`}
                     subRoute={fldKey}
@@ -135,7 +135,7 @@ export default function ElementConfiguration({ fldKey }) {
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-pre-i')}
                   />
                 )}
-                {fieldObj.subTleSufIcn && (
+                {(fieldObj.subTleSufIcn || fieldObj.subTitlSufIcn) && (
                   <NavBtn
                     cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`}
                     subRoute={fldKey}

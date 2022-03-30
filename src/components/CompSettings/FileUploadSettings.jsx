@@ -24,6 +24,7 @@ import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -152,6 +153,10 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
+      <SubTitleSettings />
+
+      <FieldSettingsDivider />
+
       <SimpleAccordion
         title={__('Upload Button Text:', 'bitform')}
         className={css(FieldStyle.fieldSection)}
@@ -168,7 +173,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
-        title={__('Input Icons', 'bitform')}
+        title={__('Button Icons', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         toggleAction={hideAdminLabel}
         toggleChecked
@@ -177,7 +182,7 @@ export default function FileUploadSettings() {
       >
         <div className={css(ut.mt2, { mx: 10 })}>
           <FieldIconSettings
-            label="Start Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.prefixIcn}
             styleRoute="pre-i"
             setIcon={() => setIconModel('prefixIcn')}
@@ -185,7 +190,7 @@ export default function FileUploadSettings() {
           />
 
           <FieldIconSettings
-            label="End Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.suffixIcn}
             styleRoute="suf-i"
             setIcon={() => setIconModel('suffixIcn')}
@@ -198,11 +203,11 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
-      <RequiredSettings />
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <RequiredSettings />
 
       <FieldSettingsDivider />
 

@@ -23,6 +23,7 @@ import FileLblPropertyMdl from './advfileupcmpt/FileLblPropertyMdl'
 import FileStyle from './advfileupcmpt/FileStyle'
 import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import ImageValidateoMdl from './advfileupcmpt/ImageValidateoMdl'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
@@ -31,6 +32,7 @@ import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
+import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -144,25 +146,11 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
-        title={__('Admin Label', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
-        switching
-        toggleAction={hideAdminLabel}
-        toggleChecked={fieldData?.adminLbl !== undefined}
-        open={fieldData?.adminLbl !== undefined}
-        disable={!fieldData?.adminLbl}
-      >
-        <div className={css(FieldStyle.placeholder)}>
-          <AutoResizeInput
-            ariaLabel="Admin label for this Field"
-            placeholder="Type Admin label here..."
-            value={adminLabel}
-            name="adminLbl"
-            changeAction={setFieldProperty}
-          />
-        </div>
-      </SimpleAccordion>
+      <AdminLabelSettings />
+
+      <FieldSettingsDivider />
+
+      <SubTitleSettings />
 
       <FieldSettingsDivider />
 
