@@ -230,7 +230,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                 icnStrok={1}
                 title="Drop Shadow"
                 actionComponent={(
-                  <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn)} delete-btn`} type="button" aria-label="Clear Filter">
+                  <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn, { rt: -14 })} delete-btn`} type="button" aria-label="Clear Filter">
                     <TrashIcn />
                   </button>
                 )}
@@ -373,8 +373,11 @@ const c = {
     bd: 'none',
     cr: 'var(--red-100-61)',
     pn: 'absolute',
-    rt: 5,
+    rt: -8,
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
-  containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
+  containerHover: {
+    pn: 'relative',
+    '&:hover .delete-btn': { tm: 'scale(1)' },
+  },
 }

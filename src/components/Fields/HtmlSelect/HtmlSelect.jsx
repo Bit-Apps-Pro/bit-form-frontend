@@ -23,16 +23,16 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
           {...'disabled' in fieldData && { disabled: fieldData.disabled }}
           {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
         >
-          {fieldData.phHide && <option className={`${fieldKey}-slct-optn`} value="">{fieldData.ph}</option>}
+          {fieldData.phHide && <option data-dev-slct-optn={fieldKey} className={`${fieldKey}-slct-optn`} value="">{fieldData.ph}</option>}
           {
             fieldData.opt.map(opt => {
               if (opt.type) {
                 return (
-                  <optgroup className={`${fieldKey}-slct-opt-grp`} key={opt.title} label={opt.title}>
-                    {opt.childs.map(opt2 => <option className={`${fieldKey}-slct-optn`} key={opt2.val} value={opt2.val} selected={opt2.check}>{opt2.lbl}</option>)}
+                  <optgroup data-dev-slct-opt-grp={fieldKey} className={`${fieldKey}-slct-opt-grp`} key={opt.title} label={opt.title}>
+                    {opt.childs.map(opt2 => <option data-dev-slct-optn={fieldKey} className={`${fieldKey}-slct-optn`} key={opt2.val} value={opt2.val} selected={opt2.check}>{opt2.lbl}</option>)}
                   </optgroup>
                 )
-              } return <option className={`${fieldKey}-slct-optn`} key={opt.val} value={opt.val} selected={opt.check}>{opt.lbl}</option>
+              } return <option data-dev-slct-optn={fieldKey} className={`${fieldKey}-slct-optn`} key={opt.val} value={opt.val} selected={opt.check}>{opt.lbl}</option>
             })
           }
         </select>

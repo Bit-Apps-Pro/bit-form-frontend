@@ -17,8 +17,8 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
 
   const titlePreIcn = fieldData.titlePreIcn ? `<img data-dev-title-pre-i="${fieldKey}" classname="${fieldKey}-title-pre-i" src="${fieldData.titlePreIcn}" alt="Title Prefix Icon" />` : ''
   const titleSufIcn = fieldData.titleSufIcn ? `<img data-dev-title-suf-i="${fieldKey}" classname="${fieldKey}-title-suf-i" src="${fieldData.titleSufIcn}" alt="Title Suffix Icon" />` : ''
-  const subTlePreIcn = fieldData.subTlePreIcn ? `<img data-dev-sub-titl-pre-i="${fieldKey}" classname="${fieldKey}-sub-titl-pre-i" src="${fieldData.subTlePreIcn}" alt="Subtitle Prefix Icon" />` : ''
-  const subTleSufIcn = fieldData.subTleSufIcn ? `<img data-dev-sub-titl-suf-i="${fieldKey}" classname="${fieldKey}-sub-titl-suf-i" src="${fieldData.subTleSufIcn}" alt="Subtitle Suffix Icon" />` : ''
+  const subTitlPreIcn = fieldData.subTitlPreIcn ? `<img data-dev-sub-titl-pre-i="${fieldKey}" classname="${fieldKey}-sub-titl-pre-i" src="${fieldData.subTitlPreIcn}" alt="Subtitle Prefix Icon" />` : ''
+  const subTitlSufIcn = fieldData.subTitlSufIcn ? `<img data-dev-sub-titl-suf-i="${fieldKey}" classname="${fieldKey}-sub-titl-suf-i" src="${fieldData.subTitlSufIcn}" alt="Subtitle Suffix Icon" />` : ''
 
   return (
     <>
@@ -28,7 +28,7 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
         <div data-dev-titl-wrp={fieldKey} className={`${fieldKey}-titl-wrp`}>
           {!titleHide && titleGenerator(titleTag, title, '-title', titlePreIcn, titleSufIcn)}
 
-          {!subtitleHide && titleGenerator(subTitleTag, subtitle, '-sub-titl', subTlePreIcn, subTleSufIcn)}
+          {!subtitleHide && titleGenerator(subTitleTag, subtitle, '-sub-titl', subTitlPreIcn, subTitlSufIcn)}
         </div>
       </div>
     </>

@@ -64,6 +64,7 @@ const iconCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
+  'color(filter)': { filter: '', 'icon-color': '' },
 }
 
 const fieldWrpCssProps = {
@@ -893,6 +894,18 @@ const editorConfig = {
       properties: { ...iconCssProps },
     },
     'lbl-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'sub-titl': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'sub-titl-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'sub-titl-suf-i': {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
