@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
@@ -26,9 +26,9 @@ export default function FieldLabelSettings() {
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-
   const [styles, setStyles] = useRecoilState($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
@@ -67,13 +67,13 @@ export default function FieldLabelSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      reCalculateFieldHeights(setBuilderHookStates)
     }
   }
 
-  const setIconModel = (typ) => {
-    console.log(typ)
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
-    setIcnType(typ)
+  const setIconModel = (iconType) => {
+    addDefaultStyleClasses(selectedFieldId, iconType, setStyles)
+    setIcnType(iconType)
     setIcnMdl(true)
   }
 

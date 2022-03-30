@@ -15,6 +15,7 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -66,7 +67,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-sa'] = ''
         }))
         setOpenVarPos(false)
-        setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
+        reCalculateFieldHeights(setBuilderHookStates)
         break
       case 'inline':
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
@@ -76,7 +77,7 @@ export default function LabelControlMenu() {
           drftStyle['--inp-wrp-width'] = '100%'
         }))
         setOpenVarPos(true)
-        setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
+        reCalculateFieldHeights(setBuilderHookStates)
         break
       case 'inline-rev':
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
@@ -86,7 +87,7 @@ export default function LabelControlMenu() {
           drftStyle['--inp-wrp-width'] = '60%'
         }))
         setOpenVarPos(true)
-        setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
+        reCalculateFieldHeights(setBuilderHookStates)
         break
       default:
         break

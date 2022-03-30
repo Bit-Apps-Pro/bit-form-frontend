@@ -7,7 +7,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $builderHookStates, $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
@@ -16,6 +16,7 @@ import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -37,6 +38,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const uploadLabel = uploadLbl || 'Upload Icon'
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setStyles = useSetRecoilState($styles)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [total, setTotal] = useState(10001)
   const { css } = useFela()
   const url = 'https://raw.githack.com'
@@ -110,6 +112,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
         setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+        reCalculateFieldHeights(setBuilderHookStates)
         setModal(false)
       })
 
@@ -157,6 +160,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
               if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
             }))
           }
+          reCalculateFieldHeights(setBuilderHookStates)
         }
         setDnLoading(false)
         setModal(false)
@@ -234,6 +238,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
     }))
     setModal(false)
+    reCalculateFieldHeights(setBuilderHookStates)
   }
 
   const handlePrefixIcon = e => {

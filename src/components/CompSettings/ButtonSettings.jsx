@@ -9,7 +9,7 @@ import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $update
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../style-new/styleHelpers'
@@ -125,7 +125,7 @@ export default function ButtonSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+      reCalculateFieldHeights(setBuilderHookState)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -147,7 +147,7 @@ export default function ButtonSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    reCalculateFieldHeights(setBuilderHookState)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 

@@ -17,7 +17,7 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
@@ -152,7 +152,7 @@ function TextFieldSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+      reCalculateFieldHeights(setBuilderHookState)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -174,7 +174,7 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    reCalculateFieldHeights(setBuilderHookState)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -928,13 +928,12 @@ function TextFieldSettings() {
           {
             fieldData.typ.match(/^(email|username)$/) && (
               <>
-                <ErrorMessageSettings
-                  className={css(FieldStyle.fieldSection)}
+                <UniqFieldSettings
                   type="userUnique"
-                  isUnique="isUserUnique"
                   title="Validate as User Unique"
                   tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-                  defaultMsg="The value is already taken. Try another."
+                  className={css(FieldStyle.fieldSection)}
+                  isUnique="show"
                 />
                 <FieldSettingsDivider />
               </>

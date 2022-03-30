@@ -89,7 +89,7 @@ function SimpleColorsPickerMenu({ stateObjName,
       default:
         break
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   const handleColor = (_h, _s, _v, _a) => {
@@ -106,9 +106,9 @@ function SimpleColorsPickerMenu({ stateObjName,
           drftThmClr[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmClr[hslaPaths.h] = h }
-            if ('s' in hslaPaths) { drftThmClr[hslaPaths.s] = s }
-            if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = l }
-            if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = a }
+            if ('s' in hslaPaths) { drftThmClr[hslaPaths.s] = `${s}%` }
+            if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = `${l}%` }
+            if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = `${a}%` }
           }
         })
         setThemeColors(newThemeColors)
@@ -121,9 +121,9 @@ function SimpleColorsPickerMenu({ stateObjName,
           drftThmVar[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmVar[hslaPaths.h] = h }
-            if ('s' in hslaPaths) { drftThmVar[hslaPaths.s] = s }
-            if ('l' in hslaPaths) { drftThmVar[hslaPaths.l] = l }
-            if ('a' in hslaPaths) { drftThmVar[hslaPaths.a] = a }
+            if ('s' in hslaPaths) { drftThmVar[hslaPaths.s] = `${s}%` }
+            if ('l' in hslaPaths) { drftThmVar[hslaPaths.l] = `${l}%` }
+            if ('a' in hslaPaths) { drftThmVar[hslaPaths.a] = `${a}%` }
           }
         }))
         break

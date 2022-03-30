@@ -10,7 +10,7 @@ import CloseIcn from '../../../Icons/CloseIcn'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
@@ -57,14 +57,14 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    reCalculateFieldHeights(setBuilderHookState)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setSubTitle = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.subtitle
-      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+      reCalculateFieldHeights(setBuilderHookState)
     } else {
       fieldData.subtitle = value
     }
@@ -89,6 +89,7 @@ export default function SubTitleSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
+      reCalculateFieldHeights(setBuilderHookState)
     }
   }
 

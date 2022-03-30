@@ -108,13 +108,18 @@ export default function FieldContextMenu({ isContextMenu,
     return { display: 'flex' }
   }
 
+  const styleNavigation = e => {
+    e.stopPropagation()
+    navigateToStyle(fldKey)
+  }
+
   return (
     <div style={generateContextMenuStyle()}>
       <div className={`context-menu ${className}`}>
         <ul className="context-list">
           <ContextMenuItem onClick={deselectFieldId} label="Deselect" icn={<DeSelectIcn />} />
           <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
-          <ContextMenuItem onClick={() => navigateToStyle(fldKey)} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
+          <ContextMenuItem onClick={styleNavigation} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
           <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">

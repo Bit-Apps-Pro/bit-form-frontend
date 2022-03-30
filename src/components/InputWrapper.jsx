@@ -1,15 +1,18 @@
 import { useRef } from 'react'
-import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useHistory, useParams } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { renderDOMObjectFromHTMLStr } from '../Utils/Helpers'
+import { highlightElm, removeHightlight } from './style-new/styleHelpers'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
+  const { rightBar, element, fieldKey: urlFldKey, formType } = useParams()
+  const history = useHistory()
   const breakpoint = useRecoilValue($breakpoint)
   const fieldDirection = useRecoilValue($fieldsDirection)
-  const { styleMode } = useRecoilValue($flags)
-  const { rightBar, element, fieldKey: urlFldKey } = useParams()
+  const [flages, setFlags] = useRecoilState($flags)
+  const { styleMode, inspectMode } = flages
   const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'error-messages'
   const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && element === 'error-message' && urlFldKey === fieldKey
 
@@ -36,6 +39,11 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
     if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
   }
 
+  const elementStyleHandler = (e, route) => {
+    setFlags(prvFlags => ({ ...prvFlags, inspectMode: false }))
+    if (fieldKey) history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fieldKey}`)
+  }
+
   return (
     <div
       data-dev-fld-wrp={fieldKey}
@@ -55,13 +63,27 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
             >
               {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
-              {renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
+              {inspectMode ? (
+                <div
+                  onMouseEnter={() => highlightElm(`[data-dev-lbl-wrp="${fieldKey}"]`)}
+                  onFocus={() => highlightElm(`[data-dev-lbl-wrp="${fieldKey}"]`)}
+                  onMouseLeave={() => removeHightlight()}
+                  onBlur={() => removeHightlight()}
+                  role="button"
+                  onClick={(e) => elementStyleHandler(e, 'label')}
+                >
+                  {renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
+                </div>
+              ) : (
+                renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))
+              )}
               {fieldData.valid?.req && (
                 <>
                   {' '}
                   <span className="fld-req-symbol">*</span>
                 </>
               )}
+
               {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
             </label>
           )}

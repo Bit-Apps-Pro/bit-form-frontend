@@ -90,9 +90,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     return state
   }
 
-  console.log(elementKey)
-
-  console.log(styles)
 
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }

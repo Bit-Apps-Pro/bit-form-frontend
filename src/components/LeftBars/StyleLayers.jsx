@@ -40,29 +40,29 @@ export default function StyleLayers() {
           <NavBtn route="field-containers" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-containers" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('label')} offset="6" title="Label" highlightSelector="[data-dev-lbl]">
-            <NavBtn route="lbl-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
-            <NavBtn route="lbl-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('label')} offset="6" title="Labels" highlightSelector="[data-dev-lbl]">
+            <NavBtn route="lbl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
+            <NavBtn route="lbl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('subtitle')} offset="6" title="Sub Title" highlightSelector="[data-dev-sub-titl]">
-            <NavBtn route="sub-titl-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-sub-titl-pre-i]" />
-            <NavBtn route="sub-titl-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('subtitle')} offset="6" title="Sub Titles" highlightSelector="[data-dev-sub-titl]">
+            <NavBtn route="sub-titl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-pre-i]" />
+            <NavBtn route="sub-titl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('pre-i')} offset="6" title="Input" highlightSelector="[data-dev-sub-titl]">
-            <NavBtn route="pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-pre-i]" />
-            <NavBtn route="suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-suf-i]" />
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('pre-i')} offset="6" title="Inputs" highlightSelector="[data-dev-sub-titl]">
+            <NavBtn route="pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-pre-i]" />
+            <NavBtn route="suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-suf-i]" />
           </LayerAccordion>
 
           <LayerAccordion childrenAccodin onClick={() => styleHandler('helper-text')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
-            <NavBtn route="hlp-txt-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
-            <NavBtn route="hlp-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
+            <NavBtn route="hlp-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
+            <NavBtn route="hlp-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
           </LayerAccordion>
 
           <LayerAccordion childrenAccodin onClick={() => styleHandler('error-messages')} offset="6" title="Error Messages" highlightSelector="[data-dev-err-msg]">
-            <NavBtn route="err-txt-pre-i" label="Prefix Icon" offset="3.5" highlightSelector="[data-dev-err-txt-pre-i]" />
-            <NavBtn route="err-txt-suf-i" label="Suffix Icon" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
+            <NavBtn route="err-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-pre-i]" />
+            <NavBtn route="err-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
           </LayerAccordion>
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>

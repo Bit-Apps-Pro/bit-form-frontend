@@ -7,6 +7,7 @@ import { $breakpoint, $fields, $flags, $selectedFieldId } from '../GlobalStates/
 import { $styles } from '../GlobalStates/StylesState'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
+import BtnIcn from '../Icons/BtnIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
@@ -56,7 +57,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
       if (prvFlags.styleMode || showToolBar) toggleToolBar()
-      return { ...prvFlags, styleMode: true }
+      return { ...prvFlags, styleMode: true, inspectMode: false }
     })
     if (selectedFldId) {
       history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
@@ -65,10 +66,11 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     }
     removeUnuseStyles(fields, setStyles)
   }
+
   const formFieldButtonHandler = () => {
     setFlags(prvFlags => {
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
-      return { ...prvFlags, styleMode: false }
+      return { ...prvFlags, styleMode: false, inspectMode: false }
     })
     history.replace(`/form/builder/${formType}/${formID}/fields-list`)
     removeUnuseStyles(fields, setStyles)
@@ -81,6 +83,15 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       history.push(`/form/builder/${formType}/${formID}/themes`)
     }
     removeUnuseStyles(fields, setStyles)
+  }
+
+  const inspectModeButtonHandler = () => {
+    setFlags(prvFlags => ({ ...prvFlags, inspectMode: !flags.inspectMode }))
+    if (selectedFldId) {
+      history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
+    } else {
+      history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
+    }
   }
 
   return (
@@ -97,6 +108,13 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               <LayerIcon size="22" />
             </button>
           </Tip>
+          {flags.styleMode && (
+            <Tip msg="Inspect Element">
+              <button onClick={inspectModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}>
+                <BtnIcn size="22" />
+              </button>
+            </Tip>
+          )}
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
           <Tip msg="Small Screen View">

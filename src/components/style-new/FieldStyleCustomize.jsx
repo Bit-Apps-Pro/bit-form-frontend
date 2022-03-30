@@ -48,6 +48,31 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     if (hoverStyle) deleteNestedObj(drft, getPath(elemnt, state))
   }
 
+  const getTitle = () => {
+    switch (element) {
+      case 'field-container': return 'Field Container'
+      case 'label-subtitle-container': return 'Label & Subtitle Container'
+      case 'label': return 'Label Container'
+      case 'lbl-pre-i': return 'Label Prefix Icon'
+      case 'lbl-suf-i': return 'Label Suffix Icon'
+      case 'subtitle': return 'Subtitle Container'
+      case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
+      case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
+      case 'fld': return 'Input Container'
+      case 'pre-i': return 'Field Prefix Icon'
+      case 'suf-i': return 'Field Suffix Icon'
+      case 'helper-text': return 'Helper Text Container'
+      case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
+      case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
+      case 'error-message': return 'Error Messages Container'
+      case 'currency-fld-wrp': return 'Currency Field Wrapper'
+      default:
+        break
+    }
+  }
+
+  const title = getTitle()
+
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
     console.log('element key', elmnt)
     if (theme === 'material') return
@@ -259,7 +284,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       <h4 className={css(cls.title)}>
         {fieldsTypes[fieldType]}
         {' '}
-        {element?.replaceAll('-', ' ')}
+        {/* {element?.replaceAll('-', ' ')} */}
+        {title}
       </h4>
       <div className={css(ut.flxc)}>
         <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
