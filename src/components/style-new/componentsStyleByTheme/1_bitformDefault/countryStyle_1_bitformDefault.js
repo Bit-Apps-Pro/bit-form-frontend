@@ -2,7 +2,7 @@
 
 import inputWrapperClasses from './inputWrapperClasses'
 
-export default function countryStyle_1_BitformDefault({ fk, type, direction }) {
+export default function countryStyle_1_BitformDefault({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 
