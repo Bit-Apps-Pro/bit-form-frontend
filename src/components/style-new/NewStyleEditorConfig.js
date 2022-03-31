@@ -124,6 +124,10 @@ const textFldCssProps = {
     states: ['hover'],
     properties: { ...iconCssProps },
   },
+  'req-smbl': {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
   'pre-i': {
     states: ['hover'],
     properties: { ...iconCssProps },

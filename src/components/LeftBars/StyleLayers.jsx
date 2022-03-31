@@ -43,6 +43,7 @@ export default function StyleLayers() {
           <LayerAccordion childrenAccodin onClick={() => styleHandler('label')} offset="6" title="Labels" highlightSelector="[data-dev-lbl]">
             <NavBtn route="lbl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
             <NavBtn route="lbl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
+            <NavBtn route="req-smbl" label="Asterisk Icon" offset="3.5" highlightSelector="[data-dev-req-smbl]" />
           </LayerAccordion>
 
           <LayerAccordion childrenAccodin onClick={() => styleHandler('subtitle')} offset="6" title="Sub Titles" highlightSelector="[data-dev-sub-titl]">

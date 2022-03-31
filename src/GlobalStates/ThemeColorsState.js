@@ -36,6 +36,8 @@ export const $lightThemeColors = atom({
     '--fld-lbl-sh': '', // field label box shadow
     '--fld-lbl-bdr': '', // field label border
 
+    '--req-smbl-c': 'hsla(0, 100%, 50%, 100%)', // Required Symbol Color
+
     '--sub-titl-bg': '', // sub title background color
     '--sub-titl-c': '', // sub title color
     '--sub-titl-sh': '', // subtitle box shadow

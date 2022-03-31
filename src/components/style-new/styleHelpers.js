@@ -404,6 +404,7 @@ export const styleClasses = {
   lbl: ['lbl', 'lbl-wrp'],
   lblPreIcn: ['lbl-pre-i'],
   lblSufIcn: ['lbl-suf-i'],
+  reqSmbl: ['req-smbl'],
   subTitl: ['sub-titl'],
   subTlePreIcn: ['sub-titl-pre-i'],
   subTleSufIcn: ['sub-titl-suf-i'],

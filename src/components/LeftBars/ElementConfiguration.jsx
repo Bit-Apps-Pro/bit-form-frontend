@@ -162,7 +162,7 @@ export default function ElementConfiguration({ fldKey }) {
             highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
             styleOverride={isLabelOverrideStyles(styles, fldKey, 'label-subtitle-container')}
           />
-          {!(fieldObj.lblPreIcn || fieldObj.lblSufIcn) && (
+          {!(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.lbl[1]}`}
               subRoute={fldKey}
@@ -173,7 +173,7 @@ export default function ElementConfiguration({ fldKey }) {
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'label')}
             />
           )}
-          {(fieldObj.lblPreIcn || fieldObj.lblSufIcn) && (
+          {(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <LayerAccordion
               childrenAccodin
               onClick={() => styleHandler('label')}
@@ -205,6 +205,17 @@ export default function ElementConfiguration({ fldKey }) {
                   offset="3.3"
                   highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`}
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-suf-i')}
+                />
+              )}
+              {(fieldObj.valid.req && fieldObj.valid.reqShow) && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.reqSmbl[0]}`}
+                  subRoute={fldKey}
+                  route="req-smbl"
+                  label="Asterisk"
+                  offset="3.3"
+                  highlightSelector={`[data-dev-req-smbl="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'req-smbl')}
                 />
               )}
             </LayerAccordion>

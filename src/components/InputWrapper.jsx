@@ -62,6 +62,9 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               className={`${fieldKey}-lbl`}
               htmlFor={fieldKey}
             >
+              {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
+                <span className={`${fieldKey}-req-symbol`}>*</span>
+              )}
               {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
               {inspectMode ? (
                 <div
@@ -77,14 +80,12 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               ) : (
                 renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))
               )}
-              {fieldData.valid?.req && (
-                <>
-                  {' '}
-                  <span className="fld-req-symbol">*</span>
-                </>
+              {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
+
+              {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'after' && (
+                <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl`}>*</span>
               )}
 
-              {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
             </label>
           )}
           {

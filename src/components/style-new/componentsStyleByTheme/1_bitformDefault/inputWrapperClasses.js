@@ -51,6 +51,13 @@ export default function inputWrapperClasses(fk) {
       'font-weight': 'var(--lbl-font-w)',
       'font-style': 'var(--lbl-font-style)',
     },
+    [`.${fk}-req-smbl`]: {
+      color: 'var(--req-smbl-c, inherit)',
+      'font-size': 'var(--req-smbl-fs)',
+      margin: 'var(--req-smbl-m, 0)',
+      padding: 'var(--req-smbl-p, 0)',
+      'font-weight': 'var(--req-smbl-fw)',
+    },
     [`.${fk}-sub-titl`]: {
       'background-color': 'var(--sub-titl-bg, none)',
       color: 'var(--sub-titl-c, inherit)',
