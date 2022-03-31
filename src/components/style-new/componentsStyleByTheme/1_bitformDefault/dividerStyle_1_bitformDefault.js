@@ -16,7 +16,7 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
     [`.${fk}-divider`]: {
       margin: '0px 10px 0px 10px',
@@ -24,7 +24,7 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
       border: '',
       'border-bottom': 'solid',
       'border-width': '1',
-      'border-color': '#9f9f9f',
+      'border-color': 'hsla(0, 0%, 62%, 100%)',
     },
   }
 }
