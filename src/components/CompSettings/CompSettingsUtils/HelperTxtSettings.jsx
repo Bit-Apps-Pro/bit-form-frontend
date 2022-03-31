@@ -53,7 +53,7 @@ export default function HelperTxtSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -61,11 +61,12 @@ export default function HelperTxtSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -84,7 +85,7 @@ export default function HelperTxtSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     }
   }
 

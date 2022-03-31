@@ -1558,10 +1558,23 @@ arrow:after,
     z-index: 9;
     outline: 3px solid var(--g-41)
  }
+
+ .blk:hover:not(.itm-focus) {
+    z-index: 9;
+ }
  
  .blk:focus .blk-icn-wrp,.blk:hover .blk-icn-wrp,.itm-focus .blk-icn-wrp {
     visibility: visible;
-    z-index: 1
+ }
+
+ .blk:focus .blk-icn-wrp,.itm-focus .blk-icn-wrp {
+  top: -33px;
+  right: -3px;
+ }
+
+ .blk:not(.itm-focus):hover:not(:focus) .blk-icn-wrp {
+  top: -30px;
+  right: 0px;
  }
  
  .blk:focus .blk-icn-wrp button,.blk:focus .react-resizable-handle,.blk:hover .blk-icn-wrp button,.blk:hover .react-resizable-handle,.itm-focus .blk-icn-wrp button,.itm-focus .react-resizable-handle {
@@ -1594,9 +1607,13 @@ arrow:after,
  }
  
  .blk-icn-wrp {
-    background: var(--white-100-a-658);
+    background-color: hsl(215deg 100% 50%);
+    color: white;
     right: 0;
-    visibility: hidden
+    top: -30px;
+    visibility: hidden;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
  }
  
  .blk-wrp-btn {
@@ -1606,15 +1623,14 @@ arrow:after,
     outline: 0;
     width: 30px;
     height: 30px;
-    border-radius: 3px;
+    border-radius: 7px;
     border: 0;
     transform: scale(0);
     transition: transform 300ms
  }
  
  .blk-wrp-btn:hover {
-    background: var(--white-0-95);
-    color: var(--black-0)
+    background: hsl(215deg 100% 50%);
  }
  
  .blk-wrp-btn:focus-visible {

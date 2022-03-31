@@ -44,6 +44,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    reCalculateFieldHeights(setBuilderHookStates, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -59,6 +60,7 @@ export default function FieldLabelSettings() {
     const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    reCalculateFieldHeights(setBuilderHookStates, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -67,7 +69,7 @@ export default function FieldLabelSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      reCalculateFieldHeights(setBuilderHookStates)
+      reCalculateFieldHeights(setBuilderHookStates, fldKey)
     }
   }
 

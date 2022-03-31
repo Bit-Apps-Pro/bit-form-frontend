@@ -15,6 +15,7 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
+import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
@@ -49,33 +50,9 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     if (hoverStyle) deleteNestedObj(drft, getPath(elemnt, state))
   }
 
-  const getTitle = () => {
-    switch (element) {
-      case 'field-container': return 'Field Container'
-      case 'label-subtitle-container': return 'Label & Subtitle Container'
-      case 'label': return 'Label Container'
-      case 'lbl-pre-i': return 'Label Prefix Icon'
-      case 'lbl-suf-i': return 'Label Suffix Icon'
-      case 'subtitle': return 'Subtitle Container'
-      case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
-      case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
-      case 'fld': return 'Input Container'
-      case 'pre-i': return 'Field Prefix Icon'
-      case 'suf-i': return 'Field Suffix Icon'
-      case 'helper-text': return 'Helper Text Container'
-      case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
-      case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
-      case 'error-message': return 'Error Messages Container'
-      case 'currency-fld-wrp': return 'Currency Field Wrapper'
-      default:
-        break
-    }
-  }
-
-  const title = getTitle()
+  const title = getElementTitle(element)
 
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
-    console.log('element key', elmnt)
     if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {

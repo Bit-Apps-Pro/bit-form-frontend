@@ -22,7 +22,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       margin: 0,
       'font-weight': 500,
       'font-size': '16px',
-      color: 'rgba(42, 49, 99, 1)!important',
+      color: 'hsla(233, 40%, 28%, 100%) !important',
       'line-height': '1.4!important',
     },
     // checkbox container

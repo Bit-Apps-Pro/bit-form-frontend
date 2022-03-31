@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function recaptchaStyle_1_bitformDefault({ fk, type, direction }) {
+export default function recaptchaStyle_1_bitformDefault({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'var(--fld-wrp-dis, block)',
@@ -22,7 +22,7 @@ export default function recaptchaStyle_1_bitformDefault({ fk, type, direction })
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
   }
 }

@@ -15,7 +15,7 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
     [`.${fk}-titl-wrp`]: { padding: '0px 5px' },
     [`.${fk}-title`]: {

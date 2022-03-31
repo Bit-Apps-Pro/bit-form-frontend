@@ -13,6 +13,7 @@ import imageStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefaul
 import paypalStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/razorpayStyle_1_BitformDefault'
+import recaptchaStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from '../componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from '../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
@@ -131,21 +132,21 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
-        classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
+        classes: currencyStyle_1_BitformDefault({ fk }),
       }
     case 'country':
       return {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
-        classes: countryStyle_1_BitformDefault({ fk, type, direction }),
+        classes: countryStyle_1_BitformDefault({ fk }),
       }
     case 'recaptcha':
       return {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
-        classes: currencyStyle_1_BitformDefault({ fk, type, direction }),
+        classes: recaptchaStyle_1_bitformDefault({ fk }),
       }
     case 'file-up':
       return {

@@ -20,7 +20,7 @@ export default function inputWrapperClasses(fk) {
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
     [`.${fk}-lbl-wrp`]: {
       width: 'var(--lbl-wrp-width, auto)',
@@ -83,7 +83,7 @@ export default function inputWrapperClasses(fk) {
       display: 'flex',
       'align-items': 'center',
       // 'text-align': 'var(--hlp-txt-al, init)',
-      'justify-content': 'var(--hlp-txt-al,, initial)',
+      'justify-content': 'var(--hlp-txt-al, initial)',
       padding: 'var(--hlp-txt-p, 0)',
       margin: 'var(--hlp-txt-m, 0)',
       'box-shadow': 'var(--hlp-txt-sh, none)',

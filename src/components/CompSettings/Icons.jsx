@@ -112,7 +112,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
         setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-        reCalculateFieldHeights(setBuilderHookStates)
+        reCalculateFieldHeights(setBuilderHookStates, fldKey)
         setModal(false)
       })
 
@@ -160,7 +160,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
               if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
             }))
           }
-          reCalculateFieldHeights(setBuilderHookStates)
+          reCalculateFieldHeights(setBuilderHookStates, fldKey)
         }
         setDnLoading(false)
         setModal(false)
@@ -238,7 +238,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
     }))
     setModal(false)
-    reCalculateFieldHeights(setBuilderHookStates)
+    reCalculateFieldHeights(setBuilderHookStates, fldKey)
   }
 
   const handlePrefixIcon = e => {

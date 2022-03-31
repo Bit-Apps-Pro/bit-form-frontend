@@ -257,7 +257,7 @@ function RadioCheckSettings() {
 
   const handleOptions = newOpts => {
     setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
-    reCalculateFieldHeights(setBuilderHookStates)
+    reCalculateFieldHeights(setBuilderHookStates, fldKey)
   }
 
   function setColumn({ target: { value } }) {

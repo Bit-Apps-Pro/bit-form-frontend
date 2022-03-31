@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from './inputWrapperClasses'
 
-export default function selectStyle_1_BitformDefault({ fk, type, direction }) {
+export default function selectStyle_1_BitformDefault({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 
@@ -21,8 +21,7 @@ export default function selectStyle_1_BitformDefault({ fk, type, direction }) {
       color: 'var(--global-font-color)!important',
       padding: '10px 8px 10px 8px!important',
       'line-height': '1.4 !important',
-      height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
-      ...type === 'textarea' && { resize: 'vertical' },
+      height: '40px',
     },
     [`.${fk}-fld:focus`]: {
       'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30)!important',
@@ -32,15 +31,15 @@ export default function selectStyle_1_BitformDefault({ fk, type, direction }) {
     [`.${fk}-fld.readonly`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      color: 'rgb(84, 84, 84)',
-      'background-color': 'rgba(239, 239, 239, 0.3) !important',
+      color: 'hsla(0, 0%, 33%, 100%)',
+      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
     },
     [`.${fk}-fld:disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'rgba(239, 239, 239, 0.3) !important',
-      color: 'rgb(84, 84, 84) !important',
-      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
+      color: 'hsla(0, 0%, 33%, 100%) !important',
+      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
     },
     [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
 
@@ -61,7 +60,7 @@ export default function selectStyle_1_BitformDefault({ fk, type, direction }) {
       transition: 'display 1s, opacity 1s',
       'justify-content': 'left',
       'align-items': 'center',
-      'background-color': '#fff2f2',
+      'background-color': 'hsla(0, 100%, 97%, 100%)',
       color: 'darkred',
       'border-radius': '10px',
       height: '40px',
