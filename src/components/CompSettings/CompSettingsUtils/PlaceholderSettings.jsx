@@ -22,7 +22,7 @@ export default function PlaceholderSettings() {
 
   const hidePlaceholder = (e) => {
     if (e.target.checked) {
-      fieldData.ph = 'type here...'
+      fieldData.ph = 'Placeholder Text...'
       fieldData.phHide = true
     } else {
       fieldData.phHide = false

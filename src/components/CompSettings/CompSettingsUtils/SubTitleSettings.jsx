@@ -57,20 +57,21 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setSubTitle = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.subtitle
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     } else {
       fieldData.subtitle = value
     }
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -89,7 +90,7 @@ export default function SubTitleSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     }
   }
 

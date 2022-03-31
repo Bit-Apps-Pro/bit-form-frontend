@@ -20,7 +20,8 @@ export default function FieldBlockWrapper({ layoutItem,
   fields,
   formID,
   navigateToFieldSettings,
-  navigateToStyle }) {
+  navigateToStyle,
+  handleContextMenu, }) {
   const styleNavigation = e => {
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
@@ -58,26 +59,27 @@ export default function FieldBlockWrapper({ layoutItem,
           removeLayoutItem={removeLayoutItem}
           fieldId={layoutItem.i}
         />
-        <Downmenu>
-          <button
-            data-close
-            type="button"
-            className="g-c us-n no-drg blk-wrp-btn"
-            unselectable="on"
-            draggable="false"
-            style={{ cursor: 'pointer' }}
-            title={__('More Options', 'bitform')}
-          >
-            <ChevronDownIcn size="19" />
-          </button>
-          <FieldContextMenu
+        {/* <Downmenu> */}
+        <button
+          data-close
+          type="button"
+          className="g-c us-n no-drg blk-wrp-btn blk-wrp-down-btn"
+          // unselectable="on"
+          draggable="false"
+          style={{ cursor: 'pointer' }}
+          title={__('More Options', 'bitform')}
+          onClick={e => handleContextMenu(e, layoutItem.i)}
+        >
+          <ChevronDownIcn size="19" />
+        </button>
+        {/* <FieldContextMenu
             layoutItem={layoutItem}
             navigateToFieldSettings={navigateToFieldSettings}
             navigateToStyle={navigateToStyle}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
-          />
-        </Downmenu>
+          /> */}
+        {/* </Downmenu> */}
       </div>
       <ComponentsByTheme
         fields={fields}

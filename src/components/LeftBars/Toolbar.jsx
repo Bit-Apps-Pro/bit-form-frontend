@@ -65,6 +65,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'text',
         lbl: __('Text Field', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
+        phHide: true,
         valid: {},
         err: {},
       },

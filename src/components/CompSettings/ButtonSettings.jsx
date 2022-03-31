@@ -125,7 +125,7 @@ export default function ButtonSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -147,7 +147,7 @@ export default function ButtonSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
