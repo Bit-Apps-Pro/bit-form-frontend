@@ -18,6 +18,7 @@ import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
+import editorConfig from './NewStyleEditorConfig'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -118,15 +119,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               const hlptxt = getElementStyleClasses[`.${fieldKey}-hlp-txt`]
               assignNestedObj(drft, getPath('hlp-txt'), hlptxt)
               deleteStyle(drft, 'hlp-txt', ':hover')
-              break
-
-            case 'fld':
-              const fldStyle = getElementStyleClasses[`.${fieldKey}-fld`]
-              const hoverFldStyle = getElementStyleClasses[`.${fieldKey}-fld:hover`]
-              const focusFldStyle = getElementStyleClasses[`.${fieldKey}-fld:focus`]
-              assignNestedObj(drft, getPath('fld'), fldStyle)
-              assignNestedObj(drft, getPath('fld', ':hover'), hoverFldStyle)
-              assignNestedObj(drft, getPath('fld', ':focus'), focusFldStyle)
               break
 
             case 'error-message':
@@ -250,6 +242,18 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             default:
+              const keyObj = getElmDataBasedOnElement(elmnt)
+              const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${keyObj.classKey}`] || {}
+              assignNestedObj(drft, getPath(keyObj.classKey), allDefaltStyle)
+              const states = [...editorConfig[fieldType][keyObj.elementKey].states]
+              states?.map(state => {
+                const tempDefault = getElementStyleClasses[`.${fieldKey}-${keyObj.classKey}:${state}`]
+                if (tempDefault) {
+                  assignNestedObj(drft, getPath(`${keyObj.classKey}:${state}`), tempDefault)
+                } else {
+                  deleteStyle(drft, keyObj.classKey, `:${state}`)
+                }
+              })
               break
           }
         }
