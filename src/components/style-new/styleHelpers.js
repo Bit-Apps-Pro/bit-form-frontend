@@ -13,6 +13,7 @@ import dropdownStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDe
 import fileUploadStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
 import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
+import phoneNumberStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
 import recaptchaStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
@@ -547,7 +548,7 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         })
         break
       case 'currency':
-        const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, fldTyp })
+        const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = currencyStyle1BitformDefault[`.${fk}-${cls}`]
         })
@@ -580,6 +581,12 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
         const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp })
         styleClasses[element].forEach(cls => {
           drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dropdownStyle1BitformDefault[`.${fk}-${cls}`]
+        })
+        break
+      case 'phone-number':
+        const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk })
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = phoneNumberStyleBitformDefault[`.${fk}-${cls}`]
         })
         break
       default:
