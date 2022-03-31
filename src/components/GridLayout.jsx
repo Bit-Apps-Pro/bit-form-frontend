@@ -335,21 +335,69 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const handleContextMenu = (e, fldKey) => {
     e.preventDefault()
+    // 0 - left click, 1 - middle click, 2 - right click
+    const { button: mouseBtnClicked } = e
+
+    let x
+    let y
+    let right
+    let bottom
+
     const topPos = ref.current.getBoundingClientRect().top + window.scrollY
     const leftPos = ref.current.getBoundingClientRect().left + window.scrollX
-    let x = (e.clientX - leftPos) + 5
-    const y = e.clientY - topPos
 
-    const test = selectInGrid('#layout-wrapper')
-    const rootW = Number(test.style.width.match(/\d+/gi))
-    console.log(rootW)
-    const right = (x + 170) > rootW
-    if (right) {
-      x = (e.clientX - leftPos) - 150
+    const layoutWrapperElm = selectInGrid('#layout-wrapper')
+    const rootW = Number(layoutWrapperElm.style.width.match(/\d+/gi))
+    const rootH = Number(layoutWrapperElm.style.height.match(/\d+/gi))
+
+    const menuWidth = 170
+    const menuHeight = 200
+
+    if (mouseBtnClicked === 0) {
+      const downBtn = selectInGrid(`[data-key="${fldKey}"]`)?.querySelector('.blk-wrp-down-btn')
+      const downBtnSize = 30
+      const downBtnTop = downBtn.getBoundingClientRect().top + downBtnSize
+      const downBtnLeft = downBtn.getBoundingClientRect().left
+
+      x = (downBtnLeft - leftPos) + 5
+      y = (downBtnTop - topPos) + 5
+
+      right = (x + menuWidth) > rootW
+      bottom = (y + menuHeight) > rootH
+
+      if (right) {
+        x = ((downBtnLeft + downBtnSize) - leftPos) - 145
+      }
+
+      if (bottom) {
+        y = (downBtnTop - topPos) - (menuHeight + downBtnSize + 7)
+      }
+
+      if (isComponentVisible && contextMenu.fldKey === fldKey && contextMenu.x === x && contextMenu.y === y) {
+        resetContextMenu()
+        return
+      }
+    } else if (mouseBtnClicked === 2) {
+      x = (e.clientX - leftPos) + 5
+      y = e.clientY - topPos
+
+      right = (x + menuWidth) > rootW
+      bottom = (y + menuHeight) > rootH
+
+      if (right) {
+        x = (e.clientX - leftPos) - 150
+      }
+
+      if (bottom) {
+        y = (e.clientY - topPos) - menuHeight
+      }
     }
-    setContextMenu({ fldKey, x, y })
-    setSelectedFieldId(fldKey)
-    setIsComponentVisible(true)
+
+    setTimeout(() => {
+      setContextMenu({ fldKey, x, y })
+      setSelectedFieldId(fldKey)
+      setIsComponentVisible(true)
+    }, 1)
   }
 
   const resetContextMenu = () => {
@@ -363,11 +411,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const navigateToStyle = fldKey => {
-    // if (typ === 'paypal') history.replace(history.location.pathname.replace(/fields-list|style\/.+|style/g, 'style/fl/ppl'))
-    // // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    // else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
     history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`)
-    // history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
   }
 
@@ -433,6 +477,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                           formID,
                           navigateToFieldSettings,
                           navigateToStyle,
+                          handleContextMenu,
                         }}
                       />
                     </div>
