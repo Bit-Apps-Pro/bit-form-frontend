@@ -76,7 +76,7 @@ export default function inputWrapperClasses(fk) {
       display: 'flex',
       'align-items': 'center',
       // 'text-align': 'var(--hlp-txt-al, init)',
-      'justify-content': 'var(--hlp-txt-al,, initial)',
+      'justify-content': 'var(--hlp-txt-al, initial)',
       padding: 'var(--hlp-txt-p, 0)',
       margin: 'var(--hlp-txt-m, 0)',
       'box-shadow': 'var(--hlp-txt-sh, none)',
