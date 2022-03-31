@@ -23,19 +23,18 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
-    [`.${fk}-btn`]:
-    {
+    [`.${fk}-btn`]:{
       'font-size': '16px',
       padding: '11px 20px',
-      'background-color': '#0083f3',
-      color: '#fff',
+      'background-color': 'hsla(208, 100%, 48%, 100%)',
+      color: 'hsla(0, 0%, 100%, 100%)',
       'font-weight': '700',
       border: 'none',
       'border-color': 'black',
       'border-radius': '5px',
-      'box-shadow': '2px 2px 4px -2px rgba(0,0,0,.4)',
+      'box-shadow': '2px 2px 4px -2px hsla(0, 0%, 0%, 40%)',
       cursor: 'pointer',
       'font-family': 'sans-serif',
       'line-height': '1',
@@ -49,9 +48,9 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-btn:disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'rgba(239, 239, 239, 0.3) !important',
-      color: 'rgb(84, 84, 84) !important',
-      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
+      color: 'hsla(0, 0%, 33%, 100%) !important',
+      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
     },
     [`.${fk}-btn-pre-i`]: {
       width: '20px',

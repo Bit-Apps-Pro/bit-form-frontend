@@ -22,7 +22,7 @@ export default function recaptchaStyle_1_bitformDefault({ fk }) {
       content: '""',
       width: '100%',
       height: '100%',
-      'background-color': 'rgba(0, 0, 0, 0.2)',
+      'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
   }
 }

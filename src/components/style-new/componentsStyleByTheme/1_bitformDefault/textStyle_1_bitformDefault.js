@@ -33,17 +33,17 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
     [`.${fk}-fld:disabled`]: {
       cursor: 'default',
-      'background-color': 'rgba(239, 239, 239, 0.3) !important',
-      color: 'rgb(84, 84, 84) !important',
-      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
+      color: 'hsla(0, 0%, 33%, 100%) !important',
+      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
     },
     [`.${fk}-fld:read-only`]: {
       cursor: 'default',
-      'background-color': 'rgba(239, 239, 239, 0.3) !important',
-      color: 'rgb(84, 84, 84) !important',
-      'border-color': 'rgba(118, 118, 118, 0.3) !important',
+      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
+      color: 'hsla(0, 0%, 33%, 100%) !important',
+      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
     },
-    [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
+    [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%)!important' },
 
     // title icon
     [`.${fk}-title-pre-i`]: {
