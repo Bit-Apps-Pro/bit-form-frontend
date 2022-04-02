@@ -7,6 +7,7 @@
 import produce from 'immer'
 import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
@@ -17,7 +18,7 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, cols, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
@@ -36,6 +37,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
@@ -73,7 +75,7 @@ function TextFieldSettings() {
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
-  const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(' ') : ['Off']
+  const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(',') : ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -152,7 +154,7 @@ function TextFieldSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState)
+      reCalculateFieldHeights(setBuilderHookState, fldKey)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -174,7 +176,7 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState)
+    reCalculateFieldHeights(setBuilderHookState, fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -395,12 +397,29 @@ function TextFieldSettings() {
   //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   // }
   const seAutoComplete = (value) => {
-    let strValue = value
-    if (strValue.match(/(off)/gi)?.[0] === 'off' && strValue.split(',').length > 1) {
-      strValue = strValue.replaceAll(/(off,)/gi, '')
+    const splitted = value.split(',')
+    console.log('new value', value, splitted)
+    let val = ''
+
+    if (splitted.length === 1) val = value
+    else {
+      const lastIndx = splitted.length - 1
+      if (splitted[lastIndx] === 'on') {
+        val = 'on'
+      } else if (splitted[lastIndx] === 'off') {
+        val = 'off'
+      } else if (splitted.includes('on')) {
+        splitted.splice(splitted.indexOf('on'), 1)
+        val = splitted.join(',')
+      } else if (splitted.includes('off')) {
+        splitted.splice(splitted.indexOf('off'), 1)
+        val = splitted.join(',')
+      } else {
+        val = value
+      }
     }
-    const val = strValue.split(',').join(' ')
-    if (val === '') delete fieldData.autoComplete
+
+    if (!value) delete fieldData.autoComplete
     else fieldData.autoComplete = val
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -559,26 +578,7 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        <SimpleAccordion
-          title={__('Placeholder', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hidePlaceholder}
-          toggleChecked={fieldData?.phHide}
-          open={fieldData?.phHide}
-          disable={!fieldData?.phHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <input
-              aria-label="Placeholer for this Field"
-              placeholder="Type Placeholder here..."
-              className={css(FieldStyle.input)}
-              type="text"
-              value={placeholder}
-              onChange={setPlaceholder}
-            />
-          </div>
-        </SimpleAccordion>
+        <PlaceholderSettings />
 
         <FieldSettingsDivider />
 
