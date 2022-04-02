@@ -143,8 +143,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
               </div>
             )}
             <div className="mt-2 f-right">
-              {/* <button type="button" className="btn mr-2" onClick={setPageMdl}>Cancel</button> */}
-              <button type="button" className="btn blue" onClick={() => setPageMdl(false)}>Close</button>
+              <button type="button" className="btn blue" onClick={() => setCustomRedirectMdl(false)}>Close</button>
             </div>
           </div>
         </>
