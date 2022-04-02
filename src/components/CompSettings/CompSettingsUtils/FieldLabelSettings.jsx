@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
@@ -94,7 +95,11 @@ export default function FieldLabelSettings() {
       >
         <div>
           <div className={css({ w: '97%', mx: 5 })}>
-            <AutoResizeInput ariaLabel="Field Label input" changeAction={setLabel} value={label.replaceAll('$_bf_$', '\\')} />
+            <AutoResizeInput
+              ariaLabel="Field Label input"
+              changeAction={setLabel}
+              value={label.replaceAll('$_bf_$', '\\')}
+            />
           </div>
 
           <div className={css(ut.mt2, { mx: 10 })}>
