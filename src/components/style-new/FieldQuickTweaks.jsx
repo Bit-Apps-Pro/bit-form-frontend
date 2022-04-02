@@ -223,8 +223,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const [borderRadVal, borderRadUnit] = getPropValue()
-  const [btnWidthVal, btnRadUnit] = getPropValue('width')
-  const [paypalFldWidthVal, paypalFldWidthUnit] = getPropValue('width')
+  const [fldWidthVal, fldWidthUnit] = getPropValue('width')
+  const [fldHeightVal, fldHeightUnit] = getPropValue('height')
 
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
@@ -407,10 +407,25 @@ export default function FieldQuickTweaks({ fieldKey }) {
               <SizeControl
                 min={0}
                 max={100}
-                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, btnRadUnit, 'width')}
-                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, btnRadUnit, 'width')}
-                value={btnWidthVal || 0}
-                unit={btnRadUnit || 'px'}
+                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWidthUnit, 'width')}
+                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWidthUnit, 'width')}
+                value={fldWidthVal || 0}
+                unit={fldWidthUnit || 'px'}
+                width="128px"
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Height</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                min={0}
+                max={100}
+                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldHeightUnit, 'height')}
+                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldHeightUnit, 'height')}
+                value={fldHeightVal || 0}
+                unit={fldHeightUnit || 'px'}
                 width="128px"
                 options={['px', 'em', 'rem', '%']}
               />
@@ -485,10 +500,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
             <SizeControl
               min={150}
               max={750}
-              inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, paypalFldWidthUnit, 'width')}
-              sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, paypalFldWidthUnit, 'width')}
-              value={paypalFldWidthVal || 0}
-              unit={paypalFldWidthUnit || 'px'}
+              inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWidthUnit, 'width')}
+              sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWidthUnit, 'width')}
+              value={fldWidthVal || 0}
+              unit={fldWidthUnit || 'px'}
               width="128px"
               options={['px', 'em', 'rem', '%']}
             />
