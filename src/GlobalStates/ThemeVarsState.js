@@ -96,6 +96,7 @@ const $themeVarsLg = atom({
     '--req-smbl-p': '', // Required Symbol Padding
     '--req-smbl-fs': '', // Required Symbol Font Size
     '--req-smbl-fw': '', // Required Symbol Font Weight
+    '--req-smbl-lh': '', // Required Symbol Font Weight
 
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '3px 0', // subtitle padding

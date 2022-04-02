@@ -63,7 +63,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
             >
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
-                <span className={`${fieldKey}-req-symbol`}>*</span>
+                <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl`}>*</span>
               )}
               {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
               {inspectMode ? (
