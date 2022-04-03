@@ -17,7 +17,7 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
@@ -67,13 +67,15 @@ function TextFieldSettings() {
   const imputMode = fieldData.inputMode || 'text'
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
-  const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(',') : ['Off']
+  const ac = fieldData?.ac ? fieldData.ac.trim().split(',') : ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
+
+  console.log('fieldData', fieldData)
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -301,8 +303,8 @@ function TextFieldSettings() {
   }
 
   // const handleSuggestion = ({ target: { value } }) => {
-  //   if (value !== '') fieldData.autoComplete = value
-  //   else delete fieldData.autoComplete
+  //   if (value !== '') fieldData.ac = value
+  //   else delete fieldData.ac
 
   //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
   //   setFields(allFields)
@@ -330,8 +332,8 @@ function TextFieldSettings() {
       }
     }
 
-    if (!val) delete fieldData.autoComplete
-    else fieldData.autoComplete = val
+    if (!val) delete fieldData.ac
+    else fieldData.ac = val
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -339,8 +341,8 @@ function TextFieldSettings() {
   }
 
   const hideAutoComplete = ({ target: { checked } }) => {
-    if (checked) fieldData.autoComplete = fieldData.lbl || fldKey
-    else delete fieldData.autoComplete
+    if (checked) fieldData.ac = fieldData.lbl || fldKey
+    else delete fieldData.ac
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -514,13 +516,13 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideAutoComplete}
-          toggleChecked={fieldData?.autoComplete !== undefined}
-          open={fieldData?.autoComplete !== undefined}
-          disable={!fieldData.autoComplete}
+          toggleChecked={fieldData?.ac !== undefined}
+          open={fieldData?.ac !== undefined}
+          disable={!fieldData.ac}
         >
           <div className={css(FieldStyle.placeholder)}>
             <MultiSelect
-              defaultValue={autoComplete}
+              defaultValue={ac}
               className={`${css(FieldStyle.multiselectInput)}`}
               placeholder="Select one"
               options={autofillList}
@@ -529,7 +531,7 @@ function TextFieldSettings() {
             />
             {/* <select
               className={css(FieldStyle.input)}
-              name="suggestion" value={autoComplete}
+              name="suggestion" value={ac}
               onChange={handleSuggestion}
             >
               {autofillList.map((item) => {
