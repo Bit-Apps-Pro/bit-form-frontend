@@ -7,7 +7,7 @@
 import { createRenderer } from 'fela'
 import customProperty from 'fela-plugin-custom-property'
 import { lazy, Suspense } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { RendererProvider } from 'react-fela'
 import { RecoilRoot } from 'recoil'
 import Loader from './components/Loaders/Loader'
@@ -49,7 +49,8 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   console.log('no sw')
 }
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('btcd-app'))
+root.render(
   <RecoilRoot>
     <AppSettingsProvider>
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
@@ -59,7 +60,6 @@ ReactDOM.render(
       </Suspense>
     </AppSettingsProvider>
   </RecoilRoot>,
-  document.getElementById('btcd-app'),
 )
 
 // serviceWorker.register();
