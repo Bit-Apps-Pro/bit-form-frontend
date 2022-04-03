@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import bitsFetch from '../../Utils/bitsFetch'
-import { dateTimeFormatter } from '../../Utils/Helpers'
+import { dateTimeFormatter, renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import CopyText from '../Utilities/CopyText'
@@ -139,10 +139,7 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
             :
           </p>
           {note.title && <h4>{note.title}</h4>}
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: logShow ? (note.content || '') : truncate(note.content || '', 20) }}
-          />
+          <div>{renderHTMR(logShow ? (note.content || '') : truncate(note.content || '', 20))}</div>
           {(!logShow && (note.content || '').length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More', 'bitform')}</small>}
           {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less', 'bitform')}</small>}
         </>

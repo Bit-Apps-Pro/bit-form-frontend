@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 import confirmMsgCssStyles from './confirm_msg_css_styles'
 
@@ -51,8 +52,7 @@ export default function ConfirmMsgPreview({ active, setActive, position, animati
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
               </svg>
             </button>
-            {/* eslint-disable-next-line react/no-danger */}
-            <div dangerouslySetInnerHTML={{ __html: message }} />
+            <div>{renderHTMR(message)}</div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
-import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
+import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -92,7 +92,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
                   <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                 </svg>
               </span>
-              <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(attr.lbl || attr?.info?.lbl)}</span>
+              <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderHTMR(attr.lbl || attr?.info?.lbl)}</span>
             </label>
           </div>
         </div>

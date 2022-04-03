@@ -8,7 +8,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import noData from '../../resource/img/nodata.svg'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { dateTimeFormatter } from '../../Utils/Helpers'
+import { dateTimeFormatter, renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import LoaderSm from '../Loaders/LoaderSm'
@@ -130,10 +130,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
         </div>
         <div>
           {noteDetails.title && <h3>{noteDetails.title}</h3>}
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: replaceFieldWithValue(noteDetails.content) }}
-          />
+          <div>{renderHTMR(replaceFieldWithValue(noteDetails.content))}</div>
         </div>
         <hr className="btcd-hr" />
       </div>

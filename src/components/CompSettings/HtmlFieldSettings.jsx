@@ -8,7 +8,7 @@ import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
@@ -81,11 +81,12 @@ export default function HtmlFieldSettings() {
         <div
           role="button"
           tabIndex="-1"
-          dangerouslySetInnerHTML={{ __html: fieldData.content }}
           className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto' })}
           onClick={() => setLabelModal(true)}
           onKeyPress={() => setLabelModal(true)}
-        />
+        >
+          {renderHTMR(fieldData.content)}
+        </div>
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />
 
