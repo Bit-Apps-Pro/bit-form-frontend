@@ -29,7 +29,8 @@ export default function FontPickerMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempStyle = useRecoilValue($tempStyles)
 
-  const inheritFont = themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit'
+  // const inheritFont = (themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit')
+  const inheritFont = themeVars['--g-font-family'] === 'inherit'
   const checkGoogleFontExist = (styles.font.fontType === 'Google')
 
   const apiKey = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
@@ -129,6 +130,7 @@ export default function FontPickerMenu() {
     setSorted(orderBy === 'ASC')
     setFonts(sorted)
   }
+
   const setThemeFont = ({ target: { checked } }) => {
     const font = checked ? 'inherit' : ''
     setThemeVars(prvState => produce(prvState, drft => {
@@ -162,6 +164,7 @@ export default function FontPickerMenu() {
       }))
     }
   }
+
   const urlValidationHandler = ({ target: { value } }) => {
     if (value !== '' && !isValidURL(value)) toast.error('Font url is invalid!')
   }
