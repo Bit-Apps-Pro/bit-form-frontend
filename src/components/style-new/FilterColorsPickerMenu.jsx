@@ -2,8 +2,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
+import { str2Color } from '@atomik-color/core'
+import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $updateBtn } from '../../GlobalStates/GlobalStates'
@@ -11,7 +13,6 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
-import rgbColorToFilter from './color-to-filter'
 import { hsva2hsla } from './colorHelpers'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -28,7 +29,7 @@ import { getValueByObjPath } from './styleHelpers'
 //  hsla={{h:'--gfh', s: ''}}
 // />
 function FilterColorsPickerMenu({ stateObjName,
-  objectPaths }) {
+  objectPaths, id,propertyPath }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -38,6 +39,40 @@ function FilterColorsPickerMenu({ stateObjName,
   const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const { paths } = objectPaths
+
+  useEffect(() => {
+    switch (stateObjName) {
+      case 'themeColors':
+        const themeColorsVal = getValueByObjPath(themeColors, propertyPath)
+        setColor(str2Color(themeColorsVal))
+        break
+
+      case 'themeVars':
+        const themeVarColor = getValueByObjPath(themeVars, propertyPath)
+        setColor(str2Color(themeVarColor))
+        break
+
+      case 'styles':
+        const pathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
+        const styleColor = getValueByObjPath(styles, pathArr)
+        let c = styleColor
+        if (styleColor?.match(/var/gi)?.[0] === 'var') {
+          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)/gi, '')
+          c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
+        }
+        setColor(str2Color(c))
+        break
+
+      case 'field-accent-color':
+        const accColor = getValueByObjPath(themeColors, propertyPath)
+        setColor(str2Color(accColor))
+        break
+
+      default:
+        break
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   const handleColor = (path, _h, _s, _v, _a) => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
@@ -119,9 +154,9 @@ function FilterColorsPickerMenu({ stateObjName,
 
   const setColorState = (colorObj) => {
     setColor(colorObj)
-    const filterValue = rgbColorToFilter(colorObj.r, colorObj.g, colorObj.b)
+    const resultObj = hexToCSSFilter(colorObj.str)
     handleColor(paths['icon-color'], colorObj.h, colorObj.s, colorObj.v, colorObj.a)
-    handleValue(paths.filter, filterValue)
+    handleValue(paths.filter, resultObj.filter)
   }
 
   return (
