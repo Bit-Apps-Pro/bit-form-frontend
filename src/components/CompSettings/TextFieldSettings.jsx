@@ -5,7 +5,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
-import { memo, useRef, useState } from 'react'
+import { memo, useRef, useState, useId } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -578,7 +578,7 @@ function TextFieldSettings() {
                     value={imputMode}
                     onChange={handleInputmode}
                   >
-                    {inputModeList.map(itm => <option key={`input-itm${Math.random() * 222 + 89}`} value={itm}>{itm}</option>)}
+                    {inputModeList.map(itm => <option key={`input-itm${useId()}`} value={itm}>{itm}</option>)}
                   </select>
                 </div>
               </SimpleAccordion>

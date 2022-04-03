@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import LaptopIcn from '../../../../Icons/LaptopIcn'
 import MobileIcon from '../../../../Icons/MobileIcon'
 import TabletIcon from '../../../../Icons/TabletIcon'
@@ -13,7 +14,7 @@ export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
         { lbl: 'lg', icn: <LaptopIcn size="17" />, tip: __('Laptop View', 'bitform') }]
         .map(itm => (
           <button
-            key={`${itm.lbl}+${Math.random()}`}
+            key={`${itm.lbl}+${useId()}`}
             title={itm.tip}
             onClick={() => setResponsiveView(itm.lbl)}
             className={`br-50 flx mr-1 ${itm.lbl === brkPoint && 'blue'}`}

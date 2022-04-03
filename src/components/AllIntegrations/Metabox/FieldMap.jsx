@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
@@ -77,7 +78,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
           <option value="">{__('Select Field', 'bitform')}</option>
           {
             customFields?.map(header => (
-              <option key={`${Math.random()}-1`} value={header.key}>
+              <option key={`${useId()}-1`} value={header.key}>
                 {`${header.name}`}
               </option>
             ))

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, useId } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -95,7 +95,7 @@ function RadioCheckSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option removed: ${fieldData.opt[ind].lbl}`, type: `rmv_option_${Math.random() * 2 * 5 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option removed: ${fieldData.opt[ind].lbl}`, type: `rmv_option_${useId() * 2 * 5 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function addOpt() {
@@ -103,7 +103,7 @@ function RadioCheckSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option added: ${fieldData.opt}`, type: `add_option_${Math.random() * 8 * 4 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option added: ${fieldData.opt}`, type: `add_option_${useId() * 8 * 4 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setCheck(e, i) {
@@ -123,7 +123,7 @@ function RadioCheckSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : {option_label}`, type: `set_check_${Math.random() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : {option_label}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setReq(e, i) {
@@ -168,7 +168,7 @@ function RadioCheckSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option label updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_opt_label_${Math.random() * 4 * 2 + 5}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option label updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_opt_label_${useId() * 4 * 2 + 5}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openImportModal = () => {

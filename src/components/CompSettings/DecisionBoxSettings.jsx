@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -71,7 +71,7 @@ export default function DecisionBoxSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${Math.random() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
