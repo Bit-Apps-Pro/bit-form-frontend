@@ -23,7 +23,8 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       color: 'var(--global-font-color)!important',
       padding: '10px 8px 10px 8px!important',
       'line-height': '1.4 !important',
-      height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
+      // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
+      height: type === 'textarea' ? '' : '40px',
       ...type === 'textarea' && { resize: 'vertical' },
     },
     [`.${fk}-fld:focus`]: {

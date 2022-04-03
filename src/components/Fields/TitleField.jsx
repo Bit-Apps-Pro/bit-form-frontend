@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
-import { renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
+import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
@@ -9,7 +9,7 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
-  const titleGenerator = (tag, text, cls, preIcn, sufIcn) => renderDOMObjectFromHTMLStr(
+  const titleGenerator = (tag, text, cls, preIcn, sufIcn) => renderHTMR(
     `<${tag} data-dev${cls}=${fieldKey} className="${fieldKey}${cls}">
       ${preIcn}${text}${sufIcn}
     </${tag}>`,

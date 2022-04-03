@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
-import { deepCopy, renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
+import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 /* eslint-disable react/jsx-props-no-spreading */
@@ -23,7 +23,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
           {...'disabled' in fieldData && { disabled: fieldData.disabled }}
         >
           {fieldData.btnPreIcn && <img data-dev-btn-pre-i={fieldKey} className={`${fieldKey}-btn-pre-i`} src={fieldData.btnPreIcn} alt="" />}
-          {renderDOMObjectFromHTMLStr(fieldData.txt || '')}
+          {renderHTMR(fieldData.txt || '')}
           {fieldData.btnSufIcn && <img data-dev-btn-suf-i={fieldKey} className={`${fieldKey}-btn-suf-i`} src={fieldData.btnSufIcn} alt="" />}
         </button>
         {
@@ -32,7 +32,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               {/* Prefix icon */}
               {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {/* Helper text */}
-              {renderDOMObjectFromHTMLStr(fieldData.helperTxt || '')}
+              {renderHTMR(fieldData.helperTxt || '')}
               {/* suffix icon */}
               {fieldData.hlpSufIcn && <img data-dev-hlp-txt-suf-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>

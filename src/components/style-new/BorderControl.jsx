@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -11,7 +11,7 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
-import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
+import { getValueByObjPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
 export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
@@ -19,22 +19,55 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
   const [, color] = splitValueBySpaces(value?.replaceAll('!important', ''))
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
-  const setThemeVars = useSetRecoilState($themeVars)
-  const setThemeColors = useSetRecoilState($themeColors)
-  const setStyles = useSetRecoilState($styles)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [styles, setStyles] = useRecoilState($styles)
   /**
    * objectPaths is Array
    * 0 => themeVars
    * 1 => themeColors
    */
+
+  console.log(objectPaths)
   let borderPropsFirst
+  let bdrVal
+  let bdrWdthVal
+  let bdrRdsVal
+  let valStr = ''
   if (Array.isArray(objectPaths)) {
     const propArr = Object.keys(objectPaths[0].paths)
     borderPropsFirst = objectPaths[0].paths[propArr[0]]
+
+    const bdrVar = objectPaths[1].paths.border
+    const bdrWdthVar = objectPaths[0].paths['border-width']
+    const bdrRdsVar = objectPaths[0].paths['border-radius']
+
+    bdrVal = themeColors[bdrVar]
+    bdrWdthVal = themeVars[bdrWdthVar]
+    bdrRdsVal = themeVars[bdrRdsVar]
   } else {
     const propArr = Object.keys(objectPaths.paths)
     borderPropsFirst = objectPaths.paths[propArr[0]]
+
+    const checkVarValue = (val, varState) => {
+      if (val?.match(/(var)/gi)?.[0]) {
+        const str = value.replaceAll(/\(|var|,.*\)|(!important)/gi, '')
+        val = varState[str]
+      }
+      if (val?.match(/(!important)/gi)) {
+        val = val?.replaceAll(/(!important)/gi, '')
+      }
+      return val
+    }
+
+    bdrVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths.border), themeColors)
+    bdrWdthVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-width']), themeVars)
+    bdrRdsVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-radius']), themeVars)
   }
+
+  if (bdrVal) valStr += `Border: ${bdrVal}; `
+  if (bdrWdthVal) valStr += `Border Width: ${bdrWdthVal}; `
+  if (bdrRdsVal) valStr += `Border Radius: ${bdrRdsVal};`
 
   const assignValues = (paths, obj, val = '') => {
     const propArray = Object.keys(paths)
@@ -64,17 +97,19 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
     }
   }
 
+  console.log(color)
+
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && value && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
-      <div title={value || 'Add Border Style'} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
+      {allowImportant && valStr && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
+      <div title={valStr || 'Add Border Style'} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}
           type="button"
           className={css(c.pickrBtn)}
         >
-          <ColorPreview bg={color?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-          <span className={css(c.clrVal)}>{value || 'Add Border Style'}</span>
+          <ColorPreview bg={bdrVal} h={24} w={24} className={css(ut.mr2)} />
+          <span className={css(c.clrVal)}>{valStr || 'Add Border Style'}</span>
         </button>
         {value && (
           <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Border">

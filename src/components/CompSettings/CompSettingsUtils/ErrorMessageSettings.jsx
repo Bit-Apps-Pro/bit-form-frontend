@@ -11,7 +11,7 @@ import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../../Utils/Helpers'
+import { deepCopy, renderHTMR } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
@@ -154,15 +154,11 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
               <EditIcn size={19} />
             </button>
           </div>
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: errMsg }}
-            className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
-          />
+          <div className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`} tabIndex="0" role="button" onClick={openErrorModal} onKeyPress={openErrorModal}>{renderHTMR(errMsg)}</div>
 
           <div className={css(ut.mt2, { mx: 10 })}>
             <FieldIconSettings
-              label="Start Icon"
+              label="Prefix Icon"
               iconSrc={fieldData?.errPreIcn}
               styleRoute="err-txt-pre-i"
               setIcon={() => setIconModel('errPreIcn')}
@@ -170,7 +166,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
             />
 
             <FieldIconSettings
-              label="End Icon"
+              label="Suffix Icon"
               iconSrc={fieldData?.errSufIcn}
               styleRoute="err-txt-suf-i"
               setIcon={() => setIconModel('errSufIcn')}

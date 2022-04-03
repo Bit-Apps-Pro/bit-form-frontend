@@ -303,26 +303,5 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
       color: 'hsla(0, 0%, 94%, 30%) !important',
       opacity: '0.5',
     },
-
-    [`.${fk}-err-wrp`]: {
-      display: 'none',
-      opacity: '0',
-      transition: 'display 1s, opacity 1s',
-      'justify-content': 'left',
-      'align-items': 'center',
-      'background-color': 'hsla(0, 0%, 98%, 100%)',
-      color: 'darkred',
-      'border-radius': '10px',
-      height: '40px',
-      'margin-left': '10px',
-      'margin-top': '10px',
-      padding: '2px 20px',
-      width: '90%',
-    },
-    [`.${fk}-err-wrp.active`]: {
-      display: 'flex',
-      opacity: '1',
-      transition: 'display 1s, opacity 1s',
-    },
   }
 }
