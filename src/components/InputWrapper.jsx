@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
-import { renderDOMObjectFromHTMLStr } from '../Utils/Helpers'
+import { renderHTMR } from '../Utils/Helpers'
 import { highlightElm, removeHightlight } from './style-new/styleHelpers'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
@@ -63,7 +63,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
             >
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
-                <span className={`${fieldKey}-req-symbol`}>*</span>
+                <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl`}>*</span>
               )}
               {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
               {inspectMode ? (
@@ -75,10 +75,10 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   role="button"
                   onClick={(e) => elementStyleHandler(e, 'label')}
                 >
-                  {renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
+                  {renderHTMR(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
                 </div>
               ) : (
-                renderDOMObjectFromHTMLStr(fieldData.lbl.replaceAll('$_bf_$', '\\'))
+                renderHTMR(fieldData.lbl.replaceAll('$_bf_$', '\\'))
               )}
               {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
 
@@ -92,7 +92,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
               <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
                 {fieldData.subTlePreIcn && <img data-dev-sub-titl-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
-                {renderDOMObjectFromHTMLStr(fieldData.subtitle || '')}
+                {renderHTMR(fieldData.subtitle || '')}
                 {fieldData.subTleSufIcn && <img data-dev-sub-titl-suf-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
               </div>
             )
@@ -109,7 +109,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
               {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
-              {renderDOMObjectFromHTMLStr(fieldData.helperTxt || '')}
+              {renderHTMR(fieldData.helperTxt || '')}
               {fieldData.hlpSufIcn && <img data-dev-hlp-txt-suf-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )

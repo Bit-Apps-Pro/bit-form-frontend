@@ -299,7 +299,7 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
   return ((y < x) ? -1 : ((y > x) ? 1 : 0))
 })
 
-export const renderDOMObjectFromHTMLStr = str => {
+export const renderHTMR = str => {
   try {
     return (
       <>
@@ -477,7 +477,7 @@ const divide = (dividend, divisor) => {
 export const number2Ipv6 = ipNumber => {
   const base = 16
   const blocks = []
-  const blockSize = 2 ** 16 
+  const blockSize = 2 ** 16
 
   while (blocks.length < 8) {
     const divisionResult = divide(ipNumber, blockSize)

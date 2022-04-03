@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { deepCopy, renderDOMObjectFromHTMLStr } from '../../Utils/Helpers'
+import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -129,7 +129,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
-                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderDOMObjectFromHTMLStr(itm.lbl)}</span>
+                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderHTMR(itm.lbl)}</span>
               </label>
             </div>
           ))}

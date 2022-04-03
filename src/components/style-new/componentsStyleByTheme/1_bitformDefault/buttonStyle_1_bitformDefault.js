@@ -25,7 +25,7 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       height: '100%',
       'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
-    [`.${fk}-btn`]:{
+    [`.${fk}-btn`]: {
       'font-size': '16px',
       padding: '11px 20px',
       'background-color': 'hsla(208, 100%, 48%, 100%)',
@@ -48,9 +48,7 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-btn:disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      opacity: '0.5',
     },
     [`.${fk}-btn-pre-i`]: {
       width: '20px',

@@ -20,6 +20,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
+import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -493,29 +494,13 @@ function RadioCheckSettings() {
           </>
         )
       }
-      <div className="pos-rel">
-        {/* {!bits.isPro && (
-          <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
-            <div className="pro">
-              {__('Available On', 'bitform')}
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                <span className="txt-pro">
-                  {' '}
-                  {__('Premium', 'bitform')}
-                </span>
-              </a>
-            </div>
-          </div>
-        )} */}
-        <ErrorMessageSettings
-          type="entryUnique"
-          title="Validate as Entry Unique"
-          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-          className={css(FieldStyle.fieldSection)}
-          isPro
-          defaultMsg="The value is already taken. Try another."
-        />
-      </div>
+      <UniqFieldSettings
+        type="userUnique"
+        title="Validate as User Unique"
+        tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection)}
+        isUnique="show"
+      />
 
       <FieldSettingsDivider />
 

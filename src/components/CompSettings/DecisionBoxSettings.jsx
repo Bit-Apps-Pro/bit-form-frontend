@@ -11,7 +11,7 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -121,12 +121,7 @@ export default function DecisionBoxSettings() {
             <EditIcn size={19} />
           </span>
         </div>
-        <div
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: fieldData.lbl || fieldData?.info?.lbl }}
-          // className="err-msg-box mt-2"
-          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
-        />
+        <div className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}>{renderHTMR(fieldData.lbl || fieldData?.info?.lbl)}</div>
       </div>
 
       <FieldSettingsDivider />

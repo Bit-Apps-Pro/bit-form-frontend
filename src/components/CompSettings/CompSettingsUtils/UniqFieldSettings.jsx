@@ -15,6 +15,7 @@ import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
+import ErrorMessageSettings from './ErrorMessageSettings'
 
 export default function UniqFieldSettings({ type, title, tipTitle, isUnique, className }) {
   const bits = useRecoilValue($bits)
@@ -88,56 +89,11 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
       open={fieldData?.err?.[type]?.[isUnique]}
       disable={!fieldData?.err?.[type]?.[isUnique]}
     >
-      <>
-        {/* <div className="err-msg-wrapper">
-          <div className="flx flx-between ">
-            <h4 className="mt-2 mb-2 flx">
-              {__(title, 'bitform')}
-              <Cooltip width={250} icnSize={17} className="ml-2">
-                <div className="txt-body">{__(tipTitle, 'bitform')}</div>
-              </Cooltip>
-            </h4>
-            <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
-          </div> */}
-        <>
-          <div className={`${css(ErrorMessages.flxBetween, ErrorMessages.checked, ut.px10, ut.mt2)}`}>
-            <div className={css(ErrorMessages.flx)}>
-              <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
-                <div className={css(ErrorMessages.tipBody)}>
-                  Check the box to enable the custom error message.
-                  <br />
-                  Note: You can edit the message by clicking on edit icon.
-                </div>
-              </Cooltip>
-              {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
-            </div>
-            <button
-              type="button"
-              aria-label="Edit custom message"
-              className={css(ErrorMessages.btn)}
-              onClick={openErrorModal}
-              onKeyPress={openErrorModal}
-            >
-              <EditIcn size={19} />
-            </button>
-
-          </div>
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: errMsg }}
-            className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
-          />
-        </>
-
-        <CustomErrorMessageModal
-          errorModal={errorModal}
-          setErrorModal={setErrorModal}
-          type={type}
-        />
-        {/* </div> */}
-      </>
-
+      <ErrorMessageSettings
+        type={type}
+        title={title}
+        tipTitle={tipTitle}
+      />
     </SimpleAccordion>
   )
 }
