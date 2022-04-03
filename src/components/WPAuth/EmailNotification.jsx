@@ -1,4 +1,5 @@
 import produce from 'immer'
+import { flushSync } from 'react-dom'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
@@ -14,16 +15,16 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
   }
 
   const cancelModal = () => {
-    setTimeout(() => {
-      setDataConf(tmpConf => produce(tmpConf, draft => {
-        // eslint-disable-next-line no-param-reassign
-        draft[type].body = tamplate
-        // eslint-disable-next-line no-param-reassign
-        draft[type].sub = 'Email Subject'
-      }))
-      setshowMdl(false)
-    })
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      // eslint-disable-next-line no-param-reassign
+      draft[type].body = tamplate
+      // eslint-disable-next-line no-param-reassign
+      draft[type].sub = 'Email Subject'
+    }))
+    setshowMdl(false)
   }
+
+  console.log('dataConf', dataConf, showMdl)
 
   const handleInput = e => {
     setDataConf(tmpConf => produce(tmpConf, draft => {

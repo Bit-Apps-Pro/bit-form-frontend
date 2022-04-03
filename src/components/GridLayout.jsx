@@ -335,9 +335,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const handleContextMenu = (e, fldKey) => {
     e.preventDefault()
-    setTimeout(() => {
-      calculatePositionForContextMenu(e, fldKey)
-    }, 1)
+    e.stopPropagation()
+    calculatePositionForContextMenu(e, fldKey)
   }
 
   const calculatePositionForContextMenu = (e, fldKey) => {
@@ -379,6 +378,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         y = (downBtnTop - topPos) - (menuHeight + downBtnSize + 7)
       }
 
+      if (selectedFieldId !== fldKey) {
+        x += 3
+        y -= 3
+      }
+
       if (isComponentVisible && contextMenu.fldKey === fldKey && contextMenu.x === x && contextMenu.y === y) {
         resetContextMenu()
         return
@@ -399,8 +403,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       }
     }
 
-    setContextMenu({ fldKey, x, y })
     setSelectedFieldId(fldKey)
+    setContextMenu({ fldKey, x, y })
     setIsComponentVisible(true)
   }
 
