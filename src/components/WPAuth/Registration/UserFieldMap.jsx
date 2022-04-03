@@ -9,12 +9,12 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import EmailNotification from '../EmailNotification'
 import EditIcn from '../../../Icons/EditIcn'
-import CustomMassageMdl from '../CustomMassageMdl'
+import RedirectEmailVerified from './RedirectEmailVerified'
 
 export default function UserFieldMap({ formFields, userConf, setUserConf, pages, roles, type }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [showMdl, setshowMdl] = useState(false)
-  const [showMsgMdl, setshowMsgMdl] = useState(false)
+  const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
 
   const handleInput = e => {
     setUserConf(tmpConf => produce(tmpConf, draft => {
@@ -190,25 +190,20 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               </span>
               <div className="f-m ml-1">{__('Customize  Activation Email template', 'bitform')}</div>
             </div>
+
             <div className="flx w-5 ml-2 mt-4">
               <span
                 role="button"
                 tabIndex="-1"
                 className="cp"
-                onClick={() => setshowMsgMdl(true)}
-                onKeyPress={() => setshowMsgMdl(true)}
+                onClick={() => setCustomRedirectMdl(true)}
+                onKeyPress={() => setCustomRedirectMdl(true)}
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Customize  Activation Success Message', 'bitform')}</div>
-              <CustomMassageMdl
-                dataConf={userConf}
-                setDataConf={setUserConf}
-                type={type}
-                showMdl={showMsgMdl}
-                setshowMdl={setshowMsgMdl}
-                title="Edit Custom Activation Success Message"
-              />
+              <div className="f-m ml-1">{__('Redirect after verification', 'bitform')}</div>
+              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} />
+
             </div>
           </div>
         )}
