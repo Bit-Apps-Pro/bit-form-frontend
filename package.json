@@ -24,6 +24,7 @@
     "filepond-plugin-image-transform": "^3.8.7",
     "filepond-plugin-image-validate-size": "^1.2.6",
     "filepond-plugin-media-preview": "ernestbrandi/filepond-plugin-media-preview",
+    "hex-to-css-filter": "^5.4.0",
     "htmr": "^1.0.1",
     "immer": "^9.0.7",
     "quicklink": "^2.2.0",
