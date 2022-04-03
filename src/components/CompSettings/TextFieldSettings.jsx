@@ -119,14 +119,22 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  const defaultValueChecked = ({ target: { checked } }) => {
-    if (checked) fieldData.defaultValue = 'type here...'
-    else delete fieldData.defaultValue
-
-    const req = checked ? 'on' : 'off'
+  const hideDefalutValue = (e) => {
+    if (e.target.checked) {
+      fieldData.defaultValue = fieldData.lbl || fldKey
+      fieldData.defaultValueHide = true
+    } else {
+      fieldData.defaultValueHide = false
+      delete fieldData.defaultValue
+    }
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(
+      setBuilderHistory,
+      { event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
+      setUpdateBtn,
+    )
   }
 
   const setDefaultValue = ({ target: { value } }) => {
@@ -473,10 +481,10 @@ function TextFieldSettings() {
           title={__('Default value', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          toggleAction={defaultValueChecked}
-          toggleChecked={fieldData?.defaultValue !== undefined}
-          open={fieldData?.defaultValue !== undefined}
-          disable={!fieldData?.defaultValue}
+          toggleAction={hideDefalutValue}
+          toggleChecked={fieldData?.defaultValueHide}
+          open={fieldData?.defaultValueHide}
+          disable={!fieldData?.defaultValueHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
