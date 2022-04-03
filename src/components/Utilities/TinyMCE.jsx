@@ -7,7 +7,7 @@ import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
   const [loaded, setLoaded] = useState(0)
-  useEffect(() => loadTinyMceScript(), [])
+  useEffect(() => { loadTinyMceScript() }, [])
 
   const loadTinyMceScript = async () => {
     if (typeof tinymce === 'undefined') {
