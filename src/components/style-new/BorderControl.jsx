@@ -15,20 +15,17 @@ import { getValueByObjPath, showDraggableModal, splitValueBySpaces } from './sty
 
 export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
-
-  const [, color] = splitValueBySpaces(value?.replaceAll('!important', ''))
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
-
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
+
   /**
    * objectPaths is Array
    * 0 => themeVars
    * 1 => themeColors
    */
 
-  console.log(objectPaths)
   let borderPropsFirst
   let bdrVal
   let bdrWdthVal
@@ -49,15 +46,16 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
     const propArr = Object.keys(objectPaths.paths)
     borderPropsFirst = objectPaths.paths[propArr[0]]
 
-    const checkVarValue = (val, varState) => {
-      if (val?.match(/(var)/gi)?.[0]) {
-        const str = value.replaceAll(/\(|var|,.*\)|(!important)/gi, '')
-        val = varState[str]
+    const checkVarValue = (varStr, varState) => {
+      if (varStr?.match(/(var)/gi)?.[0] === 'var') {
+        const str = varStr.replaceAll(/\(|var|,.*\)|(!important)|\s/gi, '')
+        varStr = varState[str]
       }
-      if (val?.match(/(!important)/gi)) {
-        val = val?.replaceAll(/(!important)/gi, '')
+
+      if (varStr?.match(/(!important)/gi)) {
+        varStr = varStr?.replaceAll(/(!important)/gi, '')
       }
-      return val
+      return varStr
     }
 
     bdrVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths.border), themeColors)
@@ -68,6 +66,8 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
   if (bdrVal) valStr += `Border: ${bdrVal}; `
   if (bdrWdthVal) valStr += `Border Width: ${bdrWdthVal}; `
   if (bdrRdsVal) valStr += `Border Radius: ${bdrRdsVal};`
+
+  const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
 
   const assignValues = (paths, obj, val = '') => {
     const propArray = Object.keys(paths)
@@ -97,8 +97,6 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
     }
   }
 
-  console.log(color)
-
   return (
     <div className={css(ut.flxc)}>
       {allowImportant && valStr && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
@@ -108,7 +106,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
           type="button"
           className={css(c.pickrBtn)}
         >
-          <ColorPreview bg={bdrVal} h={24} w={24} className={css(ut.mr2)} />
+          <ColorPreview bg={bdrColor} h={24} w={24} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{valStr || 'Add Border Style'}</span>
         </button>
         {value && (
