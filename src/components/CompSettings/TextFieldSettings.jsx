@@ -668,6 +668,7 @@ function TextFieldSettings() {
         }
 
         <FieldHideSettings />
+
         <FieldSettingsDivider />
 
         <FieldReadOnlySettings />

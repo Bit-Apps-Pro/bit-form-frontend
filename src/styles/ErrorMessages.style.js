@@ -1,7 +1,7 @@
 const ErrorMessages = {
   wrapper: {
     // bc: 'var(--b-50-95)',
-    p: '5px 0px 10px 7px',
+    p: 5,
     brs: 8,
     mt: 10,
   },
@@ -31,6 +31,7 @@ const ErrorMessages = {
     py: 15,
     px: 10,
     fs: 13,
+    curp: 1,
     '& p': { m: '0!important' },
   },
   checked: {
