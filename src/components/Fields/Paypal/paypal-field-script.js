@@ -42,6 +42,10 @@ class PayPalField {
       btnProps.createOrder = (data, actions) => this.#createOrderHandler(data, actions)
     }
 
+    if (this.#config.onInit) {
+      btnProps.onInit = this.#config.onInit
+    }
+
     if (paypal) paypal.Buttons(btnProps).render(this.#paypalWrpSelector)
   }
 

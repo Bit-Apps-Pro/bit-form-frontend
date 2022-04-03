@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHookStates, $fields } from '../../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../../Utils/AppSettingsContext'
+import { reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
@@ -17,6 +18,8 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const paypalFldWrapRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
 
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
+
   useEffect(() => {
     let key = ''
     if (!key && typeof bits !== 'undefined') {
@@ -26,7 +29,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       }
     }
     setClientID(key)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.payIntegID])
 
   useEffect(() => {
@@ -69,6 +72,9 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       payType: 'payment',
       shipping: 0,
       tax: 0,
+      onInit: () => {
+        reCalculateFieldHeights(setBuilderHookState, fieldKey)
+      },
     }
 
     paypalFldWrapRef.current = new PayPalField(fldElemnt, config)
@@ -79,6 +85,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       <RenderStyle styleClasses={styleClasses} />
       <InputWrapper
         formID={formID}
+        fieldKey={fieldKey}
         fieldData={attr}
         noLabel
         isBuilder={isBuilder}
