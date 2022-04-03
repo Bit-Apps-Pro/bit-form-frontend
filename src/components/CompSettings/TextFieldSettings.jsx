@@ -65,7 +65,6 @@ function TextFieldSettings() {
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const imputMode = fieldData.inputMode || 'text'
-  const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
   const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(',') : ['Off']
@@ -116,31 +115,6 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const hidePlaceholder = (e) => {
-    if (e.target.checked) {
-      fieldData.ph = 'type here...'
-      fieldData.phHide = true
-    } else {
-      fieldData.phHide = false
-      delete fieldData.ph
-    }
-    const req = e.target.checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function setPlaceholder(e) {
-    if (e.target.value === '') {
-      delete fieldData.ph
-    } else {
-      fieldData.ph = e.target.value
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const defaultValueChecked = ({ target: { checked } }) => {
@@ -336,7 +310,6 @@ function TextFieldSettings() {
   // }
   const seAutoComplete = (value) => {
     const splitted = value.split(',')
-    console.log('new value', value, splitted)
     let val = ''
 
     if (splitted.length === 1) val = value
@@ -357,7 +330,7 @@ function TextFieldSettings() {
       }
     }
 
-    if (!value) delete fieldData.autoComplete
+    if (!val) delete fieldData.autoComplete
     else fieldData.autoComplete = val
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
