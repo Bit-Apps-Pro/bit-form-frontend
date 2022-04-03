@@ -59,7 +59,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
           <textarea
             id={fieldKey}
             className={`${fieldKey}-fld`}
-            style={{ height: 'calc(100% - 30px)' }}
+            // style={{ height: 'calc(100% - 30px)' }}
             ref={textAreaRef}
             {...'disabled' in attr && { disabled: attr.disabled }}
             {...'readonly' in attr && { readOnly: attr.readonly }}

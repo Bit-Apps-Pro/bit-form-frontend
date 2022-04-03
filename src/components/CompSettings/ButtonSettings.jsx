@@ -170,14 +170,14 @@ export default function ButtonSettings() {
             />
           </div>
           <FieldIconSettings
-            label="Start Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.btnPreIcn}
             styleRoute="btn-pre-i"
             setIcon={() => setIconModel('btnPreIcn')}
             removeIcon={() => removeIcon('btnPreIcn')}
           />
           <FieldIconSettings
-            label="End Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.btnSufIcn}
             styleRoute="btn-suf-i"
             setIcon={() => setIconModel('btnSufIcn')}

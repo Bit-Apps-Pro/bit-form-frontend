@@ -162,7 +162,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
 
           <div className={css(ut.mt2, { mx: 10 })}>
             <FieldIconSettings
-              label="Start Icon"
+              label="Prefix Icon"
               iconSrc={fieldData?.errPreIcn}
               styleRoute="err-txt-pre-i"
               setIcon={() => setIconModel('errPreIcn')}
@@ -170,7 +170,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
             />
 
             <FieldIconSettings
-              label="End Icon"
+              label="Suffix Icon"
               iconSrc={fieldData?.errSufIcn}
               styleRoute="err-txt-suf-i"
               setIcon={() => setIconModel('errSufIcn')}

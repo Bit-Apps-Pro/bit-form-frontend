@@ -230,14 +230,14 @@ function TitleSettings() {
             </div>
           </div>
           <FieldIconSettings
-            label="Start Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.titlePreIcn}
             styleRoute="title-pre-i"
             setIcon={() => setIconModel('titlePreIcn')}
             removeIcon={() => removeIcon('titlePreIcn')}
           />
           <FieldIconSettings
-            label="End Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.titleSufIcn}
             styleRoute="title-suf-i"
             setIcon={() => setIconModel('titleSufIcn')}
@@ -301,14 +301,14 @@ function TitleSettings() {
             </div>
           </div>
           <FieldIconSettings
-            label="Start Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.subTitlPreIcn}
             styleRoute="sub-titl-pre-i"
             setIcon={() => setIconModel('subTitlPreIcn')}
             removeIcon={() => removeIcon('subTitlPreIcn')}
           />
           <FieldIconSettings
-            label="End Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.subTitlSufIcn}
             styleRoute="sub-titl-suf-i"
             setIcon={() => setIconModel('subTitlSufIcn')}

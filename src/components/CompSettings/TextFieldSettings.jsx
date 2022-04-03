@@ -7,18 +7,17 @@
 import produce from 'immer'
 import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import toast from 'react-hot-toast'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, cols, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
@@ -58,19 +57,13 @@ function TextFieldSettings() {
   const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const isRequired = fieldData.valid.req || false
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const patternTippy = useRef()
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
-  // const adminLblHide = fieldData.adminLblHide || true
-  // const subtitleHide = fieldData.subtitleHide || true
-  // const hlpTxtHide = fieldData.hlpTxtHide || true
-  const helperTxt = fieldData.helperTxt || ''
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
@@ -83,33 +76,8 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
-  const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
-
-  const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
-  const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
-
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
-  function setRequired(e) {
-    if (e.target.checked) {
-      const tmp = { ...fieldData.valid }
-      tmp.req = true
-      fieldData.valid = tmp
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    const req = e.target.checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  // 'address, user,
 
   function setAutoComplete(e) {
     if (e.target.checked) {
@@ -148,36 +116,6 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const setHelperTxt = ({ target: { value } }) => {
-    if (value === '') {
-      delete fieldData.helperTxt
-      // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
-    } else fieldData.helperTxt = value
-
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const hideHelperTxt = ({ target: { checked } }) => {
-    if (checked) {
-      fieldData.helperTxt = 'Helper Text'
-      fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
-    } else {
-      fieldData.hlpTxtHide = false
-      delete fieldData.helperTxt
-    }
-
-    const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {
@@ -479,32 +417,6 @@ function TextFieldSettings() {
     setUpdateBtn({ unsaved: true })
   }
 
-  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
-  const style = {
-    dotBtn: {
-      b: 0,
-      brs: 5,
-      mr: 15,
-      curp: 1,
-    },
-    button: {
-      dy: 'block',
-      w: '100%',
-      ta: 'left',
-      b: 0,
-      bd: 'none',
-      p: 3,
-      curp: 1,
-      '&:hover':
-      {
-        bd: 'var(--white-0-95)',
-        cr: 'var(--black-0)',
-        brs: 8,
-      },
-      fs: 11,
-    },
-  }
-
   return (
     <>
       <div className="">
@@ -702,26 +614,8 @@ function TextFieldSettings() {
           )
         }
 
-        {/* <SimpleAccordion
-          title={__('Required', 'bitform')}
-          // eslint-disable-next-line react/jsx-no-bind
-          toggleAction={setRequired}
-          toggleChecked={isRequired}
-          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-          switching
-          tip="By enabling this feature, user will see the error message when input is empty"
-          tipProps={{ width: 200, icnSize: 17 }}
-          open={isRequired}
-          disable={!isRequired}
-        >
-          <ErrorMessageSettings
-            type="req"
-            title="Error Message"
-            tipTitle="By enabling this feature, user will see the error message when input is empty"
-          />
-        </SimpleAccordion> */}
         <RequiredSettings />
-        {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
+
         <FieldSettingsDivider />
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
@@ -993,3 +887,29 @@ function TextFieldSettings() {
 }
 
 export default memo(TextFieldSettings)
+
+const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+const style = {
+  dotBtn: {
+    b: 0,
+    brs: 5,
+    mr: 15,
+    curp: 1,
+  },
+  button: {
+    dy: 'block',
+    w: '100%',
+    ta: 'left',
+    b: 0,
+    bd: 'none',
+    p: 3,
+    curp: 1,
+    '&:hover':
+    {
+      bd: 'var(--white-0-95)',
+      cr: 'var(--black-0)',
+      brs: 8,
+    },
+    fs: 11,
+  },
+}
