@@ -46,9 +46,8 @@ export default function ButtonSettings() {
     { name: __('Right', 'bitform'), value: 'end' },
   ]
   const type = [
-    { name: 'Submit', value: 'submit' },
-    { name: 'Reset', value: 'reset' },
-    { name: 'Button', value: 'button' },
+    { name: 'Reset', value: 'reset', disabled: false },
+    { name: 'Button', value: 'button', disabled: false },
   ]
 
   const setBuilderFldWrpHeight = () => {
@@ -97,6 +96,10 @@ export default function ButtonSettings() {
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
     return btns.length >= 1
+  }
+
+  if (!checkSubmitBtn() || btnTyp === 'submit') {
+    type.push({ name: 'Submit', value: 'submit', disabled: true })
   }
 
   function setFulW(e) {
