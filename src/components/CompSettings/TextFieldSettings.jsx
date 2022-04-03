@@ -400,6 +400,23 @@ function TextFieldSettings() {
     setUpdateBtn({ unsaved: true })
   }
 
+  const hideSuggestionVal = ({ target: { checked } }) => {
+    if (checked) {
+      fieldData.suggestionHide = true
+    } else {
+      fieldData.suggestionHide = false
+      delete fieldData.suggestions
+    }
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(
+      setBuilderHistory,
+      { event: `Suggestion ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
+      setUpdateBtn,
+    )
+  }
+
   return (
     <>
       <div className="">
@@ -504,10 +521,10 @@ function TextFieldSettings() {
           title={__('Suggestion', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          // toggleAction={() => (e)}
-          toggleChecked
-          open
-          disable={false}
+          toggleAction={hideSuggestionVal}
+          toggleChecked={fieldData?.suggestionHide}
+          open={fieldData?.suggestionHide}
+          disable={!fieldData?.suggestionHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <button onClick={openOptionModal} className={css(app.btn)} type="button">
