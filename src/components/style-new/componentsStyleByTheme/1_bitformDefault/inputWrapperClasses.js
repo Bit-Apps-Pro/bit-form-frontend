@@ -57,6 +57,7 @@ export default function inputWrapperClasses(fk) {
       margin: 'var(--req-smbl-m, 0)',
       padding: 'var(--req-smbl-p, 0)',
       'font-weight': 'var(--req-smbl-fw)',
+      'line-height': 'var(--req-smbl-lh, 12px)',
     },
     [`.${fk}-sub-titl`]: {
       'background-color': 'var(--sub-titl-bg, none)',

@@ -9,7 +9,7 @@ import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $update
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../style-new/styleHelpers'
@@ -28,7 +28,7 @@ export default function ButtonSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const [error, seterror] = useState({})
+  const [error, setError] = useState({})
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { txt, align, fulW, btnSiz, btnTyp } = fieldData
@@ -39,7 +39,6 @@ export default function ButtonSettings() {
   const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const helperTxt = fieldData.helperTxt || ''
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'start' },
@@ -66,12 +65,15 @@ export default function ButtonSettings() {
   function setBtnTyp(e) {
     fieldData.btnTyp = e.target.value
     if (fieldData.btnTyp === 'submit' && checkSubmitBtn()) {
-      seterror({ btnTyp: __('Already have a submit button') })
+      setError({ btnTyp: __('Already have a submit button') })
+      setTimeout(() => {
+        setError({ btnTyp: '' })
+      }, 3000)
       return
     }
 
     if (error.btnTyp) {
-      seterror({ btnTyp: '' })
+      setError({ btnTyp: '' })
     }
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['background-color'] = e.target.value === 'reset' ? '#ededf1' : '#0083f3'
@@ -121,49 +123,19 @@ export default function ButtonSettings() {
     }
   }
 
-  const setHelperTxt = ({ target: { value } }) => {
-    if (value === '') {
-      delete fieldData.helperTxt
-      // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
-    } else fieldData.helperTxt = value
-
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const hideHelperTxt = ({ target: { checked } }) => {
-    if (checked) {
-      fieldData.helperTxt = 'Helper Text'
-      fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
-    } else {
-      fieldData.hlpTxtHide = false
-      delete fieldData.helperTxt
-    }
-
-    const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
   return (
     <>
       <div className="">
         <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
         <SimpleAccordion
-          title={__('Submit Button Text', 'bitform')}
+          title={__('Button Text', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
-              aria-label="Submit button text"
+              aria-label="Button text"
               placeholder="Type text here..."
               value={txt}
               changeAction={setSubBtnTxt}

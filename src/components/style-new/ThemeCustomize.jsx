@@ -14,6 +14,7 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
+import AsteriskCustomizer from './AsteriskCustomizer'
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
 import FieldContainerCustomizer from './FieldContainerCustomizer'
 import FormContainerCustomizer from './FormContainerCustomizer'
@@ -59,6 +60,7 @@ export default function ThemeCustomize() {
       case 'error-messages': return 'Error Messages'
       case 'err-txt-pre-i': return 'Error Text Prefix Icons'
       case 'err-txt-suf-i': return 'Error Text Suffix Icons'
+      case 'req-smbl': return 'Asterisk Symbol'
       default: return 'Theme Customization'
     }
   }
@@ -123,6 +125,7 @@ export default function ThemeCustomize() {
         {element === 'helper-text' && <HelperTextCustomizer />}
         {element === 'error-messages' && <ErrorMessagesCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
+        {element === 'req-smbl' && <AsteriskCustomizer />}
 
         {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
