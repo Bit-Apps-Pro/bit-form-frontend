@@ -18,8 +18,7 @@ export default function HelperTextCustomizer() {
 
   const { '--hlp-txt-bg': htBg,
     '--hlp-txt-c': htC,
-    '--hlp-txt-sh': htSh,
-    '--hlp-txt-bdr': htBdr } = themeColors
+    '--hlp-txt-sh': htSh } = themeColors
   return (
     <div className={css(ut.m10)}>
       <SimpleColorPicker
@@ -40,7 +39,6 @@ export default function HelperTextCustomizer() {
           />
           <BorderControl
             subtitle="Helper Text Border Control"
-            value={htBdr}
             objectPaths={borderPathsObj}
             id="hlp-txt-control"
           />
