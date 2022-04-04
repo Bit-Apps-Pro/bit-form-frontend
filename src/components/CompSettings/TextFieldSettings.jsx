@@ -349,8 +349,8 @@ function TextFieldSettings() {
   }
 
   const hideAutoComplete = ({ target: { checked } }) => {
-    if (checked) fieldData.ac = fieldData.lbl || fldKey
-    else delete fieldData.ac
+    if (checked) fieldData.acHide = true
+    else delete fieldData.acHide
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -541,9 +541,9 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideAutoComplete}
-          toggleChecked={fieldData?.ac !== undefined}
-          open={fieldData?.ac !== undefined}
-          disable={!fieldData.ac}
+          toggleChecked={fieldData?.acHide}
+          open={fieldData?.acHide}
+          disable={!fieldData.acHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <MultiSelect
@@ -554,20 +554,7 @@ function TextFieldSettings() {
               onChange={val => seAutoComplete(val)}
               disableChip
             />
-            {/* <select
-              className={css(FieldStyle.input)}
-              name="suggestion" value={ac}
-              onChange={handleSuggestion}
-            >
-              {autofillList.map((item) => {
-                if (item.type === 'group_start') {
-                  return <optgroup label={item.label} />
-                }
-                return <option value={item.value}>{item.label}</option>
-              })}
-            </select> */}
           </div>
-
         </SimpleAccordion>
 
         <FieldSettingsDivider />
