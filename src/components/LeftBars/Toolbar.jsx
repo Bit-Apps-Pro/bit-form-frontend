@@ -125,7 +125,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: 'Option 3', val: 'Option 3' },
         ],
         ph: 'Select a option...',
-        phHide: true,
+        phHide: false,
         valid: {},
         err: {},
       },

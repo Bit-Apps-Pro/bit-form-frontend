@@ -726,7 +726,7 @@ function TextFieldSettings() {
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css(FieldStyle.fieldNumber)}>
                   <span>{__('Min:', 'bitform')}</span>
-                  <input aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={min} onChange={setMin} />
+                  <input title="Minimum number for this field" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={min} onChange={setMin} />
                 </div>
                 {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
                 {fieldData.mn && (
@@ -738,7 +738,7 @@ function TextFieldSettings() {
                 )}
                 <div className={css(FieldStyle.fieldNumber)}>
                   <span>{__('Max:', 'bitform')}</span>
-                  <input aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber)} type="number" value={max} onChange={setMax} />
+                  <input title="Maximum number for this field" aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={max} onChange={setMax} />
                 </div>
                 {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
                 {fieldData.mx && (

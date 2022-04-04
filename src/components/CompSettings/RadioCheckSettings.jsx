@@ -542,18 +542,14 @@ function RadioCheckSettings() {
           </div>
         </>
       </SimpleAccordion> */}
-      <FieldSettingsDivider />
 
-      {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
-        <DownloadIcon size="16" />
-        &nbsp;
-        {__('Import Options', 'bitform')}
-      </button> */}
-      {/* <br /> */}
-      <button onClick={openOptionModal} className={css(app.btn)} type="button">
-        &nbsp;
-        {__('Edit Options', 'bitform')}
-      </button>
+      <div className={css(FieldStyle.fieldSection)}>
+        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+          &nbsp;
+          {__('Edit Options', 'bitform')}
+        </button>
+      </div>
+      <FieldSettingsDivider />
       <Modal
         md
         autoHeight
