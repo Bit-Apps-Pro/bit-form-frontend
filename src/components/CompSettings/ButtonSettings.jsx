@@ -7,12 +7,13 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, setIconFilterValue } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -35,6 +36,7 @@ export default function ButtonSettings() {
   const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -114,6 +116,7 @@ export default function ButtonSettings() {
 
   const setIconModel = (typ) => {
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)
   }

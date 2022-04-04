@@ -1,8 +1,11 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
+import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
+import { hslToHex } from './colorHelpers'
 import advancedFileUp_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
@@ -409,6 +412,8 @@ export const styleClasses = {
   subTitl: ['sub-titl'],
   subTlePreIcn: ['sub-titl-pre-i'],
   subTleSufIcn: ['sub-titl-suf-i'],
+  subTitlPreIcn: ['sub-titl-pre-i'],
+  subTitlSufIcn: ['sub-titl-suf-i'],
   fld: ['fld'],
   divider: ['divider'],
   image: ['img'],
@@ -668,4 +673,39 @@ export const getValueFromStateVar = (stateObj, val) => {
     return stateObj[getVarProperty] || ''
   }
   return val
+}
+
+export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeColors, setThemeColors) => {
+  const elementKey = styleClasses[iconType][0]
+  const filterValue = styles?.fields?.[fldKey].classes[`.${fldKey}-${elementKey}`]?.filter
+  const themeVal = getValueFromStateVar(themeColors, filterValue)
+  if (!themeVal) {
+    const parentElement = getIconsParentElement(iconType)
+    const parentColor = styles?.fields?.[fldKey].classes[`.${fldKey}-${parentElement}`]?.color
+    if (parentColor.indexOf('var') >= 0) {
+      const parentThemeVal = getValueFromStateVar(themeColors, parentColor)
+      if (parentThemeVal) {
+        const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
+        const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
+        const setFilterValue = hexToCSSFilter(hexValue)
+        setThemeColors(prvStyle => produce(prvStyle, drft => {
+          drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
+        }))
+      }
+    } else if (parentColor) {
+      const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
+      const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
+      const setFilterValue = hexToCSSFilter(hexValue)
+      setStyles(prvState => produce(prvState, drftStyles => {
+        drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
+        drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+      }))
+    } else {
+      const setFilterValue = hexToCSSFilter('#000000')
+      setStyles(prvState => produce(prvState, drftStyles => {
+        drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
+        drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+      }))
+    }
+  }
 }

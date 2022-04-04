@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
 import htmr from 'htmr'
+import { getValueFromStateVar } from '../components/style-new/styleHelpers'
 
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
@@ -433,6 +434,88 @@ export const getElmDataBasedOnElement = (element) => {
   }
 
   return { elementKey, classKey }
+}
+
+export const getIconsGlobalFilterVariable = (iconType) => {
+  let variableName = ''
+  switch (iconType) {
+    case 'lblPreIcn':
+      variableName = '--lbl-pre-i-fltr'
+      break
+    case 'lblSufIcn':
+      variableName = '--lbl-suf-i-fltr'
+      break
+    case 'subTlePreIcn':
+      variableName = 'sub-titl-pre-i-fltr'
+      break
+    case 'subTleSufIcn':
+      variableName = 'sub-titl-suf-i-fltr'
+      break
+    case 'hlpPreIcn':
+      variableName = '--hlp-txt-pre-i-fltr'
+      break
+    case 'hlpSufIcn':
+      variableName = '--hlp-txt-suf-i-fltr'
+      break
+    case 'btnPreIcn':
+      variableName = '--lbl-pre-i-fltr'
+      break
+    case 'btnSufIcn':
+      variableName = '--lbl-pre-i-fltr'
+      break
+    case 'errPreIcn':
+      variableName = '--err-txt-pre-i-fltr'
+      break
+    case 'errSufIcn':
+      variableName = '--err-txt-suf-i-fltr'
+      break
+    case 'titlePreIcn':
+      variableName = '--lbl-pre-i-fltr'
+      break
+    case 'titleSufIcn':
+      variableName = '--lbl-pre-i-fltr'
+      break
+    default:
+      variableName = ''
+  }
+  return variableName
+}
+
+export const getIconsParentElement = (iconType) => {
+  let parentElement = ''
+  switch (iconType) {
+    case 'lblPreIcn':
+    case 'lblSufIcn':
+      parentElement = 'lbl'
+      break
+    case 'subTlePreIcn':
+    case 'subTleSufIcn':
+      parentElement = 'sub-titl'
+      break
+    case 'hlpPreIcn':
+    case 'hlpSufIcn':
+      parentElement = 'hlp-txt'
+      break
+    case 'btnPreIcn':
+    case 'btnSufIcn':
+      parentElement = 'btn'
+      break
+    case 'errPreIcn':
+    case 'errSufIcn':
+      parentElement = 'err-msg'
+      break
+    case 'titlePreIcn':
+    case 'titleSufIcn':
+      parentElement = 'title'
+      break
+    case 'subTitlPreIcn':
+    case 'subTitlSufIcn':
+      parentElement = 'sub-titl'
+      break
+    default:
+      parentElement = 'fld'
+  }
+  return parentElement
 }
 
 /**
