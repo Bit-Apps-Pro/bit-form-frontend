@@ -13,7 +13,7 @@ import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { getValueByObjPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function BorderControl({ subtitle, value, objectPaths, id, allowImportant, state }) {
+export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state }) {
   const { css } = useFela()
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -109,7 +109,7 @@ export default function BorderControl({ subtitle, value, objectPaths, id, allowI
           <ColorPreview bg={bdrColor} h={24} w={24} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{valStr || 'Add Border Style'}</span>
         </button>
-        {value && (
+        {valStr && (
           <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Border">
             <CloseIcn size="12" />
           </button>

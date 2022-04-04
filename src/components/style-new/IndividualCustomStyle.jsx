@@ -363,7 +363,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <BorderControl
               allowImportant
               subtitle={`${fldTitle}`}
-              value={`${existCssPropsObj?.[propertyKeys[0]]}  ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />
