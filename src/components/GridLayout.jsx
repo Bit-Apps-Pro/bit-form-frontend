@@ -7,7 +7,7 @@
 /* eslint-disable no-undef */
 
 import produce from 'immer'
-import { memo, useContext, useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
@@ -27,6 +27,7 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
+import { highlightElm, removeHightlight } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -65,7 +66,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const history = useHistory()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
-  const { styleMode } = flags
+  const { styleMode, inspectMode } = flags
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
@@ -431,6 +432,48 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     if (styleMode) return
     history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
+
+  const elmCurrentHighlightedRef = useRef(null)
+  const eventAbortControllerRef = useRef(null)
+  const insptectModeTurnedOnRef = useRef(false)
+
+  const highlightElmEvent = event => {
+    if (document.elementsFromPoint) {
+      const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
+      const allPointedElements = iFrameDocument.elementsFromPoint(event.pageX, event.pageY)
+      const elmOnMousePointer = allPointedElements.find(el => !el.className.startsWith('highlight-'))
+      if (!elmOnMousePointer) return false
+      if (elmCurrentHighlightedRef.current && elmOnMousePointer.isEqualNode(elmCurrentHighlightedRef.current)) return false
+      let dataDevAttrFound = false
+      if (elmOnMousePointer?.attributes?.length) {
+        for (let i = 0; i < elmOnMousePointer.attributes.length; i += 1) {
+          const { name: attrName, value: attrVal } = elmOnMousePointer.attributes[i]
+          if (attrName.startsWith('data-dev-')) {
+            removeHightlight()
+            dataDevAttrFound = true
+            elmCurrentHighlightedRef.current = elmOnMousePointer
+            highlightElm(`[${attrName}="${attrVal}"]`)
+            break
+          }
+        }
+      }
+      if (!dataDevAttrFound) {
+        removeHightlight()
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (inspectMode) {
+      const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
+      eventAbortControllerRef.current = new AbortController()
+      iFrameDocument.addEventListener('mousemove', highlightElmEvent, { signal: eventAbortControllerRef.current.signal })
+      insptectModeTurnedOnRef.current = true
+    } else if (!inspectMode && insptectModeTurnedOnRef.current) {
+      eventAbortControllerRef.current.abort()
+      removeHightlight()
+    }
+  }, [inspectMode])
 
   return (
     <div style={{ width: gridWidth + 10 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
