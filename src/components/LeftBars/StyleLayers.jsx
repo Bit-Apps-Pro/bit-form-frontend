@@ -40,13 +40,13 @@ export default function StyleLayers() {
           <NavBtn route="field-containers" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-containers" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('label')} offset="6" title="Labels" highlightSelector="[data-dev-lbl]">
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('lbl')} offset="6" title="Labels" highlightSelector="[data-dev-lbl]">
             <NavBtn route="lbl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
             <NavBtn route="lbl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
             <NavBtn route="req-smbl" label="Asterisk Icon" offset="3.5" highlightSelector="[data-dev-req-smbl]" />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('subtitle')} offset="6" title="Sub Titles" highlightSelector="[data-dev-sub-titl]">
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('sub-titl')} offset="6" title="Sub Titles" highlightSelector="[data-dev-sub-titl]">
             <NavBtn route="sub-titl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-pre-i]" />
             <NavBtn route="sub-titl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
           </LayerAccordion>
@@ -56,7 +56,7 @@ export default function StyleLayers() {
             <NavBtn route="suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-suf-i]" />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('helper-text')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
+          <LayerAccordion childrenAccodin onClick={() => styleHandler('hlp-txt')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
             <NavBtn route="hlp-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
             <NavBtn route="hlp-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
           </LayerAccordion>
@@ -71,25 +71,25 @@ export default function StyleLayers() {
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
-              {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'field-container')} />}
+              {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="fld-wrp" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp')} />}
               <ElementConfiguration fldKey={fldKey} />
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
-                    route="check-container"
+                    route="cc"
                     label="Check Container"
                     offset="2.5"
                     highlightSelector={`[data-dev-cc="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-container')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'cc')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="option-label"
+                    route="ct"
                     label="Option Label"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-label')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'ct')}
                   />
                 </>
               )}
@@ -97,40 +97,40 @@ export default function StyleLayers() {
               {fldData.typ.match(/(check|decision-box)/gi) && (
                 <NavBtn
                   subRoute={fldKey}
-                  route="check-box"
+                  route="ck"
                   label="Check Box"
                   offset="2.5"
                   highlightSelector={`[data-dev-ck="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-box')}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'ck')}
                 />
               )}
               {fldData.typ.match(/^(check|radio)$/gi) && (
                 <>
                   <NavBtn
                     subRoute={fldKey}
-                    route="check-wrapper"
+                    route="cw"
                     label="Check Wrapper"
                     offset="2.5"
                     highlightSelector={`[data-dev-cw="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-wrapper')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'cw')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="option-wrapper"
+                    route="cl"
                     label="Option Wrapper"
                     offset="2.5"
                     highlightSelector={`[data-dev-cl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrapper')}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'cl')}
                   />
 
                   {fldData.typ === 'radio' && (
                     <NavBtn
                       subRoute={fldKey}
-                      route="radio-box"
+                      route="rdo"
                       label="Radio Box"
                       offset="2.5"
                       highlightSelector={`[data-dev-rdo="${fldKey}"]`}
-                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'radio-box')}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'rdo')}
                     />
                   )}
                 </>
@@ -496,11 +496,11 @@ export default function StyleLayers() {
               {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal|recaptcha)$/) && (
                 <NavBtn
                   subRoute={fldKey}
-                  route="error-message"
+                  route="err-msg"
                   label="Error Message"
                   offset="2.5"
                   highlightSelector={`[data-dev-err-msg="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'error-message')}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'err-msg')}
                 />
               )}
 

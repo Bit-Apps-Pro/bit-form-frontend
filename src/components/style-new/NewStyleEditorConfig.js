@@ -302,7 +302,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
-  label: {
+  lbl: {
     states: ['hover'],
     properties: {
       background: {
@@ -400,7 +400,7 @@ const editorConfig = {
       width: '',
     },
   },
-  'helper-text': {
+  'hlp-txt': {
     states: ['hover'],
     properties: {
       'background-color': '',

@@ -46,7 +46,7 @@ export default function ThemeCustomize() {
       case 'form-containers': return 'Form Containers'
       case 'field-containers': return 'Field Containers'
       case 'label-containers': return 'Label & Subtitle Containers'
-      case 'label': return 'Labels'
+      case 'lbl': return 'Labels'
       case 'lbl-pre-i': return 'Label Prefix Icons'
       case 'lbl-suf-i': return 'Label Suffix Icons'
       case 'subtitle': return 'Sub Titles'
@@ -54,7 +54,7 @@ export default function ThemeCustomize() {
       case 'sub-titl-suf-i': return 'Subtitle Suffix Icons'
       case 'pre-i': return 'Input Prefix Icons'
       case 'suf-i': return 'Input Suffix Icons'
-      case 'helper-text': return 'Helper Texts'
+      case 'hlp-txt': return 'Helper Texts'
       case 'hlp-txt-pre-i': return 'Helper Text Prefix Icons'
       case 'hlp-txt-suf-i': return 'Helper Text Suffix Icons'
       case 'error-messages': return 'Error Messages'
@@ -122,7 +122,7 @@ export default function ThemeCustomize() {
         {element === 'label-containers' && <LabelContainerCustomizer />}
         {element === 'label' && <LabelCustomizer />}
         {element === 'subtitle' && <SubTitleCustomizer />}
-        {element === 'helper-text' && <HelperTextCustomizer />}
+        {element === 'hlp-txt' && <HelperTextCustomizer />}
         {element === 'error-messages' && <ErrorMessagesCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
         {element === 'req-smbl' && <AsteriskCustomizer />}
