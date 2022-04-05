@@ -258,7 +258,7 @@ export function highlightElm(selector, selectType = 'element padding margin') {
   })
 }
 
-export const removeHightlight = (selector = '[data-highlight]') => {
+export const removeHighlight = (selector = '[data-highlight]') => {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
   elms.forEach(elm => { elm.remove() })
 }

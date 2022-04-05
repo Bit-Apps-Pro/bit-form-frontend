@@ -7,7 +7,7 @@ import { CSSTransition } from 'react-transition-group'
 import FocusIcn from '../../../../Icons/FocusIcn'
 import SortIcn from '../../../../Icons/SortIcn'
 import ut from '../../../../styles/2.utilities'
-import { highlightElm, removeHightlight } from '../../../style-new/styleHelpers'
+import { highlightElm, removeHighlight } from '../../../style-new/styleHelpers'
 import Cooltip from '../../../Utilities/Cooltip'
 
 export default function LayerAccordion({ className,
@@ -105,8 +105,8 @@ export default function LayerAccordion({ className,
                   <div
                     onMouseEnter={() => highlightElm(highlightSelector)}
                     onFocus={() => highlightElm(highlightSelector)}
-                    onMouseLeave={() => removeHightlight()}
-                    onBlur={() => removeHightlight()}
+                    onMouseLeave={() => removeHighlight()}
+                    onBlur={() => removeHighlight()}
                     role="button"
                     tabIndex="0"
                     className={css(cls.highlightBtn)}

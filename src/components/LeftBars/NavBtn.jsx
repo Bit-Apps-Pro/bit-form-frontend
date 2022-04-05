@@ -2,7 +2,7 @@ import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
-import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
+import { highlightElm, removeHighlight } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 
 export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1, icn, highlightSelector, styleOverride }) {
@@ -48,8 +48,8 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
           <div
             onMouseEnter={() => highlightElm(highlightSelector)}
             onFocus={() => highlightElm(highlightSelector)}
-            onMouseLeave={() => removeHightlight()}
-            onBlur={() => removeHightlight()}
+            onMouseLeave={() => removeHighlight()}
+            onBlur={() => removeHighlight()}
             role="button"
             tabIndex="0"
             className={css(s.highlightBtn)}
