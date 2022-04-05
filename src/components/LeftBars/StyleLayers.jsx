@@ -35,8 +35,8 @@ export default function StyleLayers() {
         <div className={css(s.scrollDiv)}>
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
-          <NavBtn route="form-wrappers" label="Form Wrappers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
-          <NavBtn route="form-containers" label="Form Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
+          <NavBtn route="form-wrappers" label="Form Wrapper" highlightSelector="[data-dev-frm-bg]" offset="3" />
+          <NavBtn route="form-containers" label="Form Container" highlightSelector="[data-dev-frm-wrp]" offset="3" />
           <NavBtn route="field-containers" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-containers" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
 
