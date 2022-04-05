@@ -284,15 +284,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
-
           {element !== 'quick-tweaks' && renderIndividualCustomStyleComp()}
-
-          {element === 'bg-img' && (
-            <h2>background image</h2>
-            // <div className={css(!checkExistElement(element) && cls.blur)}>
-            //   <IndividualInputFldCustomStyle elementKey={element} fldKey={fieldKey} />
-            // </div>
-          )}
         </div>
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}

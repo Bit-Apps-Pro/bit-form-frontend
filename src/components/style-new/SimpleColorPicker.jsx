@@ -62,17 +62,17 @@ export default function SimpleColorPicker({ title,
   }
 
   const checkVarValue = () => {
-    let str = value
     let val = value
     if (value?.match(/(var)/gi)?.[0]) {
-      str = value.replaceAll(/\(|var|,.*\)|(!important)/gi, '')
+      const str = value.replaceAll(/\(|var|,.*\)|(!important)|\s/gi, '')
       val = themeColors[str]
     }
     if (val?.match(/(!important)/gi)) {
       val = val?.replaceAll(/(!important)/gi, '')
     }
-    return { str, val }
+    return val
   }
+
   const colorStr = checkVarValue()
 
   return (
@@ -88,16 +88,16 @@ export default function SimpleColorPicker({ title,
       <div className={css(ut.flxc)}>
         <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
-        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={colorStr.val || `Add ${title}`}>
+        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={colorStr || `Add ${title}`}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={colorStr.val} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{colorStr.val || 'Configure Color'}</span>
+            <ColorPreview bg={colorStr} h={24} w={24} className={css(ut.mr2)} />
+            <span className={css(c.clrVal)}>{colorStr || 'Configure Color'}</span>
           </button>
-          {value && (
+          {colorStr && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
               <CloseIcn size="12" />
             </button>

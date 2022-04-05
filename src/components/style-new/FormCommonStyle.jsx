@@ -159,7 +159,6 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
               />
               <BorderControl
                 subtitle={`${componentTitle} Border`}
-                value={formWrpStylesObj?.border}
                 objectPaths={objPaths}
                 id="fld-wrp-bdr"
               />

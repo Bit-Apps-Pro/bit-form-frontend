@@ -33,7 +33,7 @@ export default function IndividualShadowControl({ title,
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
-  const setThemeColors = useSetRecoilState($themeColors)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const clearHandler = () => {
@@ -58,7 +58,10 @@ export default function IndividualShadowControl({ title,
     }
   }
   const getValue = () => {
-    if (value?.match(/(var)/gi)) return value?.replaceAll(/\(|var|\)/gi, '')
+    if (value?.match(/(var)/gi)) {
+      const shVar = value?.replaceAll(/\(|var|\)/gi, '')
+      return themeColors[shVar]
+    }
     return value
   }
   return (
@@ -83,7 +86,7 @@ export default function IndividualShadowControl({ title,
           >
             <span className={css(c.clrVal)}>{getValue() || 'Configure'}</span>
           </button>
-          {value && (
+          {getValue() && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
               <CloseIcn size="12" />
             </button>

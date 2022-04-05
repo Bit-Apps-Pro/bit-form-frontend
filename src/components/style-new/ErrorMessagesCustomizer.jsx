@@ -18,8 +18,7 @@ export default function ErrorMessagesCustomizer() {
 
   const { '--err-bg': errBg,
     '--err-c': errC,
-    '--err-sh': errSh,
-    '--err-bdr': errB } = themeColors
+    '--err-sh': errSh } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -41,7 +40,6 @@ export default function ErrorMessagesCustomizer() {
           />
           <BorderControl
             subtitle="Error Message Border Control"
-            value={errB}
             objectPaths={borderPathsObj}
             id="err-control"
           />

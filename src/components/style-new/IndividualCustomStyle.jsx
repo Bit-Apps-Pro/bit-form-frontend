@@ -90,7 +90,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     return state
   }
 
-
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
@@ -363,7 +362,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <BorderControl
               allowImportant
               subtitle={`${fldTitle}`}
-              value={`${existCssPropsObj?.[propertyKeys[0]]}  ${existCssPropsObj?.['border-width']} ${existCssPropsObj?.['border-radius']}`}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />

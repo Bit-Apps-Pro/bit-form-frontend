@@ -164,6 +164,7 @@ const FieldStyle = {
     },
     ':hover': { '& div[data-tipbtn]': { tm: 'scale(1)' } },
   },
+  w140: { w: 140 },
 }
 
 export default FieldStyle

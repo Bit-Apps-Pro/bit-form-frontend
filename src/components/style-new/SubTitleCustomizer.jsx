@@ -18,8 +18,7 @@ export default function SubTitleCustomizer() {
 
   const { '--sub-titl-sh': stSh,
     '--sub-titl-c': stC,
-    '--sub-titl-bg': stBg,
-    '--sub-titl-bdr': stBdr } = themeColors
+    '--sub-titl-bg': stBg } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -41,7 +40,6 @@ export default function SubTitleCustomizer() {
           />
           <BorderControl
             subtitle="Subtitle Border Control"
-            value={stBdr}
             objectPaths={borderPathsObj}
             id="sub-title-width-bdr-control"
           />

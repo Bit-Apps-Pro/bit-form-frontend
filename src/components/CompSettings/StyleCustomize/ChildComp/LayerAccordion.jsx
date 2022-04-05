@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import FocusIcn from '../../../../Icons/FocusIcn'
 import SortIcn from '../../../../Icons/SortIcn'
@@ -10,6 +11,7 @@ import { highlightElm, removeHightlight } from '../../../style-new/styleHelpers'
 import Cooltip from '../../../Utilities/Cooltip'
 
 export default function LayerAccordion({ className,
+  route,
   title,
   children,
   childrenAccodin = false,
@@ -25,6 +27,12 @@ export default function LayerAccordion({ className,
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
+  const { element, rightBar } = useParams()
+  let active
+
+  if (rightBar === 'theme-customize' && element === route) {
+    active = true
+  }
   const toggleAccordion = (e) => {
     // e.preventDefault()
 
@@ -72,7 +80,7 @@ export default function LayerAccordion({ className,
         onClick={toggleAccordion}
         onKeyPress={toggleAccordion}
       >
-        <div className={`${css(ut.flxc, cls.titlebar)}`} style={{ paddingLeft: offset * 2 }}>
+        <div className={`${css(ut.flxc, cls.titlebar)} ${css(active && { bd: 'hsl(233deg 36% 95%)' })}`} style={{ paddingLeft: offset * 2 }}>
           <SortIcn className={`toggle-icn ${css(cls.icn)} `} size="9" style={{ transform: `rotate(${tgl ? 180 : 90}deg)` }} />
           <div className={css(cls.flxbwn)}>
             <div className={css(ut.flxc)}>

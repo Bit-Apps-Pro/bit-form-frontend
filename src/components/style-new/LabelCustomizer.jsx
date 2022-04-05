@@ -18,8 +18,7 @@ export default function LabelCustomizer() {
 
   const { '--fld-lbl-c': flc,
     '--fld-lbl-sh': flSh,
-    '--fld-lbl-bg': flBg,
-    '--fld-lbl-bdr': flBdr } = themeColors
+    '--fld-lbl-bg': flBg } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -71,7 +70,6 @@ export default function LabelCustomizer() {
           />
           <BorderControl
             subtitle="Label Border Control"
-            value={flBdr}
             objectPaths={borderPathsObj}
             id="fld-lbl-bdr-width"
           />

@@ -27,7 +27,6 @@ import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
-
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
@@ -350,7 +349,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           {!isLoading && !styleLoading ? (
             <RenderPortal
               id="bit-grid-layout"
-              style={{ width: gridWidth + 6, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
+              style={{ width: gridWidth + 10, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
             >
               <RenderThemeVarsAndFormCSS />
               <RenderCssInPortal />

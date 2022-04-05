@@ -15,8 +15,7 @@ export default function LabelContainerCustomizer() {
   const themeColors = useRecoilValue($themeColors)
 
   const { '--lbl-wrp-bg': lwBg,
-    '--lbl-wrp-sh': lwSh,
-    '--lbl-wrp-bdr': lwBdr } = themeColors
+    '--lbl-wrp-sh': lwSh } = themeColors
   return (
     <div className={css(ut.m10)}>
       <SimpleColorPicker
@@ -60,7 +59,6 @@ export default function LabelContainerCustomizer() {
           />
           <BorderControl
             subtitle="Label & Subtitle Container Border"
-            value={lwBdr}
             objectPaths={borderPathsObj}
             id="lbl-wrp-bdr"
           />

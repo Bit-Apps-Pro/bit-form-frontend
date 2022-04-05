@@ -59,11 +59,7 @@ export default function BorderControlMenu({ objectPaths }) {
   let borderPath
   let borderWidthPath
   let borderRadiusPath
-  const obj = {
-    border: '',
-    borderWidth: '',
-    borderRadius: '',
-  }
+  const obj = { border: '', borderWidth: '', borderRadius: '' }
 
   /**
    * When objectPaths is Array
@@ -72,11 +68,11 @@ export default function BorderControlMenu({ objectPaths }) {
    */
   if (Array.isArray(objectPaths)) {
     const [themeVarsObj, themeColorsObj] = objectPaths
+    // set state
     obj.borderWidth = themeVarsObj.object
     obj.borderRadius = themeVarsObj.object
     obj.border = themeColorsObj.object
 
-    // set state
     borderWidthPath = themeVarsObj.paths['border-width']
     borderRadiusPath = themeVarsObj.paths['border-radius']
     borderPath = themeColorsObj.paths[borderPropKeys[0]]
@@ -92,9 +88,9 @@ export default function BorderControlMenu({ objectPaths }) {
     obj.border = objectPaths.object
   }
 
-  const border = getValueFromStateVar(stateObj(obj.border), getValueByObjPath(stateObj(obj.border), borderPath))
-  const borderWidth = getValueFromStateVar(stateObj(obj.borderWidth), getValueByObjPath(stateObj(obj.borderWidth), borderWidthPath))
-  const borderRadius = getValueFromStateVar(stateObj(obj.borderRadius), getValueByObjPath(stateObj(obj.borderRadius), borderRadiusPath))
+  const border = getValueFromStateVar(themeColors, getValueByObjPath(stateObj(obj.border), borderPath))
+  const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderWidth), borderWidthPath))
+  const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderRadius), borderRadiusPath))
   const borderValue = extractBorderValue(border)
 
   const onSizeChange = (pathName, val) => {

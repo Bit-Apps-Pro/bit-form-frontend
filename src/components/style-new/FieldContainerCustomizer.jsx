@@ -20,7 +20,6 @@ export default function FieldContainerCustomizer() {
     '--fld-wrp-p': wrpPadding } = themeVars
 
   const { '--fld-wrp-bg': fwBg,
-    '--fld-wrp-bdr': fwBdr,
     '--fld-wrp-sh': fwSh } = themeColors
 
   return (
@@ -65,7 +64,6 @@ export default function FieldContainerCustomizer() {
           />
           <BorderControl
             subtitle="Field Container Border"
-            value={fwBdr}
             objectPaths={borderPathsObj}
             id="fld-wrp-bdr"
           />

@@ -88,7 +88,6 @@ export default function IcnCustomizer({ elementKey }) {
           />
           <BorderControl
             subtitle={`${title()} Icon Border Control`}
-            value={themeColors[`--${elementKey}-bdr`]}
             objectPaths={borderPathsObj}
             id="pre-i-control"
           />

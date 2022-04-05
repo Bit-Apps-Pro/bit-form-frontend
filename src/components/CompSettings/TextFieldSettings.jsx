@@ -17,7 +17,7 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
@@ -67,13 +67,15 @@ function TextFieldSettings() {
   const imputMode = fieldData.inputMode || 'text'
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
-  const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(',') : ['Off']
+  const ac = fieldData?.ac ? fieldData.ac.trim().split(',') : ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
+
+  console.log('fieldData', fieldData)
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -117,14 +119,22 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  const defaultValueChecked = ({ target: { checked } }) => {
-    if (checked) fieldData.defaultValue = 'type here...'
-    else delete fieldData.defaultValue
-
-    const req = checked ? 'on' : 'off'
+  const hideDefalutValue = (e) => {
+    if (e.target.checked) {
+      fieldData.defaultValue = fieldData.lbl || fldKey
+      fieldData.defaultValueHide = true
+    } else {
+      fieldData.defaultValueHide = false
+      delete fieldData.defaultValue
+    }
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(
+      setBuilderHistory,
+      { event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
+      setUpdateBtn,
+    )
   }
 
   const setDefaultValue = ({ target: { value } }) => {
@@ -301,8 +311,8 @@ function TextFieldSettings() {
   }
 
   // const handleSuggestion = ({ target: { value } }) => {
-  //   if (value !== '') fieldData.autoComplete = value
-  //   else delete fieldData.autoComplete
+  //   if (value !== '') fieldData.ac = value
+  //   else delete fieldData.ac
 
   //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
   //   setFields(allFields)
@@ -330,8 +340,8 @@ function TextFieldSettings() {
       }
     }
 
-    if (!val) delete fieldData.autoComplete
-    else fieldData.autoComplete = val
+    if (!val) delete fieldData.ac
+    else fieldData.ac = val
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -339,8 +349,8 @@ function TextFieldSettings() {
   }
 
   const hideAutoComplete = ({ target: { checked } }) => {
-    if (checked) fieldData.autoComplete = fieldData.lbl || fldKey
-    else delete fieldData.autoComplete
+    if (checked) fieldData.acHide = true
+    else delete fieldData.acHide
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -388,6 +398,23 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
+  }
+
+  const hideSuggestionVal = ({ target: { checked } }) => {
+    if (checked) {
+      fieldData.suggestionHide = true
+    } else {
+      fieldData.suggestionHide = false
+      delete fieldData.suggestions
+    }
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(
+      setBuilderHistory,
+      { event: `Suggestion ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
+      setUpdateBtn,
+    )
   }
 
   return (
@@ -471,10 +498,10 @@ function TextFieldSettings() {
           title={__('Default value', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          toggleAction={defaultValueChecked}
-          toggleChecked={fieldData?.defaultValue !== undefined}
-          open={fieldData?.defaultValue !== undefined}
-          disable={!fieldData?.defaultValue}
+          toggleAction={hideDefalutValue}
+          toggleChecked={fieldData?.defaultValueHide}
+          open={fieldData?.defaultValueHide}
+          disable={!fieldData?.defaultValueHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
@@ -494,10 +521,10 @@ function TextFieldSettings() {
           title={__('Suggestion', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          // toggleAction={() => (e)}
-          toggleChecked
-          open
-          disable={false}
+          toggleAction={hideSuggestionVal}
+          toggleChecked={fieldData?.suggestionHide}
+          open={fieldData?.suggestionHide}
+          disable={!fieldData?.suggestionHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <button onClick={openOptionModal} className={css(app.btn)} type="button">
@@ -514,33 +541,20 @@ function TextFieldSettings() {
           className={css(FieldStyle.fieldSection)}
           switching
           toggleAction={hideAutoComplete}
-          toggleChecked={fieldData?.autoComplete !== undefined}
-          open={fieldData?.autoComplete !== undefined}
-          disable={!fieldData.autoComplete}
+          toggleChecked={fieldData?.acHide}
+          open={fieldData?.acHide}
+          disable={!fieldData.acHide}
         >
           <div className={css(FieldStyle.placeholder)}>
             <MultiSelect
-              defaultValue={autoComplete}
+              defaultValue={ac}
               className={`${css(FieldStyle.multiselectInput)}`}
               placeholder="Select one"
               options={autofillList}
               onChange={val => seAutoComplete(val)}
               disableChip
             />
-            {/* <select
-              className={css(FieldStyle.input)}
-              name="suggestion" value={autoComplete}
-              onChange={handleSuggestion}
-            >
-              {autofillList.map((item) => {
-                if (item.type === 'group_start') {
-                  return <optgroup label={item.label} />
-                }
-                return <option value={item.value}>{item.label}</option>
-              })}
-            </select> */}
           </div>
-
         </SimpleAccordion>
 
         <FieldSettingsDivider />
@@ -712,7 +726,7 @@ function TextFieldSettings() {
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css(FieldStyle.fieldNumber)}>
                   <span>{__('Min:', 'bitform')}</span>
-                  <input aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={min} onChange={setMin} />
+                  <input title="Minimum number for this field" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={min} onChange={setMin} />
                 </div>
                 {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
                 {fieldData.mn && (
@@ -724,7 +738,7 @@ function TextFieldSettings() {
                 )}
                 <div className={css(FieldStyle.fieldNumber)}>
                   <span>{__('Max:', 'bitform')}</span>
-                  <input aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber)} type="number" value={max} onChange={setMax} />
+                  <input title="Maximum number for this field" aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={max} onChange={setMax} />
                 </div>
                 {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
                 {fieldData.mx && (
