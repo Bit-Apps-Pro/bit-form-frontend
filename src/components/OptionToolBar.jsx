@@ -86,7 +86,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   }
 
   const inspectModeButtonHandler = () => {
-    setFlags(prvFlags => ({ ...prvFlags, inspectMode: !flags.inspectMode }))
+    setFlags(prvFlags => ({ ...prvFlags, inspectMode: !prvFlags.inspectMode }))
     if (selectedFldId) {
       history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
     } else {
