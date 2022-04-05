@@ -7,12 +7,13 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
+import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, setIconFilterValue } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -23,14 +24,14 @@ export default function FieldLabelSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-
+  const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
@@ -76,6 +77,7 @@ export default function FieldLabelSettings() {
 
   const setIconModel = (iconType) => {
     addDefaultStyleClasses(selectedFieldId, iconType, setStyles)
+    setIconFilterValue(iconType, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(iconType)
     setIcnMdl(true)
   }
