@@ -115,16 +115,28 @@ const CurrencyFieldSettings = () => {
             </select>
           </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
-            <SingleToggle title={__('Currency Symbol:', 'bitform')} action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')} isChecked={fieldData.inputFormatOptions.showCurrencySymbol} />
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+            <SingleToggle
+              title={__('Currency Symbol:', 'bitform')}
+              action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')}
+              isChecked={fieldData.inputFormatOptions.showCurrencySymbol}
+            />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
-            <SingleToggle title={__('Round to Closest Integer:', 'bitform')} action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')} isChecked={fieldData.inputFormatOptions.roundToClosestInteger} />
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+            <SingleToggle
+              title={__('Round to Closest Integer:', 'bitform')}
+              action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')}
+              isChecked={fieldData.inputFormatOptions.roundToClosestInteger}
+            />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
-            <SingleToggle title={__('Round to Closest Fraction Digits:', 'bitform')} action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')} isChecked={fieldData.inputFormatOptions.roundToClosestFractionDigits} />
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+            <SingleToggle
+              title={__('Round to Closest Fraction Digits:', 'bitform')}
+              action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
+              isChecked={fieldData.inputFormatOptions.roundToClosestFractionDigits}
+            />
           </div>
         </div>
       </SimpleAccordion>
@@ -137,6 +149,8 @@ const CurrencyFieldSettings = () => {
           {__('Edit Options', 'bitform')}
         </button>
       </div>
+
+      <FieldSettingsDivider />
 
       <Modal
         md

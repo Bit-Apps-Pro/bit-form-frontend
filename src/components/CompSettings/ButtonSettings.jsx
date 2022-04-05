@@ -5,9 +5,8 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
@@ -31,12 +30,11 @@ export default function ButtonSettings() {
   const [error, setError] = useState({})
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const { txt, align, fulW, btnSiz, btnTyp } = fieldData
+  const { txt, align, fulW, btnTyp } = fieldData
   const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
 
@@ -50,10 +48,6 @@ export default function ButtonSettings() {
     { name: 'Reset', value: 'reset' },
     { name: 'Button', value: 'button' },
   ]
-
-  const setBuilderFldWrpHeight = () => {
-    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey: fldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
-  }
 
   function setSubBtnTxt(e) {
     fieldData.txt = e.target.value
@@ -76,8 +70,8 @@ export default function ButtonSettings() {
       setError({ btnTyp: '' })
     }
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['background-color'] = e.target.value === 'reset' ? '#ededf1' : '#0083f3'
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = e.target.value === 'reset' ? '#23435f' : '#fff'
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['background-color'] = e.target.value === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'hsla(208, 100%, 48%, 100%)'
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = e.target.value === 'reset' ? 'hsla(208, 46%, 25%, 100)' : 'hsla(0, 0%, 100%, 100)'
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -195,7 +189,7 @@ export default function ButtonSettings() {
 
         <FieldSettingsDivider />
 
-        <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
+        <div className={css(FieldStyle.fieldSection, { pr: '36px' })}>
           <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
         </div>
 

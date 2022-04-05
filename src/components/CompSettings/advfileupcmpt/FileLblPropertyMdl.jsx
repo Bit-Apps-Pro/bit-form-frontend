@@ -147,10 +147,6 @@ export default function FileLblPropertyMdl({ showMdl, setshowMdl, title }) {
             coolTip="Label used for upload button"
           />
         </div>
-
-        <div>
-          <button type="button" className={css(ut.mr2, ut.btn_primary)} onClick={() => setshowMdl(false)}>Close</button>
-        </div>
       </Scrollbars>
     </Modal>
   )

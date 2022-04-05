@@ -30,7 +30,7 @@ export default function FieldLabelSettings() {
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
@@ -42,7 +42,6 @@ export default function FieldLabelSettings() {
       fieldData.lbl = value.replaceAll('\\', '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(setBuilderHookStates, fldKey)
@@ -57,7 +56,6 @@ export default function FieldLabelSettings() {
       delete fieldData.valid.hideLbl
     }
     // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -102,7 +100,7 @@ export default function FieldLabelSettings() {
             />
           </div>
 
-          <div className={css(ut.mt2, { mx: 10 })}>
+          <div className={css(ut.mt1)}>
             <FieldIconSettings
               label="Prefix Icon"
               iconSrc={fieldData?.lblPreIcn}
@@ -110,6 +108,7 @@ export default function FieldLabelSettings() {
               setIcon={() => setIconModel('lblPreIcn')}
               removeIcon={() => removeIcon('lblPreIcn')}
             />
+
             <FieldIconSettings
               label="Suffix Icon"
               iconSrc={fieldData?.lblSufIcn}
@@ -129,7 +128,6 @@ export default function FieldLabelSettings() {
         title={__('Icons', 'bitform')}
       >
         <div className="pos-rel" />
-
         <Icons iconType={icnType} setModal={setIcnMdl} />
       </Modal>
     </>

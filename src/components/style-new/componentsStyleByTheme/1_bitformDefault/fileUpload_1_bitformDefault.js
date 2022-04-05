@@ -47,12 +47,15 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       width: '15px',
       height: '15px',
       'margin-right': '5px',
+      filter: 'invert(1)',
     },
     [`.${fk}-suf-i`]: {
       width: '15px',
       height: '15px',
       'margin-left': '5px',
+      filter: 'invert(1)',
     },
+    [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)' },
 
     [`.${fk}-file-select-status`]: { 'font-size': '14px' },
 

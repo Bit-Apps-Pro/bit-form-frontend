@@ -36,7 +36,9 @@ const CountryFieldSettings = () => {
   const adminLabel = fieldData.adminLbl || ''
   const { options } = fieldData
 
-  const { selectedFlagImage, selectedCountryClearable, searchClearable,
+  const { selectedFlagImage,
+    selectedCountryClearable,
+    searchClearable,
     optionFlagImage,
     detectCountryByIp,
     detectCountryByGeo,

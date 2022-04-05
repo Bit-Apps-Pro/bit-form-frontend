@@ -180,7 +180,7 @@ export default function FileUploadSettings() {
         open
       // disable={!fieldData?.adminLbl}
       >
-        <div className={css(ut.mt2, { mx: 10 })}>
+        <div className={css(ut.mt1)}>
           <FieldIconSettings
             label="Prefix Icon"
             iconSrc={fieldData?.prefixIcn}
@@ -304,7 +304,14 @@ export default function FileUploadSettings() {
             step={1}
             max={1024}
           />
-          {multiple && <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} checked={isItTotalMax} title={__('Total Maximum Size', 'bitform')} onChange={e => setConfigValue('isItTotalMax', e.target.checked)} />}
+          {multiple && (
+            <CheckBoxMini
+              className={`${css(ut.mr2)} ${css(ut.fw500)} `}
+              checked={isItTotalMax}
+              title={__('Total Maximum Size', 'bitform')}
+              onChange={e => setConfigValue('isItTotalMax', e.target.checked)}
+            />
+          )}
         </div>
       </SimpleAccordion>
 
@@ -322,24 +329,37 @@ export default function FileUploadSettings() {
         open={showFileList}
         disable={!showFileList}
       >
-        <CheckBoxMini
-          className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
-          checked={showFilePreview}
-          title={__('Show File Preview', 'bitform')}
-          onChange={e => setConfigValue('showFilePreview', e.target.checked)}
-        />
-        <CheckBoxMini
-          className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
-          checked={showFileSize}
-          title={__('Show File Size', 'bitform')}
-          onChange={e => setConfigValue('showFileSize', e.target.checked)}
-        />
+        <div className={css(ut.ml1)}>
+          <CheckBoxMini
+            className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
+            checked={showFilePreview}
+            title={__('Show File Preview', 'bitform')}
+            onChange={e => setConfigValue('showFilePreview', e.target.checked)}
+          />
+          <CheckBoxMini
+            className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
+            checked={showFileSize}
+            title={__('Show File Size', 'bitform')}
+            onChange={e => setConfigValue('showFileSize', e.target.checked)}
+          />
+        </div>
       </SimpleAccordion>
 
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <DropDown className="w-10" titleClassName="title" title={__('Allowed File Type:', 'bitform')} isMultiple addable options={options} placeholder={__('Select File Type', 'bitform')} jsonValue action={setAllowedFileType} value={existType} />
+        <DropDown
+          className="w-10"
+          titleClassName="title"
+          title={__('Allowed File Type:', 'bitform')}
+          isMultiple
+          addable
+          options={options}
+          placeholder={__('Select File Type', 'bitform')}
+          jsonValue
+          action={setAllowedFileType}
+          value={existType}
+        />
       </div>
 
       <FieldSettingsDivider />
@@ -353,7 +373,6 @@ export default function FileUploadSettings() {
         title={__('Icons', 'bitform')}
       >
         <div className="pos-rel" />
-
         <Icons addPaddingOnSelect={false} iconType={icnType} setModal={setIcnMdl} />
       </Modal>
     </>

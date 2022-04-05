@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
 /* eslint-disable no-console */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
@@ -467,7 +469,7 @@ function TextFieldSettings() {
           open
         // disable={!fieldData?.adminLbl}
         >
-          <div className={css(ut.mt2, { mx: 10 })}>
+          <div className={css(ut.mt2)}>
             <FieldIconSettings
               label="Prefix Icon"
               iconSrc={fieldData?.prefixIcn}
@@ -493,71 +495,106 @@ function TextFieldSettings() {
         <PlaceholderSettings />
 
         <FieldSettingsDivider />
+        {fieldData.typ === 'color' && (
+          <>
+            <SimpleAccordion
+              title={__('Default value', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              switching
+              toggleAction={hideDefalutValue}
+              toggleChecked={fieldData?.defaultValueHide}
+              open={fieldData?.defaultValueHide}
+              disable={!fieldData?.defaultValueHide}
+            >
+              <div className={css(FieldStyle.placeholder)}>
+                <input
+                  aria-label="Default value for this Field"
+                  placeholder="Type default value here..."
+                  className={css(FieldStyle.input)}
+                  type="color"
+                  value={defaultValue}
+                  onChange={setDefaultValue}
+                />
+              </div>
+            </SimpleAccordion>
 
-        <SimpleAccordion
-          title={__('Default value', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideDefalutValue}
-          toggleChecked={fieldData?.defaultValueHide}
-          open={fieldData?.defaultValueHide}
-          disable={!fieldData?.defaultValueHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <input
-              aria-label="Default value for this Field"
-              placeholder="Type default value here..."
-              className={css(FieldStyle.input)}
-              type="text"
-              value={defaultValue}
-              onChange={setDefaultValue}
-            />
-          </div>
-        </SimpleAccordion>
+            <FieldSettingsDivider />
+          </>
+        )}
 
-        <FieldSettingsDivider />
+        {!(fieldData.typ === 'password'
+          || fieldData.typ === 'date'
+          || fieldData.typ === 'time'
+          || fieldData.typ === 'datetime-local'
+          || fieldData.typ === 'color'
+        ) && (
+            <>
+              <SimpleAccordion
+                title={__('Default value', 'bitform')}
+                className={css(FieldStyle.fieldSection)}
+                switching
+                toggleAction={hideDefalutValue}
+                toggleChecked={fieldData?.defaultValueHide}
+                open={fieldData?.defaultValueHide}
+                disable={!fieldData?.defaultValueHide}
+              >
+                <div className={css(FieldStyle.placeholder)}>
+                  <input
+                    aria-label="Default value for this Field"
+                    placeholder="Type default value here..."
+                    className={css(FieldStyle.input)}
+                    type="text"
+                    value={defaultValue}
+                    onChange={setDefaultValue}
+                  />
+                </div>
+              </SimpleAccordion>
 
-        <SimpleAccordion
-          title={__('Suggestion', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideSuggestionVal}
-          toggleChecked={fieldData?.suggestionHide}
-          open={fieldData?.suggestionHide}
-          disable={!fieldData?.suggestionHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <button onClick={openOptionModal} className={css(app.btn)} type="button">
-              &nbsp;
-              {__('Edit suggestions', 'bitform')}
-            </button>
-          </div>
-        </SimpleAccordion>
+              <FieldSettingsDivider />
 
-        <FieldSettingsDivider />
+              <SimpleAccordion
+                title={__('Suggestion', 'bitform')}
+                className={css(FieldStyle.fieldSection)}
+                switching
+                toggleAction={hideSuggestionVal}
+                toggleChecked={fieldData?.suggestionHide}
+                open={fieldData?.suggestionHide}
+                disable={!fieldData?.suggestionHide}
+              >
+                <div className={css(FieldStyle.placeholder)}>
+                  <button onClick={openOptionModal} className={css(app.btn)} type="button">
+                    &nbsp;
+                    {__('Edit suggestions', 'bitform')}
+                  </button>
+                </div>
+              </SimpleAccordion>
 
-        <SimpleAccordion
-          title={__('Auto Complete', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-          switching
-          toggleAction={hideAutoComplete}
-          toggleChecked={fieldData?.acHide}
-          open={fieldData?.acHide}
-          disable={!fieldData.acHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <MultiSelect
-              defaultValue={ac}
-              className={`${css(FieldStyle.multiselectInput)}`}
-              placeholder="Select one"
-              options={autofillList}
-              onChange={val => seAutoComplete(val)}
-              disableChip
-            />
-          </div>
-        </SimpleAccordion>
+              <FieldSettingsDivider />
 
-        <FieldSettingsDivider />
+              <SimpleAccordion
+                title={__('Auto Complete', 'bitform')}
+                className={css(FieldStyle.fieldSection)}
+                switching
+                toggleAction={hideAutoComplete}
+                toggleChecked={fieldData?.acHide}
+                open={fieldData?.acHide}
+                disable={!fieldData.acHide}
+              >
+                <div className={css(FieldStyle.placeholder)}>
+                  <MultiSelect
+                    defaultValue={ac}
+                    className={`${css(FieldStyle.multiselectInput)}`}
+                    placeholder="Select one"
+                    options={autofillList}
+                    onChange={val => seAutoComplete(val)}
+                    disableChip
+                  />
+                </div>
+              </SimpleAccordion>
+
+              <FieldSettingsDivider />
+            </>
+          )}
 
         <SimpleAccordion
           title={__('Name', 'bitform')}

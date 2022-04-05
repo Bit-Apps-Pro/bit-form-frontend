@@ -8,8 +8,8 @@ import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -24,7 +24,6 @@ import FileStyle from './advfileupcmpt/FileStyle'
 import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import ImageValidateoMdl from './advfileupcmpt/ImageValidateoMdl'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -41,31 +40,8 @@ function AdvanceFileUpSettings() {
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const fieldData = deepCopy(fields[fldKey])
-  const isRequired = fieldData.valid.req || false
-  const adminLabel = fieldData.adminLbl || ''
   const { css } = useFela()
-
-  const setBuilderFldWrpHeight = () => {
-    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey: fldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
-  }
-
-  function setRequired(e) {
-    if (e.target.checked) {
-      const tmp = { ...fieldData.valid }
-      tmp.req = true
-      fieldData.valid = tmp
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-    }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-  }
 
   function setFieldProperty(e) {
     const { value, name } = e.target
@@ -73,16 +49,6 @@ function AdvanceFileUpSettings() {
       delete fieldData[name]
     } else {
       fieldData[name] = value
-    }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-  }
-
-  const hideAdminLabel = (e) => {
-    if (e.target.checked) {
-      fieldData.adminLbl = fieldData.lbl || fldKey
-    } else {
-      delete fieldData.adminLbl
     }
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
@@ -161,13 +127,16 @@ function AdvanceFileUpSettings() {
         tip="The capture option will only work on mobile devices."
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <select className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
-          <option value="">Select</option>
-          <option value="null">Off</option>
-          <option value="capture">On</option>
-          <option value="user">User Camera</option>
-          <option value="environment">Environment Camera</option>
-        </select>
+        <div className={css({ mx: 5 })}>
+
+          <select className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
+            <option value="">Select</option>
+            <option value="null">Off</option>
+            <option value="capture">On</option>
+            <option value="user">User Camera</option>
+            <option value="environment">Environment Camera</option>
+          </select>
+        </div>
       </SimpleAccordion>
 
       <FieldSettingsDivider />
@@ -205,7 +174,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowMultiple} name="allowMultiple" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowMultiple} name="allowMultiple" action={handle} />
           </div>
 
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
@@ -218,7 +187,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowBrowse} name="allowBrowse" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowBrowse} name="allowBrowse" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -230,7 +199,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowDrop} name="allowDrop" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowDrop} name="allowDrop" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -242,7 +211,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowPaste} name="allowPaste" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowPaste} name="allowPaste" action={handle} />
           </div>
           {/* {!fieldData?.config?.allowMultiple && (
             <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
@@ -268,7 +237,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowReorder} name="allowReorder" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowReorder} name="allowReorder" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -280,7 +249,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.instantUpload} name="instantUpload" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.instantUpload} name="instantUpload" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -292,7 +261,7 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.dropOnPage} name="dropOnPage" action={handle} />
+            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.dropOnPage} name="dropOnPage" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>

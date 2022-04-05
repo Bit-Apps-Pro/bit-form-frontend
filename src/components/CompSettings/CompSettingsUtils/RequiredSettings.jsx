@@ -86,7 +86,13 @@ export default function RequiredSettings() {
         title="Error Message"
         tipTitle="By enabling this feature, user will see the error message when input is empty"
       />
-      <CheckBoxMini className={`${css(ut.mr2, ut.mt2, { ml: 7 })} ${css(ut.fw500)} `} name="reqShow" checked={fieldData?.valid?.reqShow || false} title={__('Show Asterisk Symbol', 'bitform')} onChange={setReqShow} />
+      <CheckBoxMini
+        className={`${css(ut.mr2, ut.mt2, { ml: 7 })} ${css(ut.fw500)} `}
+        name="reqShow"
+        checked={fieldData?.valid?.reqShow || false}
+        title={__('Show Asterisk Symbol', 'bitform')}
+        onChange={setReqShow}
+      />
       {fieldData?.valid?.reqShow && (
         <div className={css(ut.flxcb, ut.pl3, ut.px10, ut.mt1)}>
           <span className={css(ut.fs12, ut.fw500)}>Asterisk Position</span>
