@@ -42,7 +42,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
-    return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
 
   const deleteStyle = (drft, elemnt, state = '') => {
