@@ -27,7 +27,7 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { highlightElm, removeHightlight } from './style-new/styleHelpers'
+import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -46,7 +46,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
-  const flags = useRecoilValue($flags)
+  const [flags, setFlags] = useRecoilState($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const setStyles = useSetRecoilState($styles)
@@ -438,18 +438,19 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const insptectModeTurnedOnRef = useRef(false)
 
   const highlightElmEvent = event => {
+    const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
     if (document.elementsFromPoint) {
-      const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
       const allPointedElements = iFrameDocument.elementsFromPoint(event.pageX, event.pageY)
       const elmOnMousePointer = allPointedElements.find(el => !el.className.startsWith('highlight-'))
       if (!elmOnMousePointer) return false
       if (elmCurrentHighlightedRef.current && elmOnMousePointer.isEqualNode(elmCurrentHighlightedRef.current)) return false
       let dataDevAttrFound = false
       if (elmOnMousePointer?.attributes?.length) {
-        for (let i = 0; i < elmOnMousePointer.attributes.length; i += 1) {
+        const attrLength = elmOnMousePointer.attributes.length
+        for (let i = 0; i < attrLength; i += 1) {
           const { name: attrName, value: attrVal } = elmOnMousePointer.attributes[i]
           if (attrName.startsWith('data-dev-')) {
-            removeHightlight()
+            removeHighlight()
             dataDevAttrFound = true
             elmCurrentHighlightedRef.current = elmOnMousePointer
             highlightElm(`[${attrName}="${attrVal}"]`)
@@ -458,8 +459,16 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         }
       }
       if (!dataDevAttrFound) {
-        removeHightlight()
+        removeHighlight()
       }
+
+      // elmOnMousePointer.addEventListener('click', () => {
+      //   setFlags(oldFlags => produce(oldFlags, draft => {
+      //     if (draft.inspectMode) {
+      //       draft.inspectMode = false
+      //     }
+      //   }))
+      // })
     }
   }
 
@@ -471,7 +480,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       insptectModeTurnedOnRef.current = true
     } else if (!inspectMode && insptectModeTurnedOnRef.current) {
       eventAbortControllerRef.current.abort()
-      removeHightlight()
+      removeHighlight()
     }
   }, [inspectMode])
 
@@ -482,8 +491,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID} _frm-bg`}>
-            <div className={`_frm-${formID}`}>
+          <div className={`_frm-bg-${formID} _frm-bg`} data-dev-frm-bg={formID}>
+            <div className={`_frm-${formID}`} data-dev-frm-wrp={formID}>
               {!styleMode ? (
                 <ResponsiveReactGridLayout
                   width={Math.round(builderWidth - 10)}
