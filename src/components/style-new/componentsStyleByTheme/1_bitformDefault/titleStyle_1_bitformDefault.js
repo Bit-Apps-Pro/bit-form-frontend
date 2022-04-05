@@ -22,11 +22,15 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
       margin: '5px',
       'text-align': 'center',
       'word-break': 'break-all',
+      display: 'flex',
+      'align-items': 'center',
     },
     [`.${fk}-sub-titl`]: {
       margin: '5px',
       'text-align': 'center',
       'word-break': 'break-all',
+      display: 'flex',
+      'align-items': 'center',
     },
     [`.${fk}-logo`]: {
       margin: '5px',

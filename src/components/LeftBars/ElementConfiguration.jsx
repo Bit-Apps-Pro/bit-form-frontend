@@ -105,24 +105,24 @@ export default function ElementConfiguration({ fldKey }) {
               <NavBtn
                 cssSelector={`.${fldKey}-${styleClasses.subTitl[0]}`}
                 subRoute={fldKey}
-                route="subtitle"
+                route="sub-titl"
                 label="Subtitle"
                 offset="2.5"
                 highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'subtitle')}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
               />
             )}
             {(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
               <LayerAccordion
                 childrenAccodin
-                onClick={() => styleHandler('subtitle')}
+                onClick={() => styleHandler('sub-titl')}
                 offset="3.1"
                 title="Subtitle"
                 fldData={fieldObj}
                 key={fldKey}
                 open={fldKey === selectedFieldKey && (fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)}
                 highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'subtitle')}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
               >
                 {(fieldObj.subTlePreIcn || fieldObj.subTitlPreIcn) && (
                   <NavBtn
@@ -156,34 +156,34 @@ export default function ElementConfiguration({ fldKey }) {
           <NavBtn
             cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}
             subRoute={fldKey}
-            route="label-subtitle-container"
+            route="lbl-wrp"
             label="Label Container"
             offset="2.5"
             highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
-            styleOverride={isLabelOverrideStyles(styles, fldKey, 'label-subtitle-container')}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-wrp')}
           />
           {!(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.lbl[1]}`}
               subRoute={fldKey}
-              route="label"
+              route="lbl"
               label="Label"
               offset="2.5"
               highlightSelector={`[data-dev-lbl="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'label')}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl')}
             />
           )}
           {(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <LayerAccordion
               childrenAccodin
-              onClick={() => styleHandler('label')}
+              onClick={() => styleHandler('lbl')}
               offset="3.1"
               title="Label"
               fldData={fieldObj}
               key={fldKey}
               open={fldKey === selectedFieldKey && (fieldObj.lblPreIcn || fieldObj.lblSufIcn)}
               highlightSelector={`[data-dev-lbl="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'label')}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl')}
             >
               {fieldObj.lblPreIcn && (
                 <NavBtn
@@ -630,24 +630,24 @@ export default function ElementConfiguration({ fldKey }) {
               <NavBtn
                 cssSelector={`.${fldKey}-${styleClasses.hlpTxt[0]}`}
                 subRoute={fldKey}
-                route="helper-text"
+                route="hlp-txt"
                 label="Helper Text"
                 offset="2.5"
                 highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'helper-text')}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'hlp-txt')}
               />
             )}
             {(fieldObj.hlpPreIcn || fieldObj.hlpSufIcn) && (
               <LayerAccordion
                 childrenAccodin
-                onClick={() => styleHandler('helper-text')}
+                onClick={() => styleHandler('hlp-txt')}
                 offset="3.1"
                 title="Helper Text"
                 fldData={fieldObj}
                 key={fldKey}
                 open={fldKey === selectedFieldKey && (fieldObj.hlpPreIcn || fieldObj.hlpSufIcn)}
                 highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'helper-text')}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'hlp-txt')}
               >
                 {fieldObj.hlpPreIcn && (
                   <NavBtn

@@ -13,7 +13,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, setIconFilterValue } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -74,7 +74,7 @@ export default function FieldLabelSettings() {
   }
 
   const setIconModel = (iconType) => {
-    addDefaultStyleClasses(selectedFieldId, iconType, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType, setStyles)
     setIconFilterValue(iconType, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(iconType)
     setIcnMdl(true)

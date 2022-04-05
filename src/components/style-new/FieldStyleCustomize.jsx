@@ -67,41 +67,41 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           const { classes: getElementStyleClasses } = bitformDefaultTheme(fieldKey, fieldType)
 
           switch (elmnt) {
-            case 'field-container':
-              const fldwrp = getElementStyleClasses[`.${fieldKey}-fld-wrp`]
-              assignNestedObj(drft, getPath('fld-wrp'), fldwrp)
-              deleteStyle(drft, 'fld-wrp', ':hover')
-              break
+            // case 'field-container':
+            //   const fldwrp = getElementStyleClasses[`.${fieldKey}-fld-wrp`]
+            //   assignNestedObj(drft, getPath('fld-wrp'), fldwrp)
+            //   deleteStyle(drft, 'fld-wrp', ':hover')
+            //   break
 
-            case 'label-subtitle-container':
-              const lblwrp = getElementStyleClasses[`.${fieldKey}-lbl-wrp`]
-              assignNestedObj(drft, getPath('lbl-wrp'), lblwrp)
-              deleteStyle(drft, 'lbl-wrp', ':hover')
-              break
+            // case 'label-subtitle-container':
+            //   const lblwrp = getElementStyleClasses[`.${fieldKey}-lbl-wrp`]
+            //   assignNestedObj(drft, getPath('lbl-wrp'), lblwrp)
+            //   deleteStyle(drft, 'lbl-wrp', ':hover')
+            //   break
 
-            case 'label':
-              const lbl = getElementStyleClasses[`.${fieldKey}-lbl`]
-              assignNestedObj(drft, getPath('lbl'), lbl)
-              deleteStyle(drft, 'lbl', ':hover')
-              break
+            // case 'label':
+            //   const lbl = getElementStyleClasses[`.${fieldKey}-lbl`]
+            //   assignNestedObj(drft, getPath('lbl'), lbl)
+            //   deleteStyle(drft, 'lbl', ':hover')
+            //   break
 
-            case 'subtitle':
-              const subtitle = getElementStyleClasses[`.${fieldKey}-sub-titl`]
-              assignNestedObj(drft, getPath('sub-titl'), subtitle)
-              deleteStyle(drft, 'sub-titl', ':hover')
-              break
+            // case 'subtitle':
+            //   const subtitle = getElementStyleClasses[`.${fieldKey}-sub-titl`]
+            //   assignNestedObj(drft, getPath('sub-titl'), subtitle)
+            //   deleteStyle(drft, 'sub-titl', ':hover')
+            //   break
 
-            case 'helper-text':
-              const hlptxt = getElementStyleClasses[`.${fieldKey}-hlp-txt`]
-              assignNestedObj(drft, getPath('hlp-txt'), hlptxt)
-              deleteStyle(drft, 'hlp-txt', ':hover')
-              break
+            // case 'helper-text':
+            //   const hlptxt = getElementStyleClasses[`.${fieldKey}-hlp-txt`]
+            //   assignNestedObj(drft, getPath('hlp-txt'), hlptxt)
+            //   deleteStyle(drft, 'hlp-txt', ':hover')
+            //   break
 
-            case 'error-message':
-              const errMsg = getElementStyleClasses[`.${fieldKey}-err-msg`]
-              assignNestedObj(drft, getPath('err-msg'), errMsg)
-              deleteStyle(drft, 'err-msg', ':hover')
-              break
+            // case 'error-message':
+            //   const errMsg = getElementStyleClasses[`.${fieldKey}-err-msg`]
+            //   assignNestedObj(drft, getPath('err-msg'), errMsg)
+            //   deleteStyle(drft, 'err-msg', ':hover')
+            //   break
 
             case 'currency-fld-wrp':
             case 'phone-fld-wrp':
@@ -182,22 +182,22 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               assignNestedObj(drft, getPath('opt-prefix'), optPrefix)
               break
 
-            case 'check-container':
+            case 'cc':
               const cc = getElementStyleClasses[`.${fieldKey}-cc`]
               assignNestedObj(drft, getPath('cc'), cc)
               deleteStyle(drft, 'cc', ':hover')
               break
 
-            case 'option-label':
+            case 'ct':
               const ct = getElementStyleClasses[`.${fieldKey}-ct`]
               assignNestedObj(drft, getPath('ct'), ct)
               deleteStyle(drft, 'ct', ':hover')
               deleteStyle(drft, 'ct', ':focus')
               break
 
-            case 'check-box':
-            case 'radio-box':
-              const optBox = elmnt === 'check-box' ? 'ck' : 'rdo'
+            case 'ck':
+            case 'rdo':
+              const optBox = elmnt === 'ck' ? 'ck' : 'rdo'
               const ck = getElementStyleClasses[`.${fieldKey}-${optBox}`]
               assignNestedObj(drft, getPath(optBox), ck)
               deleteStyle(drft, optBox, ':hover')
@@ -205,13 +205,13 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               deleteStyle(drft, optBox, ':checked')
               break
 
-            case 'check-wrapper':
+            case 'cw':
               const cw = getElementStyleClasses[`.${fieldKey}-cw`]
               assignNestedObj(drft, getPath('cw'), cw)
               deleteStyle(drft, 'cw', ':hover')
               break
 
-            case 'option-wrapper':
+            case 'cl':
               const cl = getElementStyleClasses[`.${fieldKey}-cl`]
               assignNestedObj(drft, getPath('cl'), cl)
               deleteStyle(drft, 'cl', ':hover')

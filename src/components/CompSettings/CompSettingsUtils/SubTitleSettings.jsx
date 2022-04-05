@@ -13,7 +13,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, isStyleExist, setIconFilterValue, styleClasses, unitConverter } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import AutoResizeInput from './AutoResizeInput'
 import Icons from '../Icons'
@@ -21,12 +21,14 @@ import IconStyleBtn from '../IconStyleBtn'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
+import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 
 export default function SubTitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const { fieldKey: fldKey } = useParams()
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
@@ -76,7 +78,8 @@ export default function SubTitleSettings() {
   }
 
   const setIconModel = (typ) => {
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)
   }

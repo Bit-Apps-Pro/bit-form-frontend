@@ -19,6 +19,7 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
+import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
 
@@ -40,6 +41,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const setStyles = useSetRecoilState($styles)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [total, setTotal] = useState(10001)
+  const [showWarning, setShowWarning] = useState(false)
+  const [selectIcon, setSelectIcon] = useState()
   const { css } = useFela()
   const url = 'https://raw.githack.com'
   const ref = useRef()
@@ -181,6 +184,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           setFiles(res.data)
         }
       })
+    setShowWarning(false)
   }
 
   const errHandle = (e) => {
@@ -246,133 +250,151 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   }
 
   return (
-    <div>
-      <StyleSegmentControl
-        options={[{ label: 'Icons', show: ['label'] }, { label: uploadLabel }, { label: 'Downloaded Icons' }]}
-        onChange={lbl => onTabChangeHandler(lbl, 'parent')}
-        defaultActive={controller.parent}
-        defaultItmWidth={220}
-        wideTab
-        className={css(ut.mt1)}
-      />
-      <Grow open={controller.parent === 'Icons'}>
-        <div className={css(ut.mt2, ut.flxc, { flxp: 1, jc: 'center' })}>
-          {filter.map((iconPack, i) => (
-            <button
-              key={iconPack.label}
-              title={iconPack.label}
-              onClick={() => searchByIconPack(i, iconPack.value, iconPack.status)}
-              type="button"
-              className={`${css(s.chip, ut.mr2)} ${iconPack.status && css(s.active)}`}
-            >
-              {iconPack.label}
-            </button>
-
-          ))}
-        </div>
-        <div className={css(ut.flxc, s.searchBar, ut.mt2, ut.mb2)}>
-          <div className={css(s.fields_search)}>
-            <input
-              title="Search Icons"
-              aria-label="Search Icons"
-              placeholder="Search Icons by keywords one at a time. e.g., user or login or etc..."
-              id="search-icon"
-              type="search"
-              name="searchIcn"
-              value={searchTerm}
-              onChange={onSearchChange}
-              className={css(s.search_field)}
-
-            />
-            <span title="search" className={css(s.search_icn)}>
-              <SearchIcon size="20" />
-            </span>
-          </div>
-
-          <div>
-            {searchLoading && <LoaderSm size={20} clr="#13132b" />}
-          </div>
-
-        </div>
-        <Scrollbars ref={ref} style={{ minHeight: 350 }} onScroll={onScrollFetch}>
-          {loading && (
-            <div title="Loading...">
-              <div className={css(ut.mt2)} />
-              {Array(26).fill(1).map((itm, i) => (
-                <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
-              ))}
-            </div>
-          )}
-          <div className={css(ut.flxc, ut.mt2, s.icon)}>
-            {icons.map((item) => (
+    <>
+      <div>
+        <StyleSegmentControl
+          options={[{ label: 'Icons', show: ['label'] }, { label: uploadLabel }, { label: 'Downloaded Icons' }]}
+          onChange={lbl => onTabChangeHandler(lbl, 'parent')}
+          defaultActive={controller.parent}
+          defaultItmWidth={220}
+          wideTab
+          className={css(ut.mt1)}
+        />
+        <Grow open={controller.parent === 'Icons'}>
+          <div className={css(ut.mt2, ut.flxc, { flxp: 1, jc: 'center' })}>
+            {filter.map((iconPack, i) => (
               <button
+                key={iconPack.label}
+                title={iconPack.label}
+                onClick={() => searchByIconPack(i, iconPack.value, iconPack.status)}
                 type="button"
-                key={`${item.name} (${item.id})`}
-                title={`${item.name} (${item.id})`}
-                className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
-                onClick={handlePrefixIcon}
+                className={`${css(s.chip, ut.mr2)} ${iconPack.status && css(s.active)}`}
               >
-                <img src={`${url}${item.url}`} onError={errHandle} alt={item.name} className={css(s.img)} />
+                {iconPack.label}
               </button>
+
             ))}
           </div>
-          {scrollLoading && (
-            <div title="Loading...">
-              <div className={css(ut.mt2)} />
-              {Array(26).fill(1).map((itm, i) => (
-                <div key={`loderfnt--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+          <div className={css(ut.flxc, s.searchBar, ut.mt2, ut.mb2)}>
+            <div className={css(s.fields_search)}>
+              <input
+                title="Search Icons"
+                aria-label="Search Icons"
+                placeholder="Search Icons by keywords one at a time. e.g., user or login or etc..."
+                id="search-icon"
+                type="search"
+                name="searchIcn"
+                value={searchTerm}
+                onChange={onSearchChange}
+                className={css(s.search_field)}
+
+              />
+              <span title="search" className={css(s.search_icn)}>
+                <SearchIcon size="20" />
+              </span>
+            </div>
+
+            <div>
+              {searchLoading && <LoaderSm size={20} clr="#13132b" />}
+            </div>
+
+          </div>
+          <Scrollbars ref={ref} style={{ minHeight: 350 }} onScroll={onScrollFetch}>
+            {loading && (
+              <div title="Loading...">
+                <div className={css(ut.mt2)} />
+                {Array(26).fill(1).map((itm, i) => (
+                  <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                ))}
+              </div>
+            )}
+            <div className={css(ut.flxc, ut.mt2, s.icon)}>
+              {icons.map((item) => (
+                <button
+                  type="button"
+                  key={`${item.name} (${item.id})`}
+                  title={`${item.name} (${item.id})`}
+                  className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
+                  onClick={handlePrefixIcon}
+                >
+                  <img src={`${url}${item.url}`} onError={errHandle} alt={item.name} className={css(s.img)} />
+                </button>
               ))}
+            </div>
+            {scrollLoading && (
+              <div title="Loading...">
+                <div className={css(ut.mt2)} />
+                {Array(26).fill(1).map((itm, i) => (
+                  <div key={`loderfnt--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                ))}
+              </div>
+            )}
+          </Scrollbars>
+          <button type="button" disabled={!prefix} className={css(s.saveBtn, s.btnPosition)} onClick={saveIcn}>
+            <span className={css(ut.mr1)}><DownloadIcon size="19" /></span>
+            Download & save
+            {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
+          </button>
+
+        </Grow>
+
+        <Grow open={controller.parent === uploadLabel}>
+          <button type="button" className={css(s.upBtn)} onClick={setWpMedia}>
+            <FileUploadIcn w="35" />
+            {' '}
+            Browse
+          </button>
+        </Grow>
+
+        <Grow open={controller.parent === 'Downloaded Icons'}>
+          {loading && (
+            <div className={css({ h: 300 })}>
+              <div title="Loading..." className={css({ flxp: 'wrap', jc: 'center', flx: 1 })}>
+                {Array(22).fill(1).map((itm, i) => (
+                  <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                ))}
+              </div>
             </div>
           )}
-        </Scrollbars>
-        <button type="button" disabled={!prefix} className={css(s.saveBtn, s.btnPosition)} onClick={saveIcn}>
-          <span className={css(ut.mr1)}><DownloadIcon size="19" /></span>
-          Download & save
-          {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
-        </button>
+          {!loading && (
+            <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
+              <div className={css(ut.flxc, ut.mt4, s.icon)}>
+                {files.length && files.map((file) => (
+                  <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
+                    <button
+                      type="button"
+                      className={`${css(s.delBtn)} trash`}
+                      title="Delete"
+                      onClick={() => {
+                        setShowWarning(true)
+                        setSelectIcon(file)
+                      }}
+                    >
+                      <CloseIcn size={10} />
+                    </button>
+                    <button onClick={handlePrefixIcon} type="button" title={file.name} className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}>
+                      <img src={`${bits.iconURL}/${file}`} alt={`icon ${file}`} width="40" height="30" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </Scrollbars>
+          )}
+          <button type="button" disabled={!prefix} className={css(app.btn, s.saveBtn)} onClick={selectedSaveIcon}>
+            Save
+          </button>
+        </Grow>
 
-      </Grow>
-
-      <Grow open={controller.parent === uploadLabel}>
-        <button type="button" className={css(s.upBtn)} onClick={setWpMedia}>
-          <FileUploadIcn w="35" />
-          {' '}
-          Browse
-        </button>
-      </Grow>
-
-      <Grow open={controller.parent === 'Downloaded Icons'}>
-        {loading && (
-          <div className={css({ h: 300 })}>
-            <div title="Loading..." className={css({ flxp: 'wrap', jc: 'center', flx: 1 })}>
-              {Array(22).fill(1).map((itm, i) => (
-                <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
-              ))}
-            </div>
-          </div>
-        )}
-        {!loading && (
-          <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
-            <div className={css(ut.flxc, ut.mt4, s.icon)}>
-              {files.length && files.map((file) => (
-                <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
-                  <button type="button" className={`${css(s.delBtn)} trash`} title="Delete" onClick={() => delIcon(file)}>
-                    <CloseIcn size={10} />
-                  </button>
-                  <button onClick={handlePrefixIcon} type="button" title={file.name} className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}>
-                    <img src={`${bits.iconURL}/${file}`} alt={`icon ${file}`} width="40" height="30" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </Scrollbars>
-        )}
-        <button type="button" disabled={!prefix} className={css(app.btn, s.saveBtn)} onClick={selectedSaveIcon}>
-          Save
-        </button>
-      </Grow>
-
-    </div>
+      </div>
+      <ConfirmModal
+        title="Warning"
+        action={() => delIcon(selectIcon)}
+        show={showWarning}
+        body="Are you sure you want to delete this icon? This icon will not be available in the forms where it has been used."
+        btnTxt="Okay"
+        close={() => setShowWarning(false)}
+      />
+    </>
   )
 }
 

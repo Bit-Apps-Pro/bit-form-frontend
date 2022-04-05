@@ -2,12 +2,12 @@
 export const getElementTitle = (element) => {
   switch (element) {
     case 'quick-tweaks': return 'Quick Tweaks'
-    case 'field-container': return 'Field Container'
-    case 'label-subtitle-container': return 'Label & Subtitle Container'
-    case 'label': return 'Label Container'
+    case 'fld-wrp': return 'Field Container'
+    case 'lbl-wrp': return 'Label & Subtitle Container'
+    case 'lbl': return 'Label Container'
     case 'lbl-pre-i': return 'Label Prefix Icon'
     case 'lbl-suf-i': return 'Label Suffix Icon'
-    case 'subtitle': return 'Subtitle Container'
+    case 'sub-titl': return 'Subtitle Container'
     case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
     case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
 
@@ -16,20 +16,20 @@ export const getElementTitle = (element) => {
 
     case 'pre-i': return 'Field Prefix Icon'
     case 'suf-i': return 'Field Suffix Icon'
-    case 'helper-text': return 'Helper Text Container'
+    case 'hlp-txt': return 'Helper Text Container'
     case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
     case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
-    case 'error-message': return 'Error Messages Container'
+    case 'err-msg': return 'Error Messages Container'
 
     case 'currency-fld-wrp':
     case 'dpd-fld-wrp':
     case 'country-fld-wrp': return 'Field Wrapper'
 
-    case 'check-container': return 'Check Container'
-    case 'check-box': return 'Check Box Icon'
-    case 'check-wrapper': return 'Check Wrapper'
-    case 'option-wrapper': return 'Option Wrapper'
-    case 'radio-box': return 'Radio Box'
+    case 'cc': return 'Check Container'
+    case 'ck': return 'Check Box Icon'
+    case 'cw': return 'Check Wrapper'
+    case 'cl': return 'Option Wrapper'
+    case 'rdo': return 'Radio Box'
     case 'slct-optn': return 'Select Options'
     case 'slct-opt-grp': return 'Select Options Group'
     case 'selected-opt-img': return 'Selected Option Image'
@@ -46,7 +46,7 @@ export const getElementTitle = (element) => {
     case 'phone-option-icn':
     case 'opt-icn': return 'Option Icon'
 
-    case 'option-label':
+    case 'ct':
     case 'currency-option-lbl':
     case 'phone-option-lbl':
     case 'opt-lbl': return 'Option Label'
