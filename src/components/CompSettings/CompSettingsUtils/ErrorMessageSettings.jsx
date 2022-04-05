@@ -13,7 +13,7 @@ import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy, renderHTMR } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
@@ -30,16 +30,10 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const [icnType, setIcnType] = useState('')
   const [icnMdl, setIcnMdl] = useState(false)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-
-  const errPreIcnCls = `.${selectedFieldId}-err-txt-pre-i`
-  const errSufIcnCls = `.${selectedFieldId}-err-txt-suf-i`
-
-  const { width: errPreIcnWidth, height: errPreIcnHeight } = styles?.fields[fldKey]?.classes[errPreIcnCls] || {}
-  const { width: errSufIcnWidth, height: errSufIcnHeight } = styles?.fields[fldKey]?.classes[errSufIcnCls] || {}
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
@@ -88,15 +82,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
     })
   }
 
-  const icnWidthHandle = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
   const setIconModel = (typ) => {
-    console.log(selectedFieldId)
     addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIcnType(typ)
     setIcnMdl(true)
@@ -109,19 +95,19 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
       setFields(allFields)
     }
   }
-  const icnHeightHandle = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
-    }))
-  }
 
   return (
     <div className={`${css(ErrorMessages.wrapper)} err-msg-wrapper`}>
       <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
         {/* flx flx-between mt-1 mb-1 mr-2 */}
         <div className={`${css(ErrorMessages.flx)}`}>
-          <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.show || false} title={__('Show Error Message', 'bitform')} onChange={setShowErrMsg} />
+          <CheckBoxMini
+            className={`${css(ut.mr2)} ${css(ut.fw500)} `}
+            name={type}
+            checked={fieldData?.err?.[type]?.show || false}
+            title={__('Show Error Message', 'bitform')}
+            onChange={setShowErrMsg}
+          />
           <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(ErrorMessages.tipBody)}>
               Check the box to enable the custom error message.
@@ -136,7 +122,13 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
           {/* <div className="flx flx-between mt-1 mb-1 mr-2"> */}
           <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
             <div className={css(ErrorMessages.flx)}>
-              <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
+              <CheckBoxMini
+                className={`${css(ut.mr2)} ${css(ut.fw500)} `}
+                name={type}
+                checked={fieldData?.err?.[type]?.custom || false}
+                title={__('Custom Error Message', 'bitform')}
+                onChange={setCustomErrMsg}
+              />
               <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(ErrorMessages.tipBody)}>
                   Check the box to enable the custom error message.
@@ -154,9 +146,17 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
               <EditIcn size={19} />
             </button>
           </div>
-          <div className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`} tabIndex="0" role="button" onClick={openErrorModal} onKeyPress={openErrorModal}>{renderHTMR(errMsg)}</div>
+          <div
+            className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
+            tabIndex="0"
+            role="button"
+            onClick={openErrorModal}
+            onKeyPress={openErrorModal}
+          >
+            {renderHTMR(errMsg)}
+          </div>
 
-          <div className={css(ut.mt2, { mx: 10 })}>
+          <div className={css(ut.mt1)}>
             <FieldIconSettings
               label="Prefix Icon"
               iconSrc={fieldData?.errPreIcn}

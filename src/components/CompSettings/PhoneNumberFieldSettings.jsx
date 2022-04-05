@@ -62,8 +62,6 @@ const PhoneNumberFieldSettings = () => {
 
   const removeImage = () => { }
 
-  console.log('fieldData', fieldData)
-
   return (
     <>
       <FieldSettingTitle
@@ -131,7 +129,7 @@ const PhoneNumberFieldSettings = () => {
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection)}>
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <SingleToggle
               title={__('Selected Flag Image :', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
@@ -139,7 +137,7 @@ const PhoneNumberFieldSettings = () => {
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection)}>
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <SingleToggle
               title={__('Detect Country By Geo Location:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
@@ -147,25 +145,27 @@ const PhoneNumberFieldSettings = () => {
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection)}>
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <SingleToggle
               title={__('Detect Country By IP:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
               isChecked={fieldData.config.detectCountryByIp}
             />
           </div>
-          <div className={css(FieldStyle.section, FieldStyle.fieldSection)}>
+          <div className={css(FieldStyle.section, FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <span>Placeholder Image</span>
-            <button type="button" className={css(ut.icnBtn)} onClick={() => setIconModel('placeholderImage')}>
-              <EditIcn size={22} />
-            </button>
-            <button type="button" className={css(ut.icnBtn)} onClick={() => removeImage('placeholderImage')}>
-              <CloseIcn size="13" />
-            </button>
+            <div className={css(ut.flxb)}>
+              <button type="button" className={css(ut.icnBtn)} onClick={() => setIconModel('placeholderImage')}>
+                <EditIcn size={22} />
+              </button>
+              <button type="button" className={css(ut.icnBtn)} onClick={() => removeImage('placeholderImage')}>
+                <CloseIcn size="13" />
+              </button>
+            </div>
           </div>
 
           {/*
-          <div className={css(FieldStyle.fieldSection)}>
+          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <SingleToggle title={__('Round to Closest Fraction Digits:', 'bitform')} action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'config')} isChecked={fieldData.config.roundToClosestFractionDigits} />
           </div> */}
         </div>
@@ -173,10 +173,12 @@ const PhoneNumberFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <button onClick={openOptionModal} className={css(app.btn)} type="button">
-        &nbsp;
-        {__('Edit Options', 'bitform')}
-      </button>
+      <div className={css(FieldStyle.fieldSection)}>
+        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+          &nbsp;
+          {__('Edit Options', 'bitform')}
+        </button>
+      </div>
 
       <Modal
         md

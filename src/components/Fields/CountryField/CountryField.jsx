@@ -13,6 +13,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
 
+  const { options, ph } = fieldData
+
   useEffect(() => {
     if (!countryWrapElmRef?.current) {
       countryWrapElmRef.current = selectInGrid(`.${fieldKey}-country-fld-wrp`)
@@ -23,8 +25,14 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       fldConstructor.destroy()
     }
 
-    const { options, ph } = fieldData
-    const { selectedFlagImage, selectedCountryClearable, searchClearable, optionFlagImage, detectCountryByIp, detectCountryByGeo, defaultValue, searchPlaceholder } = fieldData.config
+    const { selectedFlagImage,
+      selectedCountryClearable,
+      searchClearable,
+      optionFlagImage,
+      detectCountryByIp,
+      detectCountryByGeo,
+      defaultValue,
+      searchPlaceholder } = fieldData.config
 
     const configOptions = {
       fieldKey,
@@ -54,7 +62,11 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         fieldData={attr}
       >
         <div className={`${fieldKey}-country-fld-container`}>
-          <div data-dev-country-fld-wrp={fieldKey} className={`${fieldKey}-country-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} ref={countryWrapElmRef}>
+          <div
+            data-dev-country-fld-wrp={fieldKey}
+            className={`${fieldKey}-country-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            ref={countryWrapElmRef}
+          >
             <input
               name="country-name"
               type="hidden"
@@ -80,7 +92,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
                   />
                 )}
-                <span className={`${fieldKey}-selected-country-lbl`}>Select a country</span>
+                <span className={`${fieldKey}-selected-country-lbl`}>{ph}</span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
                 <button
@@ -152,7 +164,13 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
-                  <button type="button" title="Clear search" data-dev-search-clear-btn={fieldKey} className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`} tabIndex="-1">
+                  <button
+                    type="button"
+                    title="Clear search"
+                    data-dev-search-clear-btn={fieldKey}
+                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`}
+                    tabIndex="-1"
+                  >
                     <svg
                       width="15"
                       height="15"
@@ -170,7 +188,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     </svg>
                   </button>
                 </div>
-                <ul className={`${fieldKey}-option-list`} tabIndex="-1" role="listbox" aria-label="country list" />
+                <ul
+                  className={`${fieldKey}-option-list`}
+                  tabIndex="-1"
+                  role="listbox"
+                  aria-label="country list"
+                />
               </div>
             </div>
           </div>

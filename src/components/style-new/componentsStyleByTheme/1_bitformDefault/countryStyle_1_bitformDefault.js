@@ -96,7 +96,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       'border-radius': '3px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       'margin-right': '10px',
-      'background-color': 'hsla(0, 0%, 0%, 0.5%)',
+      'background-color': 'hsla(0, 0%, 0%, 5%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
     },

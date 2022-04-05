@@ -34,7 +34,11 @@ export default function FieldReadOnlySettings({ cls }) {
 
   return (
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
-      <SingleToggle title={__('Read only Field:', 'bitform')} action={setReadOnly} isChecked={isReadOnly} />
+      <SingleToggle
+        title={__('Read only Field:', 'bitform')}
+        action={setReadOnly}
+        isChecked={isReadOnly}
+      />
     </div>
   )
 }
