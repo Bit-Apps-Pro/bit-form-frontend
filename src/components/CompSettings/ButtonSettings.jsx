@@ -13,7 +13,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, setIconFilterValue } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -115,7 +115,7 @@ export default function ButtonSettings() {
   }
 
   const setIconModel = (typ) => {
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
     setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)

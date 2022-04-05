@@ -7,13 +7,14 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
+import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy, renderHTMR } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, getStrFromStr, isStyleExist, setIconFilterValue, styleClasses, unitConverter } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
@@ -31,6 +32,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [icnType, setIcnType] = useState('')
   const [icnMdl, setIcnMdl] = useState(false)
   const selectedFieldId = useRecoilValue($selectedFieldId)
@@ -96,8 +98,8 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
   }
 
   const setIconModel = (typ) => {
-    console.log(selectedFieldId)
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)
   }

@@ -13,16 +13,17 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { addDefaultStyleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -57,7 +58,8 @@ function TextFieldSettings() {
   const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
@@ -366,7 +368,8 @@ function TextFieldSettings() {
   }
 
   const setIconModel = (typ) => {
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)
   }

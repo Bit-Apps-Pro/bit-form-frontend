@@ -10,16 +10,17 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -37,10 +38,11 @@ function TitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
@@ -59,15 +61,12 @@ function TitleSettings() {
   //   }))
   // }, [fieldData?.bg_img])
 
-  const setBuilderFldWrpHeight = () => {
-    setBuilderHookState(olds => ({ ...olds, reCalculateSpecificFldHeight: { fieldKey, counter: olds.reCalculateSpecificFldHeight.counter + 1 } }))
-  }
-
   const setIconModel = (typ) => {
-    addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fieldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    setIconFilterValue(typ, fieldKey, styles, setStyles, themeColors, setThemeColors)
     setFieldName(typ)
     setIcnMdl(true)
-    setBuilderFldWrpHeight()
+    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
   }
 
   const removeIcon = (iconType) => {
@@ -87,7 +86,7 @@ function TitleSettings() {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      setBuilderFldWrpHeight()
+      reCalculateFieldHeights(setBuilderHookStates, fieldKey)
     }
   }
 
@@ -104,7 +103,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderFldWrpHeight()
+    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `title_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -121,7 +120,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    setBuilderFldWrpHeight()
+    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -132,14 +131,14 @@ function TitleSettings() {
       delete fieldData[type]
     }
     setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
-    setBuilderFldWrpHeight()
+    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
   }
 
   const flexDirectionHandle = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
-    setBuilderFldWrpHeight()
+    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
   }
 
   const positionHandle = (val, type) => {
@@ -155,7 +154,7 @@ function TitleSettings() {
 
   useEffect(() => {
     if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
-      setBuilderFldWrpHeight()
+      reCalculateFieldHeights(setBuilderHookStates, fieldKey)
     }
   }, [icnMdl])
 
