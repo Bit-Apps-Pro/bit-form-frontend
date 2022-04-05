@@ -138,7 +138,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         }
       }))
     }
-    console.log('gridWidth fetch', window.innerWidth, gridWidth)
     // setGridWidth(863)
   }, [fetchedBuilderHelperStates])
 
