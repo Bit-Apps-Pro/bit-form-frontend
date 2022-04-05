@@ -35,7 +35,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       border: 'none',
       'border-radius': '8px',
       'box-shadow': 'none',
-      color: 'hsla(0, 0%, 100%, 100%))',
+      color: 'hsla(0, 0%, 100%, 100%)',
       cursor: 'pointer',
       display: 'inline-flex',
       height: '35px',

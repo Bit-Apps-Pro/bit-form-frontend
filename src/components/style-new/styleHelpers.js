@@ -364,41 +364,39 @@ export function arrDiff(arr1, arr2) {
     .concat(arr2.filter(x => !arr1.includes(x)))
 }
 
-export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => {
-  // return Object.keys(editorConfig.texfieldStyle.properties)
-  switch (fieldType) {
-    case 'text':
-    case 'date':
-    case 'number':
-    case 'username':
-    case 'textarea':
-    case 'email':
-    case 'title':
-    case 'divider':
-    case 'image':
-    case 'button':
-    case 'check':
-    case 'file-up':
-    case 'advanced-file-up':
-    case 'radio':
-    case 'decision-box':
-    case 'html':
-    case 'recaptcha':
-    case 'currency':
-    case 'country':
-    case 'html-select':
-    case 'select':
-    case 'dropdown':
-    case 'phone-number':
-    case 'razorpay':
-      return Object.keys(editorConfig[fieldType][elementKey].properties)
-    // case 'dropdown':
-    // return Object.keys(editorConfig.texfieldStyle.properties)
-    // eslint-disable-next-line no-fallthrough
-    default:
-      break
-  }
-}
+export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => Object.keys(editorConfig[fieldType][elementKey].properties)
+// return Object.keys(editorConfig.texfieldStyle.properties)
+// switch (fieldType) {
+//   case 'text':
+//   case 'date':
+//   case 'number':
+//   case 'username':
+//   case 'textarea':
+//   case 'email':
+//   case 'title':
+//   case 'divider':
+//   case 'image':
+//   case 'button':
+//   case 'check':
+//   case 'file-up':
+//   case 'advanced-file-up':
+//   case 'radio':
+//   case 'decision-box':
+//   case 'html':
+//   case 'recaptcha':
+//   case 'currency':
+//   case 'country':
+//   case 'html-select':
+//   case 'select':
+//   case 'dropdown':
+//   case 'phone-number':
+//   case 'razorpay':
+// Object.keys(editorConfig[fieldType][elementKey].properties)
+// case 'dropdown':
+// return Object.keys(editorConfig.texfieldStyle.properties)
+// eslint-disable-next-line no-fallthrough
+//   default:
+//     break
 
 export const styleClasses = {
   logo: ['logo'],
@@ -682,7 +680,7 @@ export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeCol
   if (!themeVal) {
     const parentElement = getIconsParentElement(iconType)
     const parentColor = styles?.fields?.[fldKey].classes[`.${fldKey}-${parentElement}`]?.color
-    if (parentColor.indexOf('var') >= 0) {
+    if (parentColor && parentColor.indexOf('var') >= 0) {
       const parentThemeVal = getValueFromStateVar(themeColors, parentColor)
       if (parentThemeVal) {
         const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
@@ -708,4 +706,9 @@ export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeCol
       }))
     }
   }
+}
+
+export const isStyleExist = (styles, fieldKey, classKey) => {
+  if (styles.fields[fieldKey].classes[`.${fieldKey}-${classKey}`]) return true
+  return false
 }

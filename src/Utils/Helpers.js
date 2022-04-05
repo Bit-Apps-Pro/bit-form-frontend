@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 
 import htmr from 'htmr'
-import { getValueFromStateVar } from '../components/style-new/styleHelpers'
 
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
@@ -446,10 +445,16 @@ export const getIconsGlobalFilterVariable = (iconType) => {
       variableName = '--lbl-suf-i-fltr'
       break
     case 'subTlePreIcn':
-      variableName = 'sub-titl-pre-i-fltr'
+      variableName = '--sub-titl-pre-i-fltr'
       break
     case 'subTleSufIcn':
-      variableName = 'sub-titl-suf-i-fltr'
+      variableName = '--sub-titl-suf-i-fltr'
+      break
+    case 'prefixIcn':
+      variableName = '--pre-i-fltr'
+      break
+    case 'suffixIcn':
+      variableName = '--suf-i-fltr'
       break
     case 'hlpPreIcn':
       variableName = '--hlp-txt-pre-i-fltr'
