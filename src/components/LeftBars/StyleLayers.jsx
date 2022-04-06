@@ -35,8 +35,8 @@ export default function StyleLayers() {
         <div className={css(s.scrollDiv)}>
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
-          <NavBtn route="form-wrappers" label="Form Wrapper" highlightSelector="[data-dev-frm-bg]" offset="3" />
-          <NavBtn route="form-containers" label="Form Container" highlightSelector="[data-dev-frm-wrp]" offset="3" />
+          <NavBtn route="frm-bg" label="Form Wrapper" highlightSelector="[data-dev-frm-bg]" offset="3" />
+          <NavBtn route="frm-wrp" label="Form Container" highlightSelector="[data-dev-frm-wrp]" offset="3" />
           <NavBtn route="field-containers" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-containers" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
 
@@ -61,7 +61,7 @@ export default function StyleLayers() {
             <NavBtn route="hlp-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
           </LayerAccordion>
 
-          <LayerAccordion route="error-messages" childrenAccodin onClick={() => styleHandler('error-messages')} offset="6" title="Error Messages" highlightSelector="[data-dev-err-msg]">
+          <LayerAccordion route="err-msg" childrenAccodin onClick={() => styleHandler('err-msg')} offset="6" title="Error Messages" highlightSelector="[data-dev-err-msg]">
             <NavBtn route="err-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-pre-i]" />
             <NavBtn route="err-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
           </LayerAccordion>
