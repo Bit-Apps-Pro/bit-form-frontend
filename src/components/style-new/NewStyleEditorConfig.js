@@ -254,11 +254,11 @@ const formCommonCssProps = {
   transition: '',
 }
 const editorConfig = {
-  'form-wrappers': {
+  'frm-bg': {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
-  'form-containers': {
+  'frm-wrp': {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
@@ -352,7 +352,7 @@ const editorConfig = {
       width: '',
     },
   },
-  subtitle: {
+  'sub-titl': {
     states: ['hover'],
     properties: {
       'background-color': '',
@@ -448,7 +448,7 @@ const editorConfig = {
       width: '',
     },
   },
-  'error-messages': {
+  'err-msg': {
     states: ['hover'],
     properties: {
       'background-color': '',

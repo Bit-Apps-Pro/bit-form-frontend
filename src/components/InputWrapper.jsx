@@ -11,7 +11,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
   const { styleMode } = flages
-  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'error-messages'
+  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'err-msg'
   const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && element === 'err-msg' && urlFldKey === fieldKey
 
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
