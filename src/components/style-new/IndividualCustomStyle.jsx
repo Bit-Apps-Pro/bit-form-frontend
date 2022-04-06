@@ -332,6 +332,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('background-color', state)}
             clearHandler={() => clearHandler('background-color', state)}
             allowImportant
+            canSetVariable
           />
         )
       case 'color':
@@ -347,6 +348,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('color', state)}
             clearHandler={() => clearHandler('color', state)}
             allowImportant
+            canSetVariable
           />
         )
       case 'border':

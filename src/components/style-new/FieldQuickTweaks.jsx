@@ -370,7 +370,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
         <>
-        {console.log(getValueByObjPath(styles, objPath[0]))}
           <SimpleColorPicker
             title="Accent Color"
             subtitle="Accent Color"

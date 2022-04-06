@@ -16,7 +16,7 @@ import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsva2hsla } from './colorHelpers'
+import { hsla2hsva, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -75,8 +75,11 @@ function SimpleColorsPickerMenu({ stateObjName,
         const styleColor = getValueByObjPath(styles, pathArr)
         let c = styleColor
         if (styleColor?.match(/var/gi)?.[0] === 'var') {
-          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)/gi, '')
+          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
           c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
+        }
+        if (styleColor?.match(/(!important)/gi)) {
+          c = styleColor?.replaceAll(/(!important)|\s/gi, '')
         }
         setColor(str2Color(c))
         break
@@ -92,7 +95,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  const handleColor = (_h, _s, _v, _a) => {
+  const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
     const event = 'color changed'
@@ -143,18 +146,19 @@ function SimpleColorsPickerMenu({ stateObjName,
           let hslaColor = hslaStr
           const propertyPathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
           const value = getValueByObjPath(drftStyles, propertyPathArr)
-          const checkExistImportant = value?.match(/!important/gi)?.[0]
+          const checkExistImportant = value?.match(/(!important)/gi)?.[0]
           const sc = `0px 0px 0px 3px hsla(${h}, ${s}%, ${l}%, 0.30) !important`
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
+          const clr = str || hslaColor
           if (Array.isArray(propertyPath)) {
             propertyPath.forEach(path => {
               const pathArr = path.split('->')
               const lastIndx = pathArr.length - 1
               if (pathArr[lastIndx] === 'box-shadow') assignNestedObj(drftStyles, path, sc)
-              else assignNestedObj(drftStyles, path, hslaColor)
+              else assignNestedObj(drftStyles, path, clr)
             })
           } else {
-            assignNestedObj(drftStyles, propertyPath, hslaColor)
+            assignNestedObj(drftStyles, propertyPath, clr)
           }
         }))
         break
@@ -165,8 +169,21 @@ function SimpleColorsPickerMenu({ stateObjName,
   }
 
   const setColorState = (colorObj) => {
-    setColor(colorObj)
-    handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
+    if (typeof colorObj === 'object') {
+      setColor(colorObj)
+      handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
+    } else {
+      const str = `var(${colorObj})`
+      const getColor = themeColors[colorObj]
+      if (getColor) {
+        const [_h, _s, _v, _a] = getColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
+        const [h, s, v, a] = hsla2hsva(_h, _s, _v, _a)
+        setColor({ h, s, v, a })
+        handleColor(h, s, v, a, str)
+      } else {
+        handleColor('', '', '', '', str)
+      }
+    }
   }
 
   return (
@@ -253,7 +270,7 @@ const c = {
     mr: 10,
   },
   bggrid: { bi: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N89erVfwY0ICYmxoguxjgUFKI7GsTH5m4M3w1ChQC1/Ca8i2n1WgAAAABJRU5ErkJggg==)' },
-  varClr: { my: 5 },
+  varClr: { my: 5, w: '100%' },
   active: { bcr: 'var(--b-50) !important', bd: '#f3f8ff' },
   clrItem: {
     dy: 'block',

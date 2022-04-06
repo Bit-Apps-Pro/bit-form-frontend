@@ -7,15 +7,15 @@
 * @param {Number} l - Lightness (0 - 100)
 * @return {ArrayHSV}
 * @example
-* hsl2hsv(0, 100, 50)
+* hsla2hsva(0, 100, 50)
 * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
 */
 
-export function hsl2hsv(hslH, hslS, hslL) {
+export function hsla2hsva(hslH, hslS, hslL, alpha = 100) {
   const hsv1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100
   const hsvS = hsv1 === 0 ? 0 : 2 * hsv1 / (hslL + hsv1) * 100
   const hsvV = hslL + hsv1
-  return [hslH, hsvS, hsvV]
+  return [hslH, hsvS, hsvV, alpha]
 }
 /**
 * @func hsv2hsl

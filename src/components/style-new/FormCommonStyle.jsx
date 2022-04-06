@@ -82,6 +82,7 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
             delPropertyHandler={() => delPropertyHandler('background')}
             clearHandler={() => clearHandler('background')}
             allowImportant
+            canSetVariable
           />
         )
       case 'color':
@@ -97,6 +98,7 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
             delPropertyHandler={() => delPropertyHandler('color')}
             clearHandler={() => clearHandler('color')}
             allowImportant
+            canSetVariable
           />
         )
       case 'padding':

@@ -28,13 +28,13 @@ const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColor
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, defaultValue, objectPaths, state, id, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
+const RenderComponent = ({ component, action, value, defaultValue, objectPaths, state, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} state={state} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
-    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
+    case 'color-picker': return <SimpleColorsPickerMenu canSetVariable={canSetVariable} stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'filter-color': return <FilterColorsPickerMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} propertyArray={propertyArray} defaultValue={defaultValue} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'font': return <FontPickerMenu />
@@ -82,7 +82,7 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable } = draggableModal
   const history = useHistory()
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
@@ -131,6 +131,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
               propertyArray={propertyArray}
               fldKey={fldKey}
               hslaPaths={hslaPaths}
+              canSetVariable={canSetVariable}
             />
           </Suspense>
         </div>
