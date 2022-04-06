@@ -276,14 +276,24 @@ export const commonStyle = (fk, type) => {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
-        [`.${fk}-fld`]: { 'font-size': '12px', padding: '5px 2px !important', height: '12px' },
+        [`.${fk}-fld`]: {
+          'font-size': '12px',
+          padding: '5px 2px !important',
+          height: '20px',
+          'border-radius': '6px',
+        },
       }
     case 'small-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
-        [`.${fk}-fld`]: { 'font-size': '14px', padding: '6px 3px' },
+        [`.${fk}-fld`]: {
+          'font-size': '14px',
+          padding: '6px 3px',
+          height: '24px',
+          'border-radius': '7px',
+        },
       }
     // case 'small':
     //   return {
@@ -297,7 +307,12 @@ export const commonStyle = (fk, type) => {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
-        [`.${fk}-fld`]: { 'font-size': '16px', padding: '8px 5px' },
+        [`.${fk}-fld`]: {
+          'font-size': '16px',
+          padding: '8px 5px',
+          height: '30px',
+          'border-radius': '8px',
+        },
       }
     // case 'large':
     //   return {
@@ -311,14 +326,24 @@ export const commonStyle = (fk, type) => {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
-        [`.${fk}-fld`]: { 'font-size': '18px', padding: '10px 7px' },
+        [`.${fk}-fld`]: {
+          'font-size': '18px',
+          padding: '10px 7px',
+          height: '36px',
+          'border-radius': '10px',
+        },
       }
     case 'large-2':
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
         [`.${fk}-sub-titl`]: { 'font-size': '18px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '18px' },
-        [`.${fk}-fld`]: { 'font-size': '20px', padding: '10px 7px' },
+        [`.${fk}-fld`]: {
+          'font-size': '20px',
+          padding: '10px 7px',
+          height: '40px',
+          'border-radius': '11px',
+        },
       }
     default:
       return 'default......'

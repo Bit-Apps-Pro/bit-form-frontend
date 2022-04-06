@@ -31,7 +31,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 
-  const rtrCurrencyFld = () => {
+  const rtlCurrencyFldCheck = () => {
     const fldType = styles.fields[fieldKey].fieldType
     const clsName = fldType === 'phone-number' ? 'phone' : fldType
     const path = propertyPath(`${clsName}-inner-wrp`, 'direction')
@@ -292,7 +292,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       const fldType = prvStyle.fields[fieldKey].fieldType
       const clsName = fldType === 'phone-number' ? 'phone' : fldType
       const { classes: clss } = drft.fields[fieldKey]
-      if (!rtrCurrencyFld()) {
+      if (!rtlCurrencyFldCheck()) {
         clss[`.${fieldKey}-${clsName}-inner-wrp`].direction = 'rtl'
         clss[`.${fieldKey}-input-clear-btn`].left = '6px'
         delete clss[`.${fieldKey}-input-clear-btn`].right
@@ -370,6 +370,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
         <>
+        {console.log(getValueByObjPath(styles, objPath[0]))}
           <SimpleColorPicker
             title="Accent Color"
             subtitle="Accent Color"
@@ -383,6 +384,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>
             <select onChange={setSizes} className={css(sc.select)}>
+              <option value="">Select Size</option>
               {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
             </select>
           </div>
@@ -473,7 +475,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {(fieldType === 'currency' || fieldType === 'phone-number') && (
         <div className={css(ut.flxcb, ut.mt3)}>
           <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-          <SingleToggle isChecked={rtrCurrencyFld()} action={handleDir} />
+          <SingleToggle isChecked={rtlCurrencyFldCheck()} action={handleDir} />
         </div>
       )}
       {!(fieldType === 'paypal' || fieldType === 'razorpay') && (
