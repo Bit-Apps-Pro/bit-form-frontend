@@ -55,7 +55,7 @@ const tool = {
   p: 8,
   brs: 8,
   cur: 'grab',
-  ow: 'hidden',
+  // ow: 'hidden',
   m: 5,
   bs: '0 0 0 1.5px var(--white-0-86) inset',
   tn: 'all 200ms',
