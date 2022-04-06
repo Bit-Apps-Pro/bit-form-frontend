@@ -57,6 +57,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
       >
         <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp`}>
           <textarea
+            data-dev-fld={fieldKey}
             id={fieldKey}
             className={`${fieldKey}-fld`}
             // style={{ height: 'calc(100% - 30px)' }}
