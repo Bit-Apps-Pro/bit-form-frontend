@@ -254,6 +254,7 @@ const c = {
       ow: 'hidden',
     },
     mnw: 230,
+    py: 5,
   },
   color: {
     w: 30,
