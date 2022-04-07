@@ -40,8 +40,8 @@ export default function ThemeCustomize() {
   const genarateTitle = () => {
     switch (element) {
       case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case 'frm-bg': return 'Form Wrappers'
-      case 'frm-wrp': return 'Form Containers'
+      case '_frm-bg': return 'Form Wrappers'
+      case '_frm': return 'Form Containers'
       case 'field-containers': return 'Field Containers'
       case 'label-containers': return 'Label & Subtitle Containers'
       case 'lbl': return 'Labels'
@@ -114,8 +114,8 @@ export default function ThemeCustomize() {
         <div className={css(cls.divider)} />
 
         {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
-        {element === 'frm-bg' && <FormWrapperCustomizer />}
-        {element === 'frm-wrp' && <FormContainerCustomizer />}
+        {element === '_frm-bg' && <FormWrapperCustomizer element={element} />}
+        {element === '_frm' && <FormContainerCustomizer element={element} />}
         {element === 'field-containers' && <FieldContainerCustomizer />}
         {element === 'label-containers' && <LabelContainerCustomizer />}
         {element === 'lbl' && <LabelCustomizer />}

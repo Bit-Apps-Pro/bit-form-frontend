@@ -6,6 +6,7 @@ import { $colorScheme } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
@@ -16,18 +17,18 @@ import SpacingControl from './SpacingControl'
 import StylePropertyBlock from './StylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
-export default function FormCommonStyle({ element, formElement, componentTitle }) {
+export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const colorScheme = useRecoilValue($colorScheme)
-  const formWrpStylesObj = styles.form[colorScheme][formElement]
+  const formWrpStylesObj = styles.form[colorScheme][element]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
 
   const addableCssProps = Object
     .keys(editorConfig[element].properties)
     .filter(x => !formWrpStylesPropertiesArr.includes(x))
 
-  const getPropertyPath = (cssProperty) => `form->${colorScheme}->${formElement}->${cssProperty}`
+  const getPropertyPath = (cssProperty) => `form->${colorScheme}->${element}->${cssProperty}`
 
   const delPropertyHandler = (property) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
@@ -47,7 +48,11 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
 
   const clearHandler = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, getPropertyPath(property), '')
+      if (Array.isArray(property)) {
+        property.forEach(prop => assignNestedObj(drft, getPropertyPath(prop), ''))
+      } else {
+        assignNestedObj(drft, getPropertyPath(property), '')
+      }
     }))
   }
 
@@ -68,21 +73,45 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
       objPaths.paths[prop] = getPropertyPath(prop)
     }
 
+    const bgPropArr = [
+      'background-image',
+      'background-position',
+      'background-repeat',
+      'background-size',
+      'backdrop-filter',
+    ]
+
     switch (prop) {
-      case 'background':
+      case 'background-color':
         return (
           <SimpleColorPicker
-            title="Background"
+            title="Background Color"
             subtitle={`${componentTitle} Background Color`}
-            value={formWrpStylesObj?.background}
-            modalId="field-container-backgroung"
+            value={formWrpStylesObj?.['background-color']}
+            modalId="form-container-backgroung-color"
             stateObjName="styles"
-            propertyPath={objPaths.paths.background}
+            propertyPath={objPaths.paths?.['background-color']}
             deleteable
-            delPropertyHandler={() => delPropertyHandler('background')}
-            clearHandler={() => clearHandler('background')}
+            delPropertyHandler={() => delPropertyHandler('background-color')}
+            clearHandler={() => clearHandler('background-color')}
             allowImportant
             canSetVariable
+          />
+        )
+
+      case 'background':
+        return (
+          <BackgroundControl
+            title="Background"
+            subtitle={`${componentTitle} Background`}
+            value={formWrpStylesObj?.['background-image']}
+            modalId="form-container-background"
+            stateObjName="styles"
+            objectPaths={objPaths}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler([...bgPropArr, 'background'])}
+            clearHandler={() => clearHandler(bgPropArr)}
+            allowImportant
           />
         )
       case 'color':
@@ -167,7 +196,7 @@ export default function FormCommonStyle({ element, formElement, componentTitle }
             </span>
           </StylePropertyBlock>
         )
-      case 'trsansition':
+      case 'transition':
         return (
           <TransitionControl
             title="Transition"

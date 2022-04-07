@@ -242,6 +242,7 @@ const formCommonCssProps = {
     'background-size': true,
     'backdrop-filter': true,
   },
+  'background-color': '',
   color: '',
   padding: '5px',
   margin: '5px',
@@ -254,11 +255,11 @@ const formCommonCssProps = {
   transition: '',
 }
 const editorConfig = {
-  'frm-bg': {
+  '_frm-bg': {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
-  'frm-wrp': {
+  _frm: {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
