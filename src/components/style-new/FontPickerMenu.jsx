@@ -175,6 +175,14 @@ export default function FontPickerMenu() {
 
   return (
     <div className={css(fontStyle.container)}>
+      <div className={css(ut.flxcb, ut.mb2)}>
+        <span className={css(fontStyle.title)}>Inherit from theme</span>
+        <SingleToggle
+          name="themeInherit"
+          isChecked={inheritFont}
+          action={setThemeFont}
+        />
+      </div>
       <StyleSegmentControl
         options={[{ label: 'Custom' }, { label: 'Google' }]}
         onChange={lbl => onTabChangeHandler(lbl)}
@@ -194,7 +202,7 @@ export default function FontPickerMenu() {
           ))}
         </div>
       )}
-      {controller === 'Google' && (
+      {!inheritFont && controller === 'Google' && (
         <>
           <div className={css(ut.flxc, fontStyle.searchBar, ut.mt2, ut.mb2)}>
             <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '100%' : '90%' }}>
@@ -254,44 +262,34 @@ export default function FontPickerMenu() {
       )}
 
       {(controller === 'Custom' || controller === 'inherit') && (
-        <>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(fontStyle.title)}>Inherit from theme</span>
-            <SingleToggle
-              name="themeInherit"
-              isChecked={inheritFont}
-              action={setThemeFont}
-            />
-          </div>
-          {!inheritFont && (
-            <>
-              <div className={css(ut.flxClm, ut.mt2)}>
-                <span className={css(fontStyle.title)}>Link</span>
-                <input
-                  className={css(fontStyle.url)}
-                  onChange={customFontHandler}
-                  onBlur={urlValidationHandler}
-                  name="fontURL"
-                  aria-label="Custom font url"
-                  type="url"
-                  placeholder="e.g: http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
-                />
-              </div>
-              <div className={css(ut.flxClm, ut.mt2)}>
-                <span className={css(fontStyle.title)}>Font Family</span>
-                <input
-                  value={(styles.font.fontType === 'Custom' && themeVars['--g-font-family']) || ''}
-                  className={css(fontStyle.url)}
-                  onChange={customFontHandler}
-                  name="font-family"
-                  aria-label="Custom font family"
-                  type="text"
-                  placeholder="e.g: Lato"
-                />
-              </div>
-            </>
-          )}
-        </>
+        !inheritFont && (
+          <>
+            <div className={css(ut.flxClm, ut.mt2)}>
+              <span className={css(fontStyle.title)}>Link</span>
+              <input
+                className={css(fontStyle.url)}
+                onChange={customFontHandler}
+                onBlur={urlValidationHandler}
+                name="fontURL"
+                aria-label="Custom font url"
+                type="url"
+                placeholder="e.g: http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
+              />
+            </div>
+            <div className={css(ut.flxClm, ut.mt2)}>
+              <span className={css(fontStyle.title)}>Font Family</span>
+              <input
+                value={(styles.font.fontType === 'Custom' && themeVars['--g-font-family']) || ''}
+                className={css(fontStyle.url)}
+                onChange={customFontHandler}
+                name="font-family"
+                aria-label="Custom font family"
+                type="text"
+                placeholder="e.g: Lato"
+              />
+            </div>
+          </>
+        )
       )}
     </div>
   )
