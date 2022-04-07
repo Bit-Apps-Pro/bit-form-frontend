@@ -40,14 +40,14 @@ export default function ThemeCustomize() {
   const genarateTitle = () => {
     switch (element) {
       case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case 'form-wrappers': return 'Form Wrappers'
-      case 'form-containers': return 'Form Containers'
+      case 'frm-bg': return 'Form Wrappers'
+      case 'frm-wrp': return 'Form Containers'
       case 'field-containers': return 'Field Containers'
       case 'label-containers': return 'Label & Subtitle Containers'
       case 'lbl': return 'Labels'
       case 'lbl-pre-i': return 'Label Prefix Icons'
       case 'lbl-suf-i': return 'Label Suffix Icons'
-      case 'subtitle': return 'Sub Titles'
+      case 'sub-titl': return 'Sub Titles'
       case 'sub-titl-pre-i': return 'Subtitle Prefix Icons'
       case 'sub-titl-suf-i': return 'Subtitle Suffix Icons'
       case 'pre-i': return 'Input Prefix Icons'
@@ -55,7 +55,7 @@ export default function ThemeCustomize() {
       case 'hlp-txt': return 'Helper Texts'
       case 'hlp-txt-pre-i': return 'Helper Text Prefix Icons'
       case 'hlp-txt-suf-i': return 'Helper Text Suffix Icons'
-      case 'error-messages': return 'Error Messages'
+      case 'err-msg': return 'Error Messages'
       case 'err-txt-pre-i': return 'Error Text Prefix Icons'
       case 'err-txt-suf-i': return 'Error Text Suffix Icons'
       case 'req-smbl': return 'Asterisk Symbol'
@@ -114,14 +114,14 @@ export default function ThemeCustomize() {
         <div className={css(cls.divider)} />
 
         {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
-        {element === 'form-wrappers' && <FormWrapperCustomizer />}
-        {element === 'form-containers' && <FormContainerCustomizer />}
+        {element === 'frm-bg' && <FormWrapperCustomizer />}
+        {element === 'frm-wrp' && <FormContainerCustomizer />}
         {element === 'field-containers' && <FieldContainerCustomizer />}
         {element === 'label-containers' && <LabelContainerCustomizer />}
-        {element === 'label' && <LabelCustomizer />}
-        {element === 'subtitle' && <SubTitleCustomizer />}
+        {element === 'lbl' && <LabelCustomizer />}
+        {element === 'sub-titl' && <SubTitleCustomizer />}
         {element === 'hlp-txt' && <HelperTextCustomizer />}
-        {element === 'error-messages' && <ErrorMessagesCustomizer />}
+        {element === 'err-msg' && <ErrorMessagesCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
         {element === 'req-smbl' && <AsteriskCustomizer />}
 

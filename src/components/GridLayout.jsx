@@ -439,7 +439,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const highlightElmEvent = event => {
     const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
-    if (document.elementsFromPoint) {
+    if (iFrameDocument.elementsFromPoint) {
       const allPointedElements = iFrameDocument.elementsFromPoint(event.pageX, event.pageY)
       const elmOnMousePointer = allPointedElements.find(el => !el.className.startsWith('highlight-'))
       if (!elmOnMousePointer) return false
@@ -460,24 +460,38 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       }
       if (!dataDevAttrFound) {
         removeHighlight()
+        elmCurrentHighlightedRef.current = null
       }
+    }
+  }
 
-      // elmOnMousePointer.addEventListener('click', () => {
-      //   setFlags(oldFlags => produce(oldFlags, draft => {
-      //     if (draft.inspectMode) {
-      //       draft.inspectMode = false
-      //     }
-      //   }))
-      // })
+  const redirectStyleUrlOfHighlightedElm = () => {
+    const highlightedElm = elmCurrentHighlightedRef.current
+    if (highlightedElm?.attributes?.length) {
+      const attrLength = highlightedElm.attributes.length
+      for (let i = 0; i < attrLength; i += 1) {
+        const { name: attrName, value: attrVal } = highlightedElm.attributes[i]
+        if (attrName.startsWith('data-dev-')) {
+          const styleUrlPart = attrName.replace('data-dev-', '')
+          const styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
+          history.push(styleUrl)
+          setFlags(prvFlags => produce(prvFlags, draft => {
+            draft.inspectMode = false
+          }))
+          // setSelectedFieldId(attrVal)
+          break
+        }
+      }
     }
   }
 
   useEffect(() => {
     if (inspectMode) {
+      insptectModeTurnedOnRef.current = true
       const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
       eventAbortControllerRef.current = new AbortController()
       iFrameDocument.addEventListener('mousemove', highlightElmEvent, { signal: eventAbortControllerRef.current.signal })
-      insptectModeTurnedOnRef.current = true
+      iFrameDocument.addEventListener('click', redirectStyleUrlOfHighlightedElm, { signal: eventAbortControllerRef.current.signal })
     } else if (!inspectMode && insptectModeTurnedOnRef.current) {
       eventAbortControllerRef.current.abort()
       removeHighlight()

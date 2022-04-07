@@ -23,7 +23,7 @@ export default function LayerAccordion({ className,
   highlightSelector,
   onClick,
   styleOverride }) {
-  const [tgl, setTgl] = useState((open) || false)
+  const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
@@ -81,9 +81,11 @@ export default function LayerAccordion({ className,
         onKeyPress={toggleAccordion}
       >
         <div className={`${css(ut.flxc, cls.titlebar)} ${css(active && { bd: 'hsl(233deg 36% 95%)' })}`} style={{ paddingLeft: offset * 2 }}>
-          <SortIcn className={`toggle-icn ${css(cls.icn)} `} size="9" style={{ transform: `rotate(${tgl ? 180 : 90}deg)` }} />
+          <div>
+            <SortIcn className={`toggle-icn ${css(cls.icn)} `} size="9" style={{ transform: `rotate(${tgl ? 180 : 90}deg)` }} />
+          </div>
           <div className={css(cls.flxbwn)}>
-            <div className={css(ut.flxc)}>
+            <div className={css(ut.flxc, ut.mr2)}>
               <span className={`title ${css(cls.dflx, !childrenAccodin && ut.fw500)}`}>
                 {title}
               </span>
@@ -211,10 +213,9 @@ const cls = {
     ':hover': { bd: '#d3d3d3' },
   },
   navActionBtn: {
-    h: '100%',
     b: 'none',
     pn: 'absolute',
-    rt: 0,
+    rt: 10,
     jc: 'center',
     ai: 'center',
     dy: 'none',

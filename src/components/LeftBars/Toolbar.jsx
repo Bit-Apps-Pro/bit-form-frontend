@@ -45,6 +45,7 @@ import countries from '../../Utils/StaticData/countries.json'
 import currencyList from '../../Utils/StaticData/currencies.json'
 import phoneNumberList from '../../Utils/StaticData/phone-number-code.json'
 import { searchKey } from '../style-new/styleHelpers'
+import Cooltip from '../Utilities/Cooltip'
 import Tools from './Tools'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
@@ -115,6 +116,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       keywords: 'Select',
       icn: <ChevronDownIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
+      tip: 'Select',
       elm: {
         typ: 'html-select',
         lbl: __('Select', 'bitform'),
@@ -187,20 +189,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
               { lbl: 'Option 1 1', val: 'Option 1 1' },
               { lbl: 'Option 1 2', val: 'Option 1 2' },
               { lbl: 'Option 1 3', val: 'Option 1 3' },
-            ],
-          },
-          {
-            'List-2': [
-              { lbl: 'Option 2 1', val: 'Option 2 1' },
-              { lbl: 'Option 2 2', val: 'Option 2 2' },
-              { lbl: 'Option 2 3', val: 'Option 2 3' },
-            ],
-          },
-          {
-            'List-3': [
-              { lbl: 'Option 3 1', val: 'Option 3 1' },
-              { lbl: 'Option 3 2', val: 'Option 3 2' },
-              { lbl: 'Option 3 3', val: 'Option 3 3' },
             ],
           },
         ],
@@ -736,8 +724,15 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <div className={css(Toolbars.tool_bar)}>
             {toolsArray().map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {tool.name}
+                <div className={`${css(toolStyle.wrp)} ${css(tool.tip ? ut.w9 : ut.w10)}`} title={tool.name}>
+                  <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
+                  {tool.name}
+                </div>
+                {tool.tip && (
+                  <Cooltip className={`${css(ut.w1)} hover-tip`} icnSize={15}>
+                    <div className="txt-body">{tool.tip}</div>
+                  </Cooltip>
+                )}
               </Tools>
             ))}
           </div>
@@ -748,3 +743,11 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   )
 }
 export default memo(Toolbar)
+
+const toolStyle = {
+  wrp: {
+    flx: 'align-center',
+    ow: 'hidden',
+    w: '90%'
+  }
+}

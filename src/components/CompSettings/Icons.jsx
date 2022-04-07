@@ -359,7 +359,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           {!loading && (
             <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
               <div className={css(ut.flxc, ut.mt4, s.icon)}>
-                {files.length && files.map((file) => (
+                {!!files.length && files.map((file) => (
                   <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
                     <button
                       type="button"
