@@ -630,7 +630,7 @@ export const generateFontUrl = (font, string) => {
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
 
-export const findExistingFontStyleAndWeidth = (styles) => {
+export const findExistingFontStyleNWeidth = (styles, themeVars) => {
   const fontWeightVariant = []
   const fontStyleParam = []
   const fieldsArr = Object.keys(styles.fields)
@@ -643,22 +643,25 @@ export const findExistingFontStyleAndWeidth = (styles) => {
     for (let clsIndx = 0; clsIndx < fieldClassesLen; clsIndx += 1) {
       const clsProperties = fieldClasses[fieldClassesArr[clsIndx]]
       if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-weight')) {
-        const weight = clsProperties['font-weight']
-        if (!fontWeightVariant.includes(weight)) fontWeightVariant.push(weight)
+        let weight = clsProperties['font-weight']
+        weight = getValueFromStateVar(themeVars, weight)
+        if (weight && !fontWeightVariant.includes(weight)) fontWeightVariant.push(weight)
       }
       if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-style')) {
-        const style = clsProperties['font-style']
-        if (!fontStyleParam.includes(style)) fontStyleParam.push(style)
+        let style = clsProperties['font-style']
+        style = getValueFromStateVar(themeVars, style)
+        if (style && !fontStyleParam.includes(style)) fontStyleParam.push(style)
       }
     }
   }
   return [fontWeightVariant, fontStyleParam]
 }
 
-export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
+export const updateGoogleFontUrl = (styles, setStyle, themeVars) => {
   const fontWeightparam = []
   let string = ''
-  const [fontWeightVariant, fontStyleParam] = findExistingFontStyleAndWeidth(styles)
+  const globalFont = themeVars['--g-font-family']
+  const [fontWeightVariant, fontStyleParam] = findExistingFontStyleNWeidth(styles, themeVars)
 
   const fontWeightVLen = fontWeightVariant.length
   if (fontWeightVLen > 0) {
@@ -673,7 +676,7 @@ export const updateGoogleFontUrl = (styles, setStyle, fontFamily) => {
     string = `wght@${string}`
   }
 
-  const url = generateFontUrl(fontFamily, string)
+  const url = generateFontUrl(globalFont, string)
   setStyle(prvStyle => produce(prvStyle, drft => {
     drft.font.fontURL = url
   }))

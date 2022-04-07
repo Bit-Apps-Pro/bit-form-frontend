@@ -16,7 +16,7 @@ import ut from '../../styles/2.utilities'
 import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { findExistingFontStyleAndWeidth, generateFontUrl, isValidURL } from './styleHelpers'
+import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
 export default function FontPickerMenu() {
   const { css } = useFela()
@@ -52,7 +52,11 @@ export default function FontPickerMenu() {
     setController(lbl)
   }
 
-  const findSelectedFontIndx = () => (styles?.font?.fontType === 'Google' ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family']) : 0)
+  const findSelectedFontIndx = () => (
+    styles?.font?.fontType === 'Google'
+      ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family'])
+      : 0
+  )
 
   const searchHandler = (e) => {
     const { value } = e.target
@@ -93,11 +97,11 @@ export default function FontPickerMenu() {
     return [weight, style, string]
   }
 
-  const checkedExistingGoogleFontVariantStyle = () => {
+  const checkedExistingGoogleFontVariantNStyle = () => {
     const weightVariants = styles.font.fontWeightVariants
     const styleVariants = styles.font.fontStyle
 
-    const [fontWeight, fontStyle] = findExistingFontStyleAndWeidth(styles)
+    const [fontWeight, fontStyle] = findExistingFontStyleNWeidth(styles, themeVars)
 
     const getNotExistVariant = fontWeight.filter(w => !weightVariants.includes(Number(w)))
     const getNotExiststyle = fontStyle.filter(w => !styleVariants.includes(Number(w)))
@@ -122,7 +126,7 @@ export default function FontPickerMenu() {
     setThemeVars(prvState => produce(prvState, drft => {
       drft['--g-font-family'] = fontFamily
     }))
-    styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantStyle()
+    styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantNStyle()
   }
 
   const fontSorted = (orderBy) => {
@@ -298,6 +302,7 @@ const fontStyle = {
     scrollBehavior: 'auto !important',
     mb: 5,
     '& *': { scrollBehavior: 'auto !important' },
+    w: '95%',
   },
   url: {
     w: '100%',
