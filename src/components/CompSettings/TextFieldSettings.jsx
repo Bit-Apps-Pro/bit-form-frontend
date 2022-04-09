@@ -497,66 +497,38 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        <PlaceholderSettings />
+        <SimpleAccordion
+          title={__('Default value', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideDefalutValue}
+          toggleChecked={fieldData?.defaultValueHide}
+          open={fieldData?.defaultValueHide}
+          disable={!fieldData?.defaultValueHide}
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <input
+              aria-label="Default value for this Field"
+              placeholder="Type default value here..."
+              className={css(FieldStyle.input)}
+              type={fieldData.typ === 'textarea' ? 'textarea' : fieldData.typ}
+              value={defaultValue}
+              onChange={setDefaultValue}
+            />
+          </div>
+        </SimpleAccordion>
 
         <FieldSettingsDivider />
-        {fieldData.typ === 'color' && (
-          <>
-            <SimpleAccordion
-              title={__('Default value', 'bitform')}
-              className={css(FieldStyle.fieldSection)}
-              switching
-              toggleAction={hideDefalutValue}
-              toggleChecked={fieldData?.defaultValueHide}
-              open={fieldData?.defaultValueHide}
-              disable={!fieldData?.defaultValueHide}
-            >
-              <div className={css(FieldStyle.placeholder)}>
-                <input
-                  aria-label="Default value for this Field"
-                  placeholder="Type default value here..."
-                  className={css(FieldStyle.input)}
-                  type="color"
-                  value={defaultValue}
-                  onChange={setDefaultValue}
-                />
-              </div>
-            </SimpleAccordion>
-
-            <FieldSettingsDivider />
-          </>
-        )}
 
         {!(fieldData.typ === 'password'
           || fieldData.typ === 'date'
           || fieldData.typ === 'time'
           || fieldData.typ === 'datetime-local'
           || fieldData.typ === 'color'
+          || fieldData.typ === 'month'
+          || fieldData.typ === 'week'
         ) && (
             <>
-              <SimpleAccordion
-                title={__('Default value', 'bitform')}
-                className={css(FieldStyle.fieldSection)}
-                switching
-                toggleAction={hideDefalutValue}
-                toggleChecked={fieldData?.defaultValueHide}
-                open={fieldData?.defaultValueHide}
-                disable={!fieldData?.defaultValueHide}
-              >
-                <div className={css(FieldStyle.placeholder)}>
-                  <input
-                    aria-label="Default value for this Field"
-                    placeholder="Type default value here..."
-                    className={css(FieldStyle.input)}
-                    type="text"
-                    value={defaultValue}
-                    onChange={setDefaultValue}
-                  />
-                </div>
-              </SimpleAccordion>
-
-              <FieldSettingsDivider />
-
               <SimpleAccordion
                 title={__('Suggestion', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
@@ -596,6 +568,10 @@ function TextFieldSettings() {
                   />
                 </div>
               </SimpleAccordion>
+
+              <FieldSettingsDivider />
+
+              <PlaceholderSettings />
 
               <FieldSettingsDivider />
             </>
