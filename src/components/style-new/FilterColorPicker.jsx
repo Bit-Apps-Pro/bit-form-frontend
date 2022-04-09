@@ -62,9 +62,12 @@ export default function FilterColorPicker({ title,
   }
 
   const checkVarValue = () => {
-    const str = value
+    let str = value
     let val = value
-
+    if (value?.match(/(var)/gi)?.[0]) {
+      str = value.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
+      val = themeColors[str]
+    }
     if (val?.match(/(!important)/gi)) {
       val = val?.replaceAll(/(!important)/gi, '')
     }
