@@ -4,6 +4,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle, autoHeight }) {
   const handleClickOutside = e => {
     if (e.target.classList.contains('btcd-modal-wrp')) {
+      e.stopPropagation()
       setModal(false)
     }
   }
