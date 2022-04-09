@@ -20,6 +20,7 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
+import { paddingGenerator } from '../style-new/styleHelpers'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
@@ -160,8 +161,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
           if (addPaddingOnSelect) {
             setStyles(prvStyle => produce(prvStyle, draft => {
-              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
-              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+              const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+
+              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
+              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
             }))
           }
           reCalculateFieldHeights(setBuilderHookStates, fldKey)
@@ -240,8 +243,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     fieldData[iconType] = prefix
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     setStyles(prvStyle => produce(prvStyle, draft => {
-      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
-      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+      const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+
+      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
+      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
     }))
     setModal(false)
     reCalculateFieldHeights(setBuilderHookStates, fldKey)

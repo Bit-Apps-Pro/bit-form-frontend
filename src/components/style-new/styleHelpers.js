@@ -740,3 +740,61 @@ export const isStyleExist = (styles, fieldKey, classKey) => {
   if (styles.fields[fieldKey].classes[`.${fieldKey}-${classKey}`]) return true
   return false
 }
+
+/**
+ * @function paddingGenerator
+ * @description This funcaiton generate padding for add or remove padding with icon position
+ * @param {String} padding : {Padding String};
+ * @param {String} pos {Add Icon left or right positon}
+ * @param {true|false} add {When padding add param value true & remove param value false }
+ * @returns Padding String
+ */
+export const paddingGenerator = (padding, pos, add) => {
+  let checkImportant = false
+  let values
+
+  if (padding.match(/(!important)/gi)) {
+    values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
+    checkImportant = true
+  } else {
+    values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
+  }
+  const valuesLan = values.length
+  const val = add ? '40px' : values[0]
+  switch (valuesLan) {
+    case 1:
+      if (pos === 'left') {
+        values = [values[0], values[0], values[0], val]
+      } else {
+        values = [values[0], val, values[0], values[0]]
+      }
+      break
+    case 2:
+      if (pos === 'left') {
+        values = [values[0], values[1], values[0], val]
+      } else {
+        values = [values[0], val, values[0], values[1]]
+      }
+      break
+    case 3:
+      if (pos === 'left') {
+        values = [values[0], values[1], values[2], val]
+      } else {
+        values = [values[0], val, values[2], values[1]]
+      }
+      break
+    case 4:
+      if (pos === 'left') {
+        values = [values[0], values[1], values[2], val]
+      } else {
+        values = [values[0], val, values[2], values[3]]
+      }
+      break
+    default:
+      break
+  }
+
+  if (checkImportant) values[4] = '!important'
+
+  return values.join(' ')
+}
