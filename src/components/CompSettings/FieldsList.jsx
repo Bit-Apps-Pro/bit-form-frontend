@@ -32,6 +32,7 @@ const Group = ({ title, filteredFields }) => {
         }
         return (
           <FieldLinkBtn
+            key={fldKey}
             fieldKey={fldKey}
             icn={typ}
             title={lbl || adminLbl || typ}
