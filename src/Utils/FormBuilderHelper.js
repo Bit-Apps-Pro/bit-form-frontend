@@ -1,6 +1,8 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { getRecoil, setRecoil } from 'recoil-nexus'
+import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import { selectInGrid } from './globalHelpers'
 import { deepCopy } from './Helpers'
 
@@ -480,18 +482,21 @@ export const propertyValueSumY = (propertyValue = '') => {
 
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
-export const reCalculateFieldHeights = (setBuilderHookStates, fieldKey) => {
+export const reCalculateFieldHeights = (fieldKey) => {
+  const builderHookState = getRecoil($builderHookStates)
   if (fieldKey) {
-    setBuilderHookStates(oldHooks => produce(oldHooks, draft => {
+    const newBuilderHookState = produce(builderHookState, draft => {
       const { counter } = draft.reCalculateSpecificFldHeight
       draft.reCalculateSpecificFldHeight = {
         fieldKey,
         counter: counter + 1,
       }
-    }))
+    })
+    setRecoil($builderHookStates, newBuilderHookState)
   } else {
-    setBuilderHookStates(oldHooks => produce(oldHooks, draft => {
+    const newBuilderHookState = produce(builderHookState, draft => {
       draft.reCalculateFieldHeights += 1
-    }))
+    })
+    setRecoil($builderHookStates, newBuilderHookState)
   }
 }
