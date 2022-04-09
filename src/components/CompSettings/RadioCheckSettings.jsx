@@ -81,8 +81,7 @@ function RadioCheckSettings() {
         assignNestedObj(drft, path, bdr)
       } else {
         delete fieldData.round
-        if (fieldData.typ === 'radio') deleteNestedObj(drft, path)
-        else assignNestedObj(drft, path, bdr)
+        assignNestedObj(drft, path, bdr)
       }
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
