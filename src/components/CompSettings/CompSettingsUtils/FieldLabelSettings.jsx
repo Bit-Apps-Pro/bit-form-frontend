@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import ut from '../../../styles/2.utilities'
@@ -29,7 +29,6 @@ export default function FieldLabelSettings() {
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [icnMdl, setIcnMdl] = useState(false)
@@ -45,7 +44,7 @@ export default function FieldLabelSettings() {
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(setBuilderHookStates, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -60,7 +59,7 @@ export default function FieldLabelSettings() {
     const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(setBuilderHookStates, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -69,7 +68,7 @@ export default function FieldLabelSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      reCalculateFieldHeights(setBuilderHookStates, fldKey)
+      reCalculateFieldHeights(fldKey)
     }
   }
 

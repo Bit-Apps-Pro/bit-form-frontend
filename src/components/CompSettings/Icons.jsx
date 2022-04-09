@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
@@ -40,7 +40,6 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const uploadLabel = uploadLbl || 'Upload Icon'
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setStyles = useSetRecoilState($styles)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()
@@ -116,7 +115,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
         setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-        reCalculateFieldHeights(setBuilderHookStates, fldKey)
+        reCalculateFieldHeights(fldKey)
         setModal(false)
       })
 
@@ -164,7 +163,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
               if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
             }))
           }
-          reCalculateFieldHeights(setBuilderHookStates, fldKey)
+          reCalculateFieldHeights(fldKey)
         }
         setDnLoading(false)
         setModal(false)
@@ -244,7 +243,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
     }))
     setModal(false)
-    reCalculateFieldHeights(setBuilderHookStates, fldKey)
+    reCalculateFieldHeights(fldKey)
   }
 
   const handlePrefixIcon = e => {
@@ -360,7 +359,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         {!loading && (
           <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
             <div className={css(ut.flxc, ut.mt4, s.icon)}>
-              {files.length && files.map((file) => (
+              {!!files.length && files.map((file) => (
                 <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
                   <button
                     type="button"

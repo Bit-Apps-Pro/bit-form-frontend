@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $fields } from '../../../GlobalStates/GlobalStates'
+import { useRecoilValue } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../../Utils/AppSettingsContext'
 import { reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
@@ -17,8 +17,6 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const paypalElemnRaf = useRef(null)
   const paypalFldWrapRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
-
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
 
   useEffect(() => {
     let key = ''
@@ -73,7 +71,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       shipping: 0,
       tax: 0,
       onInit: () => {
-        reCalculateFieldHeights(setBuilderHookState, fieldKey)
+        reCalculateFieldHeights(fieldKey)
       },
     }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import HistoryIcn from '../Icons/HistoryIcn'
@@ -38,7 +38,6 @@ export default function FormBuilderHistory() {
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   // const [scrolIndex, setScrolIndex] = useState(0)
 
   useEffect(() => {
@@ -118,7 +117,7 @@ export default function FormBuilderHistory() {
     }
 
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
-    reCalculateFieldHeights(setBuilderHookStates)
+    reCalculateFieldHeights()
     setDisabled(false)
   }
 

@@ -8,7 +8,7 @@ import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
@@ -42,7 +42,6 @@ function TitleSettings() {
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
@@ -66,7 +65,7 @@ function TitleSettings() {
     setIconFilterValue(typ, fieldKey, styles, setStyles, themeColors, setThemeColors)
     setFieldName(typ)
     setIcnMdl(true)
-    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+    reCalculateFieldHeights(fieldKey)
   }
 
   const removeIcon = (iconType) => {
@@ -86,7 +85,7 @@ function TitleSettings() {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+      reCalculateFieldHeights(fieldKey)
     }
   }
 
@@ -103,7 +102,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+    reCalculateFieldHeights(fieldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `title_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -120,7 +119,7 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+    reCalculateFieldHeights(fieldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
@@ -131,14 +130,14 @@ function TitleSettings() {
       delete fieldData[type]
     }
     setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
-    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+    reCalculateFieldHeights(fieldKey)
   }
 
   const flexDirectionHandle = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
-    reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+    reCalculateFieldHeights(fieldKey)
   }
 
   const positionHandle = (val, type) => {
@@ -154,7 +153,7 @@ function TitleSettings() {
 
   useEffect(() => {
     if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
-      reCalculateFieldHeights(setBuilderHookStates, fieldKey)
+      reCalculateFieldHeights(fieldKey)
     }
   }, [icnMdl])
 
