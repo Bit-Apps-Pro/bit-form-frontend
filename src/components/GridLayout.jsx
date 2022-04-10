@@ -473,7 +473,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         const { name: attrName, value: attrVal } = highlightedElm.attributes[i]
         if (attrName.startsWith('data-dev-')) {
           const styleUrlPart = attrName.replace('data-dev-', '')
-          const styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
+          let styleUrl
+          if (styleUrlPart.startsWith('_frm-')) {
+            styleUrl = `/form/builder/${formType}/${formID}/theme-customize/${styleUrlPart}`
+          } else {
+            styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
+          }
           history.push(styleUrl)
           setFlags(prvFlags => produce(prvFlags, draft => {
             draft.inspectMode = false
