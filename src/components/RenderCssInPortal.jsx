@@ -1655,7 +1655,6 @@ arrow:after,
  
  .react-grid-layout {
     position: relative;
-    transition: height 200ms ease
  }
  
  .react-grid-item {
