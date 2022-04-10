@@ -7,8 +7,12 @@ import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import BackIcn from '../../../Icons/BackIcn'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
+  const bits = useRecoilValue($bits)
+  const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const nextPage = () => {
@@ -54,7 +58,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
         <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
         <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-        <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
         <CopyText value={redirectLocation || `${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
