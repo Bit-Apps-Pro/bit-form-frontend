@@ -97,6 +97,8 @@ export default function HelperTxtSettings() {
         title={__('Helper Text', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
+        tip="By disabling this option, the field helper text will be hidden"
+        tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={hideHelperTxt}
         toggleChecked={fieldData?.hlpTxtHide}
         open={fieldData?.hlpTxtHide}

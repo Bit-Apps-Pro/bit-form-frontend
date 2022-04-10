@@ -7,6 +7,7 @@ import { $breakpoint, $builderHistory, $fields, $updateBtn } from '../../../Glob
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
+import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings({ cls }) {
@@ -37,6 +38,9 @@ export default function FieldHideSettings({ cls }) {
 
   return (
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
+      <Cooltip width="200" icnSize="17" className="hover-tip">
+        <div className="txt-body">{__('tip', 'bitform')}</div>
+      </Cooltip>
       <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} />
     </div>
   )

@@ -441,6 +441,8 @@ function TextFieldSettings() {
           title={__('Admin Label', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
+          tip="By disabling this option, the field admin label will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideAdminLabel}
           toggleChecked={fieldData?.adminLblHide}
           open={fieldData?.adminLblHide}
@@ -501,6 +503,8 @@ function TextFieldSettings() {
           title={__('Default value', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
+          tip="By disabling this option, the field default will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideDefalutValue}
           toggleChecked={fieldData?.defaultValueHide}
           open={fieldData?.defaultValueHide}
@@ -533,6 +537,8 @@ function TextFieldSettings() {
                 title={__('Suggestion', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 switching
+                tip="By disabling this option, the field suggestion will be hidden"
+                tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideSuggestionVal}
                 toggleChecked={fieldData?.suggestionHide}
                 open={fieldData?.suggestionHide}
@@ -552,6 +558,8 @@ function TextFieldSettings() {
                 title={__('Auto Complete', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 switching
+                tip="By disabling this option, the field auto complete will be hidden"
+                tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideAutoComplete}
                 toggleChecked={fieldData?.acHide}
                 open={fieldData?.acHide}

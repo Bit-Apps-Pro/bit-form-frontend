@@ -50,6 +50,8 @@ export default function PlaceholderSettings() {
       title={__('Placeholder', 'bitform')}
       className={css(FieldStyle.fieldSection)}
       switching
+      tip="By disabling this option, the field placeholder will be hidden"
+      tipProps={{ width: 250, icnSize: 17 }}
       toggleAction={hidePlaceholder}
       toggleChecked={fieldData?.phHide}
       open={fieldData?.phHide}
