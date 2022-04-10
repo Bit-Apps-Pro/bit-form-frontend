@@ -62,7 +62,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               {renderHTMR(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
               {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
 
-              {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'after' && (
+              {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos !== 'before' && (
                 <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl`}>*</span>
               )}
 

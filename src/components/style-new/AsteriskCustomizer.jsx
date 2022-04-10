@@ -2,11 +2,15 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FontSizeControl from './FontSizeControl'
 import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
@@ -19,6 +23,7 @@ export default function AsteriskCustomizer() {
   const { css } = useFela()
   const themeColors = useRecoilValue($themeColors)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [fields, setFields] = useRecoilState($fields)
 
   const lhVar = '--req-smbl-lh'
   const { '--req-smbl-c': flc } = themeColors
@@ -39,6 +44,37 @@ export default function AsteriskCustomizer() {
   const icnSizeHandler = ({ v, u }, prop) => {
     const val = `${v}${u}`
     updateState(prop, val)
+  }
+
+  const setAsteriskPos = (posValue) => {
+    if (posValue === 'left') {
+      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        drftStyle['--fld-lbl-pn'] = 'relative'
+        drftStyle['--req-smbl-pn'] = 'absolute'
+        drftStyle['--req-smbl-rt'] = 'unset'
+        drftStyle['--req-smbl-lt'] = '0px'
+      }))
+    } else if (posValue === 'right') {
+      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        drftStyle['--fld-lbl-pn'] = 'relative'
+        drftStyle['--req-smbl-pn'] = 'absolute'
+        drftStyle['--req-smbl-rt'] = '0px'
+        drftStyle['--req-smbl-lt'] = 'unset'
+      }))
+    } else {
+      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        drftStyle['--fld-lbl-pn'] = 'unset'
+        drftStyle['--req-smbl-pn'] = 'unset'
+        drftStyle['--req-smbl-rt'] = 'unset'
+        drftStyle['--req-smbl-lt'] = 'unset'
+      }))
+
+      setFields(prevFields => produce(prevFields, draftFields => {
+        Object.keys(fields).map(fieldKey => {
+          draftFields[fieldKey].valid.reqPos = posValue
+        })
+      }))
+    }
   }
 
   return (
@@ -81,10 +117,32 @@ export default function AsteriskCustomizer() {
           <SizeControl
             width="128px"
             value={Number(getNumFromStr(themeVars[lhVar]))}
-            unit={getStrFromStr(themeVars[lhVar])}
+            unit={getStrFromStr(themeVars[lhVar]) || 'px'}
             inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, lhVar)}
             sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, lhVar)}
             options={['px', 'em', 'rem', '%']}
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+
+      <ThemeStylePropertyBlock label="Asterisk Position">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={lhVar}
+            stateObjName="themeVars"
+          />
+          <StyleSegmentControl
+            className={css({ w: 128 })}
+            show={['icn']}
+            tipPlace="bottom"
+            options={[
+              { icn: <TxtAlignLeftIcn size="17" />, label: 'left', tip: 'left' },
+              { icn: <TxtAlignLeftIcn size="17" />, label: 'before', tip: 'before' },
+              { icn: <TxtAlignRightIcn size="17" />, label: 'after', tip: 'after' },
+              { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'right' },
+            ]}
+            onChange={value => setAsteriskPos(value)}
+            activeValue="after"
           />
         </div>
       </ThemeStylePropertyBlock>

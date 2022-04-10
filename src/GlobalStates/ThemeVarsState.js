@@ -89,6 +89,7 @@ const $themeVarsLg = atom({
     '--fld-lbl-fs': '1rem', // field label font size
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
+    '--fld-lbl-pn': '', // field label position
     '--fld-font-w': 700, // field font weight
     '--fld-font-style': '', // field font style
 
@@ -96,7 +97,10 @@ const $themeVarsLg = atom({
     '--req-smbl-p': '', // Required Symbol Padding
     '--req-smbl-fs': '', // Required Symbol Font Size
     '--req-smbl-fw': '', // Required Symbol Font Weight
-    '--req-smbl-lh': '', // Required Symbol Font Weight
+    '--req-smbl-lh': '', // Required Symbol line height
+    '--req-smbl-pn': '', // Required Symbol position
+    '--req-smbl-lt': '', // Required Symbol Left Value
+    '--req-smbl-rt': '', // Required Symbol Right Value
 
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '3px 0', // subtitle padding
