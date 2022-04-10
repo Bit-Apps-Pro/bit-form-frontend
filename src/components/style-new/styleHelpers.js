@@ -462,6 +462,7 @@ export const styleClasses = {
 }
 
 const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
 export const removeUnuseStyles = (fields, setStyles) => {
   const fieldsArray = Object.keys(fields)
@@ -724,13 +725,17 @@ export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeCol
       const setFilterValue = hexToCSSFilter(hexValue)
       setStyles(prvState => produce(prvState, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
-        drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+        if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+        }
       }))
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
       setStyles(prvState => produce(prvState, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
-        drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+        if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+        }
       }))
     }
   }
