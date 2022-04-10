@@ -653,7 +653,12 @@ function TextFieldSettings() {
                         <div>
                           <ul role="menu">
                             {predefinedPatterns?.map(opt => (
-                              <li role="menuitem" className={`${css(style.button)} btnHover`} onKeyPress={() => setRegexrValue(opt.val)} onClick={() => setRegexrValue(opt.val)}>
+                              <li
+                                role="menuitem"
+                                className={`${css(style.button)} btnHover`}
+                                onKeyPress={() => setRegexrValue(opt.val)}
+                                onClick={() => setRegexrValue(opt.val)}
+                              >
                                 <span>{opt.lbl}</span>
                                 <br />
                                 <small>{generateBackslashPattern(opt.val)}</small>
@@ -715,7 +720,11 @@ function TextFieldSettings() {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
             <>
               <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
-                <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
+                <SingleToggle
+                  title={__('Auto Fill:', 'bitform')}
+                  action={setAutoComplete}
+                  isChecked={isAutoComplete}
+                />
               </div>
               <FieldSettingsDivider />
             </>
@@ -742,30 +751,49 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
-                <div className={css(FieldStyle.fieldNumber)}>
-                  <span>{__('Min:', 'bitform')}</span>
-                  <input title="Minimum number for this field" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={min} onChange={setMin} />
+                <div className={css({ mx: 5 })}>
+                  <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+                    <span>{__('Min:', 'bitform')}</span>
+                    <input
+                      title="Minimum number for this field"
+                      aria-label="Minimum number for this field"
+                      placeholder="Type minimum number here..."
+                      // className={css(FieldStyle.inputNumber, FieldStyle.w140)}
+                      className={css(FieldStyle.input, FieldStyle.w140)}
+                      type="number"
+                      value={min}
+                      onChange={setMin}
+                    />
+                  </div>
+                  {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
+                  {fieldData.mn && (
+                    <ErrorMessageSettings
+                      type="mn"
+                      title="Min Error Message"
+                      tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
+                    />
+                  )}
+                  <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+                    <span>{__('Max:', 'bitform')}</span>
+                    <input
+                      title="Maximum number for this field"
+                      aria-label="Maximum number for this field"
+                      placeholder="Type maximun number here..."
+                      className={css(FieldStyle.input, FieldStyle.w140)}
+                      type="number"
+                      value={max}
+                      onChange={setMax}
+                    />
+                  </div>
+                  {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
+                  {fieldData.mx && (
+                    <ErrorMessageSettings
+                      type="mx"
+                      title="Max Error Message"
+                      tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
+                    />
+                  )}
                 </div>
-                {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
-                {fieldData.mn && (
-                  <ErrorMessageSettings
-                    type="mn"
-                    title="Min Error Message"
-                    tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
-                  />
-                )}
-                <div className={css(FieldStyle.fieldNumber)}>
-                  <span>{__('Max:', 'bitform')}</span>
-                  <input title="Maximum number for this field" aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={max} onChange={setMax} />
-                </div>
-                {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
-                {fieldData.mx && (
-                  <ErrorMessageSettings
-                    type="mx"
-                    title="Max Error Message"
-                    tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
-                  />
-                )}
               </SimpleAccordion>
               <FieldSettingsDivider />
             </>
@@ -803,16 +831,41 @@ function TextFieldSettings() {
                     onChange={setPasswordValidation}
                     disabled={!bits.isPro}
                   />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox
+                    className={css(ut.w10, ut.mt2)}
+                    cls={css(ut.mr2)}
+                    name="limit"
+                    checked={fieldData.valid?.validations?.limit || false}
+                    value=".{8,32}"
+                    title={__('Limit Password Length', 'bitform')}
+                    onChange={setPasswordValidation}
+                    disabled={!bits.isPro}
+                  />
                   {fieldData.valid?.validations?.limit && (
                     <div>
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Min:', 'bitform')}</span>
-                        <input name="mn" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mn} onChange={setPasswordLimit} />
+                        <input
+                          name="mn"
+                          aria-label="Minimum number for this field"
+                          placeholder="Type minimum number here..."
+                          className={css(FieldStyle.inputNumber)}
+                          type="number"
+                          value={fieldData.valid?.validations?.limit?.mn}
+                          onChange={setPasswordLimit}
+                        />
                       </div>
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Max:', 'bitform')}</span>
-                        <input name="mx" aria-label="Maximum number for this field" placeholder="Type maximum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mx} onChange={setPasswordLimit} />
+                        <input
+                          name="mx"
+                          aria-label="Maximum number for this field"
+                          placeholder="Type maximum number here..."
+                          className={css(FieldStyle.inputNumber)}
+                          type="number"
+                          value={fieldData.valid?.validations?.limit?.mx}
+                          onChange={setPasswordLimit}
+                        />
                       </div>
                       {/* <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
                       {/* <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
