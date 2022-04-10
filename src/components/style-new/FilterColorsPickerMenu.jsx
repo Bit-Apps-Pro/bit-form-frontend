@@ -37,11 +37,6 @@ function FilterColorsPickerMenu({ stateObjName,
 
   const { paths } = objectPaths
 
-  // todo this use-effect will be remove
-  useEffect(() => {
-    console.log('themeColorsEffect=', themeColors)
-  }, [themeColors])
-
   useEffect(() => {
     switch (stateObjName) {
       case 'themeColors':
