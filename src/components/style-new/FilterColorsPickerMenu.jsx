@@ -4,15 +4,14 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import produce from 'immer'
+import produce, { current } from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { hsva2hsla } from './colorHelpers'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -29,16 +28,19 @@ import { getValueByObjPath } from './styleHelpers'
 //  hsla={{h:'--gfh', s: ''}}
 // />
 function FilterColorsPickerMenu({ stateObjName,
-  objectPaths, id,propertyPath }) {
+  objectPaths, id, propertyPath }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const { paths } = objectPaths
+
+  // todo this use-effect will be remove
+  useEffect(() => {
+    console.log('themeColorsEffect=', themeColors)
+  }, [themeColors])
 
   useEffect(() => {
     switch (stateObjName) {
@@ -82,14 +84,21 @@ function FilterColorsPickerMenu({ stateObjName,
     const state = { fldKey: stateObjName }
     const historyData = { event, type, state }
 
+    // TODO history should be added
     switch (stateObjName) {
       case 'themeColors':
-        const newThemeColors = produce(themeColors, drftThmClr => {
+        // const newThemeColors = produce(themeColors, drftThmClr => {
+        //   drftThmClr[path] = hslaStr
+        // })
+        setThemeColors(prvState => produce(prvState, drftThmClr => {
           drftThmClr[path] = hslaStr
-        })
-        setThemeColors(newThemeColors)
-        historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        }))
+        // historyData.state.themeColors = newThemeColors
+        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        // setThemeColors(newThemeColors)
+        // console.log('newThemeColors', newThemeColors)
+        // historyData.state.themeColors = newThemeColors
+        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
         break
 
       case 'themeVars':
@@ -113,7 +122,7 @@ function FilterColorsPickerMenu({ stateObjName,
         break
     }
   }
-
+  // TODO history should be added
   const handleValue = (path, value) => {
     const event = 'value changed'
     const type = path
@@ -122,12 +131,19 @@ function FilterColorsPickerMenu({ stateObjName,
 
     switch (stateObjName) {
       case 'themeColors':
-        const newThemeColors = produce(themeColors, drftThmClr => {
+        setThemeColors(prvState => produce(prvState, drftThmClr => {
           drftThmClr[path] = value
-        })
-        setThemeColors(newThemeColors)
-        historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+
+          const newThemeColors = current(drftThmClr)
+          historyData.state.themeColors = newThemeColors
+          // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        }))
+        // const newThemeColors = produce(themeColors, drftThmClr => {
+        //   drftThmClr[path] = value
+        // })
+        // setThemeColors(newThemeColors)
+        // historyData.state.themeColors = newThemeColors
+        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
         break
 
       case 'themeVars':

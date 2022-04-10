@@ -8,6 +8,7 @@ import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import BorderControl from './BorderControl'
+import FilterColorPicker from './FilterColorPicker'
 import FilterController from './FilterController'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
@@ -78,6 +79,9 @@ export default function IcnCustomizer({ elementKey }) {
     },
   ]
 
+  const { [`--${elementKey}-clr`]: fltrColorValue } = themeColors
+  console.log('filter colorValue=', fltrColorValue)
+
   return (
     <div className={css(ut.m10)}>
       <ThemeStylePropertyBlock label="Border">
@@ -94,6 +98,21 @@ export default function IcnCustomizer({ elementKey }) {
         </div>
       </ThemeStylePropertyBlock>
 
+      <FilterColorPicker
+        title="Color"
+        subtitle="Label Text Color Control"
+        value={fltrColorValue}
+        stateObjName="themeColors"
+        propertyPath={`--${elementKey}-clr`}
+        objectPaths={{
+          object: 'themeColors',
+          paths: {
+            'icon-color': `--${elementKey}-clr`,
+            filter: `--${elementKey}-fltr`,
+          },
+        }}
+        modalId={`--${elementKey}-fltr`}
+      />
       <ThemeStylePropertyBlock label="Filter">
         <div className={css(ut.flxc)}>
           <ResetStyle
