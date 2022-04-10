@@ -23,11 +23,19 @@ export default class RecaptchaField {
 
   init() {
     this.#recaptcha = this.#select('.g-recaptcha')
-    this.#recaptcha.setAttribute('data-theme', this.#config.theme)
-    this.#recaptcha.setAttribute('data-size', this.#config.size)
+    this.#setAttribute(this.#recaptcha, 'data-theme', this.#config.theme)
+    this.#setAttribute(this.#recaptcha, 'data-size', this.#config.size)
   }
 
   #select(selector) { return this.#recaptchaWrap.querySelector(selector) }
+
+  #setAttribute(elm, attribute, value) {
+    elm.setAttribute(attribute, value)
+  }
+
+  destroy() {
+    this.#recaptcha.innerHTML = ''
+  }
 }
 
 // const recaptchaField = new RecaptchaField('.container', {
