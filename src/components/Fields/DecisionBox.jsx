@@ -79,6 +79,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
               type="checkbox"
               className={`${fieldKey}-ci`}
               disabled={attr.valid.disabled}
+              readOnly={attr.valid.readonly}
               defaultValue={attr?.info?.lbl}
               required={attr.valid.req}
               name={attr?.info?.lbl}

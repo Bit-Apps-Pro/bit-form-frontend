@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useState, useId } from 'react'
+import { useId, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -17,7 +17,6 @@ import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
-import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -31,6 +30,7 @@ export default function DecisionBoxSettings() {
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const isDiasabled = fieldData.valid.disabled
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
@@ -62,7 +62,8 @@ export default function DecisionBoxSettings() {
   }
 
   function setChecked(e) {
-    if (e.target.checked) {
+    const { checked } = e.target
+    if (checked) {
       const tmp = { ...fieldData.valid }
       tmp.checked = true
       fieldData.valid = tmp
@@ -71,7 +72,7 @@ export default function DecisionBoxSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
@@ -81,20 +82,42 @@ export default function DecisionBoxSettings() {
     addToBuilderHistory(setBuilderHistory, { event: 'Message added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
+  const setDiasabled = e => {
+    const { checked } = e.target
+    if (checked) {
+      const tmp = { ...fieldData.valid }
+      tmp.disabled = true
+      fieldData.valid = tmp
+    } else {
+      delete fieldData.valid.disabled
+    }
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    const req = checked ? 'on' : 'off'
+    addToBuilderHistory(setBuilderHistory, { event: `Disabled field ${req}`, type: `disabled_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const setReadOnly = e => {
+    const { checked } = e.target
+    if (checked) {
+      const tmp = { ...fieldData.valid }
+      tmp.readonly = true
+      fieldData.valid = tmp
+    } else {
+      delete fieldData.valid.readonly
+    }
+    console.log('setReadOnly', fieldData)
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    const req = checked ? 'on' : 'off'
+    addToBuilderHistory(setBuilderHistory, { event: `Readonly field ${req}`, type: `readobly_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
   return (
     <div>
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
-      {/*
-      <div className="mb-2">
-        <span className="font-w-m">Field Type :</span>
-        {' '}
-        {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
-      </div>
-      <div className="flx">
-        <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
-        <CopyText value={fldKey} className="field-key-cpy m-0" />
-      </div> */}
       <div className={css(FieldStyle.fieldSection)}>
         <div className="flx flx-between">
           <div className="flx">
@@ -121,7 +144,11 @@ export default function DecisionBoxSettings() {
             <EditIcn size={19} />
           </span>
         </div>
-        <div className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}>{renderHTMR(fieldData.lbl || fieldData?.info?.lbl)}</div>
+        <div
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
+        >
+          {renderHTMR(fieldData.lbl || fieldData?.info?.lbl)}
+        </div>
       </div>
 
       <FieldSettingsDivider />
@@ -129,43 +156,30 @@ export default function DecisionBoxSettings() {
       <DecisionBoxLabelModal labelModal={labelModal} setLabelModal={setLabelModal} />
 
       <AdminLabelSettings />
-      {/* <SimpleAccordion
-        title={__('Admin Label', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
-        open
-      >
-        <div className={css(FieldStyle.placeholder)}>
-          <AutoResizeInput
-            ariaLabel="admib label"
-            value={fieldData.adminLbl || ''}
-            changeAction={setAdminLabel}
-          />
-        </div>
-      </SimpleAccordion> */}
 
       <FieldSettingsDivider />
 
-      {/* <SimpleAccordion
-        title={__('Required', 'bitform')}
-        // eslint-disable-next-line react/jsx-no-bind
-        toggleAction={setRequired}
-        toggleChecked={fieldData.valid.req}
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        tip="By enabling this feature, user will see the error message when input is empty"
-        tipProps={{ width: 200, icnSize: 17 }}
-        open
-      >
-        <ErrorMessageSettings
-          type="req"
-          title="Error Message"
-          tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
-        />
-      </SimpleAccordion> */}
       <RequiredSettings />
 
       <FieldSettingsDivider />
 
-      <FieldDisabledSettings />
+      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
+        <SingleToggle
+          title={__('Disabled Field:', 'bitform')}
+          action={setDiasabled}
+          isChecked={isDiasabled}
+        />
+      </div>
+
+      <FieldSettingsDivider />
+
+      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
+        <SingleToggle
+          title={__('Read Only:', 'bitform')}
+          action={setReadOnly}
+          isChecked={fieldData.valid.readonly}
+        />
+      </div>
 
       <FieldSettingsDivider />
 
@@ -215,7 +229,7 @@ export default function DecisionBoxSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, { pr: '10px !important' })}>
+      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
         <SingleToggle
           title={__('Checked by Default:', 'bitform')}
           action={setChecked}
@@ -225,7 +239,6 @@ export default function DecisionBoxSettings() {
       <FieldSettingsDivider />
       {/* <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={fieldData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} /> */}
       {/* <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={fieldData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} /> */}
-      {/* <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={fieldData.valid.checked} className="mt-3" /> */}
 
     </div>
   )
