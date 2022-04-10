@@ -2,8 +2,7 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHookStates } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
 import LblPlacementReverseIcn from '../../Icons/LblPlacementReverseIcn'
@@ -25,7 +24,6 @@ import { getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 export default function LabelControlMenu() {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [openVarPos, setOpenVarPos] = useState(false)
 
   const { '--fld-lbl-fs': fldLblFs,
@@ -67,7 +65,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-sa'] = ''
         }))
         setOpenVarPos(false)
-        reCalculateFieldHeights(setBuilderHookStates)
+        reCalculateFieldHeights()
         break
       case 'inline':
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
@@ -77,7 +75,7 @@ export default function LabelControlMenu() {
           drftStyle['--inp-wrp-width'] = '100%'
         }))
         setOpenVarPos(true)
-        reCalculateFieldHeights(setBuilderHookStates)
+        reCalculateFieldHeights()
         break
       case 'inline-rev':
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
@@ -87,7 +85,7 @@ export default function LabelControlMenu() {
           drftStyle['--inp-wrp-width'] = '60%'
         }))
         setOpenVarPos(true)
-        reCalculateFieldHeights(setBuilderHookStates)
+        reCalculateFieldHeights()
         break
       default:
         break

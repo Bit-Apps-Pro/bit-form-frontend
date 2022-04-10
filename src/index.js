@@ -10,6 +10,7 @@ import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RendererProvider } from 'react-fela'
 import { RecoilRoot } from 'recoil'
+import RecoilNexus from 'recoil-nexus'
 import Loader from './components/Loaders/Loader'
 import customProperties from './styles/1.customProperties'
 import AppSettingsProvider from './Utils/AppSettingsContext'
@@ -52,6 +53,7 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 const root = ReactDOM.createRoot(document.getElementById('btcd-app'))
 root.render(
   <RecoilRoot>
+    <RecoilNexus />
     <AppSettingsProvider>
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
         <RendererProvider renderer={renderer}>

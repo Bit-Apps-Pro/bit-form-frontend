@@ -25,7 +25,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -392,8 +392,10 @@ function TextFieldSettings() {
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       setStyles(prvStyle => produce(prvStyle, draft => {
-        if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
-        if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
+        const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+        console.log('removeIcon', padding, paddingGenerator(padding, 'left', false))
+        if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', false)
+        if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', false)
       }))
     }
   }

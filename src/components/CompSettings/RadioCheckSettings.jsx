@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { memo, useEffect, useState, useId } from 'react'
+import { memo, useEffect, useId, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -47,7 +47,6 @@ function RadioCheckSettings() {
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setStyles = useSetRecoilState($styles)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
 
   let fieldObject = null
   let disabled = false
@@ -81,8 +80,7 @@ function RadioCheckSettings() {
         assignNestedObj(drft, path, bdr)
       } else {
         delete fieldData.round
-        if (fieldData.typ === 'radio') deleteNestedObj(drft, path)
-        else assignNestedObj(drft, path, bdr)
+        assignNestedObj(drft, path, bdr)
       }
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -258,7 +256,7 @@ function RadioCheckSettings() {
 
   const handleOptions = newOpts => {
     setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
-    reCalculateFieldHeights(setBuilderHookStates, fldKey)
+    reCalculateFieldHeights(fldKey)
   }
 
   function setColumn({ target: { value } }) {

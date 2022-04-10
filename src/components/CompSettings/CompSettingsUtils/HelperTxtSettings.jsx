@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -25,7 +25,6 @@ export default function HelperTxtSettings() {
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
@@ -55,7 +54,7 @@ export default function HelperTxtSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -63,12 +62,12 @@ export default function HelperTxtSettings() {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
+      reCalculateFieldHeights(fldKey)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -88,7 +87,7 @@ export default function HelperTxtSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
+      reCalculateFieldHeights(fldKey)
     }
   }
 

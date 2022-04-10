@@ -4,24 +4,19 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import CloseIcn from '../../../Icons/CloseIcn'
-import EditIcn from '../../../Icons/EditIcn'
-import ut from '../../../styles/2.utilities'
+import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getNumFromStr, getStrFromStr, isStyleExist, setIconFilterValue, styleClasses, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, getStrFromStr, isStyleExist, setIconFilterValue, styleClasses, unitConverter } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
-import AutoResizeInput from './AutoResizeInput'
 import Icons from '../Icons'
-import IconStyleBtn from '../IconStyleBtn'
-import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
-import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
-import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
+import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
+import AutoResizeInput from './AutoResizeInput'
 
 export default function SubTitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
@@ -29,7 +24,6 @@ export default function SubTitleSettings() {
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
@@ -59,21 +53,21 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setSubTitle = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.subtitle
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
+      reCalculateFieldHeights(fldKey)
     } else {
       fieldData.subtitle = value
     }
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(setBuilderHookState, fldKey)
+    reCalculateFieldHeights(fldKey)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
@@ -93,7 +87,7 @@ export default function SubTitleSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(setBuilderHookState, fldKey)
+      reCalculateFieldHeights(fldKey)
     }
   }
 

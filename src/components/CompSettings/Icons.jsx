@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
@@ -20,6 +20,7 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
+import { paddingGenerator } from '../style-new/styleHelpers'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
@@ -40,7 +41,6 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const uploadLabel = uploadLbl || 'Upload Icon'
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setStyles = useSetRecoilState($styles)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()
@@ -116,7 +116,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
         setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-        reCalculateFieldHeights(setBuilderHookStates, fldKey)
+        reCalculateFieldHeights(fldKey)
         setModal(false)
       })
 
@@ -160,11 +160,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
           if (addPaddingOnSelect) {
             setStyles(prvStyle => produce(prvStyle, draft => {
-              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
-              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+              const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+
+              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
+              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
             }))
           }
-          reCalculateFieldHeights(setBuilderHookStates, fldKey)
+          reCalculateFieldHeights(fldKey)
         }
         setDnLoading(false)
         setModal(false)
@@ -240,11 +242,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     fieldData[iconType] = prefix
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     setStyles(prvStyle => produce(prvStyle, draft => {
-      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
-      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+      const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+
+      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
+      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
     }))
     setModal(false)
-    reCalculateFieldHeights(setBuilderHookStates, fldKey)
+    reCalculateFieldHeights(fldKey)
   }
 
   const handlePrefixIcon = e => {
@@ -360,7 +364,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         {!loading && (
           <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
             <div className={css(ut.flxc, ut.mt4, s.icon)}>
-              {files.length && files.map((file) => (
+              {!!files.length && files.map((file) => (
                 <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
                   <button
                     type="button"
