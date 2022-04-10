@@ -6,11 +6,13 @@ import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { $forms } from '../GlobalStates'
 import { formsReducer } from '../Utils/Reducers'
+import LoaderSm from './Loaders/LoaderSm'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
   const setForms = useSetRecoilState($forms)
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
+  const [isLoading, setLoading] = useState(false)
   const handleChange = (ev) => {
     if (error[ev.target.name]) {
       setError({ ...error, [ev.target.name]: '' })
@@ -87,7 +89,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
         }
       }
     }
-
+    setLoading(true)
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
@@ -98,6 +100,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       } else if (response?.data) {
         setSnackbar({ show: true, msg: response.data })
       }
+      setLoading(false)
     })
   }
   return (
@@ -192,7 +195,10 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       </div>
       <div className="flx flx-between w-5">
         <button onClick={() => setModal(false)} className="btn round btcd-btn-lg blue blue-sh" type="button"> Cancel </button>
-        <button onClick={handleImport} className="btn round btcd-btn-lg blue blue-sh" type="button"> Import </button>
+        <button onClick={handleImport} className="btn round btcd-btn-lg blue blue-sh" type="button" disabled={isLoading}>
+          Import
+          {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+        </button>
       </div>
     </div>
   )

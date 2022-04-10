@@ -86,6 +86,10 @@ export const SmartTagField = [
     label: 'User URL',
   },
   {
+    name: '_bf_current_user_role',
+    label: 'Current User Role',
+  },
+  {
     name: '_bf_author_id',
     label: 'Post Author ID',
   },

@@ -13,7 +13,7 @@ import TableFileLink from '../components/Utilities/TableFileLink'
 import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy } from '../Utils/Helpers'
+import { deepCopy, number2Ipv6 } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
@@ -220,8 +220,10 @@ function FormEntries({ allResp, setAllResp, integrations }) {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
 
-            if (val.key === '__user_ip' && isFinite(row.cell.value)) {
+            if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
               return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
+            } if (val.key === '__user_ip' && row.cell.value > 10) {
+              return number2Ipv6(row.cell.value)
             }
             return row.cell.value
           }
