@@ -50,6 +50,7 @@ export default function inputWrapperClasses(fk) {
       width: '100%',
       'font-weight': 'var(--lbl-font-w)',
       'font-style': 'var(--lbl-font-style)',
+      position: 'var(--fld-lbl-pn,unset)',
     },
     [`.${fk}-req-smbl`]: {
       color: 'var(--req-smbl-c, inherit)',
@@ -58,6 +59,9 @@ export default function inputWrapperClasses(fk) {
       padding: 'var(--req-smbl-p, 0)',
       'font-weight': 'var(--req-smbl-fw)',
       'line-height': 'var(--req-smbl-lh, 12px)',
+      position: 'var(--req-smbl-pn,unset)',
+      right: 'var(--req-smbl-rt,unset)',
+      left: 'var(--req-smbl-lt,unset)',
     },
     [`.${fk}-sub-titl`]: {
       'background-color': 'var(--sub-titl-bg, none)',
