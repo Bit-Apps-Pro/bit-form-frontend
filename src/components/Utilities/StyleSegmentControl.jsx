@@ -96,6 +96,10 @@ export default function StyleSegmentControl({ defaultActive,
   const [tabsRef, setTabsRef] = useState(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
 
+  useEffect(() => {
+    setactive(defaultActive)
+  }, [defaultActive])
+
   const setSelectorPos = (activeElement) => {
     setTimeout(() => {
       const { width: toActiveElmWidth } = activeElement.getBoundingClientRect() || { width: 0 }
