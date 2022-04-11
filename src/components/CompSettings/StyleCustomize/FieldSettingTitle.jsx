@@ -1,4 +1,6 @@
 import { useFela } from 'react-fela'
+import { useRecoilValue } from 'recoil'
+import { $builderRightPanelScroll } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import style from '../../../styles/FieldSettingTitle.style'
 import { ucFirst } from '../../../Utils/Helpers'
@@ -8,10 +10,11 @@ import Back2FldBtn from '../Back2FldBtn'
 import SizeAndPosition from './StyleComponents/SizeAndPosition'
 
 export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
+  const scrollTo = useRecoilValue($builderRightPanelScroll)
   const { css } = useFela()
   return (
     <>
-      <div className={css(style.section, style.flxColumn, style.fixed)}>
+      <div className={css(style.section, style.flxColumn, style.fixed, scrollTo && style.shw)}>
         <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
         <div>
           <div className={css(style.mainTitle)}>{__(title, 'bitform')}</div>

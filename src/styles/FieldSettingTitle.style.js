@@ -53,5 +53,6 @@ const style = {
     bd: 'var(--white-100)',
     zx: 10,
   },
+  shw: { bs: 'rgb(123 123 123) 0px 7px 7px -9px' },
 }
 export default style

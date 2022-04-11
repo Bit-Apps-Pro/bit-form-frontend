@@ -1,6 +1,8 @@
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { $builderRightPanelScroll } from '../../GlobalStates/GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
@@ -25,12 +27,11 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const { css } = useFela()
+  const setScrollTop = useSetRecoilState($builderRightPanelScroll)
 
-  // const [scrollTopShadow, setScrollTopShadow] = useState(false)
-
-  // const onSettingScroll = ({ target: { scrollTop } }) => {
-  //   scrollTop > 20 ? setScrollTopShadow(true) : setScrollTopShadow(false)
-  // }
+  const onSettingScroll = ({ target: { scrollTop } }) => {
+    scrollTop > 20 ? setScrollTop(true) : setScrollTop(false)
+  }
   return (
     <div className={css(c.elmSettings)}>
       {/* <div className="elm-settings-title pos-rel flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
@@ -40,7 +41,7 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
       {/* <div className="btcd-hr" /> */}
       <div className="settings">
         <Scrollbars
-          // onScroll={onSettingScroll}
+          onScroll={onSettingScroll}
           autoHide
         >
           {/* <TransitionGroup> */}
