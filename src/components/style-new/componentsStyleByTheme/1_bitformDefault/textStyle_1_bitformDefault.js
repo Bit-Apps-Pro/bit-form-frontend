@@ -11,7 +11,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       display: ' inline-block !important',
       direction: 'inherit !important',
       'max-width': '100% !important',
-      'font-family': 'sans-serif',
+      'font-family': 'var(--fld-lbl-fs)',
       width: '100% !important',
       outline: 'none !important',
       'background-color': 'var(--global-fld-bg-color, transparent)!important',
