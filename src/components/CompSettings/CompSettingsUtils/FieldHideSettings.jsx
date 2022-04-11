@@ -7,9 +7,10 @@ import { $breakpoint, $builderHistory, $fields, $updateBtn } from '../../../Glob
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
+import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldHideSettings({ cls }) {
+export default function FieldHideSettings({ cls, tip }) {
   const { fieldKey: fldKey } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
@@ -36,8 +37,13 @@ export default function FieldHideSettings({ cls }) {
   }
 
   return (
-    <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
-      <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} />
+    <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
+      <SingleToggle
+        tip={tip}
+        title={__('Hidden Field', 'bitform')}
+        action={setHidden}
+        isChecked={isHidden}
+      />
     </div>
   )
 }

@@ -79,8 +79,6 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  console.log('fieldData', fieldData)
-
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
 
@@ -439,8 +437,10 @@ function TextFieldSettings() {
 
         <SimpleAccordion
           title={__('Admin Label', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
+          tip="By disabling this option, the field admin label will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideAdminLabel}
           toggleChecked={fieldData?.adminLblHide}
           open={fieldData?.adminLblHide}
@@ -459,10 +459,6 @@ function TextFieldSettings() {
         <FieldSettingsDivider />
 
         <SubTitleSettings />
-
-        <FieldSettingsDivider />
-
-        <HelperTxtSettings />
 
         <FieldSettingsDivider />
 
@@ -497,10 +493,16 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
+        <HelperTxtSettings />
+
+        <FieldSettingsDivider />
+
         <SimpleAccordion
           title={__('Default value', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
+          tip="By disabling this option, the field default will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideDefalutValue}
           toggleChecked={fieldData?.defaultValueHide}
           open={fieldData?.defaultValueHide}
@@ -531,8 +533,10 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 title={__('Suggestion', 'bitform')}
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
+                tip="By disabling this option, the field suggestion will be hidden"
+                tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideSuggestionVal}
                 toggleChecked={fieldData?.suggestionHide}
                 open={fieldData?.suggestionHide}
@@ -550,8 +554,10 @@ function TextFieldSettings() {
 
               <SimpleAccordion
                 title={__('Auto Complete', 'bitform')}
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
+                tip="By disabling this option, the field auto complete will be hidden"
+                tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideAutoComplete}
                 toggleChecked={fieldData?.acHide}
                 open={fieldData?.acHide}
@@ -653,7 +659,12 @@ function TextFieldSettings() {
                         <div>
                           <ul role="menu">
                             {predefinedPatterns?.map(opt => (
-                              <li role="menuitem" className={`${css(style.button)} btnHover`} onKeyPress={() => setRegexrValue(opt.val)} onClick={() => setRegexrValue(opt.val)}>
+                              <li
+                                role="menuitem"
+                                className={`${css(style.button)} btnHover`}
+                                onKeyPress={() => setRegexrValue(opt.val)}
+                                onClick={() => setRegexrValue(opt.val)}
+                              >
                                 <span>{opt.lbl}</span>
                                 <br />
                                 <small>{generateBackslashPattern(opt.val)}</small>
@@ -699,23 +710,28 @@ function TextFieldSettings() {
           )
         }
 
-        <FieldHideSettings />
+        <FieldHideSettings tip="By disabling this option, the field will be hidden" />
 
         <FieldSettingsDivider />
 
-        <FieldReadOnlySettings />
+        <FieldReadOnlySettings tip="By disabling this option, the field readonly will be hidden" />
 
         <FieldSettingsDivider />
 
-        <FieldDisabledSettings />
+        <FieldDisabledSettings tip="By disabling this option, the field disable will be hidden" />
 
         <FieldSettingsDivider />
 
         {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
             <>
-              <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
-                <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
+              <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
+                <SingleToggle
+                  tip="By disabling this option, the field auto fill will be hidden"
+                  title={__('Auto Fill', 'bitform')}
+                  action={setAutoComplete}
+                  isChecked={isAutoComplete}
+                />
               </div>
               <FieldSettingsDivider />
             </>
@@ -729,7 +745,7 @@ function TextFieldSettings() {
                 type="entryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 isUnique="show"
               />
               <FieldSettingsDivider />
@@ -742,30 +758,49 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
-                <div className={css(FieldStyle.fieldNumber)}>
-                  <span>{__('Min:', 'bitform')}</span>
-                  <input title="Minimum number for this field" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={min} onChange={setMin} />
+                <div className={css({ mx: 5 })}>
+                  <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+                    <span>{__('Min:', 'bitform')}</span>
+                    <input
+                      title="Minimum number for this field"
+                      aria-label="Minimum number for this field"
+                      placeholder="Type minimum number here..."
+                      // className={css(FieldStyle.inputNumber, FieldStyle.w140)}
+                      className={css(FieldStyle.input, FieldStyle.w140)}
+                      type="number"
+                      value={min}
+                      onChange={setMin}
+                    />
+                  </div>
+                  {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
+                  {fieldData.mn && (
+                    <ErrorMessageSettings
+                      type="mn"
+                      title="Min Error Message"
+                      tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
+                    />
+                  )}
+                  <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+                    <span>{__('Max:', 'bitform')}</span>
+                    <input
+                      title="Maximum number for this field"
+                      aria-label="Maximum number for this field"
+                      placeholder="Type maximun number here..."
+                      className={css(FieldStyle.input, FieldStyle.w140)}
+                      type="number"
+                      value={max}
+                      onChange={setMax}
+                    />
+                  </div>
+                  {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
+                  {fieldData.mx && (
+                    <ErrorMessageSettings
+                      type="mx"
+                      title="Max Error Message"
+                      tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
+                    />
+                  )}
                 </div>
-                {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
-                {fieldData.mn && (
-                  <ErrorMessageSettings
-                    type="mn"
-                    title="Min Error Message"
-                    tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
-                  />
-                )}
-                <div className={css(FieldStyle.fieldNumber)}>
-                  <span>{__('Max:', 'bitform')}</span>
-                  <input title="Maximum number for this field" aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber, FieldStyle.w140)} type="number" value={max} onChange={setMax} />
-                </div>
-                {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
-                {fieldData.mx && (
-                  <ErrorMessageSettings
-                    type="mx"
-                    title="Max Error Message"
-                    tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
-                  />
-                )}
               </SimpleAccordion>
               <FieldSettingsDivider />
             </>
@@ -803,16 +838,41 @@ function TextFieldSettings() {
                     onChange={setPasswordValidation}
                     disabled={!bits.isPro}
                   />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox
+                    className={css(ut.w10, ut.mt2)}
+                    cls={css(ut.mr2)}
+                    name="limit"
+                    checked={fieldData.valid?.validations?.limit || false}
+                    value=".{8,32}"
+                    title={__('Limit Password Length', 'bitform')}
+                    onChange={setPasswordValidation}
+                    disabled={!bits.isPro}
+                  />
                   {fieldData.valid?.validations?.limit && (
                     <div>
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Min:', 'bitform')}</span>
-                        <input name="mn" aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mn} onChange={setPasswordLimit} />
+                        <input
+                          name="mn"
+                          aria-label="Minimum number for this field"
+                          placeholder="Type minimum number here..."
+                          className={css(FieldStyle.inputNumber)}
+                          type="number"
+                          value={fieldData.valid?.validations?.limit?.mn}
+                          onChange={setPasswordLimit}
+                        />
                       </div>
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Max:', 'bitform')}</span>
-                        <input name="mx" aria-label="Maximum number for this field" placeholder="Type maximum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mx} onChange={setPasswordLimit} />
+                        <input
+                          name="mx"
+                          aria-label="Maximum number for this field"
+                          placeholder="Type maximum number here..."
+                          className={css(FieldStyle.inputNumber)}
+                          type="number"
+                          value={fieldData.valid?.validations?.limit?.mx}
+                          onChange={setPasswordLimit}
+                        />
                       </div>
                       {/* <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
                       {/* <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
@@ -832,7 +892,7 @@ function TextFieldSettings() {
                   type="userUnique"
                   title="Validate as User Unique"
                   tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-                  className={css(FieldStyle.fieldSection)}
+                  className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                   isUnique="show"
                 />
                 <FieldSettingsDivider />

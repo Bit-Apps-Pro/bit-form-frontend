@@ -29,6 +29,7 @@ export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMod
 export const $isNewThemeStyleLoaded = atom({ key: '$isNewThemeStyleLoaded', default: false })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
 export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
+export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })

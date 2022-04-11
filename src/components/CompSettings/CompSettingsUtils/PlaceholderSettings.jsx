@@ -48,8 +48,10 @@ export default function PlaceholderSettings() {
   return (
     <SimpleAccordion
       title={__('Placeholder', 'bitform')}
-      className={css(FieldStyle.fieldSection)}
+      className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
+      tip="By disabling this option, the field placeholder will be hidden"
+      tipProps={{ width: 250, icnSize: 17 }}
       toggleAction={hidePlaceholder}
       toggleChecked={fieldData?.phHide}
       open={fieldData?.phHide}

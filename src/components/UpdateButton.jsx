@@ -102,9 +102,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   useEffect(() => {
     document.addEventListener('keydown', updateBtnEvent)
+    const iFrameDocument = document.getElementById('bit-grid-layout')?.contentDocument
+    iFrameDocument?.addEventListener('keydown', updateBtnEvent)
     window.addEventListener('beforeunload', closeTabOrBrowserEvent)
     return () => {
       document.removeEventListener('keydown', updateBtnEvent)
+      iFrameDocument?.removeEventListener('keydown', updateBtnEvent)
       window.removeEventListener('beforeunload', closeTabOrBrowserEvent)
     }
   })

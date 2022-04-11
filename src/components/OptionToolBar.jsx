@@ -89,6 +89,17 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     setFlags(prvFlags => ({ ...prvFlags, inspectMode: !prvFlags.inspectMode }))
   }
 
+  const handleRightPanelDefaultActive = () => {
+    if (rightBar.match(/fields-list|field-settings/)) {
+      setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
+      return 'fld-settings'
+    }
+    if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
+      setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
+      return 'theme-customize'
+    }
+  }
+
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
@@ -184,7 +195,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               width={180}
               show={['icn']}
               tipPlace="bottom"
-              defaultActive={rightBar.match(/themes|theme-customize/gi) && 'theme-customize'}
+              defaultActive={handleRightPanelDefaultActive()}
               options={[
                 { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
                 { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },

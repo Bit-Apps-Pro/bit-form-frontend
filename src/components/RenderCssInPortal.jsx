@@ -1560,7 +1560,7 @@ arrow:after,
  }
 
  .blk:hover:not(.itm-focus) {
-    z-index: 9;
+    z-index: 999;
  }
  
  .blk:focus .blk-icn-wrp,.blk:hover .blk-icn-wrp,.itm-focus .blk-icn-wrp {
@@ -1642,7 +1642,8 @@ arrow:after,
  }
  
  .drag:hover {
-    background: rgba(0,114,255,.12156862745098039)
+    /* background: rgba(0,114,255,.12156862745098039) */
+    background: aliceblue;
  }
  
  .drag:active {
@@ -1655,7 +1656,6 @@ arrow:after,
  
  .react-grid-layout {
     position: relative;
-    transition: height 200ms ease
  }
  
  .react-grid-item {

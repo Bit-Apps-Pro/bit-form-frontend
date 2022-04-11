@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'
@@ -93,8 +93,12 @@ export default function StyleSegmentControl({ defaultActive,
   }
 
   const selectorRef = useRef(null)
-  const tabsRef = useRef(null)
+  const [tabsRef, setTabsRef] = useState(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
+
+  useEffect(() => {
+    if (active !== defaultActive) setactive(defaultActive)
+  }, [defaultActive])
 
   const setSelectorPos = (activeElement) => {
     setTimeout(() => {
@@ -105,14 +109,10 @@ export default function StyleSegmentControl({ defaultActive,
     }, 100)
   }
 
-  useEffect(() => {
-    if (activeValue) { setactive(activeValue) }
-  }, [activeValue])
-
-  useEffect(() => {
-    const toActiveElement = tabsRef.current.querySelector(`[data-label="${active}"]`)
+  const toActiveElement = tabsRef?.querySelector(`[data-label="${active}"]`)
+  if (toActiveElement) {
     setSelectorPos(toActiveElement)
-  }, [active])
+  }
 
   const eventHandler = (e, i) => {
     e.preventDefault()
@@ -123,10 +123,9 @@ export default function StyleSegmentControl({ defaultActive,
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    const currentActiveElm = tabsRef.current.querySelector('.tabs button.active')
+    const currentActiveElm = tabsRef.querySelector('.tabs button.active')
     if (elm !== currentActiveElm) {
       currentActiveElm?.classList.remove('active')
-      setSelectorPos(elm)
       setactive(options[i].label)
     }
 
@@ -144,7 +143,7 @@ export default function StyleSegmentControl({ defaultActive,
 
   return (
     <div className={`${css(style.wrapper)} ${className}`}>
-      <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
+      <div ref={setTabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} style={{ width: defaultItmWidth }} />
         {options?.map((item, i) => {
           const btn = (
