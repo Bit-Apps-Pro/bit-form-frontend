@@ -16,6 +16,7 @@ import Downmenu from './Utilities/Downmenu'
 
 export default function FieldBlockWrapper({ layoutItem,
   removeLayoutItem,
+  removeFieldStyles,
   cloneLayoutItem,
   fields,
   formID,
@@ -57,6 +58,7 @@ export default function FieldBlockWrapper({ layoutItem,
         <FieldDeleteButton
           className="g-c drag us-n no-drg blk-wrp-btn"
           removeLayoutItem={removeLayoutItem}
+          removeFieldStyles={removeFieldStyles}
           fieldId={layoutItem.i}
         />
         {/* <Downmenu> */}
