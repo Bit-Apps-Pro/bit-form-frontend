@@ -97,7 +97,7 @@ export default function StyleSegmentControl({ defaultActive,
   const [active, setactive] = useState(defaultActive || options[0].label)
 
   useEffect(() => {
-    setactive(defaultActive)
+    if (active !== defaultActive) setactive(defaultActive)
   }, [defaultActive])
 
   const setSelectorPos = (activeElement) => {
