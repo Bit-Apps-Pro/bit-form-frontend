@@ -9,7 +9,7 @@ import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldDisabledSettings({ cls }) {
+export default function FieldDisabledSettings({ cls, tip }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -33,8 +33,13 @@ export default function FieldDisabledSettings({ cls }) {
   }
 
   return (
-    <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
-      <SingleToggle title={__('Disabled Field:', 'bitform')} action={setDiasabled} isChecked={isDiasabled} />
+    <div className={`${css(FieldStyle.fieldSection,FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
+      <SingleToggle
+        tip={tip}
+        title={__('Disabled Field', 'bitform')}
+        action={setDiasabled}
+        isChecked={isDiasabled}
+      />
     </div>
   )
 }

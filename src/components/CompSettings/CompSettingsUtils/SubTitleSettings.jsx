@@ -89,7 +89,7 @@ export default function SubTitleSettings() {
     <div>
       <SimpleAccordion
         title={__('Sub Title', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field sub title will be hidden"
         tipProps={{ width: 250, icnSize: 17 }}
