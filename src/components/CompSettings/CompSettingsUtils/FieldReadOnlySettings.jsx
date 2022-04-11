@@ -9,7 +9,7 @@ import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldReadOnlySettings({ cls }) {
+export default function FieldReadOnlySettings({ cls, tip }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -33,9 +33,10 @@ export default function FieldReadOnlySettings({ cls }) {
   }
 
   return (
-    <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption)} ${cls}`}>
+    <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption, FieldStyle.hover_tip)} ${cls}`}>
       <SingleToggle
-        title={__('Read only Field:', 'bitform')}
+        tip={tip}
+        title={__('Read only Field', 'bitform')}
         action={setReadOnly}
         isChecked={isReadOnly}
       />

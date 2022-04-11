@@ -79,8 +79,6 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  console.log('fieldData', fieldData)
-
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
 
@@ -439,7 +437,7 @@ function TextFieldSettings() {
 
         <SimpleAccordion
           title={__('Admin Label', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
           tip="By disabling this option, the field admin label will be hidden"
           tipProps={{ width: 250, icnSize: 17 }}
@@ -461,10 +459,6 @@ function TextFieldSettings() {
         <FieldSettingsDivider />
 
         <SubTitleSettings />
-
-        <FieldSettingsDivider />
-
-        <HelperTxtSettings />
 
         <FieldSettingsDivider />
 
@@ -499,9 +493,13 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
+        <HelperTxtSettings />
+
+        <FieldSettingsDivider />
+
         <SimpleAccordion
           title={__('Default value', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
           tip="By disabling this option, the field default will be hidden"
           tipProps={{ width: 250, icnSize: 17 }}
@@ -535,7 +533,7 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 title={__('Suggestion', 'bitform')}
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
                 tip="By disabling this option, the field suggestion will be hidden"
                 tipProps={{ width: 250, icnSize: 17 }}
@@ -556,7 +554,7 @@ function TextFieldSettings() {
 
               <SimpleAccordion
                 title={__('Auto Complete', 'bitform')}
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
                 tip="By disabling this option, the field auto complete will be hidden"
                 tipProps={{ width: 250, icnSize: 17 }}
@@ -712,24 +710,25 @@ function TextFieldSettings() {
           )
         }
 
-        <FieldHideSettings />
+        <FieldHideSettings tip="By disabling this option, the field will be hidden" />
 
         <FieldSettingsDivider />
 
-        <FieldReadOnlySettings />
+        <FieldReadOnlySettings tip="By disabling this option, the field readonly will be hidden" />
 
         <FieldSettingsDivider />
 
-        <FieldDisabledSettings />
+        <FieldDisabledSettings tip="By disabling this option, the field disable will be hidden" />
 
         <FieldSettingsDivider />
 
         {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
             <>
-              <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
+              <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
                 <SingleToggle
-                  title={__('Auto Fill:', 'bitform')}
+                  tip="By disabling this option, the field auto fill will be hidden"
+                  title={__('Auto Fill', 'bitform')}
                   action={setAutoComplete}
                   isChecked={isAutoComplete}
                 />
@@ -746,7 +745,7 @@ function TextFieldSettings() {
                 type="entryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 isUnique="show"
               />
               <FieldSettingsDivider />
@@ -893,7 +892,7 @@ function TextFieldSettings() {
                   type="userUnique"
                   title="Validate as User Unique"
                   tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-                  className={css(FieldStyle.fieldSection)}
+                  className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                   isUnique="show"
                 />
                 <FieldSettingsDivider />

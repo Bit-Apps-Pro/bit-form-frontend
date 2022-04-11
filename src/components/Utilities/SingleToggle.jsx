@@ -1,10 +1,19 @@
 import { useFela } from 'react-fela'
+import { __ } from '../../Utils/i18nwrap'
+import Cooltip from './Cooltip'
 
-export default function SingleToggle({ className, title, isChecked, name, action = () => { }, disabled }) {
+export default function SingleToggle({ className, tip, title, isChecked, name, action = () => { }, disabled }) {
   const { css } = useFela()
   return (
     <div className={`flx flx-between ${className}`}>
-      <span className="font-w-m">{title}</span>
+      <span className={`font-w-m ${css(c.titleWrp)}`}>
+        {title}
+        {tip && (
+          <Cooltip width="200" icnSize="17" className="hover-tip">
+            <div className="txt-body">{__(tip, 'bitform')}</div>
+          </Cooltip>
+        )}
+      </span>
       <label className={css(c.toggle_control)} htmlFor={`s-ck-${title || name}-${isChecked}`}>
         <input
           id={`s-ck-${title || name}-${isChecked}`}
@@ -31,6 +40,11 @@ const c = {
     w: 32,
     h: 22,
     // ':hover': { '& .control::after': { bs: '0 0 0 5px #8cbaff59' } },
+  },
+  titleWrp: {
+    flx: 'align-center',
+    fw: 600,
+    '& .hover-tip': { oy: 0 },
   },
   input: {
     pn: 'absolute',

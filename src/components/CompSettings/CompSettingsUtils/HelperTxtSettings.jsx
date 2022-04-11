@@ -34,12 +34,6 @@ export default function HelperTxtSettings() {
   const adminLabel = fieldData.adminLbl || ''
   const helperTxt = fieldData.helperTxt || ''
 
-  // const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
-  // const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
-
-  // const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
-  // const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
-
   const hideHelperTxt = ({ target: { checked } }) => {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
@@ -95,7 +89,7 @@ export default function HelperTxtSettings() {
     <>
       <SimpleAccordion
         title={__('Helper Text', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field helper text will be hidden"
         tipProps={{ width: 250, icnSize: 17 }}
