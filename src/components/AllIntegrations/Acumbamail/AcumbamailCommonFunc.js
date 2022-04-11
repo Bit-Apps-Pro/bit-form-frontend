@@ -15,7 +15,7 @@ export const handleInput = (e, acumbamailConf, setAcumbamailConf, setIsLoading, 
   newConf[e.target.name] = e.target.value
   switch (e.target.name) {
     case 'listId':
-      if (newConf.listId && !newConf.default?.fields?.[newConf.listId]) {
+      if (newConf.listId && !newConf.default?.allFields?.[newConf.listId]) {
         newConf = refreshFields(formID, newConf, setAcumbamailConf, setIsLoading, setSnackbar)
       }
       break
