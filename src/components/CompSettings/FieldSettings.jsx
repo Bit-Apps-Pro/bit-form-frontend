@@ -8,7 +8,7 @@ import CountryFieldSettings from './CountryFieldSettings'
 import CurrencyFieldSettings from './CurrencyFieldSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import DividerSettings from './DividerSettings'
-import DropdownSettings from './DropdownFieldSettings'
+import DropdownFieldSettings from './DropdownFieldSettings'
 import FileUploadSettings from './FileUploadSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
 import HtmlSelectSettings from './HtmlSelectSettings'
@@ -53,7 +53,7 @@ export default function FieldSettings() {
       return <HtmlSelectSettings />
     case 'select':
     case 'dropdown':
-      return <DropdownSettings />
+      return <DropdownFieldSettings />
     case 'file-up': return <FileUploadSettings />
     case 'advanced-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettings />

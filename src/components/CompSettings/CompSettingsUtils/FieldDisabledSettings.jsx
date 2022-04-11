@@ -33,9 +33,9 @@ export default function FieldDisabledSettings({ cls, tip }) {
   }
 
   return (
-    <div className={`${css(FieldStyle.fieldSection,FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
+    <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle
-        tip={tip}
+        tip="By disabling this option, the field will be enable"
         title={__('Disabled Field', 'bitform')}
         action={setDiasabled}
         isChecked={isDiasabled}

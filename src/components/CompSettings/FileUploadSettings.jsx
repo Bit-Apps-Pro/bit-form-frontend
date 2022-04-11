@@ -282,10 +282,11 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Show Maximum Size:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Show Maximum Size', 'bitform')}
         action={e => setConfigValue('showMaxSize', e.target.checked)}
         isChecked={showMaxSize}
+        tip="By disabling this option, the field show maximum size will be hidden"
       />
 
       <FieldSettingsDivider />

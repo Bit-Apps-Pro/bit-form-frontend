@@ -30,7 +30,7 @@ import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
-export default function DropdownSettings() {
+export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
   const setBuilderHistory = useSetRecoilState($builderHistory)
@@ -171,8 +171,10 @@ export default function DropdownSettings() {
 
       <SimpleAccordion
         title={__('Search Placeholder', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
+        tip="By disabling this option, the field search placeholder will be remove"
+        tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={toggleSearchPlaceholder}
         toggleChecked={showSearchPh}
         open={showSearchPh}
@@ -193,10 +195,11 @@ export default function DropdownSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Show Selected Option Image:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Show Selected Option Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptImage')}
         isChecked={selectedOptImage}
+        tip="By disabling this option, the field show selected option image will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -206,6 +209,7 @@ export default function DropdownSettings() {
         title={__('Selected Option Clearable:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptClearable')}
         isChecked={selectedOptClearable}
+        tip="By disabling this option, the field selected option clearable will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -215,6 +219,7 @@ export default function DropdownSettings() {
         title={__('Search Clearable:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable')}
         isChecked={searchClearable}
+        tip="By disabling this option, the field search clearable will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -224,6 +229,7 @@ export default function DropdownSettings() {
         title={__('Option Icon:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'optionIcon')}
         isChecked={optionIcon}
+        tip="By disabling this option, the field option icon will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -233,6 +239,7 @@ export default function DropdownSettings() {
         title={__('Allow Custom Option:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'allowCustomOption')}
         isChecked={closeOnSelect}
+        tip="By disabling this option, the field allow custom option will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -242,6 +249,7 @@ export default function DropdownSettings() {
         title={__('Multiple Select:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'closeOnSelect')}
         isChecked={closeOnSelect}
+        tip="By disabling this option, the field multiple will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -251,6 +259,7 @@ export default function DropdownSettings() {
         title={__('Close On Select:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'multipleSelect')}
         isChecked={multipleSelect}
+        tip="By disabling this option, the field close on select will be hidden"
       />
 
       <FieldSettingsDivider />
@@ -259,7 +268,7 @@ export default function DropdownSettings() {
         type="entryUnique"
         title="Validate as Entry Unique"
         tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         isUnique="show"
       />
       <FieldSettingsDivider />

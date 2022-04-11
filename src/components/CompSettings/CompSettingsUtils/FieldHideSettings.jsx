@@ -10,7 +10,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldHideSettings({ cls, tip }) {
+export default function FieldHideSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
@@ -39,7 +39,7 @@ export default function FieldHideSettings({ cls, tip }) {
   return (
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle
-        tip={tip}
+        tip="By disabling this option, the field will be hidden"
         title={__('Hidden Field', 'bitform')}
         action={setHidden}
         isChecked={isHidden}

@@ -361,8 +361,10 @@ function RadioCheckSettings() {
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
+        tip="By disabling this option, the field required will be hidden"
+        tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={setRadioRequired}
         toggleChecked={isRadioRequired}
         open
@@ -380,6 +382,7 @@ function RadioCheckSettings() {
 
       <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
         <SingleToggle
+          tip="By disabling this option, the field rounded will be remove"
           title={__('Rounded', 'bitform')}
           action={e => setRound(e)}
           isChecked={isRound}
@@ -496,7 +499,7 @@ function RadioCheckSettings() {
         type="userUnique"
         title="Validate as User Unique"
         tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         isUnique="show"
       />
 

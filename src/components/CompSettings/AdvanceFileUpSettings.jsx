@@ -391,62 +391,65 @@ function AdvanceFileUpSettings() {
         tip="Note : If you enable this option, the Image Preview features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2, ut.w9)}>Image Preview Min Height</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                Minimum image preview height
-              </div>
-            </Cooltip>
+        <div className={css({ m: 5 })}>
+
+          <div className={css(FieldStyle.placeholder, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb)}>
+              <label className={css(ut.fw500, ut.w9)}>Image Preview Min Height</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  Minimum image preview height
+                </div>
+              </Cooltip>
+            </div>
+            <input
+              placeholder="Preview Min Height"
+              className={css(FieldStyle.input)}
+              type="number"
+              name="imagePreviewMinHeight"
+              value={fieldData?.config?.imagePreviewMinHeight}
+              min="0"
+              onChange={setErrorMsg}
+            />
           </div>
-          <input
-            placeholder="Preview Min Height"
-            className={css(FieldStyle.input)}
-            type="number"
-            name="imagePreviewMinHeight"
-            value={fieldData?.config?.imagePreviewMinHeight}
-            min="0"
-            onChange={setErrorMsg}
-          />
-        </div>
-        <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2, ut.w9)}>Image Preview Max Height</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                Maximum image preview height
-              </div>
-            </Cooltip>
+          <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb)}>
+              <label className={css(ut.fw500, ut.w9)}>Image Preview Max Height</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  Maximum image preview height
+                </div>
+              </Cooltip>
+            </div>
+            <input
+              placeholder="Preview Min Height"
+              className={css(FieldStyle.input)}
+              type="number"
+              name="imagePreviewMaxHeight"
+              value={fieldData?.config?.imagePreviewMaxHeight}
+              min="0"
+              onChange={setErrorMsg}
+            />
           </div>
-          <input
-            placeholder="Preview Min Height"
-            className={css(FieldStyle.input)}
-            type="number"
-            name="imagePreviewMaxHeight"
-            value={fieldData?.config?.imagePreviewMaxHeight}
-            min="0"
-            onChange={setErrorMsg}
-          />
-        </div>
-        <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2, ut.w9)}>Preview Height</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                Fixed image preview height, overrides min and max preview height
-              </div>
-            </Cooltip>
+          <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb)}>
+              <label className={css(ut.fw500, ut.w9)}>Preview Height</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  Fixed image preview height, overrides min and max preview height
+                </div>
+              </Cooltip>
+            </div>
+            <input
+              placeholder="Preview Height"
+              className={css(FieldStyle.input)}
+              type="number"
+              name="imagePreviewHeight"
+              value={fieldData?.config?.imagePreviewHeight}
+              min="0"
+              onChange={setErrorMsg}
+            />
           </div>
-          <input
-            placeholder="Preview Height"
-            className={css(FieldStyle.input)}
-            type="number"
-            name="imagePreviewHeight"
-            value={fieldData?.config?.imagePreviewHeight}
-            min="0"
-            onChange={setErrorMsg}
-          />
         </div>
       </SimpleAccordion>
 
@@ -469,7 +472,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         title={__('Image Crop', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageCrop')}
         toggleChecked={fieldData?.config?.allowImageCrop}
@@ -478,9 +481,9 @@ function AdvanceFileUpSettings() {
         tip="Note : If you enable this option, the Image Crop features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <div className={css(ut.mt2, FieldStyle.labelTip)}>
+        <div className={css({ m: 5 }, FieldStyle.labelTip)}>
           <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2)}>Crop Aspect Ratio</label>
+            <label className={css(ut.fw500, ut.ml1)}>Crop Aspect Ratio</label>
             <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
               <div className={css(ut.tipBody)}>
                 The aspect ratio of the crop in human readable format, for example '1:1' or '16:10'
@@ -504,7 +507,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         title={__('Image Resize', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageResize')}
         toggleChecked={fieldData?.config?.allowImageResize}
@@ -513,59 +516,61 @@ function AdvanceFileUpSettings() {
         tip="Note :If you enable this option, the Image Resize features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2)}>Image Resize Width</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                The output width in pixels, if null will use value of imageResizeTargetHeight
-              </div>
-            </Cooltip>
+        <div className={css({ m: 5 })}>
+          <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb)}>
+              <label className={css(ut.fw500)}>Image Resize Width</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  The output width in pixels, if null will use value of imageResizeTargetHeight
+                </div>
+              </Cooltip>
+            </div>
+            <input
+              placeholder="Image Resize Width"
+              className={css(FieldStyle.input)}
+              type="number"
+              name="imageResizeTargetWidth"
+              value={fieldData?.config?.imageResizeTargetWidth}
+              min="0"
+              onChange={setErrorMsg}
+            />
           </div>
-          <input
-            placeholder="Image Resize Width"
-            className={css(FieldStyle.input)}
-            type="number"
-            name="imageResizeTargetWidth"
-            value={fieldData?.config?.imageResizeTargetWidth}
-            min="0"
-            onChange={setErrorMsg}
-          />
-        </div>
-        <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500, ut.ml2)}>Image Resize Height</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                The output height in pixels, if null will use value of imageResizeTargetWidth
-              </div>
-            </Cooltip>
+          <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb)}>
+              <label className={css(ut.fw500)}>Image Resize Height</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  The output height in pixels, if null will use value of imageResizeTargetWidth
+                </div>
+              </Cooltip>
+            </div>
+            <input
+              placeholder="Image Resize Height"
+              className={css(FieldStyle.input)}
+              type="number"
+              name="imageResizeTargetHeight"
+              value={fieldData?.config?.imageResizeTargetHeight}
+              min="0"
+              onChange={setErrorMsg}
+            />
           </div>
-          <input
-            placeholder="Image Resize Height"
-            className={css(FieldStyle.input)}
-            type="number"
-            name="imageResizeTargetHeight"
-            value={fieldData?.config?.imageResizeTargetHeight}
-            min="0"
-            onChange={setErrorMsg}
-          />
-        </div>
-        <div className={css(ut.mt2, FieldStyle.labelTip)}>
-          <div className={css(ut.dyb)}>
-            <label className={css(ut.fw500)}>Image Resize Mode</label>
-            <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>
-                The method in which the images are resized.
-              </div>
-            </Cooltip>
+          <div className={css(ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.dyb, ut.mb2)}>
+              <label className={css(ut.fw500, ut.ml1)}>Image Resize Mode</label>
+              <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
+                <div className={css(ut.tipBody)}>
+                  The method in which the images are resized.
+                </div>
+              </Cooltip>
+            </div>
+            <select className={css(FieldStyle.selectBox, ut.mr2, ut.ml1, ut.fw500)} name="imageResizeMode" onChange={setErrorMsg}>
+              <option value="">Select</option>
+              <option value="cover">Cover</option>
+              <option value="force">Force</option>
+              <option value="contain">Contain</option>
+            </select>
           </div>
-          <select className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)} name="imageResizeMode" onChange={setErrorMsg}>
-            <option value="">Select</option>
-            <option value="cover">Cover</option>
-            <option value="force">Force</option>
-            <option value="contain">Contain</option>
-          </select>
         </div>
       </SimpleAccordion>
 
@@ -573,7 +578,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         title={__('Image Transform', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageTransform')}
         toggleChecked={fieldData?.config?.allowImageTransform}
@@ -584,7 +589,7 @@ function AdvanceFileUpSettings() {
       >
         <div className={css(ut.mt2, ut.ml2)}>
           <div className={css(ut.mt2, FieldStyle.labelTip)}>
-            <div className={css(ut.dyb)}>
+            <div className={css(ut.flxc)}>
               <label className={css(ut.fw500)}>Image Output Type</label>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
@@ -598,8 +603,8 @@ function AdvanceFileUpSettings() {
               <option value="image/png">Image/png</option>
             </select>
           </div>
-          <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
-            <div className={css(ut.dyb)}>
+          <div className={css(ut.mt2, FieldStyle.labelTip)}>
+            <div className={css(ut.flxc)}>
               <label className={css(ut.fw500)}>Transform Output Quality</label>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
@@ -633,7 +638,7 @@ function AdvanceFileUpSettings() {
             </select>
           </div> */}
           <div className={css(ut.mt2, FieldStyle.labelTip)}>
-            <div className={css(ut.dyb, ut.flxcb)}>
+            <div className={css(ut.flxc)}>
               <label className={css(ut.fw500, ut.ml1, ut.mt1)}>Client Transforms</label>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
@@ -654,7 +659,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         title={__('Image validate size', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageValidateSize')}
         toggleChecked={fieldData?.config?.allowImageValidateSize}

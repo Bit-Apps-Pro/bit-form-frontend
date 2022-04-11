@@ -196,7 +196,12 @@ export default function ButtonSettings() {
         <FieldSettingsDivider />
 
         <div className={css(FieldStyle.fieldSection, { pr: '36px' })}>
-          <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
+          <SingleToggle
+            tip="By disabling this option, the button full width will be remove"
+            title={__('Full Width Button', 'bitform')}
+            action={setFulW}
+            isChecked={fulW}
+          />
         </div>
 
         <FieldSettingsDivider />

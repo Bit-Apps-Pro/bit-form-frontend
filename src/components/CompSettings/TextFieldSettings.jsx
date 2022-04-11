@@ -31,6 +31,7 @@ import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
@@ -435,26 +436,7 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        <SimpleAccordion
-          title={__('Admin Label', 'bitform')}
-          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-          switching
-          tip="By disabling this option, the field admin label will be hidden"
-          tipProps={{ width: 250, icnSize: 17 }}
-          toggleAction={hideAdminLabel}
-          toggleChecked={fieldData?.adminLblHide}
-          open={fieldData?.adminLblHide}
-          disable={!fieldData?.adminLblHide}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <AutoResizeInput
-              ariaLabel="Admin label for this Field"
-              placeholder="Type Admin label here..."
-              value={adminLabel}
-              changeAction={setAdminLabel}
-            />
-          </div>
-        </SimpleAccordion>
+        <AdminLabelSettings />
 
         <FieldSettingsDivider />
 
@@ -710,15 +692,15 @@ function TextFieldSettings() {
           )
         }
 
-        <FieldHideSettings tip="By disabling this option, the field will be hidden" />
+        <FieldHideSettings />
 
         <FieldSettingsDivider />
 
-        <FieldReadOnlySettings tip="By disabling this option, the field readonly will be hidden" />
+        <FieldReadOnlySettings />
 
         <FieldSettingsDivider />
 
-        <FieldDisabledSettings tip="By disabling this option, the field disable will be hidden" />
+        <FieldDisabledSettings />
 
         <FieldSettingsDivider />
 
