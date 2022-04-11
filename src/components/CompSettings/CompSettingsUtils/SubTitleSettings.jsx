@@ -11,7 +11,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, getStrFromStr, isStyleExist, setIconFilterValue, styleClasses, unitConverter } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -33,12 +33,6 @@ export default function SubTitleSettings() {
 
   const subtitle = fieldData.subtitle || ''
   const adminLabel = fieldData.adminLbl || ''
-
-  const subTlePreIcn = `.${fldKey}-sub-titl-pre-i`
-  const subTleSufIcn = `.${fldKey}-sub-titl-suf-i`
-
-  const { width: subPreIcnWidth, height: subPreIcnHeight } = styles?.fields[fldKey]?.classes[subTlePreIcn] || {}
-  const { width: subSufIcnWidth, height: subSufIcnHeight } = styles?.fields[fldKey]?.classes[subTleSufIcn] || {}
 
   const hideSubTitle = ({ target: { checked } }) => {
     if (checked) {
@@ -89,20 +83,6 @@ export default function SubTitleSettings() {
       }))
       reCalculateFieldHeights(fldKey)
     }
-  }
-
-  const icnWidthHandle = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
-    }))
-  }
-
-  const icnHeightHandle = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
-    }))
   }
 
   return (
