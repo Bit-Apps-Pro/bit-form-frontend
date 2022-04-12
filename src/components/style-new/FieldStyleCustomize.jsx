@@ -1,10 +1,12 @@
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -16,7 +18,10 @@ import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
+import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
+import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SingleToggle from '../Utilities/SingleToggle'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
@@ -32,10 +37,16 @@ export default function FieldStyleCustomizeHOC() {
 const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
+  const [controller, setController] = useState('style')
   const setFlags = useSetRecoilState($flags)
-  const fields = useRecoilValue($fields)
+  const [fields, setFields] = useRecoilState($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, theme } = fldStyleObj
+  const options = [
+    { label: 'style', icn: 'Custom style', show: ['icn'], tip: 'Custom style' },
+    { label: 'classes', icn: 'Custom Classes', show: ['icn'], tip: 'Custom Classes' },
+  ]
+  const customClsName = fields[fieldKey].customClasses
 
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme?.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
@@ -67,42 +78,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           const { classes: getElementStyleClasses } = bitformDefaultTheme(fieldKey, fieldType)
 
           switch (elmnt) {
-            // case 'field-container':
-            //   const fldwrp = getElementStyleClasses[`.${fieldKey}-fld-wrp`]
-            //   assignNestedObj(drft, getPath('fld-wrp'), fldwrp)
-            //   deleteStyle(drft, 'fld-wrp', ':hover')
-            //   break
-
-            // case 'label-subtitle-container':
-            //   const lblwrp = getElementStyleClasses[`.${fieldKey}-lbl-wrp`]
-            //   assignNestedObj(drft, getPath('lbl-wrp'), lblwrp)
-            //   deleteStyle(drft, 'lbl-wrp', ':hover')
-            //   break
-
-            // case 'label':
-            //   const lbl = getElementStyleClasses[`.${fieldKey}-lbl`]
-            //   assignNestedObj(drft, getPath('lbl'), lbl)
-            //   deleteStyle(drft, 'lbl', ':hover')
-            //   break
-
-            // case 'subtitle':
-            //   const subtitle = getElementStyleClasses[`.${fieldKey}-sub-titl`]
-            //   assignNestedObj(drft, getPath('sub-titl'), subtitle)
-            //   deleteStyle(drft, 'sub-titl', ':hover')
-            //   break
-
-            // case 'helper-text':
-            //   const hlptxt = getElementStyleClasses[`.${fieldKey}-hlp-txt`]
-            //   assignNestedObj(drft, getPath('hlp-txt'), hlptxt)
-            //   deleteStyle(drft, 'hlp-txt', ':hover')
-            //   break
-
-            // case 'error-message':
-            //   const errMsg = getElementStyleClasses[`.${fieldKey}-err-msg`]
-            //   assignNestedObj(drft, getPath('err-msg'), errMsg)
-            //   deleteStyle(drft, 'err-msg', ':hover')
-            //   break
-
             case 'currency-fld-wrp':
             case 'phone-fld-wrp':
               const curcyFldWrp = getElementStyleClasses[`.${fieldKey}-${elmnt}`]
@@ -242,6 +217,18 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
+  const customClsNamHandler = (e) => {
+    const { value } = e.target
+    console.log(fields[fieldKey])
+    setFields(prvFld => produce(prvFld, drftFld => {
+      drftFld[fieldKey].customClasses[element] = value
+    }))
+    // TODO create a property for customClasses { key(elementkey): [values]}
+    // TODO @element key is className
+    // TODO @values is a array
+    // TODO create a property for customArrribute { key(elementKey) : [{attrKey: attrValue}, {attrKey: attrValue}]}
+  }
+
   const renderIndividualCustomStyleComp = () => {
     const { elementKey, classKey } = getElmDataBasedOnElement(element)
     return (
@@ -264,7 +251,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       <h4 className={css(cls.title)}>
         {fieldsTypes[fieldType]}
         {' '}
-        {/* {element?.replaceAll('-', ' ')} */}
         {title}
       </h4>
       <div className={css(ut.flxc)}>
@@ -273,19 +259,54 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
+        {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
         {element !== 'quick-tweaks' && (
-          <SingleToggle
-            title="Override form theme styles"
-            action={(e) => overrideGlobalThemeHandler(e, element)}
-            isChecked={isFieldElemetOverrided}
-            className={css(ut.mr2, ut.mb2)}
-          />
-        )}
+          <>
 
-        <div className={css(cls.container)}>
-          {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
-          {element !== 'quick-tweaks' && renderIndividualCustomStyleComp()}
-        </div>
+            <StyleSegmentControl
+              square
+              noShadow
+              defaultActive="style"
+              options={options}
+              size={60}
+              component="button"
+              onChange={lbl => setController(lbl)}
+              show={['icn']}
+              variant="lightgray"
+              activeValue={controller}
+              width="100%"
+              wideTab
+            />
+            <Grow open={controller === 'style'}>
+              <SingleToggle
+                title="Override form theme styles"
+                action={(e) => overrideGlobalThemeHandler(e, element)}
+                isChecked={isFieldElemetOverrided}
+                className={css(ut.m10)}
+              />
+              <div className={css(cls.container)}>
+                {renderIndividualCustomStyleComp()}
+              </div>
+            </Grow>
+
+            <Grow open={controller === 'classes'}>
+              <div className={css(ut.m10)}>
+                <label htmlFor="customClassName">Add Custom Class Name</label>
+                <AutoResizeInput
+                  ariaLabel="Custom Class Name"
+                  placeholder="Class1 Class2"
+                  value={customClsName?.[element]}
+                  changeAction={customClsNamHandler}
+                  rows="3"
+                />
+              </div>
+              <div className={css(ut.m10)}>
+                <label htmlFor="customClassName">Add Custom Attributes</label>
+
+              </div>
+            </Grow>
+          </>
+        )}
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
