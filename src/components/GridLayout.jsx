@@ -180,6 +180,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     setRootLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
+    removeFieldStyles(fieldId)
     sessionStorage.setItem('btcd-lc', '-')
 
     // redirect to fields list
@@ -190,7 +191,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
-    return true
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -569,7 +569,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                         {...{
                           layoutItem,
                           removeLayoutItem,
-                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -599,7 +598,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                         {...{
                           layoutItem,
                           removeLayoutItem,
-                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -635,7 +633,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
             navigateToStyle={navigateToStyle}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
-            removeFieldStyles={removeFieldStyles}
             className="right-click-context-menu"
           />
         </CSSTransition>
