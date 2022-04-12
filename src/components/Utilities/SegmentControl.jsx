@@ -117,8 +117,12 @@ function SegmentControl({ defaultActive,
     // },
   }
   const selectorRef = useRef(null)
-  const tabsRef = useRef(null)
+  const [tabsRef, setTabsRef] = useState(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
+
+  useEffect(() => {
+    if (active !== defaultActive) setactive(defaultActive)
+  }, [defaultActive])
 
   const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
@@ -127,10 +131,10 @@ function SegmentControl({ defaultActive,
     selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 4}px, -50%)`
   }
 
-  useEffect(() => {
-    const toActiveElement = tabsRef.current.querySelector(`[data-label="${active}"]`)
+  const toActiveElement = tabsRef?.querySelector(`[data-label="${active}"]`)
+  if (toActiveElement) {
     setSelectorPos(toActiveElement)
-  }, [active])
+  }
 
   const eventHandler = (e, i) => {
     e.preventDefault()
@@ -141,7 +145,7 @@ function SegmentControl({ defaultActive,
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    const currentActiveElm = tabsRef.current.querySelector(`.tabs ${component}.active`)
+    const currentActiveElm = tabsRef.querySelector(`.tabs ${component}.active`)
     if (elm === currentActiveElm) return
 
     currentActiveElm?.classList.remove('active')
@@ -161,7 +165,7 @@ function SegmentControl({ defaultActive,
 
   return (
     <div className={css(style.wrapper)}>
-      <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
+      <div ref={setTabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
         {component === 'a' && options?.map((item, i) => (
           <a
