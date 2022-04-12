@@ -13,7 +13,8 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import { getRecoil } from 'recoil-nexus'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
@@ -49,8 +50,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [flags, setFlags] = useRecoilState($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const themeVars = useRecoilValue($themeVars)
+  const colorScheme = useRecoilValue($colorScheme)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth)
   const cols = { lg: 60, md: 40, sm: 20 }
@@ -508,6 +510,25 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }
   }, [inspectMode])
 
+  const getBuilderWidth = () => {
+    let width = builderWidth - 10
+    const builderPadding = styles.form[colorScheme]['_frm-bg'].padding
+    const builderBorderWidth = styles.form[colorScheme]['_frm-bg']['border-width']
+    const builderMargin = styles.form[colorScheme]['_frm-bg'].margin
+    if (builderPadding !== '10px') {
+      width -= (parseInt(builderPadding.replace('px', ''), 10) * 2) - 3
+    }
+
+    if (builderBorderWidth !== '1px') {
+      width -= (parseInt(builderBorderWidth.replace('px', ''), 10))
+    }
+    if (builderMargin) {
+      width -= (parseInt(builderMargin.replace('px', ''), 10))
+    }
+
+    return Math.round(width)
+  }
+
   return (
     <div style={{ width: gridWidth + 10 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
@@ -519,7 +540,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
             <div className={`_frm-${formID}`} data-dev-_frm={formID}>
               {!styleMode ? (
                 <ResponsiveReactGridLayout
-                  width={Math.round(builderWidth - 10)}
+                  width={getBuilderWidth()}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
