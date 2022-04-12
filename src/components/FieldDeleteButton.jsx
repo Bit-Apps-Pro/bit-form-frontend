@@ -6,8 +6,8 @@ import Downmenu from './Utilities/Downmenu'
 const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutItem, removeFieldStyles, resetContextMenu }) => {
   const removeLay = e => {
     e.stopPropagation()
-    removeLayoutItem(fieldId)
-    removeFieldStyles(fieldId)
+    const removed = removeLayoutItem(fieldId)
+    if (removed) removeFieldStyles(fieldId)
     if (resetContextMenu) resetContextMenu()
   }
 
