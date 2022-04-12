@@ -276,7 +276,7 @@ function AdvanceFileUpSettings() {
             <button
               type="button"
               aria-label="Image Validate Customization "
-              className={css(ut.btn)}
+              className={css(ut.btn, ut.pr4)}
               onClick={() => setLblPropertyMdl(true)}
               onKeyPress={() => setLblPropertyMdl(true)}
             >
