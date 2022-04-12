@@ -1751,7 +1751,7 @@ arrow:after,
     border-radius: 10px;
     position: relative;
     background-color: var(--white-100);
-    z-index: 99;
+    z-index: 9999999;
  }
  .context-list {
     margin: 0px;
