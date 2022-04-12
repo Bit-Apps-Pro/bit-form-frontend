@@ -3,6 +3,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -23,6 +24,7 @@ export default function ThemeQuickTweaksCustomizer() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const themeColors = useRecoilValue($themeColors)
   const setStyles = useSetRecoilState($styles)
+  const fields = useRecoilValue($fields)
 
   const { '--dir': direction,
     '--g-bdr-rad': globalBorderRad,
@@ -55,10 +57,9 @@ export default function ThemeQuickTweaksCustomizer() {
       const flds = prvStyle.fields
       const fldKeyArr = Object.keys(flds)
       const fldKeyArrLen = fldKeyArr.length
-
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        const commonStyles = commonStyle(fldKeyArr[i], value)
+        const commonStyles = commonStyle(fldKeyArr[i], value, fields[fldKeyArr[i]].typ)
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
@@ -193,8 +194,9 @@ export default function ThemeQuickTweaksCustomizer() {
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Size</span>
+        <span className={css(ut.fw500)}>Field Sizes</span>
         <select onChange={setSizes} className={css(sc.select)}>
+          <option value="">Select Size</option>
           {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
         </select>
       </div>
@@ -217,10 +219,10 @@ export default function ThemeQuickTweaksCustomizer() {
   )
 }
 const sizes = {
-  'small-2': 'Small-2',
-  'small-1': 'Small-1',
+  'small-2': 'Extra Small',
+  'small-1': 'Small',
   medium: 'Medium',
   // large: 'Large',
-  'large-1': 'Large-1',
-  'large-2': 'Large-2',
+  'large-1': 'Large',
+  'large-2': 'Extra Large',
 }

@@ -156,6 +156,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const onBreakpointChange = bp => setBreakpoint(bp)
 
+  const removeFieldStyles = fldKey => {
+    setStyles(prevStyles => produce(prevStyles, draftStyles => {
+      delete draftStyles.fields[fldKey]
+    }))
+  }
   const removeLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
@@ -251,7 +256,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }, 500)
 
     // add style
-    setStyles(styles => produce(styles, draftStyle => {
+    setStyles(preStyles => produce(preStyles, draftStyle => {
       const globalTheme = draftStyle.theme
       if (globalTheme === 'bitformDefault') {
         const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
@@ -291,7 +296,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setFields(oldFields)
 
     // clone style
-    setStyles(styles => produce(styles, draftStyle => {
+    setStyles(preStyles => produce(preStyles, draftStyle => {
       const fldStyle = draftStyle.fields[fldKey]
       const fldClasses = fldStyle.classes
       draftStyle.fields[newBlk] = { ...fldStyle }
@@ -551,6 +556,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                         {...{
                           layoutItem,
                           removeLayoutItem,
+                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -580,6 +586,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                         {...{
                           layoutItem,
                           removeLayoutItem,
+                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -615,6 +622,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
             navigateToStyle={navigateToStyle}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
+            removeFieldStyles={removeFieldStyles}
             className="right-click-context-menu"
           />
         </CSSTransition>
