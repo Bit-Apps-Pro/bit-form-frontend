@@ -91,11 +91,15 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
 
   const handleRightPanelDefaultActive = () => {
     if (rightBar.match(/fields-list|field-settings/)) {
-      setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
+      if (flags.styleMode || flags.inspectMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
+      }
       return 'fld-settings'
     }
     if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
-      setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
+      if (!flags.styleMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
+      }
       return 'theme-customize'
     }
   }
