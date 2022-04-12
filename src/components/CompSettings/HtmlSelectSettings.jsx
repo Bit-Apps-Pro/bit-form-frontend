@@ -73,7 +73,7 @@ export default function HtmlSelectSettings() {
         type="entryUnique"
         title="Validate as Entry Unique"
         tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         isUnique="show"
       />
       <FieldSettingsDivider />

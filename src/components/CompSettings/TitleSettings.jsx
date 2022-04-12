@@ -43,7 +43,7 @@ function TitleSettings() {
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const { fieldType, classes, theme } = fldStyleObj
+  const { classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
@@ -177,8 +177,10 @@ function TitleSettings() {
         <FieldSettingsDivider />
         <SimpleAccordion
           title={__('Title', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
+          tip="By disabling this option, the field title will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideTitle}
           toggleChecked={!fieldData?.titleHide}
           open={!fieldData?.titleHide}
@@ -247,8 +249,10 @@ function TitleSettings() {
 
         <SimpleAccordion
           title={__('Sub Title', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
+          tip="By disabling this option, the field sub title will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideSubTitle}
           toggleChecked={!fieldData?.subtitleHide}
           open={fieldData?.subtitleHide}

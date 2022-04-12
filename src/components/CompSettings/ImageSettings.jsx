@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import Modal from '../Utilities/Modal'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -33,6 +34,7 @@ function ImageSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
+
       <FieldIconSettings
         classNames={css(style.section)}
         labelClass={css(style.logoLabel)}
@@ -42,6 +44,8 @@ function ImageSettings() {
         setIcon={() => setIcnMdl(true)}
         removeIcon={() => removeImage('bg_img')}
       />
+
+      <FieldSettingsDivider />
 
       <Modal
         md

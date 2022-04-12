@@ -115,16 +115,18 @@ const CurrencyFieldSettings = () => {
             </select>
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              tip="By disabling this option, the currency symbol will be show"
               title={__('Currency Symbol:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')}
               isChecked={fieldData.inputFormatOptions.showCurrencySymbol}
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              tip="By disabling this option, the currency symbol will be show"
               title={__('Round to Closest Integer:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')}
               isChecked={fieldData.inputFormatOptions.roundToClosestInteger}

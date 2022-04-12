@@ -129,25 +129,28 @@ const PhoneNumberFieldSettings = () => {
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              tip="By disabling this option, the show selected flag image will be hidden"
               title={__('Selected Flag Image :', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
               isChecked={fieldData.config.selectedFlagImage}
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              tip="By disabling this option, are not detect county by Geo location"
               title={__('Detect Country By Geo Location:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
               isChecked={fieldData.config.detectCountryByGeo}
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
               title={__('Detect Country By IP:', 'bitform')}
+              tip="By disabling this option, are not detect county by ip"
               action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
               isChecked={fieldData.config.detectCountryByIp}
             />

@@ -121,8 +121,10 @@ const CountryFieldSettings = () => {
 
       <SimpleAccordion
         title={__('Search Placeholder', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
+        tip="By disabling this option, the search placeholder text will be remove"
+        tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={toggleSearchPlaceholder}
         toggleChecked={showSearchPh}
         open={showSearchPh}
@@ -143,8 +145,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Show Selected File Image:', 'bitform')}
+        tip="By disabling this option, the show selected flag image will be hidden"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Show Selected Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage')}
         isChecked={selectedFlagImage}
       />
@@ -152,8 +155,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Selected Country Clearable:', 'bitform')}
+        tip="By disabling this option, the selected country clearable button will be hidden"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Selected Country Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedCountryClearable')}
         isChecked={selectedCountryClearable}
       />
@@ -161,8 +165,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Search Clearable:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, the selected country search clearable button will be hidden"
+        title={__('Search Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable')}
         isChecked={searchClearable}
       />
@@ -170,8 +175,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Option Flag Image:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, the option flags image will be hidden"
+        title={__('Option Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage')}
         isChecked={optionFlagImage}
       />
@@ -179,8 +185,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Detect Country By IP:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, are not detect county by ip"
+        title={__('Detect Country By IP', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp')}
         isChecked={detectCountryByIp}
       />
@@ -188,8 +195,9 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Detect Country By Geo:', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, are not detect county by Geo location"
+        title={__('Detect Country By Geo', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo')}
         isChecked={detectCountryByGeo}
       />

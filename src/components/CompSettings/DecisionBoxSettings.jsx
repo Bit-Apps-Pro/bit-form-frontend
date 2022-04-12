@@ -17,6 +17,7 @@ import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -116,20 +117,22 @@ export default function DecisionBoxSettings() {
 
   return (
     <div>
-      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ}
+        fieldKey={fldKey}
+      />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <div className="flx flx-between">
+        <div className={`flx flx-between ${FieldStyle.hover_tip}`}>
           <div className="flx">
-            <b>Label: </b>
+            <b>Label </b>
             <Cooltip
               width={250}
               icnSize={17}
-              className={css(ut.ml2)}
+              className="hover-tip"
             >
-              <div
-                className="txt-body"
-              >
+              <div className="txt-body">
                 {__('Edit your decision box label by clicking on edit icon', 'bitform')}
               </div>
             </Cooltip>
@@ -153,7 +156,10 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <DecisionBoxLabelModal labelModal={labelModal} setLabelModal={setLabelModal} />
+      <DecisionBoxLabelModal
+        labelModal={labelModal}
+        setLabelModal={setLabelModal}
+      />
 
       <AdminLabelSettings />
 
@@ -163,9 +169,10 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
+      <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
-          title={__('Disabled Field:', 'bitform')}
+          tip="By disabling this option, the field disable will be hidden"
+          title={__('Disabled Field', 'bitform')}
           action={setDiasabled}
           isChecked={isDiasabled}
         />
@@ -173,9 +180,10 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
+      <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
-          title={__('Read Only:', 'bitform')}
+          tip="By disabling this option, the field readonly will be hidden"
+          title={__('Read Only', 'bitform')}
           action={setReadOnly}
           isChecked={fieldData.valid.readonly}
         />
@@ -183,19 +191,8 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={fieldData.adminLbl || ''} action={setAdminLabel} /> */}
-      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={fieldData.valid.req} className="mt-3" />
-      {
-        fieldData?.valid?.req && (
-          <ErrorMessageSettings
-            type="req"
-            title="Error Message"
-            tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
-          />
-        )
-      } */}
       <SimpleAccordion
-        title={__('Checked Value:', 'bitform')}
+        title={__('Checked Value', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -213,7 +210,7 @@ export default function DecisionBoxSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
-        title={__('Unchecked Value:', 'bitform')}
+        title={__('Unchecked Value', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -229,17 +226,15 @@ export default function DecisionBoxSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, { pr: '36px !important' })}>
+      <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
-          title={__('Checked by Default:', 'bitform')}
+          tip="By disabling this option, the field checked by default will be hidden"
+          title={__('Checked by Default', 'bitform')}
           action={setChecked}
           isChecked={fieldData.valid.checked}
         />
       </div>
       <FieldSettingsDivider />
-      {/* <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={fieldData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} /> */}
-      {/* <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={fieldData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} /> */}
-
     </div>
   )
 }
