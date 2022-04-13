@@ -42,17 +42,7 @@ const Toolbars = {
     '::placeholder': { fs: 12 },
     '::-webkit-search-cancel-button': {
       appearance: 'none',
-      w: 14,
-      h: 14,
-      mr: 10,
-      bd: 'var(--white-0-83)',
-      curp: 1,
-      backgroundPosition: '54% 50% !important',
-      // eslint-disable-next-line quotes
-      bi: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='Black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E")`,
-      brs: 20,
     },
-
   },
   search_icn: {
     pn: 'absolute',
@@ -63,6 +53,22 @@ const Toolbars = {
     cr: 'var(--white-0-50)',
     curp: 1,
     '& svg': { dy: 'block' },
+  },
+  clear_icn: {
+    pn: 'absolute',
+    tp: '50%',
+    mx: 6,
+    rt: 0,
+    tm: 'translateY(-50%)',
+    cr: 'var(--white-0-50)',
+    curp: 1,
+    w: 14,
+    h: 14,
+    bd: 'var(--white-0-83)',
+    brs: 20,
+    backgroundPosition: '54% 50% !important',
+    // eslint-disable-next-line quotes
+    bi: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='Black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E")`,
   },
   sec_acc: {
     mb: 15,

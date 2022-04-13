@@ -3,7 +3,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { memo, useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
@@ -685,11 +685,26 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     return []
   }
 
+  const searchInput = useRef(null)
+
+  const clearSearch = () => {
+    searchInput.current.value = ''
+    setSearchData([])
+    setfocusSearch(false)
+  }
+
+  const blurSearchInp = () => {
+    setTimeout(() => {
+      setfocusSearch(false)
+    }, 100)
+  }
+
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
       <div className={css(ut.flxc, { my: 5 }, isScroll && Toolbars.searchBar)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%', marginTop: '2px' }}>
           <input
+            ref={searchInput}
             title="Search Field"
             aria-label="Search Field"
             autoComplete="off"
@@ -699,13 +714,18 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             name="searchIcn"
             onChange={searchHandler}
             onFocus={() => setfocusSearch(true)}
-            onBlur={() => setfocusSearch(false)}
+            onBlur={blurSearchInp}
             className={css(Toolbars.search_field)}
           />
+          {!!searchData.length && (
+            <span title="clear" className={css(Toolbars.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch} onKeyPress={clearSearch}>&nbsp;</span>
+          )}
+
           <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>
+
+          {!searchData.length && (<div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>)}
         </div>
         {!focusSearch
           && (
