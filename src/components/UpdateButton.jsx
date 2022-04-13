@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
+import { $additionalSettings, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
@@ -19,6 +19,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
   const lay = useRecoilValue($layouts)
+  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
   const fields = useRecoilValue($fields)
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
@@ -155,6 +156,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       },
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
+    if (savedFormId && deletedFldKey.length !== 0) {
+      formData.deletedFldKey = deletedFldKey
+      setDeletedFldKey([])
+    }
 
     const fetchProm = bitsFetch(formData, action)
       .then(response => {
