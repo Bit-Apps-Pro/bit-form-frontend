@@ -17,7 +17,6 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
   const { optionsList } = fieldData
   const { activeList, optionIcon } = fieldData.config
 
-  console.log('options list', optionsList)
   useEffect(() => {
     if (!dropdownWrapElmRef?.current) {
       dropdownWrapElmRef.current = selectInGrid(`.${fieldKey}-dpd-fld-wrp`)
@@ -65,6 +64,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
             />
             <div
+              data-dev-dpd-fld-wrp={fieldKey}
               className={`${fieldKey}-dpd-wrp ${getCustomClsName(fieldKey, 'dpd-wrp')}`}
               role="combobox"
               aria-controls=""
@@ -202,9 +202,17 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                     <span className="opt-lbl">{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
-                                    <li data-index={dataIndex++} data-value={opt2.val} className={`${fieldKey}-option ${fieldKey}-opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`} role="option" aria-selected="false" tabIndex="-1">
+                                    <li data-dev-option={fieldKey} data-index={dataIndex++} data-value={opt2.val} className={`${fieldKey}-option ${fieldKey}-opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`} role="option" aria-selected="false" tabIndex="-1">
                                       <span className={`${fieldKey}-opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}>
-                                        <span className="opt-lbl">{opt2.lbl}</span>
+                                        {optionIcon && (
+                                          <img
+                                            className={`${fieldKey}-opt-icn`}
+                                            src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                                            alt="BD"
+                                            loading="lazy"
+                                          />
+                                        )}
+                                        <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt2.lbl}</span>
                                       </span>
                                       <span className="opt-prefix" />
                                     </li>
@@ -213,7 +221,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                 </>
                               )
                             } return (
-                              <li data-index={dataIndex++} data-value={opt.val} className={`${fieldKey}-option`} role="option" aria-selected="false" tabIndex="-1">
+                              <li data-dev-option={fieldKey} data-index={dataIndex++} data-value={opt.val} className={`${fieldKey}-option`} role="option" aria-selected="false" tabIndex="-1">
                                 <span className={`${fieldKey}-opt-lbl-wrp`}>
                                   {optionIcon && (
                                     <img
@@ -223,7 +231,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                       loading="lazy"
                                     />
                                   )}
-                                  <span className="opt-lbl">{opt.lbl}</span>
+                                  <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt.lbl}</span>
                                 </span>
                                 <span className="opt-prefix" />
                               </li>
