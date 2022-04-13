@@ -77,7 +77,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Multiline Text', 'bitform'),
       keywords: 'Multline Text',
       icn: <TextareaIcn size="23" />,
-      pos: { h: 60, w: 60, i: 'shadow_block', minH: 60 },
+      pos: { h: 50, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text', 'bitform'),
@@ -804,6 +804,6 @@ const toolStyle = {
   wrp: {
     flx: 'align-center',
     ow: 'hidden',
-    w: '90%'
-  }
+    w: '90%',
+  },
 }

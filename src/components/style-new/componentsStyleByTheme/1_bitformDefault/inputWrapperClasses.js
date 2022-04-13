@@ -4,7 +4,6 @@ export default function inputWrapperClasses(fk) {
       display: 'var(--fld-wrp-dis, block)',
       'flex-direction': 'var(--fld-wrp-fdir, row)',
       'background-color': 'var(--fld-wrp-bg, transparent)',
-      width: '100%',
       padding: 'var(--fld-wrp-p, 0)',
       margin: 'var(--fld-wrp-m, 0)',
       position: 'relative',

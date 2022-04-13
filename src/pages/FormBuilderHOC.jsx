@@ -16,6 +16,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
 import { $styles, $tempStyles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -79,6 +80,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
+
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -308,6 +311,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     }, styleMode ? 0 : 100))
   }
 
+  const clsAlertMdl = () => {
+    const tmpAlert = { ...alertMdl }
+    tmpAlert.show = false
+    setAlertMdl(tmpAlert)
+  }
+
   return (
     <>
       {/* {formType === 'edit' && <FetchBuilderHelperStates formID={formID} />} */}
@@ -360,6 +369,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
                 setNewData={setNewData}
                 formType={formType}
                 formID={formID}
+                setAlertMdl={setAlertMdl}
               />
             </RenderPortal>
           ) : <GridLayoutLoader />}
@@ -378,6 +388,18 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           />
         </Section>
       </Container>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Close"
+        show={alertMdl.show}
+        close={clsAlertMdl}
+        action={clsAlertMdl}
+        title="Sorry"
+      >
+        <div className="txt-center">{alertMdl.msg}</div>
+      </ConfirmModal>
     </>
   )
 })

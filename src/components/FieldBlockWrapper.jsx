@@ -8,11 +8,9 @@ import MoveIcn from '../Icons/MoveIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import FieldContextMenu from './FieldContextMenu'
 import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
 import MapComponents_old from './MapComponents_old'
-import Downmenu from './Utilities/Downmenu'
 
 export default function FieldBlockWrapper({ layoutItem,
   removeLayoutItem,

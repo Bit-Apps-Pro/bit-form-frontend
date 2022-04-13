@@ -40,7 +40,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const setSizes = ({ target: { value } }) => {
-    const commonStyleClasses = commonStyle(fieldKey, value)
+    const commonStyleClasses = commonStyle(fieldKey, value, fieldData.typ)
     const cmnStlClasses = Object.keys(commonStyleClasses)
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const stylesClasses = drftStyle.fields[fieldKey].classes
@@ -98,7 +98,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           ['16px', '11px 20px'],
         )
         break
-      case 'large':
+      case 'large-1':
         setMuptipleProperty(
           [
             propertyPath(elementKey, 'font-size'),
@@ -107,7 +107,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           ['18px', '12px 22px'],
         )
         break
-      case 'large-1':
+      case 'large-2':
         setMuptipleProperty(
           [
             propertyPath(elementKey, 'font-size'),
@@ -368,7 +368,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
   return (
     <>
-      {fieldType.match(/^(text|number|password|username|email|url|date|time|month|week|color|textarea|html-select|)$/gi) && (
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
         <>
           <SimpleColorPicker
             title="Accent Color"
@@ -539,10 +539,10 @@ const style = {
   },
 }
 const sizes = {
-  'small-2': 'Small-2',
-  'small-1': 'Small-1',
+  'small-2': 'Extra Small',
+  'small-1': 'Small',
   medium: 'Medium',
   // large: 'Large',
-  'large-1': 'Large-1',
-  'large-2': 'Large-2',
+  'large-1': 'Large',
+  'large-2': 'Extra Large',
 }

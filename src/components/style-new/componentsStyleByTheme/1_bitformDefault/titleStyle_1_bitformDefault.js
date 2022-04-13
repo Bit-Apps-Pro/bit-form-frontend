@@ -2,7 +2,6 @@
 export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     [`.${fk}-fld-wrp`]: {
-      height: '100%',
       display: 'flex',
       'justify-content': 'center',
       'flex-direction': 'row',
@@ -13,8 +12,6 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
       top: 0,
       left: 0,
       content: '""',
-      width: '100%',
-      height: '100%',
       'background-color': 'hsla(0, 0%, 0%, 20%)',
     },
     [`.${fk}-titl-wrp`]: { padding: '0px 5px' },

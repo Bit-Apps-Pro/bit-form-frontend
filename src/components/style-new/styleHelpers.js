@@ -269,30 +269,36 @@ export const removeHighlight = (selector = '[data-highlight]') => {
  * @param {string} type size
  * @return style classes
 */
-export const commonStyle = (fk, type) => {
+export const commonStyle = (fk, type, fieldType) => {
   switch (type) {
     case 'small-2':
       return {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '10px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '8px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '8px' },
         [`.${fk}-fld`]: {
-          'font-size': '12px',
-          padding: '5px 2px !important',
+          'font-size': '0.6rem',
+          padding: '5px 3px !important',
           height: '20px',
           'border-radius': '6px',
+          ...fieldType === 'html-select' && { padding: '2px 1px' },
+          ...fieldType === 'color' && { padding: '2px 1px' },
+          ...fieldType === 'textarea' && { height: '40px' },
         },
       }
     case 'small-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '10px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
         [`.${fk}-fld`]: {
-          'font-size': '14px',
-          padding: '6px 3px',
+          'font-size': '0.8rem',
+          padding: '6px 4px',
           height: '24px',
-          'border-radius': '7px',
+          'border-radius': '8px',
+          ...fieldType === 'html-select' && { padding: '3px 1px' },
+          ...fieldType === 'color' && { padding: '3px 2px' },
+          ...fieldType === 'textarea' && { height: '48px' },
         },
       }
     // case 'small':
@@ -305,13 +311,16 @@ export const commonStyle = (fk, type) => {
     case 'medium':
       return {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '14px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
         [`.${fk}-fld`]: {
-          'font-size': '16px',
-          padding: '8px 5px',
-          height: '30px',
-          'border-radius': '8px',
+          'font-size': '1rem',
+          padding: '10px 8px',
+          height: '40px',
+          'border-radius': '11px',
+          ...fieldType === 'html-select' && { padding: '5px 3px' },
+          ...fieldType === 'color' && { padding: '5px 3px' },
+          ...fieldType === 'textarea' && { height: '58px' },
         },
       }
     // case 'large':
@@ -324,25 +333,31 @@ export const commonStyle = (fk, type) => {
     case 'large-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '16px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '14px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
         [`.${fk}-fld`]: {
-          'font-size': '18px',
-          padding: '10px 7px',
-          height: '36px',
-          'border-radius': '10px',
+          'font-size': '1.2rem',
+          padding: '11px 9px',
+          height: '44px',
+          'border-radius': '12px',
+          ...fieldType === 'html-select' && { padding: '5px 3px' },
+          ...fieldType === 'color' && { padding: '5px 3px' },
+          ...fieldType === 'textarea' && { height: '70px' },
         },
       }
     case 'large-2':
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '18px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '18px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '16px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
         [`.${fk}-fld`]: {
-          'font-size': '20px',
-          padding: '10px 7px',
-          height: '40px',
-          'border-radius': '11px',
+          'font-size': '1.4rem',
+          padding: '12px 10px',
+          height: '48px',
+          'border-radius': '13px',
+          ...fieldType === 'html-select' && { padding: '6px 4px' },
+          ...fieldType === 'color' && { padding: '6px 4px' },
+          ...fieldType === 'textarea' && { height: '84px' },
         },
       }
     default:

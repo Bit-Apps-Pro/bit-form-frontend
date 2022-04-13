@@ -129,8 +129,10 @@ function TitleSettings() {
     } else {
       delete fieldData[type]
     }
-    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+    setFields(allFields)
     reCalculateFieldHeights(fieldKey)
+    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${val}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
   }
 
   const flexDirectionHandle = (val, type) => {
@@ -217,15 +219,7 @@ function TitleSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
-                <option value="h1">H1</option>
-                <option value="h2">H2</option>
-                <option value="h3">H3</option>
-                <option value="h4">H4</option>
-                <option value="h5">H5</option>
-                <option value="h6">H6</option>
-                <option value="div">Div</option>
-                <option value="span">Span</option>
-                <option value="p">p</option>
+                {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
               </select>
             </div>
           </div>
@@ -290,15 +284,7 @@ function TitleSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select className={css(style.select)} value={fieldData?.subTitleTag} onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}>
-                <option value="h1">H1</option>
-                <option value="h2">H2</option>
-                <option value="h3">H3</option>
-                <option value="h4">H4</option>
-                <option value="h5">H5</option>
-                <option value="h6">H6</option>
-                <option value="div">Div</option>
-                <option value="span">Span</option>
-                <option value="p">p</option>
+                {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
               </select>
             </div>
           </div>
@@ -368,12 +354,23 @@ function TitleSettings() {
           selected="Upload Image"
           uploadLbl="Upload Image"
           setModal={setIcnMdl}
+          addPaddingOnSelect={false}
         />
       </Modal>
     </>
   )
 }
-
+const tagOptions = [
+  { value: 'h1', title: 'H1' },
+  { value: 'h2', title: 'H2' },
+  { value: 'h3', title: 'H3' },
+  { value: 'h4', title: 'H4' },
+  { value: 'h5', title: 'H5' },
+  { value: 'h6', title: 'H6' },
+  { value: 'div', title: 'Div' },
+  { value: 'span', title: 'Span' },
+  { value: 'p', title: 'p' },
+]
 const style = {
   section: {
     my: 5,
