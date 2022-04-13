@@ -9,9 +9,9 @@ import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from 
 export default function AcumbamailFieldMap({ i, formFields, field, acumbamailConf, setAcumbamailConf }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const isRequiredFld = acumbamailConf.default.allFields[acumbamailConf.listId].required?.includes(field.acumbamailFormField)
-  const requiredFlds = Object.entries(acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields).filter(listField => listField[1].required === true) || []
-  const nonRequiredFlds = Object.entries(acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields).filter(listField => listField[1].required === false) || []
+  const isRequiredFld = acumbamailConf.default.allFields[acumbamailConf.listId]?.required?.includes(field.acumbamailFormField)
+  const requiredFlds = acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields && (Object.entries(acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields).filter(listField => listField[1].required === true) || [])
+  const nonRequiredFlds = acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields && (Object.entries(acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields).filter(listField => listField[1].required === false) || [])
 
   return (
     <div
@@ -40,7 +40,7 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
         <select className="btcd-paper-inp" name="acumbamailFormField" disabled={i < 1} value={field.acumbamailFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {
-            isRequiredFld && requiredFlds.map((listField, indx) => (
+            isRequiredFld && requiredFlds && requiredFlds.map((listField, indx) => (
               (
                 <option key={`mchimp-${indx * 2}`} value={listField[0]}>
                   {listField[0]}
@@ -50,11 +50,10 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
             ))
           }
           {
-            !isRequiredFld && nonRequiredFlds.map((listField, indx) => (
+            !isRequiredFld && nonRequiredFlds && nonRequiredFlds.map((listField, indx) => (
               (
                 <option key={`mchimp-${indx * 2}`} value={listField[0]}>
                   {listField[0]}
-
                 </option>
               )
             ))
