@@ -69,6 +69,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         phHide: true,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -82,6 +84,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -96,6 +100,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         pattern: '^[^$_bf_$s@]+@[^$_bf_$s@]+$_bf_$.[^$_bf_$s@]+$',
         valid: {},
         err: { invalid: { dflt: 'Email is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -109,6 +115,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Number Input', 'bitform'),
         valid: {},
         err: { invalid: { dflt: 'Number is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -130,6 +138,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         phHide: false,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -149,6 +159,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         optionCol: 1,
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -167,6 +179,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         optionCol: 1,
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -209,6 +223,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -223,6 +239,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         prefixIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
         err: {},
+        customClasses: {},
+        customArrribute: {},
         config: {
           multiple: true,
           showMaxSize: true,
@@ -275,6 +293,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           allowImageValidateSize: false,
         },
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -301,6 +321,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         options: countries,
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -324,6 +346,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         options: currencyList,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -341,6 +365,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         options: phoneNumberList,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -354,6 +380,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
         err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -367,6 +395,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder...', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -379,6 +409,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Date Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -391,6 +423,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Time Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -403,6 +437,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Date-Time Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -415,6 +451,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Week Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -427,6 +465,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Month Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -445,6 +485,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
         err: { invalid: { dflt: 'URL is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -457,6 +499,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Color Picker', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -474,6 +518,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         valid: { req: true },
         err: { req: { dflt: 'This field is required', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -507,6 +553,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           url: '',
         },
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -577,6 +625,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         subTitleTag: 'h5',
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -588,6 +638,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'image',
         img: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -599,6 +651,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'divider',
         divider: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -610,6 +664,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'html',
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     /* {

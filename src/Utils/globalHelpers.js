@@ -1,3 +1,6 @@
+import { getRecoil } from 'recoil-nexus'
+import { $fields } from '../GlobalStates/GlobalStates'
+
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
   if (Object.prototype.hasOwnProperty.call(elementPrototype, property)) {
@@ -79,7 +82,7 @@ export function escapeHTMLEntity(string) {
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    "'": '&#39;'
+    "'": '&#39;',
   }
 
   const reUnescapedHtml = /[&<>"']/g
@@ -96,7 +99,7 @@ export function unescapeHTMLEntity(string) {
     '&lt;': '<',
     '&gt;': '>',
     '&quot;': '"',
-    '&#39;': "'"
+    '&#39;': "'",
   }
 
   const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g
@@ -105,4 +108,9 @@ export function unescapeHTMLEntity(string) {
   return (string && reHasEscapedHtml.test(string))
     ? string.replace(reEscapedHtml, (entity) => (htmlUnescapes[entity] || "'"))
     : (string || '')
+}
+
+export const getCustomClsName = (fk, element) => {
+  const fields = getRecoil($fields)
+  return fields[fk].customClasses?.[element]
 }

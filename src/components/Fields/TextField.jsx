@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { memo, useEffect, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { observeElement, select } from '../../Utils/globalHelpers'
+import { getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -55,13 +55,13 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp`}>
+        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}>
           <input
             data-dev-fld={fieldKey}
             id={fieldKey}
             list={`${fieldKey}-datalist`}
             ref={textFieldRef}
-            className={`${fieldKey}-fld no-drg`}
+            className={`${fieldKey}-fld no-drg ${getCustomClsName(fieldKey, 'fld')}`}
             type={type}
             {...'req' in attr.valid && { required: attr.valid.req }}
             {...'disabled' in attr && { disabled: attr.disabled }}
@@ -78,8 +78,8 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             {...{ onChange: onChangeHandler }}
           />
 
-          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i`} height="90%" src={attr.prefixIcn} alt="" />}
-          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} height="90%" src={attr.suffixIcn} alt="" />}
+          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`} height="90%" src={attr.prefixIcn} alt="" />}
+          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`} height="90%" src={attr.suffixIcn} alt="" />}
 
         </div>
         {attr.suggestions?.length && (
