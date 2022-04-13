@@ -180,7 +180,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     setRootLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
-    removeFieldStyles(fieldId)
+    removeFieldStyles(fldKey)
     sessionStorage.setItem('btcd-lc', '-')
 
     // redirect to fields list
