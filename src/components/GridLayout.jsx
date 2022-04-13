@@ -365,13 +365,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       const downBtnLeft = downBtn.getBoundingClientRect().left
 
       x = (downBtnLeft - leftPos) + 5
-      y = (downBtnTop - topPos) + 5
+      y = (downBtnTop - topPos) + 2
 
       right = (x + menuWidth) > rootW
       bottom = (y + menuHeight) > rootH
 
       if (right) {
-        x = ((downBtnLeft + downBtnSize) - leftPos) - 145
+        x = ((downBtnLeft + downBtnSize) - leftPos) - 148
       }
 
       if (bottom) {
@@ -380,7 +380,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
       if (selectedFieldId !== fldKey) {
         x += 3
-        y -= 3
       }
 
       if (isComponentVisible && contextMenu.fldKey === fldKey && contextMenu.x === x && contextMenu.y === y) {
