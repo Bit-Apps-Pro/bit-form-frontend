@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -98,8 +98,15 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldData={attr}
       >
         {/* cc for checkbox container */}
-        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}>
-          <svg className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}>
+        <div
+          data-dev-cc={fieldKey}
+          className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
+          {... { ...getCustomAttributs(fieldKey, 'cc') }}
+        >
+          <svg
+            className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}
+            {... { ...getCustomAttributs(fieldKey, 'cks') }}
+          >
             <symbol id={`${fieldKey}-ck-svg ${getCustomClsName(fieldKey, 'ck-svg')}`} viewBox="0 0 12 10">
               <polyline
                 className={`${fieldKey}-ck-svgline ${getCustomClsName(fieldKey, 'ck-svgline')}`}
@@ -108,7 +115,12 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
             </symbol>
           </svg>
           {attr.opt.map((itm, i) => (
-            <div data-dev-cw={fieldKey} key={`opt-${i + 24}`} className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}>
+            <div
+              data-dev-cw={fieldKey}
+              key={`opt-${i + 24}`}
+              className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
+              {... { ...getCustomAttributs(fieldKey, 'cw') }}
+            >
               <input
                 id={`${fieldKey}-chk-${i}`}
                 type="checkbox"
@@ -124,13 +136,30 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 checked={checkBoxes.checked.includes(i) || itm?.check}
                 onChange={(e) => onChangeHandler(e, i)}
               />
-              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}>
-                <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}>
+              <label
+                data-dev-cl={fieldKey}
+                data-cl
+                htmlFor={`${fieldKey}-chk-${i}`}
+                className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
+                {... { ...getCustomAttributs(fieldKey, 'cl') }}
+              >
+                <span
+                  data-dev-ck={fieldKey}
+                  data-bx
+                  className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'ck') }}
+                >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
                   </svg>
                 </span>
-                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}>{renderHTMR(itm.lbl)}</span>
+                <span
+                  data-dev-opt-lbl={fieldKey}
+                  className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'ct') }}
+                >
+                  {renderHTMR(itm.lbl)}
+                </span>
               </label>
             </div>
           ))}

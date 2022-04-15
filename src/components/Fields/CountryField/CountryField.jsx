@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { selectInGrid } from '../../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import CountryFieldClass from './country-field-script.js'
@@ -64,8 +64,9 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         <div className={`${fieldKey}-country-fld-container`}>
           <div
             data-dev-country-fld-wrp={fieldKey}
-            className={`${fieldKey}-country-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            className={`${fieldKey}-country-fld-wrp ${getCustomClsName(fieldKey, 'country-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
             ref={countryWrapElmRef}
+            {... { ...getCustomAttributs(fieldKey, 'country-fld-wrp') }}
           >
             <input
               name="country-name"
@@ -86,10 +87,11 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 {fieldData.config.selectedFlagImage && (
                   <img
                     data-dev-selected-country-img={fieldKey}
-                    className={`${fieldKey}-selected-country-img`}
+                    className={`${fieldKey}-selected-country-img ${getCustomClsName(fieldKey, 'selected-country-img')}`}
                     aria-hidden="true"
                     alt="selected country flag"
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                    {... { ...getCustomAttributs(fieldKey, 'selected-country-img') }}
                   />
                 )}
                 <span className={`${fieldKey}-selected-country-lbl`}>{ph}</span>
@@ -99,7 +101,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   type="button"
                   title="Clear selected country value"
                   data-dev-selected-country-clear-btn={fieldKey}
-                  className={`${fieldKey}-selected-country-clear-btn`}
+                  className={`${fieldKey}-selected-country-clear-btn ${getCustomClsName(fieldKey, 'selected-country-clear-btn')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'selected-country-clear-btn') }}
                 >
                   <svg
                     width="15"
@@ -141,25 +144,27 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   <input
                     type="search"
                     data-dev-opt-search-input={fieldKey}
-                    className={`${fieldKey}-opt-search-input`}
+                    className={`${fieldKey}-opt-search-input ${getCustomClsName(fieldKey, 'opt-search-input')}`}
                     placeholder={fieldData.config.searchPlaceholder}
                     autoComplete="country-name"
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
-                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn`}
+                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     aria-hidden="true"
                     width="22"
                     height="22"
                     role="img"
                     title="Search icon"
-                    viewbox="0 0 24 24"
+                    viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-icn') }}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -168,8 +173,9 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     type="button"
                     title="Clear search"
                     data-dev-search-clear-btn={fieldKey}
-                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`}
+                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
                   >
                     <svg
                       width="15"

@@ -4,7 +4,7 @@ import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import DropdownField from './dropdown-filed-script'
@@ -54,8 +54,15 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div className={`${fieldKey}-dpd-fld-container ${getCustomClsName(fieldKey, 'dpd-fld-container')}`}>
-          <div data-dev-dpd-fld-wrp={fieldKey} className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} ref={dropdownWrapElmRef}>
+        <div
+          className={`${fieldKey}-dpd-fld-container ${getCustomClsName(fieldKey, 'dpd-fld-container')}`}
+        >
+          <div
+            data-dev-dpd-fld-wrp={fieldKey}
+            className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            ref={dropdownWrapElmRef}
+            {... { ...getCustomAttributs(fieldKey, 'dpd-fld-wrp') }}
+          >
             <input
               name={fieldKey}
               type="hidden"
@@ -72,6 +79,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               aria-expanded="false"
               tabIndex="0"
               aria-label="Dropdown"
+              {... { ...getCustomAttributs(fieldKey, 'dpd-wrp') }}
             >
               <div className={`${fieldKey}-selected-opt-wrp ${getCustomClsName(fieldKey, 'selected-opt-wrp')}`}>
                 {fieldData.config.selectedOptImage && (
@@ -81,6 +89,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     aria-hidden="true"
                     alt="selected option icon"
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                    {... { ...getCustomAttributs(fieldKey, 'selected-opt-img') }}
                   />
                 )}
                 <span className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}>Select an option</span>
@@ -91,6 +100,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                   aria-label="Clear selected option value"
                   data-dev-selected-opt-clear-btn={fieldKey}
                   className={`${fieldKey}-selected-opt-clear-btn ${getCustomClsName(fieldKey, 'selected-opt-clear-btn')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'selected-opt-clear-btn') }}
                 >
                   <svg
                     width="15"
@@ -137,6 +147,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     aria-label="Search Options"
                     aria-hidden="true"
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
@@ -152,6 +163,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-icn') }}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -162,6 +174,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     data-dev-search-clear-btn={fieldKey}
                     className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
                   >
                     <svg
                       width="13"
@@ -202,7 +215,16 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                     <span className="opt-lbl">{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
-                                    <li data-dev-option={fieldKey} data-index={dataIndex++} data-value={opt2.val} className={`${fieldKey}-option ${fieldKey}-opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`} role="option" aria-selected="false" tabIndex="-1">
+                                    <li
+                                      data-dev-option={fieldKey}
+                                      data-index={dataIndex++}
+                                      data-value={opt2.val}
+                                      className={`${fieldKey}-option ${fieldKey}-opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`}
+                                      role="option"
+                                      aria-selected="false"
+                                      tabIndex="-1"
+                                      {... { ...getCustomAttributs(fieldKey, 'option') }}
+                                    >
                                       <span className={`${fieldKey}-opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}>
                                         {optionIcon && (
                                           <img
@@ -221,7 +243,16 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                 </>
                               )
                             } return (
-                              <li data-dev-option={fieldKey} data-index={dataIndex++} data-value={opt.val} className={`${fieldKey}-option`} role="option" aria-selected="false" tabIndex="-1">
+                              <li
+                                data-dev-option={fieldKey}
+                                data-index={dataIndex++}
+                                data-value={opt.val}
+                                className={`${fieldKey}-option`}
+                                role="option"
+                                aria-selected="false"
+                                tabIndex="-1"
+                                {... { ...getCustomAttributs(fieldKey, 'option') }}
+                              >
                                 <span className={`${fieldKey}-opt-lbl-wrp`}>
                                   {optionIcon && (
                                     <img

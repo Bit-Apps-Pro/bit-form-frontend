@@ -13,7 +13,10 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
+import CloseIcn from '../../Icons/CloseIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
@@ -46,7 +49,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     { label: 'style', icn: 'Custom style', show: ['icn'], tip: 'Custom style' },
     { label: 'classes', icn: 'Custom Classes', show: ['icn'], tip: 'Custom Classes' },
   ]
-  const customClsName = fields[fieldKey].customClasses
+  const customClsName = fields[fieldKey]?.customClasses
 
   const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme?.includes(element)
   const getPath = (elementKey, state = '') => `fields->${fieldKey}->classes->.${fieldKey}-${elementKey}${state}`
@@ -219,24 +222,47 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const customClsNamHandler = (e) => {
     const { value } = e.target
-    console.log(fields[fieldKey])
     setFields(prvFld => produce(prvFld, drftFld => {
       drftFld[fieldKey].customClasses[element] = value
     }))
-    // TODO create a property for customClasses { key(elementkey): [values]}
-    // TODO @element key is className
-    // TODO @values is a array
-    // TODO create a property for customArrribute { key(elementKey) : [{attrKey: attrValue}, {attrKey: attrValue}]}
+  }
+
+  const addCustomAttribute = () => {
+    setFields(prvFld => produce(prvFld, drftFld => {
+      const preAttr = prvFld[fieldKey].customAttributes[element]
+      if (preAttr) {
+        drftFld[fieldKey].customAttributes[element] = [...preAttr, { key: '', value: '' }]
+      } else {
+        drftFld[fieldKey].customAttributes[element] = [{ key: '', value: '' }]
+      }
+    }))
+  }
+
+  const attributeHandler = (e, index) => {
+    const { name, value } = e.target
+    setFields(prvFld => produce(prvFld, drftFld => {
+      drftFld[fieldKey].customAttributes[element][index][name] = value
+    }))
+  }
+
+  const deleteCustomAttribute = (index) => {
+    setFields(prvFld => produce(prvFld, drftFld => {
+      const prvAttbut = prvFld[fieldKey].customAttributes[element]
+      const newAttbut = [...prvAttbut]
+      newAttbut.splice(index, 1)
+      drftFld[fieldKey].customAttributes[element] = newAttbut
+    }))
   }
 
   const renderIndividualCustomStyleComp = () => {
     const { elementKey, classKey } = getElmDataBasedOnElement(element)
     return (
       <div className={css(!checkExistElement(classKey) && cls.blur)}>
-        <IndividualCustomStyle elementKey={elementKey} fldKey={fieldKey} />
+        <IndividualCustomStyle elementKey={elementKey || classKey} fldKey={fieldKey} />
       </div>
     )
   }
+
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -262,7 +288,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
         {element !== 'quick-tweaks' && (
           <>
-
             <StyleSegmentControl
               square
               noShadow
@@ -291,18 +316,73 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
             <Grow open={controller === 'classes'}>
               <div className={css(ut.m10)}>
-                <label htmlFor="customClassName">Add Custom Class Name</label>
+                <label>Add Custom Class Name</label>
                 <AutoResizeInput
                   ariaLabel="Custom Class Name"
                   placeholder="Class1 Class2"
-                  value={customClsName?.[element]}
+                  value={customClsName?.[element] || ''}
                   changeAction={customClsNamHandler}
                   rows="3"
                 />
               </div>
               <div className={css(ut.m10)}>
-                <label htmlFor="customClassName">Add Custom Attributes</label>
-
+                <span>Add Custom Attributes</span>
+                <div className={css(cls.customAttrContainer)}>
+                  <div className={css({ w: '40%' })}>
+                    <span>Key</span>
+                  </div>
+                  <div className={css({ w: '40%' })}>
+                    <span>Value</span>
+                  </div>
+                </div>
+                {fields[fieldKey]?.customAttributes[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
+                  <div
+                    key={`custon-attribute-${indx + 1}`}
+                    className={css(cls.customAttrItem, ut.mx10, ut.mt1)}
+                  >
+                    <div className={css({ w: '40%' })}>
+                      <input
+                        placeholder="Key"
+                        aria-label="custom attribute key"
+                        name="key"
+                        onChange={e => attributeHandler(e, indx)}
+                        value={attr.key}
+                        className={css(FieldStyle.input)}
+                        type="text"
+                      />
+                    </div>
+                    <span className={css(cls.pair)}>=</span>
+                    <div className={css({ w: '40%' })}>
+                      <input
+                        aria-label="custom attribute value"
+                        placeholder="Value"
+                        name="value"
+                        onChange={e => attributeHandler(e, indx)}
+                        value={attr.value}
+                        className={css(FieldStyle.input)}
+                        type="text"
+                      />
+                    </div>
+                    <button
+                      className={css(cls.addBtn, cls.delBtnHover, ut.ml1, ut.mt1)}
+                      type="button"
+                      aria-label="Delete Custom Attribute"
+                      onClick={() => deleteCustomAttribute(indx)}
+                    >
+                      <TrashIcn size="12" />
+                    </button>
+                  </div>
+                ))}
+                <div className={css({ flx: 'center' })}>
+                  <button
+                    className={css(cls.addBtn, cls.addBtnHover)}
+                    type="button"
+                    aria-label="Add Custom Attribute"
+                    onClick={addCustomAttribute}
+                  >
+                    <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
+                  </button>
+                </div>
               </div>
             </Grow>
           </>
@@ -366,4 +446,20 @@ const cls = {
     bd: 'var(--b-23-95)',
     fw: 500,
   },
+  customAttrContainer: { flx: 'center-between', mx: 15, mt: 5 },
+  customAttrItem: { flx: 'center' },
+  pair: { fs: 20, mt: 5, mx: 5 },
+  addBtn: {
+    se: 25,
+    b: 'none',
+    brs: '50%',
+    p: 0,
+    flxi: 'center',
+    bd: 'var(--white-0-95)',
+    curp: 1,
+    tn: 'transform 0.2s',
+    ':active': { tm: 'scale(0.95)' },
+  },
+  addBtnHover: { ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' } },
+  delBtnHover: { ':hover': { tm: 'scale(1.1)', cr: 'red' } },
 }

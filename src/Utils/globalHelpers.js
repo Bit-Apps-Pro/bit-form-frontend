@@ -112,5 +112,22 @@ export function unescapeHTMLEntity(string) {
 
 export const getCustomClsName = (fk, element) => {
   const fields = getRecoil($fields)
-  return fields[fk].customClasses?.[element]
+  return fields[fk]?.customClasses?.[element] ?? ''
+}
+
+export const getCustomAttributs = (fk, element) => {
+  const fields = getRecoil($fields)
+  const attr = fields[fk]?.customAttributes?.[element]
+  const obj = {}
+  if (attr) {
+    const attrLen = attr.length
+    let i = 0
+    while (i < attrLen) {
+      if (attr[i].key && attr[i].value) {
+        obj[attr[i].key] = attr[i].value
+      }
+      i += 1
+    }
+  }
+  return obj
 }

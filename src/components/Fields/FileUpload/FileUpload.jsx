@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import FileUploadField from './file-upload-script'
@@ -58,16 +58,74 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
         fieldData={fieldData}
       >
         <div className={`${fieldKey}-file-up-container ${getCustomClsName(fieldKey, 'file-up-container')}`}>
-          <div data-dev-file-up-wrpr={fieldKey} className={`${fieldKey}-file-up-wrpr ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''} ${getCustomClsName(fieldKey, 'file-up-wrpr')}`} ref={fileUploadWrapElmRef}>
-            <div data-dev-file-input-wrpr={fieldKey} className={`${fieldKey}-file-input-wrpr ${getCustomClsName(fieldKey, 'file-input-wrpr')}`}>
-              <div data-dev-btn-wrpr={fieldKey} className={`${fieldKey}-btn-wrpr ${getCustomClsName(fieldKey, 'btn-wrpr')}`}>
-                <button data-dev-inp-btn={fieldKey} type="button" className={`${fieldKey}-inp-btn ${getCustomClsName(fieldKey, 'inp-btn')}`}>
-                  { fieldData.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`} src={`${fieldData.prefixIcn}`} alt="Upload icon" srcSet="" />}
-                  <span data-dev-btn-txt={fieldKey} className={`${fieldKey}-btn-txt ${getCustomClsName(fieldKey, 'btn-txt')}`}>{fieldData.btnTxt}</span>
-                  { fieldData.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`} src={`${fieldData.suffixIcn}`} alt="Upload icon" srcSet="" />}
+          <div
+            data-dev-file-up-wrpr={fieldKey}
+            className={`${fieldKey}-file-up-wrpr ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''} ${getCustomClsName(fieldKey, 'file-up-wrpr')}`}
+            ref={fileUploadWrapElmRef}
+            {... { ...getCustomAttributs(fieldKey, 'file-up-wrpr') }}
+          >
+            <div
+              data-dev-file-input-wrpr={fieldKey}
+              className={`${fieldKey}-file-input-wrpr ${getCustomClsName(fieldKey, 'file-input-wrpr')}`}
+              {... { ...getCustomAttributs(fieldKey, 'file-input-wrpr') }}
+            >
+              <div
+                data-dev-btn-wrpr={fieldKey}
+                className={`${fieldKey}-btn-wrpr ${getCustomClsName(fieldKey, 'btn-wrpr')}`}
+                {... { ...getCustomAttributs(fieldKey, 'btn-wrpr') }}
+              >
+                <button
+                  data-dev-inp-btn={fieldKey}
+                  type="button"
+                  className={`${fieldKey}-inp-btn ${getCustomClsName(fieldKey, 'inp-btn')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'inp-btn') }}
+                >
+                  { fieldData.prefixIcn && (
+                    <img
+                      data-dev-pre-i={fieldKey}
+                      className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`}
+                      src={`${fieldData.prefixIcn}`}
+                      alt="Upload icon"
+                      srcSet=""
+                      {... { ...getCustomAttributs(fieldKey, 'pre-i') }}
+                    />
+                  )}
+                  <span
+                    data-dev-btn-txt={fieldKey}
+                    className={`${fieldKey}-btn-txt ${getCustomClsName(fieldKey, 'btn-txt')}`}
+                    {... { ...getCustomAttributs(fieldKey, 'btn-txt') }}
+                  >
+                    {fieldData.btnTxt}
+                  </span>
+                  { fieldData.suffixIcn && (
+                    <img
+                      data-dev-suf-i={fieldKey}
+                      className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`}
+                      src={`${fieldData.suffixIcn}`}
+                      alt="Upload icon"
+                      srcSet=""
+                      {... { ...getCustomAttributs(fieldKey, 'suf-i') }}
+                    />
+                  )}
                 </button>
-                { fieldData.config.showSelectStatus && <div data-dev-file-select-status={fieldKey} className={`${fieldKey}-file-select-status ${getCustomClsName(fieldKey, 'file-select-status')}`}>No Choosen File</div>}
-                { fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (<small data-dev-max-size-lbl={fieldKey} className={`${fieldKey}-max-size-lbl ${getCustomClsName(fieldKey, 'max-size-lbl')}`}>{`(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}</small>)}
+                { fieldData.config.showSelectStatus && (
+                  <div
+                    data-dev-file-select-status={fieldKey}
+                    className={`${fieldKey}-file-select-status ${getCustomClsName(fieldKey, 'file-select-status')}`}
+                    {... { ...getCustomAttributs(fieldKey, 'file-select-status') }}
+                  >
+                    No Choosen File
+                  </div>
+                )}
+                { fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (
+                  <small
+                    data-dev-max-size-lbl={fieldKey}
+                    className={`${fieldKey}-max-size-lbl ${getCustomClsName(fieldKey, 'max-size-lbl')}`}
+                    {... { ...getCustomAttributs(fieldKey, 'max-size-lbl') }}
+                  >
+                    {`(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}
+                  </small>
+                )}
                 <input
                   type="file"
                   className={`${fieldKey}-file-upload-input ${getCustomClsName(fieldKey, 'file-upload-input')}`}
@@ -78,7 +136,11 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
                 />
               </div>
-              <div data-dev-files-list={fieldKey} className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`} />
+              <div
+                data-dev-files-list={fieldKey}
+                className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
+                {... { ...getCustomAttributs(fieldKey, 'files-list') }}
+              />
             </div>
             <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} />
           </div>

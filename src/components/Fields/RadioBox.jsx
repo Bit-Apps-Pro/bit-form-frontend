@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
 import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -66,9 +66,18 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}>
+        <div
+          data-dev-cc={fieldKey}
+          className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
+          {... { ...getCustomAttributs(fieldKey, 'cc') }}
+        >
           {attr.opt.map((itm, i) => (
-            <div data-dev-cw={fieldKey} key={`opr-${i + 22}`} className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}>
+            <div
+              data-dev-cw={fieldKey}
+              key={`opr-${i + 22}`}
+              className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
+              {... { ...getCustomAttributs(fieldKey, 'cw') }}
+            >
               <input
                 id={`${fieldKey}-chk-${i}`}
                 type="radio"
@@ -84,15 +93,33 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 checked={value === (itm.val || itm.lbl)}
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
+                {... { ...getCustomAttributs(fieldKey, 'ci') }}
               />
-              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}>
+              <label
+                data-dev-cl={fieldKey}
+                data-cl
+                htmlFor={`${fieldKey}-chk-${i}`}
+                className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
+                {... { ...getCustomAttributs(fieldKey, 'cl') }}
+              >
                 {/* <span data-bx className={`${fieldKey}-bx`} /> */}
-                <span data-dev-rdo={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}>
+                <span
+                  data-dev-rdo={fieldKey}
+                  data-bx
+                  className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'rdo') }}
+                >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
                   </svg>
                 </span>
-                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}>{renderHTMR(itm.lbl)}</span>
+                <span
+                  data-dev-opt-lbl={fieldKey}
+                  className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'ct') }}
+                >
+                  {renderHTMR(itm.lbl)}
+                </span>
               </label>
             </div>
           ))}

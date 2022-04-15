@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { selectInGrid } from '../../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import CurrencyFieldClass from './currency-field-script'
@@ -48,9 +48,10 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       >
         <div className={`${fieldKey}-currency-fld-container`}>
           <div
-            data-dev-crncy-fld-wrp={fieldKey}
-            className={`${fieldKey}-currency-fld-wrp ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            data-dev-currency-fld-wrp={fieldKey}
+            className={`${fieldKey}-currency-fld-wrp ${getCustomClsName(fieldKey, 'currency-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
             ref={currencyWrapElmRef}
+            {... { ...getCustomAttributs(fieldKey, 'currency-fld-wrp') }}
           >
             <input
               name={fieldKey}
@@ -71,11 +72,12 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
               >
                 <div className={`${fieldKey}-selected-currency-wrp`}>
                   <img
-                    data-dev-selected-crncy-img={fieldKey}
+                    data-dev-selected-currency-img={fieldKey}
                     alt="Selected currency image"
                     aria-hidden="true"
-                    className={`${fieldKey}-selected-currency-img`}
+                    className={`${fieldKey}-selected-currency-img ${getCustomClsName(fieldKey, 'selected-currency-img')}`}
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                    {... { ...getCustomAttributs(fieldKey, 'selected-currency-img') }}
                   />
                 </div>
                 <div className={`${fieldKey}-dpd-down-btn`}>
@@ -105,7 +107,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 data-dev-input-clear-btn={fieldKey}
                 type="button"
                 title="Clear value"
-                className={`${fieldKey}-icn ${fieldKey}-input-clear-btn`}
+                className={`${fieldKey}-icn ${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
+                {... { ...getCustomAttributs(fieldKey, 'input-clear-btn') }}
               >
                 <svg
                   width="13"
@@ -126,7 +129,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div
                   data-dev-opt-search-input={fieldKey}
-                  className={`${fieldKey}-option-search-wrp`}
+                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-input')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
                 >
                   <input
                     type="search"
@@ -136,7 +140,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     tabIndex="-1"
                   />
                   <svg
-                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn`}
+                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     data-dev-opt-search-icn={fieldKey}
                     aria-hidden="true"
                     width="22"
@@ -147,6 +151,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-icn') }}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -155,8 +160,9 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     data-dev-search-clear-btn={fieldKey}
                     type="button"
                     aria-label="Clear search"
-                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn`}
+                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
                   >
                     <svg
                       width="16"
