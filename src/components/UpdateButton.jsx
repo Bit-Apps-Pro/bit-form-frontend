@@ -158,7 +158,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
     if (savedFormId && deletedFldKey.length !== 0) {
       formData.deletedFldKey = deletedFldKey
-      setDeletedFldKey([])
     }
 
     const fetchProm = bitsFetch(formData, action)
@@ -182,6 +181,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
             data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
           }))
+          setDeletedFldKey([])
           setbuttonDisabled(false)
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
