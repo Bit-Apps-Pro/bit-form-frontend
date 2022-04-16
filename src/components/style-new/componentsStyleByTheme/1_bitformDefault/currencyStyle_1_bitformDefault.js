@@ -13,12 +13,16 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
     [`.${fk}-currency-fld-wrp`]: {
       width: '100%',
-      'border-radius': '8px',
+      'background-color': 'var(--global-fld-bg-color, transparent)',
+      border: 'solid var(--global-fld-bdr-clr) !important',
+      'border-radius': 'var(--g-bdr-rad) !important',
+      'border-width': 'var(--g-bdr-width) !important',
+      'font-size': 'var(--fld-fs) !important',
+      'font-family': 'var(--g-font-family)',
+      color: 'var(--global-font-color) !important',
       overflow: 'hidden',
-      display: 'flex',
+      // display: 'flex',
       'flex-direction': 'column',
-      border: 'solid hsla(205, 24%, 82%, 100%)',
-      'border-width': '1px',
       transition: 'box-shadow .3s',
     },
     [`.disabled .${fk}-currency-inner-wrp`]: {
@@ -51,30 +55,37 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'border-color': 'hsla(0, 0%, 46%, 30%) !important',
     },
     [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
-      border: 'solid hsla(0, 0%, 93%, 100%)',
-      'border-width': '1px',
+      // border: 'solid hsla(0, 0%, 93%, 100%)',
+      // 'border-width': '1px',
+      'border-color': 'var(--global-accent-color) !important',
     },
     [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open, .${fk}-disabled)`]: {
-      border: 'solid hsla(205, 95%, 55%, 100%)',
-      'border-width': '1px',
-      'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
+      // border: 'solid hsla(205, 95%, 55%, 100%)',
+      // 'border-width': '1px',
+      // 'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
+      'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
+      'border-color': 'var(--global-accent-color) !important',
     },
+
     [`.${fk}-menu-open`]: {
       'z-index': 999,
       'box-shadow': '0px 1.2px 2.2px hsla(0, 0%, 0%, 3%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 5%), 0px 5.4px 10px hsla(0, 0%, 0%, 5%), 0px 9.6px 17.9px hsla(0, 0%, 0%, 6%), 0px 18px 33.4px hsla(0, 0%, 0%, 7%), 0px 43px 80px hsla(0, 0%, 0%, 10%)',
       'border-color': 'hsla(0, 0%, 87%, 100%)',
     },
-    [`.${fk}-currency-inner-wrp`]: { display: 'flex' },
+    [`.${fk}-currency-inner-wrp`]: {
+      display: 'flex',
+      height: '100%',
+    },
 
     [`.${fk}-dpd-wrp`]: {
+      'background-color': 'transparent',
       overflow: 'hidden',
-      'border-radius': '7px',
       'font-weight': 500,
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
       cursor: 'pointer',
-      height: '38px',
+      height: '40px',
       padding: '8px 12px',
       'box-sizing': 'border-box',
       position: 'relative',
@@ -90,7 +101,11 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       height: '100%',
     },
 
-    [`.${fk}-selected-currency-lbl`]: { 'font-size': '16px' },
+    [`.${fk}-selected-currency-lbl`]: {
+      // 'font-size': 'var(--fld-fs) !important',
+      // 'font-family': 'var(--g-font-family)',
+      // color: 'var(--global-font-color) !important',
+    },
     [`.${fk}-selected-currency-img`]: {
       height: '17px',
       width: '25px',
@@ -117,6 +132,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'place-content': 'center',
       width: '16px',
       height: '15px',
+      color: 'var(--global-font-color) !important',
     },
 
     [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
@@ -139,7 +155,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       width: 'calc(100% - 50px)',
       padding: '8px',
       'padding-right': '26px',
-      'font-size': '16px',
+      'font-size': 'var(--fld-fs) !important',
+      'font-family': 'var(--g-font-family)',
+      color: 'var(--global-font-color) !important',
+      'background-color': 'var(--global-fld-bg-color, transparent)',
     },
 
     // /* Chrome, Safari, Edge, Opera */
@@ -162,7 +181,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
-      'background-color': 'white',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
       transition: 'height .3s',
     },
 
@@ -177,8 +196,8 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-option-search-wrp`]: {
       position: 'relative',
-      'margin-bottom': '5px',
-      padding: '0 7px',
+      // 'margin-bottom': '5px',
+      padding: '5px',
     },
 
     [`.${fk}-icn`]: {
@@ -186,6 +205,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       stroke: 'hsla(0, 1%, 68%, 100%)',
       top: '50%',
       transform: 'translateY(-50%)',
+      color: 'var(--global-font-color) !important',
     },
 
     [`.${fk}-opt-search-icn`]: { left: '13px' },
@@ -199,11 +219,13 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       border: 'none',
       height: '35px',
       'border-radius': '8px',
-      'background-color': 'hsla(231, 33%, 96%, 100%)',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
       'font-size': '16px',
+      'font-family': 'var(--g-font-family)',
+      color: 'var(--global-font-color) !important',
     },
 
-    [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'hsla(205, 95%, 55%, 100%)' },
+    [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
 
     [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
     [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
@@ -225,6 +247,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'place-content': 'center',
       width: '16px',
       height: '16px',
+      color: 'var(--global-font-color) !important',
     },
 
     [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
@@ -256,7 +279,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       margin: '0 5px',
       transition: 'background 0.2s',
       'border-radius': '6px',
-      'font-size': '14px',
+      // 'font-size': 'var(--fld-fs)',
       cursor: 'pointer',
       'text-align': 'left',
       border: 'none',
@@ -265,19 +288,19 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'align-items': 'center',
     },
 
-    [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'hsl(0, 0%, 93%, 100%)' },
+    [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
 
     [`.${fk}-option:focus-visible`]: {
-      'box-shadow': '0 0 0 1.5px hsla(216, 100%, 50%, 100%) inset',
+      'box-shadow': '0 0 0 1.5px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
       outline: 'none',
     },
 
     [`.${fk}-selected-opt`]: {
-      color: 'white',
-      'background-color': 'hsla(215, 100%, 50%, 100%)',
+      // color: 'white',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
     },
 
-    [`.${fk}-selected-opt:focus-visible`]: { 'background-color': 'hsla(216, 100%, 40%, 100%)' },
+    [`.${fk}-selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
     [`.${fk}-opt-not-found`]: {
       'text-align': 'center',
@@ -303,10 +326,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'user-select': 'none',
     },
 
-    [`.${fk}-opt-suffix`]: {
-      color: 'hsla(0, 0%, 1%, 100%)',
-      'font-size': '10px',
-    },
+    [`.${fk}-opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
 
     [`.${fk}-menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
   }

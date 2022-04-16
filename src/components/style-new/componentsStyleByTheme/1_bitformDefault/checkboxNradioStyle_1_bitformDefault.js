@@ -47,7 +47,12 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       // 'border-width': 'var(--g-bdr-width)!important',
       // 'border-radius': 'var(--g-bdr-rad)!important',
     },
-    [`.${fk}-ct`]: { 'line-height': 'initial' },
+    [`.${fk}-ct`]: {
+      'font-size': 'var(--fld-fs) !important',
+      'font-family': 'var(--g-font-family)',
+      'line-height': 'initial',
+      color: 'var(--global-font-color) !important',
+    },
     // checkbox input
     [`.${fk}-ci`]: {
       position: 'absolute',
