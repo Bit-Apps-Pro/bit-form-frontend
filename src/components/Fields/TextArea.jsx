@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { observeElement, select } from '../../Utils/globalHelpers'
+import { getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -55,11 +55,11 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp`}>
+        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}>
           <textarea
             data-dev-fld={fieldKey}
             id={fieldKey}
-            className={`${fieldKey}-fld`}
+            className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')}`}
             // style={{ height: 'calc(100% - 30px)' }}
             ref={textAreaRef}
             {...'disabled' in attr && { disabled: attr.disabled }}
@@ -74,8 +74,8 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
             {...{ value }}
             onChange={onChangeHandler}
           />
-          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i`} height="90%" src={attr.prefixIcn} alt="" />}
-          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} height="90%" src={attr.suffixIcn} alt="" />}
+          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`} height="90%" src={attr.prefixIcn} alt="" />}
+          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`} height="90%" src={attr.suffixIcn} alt="" />}
         </div>
       </InputWrapper>
     </>

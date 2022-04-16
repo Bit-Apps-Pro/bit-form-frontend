@@ -8,15 +8,12 @@ import MoveIcn from '../Icons/MoveIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import FieldContextMenu from './FieldContextMenu'
 import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
 import MapComponents_old from './MapComponents_old'
-import Downmenu from './Utilities/Downmenu'
 
 export default function FieldBlockWrapper({ layoutItem,
   removeLayoutItem,
-  removeFieldStyles,
   cloneLayoutItem,
   fields,
   formID,
@@ -58,7 +55,6 @@ export default function FieldBlockWrapper({ layoutItem,
         <FieldDeleteButton
           className="g-c drag us-n no-drg blk-wrp-btn"
           removeLayoutItem={removeLayoutItem}
-          removeFieldStyles={removeFieldStyles}
           fieldId={layoutItem.i}
         />
         {/* <Downmenu> */}

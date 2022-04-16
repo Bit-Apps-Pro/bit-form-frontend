@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -28,6 +28,11 @@ export default function LayerAccordion({ className,
 
   const { css } = useFela()
   const { element, rightBar } = useParams()
+
+  useEffect(() => {
+    setTgl(open)
+  }, [open])
+
   let active
 
   if (rightBar === 'theme-customize' && element === route) {

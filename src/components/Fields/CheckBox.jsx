@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -97,21 +98,21 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldData={attr}
       >
         {/* cc for checkbox container */}
-        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc`}>
-          <svg className={`${fieldKey}-cks`}>
-            <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
+        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}>
+          <svg className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}>
+            <symbol id={`${fieldKey}-ck-svg ${getCustomClsName(fieldKey, 'ck-svg')}`} viewBox="0 0 12 10">
               <polyline
-                className={`${fieldKey}-ck-svgline`}
+                className={`${fieldKey}-ck-svgline ${getCustomClsName(fieldKey, 'ck-svgline')}`}
                 points="1.5 6 4.5 9 10.5 1"
               />
             </symbol>
           </svg>
           {attr.opt.map((itm, i) => (
-            <div data-dev-cw={fieldKey} key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
+            <div data-dev-cw={fieldKey} key={`opt-${i + 24}`} className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}>
               <input
                 id={`${fieldKey}-chk-${i}`}
                 type="checkbox"
-                className={`${fieldKey}-ci`}
+                className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}
                 disabled={attr.valid.disabled}
                 // readOnly={attr?.valid?.readonly}
                 // {...itm.check && { defaultChecked: true }}
@@ -123,13 +124,13 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 checked={checkBoxes.checked.includes(i) || itm?.check}
                 onChange={(e) => onChangeHandler(e, i)}
               />
-              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck`}>
-                  <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
-                    <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
+              <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}>
+                <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}>
+                  <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
+                    <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
                   </svg>
                 </span>
-                <span data-dev-ct={fieldKey} className={`${fieldKey}-ct`}>{renderHTMR(itm.lbl)}</span>
+                <span data-dev-ct={fieldKey} className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}>{renderHTMR(itm.lbl)}</span>
               </label>
             </div>
           ))}

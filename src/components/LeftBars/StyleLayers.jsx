@@ -18,11 +18,9 @@ export default function StyleLayers() {
   const styles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
   const history = useHistory()
-  const { formID, formType } = useParams()
+  const { formID, formType, fieldKey } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
-  const selectedFieldKey = useRecoilValue($selectedFieldId)
-
   const styleHandler = (route, fldKey = null) => {
     if (fldKey) history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
     else history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
@@ -69,7 +67,7 @@ export default function StyleLayers() {
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
 
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
+            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === fieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
               {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="fld-wrp" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp')} />}
               <ElementConfiguration fldKey={fldKey} />

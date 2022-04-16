@@ -1568,7 +1568,7 @@ arrow:after,
  }
 
  .blk:focus .blk-icn-wrp,.itm-focus .blk-icn-wrp {
-  top: -33px;
+  top: -30px;
   right: -3px;
  }
 
@@ -1641,8 +1641,7 @@ arrow:after,
     cursor: grab
  }
  
- .drag:hover {
-    /* background: rgba(0,114,255,.12156862745098039) */
+ .drag:hover:not(.blk-wrp-btn) {
     background: aliceblue;
  }
  
@@ -1751,7 +1750,7 @@ arrow:after,
     border-radius: 10px;
     position: relative;
     background-color: var(--white-100);
-    z-index: 99;
+    z-index: 9999999;
  }
  .context-list {
     margin: 0px;

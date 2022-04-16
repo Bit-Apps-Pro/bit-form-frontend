@@ -3,7 +3,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { memo, useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
@@ -69,6 +69,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         phHide: true,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -82,6 +84,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -96,6 +100,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         pattern: '^[^$_bf_$s@]+@[^$_bf_$s@]+$_bf_$.[^$_bf_$s@]+$',
         valid: {},
         err: { invalid: { dflt: 'Email is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -109,6 +115,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Number Input', 'bitform'),
         valid: {},
         err: { invalid: { dflt: 'Number is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -130,6 +138,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         phHide: false,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -149,6 +159,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         optionCol: 1,
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -167,6 +179,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         optionCol: 1,
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -211,6 +225,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -225,6 +241,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         prefixIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
         err: {},
+        customClasses: {},
+        customArrribute: {},
         config: {
           multiple: true,
           showMaxSize: true,
@@ -277,6 +295,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           allowImageValidateSize: false,
         },
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -303,6 +323,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         options: countries,
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -326,6 +348,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         options: currencyList,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -343,6 +367,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         options: phoneNumberList,
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -356,6 +382,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
         err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -369,6 +397,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder...', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -381,6 +411,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Date Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -393,6 +425,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Time Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -405,6 +439,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Date-Time Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -417,6 +453,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Week Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -429,6 +467,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Month Input', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -447,6 +487,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
         err: { invalid: { dflt: 'URL is invalid', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -459,6 +501,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Color Picker', 'bitform'),
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -476,6 +520,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         valid: { req: true },
         err: { req: { dflt: 'This field is required', show: true } },
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -509,6 +555,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           url: '',
         },
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -579,6 +627,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         subTitleTag: 'h5',
         valid: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -590,6 +640,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'image',
         img: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -601,6 +653,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'divider',
         divider: {},
         err: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     {
@@ -612,6 +666,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'html',
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
+        customClasses: {},
+        customArrribute: {},
       },
     },
     /* {
@@ -687,11 +743,26 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     return []
   }
 
+  const searchInput = useRef(null)
+
+  const clearSearch = () => {
+    searchInput.current.value = ''
+    setSearchData([])
+    setfocusSearch(false)
+  }
+
+  const blurSearchInp = () => {
+    setTimeout(() => {
+      setfocusSearch(false)
+    }, 100)
+  }
+
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
       <div className={css(ut.flxc, { my: 5 }, isScroll && Toolbars.searchBar)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%', marginTop: '2px' }}>
           <input
+            ref={searchInput}
             title="Search Field"
             aria-label="Search Field"
             autoComplete="off"
@@ -701,13 +772,18 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             name="searchIcn"
             onChange={searchHandler}
             onFocus={() => setfocusSearch(true)}
-            onBlur={() => setfocusSearch(false)}
+            onBlur={blurSearchInp}
             className={css(Toolbars.search_field)}
           />
+          {!!searchData.length && (
+            <span title="clear" className={css(Toolbars.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch} onKeyPress={clearSearch}>&nbsp;</span>
+          )}
+
           <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>
+
+          {!searchData.length && (<div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>)}
         </div>
         {!focusSearch
           && (

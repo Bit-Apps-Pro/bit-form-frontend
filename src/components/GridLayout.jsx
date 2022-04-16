@@ -13,7 +13,6 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
 import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -31,13 +30,12 @@ import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
-import ConfirmModal from './Utilities/ConfirmModal'
 
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
 
-function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
+function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
   const { formType } = useParams()
   const { payments } = useContext(AppSettings)
@@ -58,7 +56,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(2)
-  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -169,7 +166,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
-        return
+        return false
       }
     }
     const removedLay = {
@@ -183,6 +180,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setRootLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
+    removeFieldStyles(fldKey)
     sessionStorage.setItem('btcd-lc', '-')
 
     // redirect to fields list
@@ -193,12 +191,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
-  }
-
-  const clsAlertMdl = () => {
-    const tmpAlert = { ...alertMdl }
-    tmpAlert.show = false
-    setAlertMdl(tmpAlert)
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -373,13 +365,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       const downBtnLeft = downBtn.getBoundingClientRect().left
 
       x = (downBtnLeft - leftPos) + 5
-      y = (downBtnTop - topPos) + 5
+      y = (downBtnTop - topPos) + 2
 
       right = (x + menuWidth) > rootW
       bottom = (y + menuHeight) > rootH
 
       if (right) {
-        x = ((downBtnLeft + downBtnSize) - leftPos) - 145
+        x = ((downBtnLeft + downBtnSize) - leftPos) - 148
       }
 
       if (bottom) {
@@ -388,7 +380,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
       if (selectedFieldId !== fldKey) {
         x += 3
-        y -= 3
       }
 
       if (isComponentVisible && contextMenu.fldKey === fldKey && contextMenu.x === x && contextMenu.y === y) {
@@ -577,7 +568,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                         {...{
                           layoutItem,
                           removeLayoutItem,
-                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -607,7 +597,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                         {...{
                           layoutItem,
                           removeLayoutItem,
-                          removeFieldStyles,
                           cloneLayoutItem,
                           fields,
                           formID,
@@ -643,24 +632,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
             navigateToStyle={navigateToStyle}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
-            removeFieldStyles={removeFieldStyles}
             className="right-click-context-menu"
           />
         </CSSTransition>
       </div>
 
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="red"
-        btnTxt="Close"
-        show={alertMdl.show}
-        close={clsAlertMdl}
-        action={clsAlertMdl}
-        title="Sorry"
-      >
-        <div className="txt-center">{alertMdl.msg}</div>
-      </ConfirmModal>
+
     </div>
   )
 }

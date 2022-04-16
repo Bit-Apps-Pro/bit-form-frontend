@@ -36,8 +36,7 @@ export default function FieldContextMenu({ isContextMenu,
   navigateToStyle,
   className,
   cloneLayoutItem,
-  removeLayoutItem,
-  removeFieldStyles }) {
+  removeLayoutItem }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -150,7 +149,7 @@ export default function FieldContextMenu({ isContextMenu,
           </MenuItemWrapper>
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
-              <FieldDeleteButton placement="bottom" className="context-btn delete" label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} removeFieldStyles={removeFieldStyles} resetContextMenu={resetContextMenu} />
+              <FieldDeleteButton placement="bottom" className="context-btn delete" label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} />
             </li>
           </MenuItemWrapper>
         </ul>
