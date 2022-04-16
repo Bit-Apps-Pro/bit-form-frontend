@@ -276,6 +276,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       }
     }
 
+    const nwLay = {}
+    const tmpFields = { ...fields }
+    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
+    nwLay.md = genFilterLay(layouts.md, cols.md, i)
+    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
+    delete tmpFields[i]
+    setLayouts(nwLay)
+    setFields(tmpFields)
     setDeletedFldKey(prvDeleted => {
       const tmpFldKeys = [...prvDeleted]
       if (!tmpFldKeys.includes(i)) {
@@ -284,15 +292,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
       return tmpFldKeys
     })
-    const nwLay = {}
-    const tmpFields = { ...fields }
-    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
-    nwLay.md = genFilterLay(layouts.md, cols.md, i)
-    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
-    delete tmpFields[i]
-    setLayouts(nwLay)
-    setDeletedFldKey(tmpFldKeys)
-    setFields(tmpFields)
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
   }
@@ -422,7 +421,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbffars autoHide>
+      <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
