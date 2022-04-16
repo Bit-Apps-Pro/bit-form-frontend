@@ -4,7 +4,7 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar, formID) => {
-  let newConf = { ...acumbamailConf }
+  const newConf = { ...acumbamailConf }
   const { name } = e.target
   if (e.target.value !== '') {
     newConf[name] = e.target.value
@@ -15,9 +15,14 @@ export const handleInput = (e, acumbamailConf, setAcumbamailConf, setIsLoading, 
   newConf[e.target.name] = e.target.value
   switch (e.target.name) {
     case 'listId':
+      newConf.field_map = [
+        { formField: '', acumbamailFormField: 'email' },
+      ]
+      // setAcumbamailConf({ ...newConf })
       if (newConf.listId && !newConf.default?.allFields?.[newConf.listId]) {
-        newConf = refreshFields(formID, newConf, setAcumbamailConf, setIsLoading, setSnackbar)
+        refreshFields(formID, newConf, setAcumbamailConf, setIsLoading, setSnackbar)
       }
+
       break
     default:
       break
