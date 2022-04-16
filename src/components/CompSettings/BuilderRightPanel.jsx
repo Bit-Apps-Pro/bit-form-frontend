@@ -33,7 +33,7 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
 
   useEffect(() => {
     const settingsScroll = select('.settings').firstChild.firstChild
-    if (settingsScroll) settingsScroll.scrollTop = 0
+    if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
   }, [fieldKey, rightBar, element])
 
   const onSettingScroll = ({ target: { scrollTop } }) => {
