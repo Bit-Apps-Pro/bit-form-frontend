@@ -160,7 +160,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
           if (addPaddingOnSelect) {
             setStyles(prvStyle => produce(prvStyle, draft => {
-              const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
+              const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`] || {}
 
               if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
               if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)

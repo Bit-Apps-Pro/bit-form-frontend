@@ -192,6 +192,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
         mul: false,
+        phHide: true,
+        ph: 'Select a Option',
         options: [
           { lbl: 'Option 1', val: 'Option 1' },
           { lbl: 'Option 2', val: 'Option 2' },

@@ -14,7 +14,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
   const dropdownFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  const { optionsList } = fieldData
+  const { optionsList, ph } = fieldData
   const { activeList, optionIcon } = fieldData.config
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     {... { ...getCustomAttributs(fieldKey, 'selected-opt-img') }}
                   />
                 )}
-                <span className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}>Select an option</span>
+                <span className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}>{ph}</span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp ${getCustomClsName(fieldKey, 'dpd-btn-wrp')}`}>
                 <button

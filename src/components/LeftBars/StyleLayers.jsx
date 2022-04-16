@@ -86,7 +86,7 @@ export default function StyleLayers() {
                     route="ct"
                     label="Option Label"
                     offset="2.5"
-                    highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
+                    highlightSelector={`[data-dev-ct="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'ct')}
                   />
                 </>

@@ -49,11 +49,13 @@ export default function FieldLabelSettings() {
   }
 
   const hideFieldLabel = e => {
-    if (!e.target.checked) {
-      fieldData.valid.hideLbl = true
+    if (e.target.checked) {
+      fieldData.lbl = 'Field Label'
+      fieldData.valid.hideLbl = false
       addDefaultStyleClasses(selectedFieldId, 'lbl', setStyles)
     } else {
-      delete fieldData.valid.hideLbl
+      fieldData.valid.hideLbl = true
+      delete fieldData.lbl
     }
     // eslint-disable-next-line no-param-reassign
     const req = !e.target.checked ? 'on' : 'off'

@@ -149,6 +149,7 @@ export default function ThemeQuickTweaksCustomizer() {
         stateObjName="themeColors"
         propertyPath="--global-fld-bg-color"
         modalId="global-fld-bg-clr"
+        hslaPaths={{ h: '--gfbg-h', s: '--gfbg-s', l: '--gfbg-l', a: '--gfbg-a' }}
       />
 
       <div className={css(ut.flxcb, ut.mt2)}>
