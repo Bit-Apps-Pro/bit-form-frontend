@@ -198,7 +198,7 @@ export default function ThemeQuickTweaksCustomizer() {
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select onChange={setSizes} className={css(sc.select)}>
           <option value="">Select Size</option>
-          {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+          {Object.keys(sizes).map((key, index) => <option key={`size-${index * 5}`} value={key}>{sizes[key]}</option>)}
         </select>
       </div>
 

@@ -28,6 +28,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
 
   let borderPropsFirst
   let bdrVal
+  let bdrClr
   let bdrWdthVal
   let bdrRdsVal
   let valStr = ''
@@ -40,6 +41,8 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
     const bdrRdsVar = objectPaths[0].paths['border-radius']
 
     bdrVal = themeColors[bdrVar]
+    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
+    bdrClr = bdrColor
     bdrWdthVal = themeVars[bdrWdthVar]
     bdrRdsVal = themeVars[bdrRdsVar]
   } else {
@@ -48,7 +51,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
 
     const checkVarValue = (varStr, varState) => {
       if (varStr?.match(/(var)/gi)?.[0] === 'var') {
-        const str = varStr.replaceAll(/\(|var|,.*\)|(!important)|\s/gi, '')
+        const str = varStr.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
         varStr = varState[str]
       }
 
@@ -58,7 +61,9 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
       return varStr
     }
 
-    bdrVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths.border), themeColors)
+    bdrVal = getValueByObjPath(styles, objectPaths.paths.border)
+    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
+    bdrClr = checkVarValue(bdrColor, themeColors)
     bdrWdthVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-width']), themeVars)
     bdrRdsVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-radius']), themeVars)
   }
@@ -66,8 +71,6 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
   if (bdrVal) valStr += `Border: ${bdrVal}; `
   if (bdrWdthVal) valStr += `Border Width: ${bdrWdthVal}; `
   if (bdrRdsVal) valStr += `Border Radius: ${bdrRdsVal};`
-
-  const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
 
   const assignValues = (paths, obj, val = '') => {
     const propArray = Object.keys(paths)
@@ -106,7 +109,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
           type="button"
           className={css(c.pickrBtn)}
         >
-          <ColorPreview bg={bdrColor} h={24} w={24} className={css(ut.mr2)} />
+          <ColorPreview bg={bdrClr} h={24} w={24} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{valStr || 'Add Border Style'}</span>
         </button>
         {valStr && (
