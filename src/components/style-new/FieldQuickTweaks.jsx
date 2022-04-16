@@ -437,7 +437,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
       {fieldType === 'title' && (
         <>
-          <div className={css(style.main)}>
+          <div className={css(style.main, ut.mt2)}>
             <span className={css(style.label)}>Label Alignment</span>
             <StyleSegmentControl
               show={['icn']}
@@ -452,7 +452,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
               activeValue={position}
             />
           </div>
-          <div className={css(style.main)}>
+          <div className={css(style.main, ut.mt2)}>
             <span className={css(style.label)}>Flex Direction</span>
             <StyleSegmentControl
               show={['icn']}
@@ -528,11 +528,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
 const style = {
   main: { flx: 'center-between' },
-  label: {
-    fw: 500,
-    ml: 10,
-    mt: 5,
-  },
+  label: { fw: 500 },
   segment: {
     mr: 7,
     mt: 4,
