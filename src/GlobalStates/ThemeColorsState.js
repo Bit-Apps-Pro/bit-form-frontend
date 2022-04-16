@@ -20,8 +20,12 @@ export const $lightThemeColors = atom({
     '--gbg-s': 0,
     '--gbg-l': 100,
     '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
+    '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)', // field Border color
     '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
+    '--gfbg-h': 0,
+    '--gfbg-s': '0%',
+    '--gfbg-l': '100%',
+    '--gfbg-a': 100,
 
     '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-bdr': '', // field wrapper border
