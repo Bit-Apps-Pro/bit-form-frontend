@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { memo, useEffect, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -55,7 +55,11 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}>
+        <div
+          data-dev-inp-fld-wrp={fieldKey}
+          className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
+          {... { ...getCustomAttributs(fieldKey, 'inp-fld-wrp') }}
+        >
           <input
             data-dev-fld={fieldKey}
             id={fieldKey}
@@ -76,10 +80,29 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             onBlur={handleBlur}
             {...{ value }}
             {...{ onChange: onChangeHandler }}
+            {... { ...getCustomAttributs(fieldKey, 'fld') }}
           />
 
-          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`} height="90%" src={attr.prefixIcn} alt="" />}
-          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`} height="90%" src={attr.suffixIcn} alt="" />}
+          {attr.prefixIcn && (
+            <img
+              data-dev-pre-i={fieldKey}
+              className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`}
+              height="90%"
+              src={attr.prefixIcn}
+              alt=""
+              {... { ...getCustomAttributs(fieldKey, 'pre-i') }}
+            />
+          )}
+          {attr.suffixIcn && (
+            <img
+              data-dev-suf-i={fieldKey}
+              className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`}
+              height="90%"
+              src={attr.suffixIcn}
+              alt=""
+              {... { ...getCustomAttributs(fieldKey, 'suf-i') }}
+            />
+          )}
 
         </div>
         {attr.suggestions?.length && (

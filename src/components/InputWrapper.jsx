@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
-import { getCustomClsName } from '../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName } from '../Utils/globalHelpers'
 import { renderHTMR } from '../Utils/Helpers'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
@@ -42,11 +43,13 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       data-dev-fld-wrp={fieldKey}
       className={`${fieldKey}-fld-wrp ${getCustomClsName(fieldKey, 'fld-wrp')} ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
+      {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
     >
       {!noLabel && (
         <div
           data-dev-lbl-wrp={fieldKey}
           className={`${fieldKey}-lbl-wrp ${getCustomClsName(fieldKey, 'lbl-wrp')}`}
+          {... { ...getCustomAttributs(fieldKey, 'lbl-wrp') }}
         >
           {(!fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
             <label
@@ -54,42 +57,115 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               title={fieldData.lbl}
               className={`${fieldKey}-lbl ${getCustomClsName(fieldKey, 'lbl')}`}
               htmlFor={fieldKey}
+              {... { ...getCustomAttributs(fieldKey, 'lbl') }}
             >
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
-                <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}>*</span>
+                <span
+                  data-dev-req-smbl={fieldKey}
+                  className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'req-smbl') }}
+                >
+                  *
+                </span>
               )}
-              {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i ${getCustomClsName(fieldKey, 'lbl-pre-i')}`} src={fieldData.lblPreIcn} alt="" />}
+              {fieldData.lblPreIcn && (
+                <img
+                  data-dev-lbl-pre-i={fieldKey}
+                  className={`${fieldKey}-lbl-pre-i ${getCustomClsName(fieldKey, 'lbl-pre-i')}`}
+                  src={fieldData.lblPreIcn}
+                  alt=""
+                  {... { ...getCustomAttributs(fieldKey, 'lbl-pre-i') }}
+                />
+              )}
               {renderHTMR(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
-              {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i ${getCustomClsName(fieldKey, 'lbl-suf-i')}`} src={fieldData.lblSufIcn} alt="" />}
+              {fieldData.lblSufIcn && (
+                <img
+                  data-dev-lbl-suf-i={fieldKey}
+                  className={`${fieldKey}-lbl-suf-i ${getCustomClsName(fieldKey, 'lbl-suf-i')}`}
+                  src={fieldData.lblSufIcn}
+                  alt=""
+                  {... { ...getCustomAttributs(fieldKey, 'lbl-suf-i') }}
+                />
+              )}
 
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos !== 'before' && (
-                <span data-dev-req-smbl={fieldKey} className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}>*</span>
+                <span
+                  data-dev-req-smbl={fieldKey}
+                  className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'req-smbl') }}
+                >
+                  *
+                </span>
               )}
             </label>
           )}
           {
             (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
-              <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl ${getCustomClsName(fieldKey, 'sub-titl')}`}>
-                {fieldData.subTlePreIcn && <img data-dev-sub-titl-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i ${getCustomClsName(fieldKey, 'sub-titl-pre-i')}`} src={fieldData.subTlePreIcn} alt="" />}
+              <div
+                data-dev-sub-titl={fieldKey}
+                className={`${fieldKey}-sub-titl ${getCustomClsName(fieldKey, 'sub-titl')}`}
+                {... { ...getCustomAttributs(fieldKey, 'sub-titl') }}
+              >
+                {fieldData.subTlePreIcn && (
+                  <img
+                    data-dev-sub-titl-pre-i={fieldKey}
+                    className={`${fieldKey}-sub-titl-pre-i ${getCustomClsName(fieldKey, 'sub-titl-pre-i')}`}
+                    src={fieldData.subTlePreIcn}
+                    alt=""
+                    {... { ...getCustomAttributs(fieldKey, 'sub-titl-pre-i') }}
+                  />
+                )}
                 {renderHTMR(fieldData.subtitle || '')}
-                {fieldData.subTleSufIcn && <img data-dev-sub-titl-suf-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i ${getCustomClsName(fieldKey, 'sub-titl-suf-i')}`} src={fieldData.subTleSufIcn} alt="" />}
+                {fieldData.subTleSufIcn && (
+                  <img
+                    data-dev-sub-titl-suf-i={fieldKey}
+                    className={`${fieldKey}-sub-titl-suf-i ${getCustomClsName(fieldKey, 'sub-titl-suf-i')}`}
+                    src={fieldData.subTleSufIcn}
+                    alt=""
+                    {... { ...getCustomAttributs(fieldKey, 'sub-titl-suf-i') }}
+                  />
+                )}
               </div>
             )
           }
         </div>
       )}
 
-      <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp ${getCustomClsName(fieldKey, 'inp-wrp')}`}>
+      <div
+        data-dev-inp-wrp={fieldKey}
+        className={`${fieldKey}-inp-wrp ${getCustomClsName(fieldKey, 'inp-wrp')}`}
+        {... { ...getCustomAttributs(fieldKey, 'inp-wrp') }}
+      >
         {/* field content here */}
         {children}
 
         {/* field helper text */}
         {
           (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
-            <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}>
-              {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`} src={fieldData.hlpPreIcn} alt="" />}
+            <div
+              data-dev-hlp-txt={fieldKey}
+              className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}
+              {... { ...getCustomAttributs(fieldKey, 'hlp-txt') }}
+            >
+              {fieldData.hlpPreIcn && (
+                <img
+                  data-dev-hlp-txt-pre-i={fieldKey}
+                  className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`}
+                  src={fieldData.hlpPreIcn}
+                  alt=""
+                  {... { ...getCustomAttributs(fieldKey, 'hlp-txt-pre-i') }}
+                />
+              )}
               {renderHTMR(fieldData.helperTxt || '')}
-              {fieldData.hlpSufIcn && <img data-dev-hlp-txt-suf-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`} src={fieldData.hlpSufIcn} alt="" />}
+              {fieldData.hlpSufIcn && (
+                <img
+                  data-dev-hlp-txt-suf-i={fieldKey}
+                  className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`}
+                  src={fieldData.hlpSufIcn}
+                  alt=""
+                  {... { ...getCustomAttributs(fieldKey, 'hlp-txt-suf-i') }}
+                />
+              )}
             </div>
           )
         }
@@ -104,10 +180,30 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       )} */}
       {/* field error message */}
       {(showAllErrorMsg || showOnlyThisFldErrMsg) && (
-        <div data-dev-err-msg={fieldKey} className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}>
-          {fieldData.errPreIcn && <img data-dev-err-txt-pre-i={fieldKey} className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`} src={fieldData.errPreIcn} alt="" />}
+        <div
+          data-dev-err-msg={fieldKey}
+          className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}
+          {... { ...getCustomAttributs(fieldKey, 'err-msg') }}
+        >
+          {fieldData.errPreIcn && (
+            <img
+              data-dev-err-txt-pre-i={fieldKey}
+              className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`}
+              src={fieldData.errPreIcn}
+              alt=""
+              {... { ...getCustomAttributs(fieldKey, 'err-txt-pre-i') }}
+            />
+          )}
           {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
-          {fieldData.errSufIcn && <img data-dev-err-txt-suf-i={fieldKey} className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`} src={fieldData.errSufIcn} alt="" />}
+          {fieldData.errSufIcn && (
+            <img
+              data-dev-err-txt-suf-i={fieldKey}
+              className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`}
+              src={fieldData.errSufIcn}
+              alt=""
+              {... { ...getCustomAttributs(fieldKey, 'err-txt-suf-i') }}
+            />
+          )}
         </div>
       )}
     </div>

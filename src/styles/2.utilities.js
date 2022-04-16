@@ -78,7 +78,7 @@ const ut = {
   ml4: { ml: '20px!important' },
   ml5: { ml: '25px!important' },
   ml6: { ml: '30px!important' },
-  mx10: {mx: 10},
+  mx10: { mx: 10 },
 
   txCenter: { ta: 'center' },
   txRight: { ta: 'right' },

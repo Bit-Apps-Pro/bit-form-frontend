@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
@@ -11,6 +12,7 @@ import FormIcn from '../../Icons/FormIcn'
 import ImageIcn from '../../Icons/ImageIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
+import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
 import ThemeCustomize from '../style-new/ThemeCustomize'
@@ -25,9 +27,14 @@ import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
-  const { formType, formID } = useParams()
+  const { formType, formID, fieldKey, rightBar, element } = useParams()
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
+
+  useEffect(() => {
+    const settingsScroll = select('.settings').firstChild.firstChild
+    if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
+  }, [fieldKey, rightBar, element])
 
   const onSettingScroll = ({ target: { scrollTop } }) => {
     scrollTop > 20 ? setScrollTop(true) : setScrollTop(false)

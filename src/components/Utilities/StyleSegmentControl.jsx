@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'

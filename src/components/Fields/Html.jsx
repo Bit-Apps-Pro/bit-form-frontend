@@ -3,7 +3,7 @@
 
 import { useRecoilValue } from 'recoil'
 import { $flags } from '../../GlobalStates/GlobalStates'
-import { getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
 import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -12,7 +12,11 @@ export default function HtmlField({ fieldKey, attr, styleClasses }) {
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div data-dev-fld-wrp={fieldKey} className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')}`}>
+      <div
+        data-dev-fld-wrp={fieldKey}
+        className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
+        {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
+      >
         {renderHTMR(attr.content || attr?.info?.content)}
       </div>
     </>

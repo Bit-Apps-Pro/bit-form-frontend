@@ -69,8 +69,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         phHide: true,
         valid: {},
         err: {},
-        customClasses: {},
-        customArrribute: {},
+        customClasses: {}, // { key(elementkey): 'class1 class2 class3'}
+        customAttributes: {}, // { key(elementKey) : [{attrKey: attrValue}, {attrKey: attrValue}]}
       },
     },
     {
@@ -85,7 +85,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -101,7 +101,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: { invalid: { dflt: 'Email is invalid', show: true } },
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -116,7 +116,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: { invalid: { dflt: 'Number is invalid', show: true } },
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -139,7 +139,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -160,7 +160,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: {},
         optionCol: 1,
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -180,7 +180,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: {},
         optionCol: 1,
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -226,7 +226,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -242,7 +242,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         prefixIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
         config: {
           multiple: true,
           showMaxSize: true,
@@ -296,7 +296,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -324,7 +324,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         options: countries,
         valid: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -349,7 +349,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -368,7 +368,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -383,7 +383,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -398,7 +398,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -412,7 +412,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -426,7 +426,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -440,7 +440,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -454,7 +454,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -468,7 +468,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -488,7 +488,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: { invalid: { dflt: 'URL is invalid', show: true } },
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -502,7 +502,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -521,7 +521,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: { req: true },
         err: { req: { dflt: 'This field is required', show: true } },
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -556,7 +556,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         valid: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -609,6 +609,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           modal: { confirm_close: false },
         },
         valid: {},
+        customClasses: {},
+        customAttributes: {},
       },
     },
     {
@@ -628,7 +630,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -641,7 +643,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         img: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -654,7 +656,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         divider: {},
         err: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     {
@@ -667,7 +669,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
         customClasses: {},
-        customArrribute: {},
+        customAttributes: {},
       },
     },
     /* {

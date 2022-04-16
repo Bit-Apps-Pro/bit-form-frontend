@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
-import { getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
 import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -64,7 +64,11 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
         fieldData={attr}
         noLabel
       >
-        <div data-dev-cc={fieldKey} className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}>
+        <div
+          data-dev-cc={fieldKey}
+          className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
+          {... { ...getCustomAttributs(fieldKey, 'cc') }}
+        >
           <svg className={`${fieldKey}-cks`}>
             <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
               <polyline
@@ -74,7 +78,11 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
             </symbol>
           </svg>
 
-          <div data-dev-cw={fieldKey} className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}>
+          <div
+            data-dev-cw={fieldKey}
+            className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
+            {... { ...getCustomAttributs(fieldKey, 'cw') }}
+          >
             <input
               id={`${fieldKey}-decision`}
               type="checkbox"
@@ -88,13 +96,30 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
               value={value}
               onChange={(e) => onChangeHandler(e)}
             />
-            <label data-dev-cl={fieldKey} data-cl htmlFor={`${fieldKey}-decision`} className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}>
-              <span data-dev-ck={fieldKey} data-bx className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}>
+            <label
+              data-dev-cl={fieldKey}
+              data-cl
+              htmlFor={`${fieldKey}-decision`}
+              className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
+              {... { ...getCustomAttributs(fieldKey, 'cl') }}
+            >
+              <span
+                data-dev-ck={fieldKey}
+                data-bx
+                className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
+                {... { ...getCustomAttributs(fieldKey, 'ck') }}
+              >
                 <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
                   <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                 </svg>
               </span>
-              <span data-dev-ct={fieldKey} className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}>{renderHTMR(attr.lbl || attr?.info?.lbl)}</span>
+              <span
+                data-dev-ct={fieldKey}
+                className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
+                {... { ...getCustomAttributs(fieldKey, 'ct') }}
+              >
+                {renderHTMR(attr.lbl || attr?.info?.lbl)}
+              </span>
             </label>
           </div>
         </div>

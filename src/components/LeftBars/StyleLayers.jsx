@@ -178,7 +178,7 @@ export default function StyleLayers() {
                     route="currency-fld-wrp"
                     label="Currency Field Wrapper"
                     offset="2.5"
-                    highlightSelector={`[data-dev-crncy-fld-wrp="${fldKey}"]`}
+                    highlightSelector={`[data-dev-currency-fld-wrp="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-fld-wrp')}
                   />
                   <NavBtn
@@ -186,7 +186,7 @@ export default function StyleLayers() {
                     route="selected-currency-img"
                     label="Selected Currency Image"
                     offset="2.5"
-                    highlightSelector={`[data-dev-selected-crncy-img="${fldKey}"]`}
+                    highlightSelector={`[data-dev-selected-currency-img="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-currency-img')}
                   />
                   <NavBtn

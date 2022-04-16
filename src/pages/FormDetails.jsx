@@ -408,4 +408,6 @@ const btnData = {
     url: '',
   },
   valid: {},
+  customClasses: {},
+  customAttributes: {},
 }
