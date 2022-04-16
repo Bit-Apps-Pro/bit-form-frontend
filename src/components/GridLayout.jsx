@@ -24,7 +24,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
-  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
+  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
@@ -275,10 +275,15 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         return
       }
     }
-    const tmpFldKeys = [...deletedFldKey]
-    if (!tmpFldKeys.includes(i)) {
-      tmpFldKeys.push(i)
-    }
+
+    setDeletedFldKey(prvDeleted => {
+      const tmpFldKeys = [...prvDeleted]
+      if (!tmpFldKeys.includes(i)) {
+        tmpFldKeys.push(i)
+      }
+
+      return tmpFldKeys
+    })
     const nwLay = {}
     const tmpFields = { ...fields }
     nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
@@ -417,7 +422,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars autoHide>
+      <Scrollbffars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
