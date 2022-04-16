@@ -14,10 +14,9 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
   const dropdownFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  const { optionsList } = fieldData
+  const { optionsList, ph } = fieldData
   const { activeList, optionIcon } = fieldData.config
 
-  console.log('options list', optionsList)
   useEffect(() => {
     if (!dropdownWrapElmRef?.current) {
       dropdownWrapElmRef.current = selectInGrid(`.${fieldKey}-dpd-fld-wrp`)
@@ -83,7 +82,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
                   />
                 )}
-                <span className={`${fieldKey}-selected-opt-lbl`}>Select an option</span>
+                <span className={`${fieldKey}-selected-opt-lbl`}>{ph}</span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
                 <button
@@ -202,7 +201,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                     <span className="opt-lbl">{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
-                                    <li data-index={dataIndex++} data-value={opt2.val} className={`${fieldKey}-option ${fieldKey}-opt-group-child`} role="option" aria-selected="false" tabIndex="-1">
+                                    <li data-index={dataIndex++} data-value={opt2.val || opt2.lbl} className={`${fieldKey}-option ${fieldKey}-opt-group-child`} role="option" aria-selected="false" tabIndex="-1">
                                       <span className={`${fieldKey}-opt-lbl-wrp`}>
                                         <span className="opt-lbl">{opt2.lbl}</span>
                                       </span>
