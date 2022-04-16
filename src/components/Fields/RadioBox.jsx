@@ -114,7 +114,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   </svg>
                 </span>
                 <span
-                  data-dev-opt-lbl={fieldKey}
+                  data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {... { ...getCustomAttributs(fieldKey, 'ct') }}
                 >
