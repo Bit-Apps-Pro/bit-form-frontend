@@ -34,7 +34,7 @@ export default function ElementConfiguration({ fldKey }) {
           styleOverride={isLabelOverrideStyles(styles, fldKey, 'logo')}
         />
       )}
-      {(fieldObj.title || fieldObj.titlePreIcn || fieldObj.titleSufIcn || fieldObj.subtitle || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)
+      {(fieldObj.typ === 'title' && (fieldObj.title || fieldObj.titlePreIcn || fieldObj.titleSufIcn || fieldObj.subtitle || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn))
         && (
           <NavBtn
             cssSelector={`.${fldKey}-titl-wrp`}
@@ -98,70 +98,24 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
-      {(fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)
-        && (
-          <>
-            {!(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
-              <NavBtn
-                cssSelector={`.${fldKey}-${styleClasses.subTitl[0]}`}
-                subRoute={fldKey}
-                route="sub-titl"
-                label="Subtitle"
-                offset="2.5"
-                highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
-              />
-            )}
-            {(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
-              <LayerAccordion
-                childrenAccodin
-                onClick={() => styleHandler('sub-titl')}
-                offset="3.1"
-                title="Subtitle"
-                fldData={fieldObj}
-                key={fldKey}
-                open={fldKey === selectedFieldKey && (fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)}
-                highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
-                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
-              >
-                {(fieldObj.subTlePreIcn || fieldObj.subTitlPreIcn) && (
-                  <NavBtn
-                    cssSelector={`.${fldKey}-${styleClasses.subTlePreIcn[0]}`}
-                    subRoute={fldKey}
-                    route="sub-titl-pre-i"
-                    label="Prefix Icon"
-                    offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-pre-i')}
-                  />
-                )}
-                {(fieldObj.subTleSufIcn || fieldObj.subTitlSufIcn) && (
-                  <NavBtn
-                    cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`}
-                    subRoute={fldKey}
-                    route="sub-titl-suf-i"
-                    label="Suffix Icon"
-                    offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-suf-i')}
-                  />
-                )}
-              </LayerAccordion>
-            )}
-          </>
-        )}
+      {
+        (fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn || fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
+      && (
+        <NavBtn
+          cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}
+          subRoute={fldKey}
+          route="lbl-wrp"
+          label="Label Container"
+          offset="2.5"
+          highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
+          styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-wrp')}
+        />
+      )
+      }
+
       {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
         && !fieldObj.typ.match(/^(decision-box|razorpay|paypal)$/gi)?.[0] && (
         <>
-          <NavBtn
-            cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}
-            subRoute={fldKey}
-            route="lbl-wrp"
-            label="Label Container"
-            offset="2.5"
-            highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
-            styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-wrp')}
-          />
           {!(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.lbl[1]}`}
@@ -222,6 +176,58 @@ export default function ElementConfiguration({ fldKey }) {
           )}
         </>
       )}
+      {(fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)
+        && (
+          <>
+            {!(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.subTitl[0]}`}
+                subRoute={fldKey}
+                route="sub-titl"
+                label="Subtitle"
+                offset="2.5"
+                highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
+              />
+            )}
+            {(fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn) && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('sub-titl')}
+                offset="3.1"
+                title="Subtitle"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey && (fieldObj.subTlePreIcn || fieldObj.subTleSufIcn || fieldObj.subTitlPreIcn || fieldObj.subTitlSufIcn)}
+                highlightSelector={`[data-dev-sub-titl="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl')}
+              >
+                {(fieldObj.subTlePreIcn || fieldObj.subTitlPreIcn) && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.subTlePreIcn[0]}`}
+                    subRoute={fldKey}
+                    route="sub-titl-pre-i"
+                    label="Prefix Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-pre-i')}
+                  />
+                )}
+                {(fieldObj.subTleSufIcn || fieldObj.subTitlSufIcn) && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`}
+                    subRoute={fldKey}
+                    route="sub-titl-suf-i"
+                    label="Suffix Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-suf-i')}
+                  />
+                )}
+              </LayerAccordion>
+            )}
+          </>
+        )}
       {fieldObj.divider && (
         <NavBtn
           cssSelector={`.${fldKey}-${styleClasses.divider[0]}`}
