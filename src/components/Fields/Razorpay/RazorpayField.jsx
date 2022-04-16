@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
 import Razorpay from './razorpay-field-script'
@@ -68,16 +69,40 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
         isBuilder={isBuilder}
       >
         <div className="bf-form">
-          <div ref={razorpayElemntRef} className={`${fieldKey}-razorpay-wrp`}>
-            <button type="button" data-dev-razorpay-btn={fieldKey} className={`${fieldKey}-razorpay-btn`}>
+          <div
+            ref={razorpayElemntRef}
+            className={`${fieldKey}-razorpay-wrp`}
+          >
+            <button
+              type="button"
+              data-dev-razorpay-btn={fieldKey}
+              className={`${fieldKey}-razorpay-btn ${getCustomClsName(fieldKey, 'razorpay-btn')}`}
+              {... { ...getCustomAttributs(fieldKey, 'razorpay-btn') }}
+            >
               <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.077 6.476l-.988 3.569 5.65-3.589-3.695 13.54 3.752.004 5.457-20L7.077 6.476z" fill="#fff" />
                 <path d="M1.455 14.308L0 20h7.202L10.149 8.42l-8.694 5.887z" fill="#fff" />
               </svg>
-              <div data-dev-razorpay-btn-text={fieldKey} className={`${fieldKey}-razorpay-btn-text`}>
-                <span data-dev-razorpay-btn-title={fieldKey} className={`${fieldKey}-razorpay-btn-title`}>{fieldData.btnTxt}</span>
+              <div
+                data-dev-razorpay-btn-text={fieldKey}
+                className={`${fieldKey}-razorpay-btn-text ${getCustomClsName(fieldKey, 'razorpay-btn-text')}`}
+                {... { ...getCustomAttributs(fieldKey, 'razorpay-btn-text') }}
+              >
+                <span
+                  data-dev-razorpay-btn-title={fieldKey}
+                  className={`${fieldKey}-razorpay-btn-title ${getCustomClsName(fieldKey, 'razorpay-btn-title')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'razorpay-btn-title') }}
+                >
+                  {fieldData.btnTxt}
+                </span>
                 {fieldData.subTitl && (
-                  <span data-dev-razorpay-btn-sub-title={fieldKey} className={`${fieldKey}-razorpay-btn-sub-title`}>Secured by Razorpay</span>
+                  <span
+                    data-dev-razorpay-btn-sub-title={fieldKey}
+                    className={`${fieldKey}-razorpay-btn-sub-title ${getCustomClsName(fieldKey, 'razorpay-btn-sub-title')}`}
+                    {... { ...getCustomAttributs(fieldKey, 'razorpay-btn-sub-title') }}
+                  >
+                    Secured by Razorpay
+                  </span>
                 )}
               </div>
             </button>

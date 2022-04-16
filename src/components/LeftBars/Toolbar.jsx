@@ -607,6 +607,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           modal: { confirm_close: false },
         },
         valid: {},
+        customClasses: {},
+        customAttributes: {},
       },
     },
     {

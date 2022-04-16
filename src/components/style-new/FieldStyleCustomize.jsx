@@ -335,7 +335,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                     <span>Value</span>
                   </div>
                 </div>
-                {fields[fieldKey]?.customAttributes[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
+                {fields[fieldKey]?.customAttributes?.[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
                   <div
                     key={`custon-attribute-${indx + 1}`}
                     className={css(cls.customAttrItem, ut.mx10, ut.mt1)}
