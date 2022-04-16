@@ -100,9 +100,9 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <button
                   type="button"
                   title="Clear selected country value"
-                  data-dev-selected-country-clear-btn={fieldKey}
-                  className={`${fieldKey}-selected-country-clear-btn ${getCustomClsName(fieldKey, 'selected-country-clear-btn')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'selected-country-clear-btn') }}
+                  data-dev-inp-clr-btn={fieldKey}
+                  className={`${fieldKey}-inp-clr-btn ${getCustomClsName(fieldKey, 'inp-clr-btn')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'inp-clr-btn') }}
                 >
                   <svg
                     width="15"

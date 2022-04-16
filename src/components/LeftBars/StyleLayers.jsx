@@ -223,35 +223,35 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="currency-option"
+                    route="option"
                     label="Currency Option"
                     offset="2.5"
-                    highlightSelector={`[data-dev-currency-option="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option')}
+                    highlightSelector={`[data-dev-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="currency-option-icn"
+                    route="opt-icn"
                     label="Currency Option Icon"
                     offset="2.5"
-                    highlightSelector={`[data-dev-currency-option-icn="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-icn')}
+                    highlightSelector={`[data-dev-opt-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-icn')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="currency-option-lbl"
+                    route="opt-lbl"
                     label="Currency Option Label"
                     offset="2.5"
-                    highlightSelector={`[data-dev-currency-option-lbl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-lbl')}
+                    highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="currency-option-suf"
+                    route="opt-suffix"
                     label="Currency Option Suffix"
                     offset="2.5"
-                    highlightSelector={`[data-dev-currency-option-suf="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'currency-option-suf')}
+                    highlightSelector={`[data-dev-opt-suffix="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-suffix')}
                   />
                 </>
               )}
@@ -307,35 +307,35 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option"
+                    route="option"
                     label="Phone Option"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option')}
+                    highlightSelector={`[data-dev-option="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option-icn"
+                    route="opt-icn"
                     label="Phone Option Icon"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option-icn="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-icn')}
+                    highlightSelector={`[data-dev-opt-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-icn')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option-lbl"
+                    route="opt-lbl"
                     label="Phone Option Label"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option-lbl="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-lbl')}
+                    highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl')}
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="phone-option-prefix"
+                    route="opt-prefix"
                     label="Phone Option Prefix"
                     offset="2.5"
-                    highlightSelector={`[data-dev-phone-option-pre="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-option-prefix')}
+                    highlightSelector={`[data-dev-opt-prefix="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-prefix')}
                   />
                 </>
               )}
@@ -359,11 +359,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="selected-country-clear-btn"
+                    route="inp-clr-btn"
                     label="Input Clear Button"
                     offset="2.5"
-                    highlightSelector={`[data-dev-selected-country-clear-btn="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-country-clear-btn')}
+                    highlightSelector={`[data-dev-inp-clr-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-clr-btn')}
                   />
                   <NavBtn
                     subRoute={fldKey}

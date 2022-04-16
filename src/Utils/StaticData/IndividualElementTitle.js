@@ -37,18 +37,10 @@ export const getElementTitle = (element) => {
     case 'opt-search-input': return 'Option Search Input'
     case 'opt-search-icn': return 'Option Search Icon'
     case 'search-clear-btn': return 'Search Clear Button'
-
-    case 'currency-option':
-    case 'phone-option':
     case 'option': return 'Option'
-
-    case 'currency-option-icn':
-    case 'phone-option-icn':
     case 'opt-icn': return 'Option Icon'
 
     case 'ct':
-    case 'currency-option-lbl':
-    case 'phone-option-lbl':
     case 'opt-lbl': return 'Option Label'
 
     case 'inp-btn': return 'Input Button'
@@ -61,14 +53,14 @@ export const getElementTitle = (element) => {
     case 'file-title': return 'File Title'
     case 'file-size': return 'File Size'
     case 'cross-btn': return 'Cross Button'
-    case 'selected-country-clear-btn': return 'Selected Clear Button'
+    case 'inp-clr-btn': return 'Selected Clear Button'
     case 'input-clear-btn': return 'Input Clear Button'
 
     case 'selected-currency-img':
     case 'selected-country-img': return 'Selected Image'
 
-    case 'phone-option-prefix':
-    case 'currency-option-suf': return 'Option Prefix'
+    case 'opt-prefix': return 'Option Prefix'
+    case 'opt-suffix': return 'Option Suffix'
     default:
       break
   }

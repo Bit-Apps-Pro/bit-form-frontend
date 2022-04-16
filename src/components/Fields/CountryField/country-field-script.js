@@ -265,7 +265,7 @@ class CountryField {
     if (!selectedItem) return
 
     this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`)
-    this.#selectedCountryClearBtnElm = this.#select(`.${this.fieldKey}-selected-country-clear-btn`)
+    this.#selectedCountryClearBtnElm = this.#select(`.${this.fieldKey}-inp-clr-btn`)
     if (this.#config.selectedFlagImage && this.#selectedCountryImgElm) {
       this.#selectedCountryImgElm.src = `${bits.assetsURL}${selectedItem.img}`
     }
