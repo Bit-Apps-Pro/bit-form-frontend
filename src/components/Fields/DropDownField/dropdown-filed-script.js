@@ -423,7 +423,7 @@ class DropdownField {
 
       if (opt.i === 'not-found') {
         this.#setTextContent(li, opt.lbl)
-        this.#setClassName(li, 'opt-not-found')
+        this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
         this.#optionListElm.appendChild(li)
         return
       }

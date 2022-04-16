@@ -91,7 +91,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
-                <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-ct`}>{renderHTMR(itm.lbl)}</span>
+                <span data-dev-ct={fieldKey} className={`${fieldKey}-ct`}>{renderHTMR(itm.lbl)}</span>
               </label>
             </div>
           ))}
