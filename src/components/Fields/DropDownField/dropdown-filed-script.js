@@ -554,7 +554,7 @@ class DropdownField {
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.height = `${open ? this.#config.maxHeight : 0}px`
+    this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#dropdownFieldWrapper.classList.add('menu-open')

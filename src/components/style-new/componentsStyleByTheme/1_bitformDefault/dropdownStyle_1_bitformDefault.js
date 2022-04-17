@@ -126,7 +126,8 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option-wrp`]: {
-      height: '0',
+      'max-height': '0px',
+      'min-height': 'auto',
       margin: 'auto',
       width: '100%',
       overflow: 'hidden',
