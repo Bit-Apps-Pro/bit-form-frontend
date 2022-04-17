@@ -86,7 +86,11 @@ const fieldWrpCssProps = {
   opacity: '100%',
   'box-shadow': '',
   width: '',
+  'max-width': '',
+  'min-width': '',
   height: '',
+  'min-height': '',
+  'max-height': '',
   transform: '',
   transition: '',
 }

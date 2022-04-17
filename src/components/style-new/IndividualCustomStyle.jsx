@@ -153,7 +153,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const [fldOpctyValue, fldOpctyUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.opacity))]
   const [widthValue, widthUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.width))]
+  const [maxWidthValue, maxWidthUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-width'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-width']))]
+  const [minWidthValue, minWidthUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-width'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-width']))]
   const [heightValue, heightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height)), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.height))]
+  const [maxHeightValue, maxHeightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-height'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-height']))]
+  const [minHeightValue, minHeightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-height'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-height']))]
   const [fldZIndex] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['z-index']))]
   const [fldFSValue, fldFSUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size']))]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
@@ -522,6 +526,52 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             </div>
           </StylePropertyBlock>
         )
+      case 'max-width':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('max-width', state)}
+            title="Max width"
+          >
+            <ResetStyle
+              propertyPath={objPaths.paths?.['max-width']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              {maxWidthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['max-width']} />}
+              <SizeControl
+                width="128px"
+                value={Number(maxWidthValue)}
+                unit={maxWidthUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'max-width', maxWidthUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'max-width', heightUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </StylePropertyBlock>
+        )
+      case 'min-width':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('min-width', state)}
+            title="Min width"
+          >
+            <ResetStyle
+              propertyPath={objPaths.paths?.['min-width']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              {minWidthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['min-width']} />}
+              <SizeControl
+                width="128px"
+                value={Number(minWidthValue)}
+                unit={minWidthUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'min-width', minWidthUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'min-width', heightUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </StylePropertyBlock>
+        )
       case 'height':
         return (
           <StylePropertyBlock
@@ -540,6 +590,52 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 unit={heightUnit}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </StylePropertyBlock>
+        )
+      case 'max-height':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('max-height', state)}
+            title="Max Height"
+          >
+            <ResetStyle
+              propertyPath={objPaths.paths?.['max-height']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              {maxHeightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['max-height']} />}
+              <SizeControl
+                width="128px"
+                value={Number(maxHeightValue)}
+                unit={maxHeightUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'max-height', maxHeightUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'max-height', heightUnit, state)}
+                options={['px', 'em', 'rem', '%']}
+              />
+            </div>
+          </StylePropertyBlock>
+        )
+      case 'min-height':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('min-height', state)}
+            title="Min Height"
+          >
+            <ResetStyle
+              propertyPath={objPaths.paths?.['min-height']}
+              stateObjName="styles"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              {minHeightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['min-height']} />}
+              <SizeControl
+                width="128px"
+                value={Number(minHeightValue)}
+                unit={minHeightUnit}
+                inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'min-height', minHeightUnit, state)}
+                sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'min-height', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
               />
             </div>
