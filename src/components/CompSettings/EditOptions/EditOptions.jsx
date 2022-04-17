@@ -72,6 +72,7 @@ export default function EditOptions({ optionMdl, options, setOptions, type, lblK
       )}
       {editOptionType === 'Import' && (
         <ImportOptionsTab
+          setOptions={setOptions}
           lblKey={lblKey}
           valKey={valKey}
           setEditOptionType={setEditOptionType}
