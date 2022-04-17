@@ -49,21 +49,25 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
     const propArr = Object.keys(objectPaths.paths)
     borderPropsFirst = objectPaths.paths[propArr[0]]
 
-    const checkVarValue = (varStr, varState) => {
+    const checkVarValue = (varStr, varState, stateName = '') => {
       if (varStr?.match(/(var)/gi)?.[0] === 'var') {
-        const str = varStr.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
+        const str = varStr.replaceAll(/\(|var|,.*|\)|(!important)/gi, '')
         varStr = varState[str]
       }
 
       if (varStr?.match(/(!important)/gi)) {
         varStr = varStr?.replaceAll(/(!important)/gi, '')
       }
+      if (stateName === 'themeColors') {
+        return splitValueBySpaces(varStr)
+      }
       return varStr
     }
 
     bdrVal = getValueByObjPath(styles, objectPaths.paths.border)
-    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
-    bdrClr = checkVarValue(bdrColor, themeColors)
+
+    const [, bdrHslaColor] = checkVarValue(bdrVal?.replaceAll('!important', ''), themeColors, 'themeColors')
+    bdrClr = bdrHslaColor
     bdrWdthVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-width']), themeVars)
     bdrRdsVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-radius']), themeVars)
   }
