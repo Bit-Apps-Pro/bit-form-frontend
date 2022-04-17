@@ -87,10 +87,11 @@ export default function BorderControlMenu({ objectPaths }) {
     obj.border = objectPaths.object
   }
 
-  const border = getValueFromStateVar(themeColors, getValueByObjPath(stateObj(obj.border), borderPath))
+  const borderValue = extractBorderValue(getValueByObjPath(stateObj(obj.border), borderPath))
   const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderWidth), borderWidthPath))
   const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderRadius), borderRadiusPath))
-  const borderValue = extractBorderValue(border)
+  const borderColor = getValueFromStateVar(themeColors, borderValue.borderColor)
+  const borderStyle = getValueFromStateVar(themeColors, borderValue.borderStyle)
 
   const onSizeChange = (pathName, val) => {
     const stateObjName = obj.borderWidth || obj.borderRadius
@@ -130,7 +131,7 @@ export default function BorderControlMenu({ objectPaths }) {
             <span className={css(ut.fs12, ut.fw500)}>Type</span>
             <SimpleDropdown
               options={options}
-              value={borderValue.borderStyle}
+              value={borderStyle}
               onChange={val => borderHandler('borderStyle', val)}
               w={130}
               h={30}
@@ -140,7 +141,7 @@ export default function BorderControlMenu({ objectPaths }) {
             <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
             <SimpleColorPickerTooltip
               action={{ onChange: val => borderHandler('borderColor', val) }}
-              value={borderValue.borderColor}
+              value={borderColor}
             />
           </div>
         </>
