@@ -44,11 +44,11 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
         }}
         />
       )}
-      <div className="mt-4">
-        <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+      <div className="mt-5">
+        <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
         <button onClick={() => refreshFields(null, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+
       </div>
-      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
         <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
