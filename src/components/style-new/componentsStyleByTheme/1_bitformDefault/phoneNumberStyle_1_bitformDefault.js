@@ -169,7 +169,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-option-wrp`]: {
-      height: '0px',
+      'max-height': '0px',
+      'min-height': 'auto',
       margin: 'auto',
       width: '100%',
       overflow: 'hidden',

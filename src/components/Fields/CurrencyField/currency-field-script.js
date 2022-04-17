@@ -591,7 +591,7 @@ class CurrencyField {
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.height = `${open ? this.#config.maxHeight : 0}px`
+    this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#setClassName(this.#currencyNumberFieldWrapper, `${this.fieldKey}-menu-open`)
       this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
