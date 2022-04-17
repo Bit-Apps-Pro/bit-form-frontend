@@ -159,6 +159,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
             elemntKey = `${fld.fieldType}-fld-wrp`
             break
 
+          case 'image':
+            elemntKey = 'fld-wrp'
+            break
+
           case 'phone-number':
             elemntKey = 'phone-fld-wrp'
             break
@@ -205,6 +209,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'currency':
       case 'country':
         elementKey = `${fldType}-fld-wrp`
+        break
+      case 'image':
+        elementKey = 'fld-wrp'
         break
       case 'phone-number':
         elementKey = 'phone-fld-wrp'
@@ -366,6 +373,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
     }))
   }
+  console.log(fieldType)
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
@@ -477,7 +485,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <SingleToggle isChecked={rtlCurrencyFldCheck()} action={handleDir} />
         </div>
       )}
-      {!(fieldType === 'paypal' || fieldType === 'razorpay') && (
+      {!(fieldType === 'paypal' || fieldType === 'razorpay' || fieldType === 'title') && (
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500)}>Border Radius</span>
           <div className={css(ut.flxc)}>
