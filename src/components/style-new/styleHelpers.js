@@ -2,6 +2,9 @@
 /* eslint-disable no-param-reassign */
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
+import { getRecoil, setRecoil } from 'recoil-nexus'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
@@ -36,7 +39,7 @@ export const showDraggableModal = (e, setDraggableModal, props) => {
 // This Function used for Array To Style String converter (like shadow)
 export const objectArrayToStyleStringGenarator = shadows => {
   let shadowString = ''
-  shadows.map(shadow => {
+  shadows.forEach(shadow => {
     shadowString += `${Object.values(shadow).join(' ')},`
   })
   shadowString = shadowString.slice(0, -1)
@@ -46,7 +49,7 @@ export const objectArrayToStyleStringGenarator = shadows => {
 export const json2CssStr = (className, jsonValue) => {
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
-  objArr.map(([property, value]) => {
+  objArr.forEach(([property, value]) => {
     cssStr += `${property}:${value};`
   })
   cssStr += '}'
@@ -670,9 +673,11 @@ export const styleClasses = {
 const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
-export const removeUnuseStyles = (fields, setStyles) => {
+export const removeUnuseStyles = () => {
+  const fields = getRecoil($fields)
+  const styles = getRecoil($styles)
   const fieldsArray = Object.keys(fields)
-  setStyles(prvStyle => produce(prvStyle, deftStyles => {
+  const newStyles = produce(styles, deftStyles => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
       if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
@@ -715,7 +720,9 @@ export const removeUnuseStyles = (fields, setStyles) => {
           break
       }
     })
-  }))
+  })
+
+  setRecoil($styles, newStyles)
 }
 
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
