@@ -18,7 +18,6 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
-import { getElmDataBasedOnElement } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
@@ -128,8 +127,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               assignNestedObj(drft, getPath('search-clear-btn:focus-visible'), searchClrBtnFocus)
               break
 
-            case 'currency-option':
-            case 'phone-option':
+            case 'option':
               const opt = getElementStyleClasses[`.${fieldKey}-option`]
               const optHovr = getElementStyleClasses[`.${fieldKey}-option:hover:not(.selected-opt)`]
               const optFocus = getElementStyleClasses[`.${fieldKey}-option:focus-visible`]
@@ -138,24 +136,22 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               assignNestedObj(drft, getPath('option:focus-visible'), optFocus)
               break
 
-            case 'currency-option-icn':
-            case 'phone-option-icn':
+            case 'opt-icn':
               const optIcn = getElementStyleClasses[`.${fieldKey}-opt-icn`]
               assignNestedObj(drft, getPath('opt-icn'), optIcn)
               break
 
-            case 'currency-option-lbl':
-            case 'phone-option-lbl':
+            case 'opt-lbl':
               const optLbl = getElementStyleClasses[`.${fieldKey}-opt-lbl`]
               assignNestedObj(drft, getPath('opt-lbl'), optLbl)
               break
 
-            case 'currency-option-suf':
+            case 'opt-suffix':
               const optSuf = getElementStyleClasses[`.${fieldKey}-opt-suffix`]
               assignNestedObj(drft, getPath('opt-suffix'), optSuf)
               break
 
-            case 'phone-option-prefix':
+            case 'opt-prefix':
               const optPrefix = getElementStyleClasses[`.${fieldKey}-opt-prefix`]
               assignNestedObj(drft, getPath('opt-prefix'), optPrefix)
               break
@@ -196,7 +192,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             default:
-              const keyObj = getElmDataBasedOnElement(elmnt)
+              const keyObj = elmnt
               const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${keyObj.classKey}`] || {}
               assignNestedObj(drft, getPath(keyObj.classKey), allDefaltStyle)
               const states = [...editorConfig[fieldType][keyObj.elementKey].states]
@@ -255,7 +251,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   const renderIndividualCustomStyleComp = () => {
-    const { elementKey, classKey } = getElmDataBasedOnElement(element)
+    const elementKey = element
+    const classKey = element
     return (
       <div className={css(!checkExistElement(classKey) && cls.blur)}>
         <IndividualCustomStyle elementKey={elementKey || classKey} fldKey={fieldKey} />

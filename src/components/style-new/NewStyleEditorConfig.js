@@ -1498,7 +1498,7 @@ const editorConfig = {
         'backgound-color': '',
       },
     },
-    'selected-country-clear-btn': {
+    'inp-clr-btn': {
       states: ['hover', 'focus'],
       properties: {
         border: {

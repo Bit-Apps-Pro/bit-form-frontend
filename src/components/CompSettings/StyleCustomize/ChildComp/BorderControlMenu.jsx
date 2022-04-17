@@ -8,7 +8,6 @@ import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
-import { getElmDataBasedOnElement } from '../../../../Utils/Helpers'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
@@ -44,7 +43,7 @@ export default function BorderControlMenu({ objectPaths }) {
       borderPropObj = editorConfig[element].properties.border
     } else {
       const { fieldType } = fldStyleObj
-      const { elementKey } = getElmDataBasedOnElement(element)
+      const elementKey = element
       borderPropObj = editorConfig[fieldType][elementKey].properties.border
     }
   } catch (error) {
