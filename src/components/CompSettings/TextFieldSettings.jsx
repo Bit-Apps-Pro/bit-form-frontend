@@ -73,7 +73,7 @@ function TextFieldSettings() {
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
   const ac = fieldData?.ac ? fieldData.ac.trim().split(',') : ['Off']
-  const fieldName = fieldData.fieldName || fldKey
+  const { fieldName } = fieldData
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
@@ -364,7 +364,8 @@ function TextFieldSettings() {
 
   const handleFieldName = ({ target: { value } }) => {
     if (value !== '') fieldData.fieldName = value
-    else fieldData.fieldName = fldKey
+    // else fieldData.fieldName = fldKey
+    else delete fieldData.fieldName
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
