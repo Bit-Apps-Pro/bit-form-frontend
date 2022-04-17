@@ -970,7 +970,7 @@ export const isStyleExist = (styles, fieldKey, classKey) => {
 export const paddingGenerator = (padding, pos, add) => {
   let checkImportant = false
   let values
-
+  if (padding === '') values = '10px'
   if (padding.match(/(!important)/gi)) {
     values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
     checkImportant = true
