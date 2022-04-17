@@ -192,16 +192,15 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             default:
-              const keyObj = elmnt
-              const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${keyObj.classKey}`] || {}
-              assignNestedObj(drft, getPath(keyObj.classKey), allDefaltStyle)
-              const states = [...editorConfig[fieldType][keyObj.elementKey].states]
+              const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${elmnt}`] || {}
+              assignNestedObj(drft, getPath(elmnt), allDefaltStyle)
+              const states = [...editorConfig[fieldType][elmnt].states]
               states?.map(state => {
-                const tempDefault = getElementStyleClasses[`.${fieldKey}-${keyObj.classKey}:${state}`]
+                const tempDefault = getElementStyleClasses[`.${fieldKey}-${elmnt}:${state}`]
                 if (tempDefault) {
-                  assignNestedObj(drft, getPath(`${keyObj.classKey}:${state}`), tempDefault)
+                  assignNestedObj(drft, getPath(`${elmnt}:${state}`), tempDefault)
                 } else {
-                  deleteStyle(drft, keyObj.classKey, `:${state}`)
+                  deleteStyle(drft, elmnt, `:${state}`)
                 }
               })
               break
