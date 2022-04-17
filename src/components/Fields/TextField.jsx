@@ -75,7 +75,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             {...'mx' in attr && { max: attr.mx }}
             {...'ac' in attr && { autoComplete: attr.ac }}
             {...'name' in attr && { name: attr.name }}
-            {...'inputMode' in attr && { inputmode: attr.inputMode }}
+            {...'inputMode' in attr && { inputMode: attr.inputMode }}
             {...onBlurHandler && { onInput: onBlurHandler }}
             onBlur={handleBlur}
             {...{ value }}
