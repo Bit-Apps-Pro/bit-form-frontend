@@ -2,7 +2,7 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
@@ -67,7 +67,7 @@ export default function StyleLayers() {
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
 
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === fieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
+            <LayerAccordion key={fldKey} onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} open={fldKey === fieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
               {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
               {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="fld-wrp" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp')} />}
               <ElementConfiguration fldKey={fldKey} />

@@ -384,7 +384,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
             <span className={css(ut.fw500)}>Size</span>
             <select onChange={setSizes} className={css(sc.select)}>
               <option value="">Select Size</option>
-              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -399,7 +399,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>
             <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
-              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>

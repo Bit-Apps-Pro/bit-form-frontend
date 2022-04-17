@@ -224,6 +224,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
           return (
             <>
               <SimpleAccordion
+                key={filter.name}
                 className={css(c.accordionHead, c.containerHover)}
                 open
                 titleCls={css({ fw: 500 })}
