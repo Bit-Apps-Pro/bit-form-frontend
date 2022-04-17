@@ -643,8 +643,10 @@ function TextFieldSettings() {
                         </button>
                         <div>
                           <ul role="menu">
-                            {predefinedPatterns?.map(opt => (
+                            {predefinedPatterns?.map((opt, i) => (
                               <li
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={i}
                                 role="menuitem"
                                 className={`${css(style.button)} btnHover`}
                                 onKeyPress={() => setRegexrValue(opt.val)}
