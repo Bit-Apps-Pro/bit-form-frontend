@@ -14,7 +14,9 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsla2hsva, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
@@ -51,7 +53,6 @@ function SimpleColorsPickerMenu({ stateObjName,
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
-
   const { '--global-bg-color': themeBgColor,
     '--global-fld-bdr-clr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
@@ -186,6 +187,20 @@ function SimpleColorsPickerMenu({ stateObjName,
     }
   }
 
+  const transparantColor = (e) => {
+    const colorObj = { h: 0, s: 0, v: 0, a: 0 }
+    if (e.target.checked) {
+      setColorState(colorObj)
+    }
+  }
+
+  const checkTransparant = () => {
+    if (color?.h === 0 && color?.s === 0 && color?.v === 0 && color?.a === 0) {
+      return true
+    }
+    return false
+  }
+
   return (
     <div className={css(c.preview_wrp)}>
       {canSetVariable ? (
@@ -194,7 +209,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             <StyleSegmentControl
               square
               noShadow
-              defaultActive="Var"
+              defaultActive="Custom"
               options={options}
               size={60}
               component="button"
@@ -233,11 +248,39 @@ function SimpleColorsPickerMenu({ stateObjName,
           </Grow>
 
           <Grow open={controller === 'Custom'}>
-            <ColorPicker showParams showPreview onChange={setColorState} value={color} />
+            <div className={css(c.container)}>
+              <div className={css(c.subContainer)}>
+                <SingleToggle
+                  title={__('Transparant', 'bitform')}
+                  action={transparantColor}
+                  isChecked={checkTransparant()}
+                />
+              </div>
+              <ColorPicker
+                showParams
+                showPreview
+                onChange={setColorState}
+                value={color}
+              />
+            </div>
           </Grow>
         </>
       ) : (
-        <ColorPicker showParams showPreview onChange={setColorState} value={color} />
+        <div className={css(c.container)}>
+          <div className={css(c.subContainer)}>
+            <SingleToggle
+              title={__('Transparant', 'bitform')}
+              action={transparantColor}
+              isChecked={checkTransparant()}
+            />
+          </div>
+          <ColorPicker
+            showParams
+            showPreview
+            onChange={setColorState}
+            value={color}
+          />
+        </div>
       )}
     </div>
   )
@@ -262,6 +305,15 @@ const c = {
       brs: 8,
       ow: 'hidden',
     },
+  },
+  container: {
+    dy: 'flex',
+    fd: 'column',
+  },
+  subContainer: {
+    m: 5,
+    '& span': { fs: 12 },
+    '& input': { m: 0 },
   },
   color: {
     w: 30,
