@@ -72,7 +72,11 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: false, inspectMode: false }
     })
-    history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    if (selectedFldId) {
+      history.replace(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`)
+    } else {
+      history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    }
     removeUnuseStyles()
   }
 
