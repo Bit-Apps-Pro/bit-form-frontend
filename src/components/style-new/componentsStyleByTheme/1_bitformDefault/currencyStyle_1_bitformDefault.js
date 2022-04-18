@@ -28,31 +28,31 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.disabled .${fk}-currency-inner-wrp`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
     [`.readonly .${fk}-currency-inner-wrp`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
     [`.disabled .${fk}-currency-amount-input`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
     [`.readonly .${fk}-currency-amount-input`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
     [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
       // border: 'solid hsla(0, 0%, 93%, 100%)',
@@ -306,7 +306,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-opt-not-found`]: {
       'text-align': 'center',
       'list-style': 'none',
-      'margin-top': '5px',
+      margin: '5px',
     },
     [`.${fk}-opt-lbl`]: {},
 
