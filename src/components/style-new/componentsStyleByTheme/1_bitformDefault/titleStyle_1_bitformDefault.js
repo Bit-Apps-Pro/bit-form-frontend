@@ -17,14 +17,18 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-titl-wrp`]: { padding: '0px 5px' },
     [`.${fk}-title`]: {
       margin: '5px',
+      'font-family': 'var(--g-font-family)',
       'text-align': 'center',
+      color: 'var(--global-font-color) !important',
       'word-break': 'break-all',
       display: 'flex',
       'align-items': 'center',
     },
     [`.${fk}-sub-titl`]: {
       margin: '5px',
+      'font-family': 'var(--g-font-family)',
       'text-align': 'center',
+      color: 'var(--global-font-color) !important',
       'word-break': 'break-all',
       display: 'flex',
       'align-items': 'center',

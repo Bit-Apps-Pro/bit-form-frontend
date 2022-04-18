@@ -249,6 +249,20 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
       color: 'var(--global-font-color)',
     },
 
+    [`.${fk}-create-opt`]: {
+      margin: '2px 5px',
+      transition: 'background 0.2s',
+      'border-radius': '6px',
+      // 'font-size': 'var(--fld-fs)',
+      cursor: 'pointer',
+      'text-align': 'left',
+      border: 'none',
+      padding: '5px 7px',
+      display: 'flex',
+      'align-items': 'center',
+      'justify-content': 'space-between',
+    },
+
     [`.${fk}-option`]: {
       margin: '2px 5px',
       transition: 'background 0.2s',

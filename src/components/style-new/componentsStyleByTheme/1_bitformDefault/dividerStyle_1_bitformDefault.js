@@ -22,9 +22,9 @@ export default function dividerStyle_1_bitformDefault({ fk, type, direction }) {
       margin: '0px 10px 0px 10px',
       width: '100%',
       border: '',
-      'border-bottom': 'solid',
+      'border-bottom': 'solid var(--global-fld-bdr-clr) !important',
       'border-width': '1',
-      'border-color': 'hsla(0, 0%, 62%, 100%)',
+      // 'border-color': 'hsla(0, 0%, 62%, 100%)',
     },
   }
 }
