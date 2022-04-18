@@ -684,8 +684,8 @@ export const removeUnuseStyles = () => {
       if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
       if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
       if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
-      if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
-      if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.subTlePreIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
       if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hlpTxt, fldkey)
       if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
       if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
@@ -713,6 +713,12 @@ export const removeUnuseStyles = () => {
         case 'radio':
 
           break
+        case 'title':
+          if (!fld.subTitlPreIcn) deleteStyles(deftStyles, styleClasses.subTitlPreIcn, fldkey)
+          if (!fld.subTitlSufIcn) deleteStyles(deftStyles, styleClasses.subTitlSufIcn, fldkey)
+          if (!fld.titlePreIcn) deleteStyles(deftStyles, styleClasses.titlePreIcn, fldkey)
+          if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
+          break
         case 'check':
 
           break
@@ -725,9 +731,10 @@ export const removeUnuseStyles = () => {
   setRecoil($styles, newStyles)
 }
 
-export const addDefaultStyleClasses = (fk, element, setStyle) => {
-  setStyle(prvStyle => produce(prvStyle, drftStyle => {
-    const fldTyp = prvStyle.fields[fk]?.fieldType
+export const addDefaultStyleClasses = (fk, element) => {
+  const styles = getRecoil($styles)
+  const newStyles = produce(styles, drftStyle => {
+    const fldTyp = styles.fields[fk]?.fieldType
     switch (fldTyp) {
       case 'text':
       case 'number':
@@ -835,7 +842,8 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
       default:
         break
     }
-  }))
+  })
+  setRecoil($styles, newStyles)
 }
 
 export const generateFontUrl = (font, string) => {
