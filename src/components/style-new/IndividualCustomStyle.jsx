@@ -660,7 +660,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
                 ]}
                 onChange={e => setAlign(e)}
-                activeValue={txtAlignValue}
+                defaultActive={txtAlignValue}
               />
             </div>
           </StylePropertyBlock>
@@ -952,7 +952,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         onChange={lbl => setController(lbl)}
         show={['icn']}
         variant="lightgray"
-        activeValue={stateController}
+        defaultActive={stateController}
         width="100%"
         wideTab
       />

@@ -31,7 +31,7 @@ export default function BoxSizeControl({ title }) {
           onChange={lbl => setController(lbl)}
           show={['icn']}
           variant="lightgray"
-          activeValue={controller}
+          defaultActive={controller}
         />
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>

@@ -317,7 +317,7 @@ function TitleSettings() {
               { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
             ]}
             onChange={val => positionHandle(val, 'align-items')}
-            activeValue={position}
+            defaultActive={position}
           />
         </div>
         <FieldSettingsDivider />
@@ -334,7 +334,7 @@ function TitleSettings() {
               { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
             ]}
             onChange={val => flexDirectionHandle(val, 'flex-direction')}
-            activeValue={flex}
+            defaultActive={flex}
           />
         </div>
         <FieldSettingsDivider />

@@ -145,11 +145,11 @@ export default function BackgroundImageControl({ stateObjName,
 
   return (
     <div className={css(bgImgControlStyle.container)}>
-      <StyleSegmentControl options={[{ label: 'Image' }, { label: 'Gradient' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} activeValue={controller.parent} wideTab />
+      <StyleSegmentControl options={[{ label: 'Image' }, { label: 'Gradient' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} defaultActive={controller.parent} wideTab />
       <div className={css(bgImgControlStyle.innercontainer, ut.mt1)}>
         {controller.parent === 'Image' && (
           <>
-            <StyleSegmentControl options={[{ label: 'Upload' }, { label: 'Link' }]} onChange={lbl => onTabChangeHandler(lbl, 'child')} activeValue={controller.child} wideTab />
+            <StyleSegmentControl options={[{ label: 'Upload' }, { label: 'Link' }]} onChange={lbl => onTabChangeHandler(lbl, 'child')} defaultActive={controller.child} wideTab />
             <div className={css(ut.mt2)}>
 
               {controller.child === 'Upload' && (

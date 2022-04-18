@@ -294,7 +294,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               onChange={lbl => setController(lbl)}
               show={['icn']}
               variant="lightgray"
-              activeValue={controller}
+              defaultActive={controller}
               width="100%"
               wideTab
             />

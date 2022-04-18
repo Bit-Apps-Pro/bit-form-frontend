@@ -44,7 +44,7 @@ export default function EditOptions({ optionMdl, options, setOptions, type, lblK
       <StyleSegmentControl
         options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
         onChange={lbl => handleSegment(lbl)}
-        activeValue={editOptionType}
+        defaultActive={editOptionType}
         wideTab
       />
 

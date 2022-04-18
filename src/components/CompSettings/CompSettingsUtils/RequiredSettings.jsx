@@ -135,7 +135,7 @@ export default function RequiredSettings() {
               { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'right' },
             ]}
             onChange={e => setAsteriskPos(e)}
-            activeValue={fieldData.valid.reqPos}
+            defaultActive={fieldData.valid.reqPos}
           />
         </div>
       )}
