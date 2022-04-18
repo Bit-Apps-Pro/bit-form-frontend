@@ -17,10 +17,14 @@ export const $lightThemeColors = atom({
     '--gfa': 100,
     '--global-bg-color': '', // background color
     '--gbg-h': 0,
-    '--gbg-s': 0,
-    '--gbg-l': 100,
+    '--gbg-s': '0%',
+    '--gbg-l': '100%',
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)', // field Border color
+    '--gfbc-h': 0,
+    '--gfbc-s': '0%',
+    '--gfbc-l': '67%',
+    '--gfbc-a': 100,
     '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
     '--gfbg-h': 0,
     '--gfbg-s': '0%',
