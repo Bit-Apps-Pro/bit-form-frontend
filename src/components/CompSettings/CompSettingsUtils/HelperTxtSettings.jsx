@@ -38,7 +38,7 @@ export default function HelperTxtSettings() {
     if (checked) {
       fieldData.helperTxt = 'Helper Text'
       fieldData.hlpTxtHide = true
-      addDefaultStyleClasses(selectedFieldId, 'hlpTxt', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'hlpTxt')
     } else {
       fieldData.hlpTxtHide = false
       delete fieldData.helperTxt
@@ -66,7 +66,7 @@ export default function HelperTxtSettings() {
   }
 
   const setIconModel = (typ) => {
-    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)

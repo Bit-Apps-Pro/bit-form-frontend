@@ -52,7 +52,7 @@ export default function FieldLabelSettings() {
     if (e.target.checked) {
       fieldData.lbl = 'Field Label'
       fieldData.valid.hideLbl = false
-      addDefaultStyleClasses(selectedFieldId, 'lbl', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'lbl')
     } else {
       fieldData.valid.hideLbl = true
       delete fieldData.lbl
@@ -75,7 +75,7 @@ export default function FieldLabelSettings() {
   }
 
   const setIconModel = (iconType) => {
-    if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType)
     setIconFilterValue(iconType, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(iconType)
     setIcnMdl(true)

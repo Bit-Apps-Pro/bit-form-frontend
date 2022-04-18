@@ -38,7 +38,7 @@ export default function SubTitleSettings() {
     if (checked) {
       fieldData.subtitle = 'Sub Title'
       fieldData.subtitleHide = true
-      addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'subTitl')
     } else {
       delete fieldData.subtitle
       fieldData.subtitleHide = false
@@ -66,7 +66,7 @@ export default function SubTitleSettings() {
   }
 
   const setIconModel = (typ) => {
-    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)

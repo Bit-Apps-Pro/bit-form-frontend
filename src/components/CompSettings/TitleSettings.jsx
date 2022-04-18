@@ -61,7 +61,7 @@ function TitleSettings() {
   // }, [fieldData?.bg_img])
 
   const setIconModel = (typ) => {
-    if (!isStyleExist(styles, fieldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fieldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fieldKey, styles, setStyles, themeColors, setThemeColors)
     setFieldName(typ)
     setIcnMdl(true)
@@ -93,7 +93,7 @@ function TitleSettings() {
     if (checked) {
       fieldData.title = 'Title'
       fieldData.titleHide = false
-      addDefaultStyleClasses(selectedFieldId, 'title', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'title')
     } else {
       delete fieldData.title
       fieldData.titleHide = true
@@ -110,7 +110,7 @@ function TitleSettings() {
     if (checked) {
       fieldData.subtitle = 'Sub Title'
       fieldData.subtitleHide = false
-      addDefaultStyleClasses(selectedFieldId, 'subTitl', setStyles)
+      addDefaultStyleClasses(selectedFieldId, 'subTitl')
     } else {
       delete fieldData.subtitle
       fieldData.subtitleHide = true
