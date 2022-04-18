@@ -5,6 +5,7 @@ import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
@@ -853,7 +854,9 @@ export const generateFontUrl = (font, string) => {
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
 
-export const findExistingFontStyleNWeidth = (styles, themeVars) => {
+export const findExistingFontStyleNWeidth = () => {
+  const styles = getRecoil($styles)
+  const themeVars = getRecoil($themeVars)
   const fontWeightVariant = []
   const fontStyleParam = []
   const fieldsArr = Object.keys(styles.fields)
@@ -880,7 +883,10 @@ export const findExistingFontStyleNWeidth = (styles, themeVars) => {
   return [fontWeightVariant, fontStyleParam]
 }
 
-export const updateGoogleFontUrl = (styles, setStyle, themeVars) => {
+export const updateGoogleFontUrl = () => {
+  const styles = getRecoil($styles)
+  const themeVars = getRecoil($themeVars)
+
   const fontWeightparam = []
   let string = ''
   const globalFont = themeVars['--g-font-family']
@@ -900,9 +906,10 @@ export const updateGoogleFontUrl = (styles, setStyle, themeVars) => {
   }
 
   const url = generateFontUrl(globalFont, string)
-  setStyle(prvStyle => produce(prvStyle, drft => {
+  const newStyles = produce(styles, drft => {
     drft.font.fontURL = url
-  }))
+  })
+  setRecoil($styles, newStyles)
 }
 
 export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
