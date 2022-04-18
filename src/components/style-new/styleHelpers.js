@@ -270,6 +270,7 @@ export const removeHighlight = (selector = '[data-highlight]') => {
  * @function commonStyle(fk, type)
  * @param {string} fk field key
  * @param {string} type size
+ * @param {string} fieldType field type
  * @return style classes
 */
 export const commonStyle = (fk, type, fieldType) => {
