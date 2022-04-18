@@ -636,8 +636,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
           />
         </CSSTransition>
       </div>
-
-
     </div>
   )
 }
