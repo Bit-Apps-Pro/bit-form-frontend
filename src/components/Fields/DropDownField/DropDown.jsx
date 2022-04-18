@@ -15,7 +15,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const { optionsList, ph } = fieldData
-  const { activeList, optionIcon } = fieldData.config
+  const { activeList, optionIcon, allowCustomOption } = fieldData.config
 
   useEffect(() => {
     if (!dropdownWrapElmRef?.current) {
@@ -34,6 +34,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       selectedOptImage,
       selectedOptClearable,
       searchClearable,
+      allowCustomOption,
       optionIcon,
       maxHeight,
       multipleSelect,
@@ -167,6 +168,19 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
+                  {/* {allowCustomOption
+                    && (
+                      <button
+                        type="button"
+                        aria-label="Add Option"
+                        data-dev-custom-opt-btn={fieldKey}
+                        className={`${fieldKey}-icn ${fieldKey}-custom-opt-btn ${getCustomClsName(fieldKey, 'custom-opt-btn')}`}
+                        tabIndex="-1"
+                        {... { ...getCustomAttributs(fieldKey, 'custom-opt-btn') }}
+                      >
+                        Add Option
+                      </button>
+                    )} */}
                   <button
                     type="button"
                     aria-label="Clear search"
@@ -205,13 +219,28 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                         tabIndex="-1"
                         role="listbox"
                       >
+
+                        {/* <li
+                          data-dev-option={fieldKey}
+                          data-index={dataIndex++}
+                          className={`${fieldKey}-create-opt`}
+                          role="option"
+                          aria-selected="false"
+                          tabIndex="-1"
+                          {... { ...getCustomAttributs(fieldKey, 'option') }}
+                        >
+                          <span className={`${fieldKey}-opt-lbl-wrp`}>
+                            <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>Create: </span>
+                          </span>
+                          <span className="opt-prefix" />
+                        </li> */}
                         {
                           options.map(opt => {
                             if (opt.type) {
                               return (
                                 <>
                                   <li data-index={dataIndex++} className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}>
-                                    <span className="opt-lbl">{opt.title}</span>
+                                    <span className={`${fieldKey}-opt-lbl`}>{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
                                     <li
@@ -233,7 +262,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                             loading="lazy"
                                           />
                                         )}
-                                        <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt2.lbl}</span>
+                                        <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>{opt2.lbl}</span>
                                       </span>
                                       <span className="opt-prefix" />
                                     </li>
@@ -245,7 +274,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               <li
                                 data-dev-option={fieldKey}
                                 data-index={dataIndex++}
-                                data-value={opt.val}
+                                data-value={opt.val || opt.lbl}
                                 className={`${fieldKey}-option`}
                                 role="option"
                                 aria-selected="false"
@@ -261,7 +290,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                       loading="lazy"
                                     />
                                   )}
-                                  <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt.lbl}</span>
+                                  <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>{opt.lbl}</span>
                                 </span>
                                 <span className="opt-prefix" />
                               </li>

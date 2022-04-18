@@ -52,10 +52,16 @@ export default function DropdownFieldSettings() {
   const { selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
     showSearchPh,
-    searchPlaceholder, multipleSelect, closeOnSelect, activeList } = fieldData.config
+    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList } = fieldData.config
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  }
+
+  const handleMultiSelect = (val, name) => {
+    fieldData.config[name] = val
+    fieldData.config.closeOnSelect = !val
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
@@ -238,7 +244,7 @@ export default function DropdownFieldSettings() {
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Allow Custom Option:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'allowCustomOption')}
-        isChecked={closeOnSelect}
+        isChecked={allowCustomOption}
         tip="By disabling this option, the field allow custom option will be hidden"
       />
 
@@ -247,8 +253,8 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Multiple Select:', 'bitform')}
-        action={e => handleConfigChange(e.target.checked, 'closeOnSelect')}
-        isChecked={closeOnSelect}
+        action={e => handleMultiSelect(e.target.checked, 'multipleSelect')}
+        isChecked={multipleSelect}
         tip="By disabling this option, the field multiple will be hidden"
       />
 
@@ -257,8 +263,8 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Close On Select:', 'bitform')}
-        action={e => handleConfigChange(e.target.checked, 'multipleSelect')}
-        isChecked={multipleSelect}
+        action={e => handleConfigChange(e.target.checked, 'closeOnSelect')}
+        isChecked={closeOnSelect}
         tip="By disabling this option, the field close on select will be hidden"
       />
 

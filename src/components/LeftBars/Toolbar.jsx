@@ -220,6 +220,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           selectedOptImgSrc: 'test.png',
           closeOnSelect: false,
           activeList: 0,
+          allowCustomOption: false,
           // dropdownIcn: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>",
           // onChange: val => { console.log(val) },
         },
