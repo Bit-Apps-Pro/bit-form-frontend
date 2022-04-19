@@ -95,7 +95,6 @@ export default function SpaceControl({ value,
             show={['icn']}
             variant="lightgray"
             noShadow
-            defaultActive={controller}
           />
         </span>
 

@@ -216,7 +216,6 @@ function SimpleColorsPickerMenu({ stateObjName,
               onChange={lbl => setController(lbl)}
               show={['icn']}
               variant="lightgray"
-              defaultActive={controller}
               width="100%"
               wideTab
             />

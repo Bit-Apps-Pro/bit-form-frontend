@@ -192,7 +192,6 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
               onChange={lbl => setController(lbl)}
               show={['icn']}
               variant="lightgray"
-              defaultActive={controller}
               width="100%"
               wideTab
             />

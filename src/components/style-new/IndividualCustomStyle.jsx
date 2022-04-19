@@ -952,7 +952,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         onChange={lbl => setController(lbl)}
         show={['icn']}
         variant="lightgray"
-        defaultActive={stateController}
         width="100%"
         wideTab
       />
