@@ -231,17 +231,6 @@ export default function StyleLayers() {
                   />
                 </>
               )}
-
-              {fldData.typ.match(/(check|decision-box)/gi) && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="ck"
-                  label="Check Box"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-ck="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'ck')}
-                />
-              )}
               {fldData.typ.match(/^(check|radio)$/gi) && (
                 <>
                   <NavBtn
@@ -272,6 +261,17 @@ export default function StyleLayers() {
                     />
                   )}
                 </>
+              )}
+
+              {fldData.typ.match(/(check|decision-box)/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="ck"
+                  label="Check Box"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-ck="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'ck')}
+                />
               )}
 
               {fldData.typ === 'razorpay' && (

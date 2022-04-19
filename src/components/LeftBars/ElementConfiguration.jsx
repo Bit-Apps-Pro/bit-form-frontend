@@ -339,7 +339,7 @@ export default function ElementConfiguration({ fldKey }) {
           <LayerAccordion
             childrenAccodin
             onClick={() => styleHandler('fld-wrp .filepond--root')}
-            offset="2.5"
+            offset="3.5"
             title="Filepond"
             fldData={fieldObj}
             key={fldKey}
@@ -444,7 +444,7 @@ export default function ElementConfiguration({ fldKey }) {
             <LayerAccordion
               childrenAccodin
               onClick={() => styleHandler('inp-btn')}
-              offset="2.5"
+              offset="3.5"
               title="Button"
               fldData={fieldObj}
               key={`inp-${fldKey}`}
@@ -513,7 +513,7 @@ export default function ElementConfiguration({ fldKey }) {
               <LayerAccordion
                 childrenAccodin
                 onClick={() => styleHandler('files-list')}
-                offset="2.5"
+                offset="3.5"
                 title="Files list"
                 fldData={fieldObj}
                 key={fldKey}
