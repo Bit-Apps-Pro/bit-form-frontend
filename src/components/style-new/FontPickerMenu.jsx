@@ -101,7 +101,7 @@ export default function FontPickerMenu() {
     const weightVariants = styles.font.fontWeightVariants
     const styleVariants = styles.font.fontStyle
 
-    const [fontWeight, fontStyle] = findExistingFontStyleNWeidth(styles, themeVars)
+    const [fontWeight, fontStyle] = findExistingFontStyleNWeidth()
 
     const getNotExistVariant = fontWeight.filter(w => !weightVariants.includes(Number(w)))
     const getNotExiststyle = fontStyle.filter(w => !styleVariants.includes(Number(w)))
