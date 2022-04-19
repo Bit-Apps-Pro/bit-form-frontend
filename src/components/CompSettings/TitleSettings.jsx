@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
@@ -38,7 +37,6 @@ function TitleSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
@@ -62,7 +60,7 @@ function TitleSettings() {
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fieldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
-    setIconFilterValue(typ, fieldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(typ, fieldKey)
     setFieldName(typ)
     setIcnMdl(true)
     reCalculateFieldHeights(fieldKey)
@@ -157,6 +155,7 @@ function TitleSettings() {
     if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
       reCalculateFieldHeights(fieldKey)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [icnMdl])
 
   return (

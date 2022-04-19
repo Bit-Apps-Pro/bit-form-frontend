@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
@@ -31,8 +30,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const styles = useRecoilValue($styles)
   const [icnType, setIcnType] = useState('')
   const [icnMdl, setIcnMdl] = useState(false)
   const selectedFieldId = useRecoilValue($selectedFieldId)
@@ -86,7 +84,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
-    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(typ, fldKey)
     setIcnType(typ)
     setIcnMdl(true)
   }

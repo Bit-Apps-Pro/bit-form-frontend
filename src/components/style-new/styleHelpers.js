@@ -5,6 +5,7 @@ import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
@@ -931,7 +932,9 @@ export const getValueFromStateVar = (stateObj, val) => {
   return val
 }
 
-export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeColors, setThemeColors) => {
+export const setIconFilterValue = (iconType, fldKey) => {
+  const styles = getRecoil($styles)
+  const themeColors = getRecoil($themeColors)
   const elementKey = styleClasses[iconType][0]
   const filterValue = styles?.fields?.[fldKey].classes[`.${fldKey}-${elementKey}`]?.filter
   const themeVal = getValueFromStateVar(themeColors, filterValue)
@@ -944,28 +947,33 @@ export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeCol
         const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
         const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
         const setFilterValue = hexToCSSFilter(hexValue)
-        setThemeColors(prvStyle => produce(prvStyle, drft => {
+        const newThemeColors = produce(themeColors, drft => {
           drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
-        }))
+        })
+        setRecoil($themeColors, newThemeColors)
       }
     } else if (parentColor) {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
       const setFilterValue = hexToCSSFilter(hexValue)
-      setStyles(prvState => produce(prvState, drftStyles => {
+      console.log(fldKey, elementKey, setFilterValue.filter)
+      const newStyles = produce(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
+        console.log('style', drftStyles.fields[fldKey].classes)
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
-          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
-      }))
+      })
+      setRecoil($styles, newStyles)
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
-      setStyles(prvState => produce(prvState, drftStyles => {
+      const newStyles = produce(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
-          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
-      }))
+      })
+      setRecoil($styles, newStyles)
     }
   }
 }
