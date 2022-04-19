@@ -515,6 +515,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="selected-country-lbl"
+                    label="Selected Country Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-country-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-country-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="inp-clr-btn"
                     label="Input Clear Button"
                     offset="2.5"
@@ -523,11 +531,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="opt-search-input"
-                    label="Option Search Input"
+                    route="option-search-wrp"
+                    label="Option Search Wrapper"
                     offset="2.5"
-                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
+                    highlightSelector={`[data-dev-option-search-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-search-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -536,6 +544,14 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -552,6 +568,14 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-option="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-lbl-wrp"
+                    label="Option Label Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-lbl-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
