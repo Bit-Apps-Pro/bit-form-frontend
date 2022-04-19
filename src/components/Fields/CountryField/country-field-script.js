@@ -436,11 +436,9 @@ class CountryField {
     if (spaceBelow < spaceAbove && spaceBelow < 250) {
       this.#countryFieldWrapper.style.flexDirection = 'column-reverse'
       this.#countryFieldWrapper.style.bottom = '0%'
-      this.#countryFieldWrapper.style.position = 'absolute'
     } else {
       this.#countryFieldWrapper.style.flexDirection = 'column'
       this.#countryFieldWrapper.style.removeProperty('bottom')
-      this.#countryFieldWrapper.style.removeProperty('position')
     }
   }
 
