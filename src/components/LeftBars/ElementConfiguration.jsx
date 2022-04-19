@@ -283,7 +283,7 @@ export default function ElementConfiguration({ fldKey }) {
                     route="pre-i"
                     label="Prefix Icon"
                     offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`}
+                    highlightSelector={`[data-dev-pre-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'pre-i')}
                   />
                 )}
@@ -294,7 +294,7 @@ export default function ElementConfiguration({ fldKey }) {
                     route="suf-i"
                     label="Suffix Icon"
                     offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`}
+                    highlightSelector={`[data-dev-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')}
                   />
                 )}

@@ -119,7 +119,7 @@ export default function StyleLayers() {
             onClick={() => styleHandler('pre-i')}
             offset="6"
             title="Inputs"
-            highlightSelector="[data-dev-sub-titl]"
+            highlightSelector="[data-dev-fld]"
           >
             <NavBtn
               route="pre-i"
