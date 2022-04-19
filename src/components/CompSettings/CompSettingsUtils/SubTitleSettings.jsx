@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -23,7 +22,6 @@ export default function SubTitleSettings() {
   const { fieldKey: fldKey } = useParams()
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
@@ -67,7 +65,7 @@ export default function SubTitleSettings() {
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
-    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(typ, fldKey)
     setIcnType(typ)
     setIcnMdl(true)
   }

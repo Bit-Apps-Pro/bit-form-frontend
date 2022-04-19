@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
@@ -7,7 +8,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -39,18 +39,15 @@ export default function FileUploadSettings() {
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const styles = useRecoilValue($styles)
   const { css } = useFela()
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
   const fieldData = deepCopy(fields[fldKey])
   const { multiple, showMaxSize, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, showFilePreview, showFileSize, duplicateAllow, minFile, maxFile } = fieldData.config
-  const isRequired = fieldData.valid.req !== undefined
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
-  const { btnTxt, btnIcn } = fieldData
-  const mxUp = fieldData.mxUp === undefined ? '' : fieldData.mxUp
+  const { btnTxt } = fieldData
   const existType = allowedFileType ? allowedFileType.split(',._RF_,') : []
   const options = [
     { label: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
@@ -66,21 +63,6 @@ export default function FileUploadSettings() {
   function maxSizeHandler(unit, value) {
     fieldData.config.maxSize = value
     fieldData.config.sizeUnit = unit
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-  }
-  function setRequired(e) {
-    if (e.target.checked) {
-      const tmp = { ...fieldData.valid }
-      tmp.req = true
-      fieldData.valid = tmp
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-    }
-    // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
@@ -116,7 +98,7 @@ export default function FileUploadSettings() {
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
-    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(typ, fldKey)
     setIcnType(typ)
     setIcnMdl(true)
   }

@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
-import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
@@ -24,8 +23,7 @@ export default function FieldLabelSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const styles = useRecoilValue($styles)
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
@@ -76,7 +74,7 @@ export default function FieldLabelSettings() {
 
   const setIconModel = (iconType) => {
     if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType)
-    setIconFilterValue(iconType, fldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(iconType, fldKey)
     setIcnType(iconType)
     setIcnMdl(true)
   }
