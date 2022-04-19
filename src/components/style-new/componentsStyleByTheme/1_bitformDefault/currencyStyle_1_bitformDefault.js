@@ -12,6 +12,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       display: 'inline-block',
     },
     [`.${fk}-currency-fld-wrp`]: {
+      position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
       border: 'solid var(--global-fld-bdr-clr) !important',
@@ -21,7 +22,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'font-family': 'var(--g-font-family)',
       color: 'var(--global-font-color) !important',
       overflow: 'hidden',
-      // display: 'flex',
+      display: 'flex',
       'flex-direction': 'column',
       transition: 'box-shadow .3s',
     },
@@ -69,8 +70,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-menu-open`]: {
       'z-index': 999,
-      'box-shadow': '0px 1.2px 2.2px hsla(0, 0%, 0%, 3%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 5%), 0px 5.4px 10px hsla(0, 0%, 0%, 5%), 0px 9.6px 17.9px hsla(0, 0%, 0%, 6%), 0px 18px 33.4px hsla(0, 0%, 0%, 7%), 0px 43px 80px hsla(0, 0%, 0%, 10%)',
-      'border-color': 'hsla(0, 0%, 87%, 100%)',
+      'box-shadow':
+        '0px 1.2px 2.2px hsla(0, 0%, 0%, 32%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 22%),0px 5.4px 10px hsla(0, 0%, 0%, 21%),0px 9.6px 17.9px hsla(0, 0%, 0%, 17%),0px 18px 33.4px hsla(0, 0%, 0%, 17%),0px 43px 80px hsla(0, 0%, 0%, 10%)',
+      border: 'solid hsla(0, 0%, 87%, 100%)',
+      'border-width': '1px',
     },
     [`.${fk}-currency-inner-wrp`]: {
       display: 'flex',

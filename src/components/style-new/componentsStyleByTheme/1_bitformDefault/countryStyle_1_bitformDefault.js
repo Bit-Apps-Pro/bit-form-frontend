@@ -14,6 +14,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-country-fld-wrp`]: {
+      position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
       border: 'solid var(--global-fld-bdr-clr) !important',

@@ -13,6 +13,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     },
 
     [`.${fk}-phone-fld-wrp`]: {
+      position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
       border: 'solid var(--global-fld-bdr-clr) !important',
