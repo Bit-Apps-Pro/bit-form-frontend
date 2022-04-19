@@ -19,11 +19,15 @@ class DropdownField {
 
   #clearSearchBtnElm = null
 
+  #customOptionBtn = null
+
   #optionListElm = null
 
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
 
   #selectedOptValue = ''
+
+  #customOptions = []
 
   #options = []
 
@@ -92,6 +96,12 @@ class DropdownField {
     this.#searchInputElm.placeholder = this.#config.searchPlaceholder
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+
+    this.allowCustomOption = this.#config.allowCustomOption
+    if (this.allowCustomOption) {
+      // this.#customOptionBtn = this.#select(`.${this.fieldKey}-custom-opt-btn`)
+      // this.#addEvent(this.#customOptionBtn, 'click', () => { this.#addCustomOption() })
+    }
 
     observeElement(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
@@ -214,7 +224,7 @@ class DropdownField {
 
     const generateOptObjFromElm = opt => {
       const obj = {}
-      const lblElm = opt.querySelector('.opt-lbl')
+      const lblElm = opt.querySelector(`.${this.fieldKey}-opt-lbl`)
       const { value } = opt.dataset
       obj.lbl = lblElm.textContent
       if (value) obj.val = value
@@ -439,7 +449,7 @@ class DropdownField {
         lblimgbox.append(img)
       }
       const lbl = this.#createElm('span')
-      this.#setClassName(lbl, 'opt-lbl')
+      this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
       this.#setTextContent(lbl, opt.lbl)
       lblimgbox.append(lbl)
       const prefix = this.#createElm('span')
@@ -490,6 +500,27 @@ class DropdownField {
     }
   }
 
+  #addCustomOption() {
+    let value = this.#searchInputElm.value.trim()
+    if (value) {
+      const customOptLen = this.#customOptions.length
+      for (let i = 0; i < customOptLen; i++) {
+        const opt = this.#customOptions[i]
+        const lbl = opt.lbl.toLowerCase()
+        if (lbl === value) {
+          value = ''
+          break
+        }
+      }
+      if (value) {
+        this.#customOptions.push({ lbl: value, val: value })
+        this.#options.push({ lbl: value, val: value })
+        this.searchOptions(value)
+        this.#addOnClickOptionsEvent()
+      }
+    }
+  }
+
   searchOptions(value) {
     this.#setSearchValue(value)
     let filteredOptions = []
@@ -498,6 +529,7 @@ class DropdownField {
       const optLengths = this.#config.options.length
       const alreadyPushedGroups = []
       const searchText = value.toLowerCase()
+      let isExist = false
       for (let i = 0; i < optLengths; i++) {
         const opt = this.#config.options[i]
         if ('type' in opt) continue
@@ -509,16 +541,33 @@ class DropdownField {
             filteredOptions.push(this.#config.options[groupInd])
           }
           filteredOptions.push(opt)
+          if (lbl === searchText) isExist = true
         }
       }
+      const customOptLen = this.#customOptions.length
+      for (let i = 0; i < customOptLen; i++) {
+        const opt = this.#customOptions[i]
+        const lbl = opt.lbl.toLowerCase()
+        if (lbl.includes(searchText)) {
+          filteredOptions.push(opt)
+          if (lbl === searchText) isExist = true
+        }
+      }
+
       if (!filteredOptions.length) {
         filteredOptions = [{ i: 'not-found', lbl: 'No Option Found' }]
       }
       this.#options = filteredOptions
       this.#clearSearchBtnElm.style.display = 'grid'
+      // if (isExist && this.allowCustomOption) this.#customOptionBtn.style.display = 'none'
+      // else if (this.allowCustomOption && searchText.trim()) this.#customOptionBtn.style.display = 'block'
     } else {
       this.#options = this.#config.options
       this.#clearSearchBtnElm.style.display = 'none'
+      if (this.allowCustomOption) {
+        // this.#customOptionBtn.style.display = 'none'
+        // this.#options = this.#options.concat(this.#customOptions)
+      }
     }
 
     this.#reRenderVirtualOptions()
@@ -547,9 +596,11 @@ class DropdownField {
     if (spaceBelow < spaceAbove && spaceBelow < 250) {
       this.#dropdownFieldWrapper.style.flexDirection = 'column-reverse'
       this.#dropdownFieldWrapper.style.bottom = '0%'
+      this.#dropdownFieldWrapper.style.position = 'absolute'
     } else {
       this.#dropdownFieldWrapper.style.flexDirection = 'column'
       this.#dropdownFieldWrapper.style.removeProperty('bottom')
+      this.#dropdownFieldWrapper.style.removeProperty('position')
     }
   }
 

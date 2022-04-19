@@ -21,7 +21,7 @@ export default function selectStyle_1_BitformDefault({ fk }) {
       color: 'var(--global-font-color)!important',
       padding: '10px 8px 10px 8px!important',
       'line-height': '1.4 !important',
-      height: '40px',
+      'min-height': '40px',
     },
     [`.${fk}-fld:focus`]: {
       'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30)!important',

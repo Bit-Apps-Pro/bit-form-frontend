@@ -427,17 +427,20 @@ class CountryField {
   }
 
   #openDropdownAsPerWindowSpace() {
+    const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
     const elementRect = this.#countryFieldWrapper.getBoundingClientRect()
 
     const spaceAbove = elementRect.top
-    const spaceBelow = window.innerHeight - elementRect.bottom
+    const spaceBelow = iframeWindow.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < 250) {
       this.#countryFieldWrapper.style.flexDirection = 'column-reverse'
       this.#countryFieldWrapper.style.bottom = '0%'
+      this.#countryFieldWrapper.style.position = 'absolute'
     } else {
       this.#countryFieldWrapper.style.flexDirection = 'column'
       this.#countryFieldWrapper.style.removeProperty('bottom')
+      this.#countryFieldWrapper.style.removeProperty('position')
     }
   }
 

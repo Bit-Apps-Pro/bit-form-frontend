@@ -29,18 +29,18 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-country-fld-wrp.disabled .${fk}-dpd-wrp`]: {
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: ' hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
       cursor: 'not-allowed',
       'pointer-events': 'none',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
     [`.${fk}-country-fld-wrp.readonly .${fk}-dpd-wrp`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: ' hsla(0, 0%, 33%, 100%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
     [`.${fk}-country-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
@@ -273,7 +273,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     '.opt-not-found': {
       'text-align': 'center',
       'list-style': 'none',
-      'margin-top': '5px',
+      margin: '5px',
     },
 
     [`.${fk}-search-clear-btn:focus-visible`]: {

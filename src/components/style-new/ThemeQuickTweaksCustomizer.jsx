@@ -143,6 +143,7 @@ export default function ThemeQuickTweaksCustomizer() {
         stateObjName="themeColors"
         propertyPath="--global-fld-bdr-clr"
         modalId="global-fld-bdr-clr"
+        hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
       />
       <SimpleColorPicker
         title="Field Background Color"

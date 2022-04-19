@@ -37,15 +37,15 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
     [`.disabled .${fk}-dpd-wrp`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 94%, 30%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
     [`.readonly .${fk}-dpd-wrp`]: {
       'pointer-events': 'none',
-      'background-color': 'hsla(0, 0%, 94%, 30%) !important',
-      color: 'hsla(0, 0%, 94%, 30%) !important',
-      'border-color': 'hsla(0, 0%, 46%, 30%) !important',
+      'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
+      color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+      'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
     [`.${fk}-menu-open`]: {
@@ -234,6 +234,35 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
       outline: 'none',
     },
 
+    [`.${fk}-custom-opt-btn`]: {
+      display: 'none',
+      right: '30px',
+      padding: '5px',
+      margin: '0',
+      background: 'transparent',
+      border: '0.5px solid hsla(var(--gfbg-h), var(--gfbg-s), 70%, var(--gfbg-a)) ',
+      outline: '0',
+      cursor: 'pointer',
+      'place-content': 'center',
+      height: '25px',
+      'border-radius': '5px',
+      color: 'var(--global-font-color)',
+    },
+
+    [`.${fk}-create-opt`]: {
+      margin: '2px 5px',
+      transition: 'background 0.2s',
+      'border-radius': '6px',
+      // 'font-size': 'var(--fld-fs)',
+      cursor: 'pointer',
+      'text-align': 'left',
+      border: 'none',
+      padding: '5px 7px',
+      display: 'flex',
+      'align-items': 'center',
+      'justify-content': 'space-between',
+    },
+
     [`.${fk}-option`]: {
       margin: '2px 5px',
       transition: 'background 0.2s',
@@ -275,13 +304,14 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
     [`.${fk}-opt-not-found`]: {
       'text-align': 'center',
       'list-style': 'none',
-      'margin-top': '5px',
+      margin: '5px',
     },
 
     [`.${fk}-opt-lbl-wrp`]: {
       display: 'flex',
       'align-items': 'center',
     },
+    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-opt-icn`]: {
       'margin-right': '5px',
