@@ -1605,6 +1605,15 @@ arrow:after,
  .red-btn:hover {
     background: var(--red-83-54)
  }
+
+ .resize-txt {
+   position: absolute;
+   top: -25px;
+   font-size: 12px;
+   padding: 3px 6px;
+   background-color: #a5a5afbd;
+   border-radius: 10px;
+ }
  
  .blk-icn-wrp {
     background-color: hsl(215deg 100% 50%);

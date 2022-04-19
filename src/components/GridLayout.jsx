@@ -331,6 +331,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
   const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
+    setResizingFalse()
   }
 
   const handleContextMenu = (e, fldKey) => {
@@ -427,6 +428,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
+    setResizingFalse()
     if (styleMode) return
     history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
@@ -520,12 +522,27 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     return Math.round(width)
   }
 
-  // to sort the fields in the order of their position based on the y and x coordinates
-  const sortLayoutsBasedOnY = () => {
+  // sort the fields in the order of their position based on the y and x coordinates
+  const sortLayoutsBasedOnXY = () => {
     const lays = deepCopy(layouts[breakpoint])
     lays.sort(sortArrayOfObjectByMultipleProps(['y', 'x']))
 
     return lays
+  }
+
+  const [isFldResizing, setIsFldResizing] = useState(false)
+  const delayRef = useRef(null)
+
+  const setResizingFalse = () => {
+    if (!isFldResizing) return
+    if (delayRef.current !== null) {
+      clearTimeout(delayRef.current)
+    }
+
+    delayRef.current = setTimeout(() => {
+      setIsFldResizing(false)
+      delayRef.current = null
+    }, 400)
   }
 
   return (
@@ -558,7 +575,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                   draggableHandle=".drag"
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
+                  onDragStart={(_, lay) => setIsFldResizing(lay.i)}
                   onDragStop={setRegenarateLayFlag}
+                  onResizeStart={(_, lay) => setIsFldResizing(lay.i)}
                   onResizeStop={setRegenarateLayFlag}
                 >
                   {layouts[breakpoint].map(layoutItem => (
@@ -582,6 +601,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
+                          isFldResizing,
                         }}
                       />
                     </div>
@@ -589,7 +609,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                 </ResponsiveReactGridLayout>
               ) : (
                 <div className="_frm-g">
-                  {sortLayoutsBasedOnY().map(layoutItem => (
+                  {sortLayoutsBasedOnXY().map(layoutItem => (
                     <div
                       key={layoutItem.i}
                       data-key={layoutItem.i}

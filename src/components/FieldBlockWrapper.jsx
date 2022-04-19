@@ -19,7 +19,8 @@ export default function FieldBlockWrapper({ layoutItem,
   formID,
   navigateToFieldSettings,
   navigateToStyle,
-  handleContextMenu, }) {
+  handleContextMenu,
+  isFldResizing }) {
   const styleNavigation = e => {
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
@@ -27,6 +28,7 @@ export default function FieldBlockWrapper({ layoutItem,
 
   return (
     <>
+      {(isFldResizing === layoutItem.i) && <span className="resize-txt">{`w: ${layoutItem.w} x: ${layoutItem.x}`}</span>}
       <div className="blk-icn-wrp pos-abs flx">
         <button
           type="button"
