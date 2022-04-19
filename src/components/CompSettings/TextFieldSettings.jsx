@@ -15,7 +15,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
@@ -62,7 +61,6 @@ function TextFieldSettings() {
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
@@ -95,19 +93,6 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: `autocomplete_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  function setAdminLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.adminLbl
-    } else {
-      fieldData.adminLbl = e.target.value
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    // e.persist()
-    // if(!(e.ctrl && e.key.toLowerCase() === 'z' || e.key.toLowerCase() === 'y')) {
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
-    // }
-  }
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
       fieldData.adminLbl = fieldData.lbl || fldKey
@@ -382,7 +367,7 @@ function TextFieldSettings() {
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
-    setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
+    setIconFilterValue(typ, fldKey)
     setIcnType(typ)
     setIcnMdl(true)
   }

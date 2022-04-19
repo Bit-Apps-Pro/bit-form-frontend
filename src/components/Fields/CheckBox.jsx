@@ -103,7 +103,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
           {... { ...getCustomAttributs(fieldKey, 'cc') }}
         >
-          <svg
+          {/* <svg
             className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}
             {... { ...getCustomAttributs(fieldKey, 'cks') }}
           >
@@ -113,7 +113,17 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 points="1.5 6 4.5 9 10.5 1"
               />
             </symbol>
+          </svg> */}
+
+          <svg className={`${fieldKey}-cks`}>
+            <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
+              <polyline
+                className={`${fieldKey}-ck-svgline`}
+                points="1.5 6 4.5 9 10.5 1"
+              />
+            </symbol>
           </svg>
+
           {attr.opt.map((itm, i) => (
             <div
               data-dev-cw={fieldKey}

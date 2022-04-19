@@ -1063,6 +1063,26 @@ const editorConfig = {
         transition: '',
       },
     },
+    'opt-search-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
     'opt-search-icn': {
       states: ['hover'],
       properties: {
@@ -1134,6 +1154,23 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
+    'opt-lbl-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
+
     'opt-icn': {
       states: [],
       properties: {

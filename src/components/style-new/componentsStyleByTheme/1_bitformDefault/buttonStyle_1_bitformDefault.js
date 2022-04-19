@@ -5,7 +5,7 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       display: 'flex',
       'flex-direction': 'column',
       'background-color': 'var(--fld-wrp-bg, transparent)',
-      width: '100%',
+      // width: '100%',
       padding: 'var(--fld-wrp-p, 0)',
       margin: 'var(--fld-wrp-m, 0)',
       position: 'relative',

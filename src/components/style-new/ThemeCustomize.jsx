@@ -8,12 +8,13 @@
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $colorScheme, $flags } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderRightPanelScroll, $colorScheme, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
 import AsteriskCustomizer from './AsteriskCustomizer'
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
 import FieldContainerCustomizer from './FieldContainerCustomizer'
@@ -32,6 +33,8 @@ export default function ThemeCustomize() {
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
+
+  const scrollTo = useRecoilValue($builderRightPanelScroll)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -67,23 +70,25 @@ export default function ThemeCustomize() {
 
   return (
     <div className={css(cls.mainWrapper)}>
-      <span className={css({ flxi: 'center', mt: 10 })}>
-        <Link
-          to={`/form/builder/${formType}/${formID}/themes`}
-          className={css([cls.breadcumbLink, ut.fontBody, cls.l1])}
-        >
-          <ChevronLeft size="14" />
+      <div className={css(ut.pb1, style.flxColumn, style.fixed, scrollTo && style.shw)}>
+        <span className={css({ flxi: 'center', mt: 10 })}>
+          <Link
+            to={`/form/builder/${formType}/${formID}/themes`}
+            className={css([cls.breadcumbLink, ut.fontBody, cls.l1])}
+          >
+            <ChevronLeft size="14" />
+            {' '}
+            Themes /
+            {' '}
+          </Link>
+          <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
+        </span>
+        <h4 className={css(cls.title)}>
+          {genarateTitle()}
           {' '}
-          Themes /
-          {' '}
-        </Link>
-        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
-      </span>
-      <h4 className={css(cls.title)}>
-        {genarateTitle()}
-        {' '}
-        (Global)
-      </h4>
+          (Global)
+        </h4>
+      </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
 

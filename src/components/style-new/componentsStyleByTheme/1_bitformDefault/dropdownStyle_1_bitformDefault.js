@@ -13,6 +13,7 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-dpd-fld-wrp`]: {
+      position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
       border: 'solid var(--global-fld-bdr-clr) !important',
@@ -27,9 +28,9 @@ export default function dropdownStyle_1_BitformDefault({ fk }) {
       transition: 'box-shadow .3s',
     },
 
-    [`.${fk}-dpd-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
+    [`.${fk}-dpd-fld-wrp:hover:not(.${fk}-menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
 
-    [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open,.disabled)`]: {
+    [`.${fk}-dpd-fld-wrp:focus-within:not(.${fk}-menu-open,.disabled)`]: {
       'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
       'border-color': 'var(--global-accent-color) !important',
     },

@@ -598,7 +598,6 @@ function ConfMsg({ removeIntegration }) {
                               show={['icn']}
                               variant="lightgray"
                               noShadow
-                              defaultActive={controller}
                             />
                           </div>
                           <div className={css(styles.segmentcontainer)}>

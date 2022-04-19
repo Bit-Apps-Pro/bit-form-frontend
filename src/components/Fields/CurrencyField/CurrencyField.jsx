@@ -128,16 +128,18 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div
-                  data-dev-opt-search-input={fieldKey}
-                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-input')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
+                  data-dev-opt-search-wrp={fieldKey}
+                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-wrp')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'opt-search-wrp') }}
                 >
                   <input
+                    data-dev-opt-search-input={fieldKey}
                     type="search"
-                    className={`${fieldKey}-opt-search-input`}
+                    className={`${fieldKey}-opt-search-input ${getCustomClsName(fieldKey, 'opt-search-input')}`}
                     placeholder="Search for currency"
                     autoComplete="off"
                     tabIndex="-1"
+                    {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
                   />
                   <svg
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}

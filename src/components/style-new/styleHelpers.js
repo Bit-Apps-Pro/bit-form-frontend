@@ -5,6 +5,8 @@ import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
@@ -270,6 +272,7 @@ export const removeHighlight = (selector = '[data-highlight]') => {
  * @function commonStyle(fk, type)
  * @param {string} fk field key
  * @param {string} type size
+ * @param {string} fieldType field type
  * @return style classes
 */
 export const commonStyle = (fk, type, fieldType) => {
@@ -852,7 +855,9 @@ export const generateFontUrl = (font, string) => {
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
 
-export const findExistingFontStyleNWeidth = (styles, themeVars) => {
+export const findExistingFontStyleNWeidth = () => {
+  const styles = getRecoil($styles)
+  const themeVars = getRecoil($themeVars)
   const fontWeightVariant = []
   const fontStyleParam = []
   const fieldsArr = Object.keys(styles.fields)
@@ -879,7 +884,10 @@ export const findExistingFontStyleNWeidth = (styles, themeVars) => {
   return [fontWeightVariant, fontStyleParam]
 }
 
-export const updateGoogleFontUrl = (styles, setStyle, themeVars) => {
+export const updateGoogleFontUrl = () => {
+  const styles = getRecoil($styles)
+  const themeVars = getRecoil($themeVars)
+
   const fontWeightparam = []
   let string = ''
   const globalFont = themeVars['--g-font-family']
@@ -899,9 +907,10 @@ export const updateGoogleFontUrl = (styles, setStyle, themeVars) => {
   }
 
   const url = generateFontUrl(globalFont, string)
-  setStyle(prvStyle => produce(prvStyle, drft => {
+  const newStyles = produce(styles, drft => {
     drft.font.fontURL = url
-  }))
+  })
+  setRecoil($styles, newStyles)
 }
 
 export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
@@ -923,7 +932,9 @@ export const getValueFromStateVar = (stateObj, val) => {
   return val
 }
 
-export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeColors, setThemeColors) => {
+export const setIconFilterValue = (iconType, fldKey) => {
+  const styles = getRecoil($styles)
+  const themeColors = getRecoil($themeColors)
   const elementKey = styleClasses[iconType][0]
   const filterValue = styles?.fields?.[fldKey].classes[`.${fldKey}-${elementKey}`]?.filter
   const themeVal = getValueFromStateVar(themeColors, filterValue)
@@ -936,28 +947,33 @@ export const setIconFilterValue = (iconType, fldKey, styles, setStyles, themeCol
         const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
         const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
         const setFilterValue = hexToCSSFilter(hexValue)
-        setThemeColors(prvStyle => produce(prvStyle, drft => {
+        const newThemeColors = produce(themeColors, drft => {
           drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
-        }))
+        })
+        setRecoil($themeColors, newThemeColors)
       }
     } else if (parentColor) {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
       const setFilterValue = hexToCSSFilter(hexValue)
-      setStyles(prvState => produce(prvState, drftStyles => {
+      console.log(fldKey, elementKey, setFilterValue.filter)
+      const newStyles = produce(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
+        console.log('style', drftStyles.fields[fldKey].classes)
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
-          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
-      }))
+      })
+      setRecoil($styles, newStyles)
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
-      setStyles(prvState => produce(prvState, drftStyles => {
+      const newStyles = produce(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
-          drftStyles.fields[fldKey].overrideGlobalTheme = [...prvState.fields[fldKey].overrideGlobalTheme, elementKey]
+          drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
-      }))
+      })
+      setRecoil($styles, newStyles)
     }
   }
 }
@@ -1023,4 +1039,17 @@ export const paddingGenerator = (padding, pos, add) => {
   if (checkImportant) values[4] = '!important'
 
   return values.join(' ')
+}
+
+export const sortArrayOfObjectByMultipleProps = (props = []) => {
+  const l = props.length
+
+  return (a, b) => {
+    for (let i = 0; i < l; i += 1) {
+      const o = props[i]
+      if (a[o] > b[o]) return 1
+      if (a[o] < b[o]) return -1
+    }
+    return 0
+  }
 }
