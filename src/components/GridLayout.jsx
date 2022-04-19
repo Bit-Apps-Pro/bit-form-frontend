@@ -21,13 +21,13 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
-import { isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { highlightElm, removeHighlight } from './style-new/styleHelpers'
+import { highlightElm, removeHighlight, sortArrayOfObjectByMultipleProps } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
 
@@ -520,6 +520,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     return Math.round(width)
   }
 
+  // to sort the fields in the order of their position based on the y and x coordinates
+  const sortLayoutsBasedOnY = () => {
+    const lays = deepCopy(layouts[breakpoint])
+    lays.sort(sortArrayOfObjectByMultipleProps(['y', 'x']))
+
+    return lays
+  }
+
   return (
     <div style={{ width: gridWidth + 10 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
@@ -581,7 +589,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                 </ResponsiveReactGridLayout>
               ) : (
                 <div className="_frm-g">
-                  {layouts[breakpoint].map(layoutItem => (
+                  {sortLayoutsBasedOnY().map(layoutItem => (
                     <div
                       key={layoutItem.i}
                       data-key={layoutItem.i}
@@ -591,7 +599,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                       role="button"
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-
                     >
                       <FieldBlockWrapper
                         {...{
