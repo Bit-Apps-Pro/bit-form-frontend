@@ -525,7 +525,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   // sort the fields in the order of their position based on the y and x coordinates
   const sortLayoutsBasedOnXY = () => {
     const lays = deepCopy(layouts[breakpoint])
-    lays.sort(sortArrayOfObjectByMultipleProps(['y', 'x']))
+    lays.sort(sortArrOfObjByMultipleProps(['y', 'x']))
 
     return lays
   }
