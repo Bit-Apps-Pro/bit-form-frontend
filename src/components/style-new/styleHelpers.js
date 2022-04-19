@@ -2,6 +2,9 @@
 /* eslint-disable no-param-reassign */
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
+import { getRecoil, setRecoil } from 'recoil-nexus'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
@@ -36,7 +39,7 @@ export const showDraggableModal = (e, setDraggableModal, props) => {
 // This Function used for Array To Style String converter (like shadow)
 export const objectArrayToStyleStringGenarator = shadows => {
   let shadowString = ''
-  shadows.map(shadow => {
+  shadows.forEach(shadow => {
     shadowString += `${Object.values(shadow).join(' ')},`
   })
   shadowString = shadowString.slice(0, -1)
@@ -46,7 +49,7 @@ export const objectArrayToStyleStringGenarator = shadows => {
 export const json2CssStr = (className, jsonValue) => {
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
-  objArr.map(([property, value]) => {
+  objArr.forEach(([property, value]) => {
     cssStr += `${property}:${value};`
   })
   cssStr += '}'
@@ -670,17 +673,19 @@ export const styleClasses = {
 const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
-export const removeUnuseStyles = (fields, setStyles) => {
+export const removeUnuseStyles = () => {
+  const fields = getRecoil($fields)
+  const styles = getRecoil($styles)
   const fieldsArray = Object.keys(fields)
-  setStyles(prvStyle => produce(prvStyle, deftStyles => {
+  const newStyles = produce(styles, deftStyles => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
       if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
       if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
       if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
       if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
-      if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
-      if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.subTlePreIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
       if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hlpTxt, fldkey)
       if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
       if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
@@ -708,6 +713,12 @@ export const removeUnuseStyles = (fields, setStyles) => {
         case 'radio':
 
           break
+        case 'title':
+          if (!fld.subTitlPreIcn) deleteStyles(deftStyles, styleClasses.subTitlPreIcn, fldkey)
+          if (!fld.subTitlSufIcn) deleteStyles(deftStyles, styleClasses.subTitlSufIcn, fldkey)
+          if (!fld.titlePreIcn) deleteStyles(deftStyles, styleClasses.titlePreIcn, fldkey)
+          if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
+          break
         case 'check':
 
           break
@@ -715,12 +726,15 @@ export const removeUnuseStyles = (fields, setStyles) => {
           break
       }
     })
-  }))
+  })
+
+  setRecoil($styles, newStyles)
 }
 
-export const addDefaultStyleClasses = (fk, element, setStyle) => {
-  setStyle(prvStyle => produce(prvStyle, drftStyle => {
-    const fldTyp = prvStyle.fields[fk]?.fieldType
+export const addDefaultStyleClasses = (fk, element) => {
+  const styles = getRecoil($styles)
+  const newStyles = produce(styles, drftStyle => {
+    const fldTyp = styles.fields[fk]?.fieldType
     switch (fldTyp) {
       case 'text':
       case 'number':
@@ -828,7 +842,8 @@ export const addDefaultStyleClasses = (fk, element, setStyle) => {
       default:
         break
     }
-  }))
+  })
+  setRecoil($styles, newStyles)
 }
 
 export const generateFontUrl = (font, string) => {
@@ -963,7 +978,7 @@ export const isStyleExist = (styles, fieldKey, classKey) => {
 export const paddingGenerator = (padding, pos, add) => {
   let checkImportant = false
   let values
-
+  if (padding === '') values = '10px'
   if (padding.match(/(!important)/gi)) {
     values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
     checkImportant = true

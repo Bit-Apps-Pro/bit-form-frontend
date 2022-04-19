@@ -73,7 +73,7 @@ function TextFieldSettings() {
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
   const ac = fieldData?.ac ? fieldData.ac.trim().split(',') : ['Off']
-  const fieldName = fieldData.fieldName || fldKey
+  const { fieldName } = fieldData
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
@@ -364,7 +364,8 @@ function TextFieldSettings() {
 
   const handleFieldName = ({ target: { value } }) => {
     if (value !== '') fieldData.fieldName = value
-    else fieldData.fieldName = fldKey
+    // else fieldData.fieldName = fldKey
+    else delete fieldData.fieldName
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -380,7 +381,7 @@ function TextFieldSettings() {
   }
 
   const setIconModel = (typ) => {
-    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)
@@ -643,8 +644,10 @@ function TextFieldSettings() {
                         </button>
                         <div>
                           <ul role="menu">
-                            {predefinedPatterns?.map(opt => (
+                            {predefinedPatterns?.map((opt, i) => (
                               <li
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={i}
                                 role="menuitem"
                                 className={`${css(style.button)} btnHover`}
                                 onKeyPress={() => setRegexrValue(opt.val)}

@@ -8,6 +8,7 @@ import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
+import { formatOptions } from './EditOptions/editOptionsHelper'
 import AcfFieldOptions, { generateAcfOptions } from './ImportOptionsComps/AcfFieldOptions'
 import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
 import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
@@ -16,12 +17,12 @@ import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
 
-export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey, setEditOptionType }) {
+export default function ImportOptions({ setOptions, importOpts, setImportOpts, lblKey, valKey, setEditOptionType }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fldKey])
   const generateNewOptions = () => {
     if (!isPro) return []
@@ -86,7 +87,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
       fieldObject = fieldData?.customType
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setOptions(formatOptions(fieldData.opt, lblKey))
     setImportOpts({ dataSrc, fieldObject, disabled })
     setEditOptionType('Visual')
   }

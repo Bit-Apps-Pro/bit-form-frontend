@@ -186,7 +186,7 @@ export default function FontPickerMenu() {
       <StyleSegmentControl
         options={[{ label: 'Custom' }, { label: 'Google' }]}
         onChange={lbl => onTabChangeHandler(lbl)}
-        activeValue={controller}
+        defaultActive={controller}
         wideTab
         className={css(inheritFont && fontStyle.disabled)}
       />

@@ -103,7 +103,7 @@ export default function ReCaptchaSettings() {
               { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
             ]}
             onChange={val => flexDirectionHandle(val, 'justify-content')}
-            activeValue={alignment}
+            defaultActive={alignment}
           />
         </div>
       </div>

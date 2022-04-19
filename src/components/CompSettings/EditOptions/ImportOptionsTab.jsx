@@ -5,7 +5,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
 import ImportOptions from '../ImportOptions'
 
-export default function ImportOptionsTab({ lblKey, valKey, setEditOptionType }) {
+export default function ImportOptionsTab({ setOptions, lblKey, valKey, setEditOptionType }) {
   const { fieldKey: fldKey } = useParams()
   const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -21,6 +21,6 @@ export default function ImportOptionsTab({ lblKey, valKey, setEditOptionType }) 
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
 
   return (
-    <ImportOptions importOpts={importOpts} setImportOpts={setImportOpts} lblKey={lblKey} valKey={valKey} setEditOptionType={setEditOptionType} />
+    <ImportOptions setOptions={setOptions} importOpts={importOpts} setImportOpts={setImportOpts} lblKey={lblKey} valKey={valKey} setEditOptionType={setEditOptionType} />
   )
 }

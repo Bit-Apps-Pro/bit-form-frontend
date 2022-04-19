@@ -64,7 +64,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else {
       history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
     }
-    removeUnuseStyles(fields, setStyles)
+    removeUnuseStyles()
   }
 
   const formFieldButtonHandler = () => {
@@ -72,8 +72,12 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: false, inspectMode: false }
     })
-    history.replace(`/form/builder/${formType}/${formID}/fields-list`)
-    removeUnuseStyles(fields, setStyles)
+    if (selectedFldId) {
+      history.replace(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`)
+    } else {
+      history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    }
+    removeUnuseStyles()
   }
 
   const handleRightPanel = (currentActive) => {
@@ -82,7 +86,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else if (currentActive === 'theme-customize') {
       history.push(`/form/builder/${formType}/${formID}/themes`)
     }
-    removeUnuseStyles(fields, setStyles)
+    removeUnuseStyles()
   }
 
   const inspectModeButtonHandler = () => {

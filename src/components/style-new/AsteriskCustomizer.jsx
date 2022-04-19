@@ -142,7 +142,7 @@ export default function AsteriskCustomizer() {
               { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'right' },
             ]}
             onChange={value => setAsteriskPos(value)}
-            activeValue="after"
+            defaultActive="after"
           />
         </div>
       </ThemeStylePropertyBlock>

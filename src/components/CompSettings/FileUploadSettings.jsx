@@ -115,7 +115,7 @@ export default function FileUploadSettings() {
   }
 
   const setIconModel = (typ) => {
-    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ, setStyles)
+    if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey, styles, setStyles, themeColors, setThemeColors)
     setIcnType(typ)
     setIcnMdl(true)

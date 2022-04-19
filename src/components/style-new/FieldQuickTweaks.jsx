@@ -159,6 +159,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
             elemntKey = `${fld.fieldType}-fld-wrp`
             break
 
+          case 'image':
+            elemntKey = 'fld-wrp'
+            break
+
           case 'phone-number':
             elemntKey = 'phone-fld-wrp'
             break
@@ -205,6 +209,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'currency':
       case 'country':
         elementKey = `${fldType}-fld-wrp`
+        break
+      case 'image':
+        elementKey = 'fld-wrp'
         break
       case 'phone-number':
         elementKey = 'phone-fld-wrp'
@@ -366,6 +373,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
     }))
   }
+  console.log(fieldType)
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
@@ -384,7 +392,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
             <span className={css(ut.fw500)}>Size</span>
             <select onChange={setSizes} className={css(sc.select)}>
               <option value="">Select Size</option>
-              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -399,7 +407,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>
             <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
-              {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -449,7 +457,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
               ]}
               onChange={val => positionHandle(val, 'align-items')}
-              activeValue={position}
+              defaultActive={position}
             />
           </div>
           <div className={css(style.main, ut.mt2)}>
@@ -465,7 +473,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
               ]}
               onChange={val => flexDirectionHandle(val, 'flex-direction')}
-              activeValue={flex}
+              defaultActive={flex}
             />
           </div>
         </>
@@ -477,7 +485,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
           <SingleToggle isChecked={rtlCurrencyFldCheck()} action={handleDir} />
         </div>
       )}
-      {!(fieldType === 'paypal' || fieldType === 'razorpay') && (
+      {!(fieldType === 'paypal' || fieldType === 'razorpay' || fieldType === 'title') && (
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500)}>Border Radius</span>
           <div className={css(ut.flxc)}>

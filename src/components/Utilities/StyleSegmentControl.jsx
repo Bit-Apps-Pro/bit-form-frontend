@@ -4,7 +4,6 @@ import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'
 
 export default function StyleSegmentControl({ defaultActive,
-  activeValue,
   className,
   options,
   size = 100,
@@ -104,6 +103,7 @@ export default function StyleSegmentControl({ defaultActive,
     setTimeout(() => {
       const { width: toActiveElmWidth } = activeElement.getBoundingClientRect() || { width: 0 }
       // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+      if (!selectorRef.current) return
       selectorRef.current.style.width = `${toActiveElmWidth}px`
       selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
     }, 100)

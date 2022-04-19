@@ -294,7 +294,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               onChange={lbl => setController(lbl)}
               show={['icn']}
               variant="lightgray"
-              activeValue={controller}
+              defaultActive={controller}
               width="100%"
               wideTab
             />
@@ -400,7 +400,7 @@ const cls = {
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
-  container: { ml: 12, mr: 15, pn: 'relative' },
+  container: { mx: 16, pn: 'relative' },
   btn: {
     b: 'none',
     oe: 'none',

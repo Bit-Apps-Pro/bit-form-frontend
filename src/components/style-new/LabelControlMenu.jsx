@@ -194,7 +194,7 @@ export default function LabelControlMenu() {
             { icn: <LblPlacementReverseIcn size="17" />, label: 'inline-rev', tip: 'Inline reverse' },
           ]}
           onChange={name => handleLabelPosition(name)}
-          activeValue={activeLabelPosition}
+          defaultActive={activeLabelPosition}
           width="100px"
         />
       </div>
@@ -211,7 +211,7 @@ export default function LabelControlMenu() {
               { icn: <LblvarticalPlsmntBottomIcon size="17" />, label: 'end', tip: 'Bottom' },
             ]}
             onChange={e => setLabelVerticalPos(e)}
-            activeValue={lwSa}
+            defaultActive={lwSa}
             width="100px"
           />
         </div>
@@ -228,7 +228,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setLabelAlign(e)}
-          activeValue={lblAl}
+          defaultActive={lblAl}
           width="100px"
         />
       </div>
@@ -244,7 +244,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setSubLabelAlign(e)}
-          activeValue={stAl}
+          defaultActive={stAl}
           width="100px"
         />
       </div>
@@ -260,7 +260,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setHelperTextAlign(e)}
-          activeValue={htAl}
+          defaultActive={htAl}
           width="100px"
         />
       </div>

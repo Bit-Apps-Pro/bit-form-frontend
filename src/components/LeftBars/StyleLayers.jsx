@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
@@ -21,7 +22,10 @@ export default function StyleLayers() {
   const { formID, formType, fieldKey } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
-  const styleHandler = (route, fldKey = null) => {
+  const styleHandler = (route, fldKey = null, fldData = null) => {
+    if (fldData) {
+      route = (fldData.typ === 'html' || fldData.typ === 'divider') ? 'fld-wrp' : route
+    }
     if (fldKey) history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
     else history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
   }
@@ -32,44 +36,180 @@ export default function StyleLayers() {
       <Scrollbars style={{ height: 'calc(100% - 120px)' }} autoHide>
         <div className={css(s.scrollDiv)}>
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
-          <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
-          <NavBtn route="_frm-bg" label="Form Wrapper" highlightSelector="[data-dev-_frm-bg]" offset="3" />
-          <NavBtn route="_frm" label="Form Container" highlightSelector="[data-dev-_frm]" offset="3" />
-          <NavBtn route="field-containers" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
-          <NavBtn route="label-containers" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
+          <NavBtn
+            route="quick-tweaks"
+            label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>}
+            icn={<TweaksIcn size={13} />}
+          />
+          <NavBtn
+            route="_frm-bg"
+            label="Form Wrapper"
+            highlightSelector="[data-dev-_frm-bg]"
+            offset="3"
+          />
+          <NavBtn
+            route="_frm"
+            label="Form Container"
+            highlightSelector="[data-dev-_frm]"
+            offset="3"
+          />
+          <NavBtn
+            route="field-containers"
+            label="Field Containers"
+            highlightSelector="[data-dev-fld-wrp]"
+            offset="3"
+          />
+          <NavBtn
+            route="label-containers"
+            label="Label Containers"
+            offset="3"
+            highlightSelector="[data-dev-lbl-wrp]"
+          />
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('lbl')} offset="6" title="Labels" highlightSelector="[data-dev-lbl]">
-            <NavBtn route="lbl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-lbl-pre-i]" />
-            <NavBtn route="lbl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-lbl-suf-i]" />
-            <NavBtn route="req-smbl" label="Asterisk Icon" offset="3.5" highlightSelector="[data-dev-req-smbl]" />
+          <LayerAccordion
+            childrenAccodin
+            onClick={() => styleHandler('lbl')}
+            offset="6"
+            title="Labels"
+            highlightSelector="[data-dev-lbl]"
+          >
+            <NavBtn
+              route="lbl-pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-lbl-pre-i]"
+            />
+            <NavBtn
+              route="lbl-suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-lbl-suf-i]"
+            />
+            <NavBtn
+              route="req-smbl"
+              label="Asterisk Icon"
+              offset="3.5"
+              highlightSelector="[data-dev-req-smbl]"
+            />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('sub-titl')} offset="6" title="Sub Titles" highlightSelector="[data-dev-sub-titl]">
-            <NavBtn route="sub-titl-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-pre-i]" />
-            <NavBtn route="sub-titl-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-sub-titl-suf-i]" />
+          <LayerAccordion
+            childrenAccodin
+            onClick={() => styleHandler('sub-titl')}
+            offset="6"
+            title="Sub Titles"
+            highlightSelector="[data-dev-sub-titl]"
+          >
+            <NavBtn
+              route="sub-titl-pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-sub-titl-pre-i]"
+            />
+            <NavBtn
+              route="sub-titl-suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-sub-titl-suf-i]"
+            />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('pre-i')} offset="6" title="Inputs" highlightSelector="[data-dev-sub-titl]">
-            <NavBtn route="pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-pre-i]" />
-            <NavBtn route="suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-suf-i]" />
+          <LayerAccordion
+            childrenAccodin
+            onClick={() => styleHandler('pre-i')}
+            offset="6"
+            title="Inputs"
+            highlightSelector="[data-dev-sub-titl]"
+          >
+            <NavBtn
+              route="pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-pre-i]"
+            />
+            <NavBtn
+              route="suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-suf-i]"
+            />
           </LayerAccordion>
 
-          <LayerAccordion childrenAccodin onClick={() => styleHandler('hlp-txt')} offset="6" title="Helper Texts" highlightSelector="[data-dev-hlp-txt]">
-            <NavBtn route="hlp-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-pre-i]" />
-            <NavBtn route="hlp-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-hlp-txt-suf-i]" />
+          <LayerAccordion
+            childrenAccodin
+            onClick={() => styleHandler('hlp-txt')}
+            offset="6"
+            title="Helper Texts"
+            highlightSelector="[data-dev-hlp-txt]"
+          >
+            <NavBtn
+              route="hlp-txt-pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-hlp-txt-pre-i]"
+            />
+            <NavBtn
+              route="hlp-txt-suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-hlp-txt-suf-i]"
+            />
           </LayerAccordion>
 
-          <LayerAccordion route="err-msg" childrenAccodin onClick={() => styleHandler('err-msg')} offset="6" title="Error Messages" highlightSelector="[data-dev-err-msg]">
-            <NavBtn route="err-txt-pre-i" label="Prefix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-pre-i]" />
-            <NavBtn route="err-txt-suf-i" label="Suffix Icons" offset="3.5" highlightSelector="[data-dev-err-txt-suf-i]" />
+          <LayerAccordion
+            route="err-msg"
+            childrenAccodin
+            onClick={() => styleHandler('err-msg')}
+            offset="6"
+            title="Error Messages"
+            highlightSelector="[data-dev-err-msg]"
+          >
+            <NavBtn
+              route="err-txt-pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-err-txt-pre-i]"
+            />
+            <NavBtn
+              route="err-txt-suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-err-txt-suf-i]"
+            />
           </LayerAccordion>
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
 
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion onClick={() => styleHandler('quick-tweaks', fldKey)} title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === fieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isFieldOverrideStyles(styles, fldKey)}>
-              {!fldData.typ.match(/^(title|image|html)$/gi) && (<NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />)}
-              {fldData.typ !== 'paypal' && <NavBtn subRoute={fldKey} route="fld-wrp" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp')} />}
+            <LayerAccordion
+              key={fldKey}
+              onClick={() => styleHandler('quick-tweaks', fldKey, fldData)}
+              title={showFldTitle(fldData.typ)}
+              fldData={fldData}
+              tag={fldKey}
+              open={fldKey === fieldKey}
+              highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}
+              styleOverride={isFieldOverrideStyles(styles, fldKey)}
+            >
+              {!fldData.typ.match(/^(title|image|html|divider)$/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="quick-tweaks"
+                  label="Quick Tweaks"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}
+                />
+              )}
+              {fldData.typ !== 'paypal' && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="fld-wrp"
+                  label="Field Container"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp')}
+                />
+              )}
               <ElementConfiguration fldKey={fldKey} />
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>

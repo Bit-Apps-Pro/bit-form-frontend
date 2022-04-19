@@ -503,14 +503,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
   const getBuilderWidth = () => {
     let width = builderWidth - 10
-    const builderPadding = styles.form[colorScheme]['_frm-bg'].padding
-    const builderBorderWidth = styles.form[colorScheme]['_frm-bg']['border-width']
-    const builderMargin = styles.form[colorScheme]['_frm-bg'].margin
-    if (builderPadding !== '10px') {
+    const builderPadding = styles.form[colorScheme]['_frm-bg'].padding || ''
+    const builderBorderWidth = styles.form[colorScheme]['_frm-bg']['border-width'] || ''
+    const builderMargin = styles.form[colorScheme]['_frm-bg'].margin || ''
+    if (builderPadding && builderPadding !== '10px') {
       width -= (parseInt(builderPadding.replace('px', ''), 10) * 2) - 3
     }
 
-    if (builderBorderWidth !== '1px') {
+    if (builderBorderWidth && builderBorderWidth !== '1px') {
       width -= (parseInt(builderBorderWidth.replace('px', ''), 10))
     }
     if (builderMargin) {

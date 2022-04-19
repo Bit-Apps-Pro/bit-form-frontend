@@ -660,7 +660,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
                 ]}
                 onChange={e => setAlign(e)}
-                activeValue={txtAlignValue}
+                defaultActive={txtAlignValue}
               />
             </div>
           </StylePropertyBlock>
@@ -952,11 +952,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         onChange={lbl => setController(lbl)}
         show={['icn']}
         variant="lightgray"
-        activeValue={stateController}
+        defaultActive={stateController}
         width="100%"
         wideTab
       />
-      <Grow open={stateController.toLowerCase() === ''}>
+      <Grow overflw="" open={stateController.toLowerCase() === ''}>
         <div className={css(cls.space)}>
           {
             existCssProps.map((propName, indx) => (
@@ -972,7 +972,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       {
         states.map((state, i) => (
           // eslint-disable-next-line react/no-array-index-key
-          <Grow key={`grow-${i}`} open={stateController.toLowerCase() === state}>
+          <Grow overflw="" key={`grow-${i}`} open={stateController.toLowerCase() === state}>
             <div className={css(cls.space)}>
               {
                 existCssProps.map((propName, indx) => (
@@ -987,6 +987,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           </Grow>
         ))
       }
+      {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
     </>
   )
 }
