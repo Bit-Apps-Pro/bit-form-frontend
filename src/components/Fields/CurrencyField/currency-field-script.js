@@ -464,6 +464,7 @@ class CurrencyField {
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
+        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
@@ -471,20 +472,24 @@ class CurrencyField {
         }
         this.#setClassName(li, `${this.fieldKey}-option`)
         const lblimgbox = this.#createElm('span')
+        this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
         const img = this.#createElm('img')
+        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         this.#setClassName(img, `${this.fieldKey}-opt-icn`)
         img.src = `${bits.assetsURL}${opt.img}`
         img.alt = `${opt.lbl} flag image`
         img.loading = 'lazy'
         this.#setAttribute(img, 'aria-hidden', true)
         const lbl = this.#createElm('span')
+        this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(img, lbl)
-        const prefix = this.#createElm('span')
-        this.#setClassName(prefix, `${this.fieldKey}-opt-suffix`)
-        this.#setTextContent(prefix, opt.i)
+        const suffix = this.#createElm('span')
+        this.#setAttribute(suffix, 'data-dev-opt-suffix', this.fieldKey)
+        this.#setClassName(suffix, `${this.fieldKey}-opt-suffix`)
+        this.#setTextContent(suffix, opt.i)
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
         this.#setAttribute(li, 'role', 'option')
         this.#setAttribute(li, 'aria-posinset', index + 1)
@@ -503,7 +508,7 @@ class CurrencyField {
           this.#setClassName(li, `${this.fieldKey}-disabled-opt`)
         }
 
-        li.append(lblimgbox, prefix)
+        li.append(lblimgbox, suffix)
 
         if (this.#selectedCurrencyCode === opt.i) {
           this.#setClassName(li, `${this.fieldKey}-selected-opt`)

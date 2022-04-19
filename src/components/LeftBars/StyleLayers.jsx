@@ -339,11 +339,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="opt-search-input"
-                    label="Option Search Input"
+                    route="opt-search-wrp"
+                    label="Option Search Wrapper"
                     offset="2.5"
-                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
+                    highlightSelector={`[data-dev-opt-search-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -352,6 +352,14 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-search-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-search-input"
+                    label="Option Search Input"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-search-input="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-input')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -368,6 +376,14 @@ export default function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-option="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'option')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="opt-lbl-wrp"
+                    label="Currency Option Label Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-lbl-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}

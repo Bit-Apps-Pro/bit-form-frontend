@@ -34,9 +34,11 @@ export const getElementTitle = (element) => {
     case 'slct-opt-grp': return 'Select Options Group'
     case 'selected-opt-img': return 'Selected Option Image'
     case 'selected-opt-clear-btn': return 'Selected Option Clear Button'
+    case 'opt-search-wrp': return 'Option Search Wrapper'
     case 'opt-search-input': return 'Option Search Input'
     case 'opt-search-icn': return 'Option Search Icon'
     case 'search-clear-btn': return 'Search Clear Button'
+    case 'opt-lbl-wrp': return 'Option Label Wrapper'
     case 'option': return 'Option'
     case 'opt-icn': return 'Option Icon'
 
