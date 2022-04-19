@@ -1240,6 +1240,22 @@ const editorConfig = {
         transition: '',
       },
     },
+    'option-search-wrp': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        height: '',
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        'backgound-color': '',
+      },
+    },
     'selected-country-img': {
       states: [],
       properties: {
@@ -1254,6 +1270,26 @@ const editorConfig = {
         padding: '',
         'box-shadow': '',
         'backgound-color': '',
+      },
+    },
+    'phone-number-input': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
       },
     },
     'opt-search-input': {
@@ -1345,6 +1381,26 @@ const editorConfig = {
         width: '',
         height: '',
         'box-shadow': '',
+      },
+    },
+    'opt-lbl-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
       },
     },
     'opt-icn': {
