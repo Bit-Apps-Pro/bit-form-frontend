@@ -264,6 +264,7 @@ class DropdownField {
         arr.push(obj)
       }
     }
+
     return arr
   }
 
@@ -584,7 +585,7 @@ class DropdownField {
   }
 
   #isMenuOpen() {
-    return this.#containsClass(this.#dropdownFieldWrapper, 'menu-open')
+    return this.#containsClass(this.#dropdownFieldWrapper, `${this.fieldKey}-menu-open`)
   }
 
   #openDropdownAsPerWindowSpace() {
@@ -596,11 +597,9 @@ class DropdownField {
     if (spaceBelow < spaceAbove && spaceBelow < 250) {
       this.#dropdownFieldWrapper.style.flexDirection = 'column-reverse'
       this.#dropdownFieldWrapper.style.bottom = '0%'
-      this.#dropdownFieldWrapper.style.position = 'absolute'
     } else {
       this.#dropdownFieldWrapper.style.flexDirection = 'column'
       this.#dropdownFieldWrapper.style.removeProperty('bottom')
-      this.#dropdownFieldWrapper.style.removeProperty('position')
     }
   }
 
@@ -608,7 +607,7 @@ class DropdownField {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
-      this.#dropdownFieldWrapper.classList.add('menu-open')
+      this.#dropdownFieldWrapper.classList.add(`${this.fieldKey}-menu-open`)
       this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
       this.#setTabIndex(this.#searchInputElm, 0)
       this.#setTabIndex(this.#clearSearchBtnElm, 0)
@@ -617,7 +616,7 @@ class DropdownField {
       this.#setAttribute(this.#searchInputElm, 'aria-hidden', false)
       this.#reRenderVirtualOptions()
     } else {
-      this.#dropdownFieldWrapper.classList.remove('menu-open')
+      this.#dropdownFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
       document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#setTabIndex(this.#searchInputElm, -1)
