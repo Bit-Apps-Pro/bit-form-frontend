@@ -10,12 +10,13 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $fields, $flags } from '../../GlobalStates/GlobalStates'
+import { $builderRightPanelScroll, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
@@ -258,26 +259,29 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       </div>
     )
   }
+  const scrollTo = useRecoilValue($builderRightPanelScroll)
 
   return (
     <div className={css(cls.mainWrapper)}>
-      <span className={css({ flxi: 'center', mt: 10 })}>
-        <Link to={`/form/builder/${formType}/${formID}/themes`} className={css([cls.breadcumbLink, ut.fontBody, cls.l1])}>
-          <ChevronLeft size="14" />
+      <div className={css(ut.pb1, style.flxColumn, style.fixed, scrollTo && style.shw)}>
+        <span className={css({ flxi: 'center', mt: 10 })}>
+          <Link to={`/form/builder/${formType}/${formID}/themes`} className={css([cls.breadcumbLink, ut.fontBody, cls.l1])}>
+            <ChevronLeft size="14" />
+            {' '}
+            Themes /
+            {' '}
+          </Link>
+          <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Individual Field Style Customize</span>
+        </span>
+        <h4 className={css(cls.title)}>
+          {fieldsTypes[fieldType]}
           {' '}
-          Themes /
-          {' '}
-        </Link>
-        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Individual Field Style Customize</span>
-      </span>
-      <h4 className={css(cls.title)}>
-        {fieldsTypes[fieldType]}
-        {' '}
-        {title}
-      </h4>
-      <div className={css(ut.flxc)}>
-        <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
-        <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
+          {title}
+        </h4>
+        <div className={css(ut.flxc)}>
+          <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
+          <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
+        </div>
       </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
