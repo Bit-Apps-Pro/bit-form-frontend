@@ -287,7 +287,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       outline: 'none',
     },
 
-    '.opt-lbl-wrp': {
+    [`.${fk}-opt-lbl-wrp`]: {
       display: 'flex',
       'align-items': 'center',
     },

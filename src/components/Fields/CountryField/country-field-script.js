@@ -325,6 +325,7 @@ class CountryField {
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
+        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, 'opt-not-found')
@@ -332,9 +333,11 @@ class CountryField {
         }
         this.#setClassName(li, `${this.fieldKey}-option`)
         const lblimgbox = this.#createElm('span')
-        this.#setClassName(lblimgbox, 'opt-lbl-wrp')
+        this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
+          this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
           this.#setClassName(img, `${this.fieldKey}-opt-icn`)
           img.src = `${bits.assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
@@ -343,6 +346,7 @@ class CountryField {
           lblimgbox.append(img)
         }
         const lbl = this.#createElm('span')
+        this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)

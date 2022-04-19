@@ -94,7 +94,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     {... { ...getCustomAttributs(fieldKey, 'selected-country-img') }}
                   />
                 )}
-                <span className={`${fieldKey}-selected-country-lbl`}>{ph}</span>
+                <span
+                  data-dev-selected-country-lbl={fieldKey}
+                  className={`${fieldKey}-selected-country-lbl`}
+                >
+                  {ph}
+                </span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
                 <button
@@ -140,7 +145,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
             </div>
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
-                <div className={`${fieldKey}-option-search-wrp`}>
+                <div className={`${fieldKey}-option-search-wrp`} data-dev-option-search-wrp={fieldKey}>
                   <input
                     type="search"
                     data-dev-opt-search-input={fieldKey}

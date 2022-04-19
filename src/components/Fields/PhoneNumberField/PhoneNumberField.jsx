@@ -6,7 +6,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
 import InputWrapper from '../../InputWrapper'
 import RenderStyle from '../../style-new/RenderStyle'
-import PhoneNumberFieldClass from './phone-number-field-srcipt'
+import PhoneNumberFieldClass from './phone-number-field-script'
 
 export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses }) {
   const phoneNumberWrapElmRef = useRef(null)
@@ -92,6 +92,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 </div>
               </div>
               <input
+                data-dev-phone-number-input={fieldKey}
                 aria-label="Phone Number"
                 type="tel"
                 className={`${fieldKey}-phone-number-input`}
@@ -123,11 +124,12 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div
-                  data-dev-opt-search-input={fieldKey}
-                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-input')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
+                  data-dev-option-search-wrp={fieldKey}
+                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'option-search-wrp')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'option-search-wrp') }}
                 >
                   <input
+                    data-dev-opt-search-input={fieldKey}
                     aria-label="Search for countries"
                     type="search"
                     className={`${fieldKey}-opt-search-input`}

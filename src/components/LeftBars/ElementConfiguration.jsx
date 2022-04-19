@@ -283,7 +283,7 @@ export default function ElementConfiguration({ fldKey }) {
                     route="pre-i"
                     label="Prefix Icon"
                     offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-pre-i="${fldKey}"]`}
+                    highlightSelector={`[data-dev-pre-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'pre-i')}
                   />
                 )}
@@ -294,7 +294,7 @@ export default function ElementConfiguration({ fldKey }) {
                     route="suf-i"
                     label="Suffix Icon"
                     offset="3.3"
-                    highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`}
+                    highlightSelector={`[data-dev-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')}
                   />
                 )}
@@ -339,7 +339,7 @@ export default function ElementConfiguration({ fldKey }) {
           <LayerAccordion
             childrenAccodin
             onClick={() => styleHandler('fld-wrp .filepond--root')}
-            offset="2.5"
+            offset="3.5"
             title="Filepond"
             fldData={fieldObj}
             key={fldKey}
@@ -444,7 +444,7 @@ export default function ElementConfiguration({ fldKey }) {
             <LayerAccordion
               childrenAccodin
               onClick={() => styleHandler('inp-btn')}
-              offset="2.5"
+              offset="3.5"
               title="Button"
               fldData={fieldObj}
               key={`inp-${fldKey}`}
@@ -513,7 +513,7 @@ export default function ElementConfiguration({ fldKey }) {
               <LayerAccordion
                 childrenAccodin
                 onClick={() => styleHandler('files-list')}
-                offset="2.5"
+                offset="3.5"
                 title="Files list"
                 fldData={fieldObj}
                 key={fldKey}

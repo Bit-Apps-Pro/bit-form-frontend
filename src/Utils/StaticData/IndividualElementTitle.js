@@ -34,6 +34,7 @@ export const getElementTitle = (element) => {
     case 'slct-opt-grp': return 'Select Options Group'
     case 'selected-opt-img': return 'Selected Option Image'
     case 'selected-opt-clear-btn': return 'Selected Option Clear Button'
+    case 'option-search-wrp':
     case 'opt-search-wrp': return 'Option Search Wrapper'
     case 'opt-search-input': return 'Option Search Input'
     case 'opt-search-icn': return 'Option Search Icon'
@@ -41,6 +42,7 @@ export const getElementTitle = (element) => {
     case 'opt-lbl-wrp': return 'Option Label Wrapper'
     case 'option': return 'Option'
     case 'opt-icn': return 'Option Icon'
+    case 'phone-number-input': return 'Phone Number Input'
 
     case 'ct':
     case 'opt-lbl': return 'Option Label'
@@ -60,8 +62,9 @@ export const getElementTitle = (element) => {
 
     case 'selected-currency-img':
     case 'selected-country-img': return 'Selected Image'
+    case 'selected-country-lbl': return 'Selected Label'
 
-    case 'opt-prefix': return 'Option Prefix'
+    case 'opt-prefix': return 'Option Suffix'
     case 'opt-suffix': return 'Option Suffix'
     default:
       break
