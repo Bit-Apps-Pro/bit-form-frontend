@@ -1170,7 +1170,6 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-
     'opt-icn': {
       states: [],
       properties: {
@@ -1241,6 +1240,22 @@ const editorConfig = {
         transition: '',
       },
     },
+    'option-search-wrp': {
+      states: [],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        height: '',
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        'backgound-color': '',
+      },
+    },
     'selected-country-img': {
       states: [],
       properties: {
@@ -1255,6 +1270,26 @@ const editorConfig = {
         padding: '',
         'box-shadow': '',
         'backgound-color': '',
+      },
+    },
+    'phone-number-input': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
       },
     },
     'opt-search-input': {
@@ -1346,6 +1381,26 @@ const editorConfig = {
         width: '',
         height: '',
         'box-shadow': '',
+      },
+    },
+    'opt-lbl-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
       },
     },
     'opt-icn': {
@@ -1539,6 +1594,26 @@ const editorConfig = {
         'backgound-color': '',
       },
     },
+    'selected-country-lbl': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
     'inp-clr-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -1554,6 +1629,26 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+      },
+    },
+    'option-search-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
       },
     },
     'opt-search-input': {
@@ -1632,6 +1727,22 @@ const editorConfig = {
       },
     },
     option: {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        'background-color': '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+      },
+    },
+    'opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {

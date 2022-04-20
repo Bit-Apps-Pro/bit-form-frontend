@@ -1041,7 +1041,7 @@ export const paddingGenerator = (padding, pos, add) => {
   return values.join(' ')
 }
 
-export const sortArrayOfObjectByMultipleProps = (props = []) => {
+export const sortArrOfObjByMultipleProps = (props = []) => {
   const l = props.length
 
   return (a, b) => {

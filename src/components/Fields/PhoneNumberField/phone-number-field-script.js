@@ -423,6 +423,7 @@ class PhoneNumberField {
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
+        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
@@ -431,19 +432,23 @@ class PhoneNumberField {
         this.#setClassName(li, `${this.fieldKey}-option`)
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         const img = this.#createElm('img')
         this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         img.src = `${bits.assetsURL}/${opt.img}`
         img.alt = `${opt.lbl} flag image`
         img.loading = 'lazy'
         this.#setAttribute(img, 'aria-hidden', true)
         const lbl = this.#createElm('span')
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+        this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(img, lbl)
         const prefix = this.#createElm('span')
         this.#setClassName(prefix, `${this.fieldKey}-opt-prefix`)
         this.#setTextContent(prefix, opt.code)
+        this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
         this.#setAttribute(li, 'role', 'option')
         this.#setAttribute(li, 'aria-posinset', index + 1)
