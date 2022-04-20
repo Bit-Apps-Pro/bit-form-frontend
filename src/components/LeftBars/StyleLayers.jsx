@@ -690,6 +690,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="opt-lbl-wrp"
+                    label="Option Label Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-opt-lbl-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="opt-icn"
                     label="Option Icon"
                     offset="2.5"
