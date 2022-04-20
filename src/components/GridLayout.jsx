@@ -27,7 +27,7 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { highlightElm, removeHighlight, sortArrayOfObjectByMultipleProps } from './style-new/styleHelpers'
+import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
 
