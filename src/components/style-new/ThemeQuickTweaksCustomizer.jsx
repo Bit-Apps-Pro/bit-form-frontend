@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -13,18 +13,19 @@ import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, commonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { changeFormDir, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const themeColors = useRecoilValue($themeColors)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const fields = useRecoilValue($fields)
 
   const { '--dir': direction,
@@ -55,12 +56,13 @@ export default function ThemeQuickTweaksCustomizer() {
     const tmpThemeVar = deepCopy(themeVars)
 
     setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fieldSizes = value
       const flds = prvStyle.fields
       const fldKeyArr = Object.keys(flds)
       const fldKeyArrLen = fldKeyArr.length
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        const commonStyles = commonStyle(fldKeyArr[i], value, fields[fldKeyArr[i]].typ)
+        const commonStyles = commonStyle(fldKey, value, fields[fldKey].typ)
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
@@ -199,9 +201,8 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
-        <select onChange={setSizes} className={css(sc.select)}>
-          <option value="">Select Size</option>
-          {Object.keys(sizes).map((key, index) => <option key={`size-${index * 5}`} value={key}>{sizes[key]}</option>)}
+        <select value={styles.fieldSizes} onChange={setSizes} className={css(sc.select)}>
+          {Object.keys(sizes).map((key, index) => <option selected={!!(key === styles.fieldSizes)} key={`size-${index * 5}`} value={key}>{sizes[key]}</option>)}
         </select>
       </div>
 
@@ -225,7 +226,7 @@ export default function ThemeQuickTweaksCustomizer() {
 const sizes = {
   'small-2': 'Extra Small',
   'small-1': 'Small',
-  medium: 'Medium',
+  medium: 'Medium(Default)',
   // large: 'Large',
   'large-1': 'Large',
   'large-2': 'Extra Large',
