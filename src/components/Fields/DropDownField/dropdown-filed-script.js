@@ -19,7 +19,7 @@ class DropdownField {
 
   #clearSearchBtnElm = null
 
-  #customOptionBtn = null
+  #customOption = null
 
   #optionListElm = null
 
@@ -99,8 +99,8 @@ class DropdownField {
 
     this.allowCustomOption = this.#config.allowCustomOption
     if (this.allowCustomOption) {
-      // this.#customOptionBtn = this.#select(`.${this.fieldKey}-custom-opt-btn`)
-      // this.#addEvent(this.#customOptionBtn, 'click', () => { this.#addCustomOption() })
+      // this.#customOption = this.#select(`.${this.fieldKey}-create-opt`)
+      // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
     }
 
     observeElement(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
@@ -108,19 +108,18 @@ class DropdownField {
 
   #initOptionsList() {
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list.active-list`)
-
     this.#addOnClickOptionsEvent()
 
     this.#config.options = this.#generateOptionsObjFromHtml()
     this.#options = [...this.#config.options]
   }
 
-  #select(selector) { return this.#dropdownFieldWrapper.querySelector(selector) }
+  #select(selector, elm) { return this.#dropdownFieldWrapper.querySelector(selector) }
 
   #selectAll(selector) { return this.#dropdownFieldWrapper.querySelectorAll(selector) }
 
   #addEvent(selector, eventType, cb) {
-    selector.addEventListener(eventType, cb)
+    selector?.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
   }
 
@@ -221,7 +220,6 @@ class DropdownField {
 
   #generateOptionsObjFromHtml() {
     const allOptionsElms = Array.from(this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option`))
-
     const generateOptObjFromElm = opt => {
       const obj = {}
       const lblElm = opt.querySelector(`.${this.fieldKey}-opt-lbl`)
@@ -233,6 +231,14 @@ class DropdownField {
       if (this.#config.dropdownIcn && imgElm?.src) {
         obj.img = imgElm.src
       }
+      const { attributes } = opt
+      const len = attributes.length
+      obj.attributes = {}
+      for (let i = 0; i < len; i++) {
+        const attrName = attributes[i].nodeName
+        obj.attributes[attrName] = opt.getAttribute(attrName)
+      }
+
       return obj
     }
 
@@ -280,7 +286,7 @@ class DropdownField {
   }
 
   #searchOptionObjByVal(val) {
-    return this.#config.options.find(opt => opt.val === val)
+    return [...this.#config.options, ...this.#customOptions].find(opt => opt.val === val)
   }
 
   setSelectedOption(values) {
@@ -363,6 +369,9 @@ class DropdownField {
   #handleOptionValue(e) {
     const optElm = e.currentTarget
     const val = optElm.dataset.value
+    if (this.#config.allowCustomOption && optElm.classList.contains(`${this.fieldKey}-create-opt`)) {
+      this.#addCustomOption(val)
+    }
     if (this.#config.multipleSelect) {
       const valueArr = this.#splitStringByDelimiter(this.#selectedOptValue)
       const alreadyExists = valueArr.includes(val)
@@ -393,7 +402,7 @@ class DropdownField {
   }
 
   #getCurrentActiveOptions() {
-    return this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option:not(.${this.fieldKey}-opt-group-title)`)
+    return this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option:not(.${this.fieldKey}-opt-group-title):not(.${this.fieldKey}-create-opt)`)
   }
 
   #addOnClickOptionsEvent() {
@@ -459,9 +468,12 @@ class DropdownField {
 
       li.append(lblimgbox, prefix)
 
+      Object.keys(opt.attributes).map(attrName => {
+        this.#setAttribute(li, attrName, opt.attributes[attrName])
+      })
+
       if (selectedValues.includes(opt.val)) {
         this.#setClassName(li, 'selected-opt')
-
         this.#setAttribute(li, 'aria-selected', true)
       } else {
         this.#setAttribute(li, 'aria-selected', false)
@@ -496,28 +508,46 @@ class DropdownField {
         this.setSelectedOption(optKey)
         this.searchOptions('')
       }
+      if (this.#config.allowCustomOption && this.#customOption.style.display !== 'none') {
+        const { value } = e.target
+        this.#addCustomOption(value)
+        if (this.#config.multipleSelect) {
+          const valueArr = this.#splitStringByDelimiter(this.#selectedOptValue)
+          valueArr.push(value)
+          this.#selectedOptValue = this.#generateStringFromArr(valueArr)
+        } else {
+          this.#selectedOptValue = value
+        }
+
+        this.#reRenderVirtualOptions()
+        this.setSelectedOption(this.#selectedOptValue)
+      }
     } else {
       this.searchOptions(e.target.value)
     }
   }
 
-  #addCustomOption() {
-    let value = this.#searchInputElm.value.trim()
-    if (value) {
-      const customOptLen = this.#customOptions.length
-      for (let i = 0; i < customOptLen; i++) {
-        const opt = this.#customOptions[i]
-        const lbl = opt.lbl.toLowerCase()
-        if (lbl === value) {
-          value = ''
-          break
-        }
-      }
+  #addCustomOption(val) {
+    let value = val.trim()
+    if (value.includes) {
       if (value) {
-        this.#customOptions.push({ lbl: value, val: value })
-        this.#options.push({ lbl: value, val: value })
-        this.searchOptions(value)
-        this.#addOnClickOptionsEvent()
+        const customOptLen = this.#customOptions.length
+        for (let i = 0; i < customOptLen; i += 1) {
+          const opt = this.#customOptions[i]
+          const lbl = opt.lbl.toLowerCase()
+          if (lbl === value) {
+            value = ''
+            break
+          }
+        }
+        if (value) {
+          const obj = { lbl: value, val: value }
+          obj.attributes = {}
+          this.#customOptions.push(obj)
+          this.#options.push(obj)
+          this.searchOptions('')
+          // this.#addOnClickOptionsEvent()
+        }
       }
     }
   }
@@ -525,12 +555,12 @@ class DropdownField {
   searchOptions(value) {
     this.#setSearchValue(value)
     let filteredOptions = []
-
+    let isExist = false
     if (value) {
       const optLengths = this.#config.options.length
       const alreadyPushedGroups = []
       const searchText = value.toLowerCase()
-      let isExist = false
+
       for (let i = 0; i < optLengths; i++) {
         const opt = this.#config.options[i]
         if ('type' in opt) continue
@@ -558,20 +588,28 @@ class DropdownField {
       if (!filteredOptions.length) {
         filteredOptions = [{ i: 'not-found', lbl: 'No Option Found' }]
       }
-      this.#options = filteredOptions
+      this.#options = [this.#config.options[0], ...filteredOptions]
       this.#clearSearchBtnElm.style.display = 'grid'
-      // if (isExist && this.allowCustomOption) this.#customOptionBtn.style.display = 'none'
-      // else if (this.allowCustomOption && searchText.trim()) this.#customOptionBtn.style.display = 'block'
     } else {
       this.#options = this.#config.options
       this.#clearSearchBtnElm.style.display = 'none'
       if (this.allowCustomOption) {
-        // this.#customOptionBtn.style.display = 'none'
-        // this.#options = this.#options.concat(this.#customOptions)
+        this.#customOption = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-create-opt`)
+        this.#customOption.style.display = 'none'
+        this.#options = this.#options.concat(this.#customOptions)
       }
     }
 
     this.#reRenderVirtualOptions()
+    this.#customOption = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-create-opt`)
+    if (isExist && this.allowCustomOption) this.#customOption.style.display = 'none'
+    else if (this.allowCustomOption && value.trim()) {
+      this.#customOption.style.display = 'block'
+      const createOptLbl = this.#customOption.querySelector(`.${this.fieldKey}-opt-lbl`)
+      createOptLbl.innerText = `Create: ${value}`
+      this.#setAttribute(this.#customOption, 'data-value', value)
+      // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
+    }
   }
 
   #setSearchValue(val) {
@@ -710,6 +748,7 @@ class DropdownField {
 
   destroy() {
     // this.#optionListElm.innerHTML = ''
+    // this.#options = []
     this.value = ''
     this.#detachAllEvents()
   }

@@ -48,6 +48,7 @@ export default function DropdownFieldSettings() {
   }
 
   const { optionsList } = fieldData
+  const listLength = optionsList.length
 
   const { selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
@@ -290,7 +291,6 @@ export default function DropdownFieldSettings() {
       >
         <div className={css({ p: '5px 10px' })}>
           <span>Options Lists</span>
-
           {optionsList.map((listObj, index) => {
             const listName = Object.keys(listObj)
 
@@ -324,14 +324,16 @@ export default function DropdownFieldSettings() {
                   >
                     <EditIcn size={19} />
                   </button>
+                  {listLength > 1 && (
+                    <button
+                      type="button"
+                      className={css(c.delBtn)}
+                      onClick={() => handleRemoveList(index)}
+                    >
+                      <TrashIcn size={19} />
+                    </button>
+                  )}
 
-                  <button
-                    type="button"
-                    className={css(c.delBtn)}
-                    onClick={() => handleRemoveList(index)}
-                  >
-                    <TrashIcn size={19} />
-                  </button>
                 </div>
                 {duplicateListName === index && <span className={css({ cr: 'red', ml: 5 })}>Duplicate List Name Not Allowed</span>}
               </>

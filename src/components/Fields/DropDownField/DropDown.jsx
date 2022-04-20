@@ -220,20 +220,22 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                         role="listbox"
                       >
 
-                        {/* <li
+                        <li
                           data-dev-option={fieldKey}
                           data-index={dataIndex++}
-                          className={`${fieldKey}-create-opt`}
+                          data-value="create-opt"
+                          className={`${fieldKey}-option ${fieldKey}-create-opt`}
                           role="option"
                           aria-selected="false"
                           tabIndex="-1"
                           {... { ...getCustomAttributs(fieldKey, 'option') }}
+                          style={{ display: 'none' }}
                         >
                           <span className={`${fieldKey}-opt-lbl-wrp`}>
                             <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>Create: </span>
                           </span>
                           <span className="opt-prefix" />
-                        </li> */}
+                        </li>
                         {
                           options.map(opt => {
                             if (opt.type) {
