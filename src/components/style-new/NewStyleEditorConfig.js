@@ -1824,6 +1824,26 @@ const editorConfig = {
         'backgound-color': '',
       },
     },
+    'selected-opt-lbl': {
+      states: ['hover'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        'backgound-color': '',
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        color: '',
+      },
+    },
     'selected-opt-clear-btn': {
       states: ['hover', 'focus'],
       properties: {

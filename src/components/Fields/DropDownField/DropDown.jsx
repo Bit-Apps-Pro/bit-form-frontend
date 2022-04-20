@@ -92,7 +92,14 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     {... { ...getCustomAttributs(fieldKey, 'selected-opt-img') }}
                   />
                 )}
-                <span className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}>{ph}</span>
+                <span
+                  aria-label="Selected Option Label"
+                  data-dev-selected-opt-lbl={fieldKey}
+                  className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'selected-opt-lbl') }}
+                >
+                  {ph}
+                </span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp ${getCustomClsName(fieldKey, 'dpd-btn-wrp')}`}>
                 <button
