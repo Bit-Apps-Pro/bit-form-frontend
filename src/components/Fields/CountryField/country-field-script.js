@@ -427,7 +427,7 @@ class CountryField {
   }
 
   #isMenuOpen() {
-    return this.#countryFieldWrapper.classList.contains('menu-open')
+    return this.#countryFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`)
   }
 
   #openDropdownAsPerWindowSpace() {
@@ -450,7 +450,7 @@ class CountryField {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
-      this.#countryFieldWrapper.classList.add('menu-open')
+      this.#countryFieldWrapper.classList.add(`${this.fieldKey}-menu-open`)
       this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
       this.#searchInputElm.tabIndex = '0'
       this.#clearSearchBtnElm.tabIndex = '0'
@@ -459,7 +459,7 @@ class CountryField {
       this.#setAttribute(this.#searchInputElm, 'aria-hidden', false)
       this.#reRenderVirtualOptions()
     } else {
-      this.#countryFieldWrapper.classList.remove('menu-open')
+      this.#countryFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
       document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#searchInputElm.blur()

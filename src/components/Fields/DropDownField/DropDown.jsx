@@ -92,7 +92,14 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     {... { ...getCustomAttributs(fieldKey, 'selected-opt-img') }}
                   />
                 )}
-                <span className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}>{ph}</span>
+                <span
+                  aria-label="Selected Option Label"
+                  data-dev-selected-opt-lbl={fieldKey}
+                  className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'selected-opt-lbl') }}
+                >
+                  {ph}
+                </span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp ${getCustomClsName(fieldKey, 'dpd-btn-wrp')}`}>
                 <button
@@ -220,20 +227,22 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                         role="listbox"
                       >
 
-                        {/* <li
+                        <li
                           data-dev-option={fieldKey}
                           data-index={dataIndex++}
-                          className={`${fieldKey}-create-opt`}
+                          data-value="create-opt"
+                          className={`${fieldKey}-option ${fieldKey}-create-opt`}
                           role="option"
                           aria-selected="false"
                           tabIndex="-1"
                           {... { ...getCustomAttributs(fieldKey, 'option') }}
+                          style={{ display: 'none' }}
                         >
                           <span className={`${fieldKey}-opt-lbl-wrp`}>
                             <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>Create: </span>
                           </span>
                           <span className="opt-prefix" />
-                        </li> */}
+                        </li>
                         {
                           options.map(opt => {
                             if (opt.type) {

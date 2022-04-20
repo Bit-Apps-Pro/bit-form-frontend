@@ -51,7 +51,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       'border-color': 'var(--global-accent-color) !important',
     },
 
-    '.menu-open': {
+    [`.${fk}-menu-open`]: {
       'z-index': '999',
       'box-shadow': `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
       0px 2.9px 5.3px hsla(0, 0%, 0%, 4.5%),

@@ -642,6 +642,14 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="selected-opt-lbl"
+                    label="Selected Option Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-selected-opt-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-opt-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="selected-opt-clear-btn"
                     label="Input Clear Button"
                     offset="2.5"
