@@ -542,7 +542,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     delayRef.current = setTimeout(() => {
       setIsFldResizing(false)
       delayRef.current = null
-    }, 400)
+    }, 700)
   }
 
   return (
