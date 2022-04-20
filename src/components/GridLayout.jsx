@@ -530,19 +530,28 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     return lays
   }
 
-  const [isFldResizing, setIsFldResizing] = useState(false)
+  const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
 
   const setResizingFalse = () => {
-    if (!isFldResizing) return
+    if (isObjectEmpty(resizingFld)) return
     if (delayRef.current !== null) {
       clearTimeout(delayRef.current)
     }
 
     delayRef.current = setTimeout(() => {
-      setIsFldResizing(false)
+      setResizingFld({})
       delayRef.current = null
     }, 700)
+  }
+
+  const setResizingWX = (lays, lay) => {
+    const { w, x } = lays.find(l => l.i === lay.i)
+    setResizingFld({ fieldKey: lay.i, w, x })
+  }
+
+  const setResizingFldKey = (_, lay) => {
+    setResizingFld({ fieldKey: lay.i })
   }
 
   return (
@@ -575,9 +584,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                   draggableHandle=".drag"
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
-                  onDragStart={(_, lay) => setIsFldResizing(lay.i)}
+                  onDragStart={setResizingFldKey}
+                  onDrag={setResizingWX}
                   onDragStop={setRegenarateLayFlag}
-                  onResizeStart={(_, lay) => setIsFldResizing(lay.i)}
+                  onResizeStart={setResizingFldKey}
+                  onResize={setResizingWX}
                   onResizeStop={setRegenarateLayFlag}
                 >
                   {layouts[breakpoint].map(layoutItem => (
@@ -601,7 +612,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          isFldResizing,
+                          resizingFld,
                         }}
                       />
                     </div>
@@ -629,6 +640,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                           formID,
                           navigateToFieldSettings,
                           navigateToStyle,
+                          resizingFld,
                         }}
                       />
                     </div>
