@@ -265,301 +265,7 @@ export function highlightElm(selector, selectType = 'element padding margin') {
 
 export const removeHighlight = (selector = '[data-highlight]') => {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
-  elms.forEach(elm => { elm.remove() })
-}
-
-/**
- * @function commonStyle(fk, type)
- * @param {string} fk field key
- * @param {string} type size
- * @param {string} fieldType field type
- * @return style classes
-*/
-export const commonStyle = (fk, type, fieldType) => {
-  switch (type) {
-    case 'small-2':
-      return {
-        [`.${fk}-lbl`]: { 'font-size': '12px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '8px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '8px' },
-        [`.${fk}-fld`]: {
-          'font-size': '0.6rem',
-          padding: '5px 3px !important',
-          height: '20px',
-          'border-radius': '6px',
-          ...fieldType === 'html-select' && { padding: '2px 1px' },
-          ...fieldType === 'color' && { padding: '2px 1px' },
-          ...fieldType === 'textarea' && { height: '40px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country') && {
-          [`.${fk}-dpd-fld-wrp`]: {
-            'border-radius': '6px',
-            'font-size': '0.6rem',
-          },
-        },
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '20px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '20px' } },
-        ...fieldType === 'phone-number' && {
-          [`.${fk}-phone-fld-wrp`]: {
-            'border-radius': '6px',
-            'font-size': '0.6rem',
-          },
-          [`.${fk}-phone-amount-input`]: { padding: '5px 3px' },
-          [`.${fk}-phone-fld-container`]: { height: '20px' },
-        },
-        ...fieldType === 'currency' && {
-          [`.${fk}-currency-fld-wrp`]: {
-            'border-radius': '6px',
-            'font-size': '0.6rem',
-          },
-          [`.${fk}-currency-amount-input`]: { padding: '5px 3px' },
-          [`.${fk}-currency-fld-container`]: { height: '20px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country' || fieldType === 'currency' || fieldType === 'phone-number') && {
-          [`.${fk}-dpd-wrp`]: {
-            padding: '5px 3px',
-            height: '20px',
-          },
-          [`.${fk}-opt-search-input`]: {
-            height: '25px',
-            'font-size': '0.6rem',
-          },
-          [`.${fk}-opt-search-icn`]: {
-            height: '18px',
-            width: '18px',
-          },
-        },
-
-      }
-    case 'small-1':
-      return {
-        [`.${fk}-lbl`]: { 'font-size': '14px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '10px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
-        [`.${fk}-fld`]: {
-          'font-size': '0.8rem',
-          padding: '6px 4px',
-          height: '24px',
-          'border-radius': '8px',
-          ...fieldType === 'html-select' && { padding: '3px 1px' },
-          ...fieldType === 'color' && { padding: '3px 2px' },
-          ...fieldType === 'textarea' && { height: '48px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country') && {
-          [`.${fk}-dpd-fld-wrp`]: {
-            'border-radius': '8px',
-            'font-size': '0.8rem',
-          },
-        },
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '24px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '24px' } },
-        ...fieldType === 'phone-number' && {
-          [`.${fk}-phone-fld-wrp`]: {
-            'border-radius': '8px',
-            'font-size': '0.8rem',
-          },
-          [`.${fk}-phone-amount-input`]: { padding: '6px 4px' },
-          [`.${fk}-phone-fld-container`]: { height: '24px' },
-        },
-        ...fieldType === 'currency' && {
-          [`.${fk}-currency-fld-wrp`]: {
-            'border-radius': '8px',
-            'font-size': '0.8rem',
-          },
-          [`.${fk}-currency-amount-input`]: { padding: '6px 4px' },
-          [`.${fk}-currency-fld-container`]: { height: '24px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country' || fieldType === 'currency' || fieldType === 'phone-number') && {
-          [`.${fk}-dpd-wrp`]: {
-            padding: '6px 4px',
-            height: '24px',
-          },
-          [`.${fk}-opt-search-input`]: {
-            height: '30px',
-            'font-size': '0.8rem',
-          },
-          [`.${fk}-opt-search-icn`]: {
-            height: '20px',
-            width: '20px',
-          },
-        },
-      }
-    // case 'small':
-    //   return {
-    //     [`.${fk}-lbl`]: { 'font-size': '14px' },
-    //     [`.${fk}-sub-titl`]: { 'font-size': '12px' },
-    //     [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
-    //     [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
-    //   }
-    case 'medium':
-      return {
-        [`.${fk}-lbl`]: { 'font-size': '16px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
-        [`.${fk}-fld`]: {
-          'font-size': '1rem',
-          padding: '10px 8px',
-          height: '40px',
-          'border-radius': '11px',
-          ...fieldType === 'html-select' && { padding: '5px 3px' },
-          ...fieldType === 'color' && { padding: '5px 3px' },
-          ...fieldType === 'textarea' && { height: '58px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country') && {
-          [`.${fk}-dpd-fld-wrp`]: {
-            'border-radius': '11px',
-            'font-size': '1rem',
-          },
-        },
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '40px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '40px' } },
-        ...fieldType === 'phone-number' && {
-          [`.${fk}-phone-fld-wrp`]: {
-            'border-radius': '11px',
-            'font-size': '1rem',
-          },
-          [`.${fk}-phone-amount-input`]: { padding: '10px 8px' },
-          [`.${fk}-phone-fld-container`]: { height: '40px' },
-        },
-        ...fieldType === 'currency' && {
-          [`.${fk}-currency-fld-wrp`]: {
-            'border-radius': '11px',
-            'font-size': '1rem',
-          },
-          [`.${fk}-currency-amount-input`]: { padding: '10px 8px' },
-          [`.${fk}-currency-fld-container`]: { height: '40px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country' || fieldType === 'currency' || fieldType === 'phone-number') && {
-          [`.${fk}-dpd-wrp`]: {
-            padding: '10px 8px',
-            height: '40px',
-          },
-          [`.${fk}-opt-search-input`]: {
-            height: '35px',
-            'font-size': '1rem',
-          },
-          [`.${fk}-opt-search-icn`]: {
-            height: '22px',
-            width: '22px',
-          },
-        },
-      }
-    // case 'large':
-    //   return {
-    //     [`.${fk}-lbl`]: { 'font-size': '18px' },
-    //     [`.${fk}-sub-titl`]: { 'font-size': '12px' },
-    //     [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
-    //     [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
-    //   }
-    case 'large-1':
-      return {
-        [`.${fk}-lbl`]: { 'font-size': '18px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '14px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
-        [`.${fk}-fld`]: {
-          'font-size': '1.2rem',
-          padding: '11px 9px',
-          height: '44px',
-          'border-radius': '12px',
-          ...fieldType === 'html-select' && { padding: '5px 3px' },
-          ...fieldType === 'color' && { padding: '5px 3px' },
-          ...fieldType === 'textarea' && { height: '70px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country') && {
-          [`.${fk}-dpd-fld-wrp`]: {
-            'border-radius': '12px',
-            'font-size': '1.2rem',
-          },
-        },
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '44px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '44px' } },
-        ...(fieldType === 'phone-number') && {
-          [`.${fk}-phone-fld-wrp`]: {
-            'border-radius': '12px',
-            'font-size': '1.2rem',
-          },
-          [`.${fk}-phone-amount-input`]: { padding: '11px 9px' },
-          [`.${fk}-phone-fld-container`]: { height: '44px' },
-        },
-        ...(fieldType === 'currency') && {
-          [`.${fk}-currency-fld-wrp`]: {
-            'border-radius': '12px',
-            'font-size': '1.2rem',
-          },
-          [`.${fk}-currency-amount-input`]: { padding: '11px 9px' },
-          [`.${fk}-currency-fld-container`]: { height: '44px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country' || fieldType === 'currency' || fieldType === 'phone-number') && {
-          [`.${fk}-dpd-wrp`]: {
-            padding: '11px 9px',
-            height: '44px',
-          },
-          [`.${fk}-opt-search-input`]: {
-            height: '40px',
-            'font-size': '1.2rem',
-          },
-          [`.${fk}-opt-search-icn`]: {
-            height: '24px',
-            width: '24px',
-          },
-        },
-      }
-    case 'large-2':
-      return {
-        [`.${fk}-lbl`]: { 'font-size': '20px' },
-        [`.${fk}-sub-titl`]: { 'font-size': '16px' },
-        [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
-        [`.${fk}-fld`]: {
-          'font-size': '1.4rem',
-          padding: '12px 10px',
-          height: '48px',
-          'border-radius': '13px',
-          ...fieldType === 'html-select' && { padding: '6px 4px' },
-          ...fieldType === 'color' && { padding: '6px 4px' },
-          ...fieldType === 'textarea' && { height: '84px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country') && {
-          [`.${fk}-dpd-fld-wrp`]: {
-            'border-radius': '13px',
-            'font-size': '1.4rem',
-          },
-        },
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '48px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '48px' } },
-        ...(fieldType === 'phone-number') && {
-          [`.${fk}-phone-fld-wrp`]: {
-            'border-radius': '13px',
-            'font-size': '1.4rem',
-          },
-          [`.${fk}-phone-amount-input`]: { padding: '12px 10px' },
-          [`.${fk}-phone-fld-container`]: { height: '48px' },
-        },
-        ...(fieldType === 'currency') && {
-          [`.${fk}-currency-fld-wrp`]: {
-            'border-radius': '13px',
-            'font-size': '1.4rem',
-          },
-          [`.${fk}-currency-amount-input`]: { padding: '12px 10px' },
-          [`.${fk}-currency-fld-container`]: { height: '48px' },
-        },
-        ...(fieldType === 'select' || fieldType === 'country' || fieldType === 'currency' || fieldType === 'phone-number') && {
-          [`.${fk}-dpd-wrp`]: {
-            padding: '12px 10px',
-            height: '48px',
-          },
-          [`.${fk}-opt-search-input`]: {
-            height: '45px',
-            'font-size': '1.4rem',
-          },
-          [`.${fk}-opt-search-icn`]: {
-            height: '26px',
-            width: '26px',
-          },
-        },
-      }
-    default:
-      return 'default......'
-  }
+  elms?.forEach(elm => { elm.remove() })
 }
 
 export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) || []
@@ -956,10 +662,8 @@ export const setIconFilterValue = (iconType, fldKey) => {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
       const setFilterValue = hexToCSSFilter(hexValue)
-      console.log(fldKey, elementKey, setFilterValue.filter)
       const newStyles = produce(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
-        console.log('style', drftStyles.fields[fldKey].classes)
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
@@ -985,21 +689,21 @@ export const isStyleExist = (styles, fieldKey, classKey) => {
 
 /**
  * @function paddingGenerator
- * @description This funcaiton generate padding for add or remove padding with icon position
+ * @description This funcaiton generate padding for add or remove padding by icon position
  * @param {String} padding : {Padding String};
- * @param {String} pos {Add Icon left or right positon}
- * @param {true|false} add {When padding add param value true & remove param value false }
- * @returns Padding String
+ * @param {String} pos {Add Icon left or right positon in input field};
+ * @param {true|false} add {When padding add param value true or remove param value false }
+ * @return Padding String
  */
 export const paddingGenerator = (padding, pos, add) => {
   let checkImportant = false
   let values
   if (padding === '') values = '10px'
   if (padding.match(/(!important)/gi)) {
-    values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
+    values = (padding.replaceAll(/(!important)/gi, '')).trim().split(' ')
     checkImportant = true
   } else {
-    values = (padding.replaceAll(/!important/gi, '')).trim().split(' ')
+    values = (padding.replaceAll(/(!important)/gi, '')).trim().split(' ')
   }
   const valuesLan = values.length
   const val = add ? '40px' : values[0]

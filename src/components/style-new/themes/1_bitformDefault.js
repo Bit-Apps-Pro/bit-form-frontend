@@ -66,6 +66,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         // fieldThemeVars: {},
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: textStyle1BitformDefault({ fk, type, direction }),
       }
     case 'decision-box':
@@ -74,6 +75,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         // fieldThemeVars: {},
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: decisionBoxStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'check':
@@ -83,6 +85,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         fieldType: type,
         // fieldThemeVars: {},
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: checkboxNradioStyle1BitformDefault({ fk, type, direction }),
       }
     case 'title':
@@ -90,6 +93,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: titleStyle1BitformDefault({ fk, type, direction }),
       }
     case 'image':
@@ -97,6 +101,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: imageStyle1BitformDefault({ fk, type, direction }),
       }
     case 'divider':
@@ -104,6 +109,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: dividerStyle1BitformDefault({ fk, type, direction }),
       }
     case 'button':
@@ -111,6 +117,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: buttonStyle1BitformDefault({ fk, type, direction }),
       }
     case 'advanced-file-up':
@@ -118,6 +125,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: advanceFileUpStyle1BitformDefault({ fk, type, direction }),
       }
     case 'html':
@@ -125,6 +133,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: htmlStyle1BitformDefault({ fk, type, direction }),
       }
     case 'currency':
@@ -132,6 +141,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: currencyStyle_1_BitformDefault({ fk }),
       }
     case 'country':
@@ -139,6 +149,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: countryStyle_1_BitformDefault({ fk }),
       }
     case 'recaptcha':
@@ -146,6 +157,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: recaptchaStyle_1_bitformDefault({ fk }),
       }
     case 'file-up':
@@ -153,6 +165,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: fileUploadStyle_1_BitformDefault({ fk, type, direction }),
       }
     case 'html-select':
@@ -160,6 +173,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: selectStyle_1_BitformDefault({ fk, type, direction }),
       }
     case 'select':
@@ -167,6 +181,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: dropdownStyle_1_BitformDefault({ fk, type, direction }),
       }
     case 'phone-number':
@@ -174,6 +189,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: phoneNumberStyle_1_bitformDefault({ fk }),
       }
     case 'paypal':
@@ -181,6 +197,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: paypalStyle_1_BitformDefault({ fk }),
       }
     case 'razorpay':
@@ -188,6 +205,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         overrideGlobalTheme: [],
+        fieldSize: 'medium',
         classes: razorpayStyle_1_BitformDefault({ fk }),
       }
 

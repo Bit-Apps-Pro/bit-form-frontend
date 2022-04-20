@@ -16,6 +16,7 @@ export const $stylesLg = atom({
   key: '$stylesLg',
   default: {
     theme: 'bitformDefault',
+    fieldSizes: 'medium',
     font: {
       fontType: '',
       fontURL: '',
