@@ -41,7 +41,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
     const bdrRdsVar = objectPaths[0].paths['border-radius']
 
     bdrVal = themeColors[bdrVar]
-    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll('!important', ''))
+    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll(/(!important)/gi, ''))
     bdrClr = bdrColor
     bdrWdthVal = themeVars[bdrWdthVar]
     bdrRdsVal = themeVars[bdrRdsVar]
@@ -58,6 +58,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
       if (varStr?.match(/(!important)/gi)) {
         varStr = varStr?.replaceAll(/(!important)/gi, '')
       }
+
       if (stateName === 'themeColors') {
         return splitValueBySpaces(varStr)
       }
@@ -66,8 +67,10 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
 
     bdrVal = getValueByObjPath(styles, objectPaths.paths.border)
 
-    const [, bdrHslaColor] = checkVarValue(bdrVal?.replaceAll('!important', ''), themeColors, 'themeColors')
+    const [bdrStyle, bdrHslaColor] = checkVarValue(bdrVal?.replaceAll(/(!important)/gi, ''), themeColors, 'themeColors')
     bdrClr = bdrHslaColor
+    if (bdrStyle || bdrHslaColor) bdrVal = `${bdrStyle} ${bdrHslaColor}`
+
     bdrWdthVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-width']), themeVars)
     bdrRdsVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-radius']), themeVars)
   }

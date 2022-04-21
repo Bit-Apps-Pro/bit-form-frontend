@@ -30,7 +30,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
   ]
 
   const { '--global-bg-color': themeBgColor,
-    '--global-fld-bdr-clr': themeFldBdrClr,
+    '--global-fld-bdr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
     '--global-font-color': themeFontColor,
     '--global-accent-color': themePrimaryColor } = themeColors
@@ -54,7 +54,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
       case 'global-font-color':
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-fld-bdr-clr':
-        return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
+        return setColor(str2Color(themeVars['--global-fld-bdr']))
       case 'individul-color':
         return setColor(str2Color(getCustomColor()))
       default:
@@ -103,7 +103,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
         break
       case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
-          drft['--global-fld-bdr-clr'] = hsla
+          drft['--global-fld-bdr'] = hsla
         }))
         break
       case 'global-fld-bg-color':
@@ -136,7 +136,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
     switch (action.type) {
       case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
-          drft['--global-fld-bdr-clr'] = colorVar
+          drft['--global-fld-bdr'] = colorVar
         }))
         break
       default:
@@ -211,7 +211,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
                 <ColorPreview bg={themeFontColor} className={css(ut.mr2)} />
                 <span>Font Color</span>
               </button>
-              <button className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bdr-clr')}>
+              <button className={css(c.clrItem, color === '--global-fld-bdr' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bdr')}>
                 <ColorPreview bg={themeFldBdrClr} className={css(ut.mr2)} />
                 <span>Field Border Color</span>
               </button>

@@ -24,11 +24,6 @@ export default function ResetStyle({ stateObjName, propertyPath }) {
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
   const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
 
-  // console.log({ stateObjName, lightThemeColors, propertyPath },
-  //   'lightThemeColors', lightThemeColors[propertyPath],
-  //   'temlighThemeColors', tmpLightThemeColors,
-  //   darkThemeColors[propertyPath] === tmpDarkThemeColors[propertyPath],
-  // )
   let show = false
   switch (stateObjName) {
     case 'styles':
@@ -49,7 +44,6 @@ export default function ResetStyle({ stateObjName, propertyPath }) {
       if (Array.isArray(propertyPath)) {
         propertyPath.forEach(property => {
           if (tmpThemeVars?.[property] && themeVar?.[property] !== tmpThemeVars?.[property]) {
-            // console.log('reset ', tmpThemeVars?.[property], themeVar?.[property])
             show = true
           }
         })

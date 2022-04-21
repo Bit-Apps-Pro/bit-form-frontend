@@ -267,6 +267,15 @@ const editorConfig = {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
+  'quick-tweaks': {
+    properties: {
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+    },
+  },
   'field-containers': {
     states: ['hover'],
     properties: {

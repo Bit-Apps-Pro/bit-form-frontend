@@ -80,7 +80,6 @@ export default function IcnCustomizer({ elementKey }) {
   ]
 
   const { [`--${elementKey}-clr`]: fltrColorValue } = themeColors
-  console.log('filter colorValue=', fltrColorValue)
 
   return (
     <div className={css(ut.m10)}>

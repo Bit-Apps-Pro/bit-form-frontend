@@ -13,23 +13,23 @@ export const $lightThemeColors = atom({
     '--global-font-color': 'hsla(0, 0%, 14%, 100)',
     '--gfh': 0, // global font color hue
     '--gfs': '0%', // global fonst color saaturation
-    '--gfl': '14%',
-    '--gfa': 100,
+    '--gfl': '14%', // global font color lightness
+    '--gfa': 100, // global font color opacity
     '--global-bg-color': '', // background color
-    '--gbg-h': 0,
-    '--gbg-s': '0%',
-    '--gbg-l': '100%',
-    '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)', // field Border color
-    '--gfbc-h': 0,
-    '--gfbc-s': '0%',
-    '--gfbc-l': '67%',
-    '--gfbc-a': 100,
+    '--gbg-h': 0, // global background color hue
+    '--gbg-s': '0%', // global background color saturation
+    '--gbg-l': '100%', // global background color lightness
+    '--gbg-a': 100, // global background color opacity
+    '--global-fld-bdr': 'solid hsla(0, 0%, 67%, 100)', // field Border
+    '--gfbc-h': 0, // global field border color hue
+    '--gfbc-s': '0%', // global field border color saturation
+    '--gfbc-l': '67%', // global field border color lightness
+    '--gfbc-a': 100, // global field border color opacity
     '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
-    '--gfbg-h': 0,
-    '--gfbg-s': '0%',
-    '--gfbg-l': '100%',
-    '--gfbg-a': 100,
+    '--gfbg-h': 0, // global field background color hue
+    '--gfbg-s': '0%', // global field background color saturation
+    '--gfbg-l': '100%', // global field background color lightness
+    '--gfbg-a': 100, // global field background color opacity
 
     '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-bdr': '', // field wrapper border
@@ -111,7 +111,7 @@ export const $lightThemeColors = atom({
     '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
     '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
 
-    '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
+    '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)', // checkbox border color
   },
 })
 

@@ -398,7 +398,7 @@ const cls = {
   breadcumbLink: { fs: 11, flxi: 'center', mr: 3, ':focus': { bs: 'none' } },
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
-  wrp: { ml: 5, mt: 10, fs: 12 },
+  wrp: { ml: 5, mt: 10, fs: 12, mr: 10 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },

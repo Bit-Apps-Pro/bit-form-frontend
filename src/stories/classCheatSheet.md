@@ -36,7 +36,7 @@
 | --gbg-s  | global font color saturation |
 | --gbg-l  | global font color lightness  |
 | --gbg-a  | global font color opacity    |
-| --global-fld-bdr-clr  | global field border color |    
+| --global-fld-bdr  | global field border |    
 | --global-fld-bg-color | global field background color |  
 
 ### Theme Vars

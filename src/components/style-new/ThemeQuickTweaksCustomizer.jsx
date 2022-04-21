@@ -13,6 +13,7 @@ import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import BorderControl from './BorderControl'
 import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
@@ -20,6 +21,7 @@ import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import { changeFormDir, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
@@ -35,7 +37,7 @@ export default function ThemeQuickTweaksCustomizer() {
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
-    '--global-fld-bdr-clr': globalFldBdrClr,
+    '--global-fld-bdr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
 
   const updateHandler = (value, unit, globalVarUnit, globalVar) => {
@@ -143,10 +145,23 @@ export default function ThemeQuickTweaksCustomizer() {
         subtitle="Theme Quick Tweaks Border Color"
         value={globalFldBdrClr}
         stateObjName="themeColors"
-        propertyPath="--global-fld-bdr-clr"
+        propertyPath="--global-fld-bdr"
         modalId="global-fld-bdr-clr"
         hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
       />
+      <ThemeStylePropertyBlock label="Border">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={['--g-bdr-width', '--g-bdr-rad']}
+            stateObjName="themeVars"
+          />
+          <BorderControl
+            subtitle="Theme Quick Tweaks Border Color"
+            objectPaths={borderPathsObj}
+            id="fld-lbl-bdr-width"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
       <SimpleColorPicker
         title="Field Background Color"
         subtitle="Theme Quick Tweaks Field Background Color"
@@ -231,3 +246,16 @@ const sizes = {
   'large-1': 'Large',
   'large-2': 'Extra Large',
 }
+const borderPathsObj = [
+  {
+    object: 'themeVars',
+    paths: {
+      'border-width': '--g-bdr-width',
+      'border-radius': '--g-bdr-rad',
+    },
+  },
+  {
+    object: 'themeColors',
+    paths: { border: '--global-fld-bdr' },
+  },
+]

@@ -15,7 +15,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       width: '100% !important',
       outline: 'none !important',
       'background-color': 'var(--global-fld-bg-color, transparent) !important',
-      border: 'solid var(--global-fld-bdr-clr) !important',
+      border: 'var(--global-fld-bdr) !important',
       'border-radius': 'var(--g-bdr-rad) !important',
       'border-width': 'var(--g-bdr-width) !important',
       'font-size': 'var(--fld-fs) !important',

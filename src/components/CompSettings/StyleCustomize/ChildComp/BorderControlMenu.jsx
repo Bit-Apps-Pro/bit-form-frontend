@@ -48,7 +48,7 @@ export default function BorderControlMenu({ objectPaths }) {
     }
   } catch (error) {
     console.log(error.message)
-    console.error('😅 no style object found according to this field')
+    console.error(`😅 no style object found according to this field "${element}"`)
     return <></>
   }
 
@@ -87,11 +87,9 @@ export default function BorderControlMenu({ objectPaths }) {
     obj.border = objectPaths.object
   }
 
-  const borderValue = extractBorderValue(getValueByObjPath(stateObj(obj.border), borderPath))
+  const borderValue = extractBorderValue(getValueByObjPath(stateObj(obj.border), borderPath), themeColors)
   const borderWidth = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderWidth), borderWidthPath))
   const borderRadius = getValueFromStateVar(themeVars, getValueByObjPath(stateObj(obj.borderRadius), borderRadiusPath))
-  const borderColor = getValueFromStateVar(themeColors, borderValue.borderColor)
-  const borderStyle = getValueFromStateVar(themeColors, borderValue.borderStyle)
 
   const onSizeChange = (pathName, val) => {
     const stateObjName = obj.borderWidth || obj.borderRadius
@@ -131,7 +129,7 @@ export default function BorderControlMenu({ objectPaths }) {
             <span className={css(ut.fs12, ut.fw500)}>Type</span>
             <SimpleDropdown
               options={options}
-              value={borderStyle}
+              value={borderValue.borderStyle}
               onChange={val => borderHandler('borderStyle', val)}
               w={130}
               h={30}
@@ -141,7 +139,7 @@ export default function BorderControlMenu({ objectPaths }) {
             <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
             <SimpleColorPickerTooltip
               action={{ onChange: val => borderHandler('borderColor', val) }}
-              value={borderColor}
+              value={borderValue.borderColor}
             />
           </div>
         </>
@@ -176,7 +174,17 @@ export default function BorderControlMenu({ objectPaths }) {
   )
 }
 
-const extractBorderValue = (border) => {
-  const [borderStyle, borderColor] = splitValueBySpaces(border)
+const extractBorderValue = (border, varState) => {
+  let borderVar = border
+  if (border?.match(/(var)/gi)?.[0] === 'var') {
+    const str = border.replaceAll(/\(|var|,.*|\)|(!important)/gi, '')
+    borderVar = varState[str]
+  }
+
+  if (borderVar?.match(/(!important)/gi)) {
+    borderVar = borderVar?.replaceAll(/(!important)/gi, '')
+  }
+
+  const [borderStyle, borderColor] = splitValueBySpaces(borderVar)
   return { borderStyle, borderColor }
 }

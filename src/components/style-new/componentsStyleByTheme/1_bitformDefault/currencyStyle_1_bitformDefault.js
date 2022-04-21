@@ -15,7 +15,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
-      border: 'solid var(--global-fld-bdr-clr) !important',
+      border: 'var(--global-fld-bdr) !important',
       'border-radius': 'var(--g-bdr-rad) !important',
       'border-width': 'var(--g-bdr-width) !important',
       'font-size': 'var(--fld-fs) !important',
