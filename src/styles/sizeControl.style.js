@@ -54,6 +54,33 @@ const sizeControlStyle = {
     '&:focus': { bs: 'none !important' },
 
   },
+  listContainer: {
+    pn: 'relative',
+    w: 20,
+    cur: 'pointer',
+    '&:hover .value-list': { dy: 'block' },
+  },
+  valueList: {
+    dy: 'none',
+    pn: 'absolute',
+    m: 0,
+    mxh: 200,
+    owy: 'auto',
+    mnw: 100,
+    bc: 'white',
+    cr: 'black',
+    brs: 5,
+    p: 5,
+    bs: 'rgb(191 191 191) 0px 0px 5px 2px',
+    br: '.5px solid rgb(218 218 218)',
+  },
+  listItem: {
+    m: 0,
+    p: 2,
+    brs: 3,
+    cur: 'pointer',
+    ':hover': { bc: ' hsl(0deg 0% 76%)' },
+  },
 }
 
 export default sizeControlStyle

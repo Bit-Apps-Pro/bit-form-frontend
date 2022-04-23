@@ -159,7 +159,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [maxHeightValue, maxHeightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-height'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['max-height']))]
   const [minHeightValue, minHeightUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-height'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['min-height']))]
   const [fldZIndex] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['z-index']))]
-  const [fldFSValue, fldFSUnit] = [getNumFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size'])), getStrFromStr(getValueFromStateVar(themeVars, existCssPropsObj?.['font-size']))]
+  const actualFSVal = getValueFromStateVar(themeVars, existCssPropsObj?.['font-size'])
+  const [fldFSValue, fldFSUnit] = [getNumFromStr(actualFSVal), getStrFromStr(actualFSVal)]
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {
@@ -235,7 +236,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       assignNestedObj(drftStyle, getPropertyPath(prop, state), v)
     }))
   }
-
+  const preDefinedValueHandler = (value, property, state = '') => {
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      const checkExistImportant = existImportant(getPropertyPath(property, state))
+      if (checkExistImportant) value += ' !important'
+      assignNestedObj(drftStyle, getPropertyPath(property, state), value)
+    }))
+  }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
     state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -770,8 +777,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit, state)}
+                preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
+                definedValueHandler={value => preDefinedValueHandler(value, 'font-size', state)}
                 value={fldFSValue || 12}
                 unit={fldFSUnit || 'px'}
+                actualValue={actualFSVal}
                 width="128px"
                 options={['px', 'em', 'rem']}
                 step={fldFSUnit !== 'px' ? '0.1' : 1}
