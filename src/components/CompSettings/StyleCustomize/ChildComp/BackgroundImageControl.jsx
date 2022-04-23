@@ -1,7 +1,11 @@
+/* eslint-disable no-param-reassign */
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
+import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ut from '../../../../styles/2.utilities'
 import bgImgControlStyle from '../../../../styles/backgroundImageControl.style'
 import FilterControlMenu from '../../../style-new/FilterControlMenu'
@@ -20,8 +24,7 @@ export default function BackgroundImageControl({ stateObjName,
   fldKey }) {
   const [controller, setController] = useState({ parent: 'Image', child: 'Upload' })
   const { css } = useFela()
-  const { object, bgObjName, paths } = objectPaths
-  const [bgfilters, setBgFilters] = useState('blur(20%) brightness(120%)')
+  const { object, paths } = objectPaths
   const [bgImage, setBgImage] = useState('')
   const [bgSize, setBgSize] = useState({
     type: 'auto',
@@ -36,10 +39,29 @@ export default function BackgroundImageControl({ stateObjName,
   const [bgPositionValue, setBgPositionValue] = useState('center')
   const [bgRepeat, setBgRepeat] = useState('initial')
   const [styles, setStyles] = useRecoilState($styles)
+  const setThemeVars = useSetRecoilState($themeVars)
+  const setThemeColors = useSetRecoilState($themeColors)
 
   const stateObj = getObjByKey(object, { styles })
 
   const onValueChange = (pathName, val) => {
+    switch (stateObjName) {
+      case 'themeColors':
+        setThemeColors(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = val
+        }))
+        break
+      case 'themeVars':
+        setThemeVars(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = val
+        }))
+        break
+      case 'styles':
+        setStyleStateObj(object, pathName, val, { setStyles })
+        break
+      default:
+        break
+    }
     setStyleStateObj(object, pathName, val, { setStyles })
   }
   const gradientChangeHandler = (e) => {

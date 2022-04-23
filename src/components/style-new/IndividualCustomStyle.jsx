@@ -397,9 +397,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit, state)}
                 value={fldLineHeightVal || 0}
-                unit={fldLineHeightUnit || 'px'}
+                unit={fldLineHeightUnit || ''}
                 width="128px"
-                options={['px', 'em', 'rem']}
+                options={['', 'px', 'em', 'rem']}
                 step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
               />
             </div>
