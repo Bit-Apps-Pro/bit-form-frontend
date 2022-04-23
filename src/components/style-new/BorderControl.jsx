@@ -13,7 +13,7 @@ import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { getValueByObjPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state }) {
+export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state, hslaPaths }) {
   const { css } = useFela()
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -112,7 +112,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
       {allowImportant && valStr && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
       <div title={valStr || 'Add Border Style'} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id, hslaPaths })}
           type="button"
           className={css(c.pickrBtn)}
         >

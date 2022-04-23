@@ -1,5 +1,7 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
+import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -16,7 +18,7 @@ import SpaceControl from './SpaceControl'
 
 /**
  * @Function BorderControlMenu
- * @param {objectPaths}  Array|Object
+ * @param {objectPaths, hslaPaths}  Array|Object
  * @When BorderControlMenu are Array
  * {
  *    @index 0=> ThemVars
@@ -29,7 +31,7 @@ import SpaceControl from './SpaceControl'
  * }
  * @returns
  */
-export default function BorderControlMenu({ objectPaths }) {
+export default function BorderControlMenu({ objectPaths, hslaPaths }) {
   const { css } = useFela()
   const { fieldKey, element, rightBar } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -106,6 +108,17 @@ export default function BorderControlMenu({ objectPaths }) {
       }
       return shVal
     }).join(' ')
+    if (prop === 'borderColor' && hslaPaths) {
+      const v = val.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
+      const { h, s, l, a } = hslaPaths
+      setThemeColors(prvColor => produce(prvColor, (draft) => {
+        draft[h] = v[0]
+        draft[s] = v[1]
+        draft[l] = v[2]
+        draft[a] = v[3]
+      }))
+    }
+
     setStyleStateObj(stateObjName, borderPath, newBorderStyleStr, { setThemeColors, setStyles })
   }
 

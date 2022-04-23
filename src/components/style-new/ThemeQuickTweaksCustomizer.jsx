@@ -11,7 +11,6 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
 import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
@@ -20,7 +19,7 @@ import FontSizeControl from './FontSizeControl'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { changeFormDir } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeQuickTweaksCustomizer() {
@@ -30,29 +29,12 @@ export default function ThemeQuickTweaksCustomizer() {
   const [styles, setStyles] = useRecoilState($styles)
   const fields = useRecoilValue($fields)
 
-  const { '--dir': direction,
-    '--g-bdr-rad': globalBorderRad,
-    '--g-bdr-width': globalBdrWidth } = themeVars
+  const { '--dir': direction } = themeVars
 
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
-    '--global-fld-bdr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
-
-  const updateHandler = (value, unit, globalVarUnit, globalVar) => {
-    const convertvalue = unitConverter(unit, value, globalVarUnit)
-    setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft[globalVar] = `${convertvalue}${unit || globalVarUnit}`
-    }))
-  }
-  const globalBdrRadValue = getNumFromStr(globalBorderRad)
-  const globalBdrRadUnit = getStrFromStr(globalBorderRad)
-
-  const globalBdrWidthVal = getNumFromStr(globalBdrWidth)
-  const globalBdrWidthUnit = getStrFromStr(globalBdrWidth)
-  const borderRadHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrRadUnit, '--g-bdr-rad')
-  const borderWidthHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrWidthUnit, '--g-bdr-width')
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
@@ -122,6 +104,7 @@ export default function ThemeQuickTweaksCustomizer() {
         propertyPath="--global-bg-color"
         modalId="global-bg-clr"
       />
+
       <SimpleColorPicker
         title="Accent Color"
         subtitle="Theme Quick Tweaks Accent Color"
@@ -132,6 +115,7 @@ export default function ThemeQuickTweaksCustomizer() {
         // eslint-disable-next-line no-sequences
         hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
       />
+
       <SimpleColorPicker
         title="Font Color"
         subtitle="Theme Quick Tweaks Font Color"
@@ -140,15 +124,7 @@ export default function ThemeQuickTweaksCustomizer() {
         propertyPath="--global-font-color"
         modalId="global-font-clr"
       />
-      <SimpleColorPicker
-        title="Border Color"
-        subtitle="Theme Quick Tweaks Border Color"
-        value={globalFldBdrClr}
-        stateObjName="themeColors"
-        propertyPath="--global-fld-bdr"
-        modalId="global-fld-bdr-clr"
-        hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
-      />
+
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -159,9 +135,11 @@ export default function ThemeQuickTweaksCustomizer() {
             subtitle="Theme Quick Tweaks Border Color"
             objectPaths={borderPathsObj}
             id="fld-lbl-bdr-width"
+            hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
           />
         </div>
       </ThemeStylePropertyBlock>
+
       <SimpleColorPicker
         title="Field Background Color"
         subtitle="Theme Quick Tweaks Field Background Color"
@@ -177,40 +155,6 @@ export default function ThemeQuickTweaksCustomizer() {
         <span className={css(ut.flxc)}>
           <ResetStyle stateObjName="themeVars" propertyPath="--g-font-family" />
           <FontPicker id="global-font-fam" />
-        </span>
-      </div>
-
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Border Radius</span>
-        <div className={css(ut.flxc)}>
-          <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-rad" />
-          <SizeControl
-            min={0}
-            max={20}
-            inputHandler={borderRadHandler}
-            sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-            value={globalBdrRadValue}
-            unit={globalBdrRadUnit}
-            width="128px"
-            options={['px', 'em', 'rem']}
-          />
-        </div>
-      </div>
-
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>Border width</span>
-        <span className={css(ut.flxc)}>
-          <ResetStyle stateObjName="themeVars" propertyPath="--g-bdr-width" />
-          <SizeControl
-            min={0}
-            max={20}
-            inputHandler={borderWidthHandler}
-            sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-            value={globalBdrWidthVal}
-            unit={globalBdrWidthUnit}
-            width="128px"
-            options={['px', 'em', 'rem']}
-          />
         </span>
       </div>
 
