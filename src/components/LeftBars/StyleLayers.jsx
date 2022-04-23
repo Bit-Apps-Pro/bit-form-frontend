@@ -178,6 +178,28 @@ export default function StyleLayers() {
             />
           </LayerAccordion>
 
+          <LayerAccordion
+            route="btn"
+            childrenAccodin
+            onClick={() => styleHandler('btn')}
+            offset="6"
+            title="Buttons"
+            highlightSelector="[data-dev-btn]"
+          >
+            <NavBtn
+              route="btn-pre-i"
+              label="Prefix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-btn-pre-i]"
+            />
+            <NavBtn
+              route="btn-suf-i"
+              label="Suffix Icons"
+              offset="3.5"
+              highlightSelector="[data-dev-btn-suf-i]"
+            />
+          </LayerAccordion>
+
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
 
           {activeFields.map(([fldKey, fldData]) => (
