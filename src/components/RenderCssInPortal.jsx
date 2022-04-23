@@ -1613,6 +1613,7 @@ arrow:after,
    padding: 3px 6px;
    background-color: #a5a5afbd;
    border-radius: 10px;
+   z-index: 1;
  }
  
  .blk-icn-wrp {

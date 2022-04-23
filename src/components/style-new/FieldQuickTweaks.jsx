@@ -15,8 +15,9 @@ import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -26,7 +27,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const { fieldType, classes } = fldStyleObj
+  const { fieldType, classes, fieldSize } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
@@ -42,7 +43,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const setSizes = ({ target: { value } }) => {
     const commonStyleClasses = commonStyle(fieldKey, value, fieldData.typ)
     const cmnStlClasses = Object.keys(commonStyleClasses)
+
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle.fields[fieldKey].fieldSize = value
       const stylesClasses = drftStyle.fields[fieldKey].classes
       const cmnStlClsLen = cmnStlClasses.length
 
@@ -373,25 +376,25 @@ export default function FieldQuickTweaks({ fieldKey }) {
       assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
     }))
   }
-  console.log(fieldType)
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
+        <SimpleColorPicker
+          title="Accent Color"
+          subtitle="Accent Color"
+          value={getValueByObjPath(styles, objPath[0])}
+          stateObjName={objName}
+          propertyPath={objPath}
+          modalId="accent-color"
+          fldKey={fieldKey}
+        // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
+        />
+      )}
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country)$/gi) && (
         <>
-          <SimpleColorPicker
-            title="Accent Color"
-            subtitle="Accent Color"
-            value={getValueByObjPath(styles, objPath[0])}
-            stateObjName={objName}
-            propertyPath={objPath}
-            modalId="accent-color"
-            fldKey={fieldKey}
-          // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
-          />
           <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Size</span>
-            <select onChange={setSizes} className={css(sc.select)}>
-              <option value="">Select Size</option>
+            <span className={css(ut.fw500)}>Fields Size</span>
+            <select value={fieldSize} onChange={setSizes} className={css(sc.select)}>
               {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
@@ -545,7 +548,7 @@ const style = {
 const sizes = {
   'small-2': 'Extra Small',
   'small-1': 'Small',
-  medium: 'Medium',
+  medium: 'Medium(Default)',
   // large: 'Large',
   'large-1': 'Large',
   'large-2': 'Extra Large',

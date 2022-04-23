@@ -1952,6 +1952,26 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
+    'opt-lbl-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          border: true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        margin: '',
+        padding: '',
+        width: '',
+        height: '',
+        'box-shadow': '',
+        'backgound-color': '',
+        'font-size': '',
+        'font-weight': '',
+        'font-style': '',
+        color: '',
+      },
+    },
     'opt-icn': {
       states: ['hover'],
       properties: {

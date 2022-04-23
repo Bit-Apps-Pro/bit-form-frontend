@@ -450,9 +450,11 @@ class DropdownField {
       this.#setClassName(li, `${this.fieldKey}-option`)
       const lblimgbox = this.#createElm('span')
       this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+      this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
       if (this.#config.optionIcon) {
         const img = this.#createElm('img')
         this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         img.src = opt.img
         img.alt = opt.lbl
         img.loading = 'lazy'
@@ -460,6 +462,7 @@ class DropdownField {
       }
       const lbl = this.#createElm('span')
       this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+      this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
       this.#setTextContent(lbl, opt.lbl)
       lblimgbox.append(lbl)
       const prefix = this.#createElm('span')
