@@ -59,6 +59,7 @@ const sizeControlStyle = {
     w: 20,
     cur: 'pointer',
     '&:hover .value-list': { dy: 'block' },
+    '&:hover .down-icon': { transform: 'rotate(180deg) !important' },
   },
   valueList: {
     dy: 'none',

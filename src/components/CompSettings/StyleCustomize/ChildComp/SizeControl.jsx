@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import EllipsisIcon from '../../../../Icons/EllipsisIcon'
+import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
@@ -10,27 +10,25 @@ export default function SizeControl({ label, className, width, options = [], siz
   // const step = 1
   return (
     <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width }}>
-      <div className={css(sizeControlStyle.listContainer)}>
-        {preDefinedValues && (
-          <>
-            <EllipsisIcon size={20} />
-            <ul className={`${css(sizeControlStyle.valueList)} value-list`}>
-              {preDefinedValues?.map(opt => (
-                <li
-                  role="option"
-                  aria-selected={opt}
-                  onClick={() => definedValueHandler(opt)}
-                  onKeyUp={() => definedValueHandler(opt)}
-                  className={css(sizeControlStyle.listItem)}
-                >
-                  {opt}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
 
-      </div>
+      {preDefinedValues && (
+        <div className={css(sizeControlStyle.listContainer)}>
+          <ChevronDownIcn className="down-icon" size="18" rotate={false} />
+          <ul className={`${css(sizeControlStyle.valueList)} value-list`}>
+            {preDefinedValues?.map(opt => (
+              <li
+                role="option"
+                aria-selected={opt}
+                onClick={() => definedValueHandler(opt)}
+                onKeyUp={() => definedValueHandler(opt)}
+                className={css(sizeControlStyle.listItem)}
+              >
+                {opt}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <CustomInputControl
         className={css(sizeControlStyle.input)}
