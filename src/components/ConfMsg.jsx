@@ -1,17 +1,18 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 
+import produce from 'immer'
 import { memo, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
+import { $confirmations, $fieldsArr } from '../GlobalStates'
+import CloseIcn from '../Icons/CloseIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { deepCopy } from '../Utils/Helpers'
-import ConfirmModal from './Utilities/ConfirmModal'
+import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
-import CloseIcn from '../Icons/CloseIcn'
-import { $confirmations, $fieldsArr } from '../GlobalStates'
+import ConfirmModal from './Utilities/ConfirmModal'
 import TinyMCE from './Utilities/TinyMCE'
-import TrashIcn from '../Icons/TrashIcn'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -19,9 +20,9 @@ function ConfMsg({ removeIntegration }) {
   const fieldsArr = useRecoilValue($fieldsArr)
 
   const handleMsg = (mg, idx) => {
-    const confirmation = deepCopy(allConf)
-    confirmation.type.successMsg[idx].msg = mg
-    setAllConf(confirmation)
+    setAllConf(prevState => produce(prevState, draft => {
+      draft.type.successMsg[idx].msg = mg
+    }))
   }
 
   const handleMsgTitle = (e, idx) => {

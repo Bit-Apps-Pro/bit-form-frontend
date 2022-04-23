@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
@@ -20,11 +21,11 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }, [errorModal])
 
   const setErrMsg = (name, val) => {
-    const fdata = deepCopy(fieldData)
-    if (!fdata.err) fdata.err = {}
-    if (!fdata.err[name]) fdata.err[name] = {}
-    fdata.err[name].msg = val
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
+    setFields(prevState => produce(prevState, draft => {
+      if (!draft[fldKey].err) draft[fldKey].err = {}
+      if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
+      draft[fldKey].err[name].msg = val
+    }))
   }
 
   const cancelModal = () => {

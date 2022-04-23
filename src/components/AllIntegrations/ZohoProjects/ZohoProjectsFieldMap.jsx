@@ -1,5 +1,8 @@
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 
 export const addFieldMap = (i, projectsConf, setProjectsConf, event) => {
@@ -12,6 +15,9 @@ export const addFieldMap = (i, projectsConf, setProjectsConf, event) => {
 
 export default function ZohoProjectsFieldMap({ i, event, formFields, field, projectsConf, setProjectsConf }) {
   const { portalId } = projectsConf
+
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   let isNotRequired
   if (projectsConf?.projectId) {
     isNotRequired = field.zohoFormField === '' || projectsConf.default.fields?.[portalId]?.[projectsConf.projectId]?.[event]?.required?.indexOf(field.zohoFormField) === -1
@@ -61,8 +67,18 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, projectsConf, setProjectsConf)}>
           <option value="">{__('Select Field', 'bitform')}</option>
-          {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+          <optgroup label="Form Fields">
+            {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+          </optgroup>
           <option value="custom">{__('Custom...', 'bitform')}</option>
+
+          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+            {isPro && SmartTagField?.map(f => (
+              <option key={`ff-rm-${f.name}`} value={f.name}>
+                {f.label}
+              </option>
+            ))}
+          </optgroup>
         </select>
 
         {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}

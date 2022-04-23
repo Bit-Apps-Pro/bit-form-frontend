@@ -1,15 +1,19 @@
 /* eslint-disable-next-line no-undef */
-import { useState } from 'react'
 import { withQuicklink } from 'quicklink/dist/react/hoc'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import toast from 'react-hot-toast'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
-import metabox from '../resource/img/integ/metabox.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import autonami from '../resource/img/integ/autonami.svg'
+import dropbox from '../resource/img/integ/dropbox.svg'
+import Acumbamail from '../resource/img/integ/Acumbamail.svg'
+import oneDrive from '../resource/img/integ/OneDrive.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
@@ -24,6 +28,7 @@ import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
+import metabox from '../resource/img/integ/metabox.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
@@ -38,6 +43,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -45,8 +51,7 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
-import TrashIcn from '../Icons/TrashIcn'
-import { deepCopy } from '../Utils/Helpers'
+import CopyIcn from '../Icons/CopyIcn'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -79,6 +84,10 @@ function Integrations() {
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
+    { type: 'Autonami', logo: autonami, pro: !isPro },
+    { type: 'Dropbox', logo: dropbox, pro: !isPro },
+    { type: 'Acumbamail', logo: Acumbamail, pro: !isPro },
+    { type: 'OneDrive', logo: oneDrive, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
@@ -157,6 +166,33 @@ function Integrations() {
     setAvailableIntegs(filtered)
   }
 
+  const inteCloneConf = i => {
+    confMdl.btnTxt = __('Clone', 'bitform')
+    confMdl.body = __('Are you sure to clone this integration?', 'bitform')
+    confMdl.btnClass = ''
+    confMdl.action = () => { inteClone(i); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
+  const inteClone = (i) => {
+    const existInteg = { ...integrations[i] }
+    const tmpInteg = [...integrations]
+    toast.loading('cloneing...')
+    bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
+      .then(response => {
+        if (response && response.success) {
+          existInteg.id = response.data
+          existInteg.name = `Duplicate of ${existInteg.name}`
+          tmpInteg.push(existInteg)
+          setIntegration(tmpInteg)
+          toast.success('Integration clone successfully done.')
+        } else {
+          toast.error(`${__('Integration clone failed Cause', 'bitform')}: ${response.data} ${__('please try again', 'bitform')}`)
+        }
+      }).catch(() => toast.error(__('Integration clone failed.', 'bitform')))
+  }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -219,11 +255,15 @@ function Integrations() {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <TrashIcn />
                   </button>
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone', 'bitform')}'` }} onClick={() => inteCloneConf(i)} type="button">
+                    <CopyIcn size="15" />
+                  </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                     <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
                   )}
+
                 </div>
                 <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>

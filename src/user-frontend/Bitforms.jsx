@@ -2,6 +2,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { resetCaptcha } from '../components/Fields/Recaptcha'
 import MapComponents from '../components/MapComponents'
+import { loadScript } from '../Utils/globalHelpers'
 import { deepCopy } from '../Utils/Helpers'
 import { checkLogic, replaceWithField } from './checkLogic'
 import validateForm from './validation'
@@ -16,6 +17,13 @@ export default function Bitforms(props) {
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
+
+  useEffect(() => {
+    if (!props.editMode && props.gRecaptchaVersion === 'v3' && props.gRecaptchaSiteKey) {
+      loadScript(`https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`, 'g-recaptcha-script')
+    }
+  }, [])
+
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape
@@ -46,6 +54,7 @@ export default function Bitforms(props) {
           fieldData={fieldData}
           buttonDisabled={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'submit' && buttonDisabled}
           handleReset={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'reset' && handleReset}
+          handleFormValidationErrorMessages={handleFormValidationErrorMessages}
         />
       </div>
     )
@@ -314,23 +323,51 @@ export default function Bitforms(props) {
           formData.append('g-recaptcha-response', token)
           const uri = new URL(bitFormsFront.ajaxURL)
           uri.searchParams.append('action', 'bitforms_submit_form')
-          const submitResp = fetch(uri,
+          const submitResp = fetch(
+            uri,
             {
               method: 'POST',
               body: formData,
-            })
+            },
+          )
           submitResponse(submitResp)
         })
       })
     } else {
       const uri = new URL(bitFormsFront.ajaxURL)
       uri.searchParams.append('action', 'bitforms_submit_form')
-      const submitResp = fetch(uri,
+      const submitResp = fetch(
+        uri,
         {
           method: 'POST',
           body: formData,
-        })
+        },
+      )
       submitResponse(submitResp)
+    }
+  }
+
+  const handleFormValidationErrorMessages = result => {
+    if (result.data && typeof result.data === 'string') {
+      setMessage(result.data)
+      sethasError(true)
+      setSnack(true)
+    } else if (result.data) {
+      if (result.data.$form !== undefined) {
+        setMessage(deepCopy(result.data.$form))
+        sethasError(true)
+        setSnack(true)
+        // eslint-disable-next-line no-param-reassign
+        delete result.data.$form
+      }
+      if (Object.keys(result.data).length > 0) {
+        const newData = fieldData !== undefined && deepCopy(fieldData)
+
+        Object.keys(result.data).map(element => {
+          newData[props.fieldsKey[element]].error = result.data[element]
+        })
+        dispatchFieldData(newData)
+      }
     }
   }
 
@@ -343,6 +380,7 @@ export default function Bitforms(props) {
       .then(result => {
         let responsedRedirectPage = null
         let hitCron = null
+        let newNonce = ''
         if (result !== undefined && result.success) {
           handleReset()
           if (typeof result.data === 'object') {
@@ -353,6 +391,10 @@ export default function Bitforms(props) {
             if (result.data.cronNotOk) {
               hitCron = result.data.cronNotOk
             }
+            console.log('new nonce', result.data)
+            if (result.data.new_nonce) {
+              newNonce = result.data.new_nonce
+            }
             setMessage(result.data.message)
             setSnack(true)
             if (hasError) {
@@ -362,29 +404,11 @@ export default function Bitforms(props) {
             setMessage(result.data)
             setSnack(true)
           }
-        } else if (result.data && typeof result.data === 'string') {
-          setMessage(result.data)
-          sethasError(true)
-          setSnack(true)
-        } else if (result.data) {
-          if (result.data.$form !== undefined) {
-            setMessage(deepCopy(result.data.$form))
-            sethasError(true)
-            setSnack(true)
-            // eslint-disable-next-line no-param-reassign
-            delete result.data.$form
-          }
-          if (Object.keys(result.data).length > 0) {
-            const newData = fieldData !== undefined && deepCopy(fieldData)
-
-            Object.keys(result.data).map(element => {
-              newData[props.fieldsKey[element]].error = result.data[element]
-            })
-            dispatchFieldData(newData)
-          }
+        } else {
+          handleFormValidationErrorMessages(result)
         }
         if (responsedRedirectPage) {
-          triggerIntegration(hitCron)
+          triggerIntegration(hitCron, newNonce)
           const timer = setTimeout(() => {
             window.location = decodeURI(responsedRedirectPage)
             if (timer) {
@@ -392,7 +416,7 @@ export default function Bitforms(props) {
             }
           }, 1000)
         } else {
-          triggerIntegration(hitCron)
+          triggerIntegration(hitCron, newNonce)
         }
 
         setbuttonDisabled(false)
@@ -407,7 +431,7 @@ export default function Bitforms(props) {
       })
   }
 
-  const triggerIntegration = (hitCron) => {
+  const triggerIntegration = (hitCron, newNonce) => {
     if (hitCron) {
       if (typeof hitCron === 'string') {
         const uri = new URL(hitCron)
@@ -418,13 +442,15 @@ export default function Bitforms(props) {
       } else {
         const uri = new URL(bitFormsFront.ajaxURL)
         uri.searchParams.append('action', 'bitforms_trigger_workflow')
-        const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
-        fetch(uri,
+        const data = { cronNotOk: hitCron, token: newNonce || props.nonce, id: props.appID }
+        fetch(
+          uri,
           {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' },
-          })
+          },
+        )
           .then(response => response.json())
       }
     }

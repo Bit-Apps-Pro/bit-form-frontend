@@ -14,6 +14,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const autoprefixer = require('autoprefixer');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const postcssPresetEnv = require('postcss-preset-env')
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
@@ -262,6 +263,10 @@ module.exports = (env, argv) => {
                 postcssOptions: {
                   plugins: [
                     ['autoprefixer'],
+                    postcssPresetEnv({
+                      stage: 1,
+                      browsers: production ? '>0.1%' : 'Chrome >= 95',
+                    }),
                   ],
                 },
               },

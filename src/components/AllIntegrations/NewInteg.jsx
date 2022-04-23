@@ -37,6 +37,10 @@ const Pods = lazy(() => import('./Pods/Pods'))
 const Telegram = lazy(() => import('./Telegram/Telegram'))
 const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
+const Autonami = lazy(() => import('./Autonami/Autonami'))
+const Dropbox = lazy(() => import('./Dropbox/Dropbox'))
+const Acumbamail = lazy(() => import('./Acumbamail/Acumbamail'))
+const OneDrive = lazy(() => import('./OneDrive/OneDrive'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [integs, setIntegration] = useRecoilState($integrations)
@@ -107,6 +111,14 @@ export default function NewInteg({ allIntegURL }) {
         return <FluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Encharge':
         return <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Autonami':
+        return <Autonami allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Dropbox':
+        return <Dropbox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Acumbamail':
+        return <Acumbamail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'OneDrive':
+        return <OneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         return <></>
     }

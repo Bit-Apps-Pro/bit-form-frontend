@@ -11,10 +11,11 @@ export default function FieldLabelSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const label = fieldData.lbl || ''
   function setLabel(e) {
-    if (e.target.value === '') {
+    const { value } = e.target
+    if (value === '') {
       delete fieldData.lbl
     } else {
-      fieldData.lbl = e.target.value
+      fieldData.lbl = value.replaceAll('\\', '$_bf_$')
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -40,7 +41,7 @@ export default function FieldLabelSettings() {
         </div>
         <SingleToggle action={hideFieldLabel} isChecked={!fieldData.valid.hideLbl} />
       </div>
-      <input className="btcd-paper-inp" type="text" onChange={setLabel} value={label} />
+      <input className="btcd-paper-inp" type="text" onChange={setLabel} value={label.replaceAll('$_bf_$', '\\')} />
     </div>
   )
 }

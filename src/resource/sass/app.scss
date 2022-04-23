@@ -166,8 +166,17 @@ input[type="checkbox"].disabled:checked:before {
 } */
 // WP OVERRIDE END
 
-.sub-folder:hover button {
-  display: block !important;
+.sub-folder {
+  position: relative !important;
+
+  .tooltip-box {
+    position: absolute !important;
+    left: 100% !important;
+  }
+
+  &:hover button{
+    display: block !important;
+  }
 }
 
 .d-non {
@@ -4123,8 +4132,12 @@ _:-ms-fullscreen,
 .mb-2 {
   margin-bottom: 10px;
 }
+
 .mb-4 {
   margin-bottom: 20px;
+}
+.mb-25{
+  margin-bottom: 125px;
 }
 .mb-50 {
   margin-bottom: 250px;

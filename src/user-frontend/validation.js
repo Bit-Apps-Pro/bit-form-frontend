@@ -41,6 +41,13 @@ export default function validateForm({ form, input }) {
       continue
     }
 
+    if (fldType === 'number') errKey = nmbrFldValidation(fldValue, fldData)
+    else if (fldType === 'email') errKey = emailFldValidation(fldValue, fldData)
+    else if (fldType === 'url') errKey = urlFldValidation(fldValue, fldData)
+    else if (fldType === 'decision-box') errKey = dcsnbxFldValidation(fldValue, fldData)
+    else if (fldType === 'check' || fldType === 'select') errKey = checkMinMaxOptions(fldValue, fldData)
+    else if (fldType === 'file-up') errKey = fileupFldValidation(fldValue, fldData)
+
     if (fldData?.valid?.regexr) {
       errKey = regexPatternValidation(fldValue, fldData)
       if (errKey) {
@@ -49,13 +56,6 @@ export default function validateForm({ form, input }) {
         continue
       }
     }
-
-    if (fldType === 'number') errKey = nmbrFldValidation(fldValue, fldData)
-    else if (fldType === 'email') errKey = emailFldValidation(fldValue, fldData)
-    else if (fldType === 'url') errKey = urlFldValidation(fldValue, fldData)
-    else if (fldType === 'decision-box') errKey = dcsnbxFldValidation(fldValue, fldData)
-    else if (fldType === 'check' || fldType === 'select') errKey = checkMinMaxOptions(fldValue, fldData)
-    else if (fldType === 'file-up') errKey = fileupFldValidation(fldValue, fldData)
 
     generateErrMsg(errKey, fldKey, fldData)
     if (errKey) formCanBeSumbitted = false
@@ -114,14 +114,24 @@ const isElementInViewport = elm => {
   )
 }
 
-const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
+const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
 
 // eslint-disable-next-line no-nested-ternary
 const nmbrFldValidation = (fldValue, fldData) => ((fldData.mn && (Number(fldValue) < Number(fldData.mn))) ? 'mn' : (fldData.mx && (Number(fldValue) > Number(fldData.mx))) ? 'mx' : '')
 
-const emailFldValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPattern(fldData.pattern)).test(fldValue) ? 'invalid' : '')
+const emailFldValidation = (fldValue, fldData) => {
+  if (fldData.err.invalid.show) {
+    return (!new RegExp(generateBackslashPattern(fldData.pattern)).test(fldValue) ? 'invalid' : '')
+  }
+  return ''
+}
 
-const urlFldValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPattern(fldData.attr.pattern)).test(fldValue) ? 'invalid' : '')
+const urlFldValidation = (fldValue, fldData) => {
+  if (fldData.err.invalid.show) {
+    return (!new RegExp(generateBackslashPattern(fldData.attr.pattern)).test(fldValue) ? 'invalid' : '')
+  }
+  return ''
+}
 
 const dcsnbxFldValidation = (fldValue, fldData) => ((fldData.valid.req && (fldValue !== fldData.msg.checked)) ? 'req' : '')
 

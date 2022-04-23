@@ -13,7 +13,7 @@ import TableFileLink from '../components/Utilities/TableFileLink'
 import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy } from '../Utils/Helpers'
+import { deepCopy, number2Ipv6 } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
@@ -41,30 +41,30 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const reportData = useRecoilValue($reportSelector(0))
 
   useEffect(() => {
-        if (reportData) {
-          const allLabelObj = {}
+    if (reportData) {
+      const allLabelObj = {}
 
-          allLabels.map((itm) => {
-            allLabelObj[itm.key] = itm
-          })
-          const labels = []
-          console.log('reportData', reportData, allLabels, );
-          reportData.details?.order?.forEach((field) => {
-            if (
-              field
-              && field !== 'sl'
-              && field !== 'selection'
-              && field !== 'table_ac'
-            ) {
-              allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
-            }
-          })
-          // temporary tuen off report feature
-          tableHeaderHandler(labels.length ? labels : allLabels)
-        } else if (allLabels.length) {
-          tableHeaderHandler(allLabels)
+      allLabels.map((itm) => {
+        allLabelObj[itm.key] = itm
+      })
+      const labels = []
+      console.log('reportData', reportData, allLabels)
+      reportData.details?.order?.forEach((field) => {
+        if (
+          field
+          && field !== 'sl'
+          && field !== 'selection'
+          && field !== 'table_ac'
+        ) {
+          allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
         }
-        // console.log(`reportData`, reportData)
+      })
+      // temporary tuen off report feature
+      tableHeaderHandler(labels.length ? labels : allLabels)
+    } else if (allLabels.length) {
+      tableHeaderHandler(allLabels)
+    }
+    // console.log(`reportData`, reportData)
     // tableHeaderHandler(reportData?.details?.order || allLabels)
   }, [allLabels])
 
@@ -200,7 +200,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           ) {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
-              return JSON.parse(row.cell.value).map((itm, i) => (
+              return getUploadedFilesArr(row.cell.value).map((itm, i) => (
                 <TableFileLink
                   key={`file-n-${row.cell.row.index + i}`}
                   fname={itm}
@@ -220,8 +220,10 @@ function FormEntries({ allResp, setAllResp, integrations }) {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
 
-            if (val.key === '__user_ip' && isFinite(row.cell.value)) {
+            if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
               return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
+            } if (val.key === '__user_ip' && row.cell.value > 10) {
+              return number2Ipv6(row.cell.value)
             }
             return row.cell.value
           }
@@ -305,50 +307,48 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     setshowRelatedInfoMdl(true)
   }
 
-  const fetchData = useCallback(
-    ({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
-      // eslint-disable-next-line no-plusplus
-      if (refreshResp) {
-        setRefreshResp(0)
-        setisloading(true)
-        return
-      }
+  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
+    // eslint-disable-next-line no-plusplus
+    if (refreshResp) {
+      setRefreshResp(0)
+      setisloading(true)
+      return
+    }
 
-      // eslint-disable-next-line no-plusplus
-      const fetchId = ++fetchIdRef.current
-      if (allResp.length < 1) {
-        setisloading(true)
-      }
-      if (fetchId === fetchIdRef.current) {
-        const startRow = pageSize * pageIndex
-        bitsFetch(
-          {
-            id: formID,
-            offset: startRow,
-            pageSize,
-            sortBy,
-            filters,
-            globalFilter,
-          },
-          'bitforms_get_form_entries',
-        ).then((res) => {
-          if (res?.success) {
-            setPageCount(Math.ceil(res.data.count / pageSize))
-            setCountEntries(res.data.count)
-            setAllResp(res.data.entries)
-          }
+    // eslint-disable-next-line no-plusplus
+    const fetchId = ++fetchIdRef.current
+    if (allResp.length < 1) {
+      setisloading(true)
+    }
+    if (fetchId === fetchIdRef.current) {
+      const startRow = pageSize * pageIndex
+      bitsFetch(
+        {
+          id: formID,
+          offset: startRow,
+          pageSize,
+          sortBy,
+          filters,
+          globalFilter,
+        },
+        'bitforms_get_form_entries',
+      ).then((res) => {
+        if (res?.success) {
+          setPageCount(Math.ceil(res.data.count / pageSize))
+          setCountEntries(res.data.count)
+          setAllResp(res.data.entries)
+        }
 
-          setForms(allforms => formsReducer(allforms, {
-            type: 'update',
-            data: { formID, entries: res.data.count },
-          }))
+        setForms(allforms => formsReducer(allforms, {
+          type: 'update',
+          data: { formID, entries: res.data.count },
+        }))
 
-          setisloading(false)
-        })
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [delConfMdl, dupConfMdl, editData, formID, refreshResp],
-  )
+        setisloading(false)
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delConfMdl, dupConfMdl, editData, formID, refreshResp])
 
   const onRowClick = useCallback(
     (e, row, idx, rowFetchData) => {
@@ -370,11 +370,25 @@ function FormEntries({ allResp, setAllResp, integrations }) {
 
   const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
 
+  const getUploadedFilesArr = files => {
+    try {
+      const parsedFiles = files ? JSON.parse(files) : []
+      if (Array.isArray(parsedFiles)) {
+        return parsedFiles
+      }
+      if (Object.prototype.toString.call(parsedFiles) === '[object Object]') {
+        return Object.values(parsedFiles)
+      }
+      return parsedFiles
+    } catch (_) {
+      return []
+    }
+  }
+
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up') {
       return (
-        allResp[rowDtl.idx]?.[entry.accessor]
-        && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => (
+        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
           <TableFileLink
             key={`file-n-${i + 1.1}`}
             fname={it}
@@ -409,7 +423,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     if (entry.accessor === '__user_id') {
-      return  bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
+      return bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {

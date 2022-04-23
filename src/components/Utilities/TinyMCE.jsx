@@ -1,11 +1,13 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
 import { loadScript } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
+import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
   const [loaded, setLoaded] = useState(0)
-  useEffect(() => loadTinyMceScript(), [])
+  useEffect(() => { loadTinyMceScript() }, [])
 
   const loadTinyMceScript = async () => {
     if (typeof tinymce === 'undefined') {
@@ -38,6 +40,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       //   }
       // }
       // eslint-disable-next-line no-undef
+
       tinymce.init({
         selector: `textarea#${id}-settings`,
         menubar,
@@ -48,7 +51,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
         convert_urls: false,
         theme: 'modern',
         plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${!loaded ? 'wordpress' : ''}`,
-        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField',
+        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField | addSmartField',
         image_advtab: true,
         default_link_target: '_blank',
         setup(editor) {
@@ -62,6 +65,13 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
             type: 'menubutton',
             icon: false,
             menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+          })
+          SmartTagField && editor.addButton('addSmartField', {
+            text: 'Smart Tag Fields',
+            tooltip: 'Add Smart Tag Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: SmartTagField?.map(i => ({ text: i.label, onClick() { editor.insertContent(`\${${i.name}}`) } })),
           })
 
           editor.addButton('toogleCode', {
@@ -88,6 +98,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
   }
 
   return (
+
     <textarea
       id={`${id}-settings`}
       className="btcd-paper-inp mt-1 w-10"

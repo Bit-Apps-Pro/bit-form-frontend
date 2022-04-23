@@ -36,3 +36,37 @@ export const loadScript = (src, type) => new Promise((resolve) => {
 })
 
 export const select = (selector) => document.querySelector(selector)
+
+export function escapeHTMLEntity(string) {
+  const htmlEscapes = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }
+
+  const reUnescapedHtml = /[&<>"']/g
+  const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+
+  return (string && reHasUnescapedHtml.test(string))
+    ? string.replace(reUnescapedHtml, (chr) => htmlEscapes[chr])
+    : (string || '')
+}
+
+export function unescapeHTMLEntity(string) {
+  const htmlUnescapes = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#39;': "'"
+  }
+
+  const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g
+  const reHasEscapedHtml = RegExp(reEscapedHtml.source)
+
+  return (string && reHasEscapedHtml.test(string))
+    ? string.replace(reEscapedHtml, (entity) => (htmlUnescapes[entity] || "'"))
+    : (string || '')
+}

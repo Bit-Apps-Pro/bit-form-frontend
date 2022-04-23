@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
@@ -19,10 +20,9 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setContent = val => {
-    const tmp = deepCopy(fieldData)
-    tmp.content = val
-
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: tmp } }))
+    setFields(prevState => produce(prevState, draft => {
+      draft[fldKey].content = val
+    }))
   }
 
   const cancelModal = () => {

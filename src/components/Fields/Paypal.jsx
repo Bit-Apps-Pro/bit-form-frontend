@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useContext, useEffect, useState } from 'react'
+import { isFormValidatedWithoutError } from '../../user-frontend/frontendHelpers'
 import validateForm from '../../user-frontend/validation'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 
-function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
+function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder, handleFormValidationErrorMessages }) {
   const appSettingsContext = useContext(AppSettings)
   const [clientID, setClientID] = useState('')
   const [render, setrender] = useState(false)
@@ -86,8 +87,6 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   }
 
   const createOrderHandler = (_, actions) => {
-    if (!validateForm({ form: contentID })) throw new Error('form validation is failed!')
-
     const dynValues = setDefaultValues()
     const orderAmount = (Number(dynValues.amountFld[1] || amount)).toFixed(2) * 1
     const shippingAmount = (Number(dynValues.shippingFld[1] || shipping)).toFixed(2) * 1
@@ -170,6 +169,10 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     return style
   }
 
+  const handleOnClick = () => isFormValidatedWithoutError(contentID, handleFormValidationErrorMessages)
+    .then(() => true)
+    .catch(() => false)
+
   return (
     <InputWrapper
       formID={formID}
@@ -195,6 +198,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
               fundingSource={isStandalone ? FUNDING[attr.style.payBtn] : undefined}
               createSubscription={isSubscription ? (data, actions) => createSubscriptionHandler(data, actions) : undefined}
               createOrder={!isSubscription ? (data, actions) => createOrderHandler(data, actions) : undefined}
+              onClick={handleOnClick}
               onApprove={(data, actions) => onApproveHanlder(data, actions)}
               forceReRender={[amount, attr.style]}
               onError={() => { }}

@@ -1,10 +1,16 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 
 export default function ActiveCampaignFieldMap({ i, formFields, field, activeCampaingConf, setActiveCampaingConf }) {
   const isRequired = field.required
+
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const notResquiredField = activeCampaingConf?.default?.fields && Object.values(activeCampaingConf?.default?.fields).filter((f => !f.required))
   const addFieldMap = (indx) => {
     const newConf = { ...activeCampaingConf }
@@ -41,10 +47,19 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
           <option value="">{__('Select Field', 'bitform')}</option>
-          {
-            formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-          }
+          <optgroup label="Form Fields">
+            {
+              formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+            }
+          </optgroup>
           <option value="custom">{__('Custom...', 'bitform')}</option>
+          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+            {isPro && SmartTagField?.map(f => (
+              <option key={`ff-rm-${f.name}`} value={f.name}>
+                {f.label}
+              </option>
+            ))}
+          </optgroup>
         </select>
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
