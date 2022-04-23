@@ -65,7 +65,8 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
     for (let i = 0; i < fieldsKeysArrLen; i += 1) {
       const fieldKey = fieldsKeysArr[i]
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
-        if (drft.fields[fieldKey].overrideGlobalTheme === false) {
+        if (drft.fields[fieldKey].overrideGlobalTheme.length === 0) {
+          console.log('changeFormDir', style)
           switch (drft.fields[fieldKey].fieldType) {
             case 'check':
             case 'radio':
@@ -77,6 +78,41 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
                 const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
                 drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
+              }
+              break
+            case 'currency':
+            case 'country':
+              if (dir === 'rtl') {
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '6px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '35px !important'
+              } else if (dir === 'ltr') {
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right']
+              }
+              break
+            case 'phone-number':
+              if (dir === 'rtl') {
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left = '6px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '35px !important'
+              } else if (dir === 'ltr') {
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right = '6px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right']
               }
               break
             default:

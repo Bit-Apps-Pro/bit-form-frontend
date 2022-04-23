@@ -168,7 +168,7 @@ const style = {
   select: {
     fs: 14,
     fw: 500,
-    w: '96%',
+    w: '96%  !important',
     bd: 'var(--b-79-96) !important',
 
     oe: 'none !important',
