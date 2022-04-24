@@ -86,7 +86,7 @@ function Integrations() {
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Autonami', logo: autonami, pro: !isPro },
     { type: 'Dropbox', logo: dropbox, pro: !isPro },
-    // { type: 'Acumbamail', logo: Acumbamail, pro: !isPro },
+    { type: 'Acumbamail', logo: Acumbamail, pro: !isPro },
     { type: 'OneDrive', logo: oneDrive, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
