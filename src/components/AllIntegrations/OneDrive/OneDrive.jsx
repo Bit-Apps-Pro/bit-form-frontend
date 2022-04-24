@@ -37,8 +37,6 @@ function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {
     saveIntegConfig(integrations, setIntegration, allIntegURL, oneDriveConf, history)
   }
 
-  document.querySelector('.btcd-s-wrp').scrollTop = 0
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

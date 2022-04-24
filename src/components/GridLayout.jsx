@@ -12,7 +12,7 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { deepCopy, isType } from '../Utils/Helpers'
-import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings } from '../GlobalStates'
+import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings, $deletedFldKey } from '../GlobalStates'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -24,6 +24,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
+  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
@@ -274,6 +275,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         return
       }
     }
+
     const nwLay = {}
     const tmpFields = { ...fields }
     nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
@@ -282,6 +284,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     delete tmpFields[i]
     setLayouts(nwLay)
     setFields(tmpFields)
+    setDeletedFldKey(prvDeleted => {
+      const tmpFldKeys = [...prvDeleted]
+      if (!tmpFldKeys.includes(i)) {
+        tmpFldKeys.push(i)
+      }
+
+      return tmpFldKeys
+    })
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
   }
