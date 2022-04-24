@@ -510,6 +510,24 @@ const editorConfig = {
       width: '',
     },
   },
+  btn: {
+    states: ['hover'],
+    properties: {
+      'background-color': '',
+      border: {
+        border: true,
+        'border-width': true,
+        'border-radius': true,
+      },
+      color: '',
+      'font-size': '',
+      'font-style': '',
+      'font-weight': '',
+      padding: '5px',
+      margin: '5px',
+      'box-shadow': '',
+    },
+  },
   'pre-i': {
     states: ['hover'],
     properties: {

@@ -198,6 +198,15 @@ const $themeVarsLg = atom({
     '--err-txt-suf-i-p': '', // error txt suffix icon padding
     '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
     '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius
+
+    '--btn-fs': '16px', // button txt font size
+    '--btn-p': '11px 20px', // button padding
+    '--btn-m': '10px 0px', // button marging
+    '--btn-fw': '700', // button font color color
+    '--btn-f-style': '', // button font color color
+    '--btn-brs': '5px', // button border radius
+    '--btn-brw': '1px', // button border radius
+
   },
 })
 export const $themeVarsMd = atom({ key: '$themeVarsMd', default: {} })

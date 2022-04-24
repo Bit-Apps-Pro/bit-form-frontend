@@ -45,7 +45,9 @@ export default function CustomInputControl(
     showRangeTip = true,
     resizeValueByLabel = true,
     changeValueOnScroll = true,
-    showArrow = true },
+    showArrow = true,
+    placeholder,
+    hasTextMode },
 ) {
   const { css } = useFela()
   const [visible, setVisible] = useState(false)
@@ -76,8 +78,8 @@ export default function CustomInputControl(
   }
 
   const onChangeHandler = (e) => {
-    const val = Number(e.target.value)
-    if (onChange) onChange(val)
+    // const val = Number(e.target.value)
+    if (onChange) onChange(e.target.value)
   }
 
   const handleArrowKey = e => {
@@ -144,7 +146,7 @@ export default function CustomInputControl(
             type="number"
             min={min}
             max={max}
-            placeholder="auto"
+            placeholder={placeholder || 'value'}
             step={step}
             onChange={onChangeHandler}
             onKeyDown={handleArrowKey}
@@ -152,7 +154,7 @@ export default function CustomInputControl(
             onWheelCapture={!changeValueOnScroll ? e => e.target.blur() : undefined}
             value={value}
           />
-          {showArrow && (
+          {showArrow && !hasTextMode && (
             <div>
               <button
                 type="button"

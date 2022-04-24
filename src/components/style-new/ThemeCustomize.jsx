@@ -16,6 +16,7 @@ import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
 import AsteriskCustomizer from './AsteriskCustomizer'
+import ButtonCustomizer from './ButtonCustomizer'
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
 import FieldContainerCustomizer from './FieldContainerCustomizer'
 import FormContainerCustomizer from './FormContainerCustomizer'
@@ -61,6 +62,9 @@ export default function ThemeCustomize() {
       case 'err-msg': return 'Error Messages'
       case 'err-txt-pre-i': return 'Error Text Prefix Icons'
       case 'err-txt-suf-i': return 'Error Text Suffix Icons'
+      case 'btn': return 'Buttons'
+      case 'btn-pre-i': return 'Button Prefix Icons'
+      case 'btn-suf-i': return 'Button Suffix Icons'
       case 'req-smbl': return 'Asterisk Symbol'
       default: return 'Theme Customization'
     }
@@ -127,6 +131,7 @@ export default function ThemeCustomize() {
         {element === 'sub-titl' && <SubTitleCustomizer />}
         {element === 'hlp-txt' && <HelperTextCustomizer />}
         {element === 'err-msg' && <ErrorMessagesCustomizer />}
+        {element === 'btn' && <ButtonCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
         {element === 'req-smbl' && <AsteriskCustomizer />}
 
