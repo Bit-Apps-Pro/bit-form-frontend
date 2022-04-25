@@ -86,6 +86,7 @@ export default function SubTitleSettings() {
   return (
     <div>
       <SimpleAccordion
+        id="sub-titl-stng"
         title={__('Sub Title', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -98,6 +99,7 @@ export default function SubTitleSettings() {
       >
         <div className={css(FieldStyle.placeholder)}>
           <AutoResizeInput
+            id="sub-titl-stng"
             ariaLabel="Sub title for this Field"
             placeholder="Type sub title here..."
             value={subtitle}

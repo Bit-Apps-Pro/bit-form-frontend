@@ -5,7 +5,7 @@ import CopyIcn from '../../Icons/CopyIcn'
 import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'
 
-export default function CoolCopy({ className, cls, value, readOnly = true }) {
+export default function CoolCopy({ id, className, cls, value, readOnly = true }) {
   const { css } = useFela()
   const copyInput = useRef(null)
 
@@ -30,7 +30,7 @@ export default function CoolCopy({ className, cls, value, readOnly = true }) {
     <div className={`${css(style.wrapper)} ${className}`}>
       <input aria-label="Copy field key" ref={copyInput} className={`${css(style.input)} ${cls}`} id="text-copy" type="text" value={value} readOnly={readOnly} />
       <Tip msg="Copy">
-        <button onClick={copyText} className={`${css(style.btn)}`} type="button" aria-label="Copy field key">
+        <button data-testid={`${id}-col-cpy-btn`} onClick={copyText} className={`${css(style.btn)}`} type="button" aria-label="Copy field key">
           <CopyIcn w="20" />
         </button>
       </Tip>

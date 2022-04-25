@@ -21,13 +21,13 @@ export default function FieldIconSettings({ classNames, labelClass, label, alt, 
         )}
 
         <Tip msg="Change">
-          <button type="button" onClick={setIcon} className={css(ut.icnBtn)}>
+          <button data-testid={`${styleRoute}-edt-btn`} type="button" onClick={setIcon} className={css(ut.icnBtn)}>
             <EditIcn size={22} />
           </button>
         </Tip>
         {iconSrc && (
           <Tip msg="Remove">
-            <button onClick={removeIcon} className={css(ut.icnBtn)} type="button">
+            <button data-testid={`${styleRoute}-rmv-btn`} onClick={removeIcon} className={css(ut.icnBtn)} type="button">
               <CloseIcn size="13" />
             </button>
           </Tip>

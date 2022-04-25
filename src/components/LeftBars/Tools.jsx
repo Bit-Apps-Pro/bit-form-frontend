@@ -24,6 +24,7 @@ function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, titl
       title={title}
       type="button"
       role="button"
+      data-testid={`${value.fieldData.typ}-tool`}
       className={css(tool)}
       // className="tools"
       draggable

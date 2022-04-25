@@ -12,7 +12,7 @@ export default function IconStyleBtn({ route }) {
     history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
   return (
-    <button type="button" onClick={styleHandler} className={css(ut.icnBtn)}>
+    <button data-testid={`${route}-styl-btn`} type="button" onClick={styleHandler} className={css(ut.icnBtn)}>
       <BrushIcn height="30" />
     </button>
   )

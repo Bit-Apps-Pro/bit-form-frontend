@@ -769,6 +769,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             title="Search Field"
             aria-label="Search Field"
             autoComplete="off"
+            data-testid="tlbr-srch-inp"
             // placeholder="Search..."
             id="search-icon"
             type="search"
@@ -790,7 +791,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         </div>
         {!focusSearch
           && (
-            <button title="Sort by ascending order" className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
+            <button title="Sort by ascending order" data-testid="tlbr-sort-btn" className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
               <AtoZSortIcn size="20" />
             </button>
           )}

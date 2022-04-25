@@ -12,6 +12,7 @@ import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
 export default function SimpleAccordion({ className,
+  id,
   titleCls,
   title,
   toggleName,
@@ -85,6 +86,7 @@ export default function SimpleAccordion({ className,
         role="button"
         onClick={toggleAccordion}
         onKeyPress={toggleAccordion}
+        data-testid={`${id}-smpl-acrdn`}
       >
         <div className={css(SimpleAccordionStyle.flxbwn)}>
           <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
@@ -100,7 +102,7 @@ export default function SimpleAccordion({ className,
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
               {switching && (
-                <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
+                <SingleToggle id={id} className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
               )}
               {actionComponent && actionComponent}
             </div>

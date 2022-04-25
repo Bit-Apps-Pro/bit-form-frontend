@@ -20,6 +20,7 @@ export default function Back2FldBtn({ className, size }) {
       type="button"
       role="button"
       tabIndex="0"
+      data-testid="back2-fld-lst-btn"
       className={className}
       onClick={navigate2fldList}
     >

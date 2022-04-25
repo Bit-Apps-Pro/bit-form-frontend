@@ -26,7 +26,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
 
       <div className={css(style.section, { mx: 15 })}>
         <span className={css(style.title)}>Field key</span>
-        <CoolCopy value={fieldKey} />
+        <CoolCopy id="fld-stng-key" value={fieldKey} />
       </div>
 
       <hr className={css(style.divider)} />

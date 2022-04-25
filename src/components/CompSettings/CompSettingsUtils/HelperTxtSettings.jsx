@@ -87,6 +87,7 @@ export default function HelperTxtSettings() {
   return (
     <>
       <SimpleAccordion
+        id="hlpr-txt-stng"
         title={__('Helper Text', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -99,6 +100,7 @@ export default function HelperTxtSettings() {
       >
         <div className={css(FieldStyle.placeholder)}>
           <AutoResizeInput
+            id="hlpr-txt-stng"
             aria-label="Helper text for this Field"
             placeholder="Type Helper text here..."
             value={helperTxt}

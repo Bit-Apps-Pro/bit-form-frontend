@@ -82,6 +82,7 @@ export default function FieldLabelSettings() {
   return (
     <>
       <SimpleAccordion
+        id="fld-lbl-stng"
         title={__('Field Label:', 'bitform')}
         className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
         switching
@@ -95,6 +96,7 @@ export default function FieldLabelSettings() {
         <div>
           <div className={css({ w: '97%', mx: 5 })}>
             <AutoResizeInput
+              id="fld-lbl-stng"
               ariaLabel="Field Label input"
               changeAction={setLabel}
               value={label.replaceAll('$_bf_$', '\\')}

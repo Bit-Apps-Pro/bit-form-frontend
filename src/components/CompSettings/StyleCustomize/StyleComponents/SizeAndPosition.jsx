@@ -85,15 +85,16 @@ function SizeAndPosition({ fldKey }) {
     <SimpleAccordion
       title="Sizes & Positions"
       className={css(FieldStyle.fieldSection)}
+      id="siz-n-pos"
     >
       <div className={css(s.fd)}>
         <label className={css(ut.w5, s.label)} htmlFor="x">
           <span className={css(s.name)}>X</span>
-          <input aria-label="position x" placeholder="" min="0" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
+          <input data-testid="siz-n-pos-x-inp" aria-label="position x" placeholder="" min="0" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="w">
           <span className={css(s.name)}>W</span>
-          <input aria-label="position w" placeholder="" min="0" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
+          <input data-testid="siz-n-pos-w-inp" aria-label="position w" placeholder="" min="0" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
         </label>
         {/* <label className={css(ut.w5, s.label)} htmlFor="y">
           <span className={css(s.name)}>Y</span>
