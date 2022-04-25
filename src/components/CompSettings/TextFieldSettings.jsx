@@ -746,12 +746,13 @@ function TextFieldSettings() {
         {
           fieldData.typ === 'number' && (
             <>
-              <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
+              <SimpleAccordion id="nmbr-stng" title="Number:" className={css(FieldStyle.fieldSection)} open>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css({ mx: 5 })}>
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
                     <span>{__('Min:', 'bitform')}</span>
                     <input
+                      data-testid="nmbr-stng-min-inp"
                       title="Minimum number for this field"
                       aria-label="Minimum number for this field"
                       placeholder="Type minimum number here..."
@@ -765,6 +766,7 @@ function TextFieldSettings() {
                   {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mn && (
                     <ErrorMessageSettings
+                      id="nmbr-stng-min"
                       type="mn"
                       title="Min Error Message"
                       tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
@@ -773,6 +775,7 @@ function TextFieldSettings() {
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
                     <span>{__('Max:', 'bitform')}</span>
                     <input
+                      data-testid="nmbr-stng-max-inp"
                       title="Maximum number for this field"
                       aria-label="Maximum number for this field"
                       placeholder="Type maximun number here..."
@@ -785,6 +788,7 @@ function TextFieldSettings() {
                   {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mx && (
                     <ErrorMessageSettings
+                      id="nmbr-stng-max"
                       type="mx"
                       title="Max Error Message"
                       tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
@@ -809,16 +813,18 @@ function TextFieldSettings() {
           fieldData.typ === 'password' && (
             <>
               <SimpleAccordion
+                id="pass-vldsn-stng"
                 title={__('Validations', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
                 isPro
               >
                 <div className={css(ut.mt1, ut.flxClm)}>
-                  <TableCheckBox className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
                   <TableCheckBox
+                   id="pass-vldsn-stng-spcl"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="special"
@@ -829,6 +835,7 @@ function TextFieldSettings() {
                     disabled={!bits.isPro}
                   />
                   <TableCheckBox
+                   id="pass-vldsn-stng-lmt"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="limit"
@@ -843,6 +850,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Min:', 'bitform')}</span>
                         <input
+                        data-testid="pass-vldsn-stng-lmt-min-inp"
                           name="mn"
                           aria-label="Minimum number for this field"
                           placeholder="Type minimum number here..."
@@ -855,6 +863,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Max:', 'bitform')}</span>
                         <input
+                        data-testid="pass-vldsn-stng-lmt-max-inp"
                           name="mx"
                           aria-label="Maximum number for this field"
                           placeholder="Type maximum number here..."

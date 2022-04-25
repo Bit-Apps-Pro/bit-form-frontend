@@ -34,7 +34,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
 
   return (
     <SimpleAccordion
-      id="entry-unq-stng"
+      id={`${type}-stng`}
       title={title}
       className={className}
       tip={tipTitle}
@@ -47,7 +47,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
       disable={!fieldData?.err?.[type]?.[isUnique]}
     >
       <ErrorMessageSettings
-        id="entry-unq-stng"
+        id={`${type}-stng`}
         type={type}
         title={title}
         tipTitle={tipTitle}

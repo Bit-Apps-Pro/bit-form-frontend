@@ -4,7 +4,7 @@ import { useId } from 'react'
 export default function TableCheckBox(props) {
   const id = 'id' in props ? props.id : useId()
   return (
-    <label htmlFor={`btcd-cbx-${id}`} className={`btcd-label-cbx ${props.className}`}>
+    <label data-testid={`${id}-tbl-chk-lbl`} htmlFor={`btcd-cbx-${id}`} className={`btcd-label-cbx ${props.className}`}>
       <input id={`btcd-cbx-${id}`} type="checkbox" checked={props.checked} value={props.value} name={props.name} onChange={props.onChange} className="btcd-cbx-invisible" disabled={props.disabled} {...props.rest} ref={props.refer} aria-label={props.title || 'Checkbox'} />
       <div className={`btcd-t-cbx ${props.cls}`}>
         <svg width="20px" height="20px" viewBox="0 0 20 20">
