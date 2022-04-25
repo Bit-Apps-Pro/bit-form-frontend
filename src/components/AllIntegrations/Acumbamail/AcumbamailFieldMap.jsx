@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
