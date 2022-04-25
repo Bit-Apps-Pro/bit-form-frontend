@@ -135,7 +135,7 @@ export default function ThemeCustomize() {
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
         {element === 'req-smbl' && <AsteriskCustomizer />}
 
-        {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)}
+        {/* {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)} */}
       </div>
     </div>
   )

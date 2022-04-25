@@ -7,7 +7,7 @@ import { CSSTransition } from 'react-transition-group'
 import FocusIcn from '../../../../Icons/FocusIcn'
 import SortIcn from '../../../../Icons/SortIcn'
 import ut from '../../../../styles/2.utilities'
-import { highlightElm, removeHighlight } from '../../../style-new/styleHelpers'
+import { highlightElm, lowerCaseAllAndReplaceSpaceToHipen, removeHighlight } from '../../../style-new/styleHelpers'
 import Cooltip from '../../../Utilities/Cooltip'
 
 export default function LayerAccordion({ className,
@@ -29,6 +29,8 @@ export default function LayerAccordion({ className,
   const { css } = useFela()
   const { element, rightBar } = useParams()
 
+  const dataTestId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc`
+  const dataTestFocusId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc-focus`
   useEffect(() => {
     setTgl(open)
   }, [open])
@@ -77,6 +79,7 @@ export default function LayerAccordion({ className,
       onKeyPress={toggleAccordion}
       className={`${className} ${tgl && 'active'} ${css(cls.accordionLbl)}`}
       onClick={onClick}
+      data-testid={dataTestId}
     >
       <div
         className={`btgl ${css({ w: '100%' })}`}
@@ -118,6 +121,7 @@ export default function LayerAccordion({ className,
                     tabIndex="0"
                     className={css(cls.highlightBtn)}
                     title="Highlight Element in Builder"
+                    data-testid={dataTestFocusId}
                   >
                     <FocusIcn size={15} stroke="2.5" />
                   </div>

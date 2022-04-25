@@ -46,7 +46,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, theme } = fldStyleObj
   const options = [
-    { label: 'style', icn: 'Custom style', show: ['icn'], tip: 'Custom style' },
+    { label: 'style', icn: 'Custom Style', show: ['icn'], tip: 'Custom style' },
     { label: 'classes', icn: 'Custom Classes', show: ['icn'], tip: 'Custom Classes' },
   ]
   const customClsName = fields[fieldKey]?.customClasses
@@ -387,7 +387,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           </>
         )}
 
-        {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
+        {/* {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)} */}
       </div>
     </div>
   )

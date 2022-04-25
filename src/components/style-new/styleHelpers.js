@@ -66,7 +66,6 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
       const fieldKey = fieldsKeysArr[i]
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
         if (drft.fields[fieldKey].overrideGlobalTheme.length === 0) {
-          console.log('changeFormDir', style)
           switch (drft.fields[fieldKey].fieldType) {
             case 'check':
             case 'radio':
@@ -800,3 +799,5 @@ export const sortArrOfObjByMultipleProps = (props = []) => {
     return 0
   }
 }
+
+export const lowerCaseAllAndReplaceSpaceToHipen = (str) => str.toLowerCase().replace(/ /g, '-')

@@ -118,7 +118,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             </button>
           </Tip>
           <Tip msg="Elements & Layers">
-            <button onClick={styleModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}>
+            <button data-testid="style-mode" onClick={styleModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}>
               <LayerIcon size="22" />
             </button>
           </Tip>

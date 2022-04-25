@@ -5,8 +5,18 @@ import ut from '../../styles/2.utilities'
 import { highlightElm, removeHighlight } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 
-export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1, icn, highlightSelector, styleOverride }) {
+export default function NavBtn({ route,
+  subRoute,
+  cssSelector,
+  label,
+  offset = 1,
+  icn,
+  highlightSelector,
+  styleOverride }) {
   const { formType, formID, fieldKey, element, rightBar } = useParams()
+
+  const dataTestId = `${subRoute ? `${subRoute}-` : ''}${route}-nav`
+  const dataTestFocusId = `${subRoute ? `${subRoute}-` : ''}${route}-nav-focus`
 
   let active = false
   if (rightBar === 'theme-customize' && !fieldKey && !subRoute && element === route) {
@@ -30,6 +40,7 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
       onKeyPress={styleHandler}
       role="button"
       tabIndex="0"
+      data-testid={dataTestId}
     >
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
@@ -54,6 +65,7 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
             tabIndex="0"
             className={css(s.highlightBtn)}
             title="Highlight Element in Builder"
+            data-testid={dataTestFocusId}
           >
             <FocusIcn size={15} stroke="2.5" />
           </div>
