@@ -2,7 +2,7 @@ import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from './Cooltip'
 
-export default function SingleToggle({ className, tip, title, isChecked, name, action = () => { }, disabled }) {
+export default function SingleToggle({ id, className, tip, title, isChecked, name, action = () => { }, disabled }) {
   const { css } = useFela()
   return (
     <div className={`flx flx-between ${className}`}>
@@ -14,7 +14,7 @@ export default function SingleToggle({ className, tip, title, isChecked, name, a
           </Cooltip>
         )}
       </span>
-      <label className={css(c.toggle_control)} htmlFor={`s-ck-${title || name}-${isChecked}`}>
+      <label data-testid={`${id}-sngl-tgl`} className={css(c.toggle_control)} htmlFor={`s-ck-${title || name}-${isChecked}`}>
         <input
           id={`s-ck-${title || name}-${isChecked}`}
           onChange={action}

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useFela } from 'react-fela'
 import FieldStyle from '../../../styles/FieldStyle.style'
 
-const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction, value, rows = 1, maxRow = 3 }) => {
+const AutoResizeInput = ({ id, name, className, ariaLabel, placeholder, changeAction, value, rows = 1, maxRow = 3 }) => {
   const { css } = useFela()
   const textInput = useRef(null)
 
@@ -32,6 +32,7 @@ const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction
 
   return (
     <textarea
+      data-testid={`${id}-ato-siz-inp`}
       aria-label={ariaLabel}
       ref={textInput}
       name={name}

@@ -46,6 +46,7 @@ export default function AdminLabelSettings() {
 
   return (
     <SimpleAccordion
+      id="admn-lbl-stng"
       title={__('Admin Label', 'bitform')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
@@ -58,6 +59,7 @@ export default function AdminLabelSettings() {
     >
       <div className={css(FieldStyle.placeholder)}>
         <AutoResizeInput
+          id="admn-lbl-stng"
           ariaLabel="Admin label for this Field"
           placeholder="Type Admin label here..."
           value={adminLabel}

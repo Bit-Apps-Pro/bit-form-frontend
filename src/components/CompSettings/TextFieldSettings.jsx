@@ -432,6 +432,7 @@ function TextFieldSettings() {
         <FieldSettingsDivider />
 
         <SimpleAccordion
+          id="inp-icn-stng"
           title={__('Input Icons', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           toggleAction={hideAdminLabel}
@@ -468,6 +469,7 @@ function TextFieldSettings() {
 
         {!(fieldData.typ === 'password') && (
           <SimpleAccordion
+            id="dflt-val-stng"
             title={__('Default value', 'bitform')}
             className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
             switching
@@ -480,6 +482,7 @@ function TextFieldSettings() {
           >
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="dflt-val-stng-inp"
                 aria-label="Default value for this Field"
                 placeholder="Type default value here..."
                 className={css(FieldStyle.input)}
@@ -503,6 +506,7 @@ function TextFieldSettings() {
         ) && (
             <>
               <SimpleAccordion
+                id="sgsn-stng"
                 title={__('Suggestion', 'bitform')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
@@ -514,7 +518,7 @@ function TextFieldSettings() {
                 disable={!fieldData?.suggestionHide}
               >
                 <div className={css(FieldStyle.placeholder)}>
-                  <button onClick={openOptionModal} className={css(app.btn)} type="button">
+                  <button data-testid="sgsn-stng-btn" onClick={openOptionModal} className={css(app.btn)} type="button">
                     &nbsp;
                     {__('Edit suggestions', 'bitform')}
                   </button>
@@ -524,6 +528,7 @@ function TextFieldSettings() {
               <FieldSettingsDivider />
 
               <SimpleAccordion
+                id="ato-cmplt"
                 title={__('Auto Complete', 'bitform')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
@@ -536,6 +541,7 @@ function TextFieldSettings() {
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <MultiSelect
+                    data-testid="ato-cmplt-slct"
                     defaultValue={ac}
                     className={`${css(FieldStyle.multiselectInput)}`}
                     placeholder="Select one"
