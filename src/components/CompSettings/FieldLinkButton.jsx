@@ -45,7 +45,7 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
     history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
   }
   return (
-    <button type="button" onClick={handleFldLink} className="btc-s-l mt-2">
+    <button type="button" data-testid={`fld-lst-itm-${icn}-${fieldKey}`} onClick={handleFldLink} className="btc-s-l mt-2">
       <div className="flx flx-between ">
         <div className="flx w-9">
           <span className="lft-icn mr-2 flx br-50">
