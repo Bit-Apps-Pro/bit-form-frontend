@@ -47,6 +47,7 @@ export default function PlaceholderSettings() {
 
   return (
     <SimpleAccordion
+      id="plchldr-stng"
       title={__('Placeholder', 'bitform')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
@@ -59,6 +60,7 @@ export default function PlaceholderSettings() {
     >
       <div className={css(FieldStyle.placeholder)}>
         <input
+          data-testid="plchldr-stng-inp"
           aria-label="Placeholer for this Field"
           placeholder="Type Placeholder here..."
           className={css(FieldStyle.input)}

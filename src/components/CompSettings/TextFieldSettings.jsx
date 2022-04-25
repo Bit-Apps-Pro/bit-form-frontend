@@ -561,12 +561,14 @@ function TextFieldSettings() {
           )}
 
         <SimpleAccordion
+          id="nam-stng"
           title={__('Name', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
+              data-testid="nam-stng-inp"
               aria-label="Name for this Field"
               placeholder="Type field name here..."
               className={css(FieldStyle.input)}
@@ -581,12 +583,14 @@ function TextFieldSettings() {
           fieldData.typ === 'text' && (
             <>
               <SimpleAccordion
+                id="inp-mod-stng"
                 title={__('Input mode', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
+                    data-testid="inp-mod-stng-slct"
                     className={css(FieldStyle.input)}
                     aria-label="Input mode for this Field"
                     placeholder="Type field inpur mode here..."
@@ -609,6 +613,7 @@ function TextFieldSettings() {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
             <>
               <SimpleAccordion
+                id="ptrn-stng"
                 title={__('Pattern', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
@@ -623,6 +628,7 @@ function TextFieldSettings() {
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                       <Downmenu instance={patternTippy}>
                         <button
+                          data-testid="ptrn-stng-exprsn-btn"
                           data-close
                           type="button"
                           className={css(style.dotBtn)}
@@ -637,6 +643,7 @@ function TextFieldSettings() {
                           <ul role="menu">
                             {predefinedPatterns?.map((opt, i) => (
                               <li
+                                data-testid={`ptrn-stng-expn-itm-${i}`}
                                 // eslint-disable-next-line react/no-array-index-key
                                 key={i}
                                 role="menuitem"
@@ -655,6 +662,7 @@ function TextFieldSettings() {
                       </Downmenu>
                     </div>
                     <AutoResizeInput
+                      id="ptrn-stng-expn"
                       ariaLabel="Pattern for input field"
                       placeholder="e.g. ([A-Z])\w+"
                       list="patterns"
@@ -666,6 +674,7 @@ function TextFieldSettings() {
                   <div className={css({ mr: 5 }, ut.pl1)}>
 
                     <SingleInput
+                      id="ptrn-stng-flg"
                       inpType="text"
                       title={__('Flags:', 'bitform')}
                       value={flags}
@@ -677,6 +686,7 @@ function TextFieldSettings() {
                   </div>
                   {regexr && (
                     <ErrorMessageSettings
+                      id="ptrn-stng-expn"
                       type="regexr"
                       title="Error Message"
                       tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
@@ -706,6 +716,7 @@ function TextFieldSettings() {
             <>
               <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
                 <SingleToggle
+                  id="ato-fil-stng"
                   tip="By disabling this option, the field auto fill will be hidden"
                   title={__('Auto Fill', 'bitform')}
                   action={setAutoComplete}

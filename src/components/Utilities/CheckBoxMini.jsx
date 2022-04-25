@@ -6,6 +6,7 @@ export default function CheckBoxMini({ className, cls, id, name, refer, onChange
   return (
     <div className={`form-check ${className}`}>
       <input
+        data-testid={`${id}-chk-mini`}
         type="checkbox"
         className={`form-check-input ${cls}`}
         id={checkId}

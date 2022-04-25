@@ -21,7 +21,7 @@ import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg }) {
+export default function ErrorMessageSettings({ id, type, title, tipTitle, defaultMsg }) {
   const [errorModal, setErrorModal] = useState(false)
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
@@ -103,6 +103,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
         {/* flx flx-between mt-1 mb-1 mr-2 */}
         <div className={`${css(ErrorMessages.flx)}`}>
           <CheckBoxMini
+            id={`${id}-shw-err-msg`}
             className={`${css(ut.mr2)} ${css(ut.fw500)} `}
             name={type}
             checked={fieldData?.err?.[type]?.show || false}
@@ -124,6 +125,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
           <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
             <div className={css(ErrorMessages.flx)}>
               <CheckBoxMini
+                id={`${id}-cstm-err-msg`}
                 className={`${css(ut.mr2)} ${css(ut.fw500)} `}
                 name={type}
                 checked={fieldData?.err?.[type]?.custom || false}
@@ -139,6 +141,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
               </Cooltip>
             </div>
             <button
+              data-testid={`${id}-err-msg-edt-btn`}
               tabIndex="-1"
               className={css(ErrorMessages.btn)}
               onClick={openErrorModal}
