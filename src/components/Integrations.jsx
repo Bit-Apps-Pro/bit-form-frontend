@@ -6,21 +6,21 @@ import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
+import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import InfoIcn from '../Icons/InfoIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
+import Acumbamail from '../resource/img/integ/Acumbamail.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import autonami from '../resource/img/integ/autonami.svg'
-import dropbox from '../resource/img/integ/dropbox.svg'
-import Acumbamail from '../resource/img/integ/Acumbamail.svg'
-import oneDrive from '../resource/img/integ/OneDrive.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
 import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
+import dropbox from '../resource/img/integ/dropbox.svg'
 import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
@@ -31,6 +31,7 @@ import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import metabox from '../resource/img/integ/metabox.svg'
+import oneDrive from '../resource/img/integ/OneDrive.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
@@ -54,7 +55,6 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
-import CopyIcn from '../Icons/CopyIcn'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -67,8 +67,9 @@ function Integrations() {
   const history = useHistory()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
-  const { isPro } = bits
+  const { isPro, proPluginVersion } = bits
   const { css } = useFela()
+
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks, pro: !isPro },
@@ -89,9 +90,9 @@ function Integrations() {
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Autonami', logo: autonami, pro: !isPro },
-    { type: 'Dropbox', logo: dropbox, pro: !isPro },
     { type: 'Acumbamail', logo: Acumbamail, pro: !isPro },
     { type: 'OneDrive', logo: oneDrive, pro: !isPro },
+    { type: 'Dropbox', logo: dropbox, pro: !isPro || proPluginVersion < '1.4.15' },
     { type: 'Encharge', logo: encharge, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
