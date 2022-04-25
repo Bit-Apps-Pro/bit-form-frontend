@@ -16,6 +16,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const bits = useRecoilValue($bits)
   const { css } = useFela()
+  const { siteURL } = bits
 
   const handleInput = e => {
     const newConf = { ...sheetConf }
@@ -43,7 +44,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
         <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-        <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
         <CopyText value={redirectLocation || `${bits.googleRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />

@@ -43,6 +43,7 @@ const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
 const EditAutonami = lazy(() => import('./Autonami/EditAutonami'))
 const EditDropbox = lazy(() => import('./Dropbox/EditDropbox'))
 const EditOneDrive = lazy(() => import('./OneDrive/EditOneDrive'))
+const EditAcumbamail = lazy(() => import('./Acumbamail/EditAcumbamail'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -119,6 +120,8 @@ export default function EditInteg({ allIntegURL }) {
         return <EditAutonami allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Dropbox':
         return <EditDropbox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Acumbamail':
+        return <EditAcumbamail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'OneDrive':
         return <EditOneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:

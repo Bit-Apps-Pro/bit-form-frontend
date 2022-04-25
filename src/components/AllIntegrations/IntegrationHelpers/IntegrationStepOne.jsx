@@ -1,4 +1,6 @@
 import { useFela } from 'react-fela'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
@@ -7,6 +9,9 @@ import CopyText from '../../Utilities/CopyText'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
   const { css } = useFela()
+  const bits = useRecoilValue($bits)
+  const { siteURL } = bits
+
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
@@ -24,7 +29,7 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
       <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
       <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-      <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" />
+      <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" />
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
       <CopyText value={`${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" />
