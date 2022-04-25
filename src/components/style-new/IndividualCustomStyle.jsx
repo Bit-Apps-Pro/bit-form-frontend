@@ -321,7 +321,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Border Image"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj['border-image']}
-            modalId="field-border-image"
+            modalId="fld-bdr-img"
             stateObjName="styles"
             objectPaths={objPaths}
             deleteable
@@ -336,7 +336,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Background Color"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['background-color']}
-            modalId="field-container-backgroung"
+            modalId="fld-cnr-bg"
             stateObjName="styles"
             propertyPath={objPaths.paths?.['background-color']}
             deleteable
@@ -352,7 +352,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Text Color"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.color}
-            modalId="field-container-color"
+            modalId="fld-crn-color"
             stateObjName="styles"
             propertyPath={objPaths.paths?.color}
             deleteable
@@ -371,6 +371,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
               stateObjName="styles"
+              id="fld-wrp-bdr"
             />
             <BorderControl
               allowImportant
@@ -389,10 +390,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['line-height']}
               stateObjName="styles"
+              id="fld-wrp-lh"
             />
             <div className={css(ut.flxc)}>
-              {fldLineHeightVal !== null
-                && <Important className={css({ mr: 5 })} propertyPath={objPaths.paths?.['line-height']} />}
+              {fldLineHeightVal !== null && (
+                <Important
+                  id="fld-wrp-lh"
+                  className={css({ mr: 5 })}
+                  propertyPath={objPaths.paths?.['line-height']}
+                />
+              )}
               <SizeControl
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'line-height', fldLineHeightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'line-height', fldLineHeightUnit, state)}
@@ -401,6 +408,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 width="128px"
                 options={['', 'px', 'em', 'rem']}
                 step={fldLineHeightUnit !== 'px' ? '0.1' : 1}
+                dataTestId="fld-wrp-lh"
               />
             </div>
           </StylePropertyBlock>
@@ -414,10 +422,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['word-spacing']}
               stateObjName="styles"
+              id="fld-wrp-ws"
             />
             <div className={css(ut.flxc)}>
-              {wordSpacingVal !== null
-                && <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['word-spacing']} />}
+              {wordSpacingVal !== null && (
+                <Important
+                  className={css(ut.mr1)}
+                  propertyPath={objPaths.paths?.['word-spacing']}
+                  id="fld-wrp-ws"
+                />
+              )}
               <SizeControl
                 min={0.1}
                 max={100}
@@ -428,6 +442,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 width="128px"
                 options={['px', 'em', 'rem', '%']}
                 step={wordSpacingUnit !== 'px' ? '0.1' : 1}
+                dataTestId="fld-wrp-ws"
               />
             </div>
           </StylePropertyBlock>
@@ -441,10 +456,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['letter-spacing']}
               stateObjName="styles"
+              id="fld-wrp-ls"
             />
             <div className={css(ut.flxc)}>
-              {letterSpacingVal !== null
-                && <Important className={css(ut.mr1)} propertyPath={objPaths.paths?.['letter-spacing']} />}
+              {letterSpacingVal !== null && (
+                <Important
+                  className={css(ut.mr1)}
+                  propertyPath={objPaths.paths?.['letter-spacing']}
+                  id="fld-wrp-ls"
+                />
+              )}
               <SizeControl
                 min={0.1}
                 max={100}
@@ -455,6 +476,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 width="128px"
                 options={['px', 'em', 'rem', '']}
                 step={letterSpacingUnit !== 'px' ? '0.1' : 1}
+                dataTestId="fld-wrp-ls"
               />
             </div>
           </StylePropertyBlock>
@@ -471,7 +493,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               action={{ type: 'spacing-control' }}
               subtitle={`${fldTitle}`}
               objectPaths={objPaths}
-              id="margin-control"
+              id="fld-mrgn-ctrl"
             />
           </StylePropertyBlock>
         )
@@ -487,7 +509,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               action={{ type: 'spacing-control' }}
               subtitle={`${fldTitle}`}
               objectPaths={objPaths}
-              id="padding-control"
+              id="fld-pddng-ctrl"
             />
           </StylePropertyBlock>
         )
@@ -519,9 +541,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.width}
               stateObjName="styles"
+              id="fld-wrp-wdth"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {widthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.width} />}
+              {widthValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths?.width}
+                  id="fld-wrp-wdth"
+                />
+              )}
               <SizeControl
                 width="128px"
                 value={Number(widthValue)}
@@ -529,6 +558,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'width', widthUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'width', widthUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-wdth"
               />
             </div>
           </StylePropertyBlock>
@@ -542,9 +572,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['max-width']}
               stateObjName="styles"
+              id="fld-wrp-mx-wdth"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {maxWidthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['max-width']} />}
+              {maxWidthValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths?.['max-width']}
+                  id="fld-wrp-mx-wdth"
+                />
+              )}
               <SizeControl
                 width="128px"
                 value={Number(maxWidthValue)}
@@ -552,6 +589,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'max-width', maxWidthUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'max-width', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-mx-wdth"
               />
             </div>
           </StylePropertyBlock>
@@ -565,9 +603,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['min-width']}
               stateObjName="styles"
+              id="fld-wrp-mn-wdth"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {minWidthValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['min-width']} />}
+              {minWidthValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths?.['min-width']}
+                  id="fld-wrp-mn-wdth"
+                />
+              )}
               <SizeControl
                 width="128px"
                 value={Number(minWidthValue)}
@@ -575,6 +620,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'min-width', minWidthUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'min-width', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-mn-wdth"
               />
             </div>
           </StylePropertyBlock>
@@ -588,6 +634,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.height}
               stateObjName="styles"
+              id="fld-wrp-hght"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
               {heightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.height} />}
@@ -598,6 +645,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'height', heightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'height', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-hght"
               />
             </div>
           </StylePropertyBlock>
@@ -611,9 +659,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['max-height']}
               stateObjName="styles"
+              id="fld-wrp-max-hght"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {maxHeightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['max-height']} />}
+              {maxHeightValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths?.['max-height']}
+                  id="fld-wrp-max-hght"
+                />
+              )}
               <SizeControl
                 width="128px"
                 value={Number(maxHeightValue)}
@@ -621,6 +676,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'max-height', maxHeightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'max-height', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-max-hght"
               />
             </div>
           </StylePropertyBlock>
@@ -634,9 +690,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['min-height']}
               stateObjName="styles"
+              id="fld-wrp-min-hght"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {minHeightValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths?.['min-height']} />}
+              {minHeightValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths?.['min-height']}
+                  id="fld-wrp-min-hght"
+                />
+              )}
               <SizeControl
                 width="128px"
                 value={Number(minHeightValue)}
@@ -644,6 +707,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'min-height', minHeightUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'min-height', heightUnit, state)}
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="fld-wrp-min-hght"
               />
             </div>
           </StylePropertyBlock>

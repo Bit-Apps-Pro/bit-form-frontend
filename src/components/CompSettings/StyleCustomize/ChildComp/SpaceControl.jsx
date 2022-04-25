@@ -16,7 +16,7 @@ export default function SpaceControl({ value,
   className,
   stateObjName,
   propertyPath,
-  width }) {
+  width, dataTestId }) {
   const { css } = useFela()
 
   let values = (value?.replaceAll(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')
@@ -112,6 +112,7 @@ export default function SpaceControl({ value,
               unit={values[0] && getStrFromStr(values[0])}
               options={unitOption}
               width={width || '110px'}
+              dataTestId={`${dataTestId}-all`}
             />
           </div>
         </Grow>
@@ -128,6 +129,7 @@ export default function SpaceControl({ value,
               unit={sizeUnits(values[0])}
               options={unitOption}
               className={css(ut.mr1, ut.mb1)}
+              dataTestId={`${dataTestId}-top`}
             />
             <SizeControl
               min="0"
@@ -140,6 +142,7 @@ export default function SpaceControl({ value,
               unit={sizeUnits(values[1])}
               options={unitOption}
               className={css(ut.mb1)}
+              dataTestId={`${dataTestId}-right`}
             />
             <SizeControl
               min="0"
@@ -152,6 +155,7 @@ export default function SpaceControl({ value,
               unit={sizeUnits(values[2])}
               options={unitOption}
               className={css(ut.mr1)}
+              dataTestId={`${dataTestId}-bottom`}
             />
             <SizeControl
               min="0"
@@ -163,6 +167,7 @@ export default function SpaceControl({ value,
               value={sizeValues(values[3])}
               unit={sizeUnits(values[3])}
               options={unitOption}
+              dataTestId={`${dataTestId}-left`}
             />
           </div>
         </Grow>

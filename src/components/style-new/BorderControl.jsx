@@ -109,18 +109,32 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && valStr && (<Important className={css({ mr: 3 })} propertyPath={borderPropsFirst} />)}
+      {allowImportant && valStr && (
+        <Important
+          id={id}
+          className={css({ mr: 3 })}
+          propertyPath={borderPropsFirst}
+        />
+      )}
       <div title={valStr || 'Add Border Style'} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths, state, id, hslaPaths })}
           type="button"
           className={css(c.pickrBtn)}
+          data-testid={`${id}-modal-btn`}
         >
           <ColorPreview bg={bdrClr} h={24} w={24} className={css(ut.mr2)} />
           <span className={css(c.clrVal)}>{valStr || 'Add Border Style'}</span>
         </button>
         {valStr && (
-          <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Border">
+          <button
+            title="Clear Value"
+            className={css(c.clearBtn)}
+            onClick={clearValue}
+            type="button"
+            aria-label="Clear Border"
+            data-testid={`${id}-clear-btn`}
+          >
             <CloseIcn size="12" />
           </button>
         )}

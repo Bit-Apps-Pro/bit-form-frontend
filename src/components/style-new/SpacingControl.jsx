@@ -58,17 +58,30 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && getValue() && (<Important propertyPath={paths?.margin || paths?.padding} />)}
+      {allowImportant && getValue() && (
+        <Important
+          propertyPath={paths?.margin || paths?.padding}
+          id={id}
+        />
+      )}
       <div title={getValue('Margin', 'Padding') || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
+          data-testid={`${id}-modal-btn`}
         >
           {getValue() || 'Configure'}
         </button>
         {getValue('Margin', 'Padding') && (
-          <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+          <button
+            title="Clear Value"
+            onClick={clearHandler}
+            className={css(c.clearBtn)}
+            type="button"
+            aria-label="Clear Color"
+            data-testid={`${id}-clear-btn`}
+          >
             <CloseIcn size="12" />
           </button>
         )}

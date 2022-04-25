@@ -19,6 +19,7 @@ import SpaceControl from './SpaceControl'
 /**
  * @Function BorderControlMenu
  * @param {objectPaths, hslaPaths}  Array|Object
+ * @param {id} String
  * @When BorderControlMenu are Array
  * {
  *    @index 0=> ThemVars
@@ -31,7 +32,7 @@ import SpaceControl from './SpaceControl'
  * }
  * @returns
  */
-export default function BorderControlMenu({ objectPaths, hslaPaths }) {
+export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const { css } = useFela()
   const { fieldKey, element, rightBar } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -146,6 +147,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths }) {
               onChange={val => borderHandler('borderStyle', val)}
               w={130}
               h={30}
+              id={`${id}-style`}
             />
           </div>
           <div className={css(ut.flxcb, ut.mb2)}>
@@ -168,6 +170,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths }) {
           min="0"
           max="10"
           width="128px"
+          dataTestId={`${id}-wdth`}
         />
       )}
 
@@ -181,6 +184,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths }) {
           min="0"
           max="20"
           width="128px"
+          dataTestId={`${id}-rdus`}
         />
       )}
     </>

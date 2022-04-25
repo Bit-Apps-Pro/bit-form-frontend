@@ -104,6 +104,7 @@ export default function ThemeCustomize() {
               data-active={colorScheme === 'light'}
               className={css(cls.thmBtn, colorScheme === 'light' && cls.clrActive)}
               type="button"
+              data-testid="light-btn"
             >
               <LightIcn size="17" />
               Light
@@ -113,6 +114,7 @@ export default function ThemeCustomize() {
               data-active={colorScheme === 'dark'}
               className={css(cls.thmBtn, colorScheme === 'dark' && cls.clrActive)}
               type="button"
+              data-testid="dark-btn"
             >
               <DarkIcn size="17" />
               Dark

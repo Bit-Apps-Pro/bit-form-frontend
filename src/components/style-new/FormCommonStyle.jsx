@@ -88,7 +88,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Background Color"
             subtitle={`${componentTitle} Background Color`}
             value={formWrpStylesObj?.['background-color']}
-            modalId="form-container-backgroung-color"
+            modalId="frm-cnr-bdc"
             stateObjName="styles"
             propertyPath={objPaths.paths?.['background-color']}
             deleteable
@@ -105,7 +105,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Background"
             subtitle={`${componentTitle} Background`}
             value={formWrpStylesObj?.['background-image']}
-            modalId="form-container-background"
+            modalId="frm-cnr-bd"
             stateObjName="styles"
             objectPaths={objPaths}
             deleteable
@@ -120,7 +120,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Color"
             subtitle={`${componentTitle} Color`}
             value={formWrpStylesObj?.color}
-            modalId="field-container-color"
+            modalId="fld-cnr-clr"
             stateObjName="styles"
             propertyPath={objPaths.paths.color}
             deleteable

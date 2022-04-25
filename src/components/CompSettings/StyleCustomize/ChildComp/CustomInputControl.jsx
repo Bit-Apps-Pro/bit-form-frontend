@@ -47,7 +47,7 @@ export default function CustomInputControl(
     changeValueOnScroll = true,
     showArrow = true,
     placeholder,
-    hasTextMode },
+    hasTextMode, dataTestId },
 ) {
   const { css } = useFela()
   const [visible, setVisible] = useState(false)
@@ -153,6 +153,7 @@ export default function CustomInputControl(
             onFocusCapture={showRangeTip ? () => setVisible(true) : undefined}
             onWheelCapture={!changeValueOnScroll ? e => e.target.blur() : undefined}
             value={value}
+            data-testid={`${dataTestId}-input`}
           />
           {showArrow && !hasTextMode && (
             <div>

@@ -30,7 +30,7 @@ const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMen
 
 const RenderComponent = ({ component, action, value, defaultValue, objectPaths, state, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
   switch (component) {
-    case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} />
+    case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -44,7 +44,7 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
     case 'field-margin-control': return <MarginControlMenu />
     case 'theme-control': return <CustomThemeGallary fldKey={fldKey} />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
-    case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
+    case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} id={id}/>
     case 'size-control': return <SizeControlMenu value={value} objectPaths={objectPaths} />
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     case 'transition-control': return <TransitionControlMenu stateObjName={stateObjName} propertyPath={propertyPath} />

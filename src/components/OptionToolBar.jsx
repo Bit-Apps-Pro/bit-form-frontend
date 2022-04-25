@@ -218,6 +218,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
                 name="styleMood"
                 isChecked={flags.styleMode}
                 action={styleModeHandler}
+                id="style-mode"
               />
             </Tip>
           </div>
