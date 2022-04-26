@@ -143,6 +143,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="upld-btn-txt-stng"
         title={__('Upload Button Text:', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
@@ -158,6 +159,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="btn-icn-stng"
         title={__('Button Icons', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         toggleAction={hideAdminLabel}
@@ -205,6 +207,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="alw-mltpl-stng"
         title={__('Allow Multiple:', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('multiple', e.target.checked)}
@@ -220,6 +223,7 @@ export default function FileUploadSettings() {
           <div className={css(ut.flxc)}>
             <span>Minimum File</span>
             <input
+              data-testid="alw-mltpl-min-inp"
               className={css(FieldStyle.input, ut.w5, ut.mt1)}
               type="number"
               value={minFile}
@@ -229,6 +233,7 @@ export default function FileUploadSettings() {
           <div className={css(ut.flxc)}>
             <span>Maximum File</span>
             <input
+              data-testid="alw-mltpl-max-inp"
               className={css(FieldStyle.input, ut.w5, ut.mt1)}
               type="number"
               value={maxFile}
@@ -242,6 +247,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="fil-slct-stts-stng"
         title={__('File Select Status', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('showSelectStatus', e.target.checked)}
@@ -254,6 +260,7 @@ export default function FileUploadSettings() {
         disable={!showSelectStatus}
       >
         <input
+          data-testid="fil-slct-stts-inp"
           className={css(FieldStyle.input)}
           type="text"
           value={fileSelectStatus}
@@ -264,6 +271,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="shw-mxmm-siz-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         title={__('Show Maximum Size', 'bitform')}
         action={e => setConfigValue('showMaxSize', e.target.checked)}
@@ -274,12 +282,14 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="mxmm-upld-siz-stng"
         title={__('Maximum Upload Size', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <SizeControl
+            dataTestId="mxmm-upld-siz"
             className={css(ut.w10, ut.mt1, ut.mb1)}
             inputHandler={({ unit, value }) => maxSizeHandler(unit, value)}
             sizeHandler={({ unitKey, unitValue }) => maxSizeHandler(unitKey, unitValue)}
@@ -292,6 +302,7 @@ export default function FileUploadSettings() {
           />
           {multiple && (
             <CheckBoxMini
+              id="ttl-mxmm-siz"
               className={`${css(ut.mr2)} ${css(ut.fw500)} `}
               checked={isItTotalMax}
               title={__('Total Maximum Size', 'bitform')}
@@ -304,6 +315,7 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="shw-fil-lst-stng"
         title={__('Show File List', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('showFileList', e.target.checked)}
@@ -317,12 +329,14 @@ export default function FileUploadSettings() {
       >
         <div className={css(ut.ml1)}>
           <CheckBoxMini
+            id="shw-fil-prvw"
             className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
             checked={showFilePreview}
             title={__('Show File Preview', 'bitform')}
             onChange={e => setConfigValue('showFilePreview', e.target.checked)}
           />
           <CheckBoxMini
+            id="shw-fil-siz"
             className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
             checked={showFileSize}
             title={__('Show File Size', 'bitform')}

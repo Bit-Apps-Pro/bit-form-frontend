@@ -9,7 +9,7 @@ import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, assignNestedObj, deleteNestedObj, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -19,6 +19,7 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
@@ -342,12 +343,14 @@ function RadioCheckSettings() {
       <FieldSettingsDivider /> */}
 
       <SimpleAccordion
+        id="nam-stng"
         title={__('Name', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
+            data-testid="nam-stng-inp"
             aria-label="Name for this Field"
             placeholder="Type field name here..."
             className={css(FieldStyle.input)}
@@ -359,7 +362,8 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
+      {/* <SimpleAccordion
+        id="rqrd-stng"
         title={__('Required', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -371,17 +375,21 @@ function RadioCheckSettings() {
       >
         {(isRadioRequired || isOptionRequired) && (
           <ErrorMessageSettings
+            id="rqrd-stng"
             type="req"
             title="Error Message"
             tipTitle="By enabling this feature, user will see the error message when required option is not checked"
           />
         )}
-      </SimpleAccordion>
+      </SimpleAccordion> */}
+      {/* TODO this required settings should be checked by Md.abbas */}
+      <RequiredSettings />
 
       <FieldSettingsDivider />
 
       <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
         <SingleToggle
+          id="rnd-stng"
           tip="By disabling this option, the field rounded will be remove"
           title={__('Rounded', 'bitform')}
           action={e => setRound(e)}
@@ -391,12 +399,21 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
       <SimpleAccordion
+        id="opt-clm-stng"
         title={__('Options Column', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Option Column" className={css(FieldStyle.input)} min="1" type="number" value={optionCol} onChange={setColumn} />
+          <input
+            data-testid="opt-clm-stng-inp"
+            aria-label="Option Column"
+            className={css(FieldStyle.input)}
+            min="1"
+            type="number"
+            value={optionCol}
+            onChange={setColumn}
+          />
         </div>
       </SimpleAccordion>
       <FieldSettingsDivider />
@@ -415,6 +432,7 @@ function RadioCheckSettings() {
         fieldData.typ === 'check' && (
           <>
             <SimpleAccordion
+              id="mnmm-stng"
               title={__('Minimum', 'bitform')}
               className={css(FieldStyle.fieldSection)}
               tip="Set minimum number to be selected for checkbox option"
@@ -432,11 +450,20 @@ function RadioCheckSettings() {
                 <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
               </div> */}
               <div className={css(FieldStyle.placeholder)}>
-                <input aria-label="Minimum number" className={css(FieldStyle.input)} value={min} type="text" onChange={setMin} disabled={!isPro} />
+                <input
+                  data-testid="mnmm-stng-inp"
+                  aria-label="Minimum number"
+                  className={css(FieldStyle.input)}
+                  value={min}
+                  type="text"
+                  onChange={setMin}
+                  disabled={!isPro}
+                />
               </div>
 
               {fieldData.mn && (
                 <ErrorMessageSettings
+                  id="mnmm-stng"
                   type="mn"
                   title="Min Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
@@ -447,6 +474,7 @@ function RadioCheckSettings() {
             <FieldSettingsDivider />
 
             <SimpleAccordion
+              id="mxmm-stng"
               title={__('Maximum', 'bitform')}
               className={css(FieldStyle.fieldSection)}
               tip="Set maximum number to be selected for checkbox option"
@@ -454,12 +482,21 @@ function RadioCheckSettings() {
               isPro
             >
               <div className={css(FieldStyle.placeholder)}>
-                <input aria-label="maximim number" className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
+                <input
+                  data-testid="mxmm-stng-inp"
+                  aria-label="maximim number"
+                  className={css(FieldStyle.input)}
+                  value={max}
+                  type="number"
+                  onChange={setMax}
+                  disabled={!isPro}
+                />
               </div>
 
               {fieldData.mx && (
                 <>
                   <ErrorMessageSettings
+                    id="mxmm-stng"
                     type="mx"
                     title="Max Error Message"
                     tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
@@ -545,7 +582,7 @@ function RadioCheckSettings() {
       </SimpleAccordion> */}
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>

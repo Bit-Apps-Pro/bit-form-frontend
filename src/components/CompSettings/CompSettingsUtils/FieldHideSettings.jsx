@@ -39,6 +39,7 @@ export default function FieldHideSettings({ cls }) {
   return (
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle
+        id="fld-hid-stng"
         tip="By disabling this option, the field will be hidden"
         title={__('Hidden Field', 'bitform')}
         action={setHidden}

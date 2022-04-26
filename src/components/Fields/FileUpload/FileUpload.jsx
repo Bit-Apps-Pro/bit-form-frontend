@@ -136,11 +136,13 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
                 />
               </div>
-              <div
-                data-dev-files-list={fieldKey}
-                className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
-                {... { ...getCustomAttributs(fieldKey, 'files-list') }}
-              />
+              {fieldData.config.showFileList && (
+                <div
+                  data-dev-files-list={fieldKey}
+                  className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'files-list') }}
+                />
+              )}
             </div>
             <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} />
           </div>

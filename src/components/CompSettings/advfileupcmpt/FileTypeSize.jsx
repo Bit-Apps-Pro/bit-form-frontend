@@ -58,6 +58,7 @@ function FileTypeSize({ action }) {
       <div>
         <div className={css(ut.flxcb, ut.mt2)}>
           <TableCheckBox
+            id="min-fil-siz"
             cls={css(ut.mr2)}
             name="minFileSize"
             onChange={fileSizeChange}
@@ -74,6 +75,7 @@ function FileTypeSize({ action }) {
               byteType={findByte(fieldData?.config, 'minFileSize')}
               value={findValue(fieldData?.config, 'minFileSize')}
               inputHandler={(e) => inputHandler(e, 'minFileSize')}
+              dataTestId="min-fil-siz"
             />
           )}
         </div>
@@ -81,6 +83,7 @@ function FileTypeSize({ action }) {
           <>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="min-fil-siz-excd-inp"
                 placeholder="File is too small"
                 className={css(FieldStyle.input)}
                 type="text"
@@ -91,6 +94,7 @@ function FileTypeSize({ action }) {
             </div>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="min-fil-siz-lbl-inp"
                 placeholder="Minimum file size is {filesize}"
                 className={css(FieldStyle.input)}
                 type="text"
@@ -105,6 +109,7 @@ function FileTypeSize({ action }) {
       <div>
         <div className={css(ut.flxcb, ut.mt2)}>
           <TableCheckBox
+            id="max-fil-siz"
             cls={css(ut.mr2)}
             name="maxFileSize"
             onChange={fileSizeChange}
@@ -121,6 +126,7 @@ function FileTypeSize({ action }) {
               sizeVal={findByte(fieldData?.config, 'maxFileSize')}
               value={findValue(fieldData?.config, 'maxFileSize')}
               inputHandler={(e) => inputHandler(e, 'maxFileSize')}
+              dataTestId="max-fil-siz"
             />
           )}
         </div>
@@ -128,6 +134,7 @@ function FileTypeSize({ action }) {
           <>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="max-fil-siz-excd-inp"
                 placeholder="File is too large"
                 className={css(FieldStyle.input)}
                 type="text"
@@ -138,6 +145,7 @@ function FileTypeSize({ action }) {
             </div>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="max-fil-siz-lbl-inp"
                 placeholder="Maximum file size is {filesize}"
                 className={css(FieldStyle.input)}
                 type="text"
@@ -152,6 +160,7 @@ function FileTypeSize({ action }) {
       <div>
         <div className={css(ut.flxcb, ut.mt2)}>
           <TableCheckBox
+            id="max-totl-fil-siz"
             cls={css(ut.mr2)}
             name="maxTotalFileSize"
             onChange={fileSizeChange}
@@ -168,6 +177,7 @@ function FileTypeSize({ action }) {
               sizeVal={findByte(fieldData?.config, 'maxTotalFileSize')}
               value={findValue(fieldData?.config, 'maxTotalFileSize')}
               inputHandler={(e) => inputHandler(e, 'maxTotalFileSize')}
+              dataTestId="max-totl-fil-siz"
             />
           )}
         </div>
@@ -175,6 +185,7 @@ function FileTypeSize({ action }) {
           <>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="max-totl-fil-siz-excd-inp"
                 placeholder="Maximum total size exceeded"
                 className={css(FieldStyle.input)}
                 type="text"
@@ -185,6 +196,7 @@ function FileTypeSize({ action }) {
             </div>
             <div className={css(FieldStyle.placeholder)}>
               <input
+                data-testid="max-totl-fil-siz-lbl-inp"
                 placeholder="Maximum total file size is {filesize}"
                 className={css(FieldStyle.input)}
                 type="text"

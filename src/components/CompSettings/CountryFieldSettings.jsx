@@ -120,6 +120,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="srch-plchldr-stng"
         title={__('Search Placeholder', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -132,6 +133,7 @@ const CountryFieldSettings = () => {
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
+            data-testid="srch-plchldr-stng-inp"
             aria-label="Placeholer for Country Search"
             placeholder="Type Placeholder here..."
             className={css(FieldStyle.input)}
@@ -145,6 +147,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="shw-slctd-img-stng"
         tip="By disabling this option, the show selected flag image will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         title={__('Show Selected Flag Image', 'bitform')}
@@ -155,6 +158,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="slctd-clrbl-stng"
         tip="By disabling this option, the selected country clearable button will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         title={__('Selected Country Clearable', 'bitform')}
@@ -165,6 +169,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the selected country search clearable button will be hidden"
         title={__('Search Clearable', 'bitform')}
@@ -175,6 +180,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the option flags image will be hidden"
         title={__('Option Flag Image', 'bitform')}
@@ -185,6 +191,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="dtct-cntry-by-ip-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by ip"
         title={__('Detect Country By IP', 'bitform')}
@@ -195,6 +202,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="dtct-cntry-by-geo-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by Geo location"
         title={__('Detect Country By Geo', 'bitform')}
@@ -209,7 +217,7 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>

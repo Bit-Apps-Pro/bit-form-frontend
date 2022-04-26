@@ -561,12 +561,14 @@ function TextFieldSettings() {
           )}
 
         <SimpleAccordion
+          id="nam-stng"
           title={__('Name', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
+              data-testid="nam-stng-inp"
               aria-label="Name for this Field"
               placeholder="Type field name here..."
               className={css(FieldStyle.input)}
@@ -581,12 +583,14 @@ function TextFieldSettings() {
           fieldData.typ === 'text' && (
             <>
               <SimpleAccordion
+                id="inp-mod-stng"
                 title={__('Input mode', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
+                    data-testid="inp-mod-stng-slct"
                     className={css(FieldStyle.input)}
                     aria-label="Input mode for this Field"
                     placeholder="Type field inpur mode here..."
@@ -609,6 +613,7 @@ function TextFieldSettings() {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
             <>
               <SimpleAccordion
+                id="ptrn-stng"
                 title={__('Pattern', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
@@ -623,6 +628,7 @@ function TextFieldSettings() {
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                       <Downmenu instance={patternTippy}>
                         <button
+                          data-testid="ptrn-stng-exprsn-btn"
                           data-close
                           type="button"
                           className={css(style.dotBtn)}
@@ -637,6 +643,7 @@ function TextFieldSettings() {
                           <ul role="menu">
                             {predefinedPatterns?.map((opt, i) => (
                               <li
+                                data-testid={`ptrn-stng-expn-itm-${i}`}
                                 // eslint-disable-next-line react/no-array-index-key
                                 key={i}
                                 role="menuitem"
@@ -655,6 +662,7 @@ function TextFieldSettings() {
                       </Downmenu>
                     </div>
                     <AutoResizeInput
+                      id="ptrn-stng-expn"
                       ariaLabel="Pattern for input field"
                       placeholder="e.g. ([A-Z])\w+"
                       list="patterns"
@@ -666,6 +674,7 @@ function TextFieldSettings() {
                   <div className={css({ mr: 5 }, ut.pl1)}>
 
                     <SingleInput
+                      id="ptrn-stng-flg"
                       inpType="text"
                       title={__('Flags:', 'bitform')}
                       value={flags}
@@ -677,6 +686,7 @@ function TextFieldSettings() {
                   </div>
                   {regexr && (
                     <ErrorMessageSettings
+                      id="ptrn-stng-expn"
                       type="regexr"
                       title="Error Message"
                       tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
@@ -706,6 +716,7 @@ function TextFieldSettings() {
             <>
               <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
                 <SingleToggle
+                  id="ato-fil-stng"
                   tip="By disabling this option, the field auto fill will be hidden"
                   title={__('Auto Fill', 'bitform')}
                   action={setAutoComplete}
@@ -735,12 +746,13 @@ function TextFieldSettings() {
         {
           fieldData.typ === 'number' && (
             <>
-              <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
+              <SimpleAccordion id="nmbr-stng" title="Number:" className={css(FieldStyle.fieldSection)} open>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css({ mx: 5 })}>
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
                     <span>{__('Min:', 'bitform')}</span>
                     <input
+                      data-testid="nmbr-stng-min-inp"
                       title="Minimum number for this field"
                       aria-label="Minimum number for this field"
                       placeholder="Type minimum number here..."
@@ -754,6 +766,7 @@ function TextFieldSettings() {
                   {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mn && (
                     <ErrorMessageSettings
+                      id="nmbr-stng-min"
                       type="mn"
                       title="Min Error Message"
                       tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
@@ -762,6 +775,7 @@ function TextFieldSettings() {
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
                     <span>{__('Max:', 'bitform')}</span>
                     <input
+                      data-testid="nmbr-stng-max-inp"
                       title="Maximum number for this field"
                       aria-label="Maximum number for this field"
                       placeholder="Type maximun number here..."
@@ -774,6 +788,7 @@ function TextFieldSettings() {
                   {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mx && (
                     <ErrorMessageSettings
+                      id="nmbr-stng-max"
                       type="mx"
                       title="Max Error Message"
                       tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
@@ -798,16 +813,18 @@ function TextFieldSettings() {
           fieldData.typ === 'password' && (
             <>
               <SimpleAccordion
+                id="pass-vldsn-stng"
                 title={__('Validations', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
                 open
                 isPro
               >
                 <div className={css(ut.mt1, ut.flxClm)}>
-                  <TableCheckBox className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
                   <TableCheckBox
+                    id="pass-vldsn-stng-spcl"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="special"
@@ -818,6 +835,7 @@ function TextFieldSettings() {
                     disabled={!bits.isPro}
                   />
                   <TableCheckBox
+                    id="pass-vldsn-stng-lmt"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="limit"
@@ -832,6 +850,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Min:', 'bitform')}</span>
                         <input
+                          data-testid="pass-vldsn-stng-lmt-min-inp"
                           name="mn"
                           aria-label="Minimum number for this field"
                           placeholder="Type minimum number here..."
@@ -844,6 +863,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Max:', 'bitform')}</span>
                         <input
+                          data-testid="pass-vldsn-stng-lmt-max-inp"
                           name="mx"
                           aria-label="Maximum number for this field"
                           placeholder="Type maximum number here..."

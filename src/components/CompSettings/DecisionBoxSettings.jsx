@@ -17,7 +17,6 @@ import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
-import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -138,6 +137,7 @@ export default function DecisionBoxSettings() {
             </Cooltip>
           </div>
           <span
+            data-testid="lbl-edt-btn"
             role="button"
             tabIndex="-1"
             className="mr-2 cp"
@@ -171,33 +171,39 @@ export default function DecisionBoxSettings() {
 
       <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
+          id="fld-dsbl-stng"
           tip="By disabling this option, the field disable will be hidden"
           title={__('Disabled Field', 'bitform')}
           action={setDiasabled}
           isChecked={isDiasabled}
         />
       </div>
+      {/* <FieldDisabledSettings /> */}
 
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
+          id="rdonly-stng"
           tip="By disabling this option, the field readonly will be hidden"
           title={__('Read Only', 'bitform')}
           action={setReadOnly}
           isChecked={fieldData.valid.readonly}
         />
       </div>
+      {/* <FieldReadOnlySettings /> */}
 
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="chek-val-stng"
         title={__('Checked Value', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
+            data-testid="chek-val-inp"
             aria-label="Checked value"
             className={css(FieldStyle.input)}
             type="text"
@@ -210,12 +216,14 @@ export default function DecisionBoxSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="unchek-val-stng"
         title={__('Unchecked Value', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
+            data-testid="unchek-val-inp"
             aria-label="Uncheked value"
             className={css(FieldStyle.input)}
             type="text"
@@ -228,6 +236,7 @@ export default function DecisionBoxSettings() {
 
       <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
+          id="chek-by-dflt"
           tip="By disabling this option, the field checked by default will be hidden"
           title={__('Checked by Default', 'bitform')}
           action={setChecked}

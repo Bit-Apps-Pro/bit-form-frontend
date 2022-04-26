@@ -106,7 +106,7 @@ export default class FileUploadField {
     }
     if (!multiple && files.length > 0) {
       this.#files = {}
-      this.#filesList.innerHTML = ''
+      if (this.#filesList) this.#filesList.innerHTML = ''
     }
 
     for (const file of files) {
@@ -324,7 +324,7 @@ export default class FileUploadField {
   }
 
   destroy() {
-    this.#filesList.innerHTML = ''
+    if (this.#filesList) this.#filesList.innerHTML = ''
     this.#detachAllEvents()
   }
 }

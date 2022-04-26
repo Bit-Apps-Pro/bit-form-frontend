@@ -121,6 +121,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="cptr-stng"
         title={__('Capture', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
@@ -129,7 +130,7 @@ function AdvanceFileUpSettings() {
       >
         <div className={css({ mx: 5 })}>
 
-          <select className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
+          <select data-testid="cptr-stng-slct" className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
             <option value="">Select</option>
             <option value="null">Off</option>
             <option value="capture">On</option>
@@ -142,16 +143,26 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="nam-stng"
         title={__('Name', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Name for this Field" name="fieldName" value={fieldData?.fieldName} placeholder="Type field name here..." className={css(FieldStyle.input)} onChange={setFieldProperty} />
+          <input
+            data-testid="nam-stng-inp"
+            aria-label="Name for this Field"
+            name="fieldName"
+            value={fieldData?.fieldName}
+            placeholder="Type field name here..."
+            className={css(FieldStyle.input)}
+            onChange={setFieldProperty}
+          />
         </div>
       </SimpleAccordion>
       <FieldSettingsDivider />
       <SimpleAccordion
+        id="fil-styl-stng"
         title="File Style"
         className={css(FieldStyle.fieldSection)}
       >
@@ -159,6 +170,7 @@ function AdvanceFileUpSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
       <SimpleAccordion
+        id="basic-stng"
         title={__('Basic', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
@@ -174,7 +186,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowMultiple} name="allowMultiple" action={handle} />
+            <SingleToggle
+              id="bsc-stng-mltpl-fil-upld"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.allowMultiple}
+              name="allowMultiple"
+              action={handle}
+            />
           </div>
 
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
@@ -187,7 +205,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowBrowse} name="allowBrowse" action={handle} />
+            <SingleToggle
+              id="bsc-stng-alw-fil-brws"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.allowBrowse}
+              name="allowBrowse"
+              action={handle}
+            />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -199,7 +223,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowDrop} name="allowDrop" action={handle} />
+            <SingleToggle
+              id="bsc-stng-drg-n-drp"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.allowDrop}
+              name="allowDrop"
+              action={handle}
+            />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -211,7 +241,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowPaste} name="allowPaste" action={handle} />
+            <SingleToggle
+              id="bsc-stng-alw-pst"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.allowPaste}
+              name="allowPaste"
+              action={handle}
+            />
           </div>
           {/* {!fieldData?.config?.allowMultiple && (
             <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
@@ -237,7 +273,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.allowReorder} name="allowReorder" action={handle} />
+            <SingleToggle
+              id="bsc-stng-alw-reordr-fil"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.allowReorder}
+              name="allowReorder"
+              action={handle}
+            />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -249,7 +291,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.instantUpload} name="instantUpload" action={handle} />
+            <SingleToggle
+              id="bsc-stng-upld-on-slct"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.instantUpload}
+              name="instantUpload"
+              action={handle}
+            />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -261,7 +309,13 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle className={css(ut.mr4)} isChecked={fieldData?.config?.dropOnPage} name="dropOnPage" action={handle} />
+            <SingleToggle
+              id="bsc-stng-ful-pag-drpabl"
+              className={css(ut.mr4)}
+              isChecked={fieldData?.config?.dropOnPage}
+              name="dropOnPage"
+              action={handle}
+            />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -274,6 +328,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <button
+              data-destid="bsc-stng-lbl-cstmztn"
               type="button"
               aria-label="Image Validate Customization "
               className={css(ut.btn, ut.pr4)}
@@ -296,6 +351,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="fil-siz-vldtn-stng"
         title={__('File size validation', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
@@ -311,6 +367,7 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
       <SimpleAccordion
+        id="fil-typ-vldtn-stng"
         title={__('File type validation', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
@@ -348,6 +405,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="invld-fil-err-msg-inp"
               placeholder="File of Invalid type"
               className={css(FieldStyle.input)}
               type="text"
@@ -367,6 +425,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="fil-typ-err-msg-inp"
               placeholder="Expects {allButLastType} or {lastType}"
               className={css(FieldStyle.input)}
               type="text"
@@ -381,6 +440,7 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
       <SimpleAccordion
+        id="img-prvw-stng"
         title={__('Image Preview', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
@@ -403,6 +463,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="img-prvw-min-hight-inp"
               placeholder="Preview Min Height"
               className={css(FieldStyle.input)}
               type="number"
@@ -422,7 +483,8 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
-              placeholder="Preview Min Height"
+              data-testid="img-prvw-max-hight-inp"
+              placeholder="Preview Max Height"
               className={css(FieldStyle.input)}
               type="number"
               name="imagePreviewMaxHeight"
@@ -441,6 +503,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="img-prvw-hight-inp"
               placeholder="Preview Height"
               className={css(FieldStyle.input)}
               type="number"
@@ -465,12 +528,19 @@ function AdvanceFileUpSettings() {
             </div>
           </Cooltip>
         </div>
-        <SingleToggle className={css(ut.mr30)} isChecked={fieldData?.config?.allowPreview} name="allowPreview" action={(e) => enablePlugin(e, 'allowPreview')} />
+        <SingleToggle
+          id="pdf-prvw-stng"
+          className={css(ut.mr30)}
+          isChecked={fieldData?.config?.allowPreview}
+          name="allowPreview"
+          action={(e) => enablePlugin(e, 'allowPreview')}
+        />
       </div>
 
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="img-crp-stng"
         title={__('Image Crop', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -492,6 +562,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(FieldStyle.placeholder)}>
             <input
+              data-testid="img-spct-rato-inp"
               placeholder="for example '1:1' or '16:10'"
               className={css(FieldStyle.input)}
               type="text"
@@ -506,6 +577,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="img-resiz-stng"
         title={__('Image Resize', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -527,6 +599,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="img-resiz-wdt-inp"
               placeholder="Image Resize Width"
               className={css(FieldStyle.input)}
               type="number"
@@ -546,6 +619,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="img-resiz-hight-inp"
               placeholder="Image Resize Height"
               className={css(FieldStyle.input)}
               type="number"
@@ -564,7 +638,12 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <select className={css(FieldStyle.selectBox, ut.mr2, ut.ml1, ut.fw500)} name="imageResizeMode" onChange={setErrorMsg}>
+            <select
+              data-testid="img-resiz-mod-slct"
+              className={css(FieldStyle.selectBox, ut.mr2, ut.ml1, ut.fw500)}
+              name="imageResizeMode"
+              onChange={setErrorMsg}
+            >
               <option value="">Select</option>
               <option value="cover">Cover</option>
               <option value="force">Force</option>
@@ -577,6 +656,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="img-trnsfrm"
         title={__('Image Transform', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -597,7 +677,12 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <select className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)} name="imageTransformOutputMimeType" onChange={setErrorMsg}>
+            <select
+              data-testid="img-outpt-typ-slct"
+              className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)}
+              name="imageTransformOutputMimeType"
+              onChange={setErrorMsg}
+            >
               <option value="">Select</option>
               <option value="image/jpeg">Image/jpeg</option>
               <option value="image/png">Image/png</option>
@@ -613,6 +698,7 @@ function AdvanceFileUpSettings() {
               </Cooltip>
             </div>
             <input
+              data-testid="trnsfrm-outpt-qlty-inp"
               placeholder="94"
               className={css(FieldStyle.input)}
               type="number"
@@ -645,7 +731,12 @@ function AdvanceFileUpSettings() {
                   Client Transform
                 </div>
               </Cooltip>
-              <select className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)} name="imageTransformClientTransforms" onChange={setErrorMsg}>
+              <select
+                data-testid="clnt-trnsfrm-slct"
+                className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)}
+                name="imageTransformClientTransforms"
+                onChange={setErrorMsg}
+              >
                 <option value="">Select</option>
                 <option value="resize">Resize</option>
                 <option value="crop">Crop</option>
@@ -658,6 +749,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="img-vldtn-siz"
         title={__('Image validate size', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -672,6 +764,7 @@ function AdvanceFileUpSettings() {
           <div className={css(ut.fw500, ut.w8)}>{__('Customized', 'bitform')}</div>
 
           <button
+            data-testid="img-vldtn-cstmztn-btn"
             type="button"
             aria-label="Image Validate Customization "
             className={css(ut.btn)}

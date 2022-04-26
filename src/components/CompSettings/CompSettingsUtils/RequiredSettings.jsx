@@ -98,6 +98,7 @@ export default function RequiredSettings() {
 
   return (
     <SimpleAccordion
+      id="rqrd-stng"
       title={__('Required', 'bitform')}
       // eslint-disable-next-line react/jsx-no-bind
       toggleAction={setRequired}
@@ -110,11 +111,13 @@ export default function RequiredSettings() {
       disable={!isRequired}
     >
       <ErrorMessageSettings
+        id="rqrd-stng"
         type="req"
         title="Error Message"
         tipTitle="By enabling this feature, user will see the error message when input is empty"
       />
       <CheckBoxMini
+        id="rqrd-stng-shw-strsk"
         className={`${css(ut.mr2, ut.mt2, { ml: 7 })} ${css(ut.fw500)} `}
         name="reqShow"
         checked={fieldData?.valid?.reqShow || false}

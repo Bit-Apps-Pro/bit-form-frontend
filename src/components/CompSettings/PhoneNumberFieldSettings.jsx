@@ -95,6 +95,7 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="inp-frmt-opt-stng"
         title={__('Input Format Options', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         // switching
@@ -110,6 +111,7 @@ const PhoneNumberFieldSettings = () => {
               :
             </h4>
             <AutoResizeInput
+              id="srch-plchldr"
               aria-label="Search Country Placeholer"
               placeholder="Type Search Country here..."
               value={fieldData?.config?.searchCountryPlaceholder}
@@ -122,6 +124,7 @@ const PhoneNumberFieldSettings = () => {
               :
             </h4>
             <AutoResizeInput
+              id="cntry-nt-fund-txt"
               aria-label="Country Not Found Text"
               placeholder="Type no country found text here..."
               value={fieldData?.config?.noCountryFoundText}
@@ -131,6 +134,7 @@ const PhoneNumberFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="slctd-flg-img"
               tip="By disabling this option, the show selected flag image will be hidden"
               title={__('Selected Flag Image :', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
@@ -140,6 +144,7 @@ const PhoneNumberFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="dtct-cntry-by-geo-loc"
               tip="By disabling this option, are not detect county by Geo location"
               title={__('Detect Country By Geo Location:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
@@ -149,6 +154,7 @@ const PhoneNumberFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="dtct-cntry-by-ip"
               title={__('Detect Country By IP:', 'bitform')}
               tip="By disabling this option, are not detect county by ip"
               action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
@@ -158,10 +164,10 @@ const PhoneNumberFieldSettings = () => {
           <div className={css(FieldStyle.section, FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <span>Placeholder Image</span>
             <div className={css(ut.flxb)}>
-              <button type="button" className={css(ut.icnBtn)} onClick={() => setIconModel('placeholderImage')}>
+              <button data-testid="plchldr-img-edt-btn" type="button" className={css(ut.icnBtn)} onClick={() => setIconModel('placeholderImage')}>
                 <EditIcn size={22} />
               </button>
-              <button type="button" className={css(ut.icnBtn)} onClick={() => removeImage('placeholderImage')}>
+              <button data-testid="plchldr-img-rmv-btn" type="button" className={css(ut.icnBtn)} onClick={() => removeImage('placeholderImage')}>
                 <CloseIcn size="13" />
               </button>
             </div>
@@ -177,11 +183,13 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>
       </div>
+
+      <FieldSettingsDivider />
 
       <Modal
         md

@@ -3,9 +3,9 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -15,13 +15,13 @@ import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -317,12 +317,20 @@ export default function SelectSettings() {
       <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
+        id="nam-stng"
         title={__('Name', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
+          <input
+            data-testid="nam-stng-inp"
+            aria-label="Name for this Field"
+            placeholder="Type field name here..."
+            className={css(FieldStyle.input)}
+            value={fieldName}
+            onChange={handleFieldName}
+          />
         </div>
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
@@ -527,7 +535,7 @@ export default function SelectSettings() {
         {__('Import Options', 'bitform')}
       </button>
       <br /> */}
-      <button onClick={openOptionModal} className={css(app.btn)} type="button">
+      <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn)} type="button">
         &nbsp;
         {__('Edit Options', 'bitform')}
       </button>

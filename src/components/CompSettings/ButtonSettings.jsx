@@ -127,12 +127,14 @@ export default function ButtonSettings() {
         <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
         <SimpleAccordion
+          id="btn-txt-stng"
           title={__('Button Text', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
             <AutoResizeInput
+              id="btn-txt"
               aria-label="Button text"
               placeholder="Type text here..."
               value={txt}
@@ -165,12 +167,13 @@ export default function ButtonSettings() {
 
         <FieldSettingsDivider />
         <SimpleAccordion
+          id="btn-algn"
           title={__('Button Align', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
+            <select data-destid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
@@ -179,12 +182,13 @@ export default function ButtonSettings() {
         <FieldSettingsDivider />
 
         <SimpleAccordion
+          id="btn-typ"
           title={__('Button Type', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
+            <select data-destid="btn-typ-slct" className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
               {type.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
@@ -195,6 +199,7 @@ export default function ButtonSettings() {
 
         <div className={css(FieldStyle.fieldSection, { pr: '36px' })}>
           <SingleToggle
+            id="ful-wid-btn"
             tip="By disabling this option, the button full width will be remove"
             title={__('Full Width Button', 'bitform')}
             action={setFulW}
