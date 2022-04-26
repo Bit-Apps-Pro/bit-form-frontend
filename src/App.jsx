@@ -3,17 +3,22 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import { useEffect, lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { useFela } from 'react-fela'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
-import Loader from './components/Loaders/Loader'
-import TableLoader from './components/Loaders/TableLoader'
+import { useRecoilValue } from 'recoil'
 // import './resource/icons/style.css'
 import logo from '../logo.svg'
-import './resource/sass/global.scss'
+import Loader from './components/Loaders/Loader'
+import TableLoader from './components/Loaders/TableLoader'
+import { $bits } from './GlobalStates'
+import './resource/icons/style.css'
 import './resource/sass/app.scss'
+import './resource/sass/global.scss'
 import ut from './styles/2.utilities'
+import { compareBetweenVersions } from './Utils/Helpers'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
@@ -25,8 +30,12 @@ const Error404 = lazy(() => import('./pages/Error404'))
 export default function App() {
   const loaderStyle = { height: '90vh' }
   const { css } = useFela()
+  const bits = useRecoilValue($bits)
 
-  useEffect(() => { removeUnwantedCSS() }, [])
+  useEffect(() => {
+    removeUnwantedCSS()
+    // checkProVersionForUpdates(bits)
+  }, [])
 
   const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
   document.querySelector('#wpbody').style.backgroundColor = backgroundColor
@@ -121,5 +130,12 @@ function removeUnwantedCSS() {
         styles[i].disabled = true
       }
     }
+  }
+}
+
+const checkProVersionForUpdates = (bits) => {
+  const { proInfo } = bits
+  if (proInfo && compareBetweenVersions(proInfo.latestVersion, proInfo.installedVersion)) {
+    toast.error('Please update to the latest version of Bit Form Pro.', { duration: Infinity })
   }
 }

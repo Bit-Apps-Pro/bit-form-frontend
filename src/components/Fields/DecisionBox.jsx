@@ -8,6 +8,8 @@ import RenderStyle from '../style-new/RenderStyle'
 
 export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   let { checked } = attr.valid
+  const decisionBoxHiddenRef = useRef(null)
+  const checkBoxRef = useRef(null)
   const defaultValue = attr.val || (checked ? attr.msg.checked : attr.msg.unchecked)
   const [value, setvalue] = useState(defaultValue)
   if (value === attr.msg.unchecked) {
@@ -37,9 +39,9 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
     } else {
       setvalue(attr.msg.unchecked)
     }
-    if (onBlurHandler) {
-      onBlurHandler(event)
-    }
+
+    const { form } = event.target
+    validateForm({ input: { name: attr.name, form, value: event.target.checked ? attr.msg.checked : attr.msg.unchecked } })
   }
 
   // const handleBlur = e => {
