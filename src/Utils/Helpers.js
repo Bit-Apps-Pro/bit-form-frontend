@@ -338,3 +338,17 @@ export const number2Ipv6 = ipNumber => {
 
   return blocks.join(':')
 }
+
+export const compareBetweenVersions = (ver1, ver2) => {
+  //   0: ver1 & ver2 are equal
+  //   1: ver1 is greater than ver2
+  //  -1: ver2 is greater than ver1
+  try {
+    const num1 = typeof ver1 === 'number' ? ver1.toString() : ver1
+    const num2 = typeof ver2 === 'number' ? ver2.toString() : ver2
+
+    return num1.localeCompare(num2, undefined, { numeric: true, sensitivity: 'base' })
+  } catch (_) {
+    return -1
+  }
+}

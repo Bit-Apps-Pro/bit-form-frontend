@@ -5,13 +5,16 @@
 
 import { useEffect } from 'react'
 import { lazy, Suspense } from 'react'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader'
+import { $bits } from './GlobalStates'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import './resource/sass/app.scss'
+import { compareBetweenVersions } from './Utils/Helpers'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
 
@@ -23,8 +26,12 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 export default function App() {
   const loaderStyle = { height: '90vh' }
+  const bits = useRecoilValue($bits)
 
-  useEffect(() => { removeUnwantedCSS() }, [])
+  useEffect(() => {
+    removeUnwantedCSS()
+    // checkProVersionForUpdates(bits)
+  }, [])
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -116,5 +123,12 @@ function removeUnwantedCSS() {
         styles[i].disabled = true
       }
     }
+  }
+}
+
+const checkProVersionForUpdates = (bits) => {
+  const { proInfo } = bits
+  if (proInfo && compareBetweenVersions(proInfo.latestVersion, proInfo.installedVersion)) {
+    toast.error('Please update to the latest version of Bit Form Pro.', { duration: Infinity })
   }
 }
