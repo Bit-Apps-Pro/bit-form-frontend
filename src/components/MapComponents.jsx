@@ -61,7 +61,7 @@ function MapComponents(props) {
     case 'recaptcha':
       return <ReCaptcha formID={props.formID} attr={props.atts} />
     case 'decision-box':
-      return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'html':
       return <Html formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'button':
