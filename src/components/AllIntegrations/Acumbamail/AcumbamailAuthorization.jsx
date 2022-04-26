@@ -29,10 +29,16 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={acumbamailConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={acumbamailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+
+      <small className="d-blk mt-3">
+        {__('To Get Auth token, Please Visit', 'bit-integrations')}
+        &nbsp;
+        <a className="btcd-link" href="https://acumbamail.com/en/apidoc/" target="_blank" rel="noreferrer">{__('Acumbamail documentation', 'bitform')}</a>
+      </small>
 
       <div className="mt-3"><b>{__('Auth Token:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="auth_token" value={acumbamailConf.auth_token} type="text" placeholder={__('Auth Token...', 'bit-integrations')} disabled={isInfo} />
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="auth_token" value={acumbamailConf.auth_token} type="text" placeholder={__('Auth Token...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.auth_token}</div>
 
       {!isInfo && (
