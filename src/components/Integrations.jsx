@@ -43,7 +43,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy } from '../Utils/Helpers'
+import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -65,42 +65,45 @@ function Integrations() {
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
   const { isPro, proPluginVersion } = bits
+
+  const pro = 1
+
   const integs = [
-    { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
-    { type: 'Web Hooks', logo: webhooks, pro: !isPro },
-    { type: 'Zapier', logo: zapier, pro: !isPro },
-    { type: 'Integromat', logo: integromat, pro: !isPro },
-    { type: 'Integrately', logo: integrately, pro: !isPro },
-    { type: 'Pabbly', logo: pabbly, pro: !isPro },
-    { type: 'Zoho Flow', logo: zohoflow, pro: !isPro },
-    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
-    { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
-    { type: 'ACF', logo: acf, pro: !isPro },
-    { type: 'MetaBox', logo: metabox, pro: !isPro },
-    { type: 'Pods', logo: pods, pro: !isPro },
-    { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
-    { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
-    { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
-    { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
-    { type: 'Telegram', logo: telegram, pro: !isPro },
-    { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
-    { type: 'Autonami', logo: autonami, pro: !isPro },
-    { type: 'Acumbamail', logo: Acumbamail, pro: !isPro },
-    { type: 'OneDrive', logo: oneDrive, pro: !isPro },
-    { type: 'Dropbox', logo: dropbox, pro: !isPro || proPluginVersion < '1.4.15' },
-    { type: 'Encharge', logo: encharge, pro: !isPro },
-    { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
-    { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
-    { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
-    { type: 'Zoho WorkDrive', logo: zohoWorkdrive, pro: !isPro },
-    { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
-    { type: 'Zoho Mail', logo: zohoMail, pro: !isPro },
-    { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro },
-    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro },
-    { type: 'Zoho Sign', logo: zohoSign, pro: !isPro },
-    { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
-    { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
-    { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+    { type: 'Zoho CRM', logo: zohoCRM, pro },
+    { type: 'Web Hooks', logo: webhooks, pro },
+    { type: 'Zapier', logo: zapier, pro },
+    { type: 'Integromat', logo: integromat, pro },
+    { type: 'Integrately', logo: integrately, pro },
+    { type: 'Pabbly', logo: pabbly, pro },
+    { type: 'Zoho Flow', logo: zohoflow, pro },
+    { type: 'Google Sheet', logo: googleSheet, pro },
+    { type: 'Mail Chimp', logo: mailChimp, pro },
+    { type: 'ACF', logo: acf, pro },
+    { type: 'MetaBox', logo: metabox, pro },
+    { type: 'Pods', logo: pods, pro },
+    { type: 'Mail Poet', logo: mailPoet, pro },
+    { type: 'Sendinblue', logo: sendinblue, pro },
+    { type: 'WooCommerce', logo: wooCommerce, pro },
+    { type: 'ActiveCampaign', logo: activeCampaign, pro },
+    { type: 'Telegram', logo: telegram, pro },
+    { type: 'Fluent CRM', logo: fluentcrm, pro },
+    { type: 'Autonami', logo: autonami, pro },
+    { type: 'Acumbamail', logo: Acumbamail, pro, proVer: '1.4.21.3' },
+    { type: 'OneDrive', logo: oneDrive, pro },
+    { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
+    { type: 'Encharge', logo: encharge, pro },
+    { type: 'Zoho Recruit', logo: zohoRecruit, pro },
+    { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
+    { type: 'Zoho Campaigns', logo: zohoCamp, pro },
+    { type: 'Zoho WorkDrive', logo: zohoWorkdrive, pro },
+    { type: 'Zoho Desk', logo: zohoDesk, pro },
+    { type: 'Zoho Mail', logo: zohoMail, pro },
+    { type: 'Zoho Sheet', logo: zohoSheet, pro },
+    { type: 'Zoho Projects', logo: zohoProjects, pro },
+    { type: 'Zoho Sign', logo: zohoSign, pro },
+    { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
+    { type: 'Zoho Creator', logo: zohoCreator, pro },
+    { type: 'Zoho Bigin', logo: zohoBigin, pro },
 
   ]
 
@@ -145,7 +148,17 @@ function Integrations() {
     return null
   }
 
-  const setNewInteg = (type) => {
+  const setNewInteg = indx => {
+    const inte = integs[indx]
+    if (inte.pro && !isPro) {
+      toast.error('This integration is only available in Bit Form Pro.')
+      return false
+    }
+    if (inte.proVer && isPro && compareBetweenVersions(inte.proVer, proPluginVersion)) {
+      toast.error('Please update to the latest version of Bit Form Pro.')
+      return false
+    }
+    const { type } = inte
     closeIntegModal()
     history.push(`${allIntegURL}/new/${type}`)
   }
@@ -220,13 +233,13 @@ function Integrations() {
                   {availableIntegs.map((inte, i) => (
                     <div
                       key={`inte-sm-${i + 2}`}
-                      onClick={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
-                      onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
+                      onClick={() => !inte.disable && setNewInteg(i)}
+                      onKeyPress={() => !inte.disable && setNewInteg(i)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}
                     >
-                      {inte.pro && (
+                      {(inte.pro && !isPro) && (
                         <div className="pro-filter">
                           <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
