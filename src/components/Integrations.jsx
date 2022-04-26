@@ -64,7 +64,7 @@ function Integrations() {
   const history = useHistory()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
-  const { isPro, proPluginVersion } = bits
+  const { isPro, proInfo } = bits
 
   const pro = 1
 
@@ -88,7 +88,7 @@ function Integrations() {
     { type: 'Telegram', logo: telegram, pro },
     { type: 'Fluent CRM', logo: fluentcrm, pro },
     { type: 'Autonami', logo: autonami, pro },
-    { type: 'Acumbamail', logo: Acumbamail, pro, proVer: '1.4.21.3' },
+    { type: 'Acumbamail', logo: Acumbamail, pro, proVer: '1.4.23' },
     { type: 'OneDrive', logo: oneDrive, pro },
     { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
     { type: 'Encharge', logo: encharge, pro },
@@ -154,7 +154,7 @@ function Integrations() {
       toast.error('This integration is only available in Bit Form Pro.')
       return false
     }
-    if (inte.proVer && isPro && compareBetweenVersions(inte.proVer, proPluginVersion)) {
+    if (inte.proVer && isPro && compareBetweenVersions(inte.proVer, proInfo.installedVersion) === 1) {
       toast.error('Please update to the latest version of Bit Form Pro.')
       return false
     }
