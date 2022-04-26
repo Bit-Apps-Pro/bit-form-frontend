@@ -97,6 +97,7 @@ function TransformControlMenu({ propertyPath, id }) {
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>{title}</span>
         {availableTransformVal.length > 0 && (
           <CssPropertyList
+            id="transform-prop"
             properties={availableTransformVal}
             setProperty={addTransitionHandler}
             classNames={css({ mt: '0px !important' })}

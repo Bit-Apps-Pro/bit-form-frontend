@@ -225,7 +225,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
       {
         addableCssProps.length > 0
         && (
-          <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
+          <CssPropertyList id={`${element}-prop`} properties={addableCssProps} setProperty={setNewCssProp} />
         )
       }
     </div>

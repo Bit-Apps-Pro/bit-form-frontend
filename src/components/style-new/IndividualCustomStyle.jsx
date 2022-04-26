@@ -1076,7 +1076,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             ))
           }
           {(availableCssProp.length > 0)
-            && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
+            && <CssPropertyList id="individual-style" properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop)} />}
         </div>
       </Grow>
       {
@@ -1092,7 +1092,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 ))
               }
               {(availableCssProp.length > 0)
-                && <CssPropertyList properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}
+                && <CssPropertyList id={`individual-style-${state}`} properties={availableCssProp} setProperty={(prop) => setNewCssProp(prop, state)} />}
             </div>
           </Grow>
         ))

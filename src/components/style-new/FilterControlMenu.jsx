@@ -216,7 +216,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
     <>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>{title}</span>
-        <CssPropertyList properties={availableFilterProps} setProperty={addFilterToCss} classNames={css({ mt: '0px !important' })} />
+        <CssPropertyList id="fltr-prop" properties={availableFilterProps} setProperty={addFilterToCss} classNames={css({ mt: '0px !important' })} />
       </div>
       {filtersObjects.map(filter => {
         if (filter.name === 'drop-shadow') {
