@@ -51,12 +51,14 @@ export default function ReCaptchaSettings() {
       />
 
       <SimpleAccordion
+        id="thm-stng"
         title={__('Theme', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <select
+            data-testid="thm-slct"
             className={css(FieldStyle.input)}
             aria-label="Theme for ReCaptcha Field"
             placeholder="Select Theme here..."
@@ -71,12 +73,14 @@ export default function ReCaptchaSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="siz-stng"
         title={__('Size', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
           <select
+            data-testId="siz-slct"
             className={css(FieldStyle.input)}
             aria-label="Size for ReCaptcha Field"
             placeholder="Select Size here..."
