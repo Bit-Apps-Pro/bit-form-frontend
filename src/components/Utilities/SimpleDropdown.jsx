@@ -116,6 +116,7 @@ export default function SimpleDropdown({ options, value, cls, onChange = () => {
                   onClick={(e) => handleOptionClick(e, i)}
                   onKeyPress={(e) => handleOptionClick(e, i)}
                   className={css(simppleDpdStyle.opt_btn)}
+                  data-testid={`${id}-${itm.value}`}
                 >
                   <i className={css(simppleDpdStyle.opt_icn)}>{itm.icn}</i>
                   {itm.label}
