@@ -52,18 +52,37 @@ export default function TextDecorationControl({ subtitle, value, objectPaths, id
 
   return (
     <div className={css(ut.flxc)}>
-      {allowImportant && value && (<Important className={css({ mr: 3 })} propertyPath={paths['text-decoration-line']} />)}
+      {allowImportant && value && (
+        <Important
+          id={id}
+          className={css({ mr: 3 })}
+          propertyPath={paths['text-decoration-line']}
+        />
+      )}
       <div title={txtDcrtnValue} className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'text-decoration', subtitle, objectPaths, id, width: 250 })}
           type="button"
           className={css(c.pickrBtn)}
+          data-testid={`${id}-modal-btn`}
         >
-          <ColorPreview bg={getValueByObjPath(stateObj, paths['text-decoration-color'])?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
+          <ColorPreview
+            bg={getValueByObjPath(stateObj, paths['text-decoration-color'])?.replace(/!important/gi, '')}
+            h={24}
+            w={24}
+            className={css(ut.mr2)}
+          />
           <span className={css(c.clrVal)}>{txtDcrtnValue || 'Add Text Decoration Style'}</span>
         </button>
         {txtDcrtnValue && (
-          <button title="Clear Value" className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear TextDecoration">
+          <button
+            title="Clear Value"
+            className={css(c.clearBtn)}
+            onClick={clearValue}
+            type="button"
+            aria-label="Clear TextDecoration"
+            data-testid={`${id}-clear-btn`}
+          >
             <CloseIcn size="12" />
           </button>
         )}
@@ -117,3 +136,4 @@ const c = {
   },
   active: { focusShadow: 1 },
 }
+

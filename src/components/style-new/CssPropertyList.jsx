@@ -3,7 +3,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import { ucFirst } from '../../Utils/Helpers'
 import Downmenu from '../Utilities/Downmenu'
 
-export default function CssPropertyList({ properties, setProperty, classNames }) {
+export default function CssPropertyList({ properties, setProperty, classNames, id }) {
   const { css } = useFela()
 
   const decorateLabel = (label) => ucFirst(label.split('-').join(' '))
@@ -15,6 +15,7 @@ export default function CssPropertyList({ properties, setProperty, classNames })
           className={css(s.addBtn)}
           type="button"
           aria-label="Add Style Property"
+          data-testid={`${id}-add-btn`}
         >
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>
@@ -25,6 +26,7 @@ export default function CssPropertyList({ properties, setProperty, classNames })
                 type="button"
                 className={css(s.itemBtn)}
                 onClick={() => setProperty(prop)}
+                data-testid={`${id}-${prop}`}
               >
                 {decorateLabel(prop)}
               </button>

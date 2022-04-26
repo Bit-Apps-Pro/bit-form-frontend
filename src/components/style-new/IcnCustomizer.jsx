@@ -88,11 +88,12 @@ export default function IcnCustomizer({ elementKey }) {
           <ResetStyle
             propertyPath={[`--${elementKey}-bdr-width`, `--${elementKey}-bdr-rad`]}
             stateObjName="themeVars"
+            id={`${elementKey}-bdr`}
           />
           <BorderControl
             subtitle={`${title()} Icon Border Control`}
             objectPaths={borderPathsObj}
-            id="pre-i-control"
+            id={`${elementKey}-bdr`}
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -117,12 +118,13 @@ export default function IcnCustomizer({ elementKey }) {
           <ResetStyle
             propertyPath={`--${elementKey}-fltr`}
             stateObjName="themeColors"
+            id={`${elementKey}-fltr`}
           />
           <FilterController
             action={{ type: 'filter-control' }}
             subtitle={`${title()} Filter control`}
             objectPaths={preIcnFltrObj}
-            id="filter-control"
+            id={`${elementKey}-fltr-ctrl`}
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -142,12 +144,13 @@ export default function IcnCustomizer({ elementKey }) {
           <ResetStyle
             propertyPath={preIcnShObj.paths.shadow}
             stateObjName={preIcnShObj.object}
+            id={`${elementKey}-sh`}
           />
           <ShadowControl
             subtitle={`${title()} Icon Shadow Control`}
             value={themeColors[`--${elementKey}-sh`]}
             objectPaths={preIcnShObj}
-            id="pre-i-sh"
+            id={`${elementKey}-sh`}
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -157,6 +160,7 @@ export default function IcnCustomizer({ elementKey }) {
           <ResetStyle
             propertyPath={heightVar}
             stateObjName="themeVars"
+            id={`${elementKey}-h`}
           />
           <SizeControl
             width="128px"
@@ -165,6 +169,7 @@ export default function IcnCustomizer({ elementKey }) {
             inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, heightVar)}
             sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, heightVar)}
             options={['px', 'em', 'rem', '%']}
+            dataTestId={`${elementKey}-h`}
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -174,6 +179,7 @@ export default function IcnCustomizer({ elementKey }) {
           <ResetStyle
             propertyPath={weightVar}
             stateObjName="themeVars"
+            id={`${elementKey}-w`}
           />
           <SizeControl
             width="128px"
@@ -182,6 +188,7 @@ export default function IcnCustomizer({ elementKey }) {
             inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, weightVar)}
             sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, weightVar)}
             options={['px', 'em', 'rem', '%']}
+            dataTestId={`${elementKey}-w`}
           />
         </div>
       </ThemeStylePropertyBlock>

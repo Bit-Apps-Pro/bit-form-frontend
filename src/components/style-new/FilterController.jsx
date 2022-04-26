@@ -51,18 +51,26 @@ export default function FilterController({ subtitle, action, value, objectPaths,
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && getValue() && (<Important propertyPath={paths?.filter} />)}
+      {allowImportant && getValue() && (<Important id={id} propertyPath={paths?.filter} />)}
       <div title={getValue() || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-control', width: 250, subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
-        // title={val}
+          // title={val}
+          data-testid={`${id}-model-btn`}
         >
           <span className={css(c.clrVal)}>{getValue() || 'Configure'}</span>
         </button>
         {getValue() && (
-          <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Filter">
+          <button
+            title="Clear Value"
+            onClick={clearHandler}
+            className={css(c.clearBtn)}
+            type="button"
+            aria-label="Clear Filter"
+            data-testid={`${id}-clear-btn`}
+          >
             <CloseIcn size="10" />
           </button>
         )}

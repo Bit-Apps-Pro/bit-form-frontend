@@ -8,7 +8,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
 import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
 
-export default function ShadowControlMenu({ objectPaths }) {
+export default function ShadowControlMenu({ objectPaths, id }) {
   const { css } = useFela()
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
@@ -61,6 +61,7 @@ export default function ShadowControlMenu({ objectPaths }) {
           options={['px', 'em', 'rem']}
           min="-10"
           max="20"
+          dataTestId={`${id}-x-offset`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -74,6 +75,7 @@ export default function ShadowControlMenu({ objectPaths }) {
           options={['px', 'em', 'rem']}
           min="-10"
           max="20"
+          dataTestId={`${id}-y-offset`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -87,6 +89,7 @@ export default function ShadowControlMenu({ objectPaths }) {
           options={['px', 'em', 'rem']}
           min="0"
           max="10"
+          dataTestId={`${id}-blur`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -100,6 +103,7 @@ export default function ShadowControlMenu({ objectPaths }) {
           options={['px', 'em', 'rem']}
           min="-5"
           max="20"
+          dataTestId={`${id}-spread`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -108,7 +112,12 @@ export default function ShadowControlMenu({ objectPaths }) {
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Inset</span>
-        <select className={css(sc.select)} value={shadowValues.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value })}>
+        <select
+          className={css(sc.select)}
+          value={shadowValues.inset || ''}
+          onChange={e => generateShadowValue('inset', { value: e.target.value })}
+          data-testid={`${id}-inset`}
+        >
           <option value="">outset</option>
           <option value="inset">inset</option>
         </select>

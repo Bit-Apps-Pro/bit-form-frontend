@@ -7,7 +7,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
 import { getValueByObjPath } from './styleHelpers'
 
-export default function Important({ paths = {}, propertyPath, className }) {
+export default function Important({ paths = {}, propertyPath, className, id }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
@@ -44,6 +44,7 @@ export default function Important({ paths = {}, propertyPath, className }) {
         className={`${css(cls.btn, isAlreadyImportant() && cls.active)} ${className}`}
         type="button"
         onClick={addOrRemoveImportant}
+        data-testid={`${id}-important`}
       >
         <StarIcn size="12" />
       </button>

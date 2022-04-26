@@ -28,7 +28,7 @@ export default function ErrorMessagesCustomizer() {
         value={errBg}
         stateObjName="themeColors"
         propertyPath="--err-bg"
-        modalId="err-bg"
+        modalId="err-msg-bg"
       />
 
       <ThemeStylePropertyBlock label="Border">
@@ -37,11 +37,12 @@ export default function ErrorMessagesCustomizer() {
           <ResetStyle
             propertyPath={['--err-bdr-width', '--err-bdr-rad']}
             stateObjName="themeVars"
+            id="err-msg-bdr"
           />
           <BorderControl
             subtitle="Error Message Border Control"
             objectPaths={borderPathsObj}
-            id="err-control"
+            id="err-msg-bdr"
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -49,11 +50,13 @@ export default function ErrorMessagesCustomizer() {
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--err-txt-fs"
+        id="err-msg-txt-fs"
       />
 
       <FontWeightAndStyleControl
         fontWeightVar="--err-txt-font-w"
         fontStyleVar="--err-txt-font-style"
+        id="err-msg-txt-font"
       />
 
       <ThemeStylePropertyBlock label="Shadow">
@@ -61,12 +64,13 @@ export default function ErrorMessagesCustomizer() {
           <ResetStyle
             propertyPath={errShObj.paths.shadow}
             stateObjName={errShObj.object}
+            id="err-msg-sh"
           />
           <ShadowControl
             subtitle="Error Messages Shadow Control"
             value={errSh}
             objectPaths={errShObj}
-            id="err-sh"
+            id="err-msg-sh"
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -77,7 +81,7 @@ export default function ErrorMessagesCustomizer() {
           action={{ type: 'spacing-control' }}
           subtitle="Error Messages Spacing Control"
           objectPaths={errMsgSpacingObj}
-          id="err-spacing-control"
+          id="err-msg-spacing-ctrl"
         />
       </div>
 
@@ -87,7 +91,7 @@ export default function ErrorMessagesCustomizer() {
         value={errC}
         stateObjName="themeColors"
         propertyPath="--err-c"
-        modalId="err-c"
+        modalId="err-msg-c"
       />
 
     </div>

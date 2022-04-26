@@ -155,7 +155,7 @@ export default function StyleSegmentControl({ defaultActive,
               onClick={e => eventHandler(e, i)}
               onKeyPress={e => eventHandler(e, i)}
               data-label={item.label}
-              data-testid={lowerCaseAllAndReplaceSpaceToHipen(item.label)}
+              data-testid={`${lowerCaseAllAndReplaceSpaceToHipen(item.label)}-tab`}
             >
               {checkToShow(item, 'icn') && (
                 <span className={`icn ${css(style.icn)} ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>

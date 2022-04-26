@@ -12,7 +12,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
 import { getValueByObjPath } from './styleHelpers'
 
-export default function ResetStyle({ stateObjName, propertyPath }) {
+export default function ResetStyle({ stateObjName, propertyPath, id }) {
   const { lightThemeColors: tmpLightThemeColors,
     darkThemeColors: tmpDarkThemeColors,
     themeVars: tmpThemeVars,
@@ -125,6 +125,7 @@ export default function ResetStyle({ stateObjName, propertyPath }) {
         className={css(st.resetBtn)}
         type="button"
         style={{ visibility: show ? 'visible' : 'hidden' }}
+        data-testid={`${id}-reset-style`}
       >
         <StyleResetIcn size="20" />
       </button>

@@ -22,7 +22,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, un
 // TODO fix shadow value changing ,
 // TODO check empty value
 // TODO check all use cases  empty/null/undefined values
-function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
+function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
@@ -115,6 +115,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                   title="Remove"
                   className={css(c.delBtn)}
                   onClick={() => deleteShadow(indx)}
+                  data-testid={`${id}-del-shadow-${indx}`}
                 >
                   <TrashIcn size="14" />
                 </button>
@@ -135,6 +136,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                       options={['px', 'em', 'rem']}
                       min="-10"
                       max="20"
+                      dataTestId={`${id}-shad-x-ofset-${indx}`}
                     />
                   </div>
                 )
@@ -152,6 +154,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                       options={['px', 'em', 'rem']}
                       min="-10"
                       max="20"
+                      dataTestId={`${id}-shad-y-ofset-${indx}`}
                     />
                   </div>
                 )
@@ -169,6 +172,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                       options={['px', 'em', 'rem']}
                       min="-10"
                       max="20"
+                      dataTestId={`${id}-shad-blur-${indx}`}
                     />
                   </div>
                 )
@@ -186,6 +190,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                       options={['px', 'em', 'rem']}
                       min="-10"
                       max="20"
+                      dataTestId={`${id}-shad-spread-${indx}`}
                     />
                   </div>
                 )
@@ -202,7 +207,12 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
                 propertyArray.includes('inset') && (
                   <div className={css(ut.flxcb, ut.mb2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Inset</span>
-                    <select className={css(sc.select)} value={shadowObj.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}>
+                    <select
+                      data-testid={`${id}-inse-${indx}`}
+                      className={css(sc.select)}
+                      value={shadowObj.inset || ''}
+                      onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}
+                    >
                       <option value="">outset</option>
                       <option value="inset">inset</option>
                     </select>
@@ -221,6 +231,7 @@ function IndividualShadowControlMenu({ propertyPath, propertyArray = ['xOffset',
           aria-label="Add Shadow"
           onClick={addShadowHandler}
           title="Add Shadow"
+          data-testid={`${id}-add-shad`}
         >
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>

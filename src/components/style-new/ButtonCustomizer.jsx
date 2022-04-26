@@ -52,11 +52,12 @@ export default function ButtonCustomizer() {
           <ResetStyle
             propertyPath={['--btn-brw', '--btn-brs']}
             stateObjName="themeVars"
+            id="btn-bdr"
           />
           <BorderControl
             subtitle="Button Border Control"
             objectPaths={borderPathsObj}
-            id="btn-bdr-control"
+            id="btn-bdr"
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -64,11 +65,13 @@ export default function ButtonCustomizer() {
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--btn-fs"
+        id="btn-fs"
       />
 
       <FontWeightAndStyleControl
         fontWeightVar="--btn-fw"
         fontStyleVar="--btn-f-style"
+        id="btn-font"
       />
 
       <ThemeStylePropertyBlock label="Shadow">
@@ -76,6 +79,7 @@ export default function ButtonCustomizer() {
           <ResetStyle
             propertyPath={btnShObj.paths.shadow}
             stateObjName={btnShObj.object}
+            id="btn-sh"
           />
           <ShadowControl
             subtitle="Button Shadow Control"
@@ -92,7 +96,7 @@ export default function ButtonCustomizer() {
           action={{ type: 'spacing-control' }}
           subtitle="Button Spacing Control"
           objectPaths={btnMsgSpacingObj}
-          id="err-spacing-control"
+          id="btn-spacing-ctrl"
         />
       </div>
 

@@ -30,7 +30,7 @@ export default function FieldContainerCustomizer() {
         value={fwBg}
         stateObjName="themeColors"
         propertyPath="--fld-wrp-bg"
-        modalId="fld-wp-bg"
+        modalId="fld-cnr-bg-cuser"
       />
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
@@ -39,7 +39,7 @@ export default function FieldContainerCustomizer() {
           action={{ type: 'spacing-control' }}
           subtitle="Spacing control"
           objectPaths={fldWrapperObj}
-          id="spacing-control"
+          id="fld-spacing-ctrl"
         />
       </div>
       <ThemeStylePropertyBlock label="Shadow">
@@ -47,6 +47,7 @@ export default function FieldContainerCustomizer() {
           <ResetStyle
             propertyPath={fldwrpShPathObj.paths.shadow}
             stateObjName={fldwrpShPathObj.object}
+            id="fld-wrp-sh-reset"
           />
           <ShadowControl
             subtitle="Field Container Shadow"
@@ -61,6 +62,7 @@ export default function FieldContainerCustomizer() {
           <ResetStyle
             propertyPath={['--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']}
             stateObjName="themeVars"
+            id="fld-wrp-bdr"
           />
           <BorderControl
             subtitle="Field Container Border"

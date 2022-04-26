@@ -88,7 +88,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Background Color"
             subtitle={`${componentTitle} Background Color`}
             value={formWrpStylesObj?.['background-color']}
-            modalId="form-container-backgroung-color"
+            modalId={`${element}-cnr-bdc`}
             stateObjName="styles"
             propertyPath={objPaths.paths?.['background-color']}
             deleteable
@@ -105,7 +105,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Background"
             subtitle={`${componentTitle} Background`}
             value={formWrpStylesObj?.['background-image']}
-            modalId="form-container-background"
+            modalId={`${element}-cnr-bd`}
             stateObjName="styles"
             objectPaths={objPaths}
             deleteable
@@ -120,7 +120,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Color"
             subtitle={`${componentTitle} Color`}
             value={formWrpStylesObj?.color}
-            modalId="field-container-color"
+            modalId={`${element}-cnr-clr`}
             stateObjName="styles"
             propertyPath={objPaths.paths.color}
             deleteable
@@ -142,7 +142,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
               action={{ type: 'spacing-control' }}
               subtitle={`${componentTitle} Padding`}
               objectPaths={objPaths}
-              id="padding-control"
+              id={`${element}-paddn-ctrl`}
             />
           </StylePropertyBlock>
         )
@@ -158,7 +158,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
               action={{ type: 'spacing-control' }}
               subtitle={`${componentTitle} Margin`}
               objectPaths={objPaths}
-              id="margin-control"
+              id={`${element}-mrg-ctrl`}
             />
           </StylePropertyBlock>
         )
@@ -168,7 +168,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Box-shadow"
             subtitle={`${componentTitle} Box Shadow`}
             value={formWrpStylesObj?.['box-shadow']}
-            modalId="field-container-box-shadow"
+            modalId={`${element}-cnr-box-shd`}
             stateObjName="styles"
             propertyPath={objPaths.paths['box-shadow']}
             deleteable
@@ -191,7 +191,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
               <BorderControl
                 subtitle={`${componentTitle} Border`}
                 objectPaths={objPaths}
-                id="fld-wrp-bdr"
+                id={`${element}-bdr-ctrl`}
               />
             </span>
           </StylePropertyBlock>
@@ -202,7 +202,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Transition"
             subtitle={`${componentTitle} Transition`}
             value={formWrpStylesObj?.transition}
-            modalId="field-container-transition"
+            modalId={`${element}-cnr-trnsn`}
             stateObjName="styles"
             propertyPath={getPropertyPath('transition')}
             deleteable
@@ -225,7 +225,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
       {
         addableCssProps.length > 0
         && (
-          <CssPropertyList properties={addableCssProps} setProperty={setNewCssProp} />
+          <CssPropertyList id={`${element}-prop`} properties={addableCssProps} setProperty={setNewCssProp} />
         )
       }
     </div>

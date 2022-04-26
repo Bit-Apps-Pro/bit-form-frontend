@@ -41,6 +41,7 @@ export default function LabelContainerCustomizer() {
           <ResetStyle
             propertyPath={labwrpShObj.paths.shadow}
             stateObjName={labwrpShObj.object}
+            id="lbl-wrp-sh"
           />
           <ShadowControl
             subtitle="Label & Subtitle Container Shadow"
@@ -56,6 +57,7 @@ export default function LabelContainerCustomizer() {
             // propertyPath={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']}
             propertyPath={['--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']}
             stateObjName="themeVars"
+            id="lbl-wrp-bdr-reset"
           />
           <BorderControl
             subtitle="Label & Subtitle Container Border"

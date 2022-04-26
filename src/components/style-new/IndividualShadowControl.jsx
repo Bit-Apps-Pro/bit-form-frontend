@@ -68,7 +68,13 @@ export default function IndividualShadowControl({ title,
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
         {deleteable && (
-          <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+          <button
+            title="Delete Property"
+            onClick={delPropertyHandler}
+            className={`${css(c.delBtn)} delete-btn`}
+            type="button"
+            data-testid={`${modalId}-delete-btn`}
+          >
             <TrashIcn size="14" />
           </button>
         )}
@@ -76,18 +82,33 @@ export default function IndividualShadowControl({ title,
       </div>
 
       <div className={css(ut.flxc)}>
-        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && getValue() && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
+        <ResetStyle id={modalId} stateObjName={stateObjName} propertyPath={propertyPath} />
+        {allowImportant && getValue() && (
+          <Important
+            className={css({ mr: 3 })}
+            stateObjName={stateObjName}
+            propertyPath={propertyPath}
+            id={modalId}
+          />
+        )}
         <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 250, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
+            data-testid={`${modalId}-modal-btn`}
           >
             <span className={css(c.clrVal)}>{getValue() || 'Configure'}</span>
           </button>
           {getValue() && (
-            <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <button
+              title="Clear Value"
+              onClick={clearHandler}
+              className={css(c.clearBtn)}
+              type="button"
+              aria-label="Clear Color"
+              data-testid={`${modalId}-clear-btn`}
+            >
               <CloseIcn size="12" />
             </button>
           )}

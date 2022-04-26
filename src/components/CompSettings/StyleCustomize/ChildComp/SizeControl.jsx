@@ -4,7 +4,7 @@ import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
-export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1 }) {
+export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1, dataTestId }) {
   const { css } = useFela()
   const isPreDefined = preDefinedValues?.includes(actualValue)
   // const step = 1
@@ -41,6 +41,7 @@ export default function SizeControl({ label, className, width, options = [], siz
         onChange={v => inputHandler({ value: v, unit, id })}
         placeholder={actualValue}
         hasTextMode={isPreDefined}
+        dataTestId={dataTestId}
       />
       {!isPreDefined && (
         <select
@@ -48,6 +49,7 @@ export default function SizeControl({ label, className, width, options = [], siz
           className={css(sizeControlStyle.selectt, ut.fontBody)}
           name={name}
           onChange={({ target: { value: valu } }) => sizeHandler({ unitKey: valu, unitValue: value, id })}
+          data-testid={`${dataTestId}-unit-select`}
         >
           {options.length === 0 && (
             <>

@@ -37,11 +37,12 @@ export default function SubTitleCustomizer() {
             // propertyPath={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']}
             propertyPath={['--sub-titl-bdr-width', '--sub-titl-bdr-rad']}
             stateObjName="themeVars"
+            id="sub-titl-bdr"
           />
           <BorderControl
             subtitle="Subtitle Border Control"
             objectPaths={borderPathsObj}
-            id="sub-title-width-bdr-control"
+            id="sub-titl-bdr"
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -49,11 +50,13 @@ export default function SubTitleCustomizer() {
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--sub-titl-fs"
+        id="sub-titl-fs"
       />
 
       <FontWeightAndStyleControl
         fontWeightVar="--sub-titl-font-w"
         fontStyleVar="--sub-titl-font-style"
+        id="sub-titl-font"
       />
 
       <ThemeStylePropertyBlock label="Shadow">
@@ -61,6 +64,7 @@ export default function SubTitleCustomizer() {
           <ResetStyle
             propertyPath={subTitlShObj.paths.shadow}
             stateObjName={subTitlShObj.object}
+            id="sub-titl-sh"
           />
           <ShadowControl
             subtitle="Subtitle Shadow Control"
@@ -77,7 +81,7 @@ export default function SubTitleCustomizer() {
           action={{ type: 'spacing-control' }}
           subtitle="Subtitle Spacing Control"
           objectPaths={stSpacingObj}
-          id="subtitle-spacing-control"
+          id="subtitl-spacing-ctrl"
         />
       </div>
 

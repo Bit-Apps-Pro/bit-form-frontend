@@ -101,11 +101,13 @@ export default function AsteriskCustomizer() {
       <FontWeightAndStyleControl
         fontWeightVar="--req-smbl-fw"
         fontStyleVar="--lbl-font-style"
+        id="req-smbl"
       />
 
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--req-smbl-fs"
+        id="req-smbl-fs"
       />
 
       <ThemeStylePropertyBlock label="Line Height">
@@ -113,6 +115,7 @@ export default function AsteriskCustomizer() {
           <ResetStyle
             propertyPath={lhVar}
             stateObjName="themeVars"
+            id="req-smbl-lh"
           />
           <SizeControl
             width="128px"
@@ -121,6 +124,7 @@ export default function AsteriskCustomizer() {
             inputHandler={({ value, unit }) => icnSizeHandler({ v: value, u: unit }, lhVar)}
             sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, lhVar)}
             options={['px', 'em', 'rem', '%']}
+            dataTestId="req-smbl-lh"
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -130,6 +134,7 @@ export default function AsteriskCustomizer() {
           <ResetStyle
             propertyPath={lhVar}
             stateObjName="themeVars"
+            id="req-smbl-lh"
           />
           <StyleSegmentControl
             className={css({ w: 128 })}

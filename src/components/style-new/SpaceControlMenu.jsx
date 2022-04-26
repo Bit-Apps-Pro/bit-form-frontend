@@ -7,7 +7,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 import { getValueByObjPath } from './styleHelpers'
 
-export default function SpaceControlMenu({ value: spacing, objectPaths }) {
+export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
@@ -69,6 +69,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
           title="Margin"
           onChange={val => spaceHandler(val, paths.margin)}
           unitOption={['px', 'em', 'rem']}
+          dataTestId={`${id}-mrgn`}
         />
       )}
       {paths?.padding && (
@@ -80,6 +81,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
           title="Padding"
           onChange={val => spaceHandler(val, paths.padding)}
           unitOption={['px', 'em', 'rem']}
+          dataTestId={`${id}-paddng`}
         />
       )}
     </>
