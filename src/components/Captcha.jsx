@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
@@ -12,6 +14,7 @@ import SnackMsg from './Utilities/SnackMsg'
 
 export default function Captcha() {
   const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
+  const bits = useRecoilValue($bits)
   const [snack, setsnack] = useState({ show: false })
   const [loading, setLoading] = useState(false)
   const { css } = useFela()
@@ -75,7 +78,7 @@ export default function Captcha() {
             <br />
 
             <div className="mt-3">{__('Domain URL:', 'bitform')}</div>
-            <CopyText value={window.location.host} className="field-key-cpy ml-0" />
+            <CopyText value={bits.siteURL} className="field-key-cpy ml-0" />
             <div className="mt-2">
               <label htmlFor="captcha-key">
                 {__('Site Key', 'bitform')}

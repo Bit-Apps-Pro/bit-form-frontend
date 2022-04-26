@@ -6,7 +6,6 @@ import TinyMCE from '../Utilities/TinyMCE'
 
 export default function EmailNotification({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
   const temBody = dataConf[type]?.body ? dataConf[type]?.body : tamplate
-
   const handleBody = value => {
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign

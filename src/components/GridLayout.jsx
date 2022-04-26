@@ -13,7 +13,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
@@ -44,6 +44,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
+  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const draggingField = useRecoilValue($draggingField)
   const [flags, setFlags] = useRecoilState($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
@@ -181,6 +182,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     setFields(tmpFields)
     setSelectedFieldId(null)
     removeFieldStyles(fldKey)
+    setDeletedFldKey(prvDeleted => {
+      const tmpFldKeys = [...prvDeleted]
+      if (!tmpFldKeys.includes(i)) {
+        tmpFldKeys.push(i)
+      }
+
+      return tmpFldKeys
+    })
     sessionStorage.setItem('btcd-lc', '-')
 
     // redirect to fields list

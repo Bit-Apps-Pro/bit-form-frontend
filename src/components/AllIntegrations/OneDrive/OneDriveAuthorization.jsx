@@ -11,6 +11,7 @@ export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriv
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const bits = useRecoilValue($bits)
+  const { siteURL } = bits
 
   const nextPage = () => {
     getAllOneDriveFolders(flowID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)
@@ -33,7 +34,7 @@ export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriv
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={oneDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Homepage URL:', 'bit-integrations')}</b></div>
-      <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} setSnackbar={setSnackbar} />
+      <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} setSnackbar={setSnackbar} />
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b></div>
       {/* <CopyText value={redirectLocation || `${bits.api.base}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} setSnackbar={setSnackbar} /> */}

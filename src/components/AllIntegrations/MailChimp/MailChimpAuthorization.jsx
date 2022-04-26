@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
@@ -10,6 +12,8 @@ import TutorialLink from '../../Utilities/TutorialLink'
 import { handleMailChimpAuthorize, refreshAudience } from './MailChimpCommonFunc'
 
 export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
+  const bits = useRecoilValue($bits)
+  const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const { css } = useFela()
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
@@ -41,7 +45,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
         <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-        <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
         <CopyText value={redirectLocation || `${window.location.href}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />

@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -26,6 +26,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [lay, setLay] = useRecoilState($layouts)
+  const [buttonDisabled, setbuttonDisabled] = useState(false)
+  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
   const fields = useRecoilValue($fields)
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
@@ -226,6 +228,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       },
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
+    if (savedFormId && deletedFldKey.length !== 0) {
+      formData.deletedFldKey = deletedFldKey
+    }
 
     const fetchProm = bitsFetch(formData, action)
       .then(response => {
@@ -260,6 +265,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             },
           }))
           resetUpdateBtn()
+          setDeletedFldKey([])
+          setbuttonDisabled(false)
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../GlobalStates'
+import { $bits } from '../../GlobalStates/GlobalStates'
 import Modal from '../Utilities/Modal'
 import ImportStepOne from './ImportStepOne'
 import ImportStepTwo from './ImportStepTwo'

@@ -19,7 +19,7 @@ const randomKey = () => {
 export default function Apikey() {
   const [key, setKey] = useState('')
   const bits = useRecoilValue($bits)
-  const { isPro } = bits
+  const { isPro, siteURL } = bits
   const [snack, setsnack] = useState({ show: false })
   const [isLoading, setisLoading] = useState(false)
   const { css } = useFela()
@@ -86,7 +86,7 @@ export default function Apikey() {
         <div className="mt-2">
           <label htmlFor="captcha-key">
             {__('Domain URL', 'bitform')}
-            <CopyText value={window.location.origin} name="domainURL" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
+            <CopyText value={siteURL} name="domainURL" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
           </label>
         </div>
         <div className="mt-3">

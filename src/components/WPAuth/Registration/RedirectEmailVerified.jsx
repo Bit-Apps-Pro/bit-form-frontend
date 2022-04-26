@@ -40,7 +40,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
               <SingleToggle2 action={handleCustomRedirect} checked={dataConf[type]?.custom_redirect === 1} className="ml-4 flx" />
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
-                  If you enable this option, you will be able to custom add the success,already activated, Invalid pages and if you do not enable it, BitForm will have the default page.
+                  Enable this option to add the custom redirect URL or pages for the success, already activated, and invalid verification. by default BitForm will redirect to the default page.
                   <br />
                 </div>
               </Cooltip>
@@ -53,7 +53,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       {__('Success redirect Page:', 'bitform')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
-                          The success redirect page will be redirected when the activation is successful for the first time.
+                          This page will show when the verification is successful.
                           <br />
                         </div>
                       </Cooltip>
@@ -79,7 +79,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       {__('Redirect page (already activated):', 'bitform')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
-                          This page will show if the account has already been activated.
+                          This page will show if the account had already been activated.
                           {' '}
                           <br />
                         </div>
