@@ -91,7 +91,7 @@ export default function HtmlSelectSettings() {
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button onClick={() => setOptionMdl(true)} className={css(app.btn, { my: 0 })} type="button">
+        <button data-testid="edt-opt-stng" onClick={() => setOptionMdl(true)} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>

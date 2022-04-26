@@ -177,6 +177,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="srch-plchldr-stng"
         title={__('Search Placeholder', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
@@ -189,6 +190,7 @@ export default function DropdownFieldSettings() {
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
+            data-testid="srch-plchldr-stng-inp"
             aria-label="Placeholer for Country Search"
             placeholder="Type Placeholder here..."
             className={css(FieldStyle.input)}
@@ -202,6 +204,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="shw-slctd-img-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         title={__('Show Selected Option Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptImage')}
@@ -212,6 +215,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="slctd-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Selected Option Clearable:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptClearable')}
@@ -222,6 +226,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Search Clearable:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable')}
@@ -232,6 +237,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Option Icon:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'optionIcon')}
@@ -242,6 +248,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="alw-cstm-opt-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Allow Custom Option:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'allowCustomOption')}
@@ -252,6 +259,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="mltpl-slct-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Multiple Select:', 'bitform')}
         action={e => handleMultiSelect(e.target.checked, 'multipleSelect')}
@@ -262,6 +270,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SingleToggle
+        id="cls-on-slct-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
         title={__('Close On Select:', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'closeOnSelect')}
@@ -285,6 +294,7 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="lst-n-opt"
         title="Lists & Options"
         className={css(FieldStyle.fieldSection)}
         open
@@ -299,6 +309,7 @@ export default function DropdownFieldSettings() {
 
                 <div className={css(ut.flxcb)}>
                   <input
+                    data-testid={`lst-name-inp-${index}`}
                     type="text"
                     name=""
                     id=""
@@ -307,6 +318,7 @@ export default function DropdownFieldSettings() {
                     onChange={e => handleListNameChange(e, index)}
                   />
                   <CheckBox
+                    id={`lst-opt-${index}`}
                     radio
                     name="option-list"
                     className={css({ p: 0 })}
@@ -315,6 +327,7 @@ export default function DropdownFieldSettings() {
                     value={index}
                   />
                   <button
+                    data-testid={`lst-opt-edt-btn-${index}`}
                     type="button"
                     className={css(c.delBtn)}
                     onClick={() => {
@@ -326,6 +339,7 @@ export default function DropdownFieldSettings() {
                   </button>
                   {listLength > 1 && (
                     <button
+                      data-testid={`lst-opt-del-btn-${index}`}
                       type="button"
                       className={css(c.delBtn)}
                       onClick={() => handleRemoveList(index)}
@@ -339,7 +353,12 @@ export default function DropdownFieldSettings() {
               </>
             )
           })}
-          <button onClick={handleAddNewOptionList} className={css(app.btn, { my: 0 })} type="button">
+          <button
+            data-testid="ad-opt-lst-btn"
+            onClick={handleAddNewOptionList}
+            className={css(app.btn, { my: 0 })}
+            type="button"
+          >
             &nbsp;
             {__('Add Options List', 'bitform')}
           </button>

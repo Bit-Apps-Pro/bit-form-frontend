@@ -48,8 +48,6 @@ const CurrencyFieldSettings = () => {
   const handleConfigChange = (val, name, config) => {
     fieldData[config][name] = val
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-
-    console.log('handleConfigChange', val, name, config)
   }
 
   return (
@@ -89,6 +87,7 @@ const CurrencyFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SimpleAccordion
+        id="inp-frmt-opt-stng"
         title={__('Input Format Options', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         // switching
@@ -104,6 +103,7 @@ const CurrencyFieldSettings = () => {
               :
             </h4>
             <select
+              data-testid="frmtr-slct"
               className={css(FieldStyle.input)}
               aria-label="Formatter"
               value={fieldData?.inputFormatOptions?.formatter}
@@ -117,6 +117,7 @@ const CurrencyFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="crncy-symbl"
               tip="By disabling this option, the currency symbol will be show"
               title={__('Currency Symbol:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')}
@@ -126,6 +127,7 @@ const CurrencyFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="rnd-to-clsst-int"
               tip="By disabling this option, the currency symbol will be show"
               title={__('Round to Closest Integer:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')}
@@ -135,6 +137,7 @@ const CurrencyFieldSettings = () => {
 
           <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
             <SingleToggle
+              id="rnd-to-clsst-frc-dgt"
               title={__('Round to Closest Fraction Digits:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
               isChecked={fieldData.inputFormatOptions.roundToClosestFractionDigits}
@@ -146,7 +149,7 @@ const CurrencyFieldSettings = () => {
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
           {__('Edit Options', 'bitform')}
         </button>

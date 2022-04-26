@@ -22,6 +22,7 @@ function FileStyle({ action, value }) {
             </div>
           </Cooltip>
           <select
+            data-testid="fil-styl-pnl-lyot-slct"
             value={value?.stylePanelLayout}
             className={css(FieldStyle.selectBox, ut.mt0, ut.mr2, ut.w3)}
             name="stylePanelLayout"
@@ -48,6 +49,7 @@ function FileStyle({ action, value }) {
             </div>
           </Cooltip>
           <select
+            data-testid="fil-styl-rmv-btn-slct"
             value={value?.styleButtonRemoveItemPosition}
             className={css(FieldStyle.selectBox, ut.mt0, ut.mr2, ut.w3)}
             name="styleButtonRemoveItemPosition"
@@ -76,6 +78,7 @@ function FileStyle({ action, value }) {
             </div>
           </Cooltip>
           <select
+            data-testid="fil-styl-prcs-btn-slct"
             value={value?.styleButtonProcessItemPosition}
             className={css(FieldStyle.selectBox, ut.mt0, ut.mr2, ut.w3)}
             name="styleButtonProcessItemPosition"
@@ -104,6 +107,7 @@ function FileStyle({ action, value }) {
             </div>
           </Cooltip>
           <select
+            data-testid="fil-styl-lod-indctr-slct"
             value={value?.styleLoadIndicatorPosition}
             className={css(FieldStyle.selectBox, ut.mt0, ut.mr2, ut.w3)}
             name="styleLoadIndicatorPosition"
@@ -132,6 +136,7 @@ function FileStyle({ action, value }) {
             </div>
           </Cooltip>
           <select
+            data-testid="fil-styl-prgrs-indctr-slct"
             value={value?.styleProgressIndicatorPosition}
             className={css(FieldStyle.selectBox, ut.mt0, ut.mr2, ut.w3)}
             name="styleProgressIndicatorPosition"

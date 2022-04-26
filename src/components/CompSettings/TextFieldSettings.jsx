@@ -824,7 +824,7 @@ function TextFieldSettings() {
                   <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
                   <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
                   <TableCheckBox
-                   id="pass-vldsn-stng-spcl"
+                    id="pass-vldsn-stng-spcl"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="special"
@@ -835,7 +835,7 @@ function TextFieldSettings() {
                     disabled={!bits.isPro}
                   />
                   <TableCheckBox
-                   id="pass-vldsn-stng-lmt"
+                    id="pass-vldsn-stng-lmt"
                     className={css(ut.w10, ut.mt2)}
                     cls={css(ut.mr2)}
                     name="limit"
@@ -850,7 +850,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Min:', 'bitform')}</span>
                         <input
-                        data-testid="pass-vldsn-stng-lmt-min-inp"
+                          data-testid="pass-vldsn-stng-lmt-min-inp"
                           name="mn"
                           aria-label="Minimum number for this field"
                           placeholder="Type minimum number here..."
@@ -863,7 +863,7 @@ function TextFieldSettings() {
                       <div className={css(FieldStyle.fieldNumber)}>
                         <span>{__('Max:', 'bitform')}</span>
                         <input
-                        data-testid="pass-vldsn-stng-lmt-max-inp"
+                          data-testid="pass-vldsn-stng-lmt-max-inp"
                           name="mx"
                           aria-label="Maximum number for this field"
                           placeholder="Type maximum number here..."
