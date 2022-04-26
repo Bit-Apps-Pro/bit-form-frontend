@@ -59,7 +59,13 @@ export default function TransitionControl({ title,
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
         {deleteable && (
-          <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+          <button
+            title="Delete Property"
+            onClick={delPropertyHandler}
+            className={`${css(c.delBtn)} delete-btn`}
+            type="button"
+            data-testid={`${modalId}-delete-btn`}
+          >
             <TrashIcn size="14" />
           </button>
         )}
@@ -67,18 +73,33 @@ export default function TransitionControl({ title,
       </div>
 
       <div className={css(ut.flxc)}>
-        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && value && <Important stateObjName={stateObjName} propertyPath={propertyPath} className={css({ mr: 2 })} />}
+        <ResetStyle id={modalId} stateObjName={stateObjName} propertyPath={propertyPath} />
+        {allowImportant && value && (
+          <Important
+            id={modalId}
+            stateObjName={stateObjName}
+            propertyPath={propertyPath}
+            className={css({ mr: 2 })}
+          />
+        )}
         <div title={value || 'Configure'} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
+            data-testid={`${modalId}-modal-btn`}
           >
             <span className={css(c.clrVal)}>{value || 'Configure'}</span>
           </button>
           {value && (
-            <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <button
+              title="Clear Value"
+              onClick={clearHandler}
+              className={css(c.clearBtn)}
+              type="button"
+              aria-label="Clear Color"
+              data-testid={`${modalId}-clear-btn`}
+            >
               <CloseIcn size="12" />
             </button>
           )}

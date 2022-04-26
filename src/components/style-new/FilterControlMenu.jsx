@@ -10,7 +10,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
 import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, unitConverter } from './styleHelpers'
 
-export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
+export default function FilterControlMenu({ title = 'Filters', objectPaths, id }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
@@ -231,7 +231,14 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                 icnStrok={1}
                 title="Drop Shadow"
                 actionComponent={(
-                  <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn, { rt: -14 })} delete-btn`} type="button" aria-label="Clear Filter">
+                  <button
+                    title="Clear Value"
+                    onClick={() => handleClearProperties(filter.name)}
+                    className={`${css(c.delBtn, { rt: -14 })} delete-btn`}
+                    type="button"
+                    aria-label="Clear Filter"
+                    data-testid={`${id}-clear-filter`}
+                  >
                     <TrashIcn />
                   </button>
                 )}
@@ -248,6 +255,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       options={['px', 'mm', 'em', 'rem']}
                       min="-100"
                       max="100"
+                      dataTestId={`${id}-drop-shadow-x`}
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
@@ -261,6 +269,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       options={['px', 'mm', 'em', 'rem']}
                       min="-100"
                       max="100"
+                      dataTestId={`${id}-drop-shadow-y`}
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
@@ -274,11 +283,20 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                       options={['px', 'mm', 'em', 'rem']}
                       min="0"
                       max="100"
+                      dataTestId={`${id}-drop-shadow-blur`}
                     />
                   </div>
                   <div className={css(ut.flxcb, ut.mb2)}>
                     <span className={css(ut.fs12, ut.fw500)}>Color</span>
-                    <input aria-label="Filter image" width="120px" type="color" className={css(c.input, c.colorInput)} onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)} value={valueArr[3]} />
+                    <input
+                      aria-label="Filter image"
+                      width="120px"
+                      type="color"
+                      className={css(c.input, c.colorInput)}
+                      onChange={e => setFilterValue('drop-shadow', { value: e.target.value }, 3)}
+                      value={valueArr[3]}
+                      data-testid={`${id}-drop-shadow-color`}
+                    />
                   </div>
                 </div>
               </SimpleAccordion>
@@ -301,8 +319,16 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths }) {
                 options={filter.options}
                 min={filter.min}
                 max={filter.max}
+                dataTestId={`${id}-${filter.name}`}
               />
-              <button title="Clear Value" onClick={() => handleClearProperties(filter.name)} className={`${css(c.delBtn)} delete-btn`} type="button" aria-label="Clear Filter">
+              <button
+                title="Clear Value"
+                onClick={() => handleClearProperties(filter.name)}
+                className={`${css(c.delBtn)} delete-btn`}
+                type="button"
+                aria-label="Clear Filter"
+                data-testid={`${id}-clear-filter`}
+              >
                 <TrashIcn />
               </button>
             </div>

@@ -111,22 +111,45 @@ export default function BorderImageControlMenu({ stateObjName,
 
   return (
     <div className={css(bgImgControlStyle.container)}>
-      <StyleSegmentControl options={[{ label: 'Image' }, { label: 'Gradient' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} defaultActive={controller.parent} wideTab />
+      <StyleSegmentControl
+        options={[{ label: 'Image' }, { label: 'Gradient' }]}
+        onChange={lbl => onTabChangeHandler(lbl, 'parent')}
+        defaultActive={controller.parent}
+        wideTab
+      />
       <div className={css(bgImgControlStyle.innercontainer, ut.mt1)}>
         {controller.parent === 'Image' && (
           <>
-            <StyleSegmentControl options={[{ label: 'Upload' }, { label: 'Link' }]} onChange={lbl => onTabChangeHandler(lbl, 'child')} defaultActive={controller.child} wideTab />
+            <StyleSegmentControl
+              options={[{ label: 'Upload' }, { label: 'Link' }]}
+              onChange={lbl => onTabChangeHandler(lbl, 'child')}
+              defaultActive={controller.child}
+              wideTab
+            />
             <div className={css(ut.mt2)}>
 
               {controller.child === 'Upload' && (
-                <ImageUploadInput title="Image" imageSrc={borderImage?.replace(/(url\(|\))/gi, '')} value={borderImage?.slice(borderImage.lastIndexOf('/') + 1, -1)} clickAction={setWpMedia} clearAction={clearBorderImage} />
+                <ImageUploadInput
+                  title="Image"
+                  imageSrc={borderImage?.replace(/(url\(|\))/gi, '')}
+                  value={borderImage?.slice(borderImage.lastIndexOf('/') + 1, -1)}
+                  clickAction={setWpMedia}
+                  clearAction={clearBorderImage}
+                />
               )}
 
               {controller.child === 'Link' && (
                 <div className={css(ut.mt2)}>
                   <div className={css(ut.flxClm)}>
                     <span className={css(bgImgControlStyle.title)}>URL</span>
-                    <input type="url" className={css(bgImgControlStyle.urlinput)} value={borderImage.replace(/(url\(|\))/gi, '')} onChange={urlChangeHandler} placeholder="ex: https://www.example.com" />
+                    <input
+                      type="url"
+                      className={css(bgImgControlStyle.urlinput)}
+                      value={borderImage.replace(/(url\(|\))/gi, '')}
+                      onChange={urlChangeHandler}
+                      placeholder="ex: https://www.example.com"
+                      data-testid={`${id}-url-input`}
+                    />
                   </div>
                   {/* <button type="button" className={css(ut.mt2)}>browse</button> */}
                 </div>
@@ -139,7 +162,14 @@ export default function BorderImageControlMenu({ stateObjName,
                       <StyleResetIcn size={12} />
                     </span>
                     <span className={css(backgroundImageControlStyle.icon)}>*</span> */}
-                    <select value={repeat} name="" id="" onChange={repeatSelectHandler} className={css(bgImgControlStyle.select)}>
+                    <select
+                      value={repeat}
+                      name=""
+                      id=""
+                      onChange={repeatSelectHandler}
+                      className={css(bgImgControlStyle.select)}
+                      data-testid={`${id}-repeat-select`}
+                    >
                       <option value="stretch">Stretch</option>
                       <option value="repeat">Repeat</option>
                       <option value="round">Round</option>
@@ -158,6 +188,7 @@ export default function BorderImageControlMenu({ stateObjName,
                 unitOption={['px', '%']}
                 min="0"
                 max="20"
+                dataTestId={`${id}-outset`}
               />
 
               <SpaceControl
@@ -168,6 +199,7 @@ export default function BorderImageControlMenu({ stateObjName,
                 unitOption={['', 'px', '%']}
                 min="0"
                 max="100"
+                dataTestId={`${id}-width`}
               />
 
               <SpaceControl
@@ -178,6 +210,7 @@ export default function BorderImageControlMenu({ stateObjName,
                 unitOption={['', '%']}
                 min="0"
                 max="100"
+                dataTestId={`${id}-slice`}
               />
             </div>
           </>

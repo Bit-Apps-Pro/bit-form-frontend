@@ -11,7 +11,7 @@ import ResetStyle from './ResetStyle'
 import { arrayToObject } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
-export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar }) {
+export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar, id }) {
   const { css } = useFela()
   const styles = useRecoilValue($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -32,6 +32,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
           <ResetStyle
             propertyPath={fontStyleVar}
             stateObjName="themeVars"
+            id={`${id}-fs`}
           />
           <SimpleDropdown
             options={fontStyleVariants}
@@ -39,6 +40,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
             onChange={val => fontVarSetHandler(fontStyleVar, val)}
             w={130}
             h={30}
+            id={`${id}-fs`}
             cls={css((styles.font.fontType === 'Google' && themeVars[fontStyleVar] && !styles.font.fontStyleVariants?.includes(Number(themeVars[fontStyleVar]))) ? cls.warningBorder : '')}
           />
         </div>
@@ -48,6 +50,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
           <ResetStyle
             propertyPath={fontWeightVar}
             stateObjName="themeVars"
+            id={`${id}-fw`}
           />
           <SimpleDropdown
             options={fontweightVariants}
@@ -55,6 +58,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar 
             onChange={val => fontVarSetHandler(fontWeightVar, val)}
             w={130}
             h={30}
+            id={`${id}-fw`}
             cls={css((styles.font.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
           />
         </div>

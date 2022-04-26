@@ -291,7 +291,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Background"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['background-image']}
-            modalId="field-container-background"
+            modalId="fld-cnr-bg-img"
             stateObjName="styles"
             objectPaths={objPaths}
             deleteable
@@ -718,7 +718,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('text-align', state)}
             title="Text Align"
           >
-            <ResetStyle propertyPath={objPaths.paths?.['text-align']} stateObjName="styles" />
+            <ResetStyle id="txt-align" propertyPath={objPaths.paths?.['text-align']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
               <StyleSegmentControl
                 className={css({ w: 130 })}
@@ -748,6 +748,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.['text-decoration-line']}
               stateObjName="styles"
+              id="txt-decor-line"
             />
             <TextDecorationControl
               subtitle={`${fldTitle}`}
@@ -765,7 +766,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             subtitle={`${fldTitle} Text Shadow Control`}
             value={existCssPropsObj?.['text-shadow']}
             defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
-            modalId="field-container-text-shadow"
+            modalId="fld-crn-txt-shad"
             stateObjName="styles"
             propertyPath={objPaths.paths?.['text-shadow']}
             propertyArray={['xOffset', 'yOffset', 'blur', 'color']}
@@ -816,6 +817,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             <ResetStyle
               propertyPath={objPaths.paths?.filter}
               stateObjName="styles"
+              id="filter-control"
             />
             <div className={css(ut.flxc, { cg: 3 })}>
               <FilterController
@@ -834,9 +836,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('font-size', state)}
             title="Font Size"
           >
-            <ResetStyle propertyPath={objPaths.paths['font-size']} stateObjName="styles" />
+            <ResetStyle id="fld-font-size" propertyPath={objPaths.paths['font-size']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {fldFSValue && <Important className={css({ mr: 2 })} propertyPath={objPaths.paths['font-size']} />}
+              {fldFSValue && (
+                <Important
+                  id="fld-font-size"
+                  className={css({ mr: 2 })}
+                  propertyPath={objPaths.paths['font-size']}
+                />
+              )}
               <SizeControl
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
@@ -849,6 +857,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 width="128px"
                 options={['px', 'em', 'rem']}
                 step={fldFSUnit !== 'px' ? '0.1' : 1}
+                dataTestId="fld-font-size"
               />
             </div>
           </StylePropertyBlock>
@@ -859,15 +868,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('font-weight', state)}
             title="Font Weight"
           >
-            <ResetStyle propertyPath={objPaths.paths['font-weight']} stateObjName="styles" />
+            <ResetStyle id="fld-font-weight" propertyPath={objPaths.paths['font-weight']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {existCssPropsObj?.['font-weight'] && <Important propertyPath={objPaths.paths['font-weight']} />}
+              {existCssPropsObj?.['font-weight'] && <Important id="fld-font-weight" propertyPath={objPaths.paths['font-weight']} />}
               <SimpleDropdown
                 options={fontweightVariants}
                 value={String(existCssPropsObj?.['font-weight'])}
                 onChange={val => fontPropertyUpdateHandler('font-weight', val)}
                 w={130}
                 h={30}
+                id="fld-font-weight"
                 cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
               />
             </div>
@@ -879,15 +889,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('font-style', state)}
             title="Font Style"
           >
-            <ResetStyle propertyPath={objPaths.paths['font-style']} stateObjName="styles" />
+            <ResetStyle id="fld-font-style" propertyPath={objPaths.paths['font-style']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {existCssPropsObj?.['font-style'] && <Important propertyPath={objPaths.paths['font-style']} />}
+              {existCssPropsObj?.['font-style'] && (
+                <Important
+                  id="fld-font-style"
+                  propertyPath={objPaths.paths['font-style']}
+                />
+              )}
               <SimpleDropdown
                 options={fontStyleVariants}
                 value={String(existCssPropsObj?.['font-style'])}
                 onChange={val => fontPropertyUpdateHandler('font-style', val)}
                 w={130}
                 h={30}
+                id="fld-font-style"
                 cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
               />
             </div>
@@ -899,15 +915,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('white-space', state)}
             title="White Space"
           >
-            <ResetStyle propertyPath={objPaths.paths['white-space']} stateObjName="styles" />
+            <ResetStyle id="fld-white-space" propertyPath={objPaths.paths['white-space']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {existCssPropsObj?.['white-space'] && <Important propertyPath={objPaths.paths['white-space']} />}
+              {existCssPropsObj?.['white-space'] && (
+                <Important
+                  id="fld-white-space"
+                  propertyPath={objPaths.paths['white-space']}
+                />
+              )}
               <SimpleDropdown
                 options={staticWhiteSpaceVariants}
                 value={String(existCssPropsObj?.['white-space'])}
                 onChange={val => fontPropertyUpdateHandler('white-space', val)}
                 w={130}
                 h={30}
+                id="fld-white-space"
               />
             </div>
           </StylePropertyBlock>
@@ -918,15 +940,16 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('word-wrap', state)}
             title="Word Wrap"
           >
-            <ResetStyle propertyPath={objPaths.paths['word-wrap']} stateObjName="styles" />
+            <ResetStyle id="fld-word-wrap" propertyPath={objPaths.paths['word-wrap']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {existCssPropsObj?.['word-wrap'] && <Important propertyPath={objPaths.paths['word-wrap']} />}
+              {existCssPropsObj?.['word-wrap'] && <Important id="fld-word-wrap" propertyPath={objPaths.paths['word-wrap']} />}
               <SimpleDropdown
                 options={staticWordWrapVariants}
                 value={String(existCssPropsObj?.['word-wrap'])}
                 onChange={val => fontPropertyUpdateHandler('word-wrap', val)}
                 w={130}
                 h={30}
+                id="fld-word-wrap"
               />
             </div>
           </StylePropertyBlock>
@@ -937,9 +960,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('opacity', state)}
             title="Opacity"
           >
-            <ResetStyle propertyPath={objPaths.paths.opacity} stateObjName="styles" />
+            <ResetStyle id="fld-opacity" propertyPath={objPaths.paths.opacity} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {fldOpctyValue && <Important className={css(cls.mr2)} propertyPath={objPaths.paths.opacity} />}
+              {fldOpctyValue && (
+                <Important
+                  className={css(cls.mr2)}
+                  propertyPath={objPaths.paths.opacity}
+                  id="fld-opacity"
+                />
+              )}
               <SizeControl
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'opacity', fldOpctyUnit, state)}
@@ -951,6 +980,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 width="128px"
                 options={['', '%']}
                 step={fldOpctyUnit === '' ? 0.1 : 1}
+                dataTestId="fld-opacity"
               />
             </div>
           </StylePropertyBlock>
@@ -961,9 +991,15 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             delPropertyHandler={() => delPropertyHandler('z-index', state)}
             title="Z-Index"
           >
-            <ResetStyle propertyPath={objPaths.paths['z-index']} stateObjName="styles" />
+            <ResetStyle id="fld-z-index" propertyPath={objPaths.paths['z-index']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
-              {fldZIndex && <Important propertyPath={objPaths.paths['z-index']} className={css({ mr: 2 })} />}
+              {fldZIndex && (
+                <Important
+                  id="fld-z-index"
+                  propertyPath={objPaths.paths['z-index']}
+                  className={css({ mr: 2 })}
+                />
+              )}
               <div className={`${css(sizeControlStyle.container)}`}>
                 <CustomInputControl
                   className={css(sizeControlStyle.input)}
@@ -974,6 +1010,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   step={1}
                   width="120px"
                   onChange={value => fldZIndexHandler(value)}
+                  dataTestId="fld-z-index"
                 />
               </div>
             </div>
@@ -985,7 +1022,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Transform"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.transform}
-            modalId="field-container-transform"
+            modalId="fld-cnr-trsfm"
             stateObjName="styles"
             propertyPath={objPaths.paths.transform}
             deleteable
@@ -1000,7 +1037,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Color"
             subtitle={`${fldTitle}`}
             value={existCssPropsObj?.['icon-color']}
-            modalId="field-container-backgroung"
+            modalId="fld-cnr-clr-fltr"
             stateObjName="styles"
             propertyPath={objPaths.paths?.['icon-color']}
             objectPaths={objPaths}

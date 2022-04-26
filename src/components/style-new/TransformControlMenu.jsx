@@ -16,7 +16,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 
-function TransformControlMenu({ propertyPath }) {
+function TransformControlMenu({ propertyPath, id }) {
   const title = 'Transform'
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
@@ -109,7 +109,12 @@ function TransformControlMenu({ propertyPath }) {
             <div className={css(ut.flxcb, ut.mt1)}>
               <span className={css(ut.flxcb, ut.fs12, ut.fw500)}>
                 {arrOfExtractedTransformObj.length > 1 && (
-                  <button onClick={() => deleteTransform(indx)} className={`${css(c.delBtn)} delete-btn`} type="button">
+                  <button
+                    data-testid={`${id}-del-btn-${indx}`}
+                    onClick={() => deleteTransform(indx)}
+                    className={`${css(c.delBtn)} delete-btn`}
+                    type="button"
+                  >
                     <TrashIcn />
                   </button>
                 )}
@@ -127,6 +132,7 @@ function TransformControlMenu({ propertyPath }) {
                 min={getValue(transformObj, 'min') || ''}
                 max={getValue(transformObj, 'max') || ''}
                 step={getValue(transformObj, 'step') || ''}
+                dataTestId={`${id}-input-${indx}`}
               />
             </div>
           </div>

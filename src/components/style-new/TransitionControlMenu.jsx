@@ -18,7 +18,7 @@ import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAcco
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces } from './styleHelpers'
 
-function TransitionControlMenu({ stateObjName, propertyPath }) {
+function TransitionControlMenu({ stateObjName, propertyPath, id }) {
   const { css } = useFela()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
@@ -110,6 +110,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                   title="Remove"
                   className={css(c.delBtn)}
                   onClick={() => deleteTransition(indx)}
+                  data-testid={`${id}-del-transn-${indx}`}
                 >
                   <TrashIcn size="14" />
                 </button>
@@ -120,7 +121,12 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
             <div className={css(ut.p1)}>
               <div className={css(ut.flxcb, ut.mb2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Property</span>
-                <select className={css(sc.select)} value={transitionObj.property || ''} onChange={e => generateTransitionValue('property', { value: e.target.value }, indx)}>
+                <select
+                  className={css(sc.select)}
+                  value={transitionObj.property || ''}
+                  onChange={e => generateTransitionValue('property', { value: e.target.value }, indx)}
+                  data-testid={`${id}-transn-property-${indx}`}
+                >
                   <option value="all">all</option>
                   <option value="width">width</option>
                   <option value="background">background</option>
@@ -144,6 +150,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                   min={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
                   max={getStrFromStr(transitionObj.duration) === 's' ? 10 : 10000}
                   step={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
+                  dataTestId={`${id}-transn-duration-${indx}`}
                 />
               </div>
               <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
@@ -158,12 +165,18 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
                   min={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
                   max={getStrFromStr(transitionObj.delay) === 's' ? 10 : 10000}
                   step={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
+                  dataTestId={`${id}-transn-delay-${indx}`}
                 />
               </div>
               <div className={css(ut.flxcb, ut.mb2)}>
                 <span className={css(ut.fs12, ut.fw500)}>Function</span>
                 <div>
-                  <select className={css(sc.select)} value={transitionObj.func || ''} onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)}>
+                  <select
+                    className={css(sc.select)}
+                    value={transitionObj.func || ''}
+                    onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)}
+                    data-testid={`${id}-transn-func-${indx}`}
+                  >
                     <option value="Custom">Custom</option>
                     {transitionFunc.map(itm => (<option value={itm}>{itm}</option>))}
                   </select>
@@ -185,6 +198,7 @@ function TransitionControlMenu({ stateObjName, propertyPath }) {
           aria-label="Add Transition"
           onClick={addTransitionHandler}
           title="Add Transition"
+          data-testid={`${id}-add-transn`}
         >
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>

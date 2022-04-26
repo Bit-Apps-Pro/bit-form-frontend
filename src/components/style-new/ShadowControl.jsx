@@ -33,12 +33,19 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
         onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths, id, width: 250 })}
         type="button"
         className={css(c.pickrBtn)}
+        data-testid={`${id}-ctrl`}
       >
         <ColorPreview bg={colorVal} h={24} w={29} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value || 'Add Shadow'}</span>
       </button>
       {value && (
-        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Shadow">
+        <button
+          className={css(c.clearBtn)}
+          onClick={clearValue}
+          type="button"
+          aria-label="Clear Shadow"
+          data-testid={`${id}-clear-btn`}
+        >
           <CloseIcn size="12" />
         </button>
       )}

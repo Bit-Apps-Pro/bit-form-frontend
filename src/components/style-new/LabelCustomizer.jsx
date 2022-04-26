@@ -52,6 +52,7 @@ export default function LabelCustomizer() {
           <ResetStyle
             propertyPath={fldLblShObj.paths.shadow}
             stateObjName={fldLblShObj.object}
+            id="fld-lbl-sh"
           />
           <ShadowControl
             subtitle="Label Shadow Control"
@@ -67,21 +68,24 @@ export default function LabelCustomizer() {
             // propertyPath={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']}
             propertyPath={['--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']}
             stateObjName="themeVars"
+            id="fld-lbl-bdr"
           />
           <BorderControl
             subtitle="Label Border Control"
             objectPaths={borderPathsObj}
-            id="fld-lbl-bdr-width"
+            id="fld-lbl-bdr"
           />
         </div>
       </ThemeStylePropertyBlock>
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--fld-lbl-fs"
+        id="fld-lbl-fs"
       />
       <FontWeightAndStyleControl
         fontWeightVar="--lbl-font-w"
         fontStyleVar="--lbl-font-style"
+        id="fld-lbl-font"
       />
     </div>
   )

@@ -10,7 +10,7 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import ResetStyle from './ResetStyle'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 
-export default function FontSizeControl({ stateObjName, propertyPath }) {
+export default function FontSizeControl({ stateObjName, propertyPath, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyle] = useRecoilState($styles)
   const { css } = useFela()
@@ -52,7 +52,7 @@ export default function FontSizeControl({ stateObjName, propertyPath }) {
     <div className={css(ut.flxcb, ut.mt2)}>
       <span className={css(ut.fw500)}>Font Size</span>
       <div className={css(ut.flxc)}>
-        <ResetStyle propertyPath={propertyPath} stateObjName={stateObjName} />
+        <ResetStyle id={id} propertyPath={propertyPath} stateObjName={stateObjName} />
         <SizeControl
           inputHandler={fldFsSizeHandler}
           sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -60,6 +60,7 @@ export default function FontSizeControl({ stateObjName, propertyPath }) {
           unit={fldFSUnit}
           width="128px"
           options={['px', 'em', 'rem']}
+          dataTestId={id}
         />
       </div>
     </div>

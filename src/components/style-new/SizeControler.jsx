@@ -29,18 +29,26 @@ export default function SizeControler({ subtitle, action, value, objectPaths, id
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && val && (<Important propertyPath={paths?.width || paths?.height} />)}
+      {allowImportant && val && (<Important id={id} propertyPath={paths?.width || paths?.height} />)}
       <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'size-control', subtitle, action, value, objectPaths, id })}
           type="button"
           className={css(c.pickrBtn)}
           title={val}
+          data-testid={`${id}-model-btn`}
         >
           {val || 'Configure'}
         </button>
         {(val) && (
-          <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+          <button
+            title="Clear Value"
+            onClick={clearHandler}
+            className={css(c.clearBtn)}
+            type="button"
+            aria-label="Clear Color"
+            data-testid={`${id}-clear-btn`}
+          >
             <CloseIcn size="12" />
           </button>
         )}

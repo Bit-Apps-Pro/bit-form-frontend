@@ -79,26 +79,47 @@ export default function FilterColorPicker({ title,
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc, deleteable && ut.ml1)}>
         {deleteable && (
-          <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+          <button
+            title="Delete Property"
+            onClick={delPropertyHandler}
+            className={`${css(c.delBtn)} delete-btn`}
+            type="button"
+            data-testid={`${modalId}-delete-btn`}
+          >
             <TrashIcn size="14" />
           </button>
         )}
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
-        {allowImportant && value && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
+        <ResetStyle id={modalId} stateObjName={stateObjName} propertyPath={propertyPath} />
+        {allowImportant && value && (
+          <Important
+            className={css({ mr: 3 })}
+            stateObjName={stateObjName}
+            propertyPath={propertyPath}
+            id={modalId}
+          />
+        )}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)} title={ColorStr.val || `Add ${title}`}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'filter-color', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
+            data-testid={`${modalId}-modal-btn`}
           >
             <ColorPreview bg={ColorStr.val} h={24} w={24} className={css(ut.mr2)} />
             <span className={css(c.clrVal)}>{ColorStr.val || 'Configure Color'}</span>
           </button>
           {value && (
-            <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <button
+              title="Clear Value"
+              onClick={clearHandler}
+              className={css(c.clearBtn)}
+              type="button"
+              aria-label="Clear Color"
+              data-testid={`${modalId}-clear-btn`}
+            >
               <CloseIcn size="12" />
             </button>
           )}

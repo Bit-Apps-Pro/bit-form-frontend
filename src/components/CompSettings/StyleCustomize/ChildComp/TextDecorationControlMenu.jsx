@@ -11,7 +11,7 @@ import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleS
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SizeControl from './SizeControl'
 
-export default function TextDecorationControlMenu({ objectPaths }) {
+export default function TextDecorationControlMenu({ objectPaths, id }) {
   const { css } = useFela()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -61,6 +61,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           onChange={val => onValueChange(paths['text-decoration-line'], val)}
           w={130}
           h={30}
+          id={`${id}-txt-dec-line`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -71,6 +72,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           onChange={val => onValueChange(paths['text-decoration-style'], val)}
           w={130}
           h={30}
+          id={`${id}-txt-dec-style`}
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -92,6 +94,7 @@ export default function TextDecorationControlMenu({ objectPaths }) {
           width="130px"
           options={['px', 'em', 'rem', '']}
           step={thicknesUnit !== 'px' ? '0.1' : 1}
+          dataTestId={`${id}-txt-dec-thickness`}
         />
       </div>
     </>
