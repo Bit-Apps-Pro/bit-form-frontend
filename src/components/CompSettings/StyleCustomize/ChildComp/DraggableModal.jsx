@@ -37,7 +37,7 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
     case 'color-picker': return <SimpleColorsPickerMenu canSetVariable={canSetVariable} stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'filter-color': return <FilterColorsPickerMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} propertyArray={propertyArray} defaultValue={defaultValue} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
-    case 'font': return <FontPickerMenu />
+    case 'font': return <FontPickerMenu id={id} />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
     case 'text-decoration': return <TextDecorationControlMenu objectPaths={objectPaths} id={id} />

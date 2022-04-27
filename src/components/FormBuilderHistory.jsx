@@ -93,7 +93,7 @@ export default function FormBuilderHistory() {
     if (indx < 0 || disabled) return
 
     const { state } = histories[indx]
-    console.log('histories', histories);
+    console.log('histories', histories)
     setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
     if (state.layouts) {
@@ -145,12 +145,26 @@ export default function FormBuilderHistory() {
     <div>
       <div className={css(OptionToolBarStyle.option_right)}>
         <Tip msg="Undo">
-          <button type="button" id="builder-undo-btn" disabled={!active || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active - 1)}>
+          <button
+            data-testid="undo"
+            type="button"
+            id="builder-undo-btn"
+            disabled={!active || disabled}
+            className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+            onClick={() => handleHistory(active - 1)}
+          >
             <UndoIcon size="25" />
           </button>
         </Tip>
         <Tip msg="Redo">
-          <button type="button" id="builder-redo-btn" disabled={(active === (histories.length - 1)) || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active + 1)}>
+          <button
+            data-testid="redo"
+            type="button"
+            id="builder-redo-btn"
+            disabled={(active === (histories.length - 1)) || disabled}
+            className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+            onClick={() => handleHistory(active + 1)}
+          >
             <RedoIcon size="25" />
           </button>
         </Tip>
@@ -159,7 +173,11 @@ export default function FormBuilderHistory() {
           onShow={() => setShowHistory(true)}
           onHide={() => setShowHistory(false)}
         >
-          <button type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${showHistory ? 'active' : ''}`}>
+          <button
+            data-testid="history-list"
+            type="button"
+            className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${showHistory ? 'active' : ''}`}
+          >
             <EllipsisIcon size="38" />
           </button>
 
