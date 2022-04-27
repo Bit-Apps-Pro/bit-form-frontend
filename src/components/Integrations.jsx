@@ -42,7 +42,6 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import rapidmail from '../resource/img/integ/rapidmail.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -76,7 +75,6 @@ function Integrations() {
     { type: 'Zoho Flow', logo: zohoflow, pro: !isPro },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
-    { type: 'Rapidmail', logo: rapidmail, pro: !isPro },
     { type: 'ACF', logo: acf, pro: !isPro },
     { type: 'MetaBox', logo: metabox, pro: !isPro },
     { type: 'Pods', logo: pods, pro: !isPro },
