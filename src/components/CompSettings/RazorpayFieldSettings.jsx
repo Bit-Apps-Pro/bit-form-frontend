@@ -5,7 +5,10 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import TrashIcn from '../../Icons/TrashIcn'
+import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -14,12 +17,9 @@ import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import ut from '../../styles/2.utilities'
-import FieldStyle from '../../styles/FieldStyle.style'
-import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import { $styles } from '../../GlobalStates/StylesState'
 
 export default function RazorpayFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -195,7 +195,14 @@ export default function RazorpayFieldSettings() {
       <div className={css(ut.ml2, ut.mr2, ut.mt2, ut.p1)}>
         <b>{__('Select Config', 'bitform')}</b>
         <br />
-        <select name="payIntegID" id="payIntegID" onChange={setPayIntegId} className={css(FieldStyle.input)} value={fieldData.payIntegID}>
+        <select
+          data-testid="slct-cnfg-slct"
+          name="payIntegID"
+          id="payIntegID"
+          onChange={setPayIntegId}
+          className={css(FieldStyle.input)}
+          value={fieldData.payIntegID}
+        >
           <option value="">Select Config</option>
           {getRazorpayConfigs()}
         </select>
@@ -214,12 +221,13 @@ export default function RazorpayFieldSettings() {
                 <div className={css(ut.ml2, ut.p1)}>
                   <b>{__('Amount Type', 'bitform')}</b>
                   <br />
-                  <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
-                  <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
+                  <CheckBox id="amnt-typ-fxd" onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
+                  <CheckBox id="amnt-typ-dynmc" onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
                 </div>
                 {!isDynamicAmount && (
                   <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                     <SingleInput
+                      id="amnt"
                       inpType="number"
                       title={__('Amount', 'bitform')}
                       value={fieldData.options.amount || ''}
@@ -231,7 +239,13 @@ export default function RazorpayFieldSettings() {
                 {isDynamicAmount && (
                   <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                     <b>{__('Select Amount Field', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className={css(FieldStyle.input)} value={fieldData.options.amountFld}>
+                    <select
+                      data-testid="slct-amnt-fld-slct"
+                      onChange={e => handleInput(e.target.name, e.target.value)}
+                      name="amountFld"
+                      className={css(FieldStyle.input)}
+                      value={fieldData.options.amountFld}
+                    >
                       <option value="">{__('Select Field', 'bitform')}</option>
                       {getSpecifiedFields('amount')}
                     </select>
@@ -241,7 +255,13 @@ export default function RazorpayFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <label htmlFor="recap-thm">
                   <b>{__('Currency', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={fieldData.options.currency} className={css(FieldStyle.input)}>
+                  <select
+                    data-testid="crncy-slct"
+                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    name="currency"
+                    value={fieldData.options.currency}
+                    className={css(FieldStyle.input)}
+                  >
                     {sortArrOfObj(razorpayCurrencyCodes, 'currency').map(itm => (
                       <option key={itm.currency} value={itm.code}>
                         {`${itm.currency} - ${itm.code}`}
@@ -253,25 +273,45 @@ export default function RazorpayFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Account Name', 'bitform')}</b>
                 <br />
-                <input aria-label="Account Name" type="text" className={css(FieldStyle.input)} placeholder="Account Name" name="name" value={fieldData.options.name || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
+                <input
+                  data-testid="acnt-nam-inp"
+                  aria-label="Account Name"
+                  type="text"
+                  className={css(FieldStyle.input)}
+                  placeholder="Account Name"
+                  name="name"
+                  value={fieldData.options.name || ''}
+                  onChange={e => handleInput(e.target.name, e.target.value)}
+                />
               </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Description', 'bitform')}</b>
                 <br />
-                <textarea className={css(FieldStyle.input)} placeholder="Order Description" name="description" rows="5" value={fieldData.options.description || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
+                <textarea
+                  data-testid="dscrptn-txt-ara"
+                  className={css(FieldStyle.input)}
+                  placeholder="Order Description"
+                  name="description"
+                  rows="5"
+                  value={fieldData.options.description || ''}
+                  onChange={e => handleInput(e.target.name, e.target.value)}
+                />
               </div>
             </>
           )}
           <FieldSettingsDivider />
           <SimpleAccordion
+            id="adtnl-stng"
             title="Additional Settings"
             className={css(FieldStyle.fieldSection)}
           >
             <SimpleAccordion
+              id="adtnl-stng-btn"
               title="Button"
               className={css(FieldStyle.fieldSection)}
             >
               <SingleInput
+                id="btn-txt"
                 inpType="text"
                 title={__('Button Text', 'bitform')}
                 value={fieldData.btnTxt || ''}
@@ -281,6 +321,7 @@ export default function RazorpayFieldSettings() {
                 cls={css(FieldStyle.input)}
               />
               <SelectBox2
+                id="btn-algn"
                 className={css({ pr: 1 })}
                 title={__('Button Align:', 'bitform')}
                 options={pos}
@@ -290,12 +331,14 @@ export default function RazorpayFieldSettings() {
                 cls={css(FieldStyle.input)}
               />
               <SingleToggle
+                id="btn-txt"
                 title={__('Full Width Button:', 'bitform')}
                 action={setFulW}
                 isChecked={fieldData.fulW}
                 className="mt-5"
               />
               <SingleToggle
+                id="sub-titl"
                 title={__('Sub Title:', 'bitform')}
                 action={setSubTitl}
                 isChecked={fieldData?.subTitl}
@@ -310,42 +353,80 @@ export default function RazorpayFieldSettings() {
             </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <SimpleAccordion title="Theme" className={css(FieldStyle.fieldSection)}>
+            <SimpleAccordion id="thm-stng" title="Theme" className={css(FieldStyle.fieldSection)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <b>{__('Theme Color:', 'bitform')}</b>
-                <input aria-label="Theme color" className="ml-2" type="color" value={fieldData.options.theme.color} onChange={e => handleInput('color', e.target.value, 'theme')} />
+                <input
+                  data-testid="thm-clr-inp"
+                  aria-label="Theme color"
+                  className="ml-2"
+                  type="color"
+                  value={fieldData.options.theme.color}
+                  onChange={e => handleInput('color', e.target.value, 'theme')}
+                />
               </div>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <b>{__('Background Color:', 'bitform')}</b>
-                <input aria-label="Background color" className="ml-2" type="color" value={fieldData.options.theme.backdrop_color} onChange={e => handleInput('backdrop_color', e.target.value, 'theme')} />
+                <input
+                  data-testid="bg-clr-inp"
+                  aria-label="Background color"
+                  className="ml-2"
+                  type="color"
+                  value={fieldData.options.theme.backdrop_color}
+                  onChange={e => handleInput('backdrop_color', e.target.value, 'theme')}
+                />
               </div>
             </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <SimpleAccordion title="Modal" className={css(FieldStyle.fieldSection)}>
-              <SingleToggle className={css(ut.mt2)} title={__('Confirm on Close:', 'bitform')} action={e => handleInput('confirm_close', e.target.checked, 'modal')} isChecked={fieldData.options.modal.confirm_close} />
+            <SimpleAccordion id="mdl-stng" title="Modal" className={css(FieldStyle.fieldSection)}>
+              <SingleToggle
+                id="cnfrm-cls"
+                className={css(ut.mt2)}
+                title={__('Confirm on Close:', 'bitform')}
+                action={e => handleInput('confirm_close', e.target.checked, 'modal')}
+                isChecked={fieldData.options.modal.confirm_close}
+              />
             </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <SimpleAccordion title="Prefill" className={css(FieldStyle.fieldSection)}>
+            <SimpleAccordion id="prfil-stng" title="Prefill" className={css(FieldStyle.fieldSection)}>
               <div>
                 <div className={css(ut.mt2, { px: 1 })}>
                   <b>{__('Name :', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillNameFld" className={css(FieldStyle.input)} value={fieldData.options.prefill.prefillNameFld}>
+                  <select
+                    data-testid="prfil-nam-slct"
+                    onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
+                    name="prefillNameFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.options.prefill.prefillNameFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getSpecifiedFields('desc')}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
                   <b>{__('Email :', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillEmailFld" className={css(FieldStyle.input)} value={fieldData.options.prefill.prefillEmailFld}>
+                  <select
+                    data-testid="prfil-eml-slct"
+                    onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
+                    name="prefillEmailFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.options.prefill.prefillEmailFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getSpecifiedFields('email')}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
                   <b>{__('Contact :', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillContactFld" className={css(FieldStyle.input)} value={fieldData.options.prefill.prefillContactFld}>
+                  <select
+                    data-testid="prfil-cntct-slct"
+                    onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
+                    name="prefillContactFld"
+                    className={css(FieldStyle.input)}
+                    value={fieldData.options.prefill.prefillContactFld}
+                  >
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getSpecifiedFields('number')}
                   </select>
@@ -354,7 +435,11 @@ export default function RazorpayFieldSettings() {
             </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <SimpleAccordion title="Notes" className={css(FieldStyle.fieldSection)}>
+            <SimpleAccordion
+              id="nots-stng"
+              title="Notes"
+              className={css(FieldStyle.fieldSection)}
+            >
               <div className="flx">
                 <div className="w-10"><b>{__('Key :', 'bitform')}</b></div>
                 <div className="w-10"><b>{__('Value :', 'bitform')}</b></div>
@@ -362,17 +447,47 @@ export default function RazorpayFieldSettings() {
               {payNotes.map((notes, indx) => (
                 <div className="flx" key={`rp${indx * 2}`}>
                   <div className={css({ pl: 2 })}>
-                    <input aria-label="Note key" className={css(FieldStyle.input, { pr: 1 })} type="text" value={notes.key} onChange={e => handleNotes('edit', indx, 'key', e.target.value)} />
+                    <input
+                      data-testid="nots-key-inp"
+                      aria-label="Note key"
+                      className={css(FieldStyle.input, { pr: 1 })}
+                      type="text"
+                      value={notes.key}
+                      onChange={e => handleNotes('edit', indx, 'key', e.target.value)}
+                    />
                   </div>
                   <div className="ml-1">
-                    <input aria-label="Note value" className={css(FieldStyle.input)} type="text" value={notes.value} onChange={e => handleNotes('edit', indx, 'value', e.target.value)} />
+                    <input
+                      data-testid="nots-val-inp"
+                      aria-label="Note value"
+                      className={css(FieldStyle.input)}
+                      type="text"
+                      value={notes.value}
+                      onChange={e => handleNotes('edit', indx, 'value', e.target.value)}
+                    />
                   </div>
-                  <button className="icn-btn ml-1 mt-3" type="button" aria-label="btn" onClick={() => handleNotes('delete', indx)}>
+                  <button
+                    data-testid="nots-del-btn"
+                    className="icn-btn ml-1 mt-3"
+                    type="button"
+                    aria-label="btn"
+                    onClick={() => handleNotes('delete', indx)}
+                  >
                     <TrashIcn />
                   </button>
                 </div>
               ))}
-              <div className="txt-center mt-2"><button className="icn-btn" type="button" onClick={() => handleNotes('add')}>+</button></div>
+              <div className="txt-center mt-2">
+                <button
+                  data-testid="nots-ad-btn"
+                  className="icn-btn"
+                  type="button"
+                  onClick={() => handleNotes('add')}
+                >
+                  +
+                </button>
+
+              </div>
             </SimpleAccordion>
             {/* <div className="btcd-hr" /> */}
             {/* invoice */}

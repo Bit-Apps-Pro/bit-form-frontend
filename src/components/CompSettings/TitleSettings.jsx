@@ -155,7 +155,7 @@ function TitleSettings() {
     if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
       reCalculateFieldHeights(fieldKey)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [icnMdl])
 
   return (
@@ -177,6 +177,7 @@ function TitleSettings() {
         />
         <FieldSettingsDivider />
         <SimpleAccordion
+          id="titl-stng"
           title={__('Title', 'bitform')}
           className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
@@ -192,6 +193,7 @@ function TitleSettings() {
               <label className={css(ut.fw500)}>Title</label>
               <Downmenu>
                 <button
+                  data-testid="titl-mor-opt-btn"
                   data-close
                   type="button"
                   className={css(style.btn)}
@@ -208,6 +210,7 @@ function TitleSettings() {
               </Downmenu>
             </div>
             <AutoResizeInput
+              id="titl"
               placeholder="Title..."
               name="title"
               value={fieldData?.title}
@@ -217,7 +220,7 @@ function TitleSettings() {
           <div className={css(ut.flxcb, ut.mt1)}>
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
-              <select className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
+              <select data-testid="titl-tag-slct" className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
                 {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
               </select>
             </div>
@@ -241,6 +244,7 @@ function TitleSettings() {
         <FieldSettingsDivider />
 
         <SimpleAccordion
+          id="sub-titl-stng"
           title={__('Sub Title', 'bitform')}
           className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
@@ -256,6 +260,7 @@ function TitleSettings() {
               <label className={css(ut.fw500, ut.flxcb)}>Sub Title</label>
               <Downmenu>
                 <button
+                  data-testid="sub-titl-mor-opt-btn"
                   data-close
                   type="button"
                   className={css(style.btn)}
@@ -273,6 +278,7 @@ function TitleSettings() {
             </div>
 
             <AutoResizeInput
+              id="sub-titl"
               placeholder="Sub Title..."
               name="subtitle"
               value={fieldData?.subtitle}
@@ -282,7 +288,12 @@ function TitleSettings() {
           <div className={css(ut.flxcb, ut.mt1)}>
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
-              <select className={css(style.select)} value={fieldData?.subTitleTag} onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}>
+              <select
+                data-testid="sub-titl-tag"
+                className={css(style.select)}
+                value={fieldData?.subTitleTag}
+                onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}
+              >
                 {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
               </select>
             </div>

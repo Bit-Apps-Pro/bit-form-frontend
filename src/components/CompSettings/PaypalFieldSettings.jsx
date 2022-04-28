@@ -149,10 +149,11 @@ export default function PaypalFieldSettings() {
       </div> */}
 
       <SimpleAccordion
+        id="slct-cnfg-stng"
         title="Select Config"
         className={css(FieldStyle.fieldSection)}
       >
-        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className={css(FieldStyle.input)} value={fieldData.payIntegID}>
+        <select data-testid="slct-cnfg-slct" name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className={css(FieldStyle.input)} value={fieldData.payIntegID}>
           <option value="">Select Config</option>
           {getPaypalConfigs()}
         </select>
@@ -171,9 +172,16 @@ export default function PaypalFieldSettings() {
       {fieldData.payIntegID && (
         <>
           <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-            <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
+            <SingleToggle
+              id="sbscrptn"
+              title={__('Subscription:', 'bitform')}
+              action={setSubscription}
+              isChecked={isSubscription}
+              className="mt-3"
+            />
             {isSubscription && (
               <SingleInput
+                id="pln-id"
                 inpType="text"
                 title={__('Plan Id', 'bitform')}
                 value={fieldData.planId || ''}
@@ -205,12 +213,26 @@ export default function PaypalFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Amount Type', 'bitform')}</b>
                 <br />
-                <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
-                <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
+                <CheckBox
+                  id="amnt-typ-fxd"
+                  onChange={setAmountType}
+                  radio
+                  checked={!isDynamicAmount}
+                  title={__('Fixed', 'bitform')}
+                />
+                <CheckBox
+                  id="amnt-typ-dynmc"
+                  onChange={setAmountType}
+                  radio
+                  checked={isDynamicAmount}
+                  title={__('Dynamic', 'bitform')}
+                  value="dynamic"
+                />
               </div>
               {!isDynamicAmount && (
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <SingleInput
+                    id="amnt"
                     cls={css(FieldStyle.input)}
                     inpType="number"
                     title={__('Amount', 'bitform')}
@@ -223,6 +245,7 @@ export default function PaypalFieldSettings() {
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Amount Field', 'bitform')}</b>
                   <select
+                    data-testid="slct-amnt-slct"
                     onChange={e => handleInput(e.target.name, e.target.value)}
                     name="amountFld"
                     className={css(FieldStyle.input)}
@@ -236,12 +259,26 @@ export default function PaypalFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Shipping Amount', 'bitform')}</b>
                 <br />
-                <CheckBox onChange={setShippingType} radio checked={!isDynamicShipping} title={__('Fixed', 'bitform')} />
-                <CheckBox onChange={setShippingType} radio checked={isDynamicShipping} title={__('Dynamic', 'bitform')} value="dynamic" />
+                <CheckBox
+                  id="shpng-amnt-fxd"
+                  onChange={setShippingType}
+                  radio
+                  checked={!isDynamicShipping}
+                  title={__('Fixed', 'bitform')}
+                />
+                <CheckBox
+                  id="shpng-amnt-dynmc"
+                  onChange={setShippingType}
+                  radio
+                  checked={isDynamicShipping}
+                  title={__('Dynamic', 'bitform')}
+                  value="dynamic"
+                />
               </div>
               {!isDynamicShipping && (
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <SingleInput
+                    id="spng-cst"
                     cls={css(FieldStyle.input)}
                     inpType="number"
                     title={__('Shipping Cost', 'bitform')}
@@ -254,6 +291,7 @@ export default function PaypalFieldSettings() {
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Shipping Amount Field', 'bitform')}</b>
                   <select
+                    data-testid="slct-shpng-amnt"
                     onChange={e => handleInput(e.target.name, e.target.value)}
                     name="shippingFld"
                     className={css(FieldStyle.input)}
@@ -267,12 +305,26 @@ export default function PaypalFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Tax Amount Type', 'bitform')}</b>
                 <br />
-                <CheckBox onChange={setTaxType} radio checked={!isDynamicTax} title={__('Fixed', 'bitform')} />
-                <CheckBox onChange={setTaxType} radio checked={isDynamicTax} title={__('Dynamic', 'bitform')} value="dynamic" />
+                <CheckBox
+                  id="tx-amnt-fxd"
+                  onChange={setTaxType}
+                  radio
+                  checked={!isDynamicTax}
+                  title={__('Fixed', 'bitform')}
+                />
+                <CheckBox
+                  id="tx-amnt-dynmc"
+                  onChange={setTaxType}
+                  radio
+                  checked={isDynamicTax}
+                  title={__('Dynamic', 'bitform')}
+                  value="dynamic"
+                />
               </div>
               {!isDynamicTax && (
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <SingleInput
+                    id="tax"
                     cls={css(FieldStyle.input)}
                     inpType="number"
                     title={__('Tax (%)', 'bitform')}
@@ -285,6 +337,7 @@ export default function PaypalFieldSettings() {
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Amount Field', 'bitform')}</b>
                   <select
+                    data-testid="slct-amnt-fld"
                     onChange={e => handleInput(e.target.name, e.target.value)}
                     name="taxFld"
                     className={css(FieldStyle.input)}
@@ -299,6 +352,7 @@ export default function PaypalFieldSettings() {
                 <label htmlFor="recap-thm">
                   <b>{__('Currency', 'bitform')}</b>
                   <select
+                    data-testid="crncy-fld-slct"
                     onChange={e => handleInput(e.target.name, e.target.value)}
                     name="currency"
                     value={fieldData.currency}
@@ -315,13 +369,14 @@ export default function PaypalFieldSettings() {
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <b>{__('Description', 'bitform')}</b>
                 <br />
-                <CheckBox onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static', 'bitform')} />
-                <CheckBox onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic', 'bitform')} value="dynamic" />
+                <CheckBox id="dscrptn-sttc" onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static', 'bitform')} />
+                <CheckBox id="dscrptn-dynmc" onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic', 'bitform')} value="dynamic" />
               </div>
               {!isDynamicDesc
                 && (
                   <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                     <textarea
+                      data-testid="ordr-dscrptn-txt-ara"
                       className="mt-1 btcd-paper-inp"
                       placeholder="Order Description"
                       name="description"
@@ -334,6 +389,7 @@ export default function PaypalFieldSettings() {
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <b>{__('Select Description Field', 'bitform')}</b>
                   <select
+                    data-testid="slct-dscrptn-fld"
                     onChange={e => handleInput(e.target.name, e.target.value)}
                     name="descFld"
                     className={css(FieldStyle.input)}

@@ -69,6 +69,7 @@ export default function HtmlFieldSettings() {
             </Cooltip>
           </div>
           <span
+            data-testid="cntnt-edt-btn"
             role="button"
             tabIndex="-1"
             className={css(ut.mr2, ut.cp)}
@@ -79,6 +80,7 @@ export default function HtmlFieldSettings() {
           </span>
         </div>
         <div
+          data-testid="cntnt"
           role="button"
           tabIndex="-1"
           className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto' })}
