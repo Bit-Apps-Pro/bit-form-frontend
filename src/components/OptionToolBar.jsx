@@ -2,9 +2,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $fields, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $breakpoint, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
@@ -35,8 +34,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   const [modal, setModal] = useState(false)
-  const fields = useRecoilValue($fields)
-  const setStyles = useSetRecoilState($styles)
   const selectedFldId = useRecoilValue($selectedFieldId)
 
   const styleModeHandler = ({ target: { checked } }) => {
@@ -124,7 +121,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           </Tip>
           {flags.styleMode && (
             <Tip msg="Inspect Element">
-              <button onClick={inspectModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}>
+              <button data-testid="inspect-element" onClick={inspectModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}>
                 <BtnIcn size="22" />
               </button>
             </Tip>
@@ -132,13 +129,36 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
           <Tip msg="Small Screen View">
-            <button onClick={() => setResponsiveView('sm')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`} type="button"><MobileIcon size={23} /></button>
+            <button
+              data-testid="bp-sm"
+              onClick={() => setResponsiveView('sm')}
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`}
+              type="button"
+            >
+              <MobileIcon size={23} />
+            </button>
           </Tip>
           <Tip msg="Medium Screen View">
-            <button onClick={() => setResponsiveView('md')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'md' && 'active'}`} type="button"><TabletIcon size={22} /></button>
+            <button
+              data-testid="bp-md"
+              onClick={() => setResponsiveView('md')}
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'md' && 'active'}`}
+              type="button"
+            >
+              <TabletIcon size={22} />
+
+            </button>
           </Tip>
           <Tip msg="Large Screen View">
-            <button onClick={() => setResponsiveView('lg')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`} type="button"><LaptopIcn size={29} stroke={1.6} /></button>
+            <button
+              data-testid="bp-lg"
+              onClick={() => setResponsiveView('lg')}
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`}
+              type="button"
+            >
+              <LaptopIcn size={29} stroke={1.6} />
+
+            </button>
           </Tip>
           <Downmenu
             place="bottom-end"
@@ -154,7 +174,14 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <FormBuilderHistory />
           <div className={css(OptionToolBarStyle.border_right)} />
           <Tip msg="Custom CSS and JS">
-            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`} onClick={() => setModal(true)} type="button"><SettingsIcn size={22} /></button>
+            <button
+              data-testid="custom-css-js"
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`}
+              onClick={() => setModal(true)}
+              type="button"
+            >
+              <SettingsIcn size={22} />
+            </button>
           </Tip>
           <Modal
             md

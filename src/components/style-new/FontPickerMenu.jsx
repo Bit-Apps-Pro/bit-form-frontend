@@ -18,7 +18,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
-export default function FontPickerMenu() {
+export default function FontPickerMenu({ id }) {
   const { css } = useFela()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
@@ -172,7 +172,6 @@ export default function FontPickerMenu() {
   const urlValidationHandler = ({ target: { value } }) => {
     if (value !== '' && !isValidURL(value)) toast.error('Font url is invalid!')
   }
-
   return (
     <div className={css(fontStyle.container)}>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -181,6 +180,7 @@ export default function FontPickerMenu() {
           name="themeInherit"
           isChecked={inheritFont}
           action={setThemeFont}
+          id={id}
         />
       </div>
       <StyleSegmentControl
@@ -217,6 +217,7 @@ export default function FontPickerMenu() {
                 onFocus={() => setfocusSearch(true)}
                 onBlur={() => setfocusSearch(false)}
                 className={css(fontStyle.search_field)}
+                data-testid="search-font"
               />
               <span title="search" className={css(fontStyle.search_icn)}>
                 <SearchIcon size="20" />
@@ -230,6 +231,7 @@ export default function FontPickerMenu() {
                   type="button"
                   onClick={() => fontSorted(isSorted ? 'DESC' : 'ASC')}
                   aria-label="Sort Fonts Family"
+                  data-testid="sort-font"
                 >
                   <AtoZSortIcn size="20" />
                 </button>
@@ -248,6 +250,7 @@ export default function FontPickerMenu() {
                   className={css(fontStyle.btn)}
                   type="button"
                   onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}
+                  data-testid={`set-font-${fonts[index]?.family}`}
                 >
                   <span className={css(fontStyle.title)}>{fonts[index].family}</span>
                   {
@@ -274,6 +277,7 @@ export default function FontPickerMenu() {
                 aria-label="Custom font url"
                 type="url"
                 placeholder="e.g: http://fonts.gstatic.com/s/roboto/v29/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf"
+                data-testid="custom-font-url"
               />
             </div>
             <div className={css(ut.flxClm, ut.mt2)}>
@@ -286,6 +290,7 @@ export default function FontPickerMenu() {
                 aria-label="Custom font family"
                 type="text"
                 placeholder="e.g: Lato"
+                data-testid="custom-font-family"
               />
             </div>
           </>

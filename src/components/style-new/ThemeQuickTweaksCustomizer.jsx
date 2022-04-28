@@ -130,11 +130,12 @@ export default function ThemeQuickTweaksCustomizer() {
           <ResetStyle
             propertyPath={['--g-bdr-width', '--g-bdr-rad']}
             stateObjName="themeVars"
+            id="g-bdr"
           />
           <BorderControl
             subtitle="Theme Quick Tweaks Border Color"
             objectPaths={borderPathsObj}
-            id="fld-lbl-bdr-width"
+            id="global-bdr"
             hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
           />
         </div>
@@ -153,31 +154,50 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Font Family</span>
         <span className={css(ut.flxc)}>
-          <ResetStyle stateObjName="themeVars" propertyPath="--g-font-family" />
-          <FontPicker id="global-font-fam" />
+          <ResetStyle
+            id="g-fnt"
+            stateObjName="themeVars"
+            propertyPath="--g-font-family"
+          />
+          <FontPicker id="global-font-fmly" />
         </span>
       </div>
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
-        <select value={styles.fieldSizes} onChange={setSizes} className={css(sc.select)}>
-          {Object.keys(sizes).map((key, index) => <option selected={!!(key === styles.fieldSizes)} key={`size-${index * 5}`} value={key}>{sizes[key]}</option>)}
+        <select
+          value={styles.fieldSizes}
+          onChange={setSizes}
+          className={css(sc.select)}
+          data-testid="field-sizes-select"
+        >
+          {Object.keys(sizes).map((key, index) => (
+            <option
+              selected={!!(key === styles.fieldSizes)}
+              key={`size-${index * 5}`}
+              value={key}
+              data-testid={`size-${key}`}
+            >
+              {sizes[key]}
+            </option>
+          ))}
         </select>
       </div>
 
       <FontSizeControl
         stateObjName="themeVars"
         propertyPath="--fld-fs"
+        id="fld-fs"
       />
 
       <div className={css(ut.flxcb, ut.mt3)}>
         <span className={css(ut.fw500)}>Label Alignment</span>
-        <LabelControl id="label-alignment" />
+        <LabelControl id="align" />
       </div>
 
       <div className={css(ut.flxcb, ut.mt3)}>
         <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-        <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
+        <SingleToggle id="rtl" isChecked={direction === 'rtl'} action={handleDir} />
       </div>
     </>
   )
