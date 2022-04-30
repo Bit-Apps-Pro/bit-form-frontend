@@ -32,7 +32,7 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={acumbamailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
       <small className="d-blk mt-3">
-        {__('To Get Auth token, Please Visit', 'bit-integrations')}
+        {__('To Get Auth token, Please Visit', 'bitform')}
         &nbsp;
         <a className="btcd-link" href="https://acumbamail.com/en/apidoc/" target="_blank" rel="noreferrer">{__('Acumbamail documentation', 'bitform')}</a>
       </small>
@@ -56,12 +56,12 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
             type="button"
             disabled={isAuthorized || isLoading}
           >
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+            {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bit-integrations')}
+            {__('Next', 'bitform')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </>

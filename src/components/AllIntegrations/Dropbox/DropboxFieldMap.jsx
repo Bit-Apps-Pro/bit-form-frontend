@@ -25,7 +25,7 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
           </select>
 
           <select className="btcd-paper-inp" name="dropboxFormField" value={field.dropboxFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
-            <option value="">{__('Select Folder', 'bit-integrations')}</option>
+            <option value="">{__('Select Folder', 'bitform')}</option>
             {
               sortByField(dropboxConf.foldersList, 'lower_path', 'ASC').map(({ name, lower_path }) => (
                 <option key={lower_path} value={lower_path}>

@@ -42,6 +42,9 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
+import rapidmail from '../resource/img/integ/rapidmail.svg'
+import getgist from '../resource/img/integ/getgist.svg'
+import elasticemail from '../resource/img/integ/elasticemail.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -92,6 +95,9 @@ function Integrations() {
     { type: 'OneDrive', logo: oneDrive, pro },
     { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
     { type: 'Encharge', logo: encharge, pro },
+    { type: 'Rapidmail', logo: rapidmail, pro },
+    { type: 'Getgist', logo: getgist, pro },
+    { type: 'ElasticEmail', logo: elasticemail, pro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro },
