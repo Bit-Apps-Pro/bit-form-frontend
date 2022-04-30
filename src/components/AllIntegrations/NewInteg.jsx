@@ -22,6 +22,7 @@ const ZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/ZohoWorkDrive'))
 const GoogleSheet = lazy(() => import('./GoogleSheet/GoogleSheet'))
 const MailChimp = lazy(() => import('./MailChimp/MailChimp'))
 const Rapidmail = lazy(() => import('./Rapidmail/Rapidmail'))
+const Getgist = lazy(() => import('./Getgist/Getgist'))
 const ElasticEmail = lazy(() => import('./ElasticEmail/ElasticEmail'))
 const Acf = lazy(() => import('./Acf/Acf'))
 const Metabox = lazy(() => import('./Metabox/Metabox'))
@@ -83,6 +84,8 @@ export default function NewInteg({ allIntegURL }) {
         return <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Rapidmail':
         return <Rapidmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Getgist':
+        return <Getgist allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ElasticEmail':
         return <ElasticEmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ACF':

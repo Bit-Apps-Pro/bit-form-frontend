@@ -43,6 +43,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import rapidmail from '../resource/img/integ/rapidmail.svg'
+import getgist from '../resource/img/integ/getgist.svg'
 import elasticemail from '../resource/img/integ/elasticemail.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -78,6 +79,7 @@ function Integrations() {
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'Rapidmail', logo: rapidmail, pro: !isPro },
+    { type: 'Getgist', logo: getgist, pro: !isPro },
     { type: 'ElasticEmail', logo: elasticemail, pro: !isPro },
     { type: 'ACF', logo: acf, pro: !isPro },
     { type: 'MetaBox', logo: metabox, pro: !isPro },
