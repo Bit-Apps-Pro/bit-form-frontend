@@ -43,6 +43,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import rapidmail from '../resource/img/integ/rapidmail.svg'
+import hubspot from '../resource/img/integ/hubspot.svg'
 import getgist from '../resource/img/integ/getgist.svg'
 import elasticemail from '../resource/img/integ/elasticemail.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -96,6 +97,7 @@ function Integrations() {
     { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
     { type: 'Encharge', logo: encharge, pro },
     { type: 'Rapidmail', logo: rapidmail, pro },
+    { type: 'Hubspot', logo: hubspot, pro },
     { type: 'Getgist', logo: getgist, pro },
     { type: 'ElasticEmail', logo: elasticemail, pro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },

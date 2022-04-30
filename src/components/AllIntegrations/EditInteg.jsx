@@ -22,6 +22,7 @@ const EditZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/EditZohoWorkDrive')
 const EditGoogleSheet = lazy(() => import('./GoogleSheet/EditGoogleSheet'))
 const EditMailChimp = lazy(() => import('./MailChimp/EditMailChimp'))
 const EditRapidmail = lazy(() => import('./Rapidmail/EditRapidmail'))
+const EditHubspot = lazy(() => import('./Hubspot/EditHubspot'))
 const EditGetgist = lazy(() => import('./Getgist/EditGetgist'))
 const EditElasticEmail = lazy(() => import('./ElasticEmail/EditElasticEmail'))
 const EditAcf = lazy(() => import('./Acf/EditAcf'))
@@ -85,6 +86,8 @@ export default function EditInteg({ allIntegURL }) {
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Rapidmail':
         return <EditRapidmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Hubspot':
+        return <EditHubspot allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Getgist':
         return <EditGetgist allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ElasticEmail':
