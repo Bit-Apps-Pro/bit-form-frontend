@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap } from './IntegrationHelpers'
+import RapidmailActions from './RapidmailActions'
 import { getAllRecipient } from './RapidmailCommonFunc'
 import RapidmailFieldMap from './RapidmailFieldMap'
 
@@ -43,6 +44,18 @@ export default function RapidmailIntegLayout({ formFields, handleInput, rapidmai
       <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(rapidmailConf.field_map.length, rapidmailConf, setRapidmailConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
       <br />
       <br />
+
+      {rapidmailConf?.recipient_id && (
+        <>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <RapidmailActions
+            rapidmailConf={rapidmailConf}
+            setRapidmailConf={setRapidmailConf}
+            formFields={formFields}
+          />
+        </>
+      )}
 
     </>
   )
