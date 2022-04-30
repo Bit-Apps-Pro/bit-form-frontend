@@ -17,8 +17,8 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
     const newConf = { ...elasticEmailConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty', 'bit-integrations') : '',
-        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bit-integrations') : '',
+        name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
+        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bitform') : '',
       })
       return
     }
@@ -52,16 +52,16 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
-      <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={elasticEmailConf.api_key} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={elasticEmailConf.api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get API , Please Visit', 'bit-integrations')}
+        {__('To get API , Please Visit', 'bitform')}
         {' '}
-        <a className="btcd-link" href="https://elasticemail.com/account#/settings/new/manage-api" target="_blank" rel="noreferrer">{__('Elastic Email API Console', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://elasticemail.com/account#/settings/new/manage-api" target="_blank" rel="noreferrer">{__('Elastic Email API Console', 'bitform')}</a>
       </small>
       {isLoading === 'auth' && (
         <div className="flx mt-5">
@@ -81,12 +81,12 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
       {!isInfo && (
         <>
           <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+            {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bit-integrations')}
+            {__('Next', 'bitform')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </>

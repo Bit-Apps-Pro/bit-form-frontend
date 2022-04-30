@@ -57,7 +57,7 @@ export default function RapidmailAuthorization({
                 name="name"
                 value={rapidmailConf?.name}
                 type="text"
-                placeholder={__("Integration Name...", "bit-integrations")}
+                placeholder={__("Integration Name...", "bitform")}
                 disabled={isInfo}
             />
 

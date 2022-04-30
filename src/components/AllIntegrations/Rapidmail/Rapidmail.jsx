@@ -55,7 +55,7 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
   }
   const nextPage = (pageNo) => {
     if (!checkMappedFields(rapidmailConf)) {
-      // setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      // setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       toast.error('Please map mandatory fields')
       return
     }
@@ -99,7 +99,7 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bit-integrations')}
+          {__('Next', 'bitform')}
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
