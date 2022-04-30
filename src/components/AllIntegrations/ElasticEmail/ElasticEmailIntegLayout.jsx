@@ -4,6 +4,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import { getAllList } from './ElasticEmailCommonFunc'
 import { addFieldMap } from './IntegrationHelpers'
 import ElasticEmailFieldMap from './ElasticEmailFieldMap'
+import ElasticEmailActions from './ElasticEmailActions'
 
 export default function ElasticEmailIntegLayout({ formFields, handleInput, elasticEmailConf, setElasticEmailConf, isLoading, setIsLoading, setSnackbar }) {
   const setLists = (val) => {
@@ -52,6 +53,19 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
       </div>
       <br />
       <br />
+
+
+      {elasticEmailConf?.list_id && (
+        <>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <ElasticEmailActions
+            elasticEmailConf={elasticEmailConf}
+            setElasticEmailConf={setElasticEmailConf}
+            formFields={formFields}
+          />
+        </>
+      )}
 
     </>
   )
