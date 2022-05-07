@@ -67,18 +67,21 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
         fieldData={attr}
       >
         <div
+          data-testid={`${fieldKey}-cc`}
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
           {... { ...getCustomAttributs(fieldKey, 'cc') }}
         >
           {attr.opt.map((itm, i) => (
             <div
+              data-testid={`${fieldKey}-cw`}
               data-dev-cw={fieldKey}
               key={`opr-${i + 22}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
               {... { ...getCustomAttributs(fieldKey, 'cw') }}
             >
               <input
+                data-testid={`${fieldKey}-ci`}
                 id={`${fieldKey}-chk-${i}`}
                 type="radio"
                 className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}
@@ -96,6 +99,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 {... { ...getCustomAttributs(fieldKey, 'ci') }}
               />
               <label
+                data-testid={`${fieldKey}-cl`}
                 data-dev-cl={fieldKey}
                 data-cl
                 htmlFor={`${fieldKey}-chk-${i}`}
@@ -104,6 +108,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               >
                 {/* <span data-bx className={`${fieldKey}-bx`} /> */}
                 <span
+                  data-testid={`${fieldKey}-bx`}
                   data-dev-rdo={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
@@ -114,6 +119,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   </svg>
                 </span>
                 <span
+                  data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {... { ...getCustomAttributs(fieldKey, 'ct') }}

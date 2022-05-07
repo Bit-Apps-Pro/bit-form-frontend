@@ -72,7 +72,7 @@ class DropdownField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedOptImgElm = this.#select(`.${this.fieldKey}-selected-opt-img`)
-    this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
+    this.#clearSearchBtnElm = this.#config.searchClearable ? this.#select(`.${this.fieldKey}-search-clear-btn`) : {}
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
@@ -592,10 +592,10 @@ class DropdownField {
         filteredOptions = [{ i: 'not-found', lbl: 'No Option Found' }]
       }
       this.#options = [this.#config.options[0], ...filteredOptions]
-      this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
     } else {
       this.#options = this.#config.options
-      this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
       if (this.allowCustomOption) {
         this.#customOption = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-create-opt`)
         this.#customOption.style.display = 'none'

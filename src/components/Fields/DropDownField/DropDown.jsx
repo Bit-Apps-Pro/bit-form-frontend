@@ -64,6 +64,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
             {... { ...getCustomAttributs(fieldKey, 'dpd-fld-wrp') }}
           >
             <input
+              data-testid={`${fieldKey}-dpd-hdn-inp`}
               name={fieldKey}
               type="hidden"
               className={`${fieldKey}-dpd-hidden-input ${getCustomClsName(fieldKey, 'dpd-hidden-input')}`}
@@ -71,6 +72,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
             />
             <div
+              data-testid={`${fieldKey}-dpd-wrp`}
               data-dev-dpd-fld-wrp={fieldKey}
               className={`${fieldKey}-dpd-wrp ${getCustomClsName(fieldKey, 'dpd-wrp')}`}
               role="combobox"
@@ -81,9 +83,13 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               aria-label="Dropdown"
               {... { ...getCustomAttributs(fieldKey, 'dpd-wrp') }}
             >
-              <div className={`${fieldKey}-selected-opt-wrp ${getCustomClsName(fieldKey, 'selected-opt-wrp')}`}>
+              <div
+                data-testid={`${fieldKey}-slctd-opt-wrp`}
+                className={`${fieldKey}-selected-opt-wrp ${getCustomClsName(fieldKey, 'selected-opt-wrp')}`}
+              >
                 {fieldData.config.selectedOptImage && (
                   <img
+                    data-testid={`${fieldKey}-slctd-opt-img`}
                     data-dev-selected-opt-img={fieldKey}
                     className={`${fieldKey}-selected-opt-img ${getCustomClsName(fieldKey, 'selected-opt-img')}`}
                     aria-hidden="true"
@@ -93,6 +99,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                   />
                 )}
                 <span
+                  data-testid={`${fieldKey}-slctd-opt-lbl`}
                   aria-label="Selected Option Label"
                   data-dev-selected-opt-lbl={fieldKey}
                   className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
@@ -101,8 +108,12 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                   {ph}
                 </span>
               </div>
-              <div className={`${fieldKey}-dpd-btn-wrp ${getCustomClsName(fieldKey, 'dpd-btn-wrp')}`}>
+              <div
+                data-testid={`${fieldKey}-dpd-btn-wrp`}
+                className={`${fieldKey}-dpd-btn-wrp ${getCustomClsName(fieldKey, 'dpd-btn-wrp')}`}
+              >
                 <button
+                  data-testid={`${fieldKey}-slctd-opt-clr-btn`}
                   type="button"
                   aria-label="Clear selected option value"
                   data-dev-selected-opt-clear-btn={fieldKey}
@@ -147,6 +158,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               <div className={`${fieldKey}-option-inner-wrp ${getCustomClsName(fieldKey, 'option-inner-wrp')}`}>
                 <div className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'option-search-wrp')}`}>
                   <input
+                    data-testid={`${fieldKey}-opt-srch-inp`}
                     type="search"
                     data-dev-opt-search-input={fieldKey}
                     className={`${fieldKey}-opt-search-input ${getCustomClsName(fieldKey, 'opt-search-input')}`}
@@ -189,6 +201,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                       </button>
                     )} */}
                   <button
+                    data-testid={`${fieldKey}-srch-clr-btn`}
                     type="button"
                     aria-label="Clear search"
                     data-dev-search-clear-btn={fieldKey}
@@ -228,6 +241,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                       >
 
                         <li
+                          data-testid={`${fieldKey}-opt-${dataIndex}`}
                           data-dev-option={fieldKey}
                           data-index={dataIndex++}
                           data-value="create-opt"
@@ -248,11 +262,16 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                             if (opt.type) {
                               return (
                                 <>
-                                  <li data-index={dataIndex++} className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}>
+                                  <li
+                                    data-testid={`${fieldKey}-opt-${dataIndex}`}
+                                    data-index={dataIndex++}
+                                    className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
+                                  >
                                     <span className={`${fieldKey}-opt-lbl`}>{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
                                     <li
+                                      data-testid={`${fieldKey}-opt-${dataIndex}`}
                                       data-dev-option={fieldKey}
                                       data-index={dataIndex++}
                                       data-value={opt2.val || opt2.lbl}
@@ -281,6 +300,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               )
                             } return (
                               <li
+                                data-testid={`${fieldKey}-opt-${dataIndex}`}
                                 data-dev-option={fieldKey}
                                 data-index={dataIndex++}
                                 data-value={opt.val || opt.lbl}
