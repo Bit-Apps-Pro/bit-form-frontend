@@ -110,12 +110,12 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
     <div className="mt-2">
       <div>
         <b>Upload File (txt, json, xls, xlsx, csv, tsv)</b>
-        <input type="file" onChange={handleImportFile} accept=".json,.txt,.xls,.xlsx,.csv,.tsv" className="btcd-paper-inp mt-1" />
+        <input data-testid="fil-upld-imprt-optns-fil" type="file" onChange={handleImportFile} accept=".json,.txt,.xls,.xlsx,.csv,.tsv" className="btcd-paper-inp mt-1" />
       </div>
       {importOpts.dataTyp === 'txt' && (
         <div className="mt-3">
           <b>Separator</b>
-          <select name="separator" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.separator || ''}>
+          <select data-testid="imprt-optns-sprtr-slct" name="separator" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.separator || ''}>
             <option value="">Select Separator</option>
             <option value="comma">Comma</option>
             <option value="space">Space</option>
@@ -126,7 +126,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
       {importOpts?.workbook?.SheetNames?.length > 1 && (
         <div className="mt-3">
           <b>Sheet Name</b>
-          <select name="sheetName" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.sheetName || ''}>
+          <select data-testid="imprt-optns-shet-slct" name="sheetName" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.sheetName || ''}>
             <option value="">Select Sheet</option>
             {importOpts.workbook.SheetNames.map(sheet => <option key={sheet} value={sheet}>{sheet}</option>)}
           </select>
@@ -136,14 +136,14 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
         <div className="flx mt-3 w-10">
           <div className="w-5 mr-2">
             <b>Label</b>
-            <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.lbl || ''}>
+            <select data-testid="imprt-optns-lbl-slct" name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.lbl || ''}>
               <option value="">Select Label</option>
               {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
             </select>
           </div>
           <div className="w-5 ">
             <b>Value</b>
-            <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
+            <select data-testid="imprt-optns-val-slct" name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
               <option value="">Select Value</option>
               {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
             </select>

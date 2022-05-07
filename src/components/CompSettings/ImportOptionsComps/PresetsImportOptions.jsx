@@ -91,14 +91,14 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
         <div className="flx mt-3 w-10">
           <div className="w-5 mr-2">
             <b>Label</b>
-            <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.lbl || ''}>
+            <select data-testid="imprt-optns-lbl-slct" name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.lbl || ''}>
               <option value="">Select Label</option>
               {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
             </select>
           </div>
           <div className="w-5">
             <b>Value</b>
-            <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
+            <select data-testid="imprt-optns-val-slct" name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
               <option value="">Select Value</option>
               {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
             </select>

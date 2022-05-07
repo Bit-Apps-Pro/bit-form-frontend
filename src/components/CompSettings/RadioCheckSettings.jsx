@@ -501,7 +501,7 @@ function RadioCheckSettings() {
                     title="Max Error Message"
                     tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
                   />
-                  <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+                  <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
                 </>
               )}
             </SimpleAccordion>

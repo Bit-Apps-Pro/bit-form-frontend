@@ -110,7 +110,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
             <div className="flx mt-3 w-10">
               <div className="w-5 mr-2">
                 <b>Filter by Post Type</b>
-                <select name="postType" onChange={handleImportInput} value={importOpts.fieldObject?.filter?.postType || ''} className="btcd-paper-inp mt-1">
+                <select data-testid="imprt-optns-pst-typ-slct" name="postType" onChange={handleImportInput} value={importOpts.fieldObject?.filter?.postType || ''} className="btcd-paper-inp mt-1">
                   {importOpts?.postTypes?.map((type, key) => (
                     <option key={`imp-${key * 2}`} value={type.name}>{type.label}</option>
                   ))}
@@ -119,7 +119,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
 
               <div className="w-5 mr-2">
                 <b>Filter by Post Status</b>
-                <select name="postStatus" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.postStatus || ''} className="btcd-paper-inp mt-1">
+                <select data-testid="imprt-optns-pst-stats-slct" name="postStatus" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.postStatus || ''} className="btcd-paper-inp mt-1">
                   <option disabled selected>select status</option>
                   <option value="all">All</option>
                   <option value="publish">Publish</option>
@@ -139,13 +139,13 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">
                   <b>Order By</b>
-                  <select name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-by-slct" name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
                     {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                   </select>
                 </div>
                 <div className="w-5 mr-2">
                   <b>Order</b>
-                  <select name="order" onChange={handleImportInput} value={importOpts.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-slct" name="order" onChange={handleImportInput} value={importOpts.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
                     <option value="ASC">Ascending</option>
                     <option value="DESC">Descending</option>
                   </select>
@@ -156,14 +156,14 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
                 <div className="flx mt-3 w-10">
                   <div className="w-5 mr-2">
                     <b>Label</b>
-                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
+                    <select data-testid="imprt-optns-lbl-slct" name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
                       <option value="">Select Label</option>
                       {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
                   </div>
                   <div className="w-5">
                     <b>Value</b>
-                    <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
+                    <select data-testid="imprt-optns-val-slct" name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
                       <option value="">Select Value</option>
                       {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>

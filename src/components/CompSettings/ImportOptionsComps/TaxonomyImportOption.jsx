@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -112,7 +112,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
           {!!importOpts?.data && (
             <div className="w-10 mr-2">
               <b>Filter by Taxonomy</b>
-              <select name="taxanomy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.taxanomy || ''} className="btcd-paper-inp mt-1">
+              <select data-testid="imprt-optns-txnmy-slct" name="taxanomy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.taxanomy || ''} className="btcd-paper-inp mt-1">
                 {importOpts?.taxonomies?.map((taxonomy, key) => (
                   <option key={`imp-${key * 2}`} value={taxonomy?.name}>{`${taxonomy?.singular_name}-${taxonomy?.name}`}</option>
                 ))}
@@ -122,7 +122,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
           {!!importOpts?.data?.length && (
             <div>
               <div className="w-5 flx">
-                <CheckBox onChange={handleTaxonomyField} title={__('Use Post Taxonomy Fields', 'bitform')} checked={importOpts?.fieldObject?.isTaxonomy === true} value={false} />
+                <CheckBox data-testid="imprt-optns-txnmy-chek" onChange={handleTaxonomyField} title={__('Use Post Taxonomy Fields', 'bitform')} checked={importOpts?.fieldObject?.isTaxonomy === true} value={false} />
                 <Cooltip width={250} icnSize={17} className="ml-1">
                   <div className="txt-body">
                     if selected then its work also post taxanomy field.
@@ -134,13 +134,13 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">
                   <b>Order By</b>
-                  <select name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-by-slct" name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
                     {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                   </select>
                 </div>
                 <div className="w-5 mr-2">
                   <b>Order</b>
-                  <select name="order" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-slct" name="order" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
                     <option value="ASC">Ascending</option>
                     <option value="DESC">Descending</option>
                   </select>
@@ -151,14 +151,14 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
                 <div className="flx mt-3 w-10">
                   <div className="w-5 mr-2">
                     <b>Label</b>
-                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
+                    <select data-testid="imprt-optns-lbl-slct" name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
                       <option disabled>Select Label</option>
                       {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
                   </div>
                   <div className="w-5">
                     <b>Value</b>
-                    <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
+                    <select data-testid="imprt-optns-val-slct" name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
                       <option disabled>Select Value</option>
                       {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
