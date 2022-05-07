@@ -27,6 +27,7 @@ const ZohoWorkDriveAuthorization = lazy(() => import('./ZohoWorkDrive/ZohoWorkDr
 const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
 const OneDriveAuthorization = lazy(() => import('./OneDrive/OneDriveAuthorization'))
 const AcumbamailAuthorization = lazy(() => import('./Acumbamail/AcumbamailAuthorization'))
+const GroundhoggAuthorization = lazy(() => import('./Groundhogg/GroundhoggAuthorization'))
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
@@ -99,6 +100,8 @@ export default function IntegInfo({ allIntegURL }) {
         return <OneDriveAuthorization oneDriveConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'Acumbamail':
         return <AcumbamailAuthorization acumbamailConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Groundhogg':
+        return <GroundhoggAuthorization groundhoggConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

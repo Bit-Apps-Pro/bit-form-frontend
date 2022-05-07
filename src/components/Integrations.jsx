@@ -41,6 +41,7 @@ import webhooks from '../resource/img/integ/webhooks.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
+import groundhogg from '../resource/img/integ/groundhogg.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -101,6 +102,7 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+    { type: 'Groundhogg', logo: groundhogg, pro: !isPro },
 
   ]
 
