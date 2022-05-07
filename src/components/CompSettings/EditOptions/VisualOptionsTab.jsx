@@ -314,11 +314,11 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
         />
       </SortContainer>
       <div className="flx">
-        <Button className={css(optionStyle.add_btn)} onClick={() => addOption()}>
+        <Button id="add-mor" className={css(optionStyle.add_btn)} onClick={() => addOption()}>
           {__('Add More +', 'bitform')}
         </Button>
         {hasGroup && (
-          <Button className={css(optionStyle.add_btn)} onClick={addGroup}>
+          <Button id="add-grp" className={css(optionStyle.add_btn)} onClick={addGroup}>
             {__('Add Group +', 'bitform')}
           </Button>
         )}

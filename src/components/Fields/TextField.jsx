@@ -56,11 +56,13 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldData={attr}
       >
         <div
+          data-testid={`${fieldKey}-inp-fld-wrp`}
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
           {... { ...getCustomAttributs(fieldKey, 'inp-fld-wrp') }}
         >
           <input
+            data-testid={fieldKey}
             data-dev-fld={fieldKey}
             id={fieldKey}
             list={`${fieldKey}-datalist`}
@@ -85,6 +87,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
 
           {attr.prefixIcn && (
             <img
+              data-testid={`${fieldKey}-pre-i`}
               data-dev-pre-i={fieldKey}
               className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`}
               height="90%"
@@ -95,6 +98,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
           )}
           {attr.suffixIcn && (
             <img
+              data-testid={`${fieldKey}-suf-i`}
               data-dev-suf-i={fieldKey}
               className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`}
               height="90%"

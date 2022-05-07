@@ -269,6 +269,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         <div className={css(ut.mt2, ut.flxc, { flxp: 1, jc: 'center' })}>
           {filter.map((iconPack, i) => (
             <button
+              data-testid="icn-pck-btn"
               key={iconPack.label}
               title={iconPack.label}
               onClick={() => searchByIconPack(i, iconPack.value, iconPack.status)}
@@ -283,6 +284,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         <div className={css(ut.flxc, s.searchBar, ut.mt2, ut.mb2)}>
           <div className={css(s.fields_search)}>
             <input
+              data-testid="icns-mdl-srch-inp"
               title="Search Icons"
               aria-label="Search Icons"
               placeholder="Search Icons by keywords one at a time. e.g., user or login or etc..."
@@ -316,6 +318,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           <div className={css(ut.flxc, ut.mt2, s.icon)}>
             {icons.map((item) => (
               <button
+                data-testid={`inc-prv-btn-${item.name}`}
                 type="button"
                 key={`${item.name} (${item.id})`}
                 title={`${item.name} (${item.id})`}
@@ -335,7 +338,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             </div>
           )}
         </Scrollbars>
-        <button type="button" disabled={!prefix} className={css(s.saveBtn, s.btnPosition)} onClick={saveIcn}>
+        <button data-testid="icn-dwnld-n-sav" type="button" disabled={!prefix} className={css(s.saveBtn, s.btnPosition)} onClick={saveIcn}>
           <span className={css(ut.mr1)}><DownloadIcon size="19" /></span>
           Download & save
           {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
@@ -364,9 +367,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         {!loading && (
           <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
             <div className={css(ut.flxc, ut.mt4, s.icon)}>
-              {!!files.length && files.map((file) => (
+              {!!files.length && files.map((file, index) => (
                 <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
                   <button
+                    data-testid={`dwnlodd-inc-del-btn-${index}`}
                     type="button"
                     className={`${css(s.delBtn)} trash`}
                     title="Delete"
@@ -377,7 +381,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                   >
                     <CloseIcn size={10} />
                   </button>
-                  <button onClick={handlePrefixIcon} type="button" title={file.name} className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}>
+                  <button
+                    data-testid={`dwnlodd-inc-prv-btn-${index}`}
+                    onClick={handlePrefixIcon}
+                    type="button"
+                    title={file.name}
+                    className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}
+                  >
                     <img src={`${bits.iconURL}/${file}`} alt={`icon ${file}`} width="40" height="30" />
                   </button>
                 </div>
@@ -385,7 +395,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             </div>
           </Scrollbars>
         )}
-        <button type="button" disabled={!prefix} className={css(app.btn, s.saveBtn)} onClick={selectedSaveIcon}>
+        <button data-testid="icn-sav-btn" type="button" disabled={!prefix} className={css(app.btn, s.saveBtn)} onClick={selectedSaveIcon}>
           Save
         </button>
       </Grow>

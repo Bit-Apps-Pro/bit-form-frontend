@@ -13,7 +13,7 @@ export default function TextOptionsTab({ options, optionTxt, setOptionTxt, lblKe
 
   return (
     <div>
-      <textarea className={css(styles.textarea)} onChange={handleOptionText} value={optionTxt} />
+      <textarea data-testid="txt-optns-tab-area" className={css(styles.textarea)} onChange={handleOptionText} value={optionTxt} />
     </div>
   )
 }
