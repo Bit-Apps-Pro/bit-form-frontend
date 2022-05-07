@@ -184,8 +184,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     removeFieldStyles(fldKey)
     setDeletedFldKey(prvDeleted => {
       const tmpFldKeys = [...prvDeleted]
-      if (!tmpFldKeys.includes(i)) {
-        tmpFldKeys.push(i)
+      if (!tmpFldKeys.includes(fldKey)) {
+        tmpFldKeys.push(fldKey)
       }
 
       return tmpFldKeys
