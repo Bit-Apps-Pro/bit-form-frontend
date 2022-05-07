@@ -303,6 +303,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             />
             <Grow open={controller === 'style'}>
               <SingleToggle
+                id="overrideGlobalTheme-style"
                 title="Override form theme styles"
                 action={(e) => overrideGlobalThemeHandler(e, element)}
                 isChecked={isFieldElemetOverrided}
@@ -322,6 +323,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                   value={customClsName?.[element] || ''}
                   changeAction={customClsNamHandler}
                   rows="3"
+                  id={`${fieldKey}-${element}`}
                 />
               </div>
               <div className={css(ut.m10)}>
@@ -348,6 +350,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                         value={attr.key}
                         className={css(FieldStyle.input)}
                         type="text"
+                        data-testid={`${fieldKey}-${element}-atrbut-key`}
                       />
                     </div>
                     <span className={css(cls.pair)}>=</span>
@@ -360,6 +363,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                         value={attr.value}
                         className={css(FieldStyle.input)}
                         type="text"
+                        data-testid={`${fieldKey}-${element}-atrbut-value`}
                       />
                     </div>
                     <button
@@ -367,6 +371,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                       type="button"
                       aria-label="Delete Custom Attribute"
                       onClick={() => deleteCustomAttribute(indx)}
+                      data-testid={`${fieldKey}-${element}-attbut-delete`}
                     >
                       <TrashIcn size="12" />
                     </button>
@@ -378,6 +383,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                     type="button"
                     aria-label="Add Custom Attribute"
                     onClick={addCustomAttribute}
+                    data-testid={`${fieldKey}-${element}-attbut-add`}
                   >
                     <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
                   </button>

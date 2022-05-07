@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
@@ -28,7 +29,7 @@ const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColor
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, defaultValue, objectPaths, state, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
+const RenderComponent = ({ component, action, value, defaultValue, objectPaths, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -111,7 +112,12 @@ function DraggableModal({ setBuilderPointerEventNone }) {
             <span className={css(draggableModalStyle.title)}>{mainTitle || setTitle(component)}</span>
             <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
           </div>
-          <button type="button" className={css(draggableModalStyle.button)} onClick={() => setDraggableModal({ show: false })}>
+          <button
+            data-testid={`${id}-close-modal`}
+            type="button"
+            className={css(draggableModalStyle.button)}
+            onClick={() => setDraggableModal({ show: false })}
+          >
             <CloseIcn size={10} />
           </button>
         </div>

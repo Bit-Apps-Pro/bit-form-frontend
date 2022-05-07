@@ -176,7 +176,7 @@ export default function ThemeQuickTweaksCustomizer() {
               selected={!!(key === styles.fieldSizes)}
               key={`size-${index * 5}`}
               value={key}
-              data-testid={`size-${key}`}
+              data-testid={`globl-size-${key}`}
             >
               {sizes[key]}
             </option>

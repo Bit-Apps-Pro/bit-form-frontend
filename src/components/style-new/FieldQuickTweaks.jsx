@@ -394,7 +394,12 @@ export default function FieldQuickTweaks({ fieldKey }) {
         <>
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Fields Size</span>
-            <select value={fieldSize} onChange={setSizes} className={css(sc.select)}>
+            <select
+              data-testid="field-size-ctrl"
+              value={fieldSize}
+              onChange={setSizes}
+              className={css(sc.select)}
+            >
               {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
@@ -409,7 +414,11 @@ export default function FieldQuickTweaks({ fieldKey }) {
         <>
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Size</span>
-            <select onChange={e => setBtnSize('btn', e.target.value)} className={css(sc.select)}>
+            <select
+              data-testid="btn-size-ctrl"
+              onChange={e => setBtnSize('btn', e.target.value)}
+              className={css(sc.select)}
+            >
               {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
             </select>
           </div>
@@ -425,6 +434,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 unit={fldWidthUnit || 'px'}
                 width="128px"
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="btn-width"
               />
             </div>
           </div>
@@ -440,6 +450,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
                 unit={fldHeightUnit || 'px'}
                 width="128px"
                 options={['px', 'em', 'rem', '%']}
+                dataTestId="btn-height"
               />
             </div>
           </div>
@@ -485,7 +496,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {(fieldType === 'currency' || fieldType === 'phone-number') && (
         <div className={css(ut.flxcb, ut.mt3)}>
           <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-          <SingleToggle isChecked={rtlCurrencyFldCheck()} action={handleDir} />
+          <SingleToggle id="curnc-phone-rtl" isChecked={rtlCurrencyFldCheck()} action={handleDir} />
         </div>
       )}
       {!(fieldType === 'paypal' || fieldType === 'razorpay' || fieldType === 'title') && (
@@ -501,6 +512,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
               unit={borderRadUnit || 'px'}
               width="128px"
               options={['px', 'em', 'rem', '%']}
+              dataTestId="bdr-reds"
             />
           </div>
         </div>
@@ -518,6 +530,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
               unit={fldWidthUnit || 'px'}
               width="128px"
               options={['px', 'em', 'rem', '%']}
+              dataTestId="paypal-btn-width"
             />
           </div>
         </div>
@@ -525,7 +538,12 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {fieldType === 'razorpay' && (
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500)}>Button Theme</span>
-          <select onChange={razorpayBtnThemeHandler} className={css(sc.select)} value={fieldData.btnTheme}>
+          <select
+            data-testid="razorpay-btn-theme"
+            onChange={razorpayBtnThemeHandler}
+            className={css(sc.select)}
+            value={fieldData.btnTheme}
+          >
             <option value="dark">Razorpay Dark</option>
             <option value="light">Razorpay Light</option>
             <option value="outline">Razorpay Outline</option>
