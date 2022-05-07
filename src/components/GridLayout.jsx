@@ -610,6 +610,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
                       role="button"
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                      data-testid={`${layoutItem.i}-fld-blk`}
                     >
                       <FieldBlockWrapper
                         {...{
