@@ -88,6 +88,10 @@ export default function FontPickerMenu({ id }) {
           style.push(str)
         }
       }
+      if (array[i] === 'regular') {
+        param.push(...['0,400;', '1,400;'])
+        weight.push(400)
+      }
     }
     if (weight.length !== 0) {
       const str = param.sort().toString().replaceAll(/;,/gi, ';')

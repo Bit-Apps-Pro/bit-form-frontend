@@ -202,8 +202,8 @@ const $themeVarsLg = atom({
     '--btn-fs': '16px', // button txt font size
     '--btn-p': '11px 20px', // button padding
     '--btn-m': '10px 0px', // button marging
-    '--btn-fw': '700', // button font color color
-    '--btn-f-style': '', // button font color color
+    '--btn-fw': 700, // button font weight
+    '--btn-f-style': '', // button font style (italic, bold, etc)
     '--btn-brs': '5px', // button border radius
     '--btn-brw': '1px', // button border radius
 

@@ -25,7 +25,6 @@ export default function FieldBlockWrapper({ layoutItem,
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
   }
-  console.log('FieldBlockWrapper', layoutItem)
   return (
     <>
       {(resizingFld.fieldKey === layoutItem.i) && <span className="resize-txt">{`w: ${resizingFld.w || layoutItem.w}, x: ${resizingFld.x || layoutItem.x}`}</span>}
