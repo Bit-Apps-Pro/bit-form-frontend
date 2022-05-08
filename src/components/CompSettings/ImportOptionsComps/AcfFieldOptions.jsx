@@ -1,9 +1,9 @@
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 
 export const generateAcfOptions = (importOpts, lblKey, valKey) => {
@@ -96,7 +96,7 @@ export default function AcfFieldOptions({ importOpts, setImportOpts }) {
             <div className="flx mt-3 w-10">
               <div className="w-10 mr-2">
                 <b>ACF Options Field</b>
-                <select name="fieldkey" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.fieldkey || ''} className="btcd-paper-inp mt-1">
+                <select data-testid="imprt-optns-acf-slct" name="fieldkey" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.fieldkey || ''} className="btcd-paper-inp mt-1">
                   <option value="">select option</option>
                   {importOpts?.groups?.map((group, key) => (
                     <option key={`imp-${key * 2}`} value={group.key}>

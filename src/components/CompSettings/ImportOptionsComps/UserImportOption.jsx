@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
-import { sortByField } from '../../../Utils/Helpers'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import { sortByField } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 
 const getTrimmedString = str => (typeof str === 'string' ? str?.trim() : str?.toString())
@@ -96,7 +96,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
           {!!importOpts?.data && (
             <div className="w-10 mr-2">
               <b>Filter by Role</b>
-              <select name="role" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.role || ''} className="btcd-paper-inp mt-1">
+              <select data-testid="imprt-optns-rol-slct" name="role" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.role || ''} className="btcd-paper-inp mt-1">
                 <option selected disabled>select role</option>
                 <option value="all">all</option>
                 <option value="administrator">Administrator</option>
@@ -113,13 +113,13 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">
                   <b>Order By</b>
-                  <select name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-by-slct" name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
                     {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                   </select>
                 </div>
                 <div className="w-5 mr-2">
                   <b>Order</b>
-                  <select name="order" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
+                  <select data-testid="imprt-optns-ordr-slct" name="order" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
                     <option value="ASC">Ascending</option>
                     <option value="DESC">Descending</option>
                   </select>
@@ -130,14 +130,14 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
                 <div className="flx mt-3 w-10">
                   <div className="w-5 mr-2">
                     <b>Label</b>
-                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
+                    <select data-testid="imprt-optns-lbl-slct" name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
                       <option value="">Select Label</option>
                       {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
                   </div>
                   <div className="w-5">
                     <b>Value</b>
-                    <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
+                    <select data-testid="imprt-optns-val-slct" name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
                       <option value="">Select Value</option>
                       {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>

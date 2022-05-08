@@ -75,12 +75,13 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                 {... { ...getCustomAttributs(fieldKey, 'btn-wrpr') }}
               >
                 <button
+                  data-testid={`${fieldKey}-inp-btn`}
                   data-dev-inp-btn={fieldKey}
                   type="button"
                   className={`${fieldKey}-inp-btn ${getCustomClsName(fieldKey, 'inp-btn')}`}
                   {... { ...getCustomAttributs(fieldKey, 'inp-btn') }}
                 >
-                  { fieldData.prefixIcn && (
+                  {fieldData.prefixIcn && (
                     <img
                       data-dev-pre-i={fieldKey}
                       className={`${fieldKey}-pre-i ${getCustomClsName(fieldKey, 'pre-i')}`}
@@ -97,7 +98,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   >
                     {fieldData.btnTxt}
                   </span>
-                  { fieldData.suffixIcn && (
+                  {fieldData.suffixIcn && (
                     <img
                       data-dev-suf-i={fieldKey}
                       className={`${fieldKey}-suf-i ${getCustomClsName(fieldKey, 'suf-i')}`}
@@ -108,7 +109,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                     />
                   )}
                 </button>
-                { fieldData.config.showSelectStatus && (
+                {fieldData.config.showSelectStatus && (
                   <div
                     data-dev-file-select-status={fieldKey}
                     className={`${fieldKey}-file-select-status ${getCustomClsName(fieldKey, 'file-select-status')}`}
@@ -117,7 +118,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                     No Choosen File
                   </div>
                 )}
-                { fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (
+                {fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (
                   <small
                     data-dev-max-size-lbl={fieldKey}
                     className={`${fieldKey}-max-size-lbl ${getCustomClsName(fieldKey, 'max-size-lbl')}`}
@@ -127,6 +128,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   </small>
                 )}
                 <input
+                  data-testid={`${fieldKey}-fil-upld-inp`}
                   type="file"
                   className={`${fieldKey}-file-upload-input ${getCustomClsName(fieldKey, 'file-upload-input')}`}
                   id={fieldKey}

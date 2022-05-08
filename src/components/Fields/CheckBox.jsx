@@ -99,6 +99,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
       >
         {/* cc for checkbox container */}
         <div
+          data-testid={`${fieldKey}-cc`}
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
           {... { ...getCustomAttributs(fieldKey, 'cc') }}
@@ -126,12 +127,14 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
 
           {attr.opt.map((itm, i) => (
             <div
+              data-testid={`${fieldKey}-cw`}
               data-dev-cw={fieldKey}
               key={`opt-${i + 24}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
               {... { ...getCustomAttributs(fieldKey, 'cw') }}
             >
               <input
+                data-testid={`${fieldKey}-ci`}
                 id={`${fieldKey}-chk-${i}`}
                 type="checkbox"
                 className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}
@@ -147,6 +150,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onChange={(e) => onChangeHandler(e, i)}
               />
               <label
+                data-testid={`${fieldKey}-cl`}
                 data-dev-cl={fieldKey}
                 data-cl
                 htmlFor={`${fieldKey}-chk-${i}`}
@@ -154,6 +158,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 {... { ...getCustomAttributs(fieldKey, 'cl') }}
               >
                 <span
+                  data-testid={`${fieldKey}-bx`}
                   data-dev-ck={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
@@ -164,6 +169,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   </svg>
                 </span>
                 <span
+                  data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {... { ...getCustomAttributs(fieldKey, 'ct') }}

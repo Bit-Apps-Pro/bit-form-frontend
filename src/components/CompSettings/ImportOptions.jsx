@@ -1,7 +1,6 @@
-import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import app from '../../styles/app.style'
@@ -98,7 +97,7 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
     <div className="mt-2">
       <div>
         <b>Data Source</b>
-        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} disabled={importOpts?.disabled}>
+        <select data-testid="imprt-optns-data-src" name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} disabled={importOpts?.disabled}>
           <option value="fileupload">File Upload</option>
           <option value="presets">Presets</option>
           <option value="post">Posts</option>
@@ -187,7 +186,7 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
         </div>
 
       )}
-      <button onClick={handleImport} className={`${css(app.btn)} blue`} type="button" disabled={!newOptions.length || false}>
+      <button data-testid="imprt-edt-optns-btn" onClick={handleImport} className={`${css(app.btn)} blue`} type="button" disabled={!newOptions.length || false}>
         <BackIcn size="15" />
         &nbsp;
         {__('Import & Edit', 'bitform')}
