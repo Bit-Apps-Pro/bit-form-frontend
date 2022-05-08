@@ -10,7 +10,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fld`]: {
       display: ' inline-block !important',
       direction: 'inherit !important',
-      'max-width': '100% !important',
+      // 'max-width': '100% !important',
       'font-family': 'var(--g-font-family)',
       width: '100% !important',
       outline: 'none !important',
@@ -21,9 +21,9 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       'font-size': 'var(--fld-fs) !important',
       color: 'var(--global-font-color) !important',
       padding: '10px 8px 10px 8px!important',
-      'line-height': '1.4 !important',
+      // 'line-height': '1.4 !important',
       // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
-      height: type === 'textarea' ? '' : '40px',
+      // height: type === 'textarea' ? '' : '40px',
       ...type === 'textarea' && { resize: 'vertical' },
     },
     [`.${fk}-fld:focus`]: {

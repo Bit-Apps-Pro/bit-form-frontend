@@ -67,7 +67,7 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       'font-size': 'var(--hlp-txt-fs)',
       display: 'flex',
       'align-items': 'center',
-      'text-align': 'var(--hlp-txt-al, init)',
+      // 'text-align': 'var(--hlp-txt-al, init)',
       padding: 'var(--hlp-txt-p, 0)',
       margin: 'var(--hlp-txt-m, 0)',
       'box-shadow': 'var(--hlp-txt-sh, none)',
