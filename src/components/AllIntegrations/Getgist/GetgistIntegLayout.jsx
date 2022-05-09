@@ -3,6 +3,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
+import GetgistActions from './GetgistActions'
 import GetgistFieldMap from './GetgistFieldMap'
 
 export default function GetgistIntegLayout({ formFields, getgistConf, setGetgistConf, isLoading, setIsLoading, error, setError }) {
@@ -62,6 +63,18 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
       <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(getgistConf.field_map.length, getgistConf, setGetgistConf)} className="icn-btn sh-sm" type="button">+</button></div>
       <br />
       <br />
+
+      {getgistConf?.user_type && (
+        <>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <GetgistActions
+            getgistConf={getgistConf}
+            setGetgistConf={setGetgistConf}
+            formFields={formFields}
+          />
+        </>
+      )}
     </>
   )
 }

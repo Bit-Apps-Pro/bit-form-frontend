@@ -44,7 +44,6 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
   })
 
   const saveConfig = () => {
-    // saveActionConf({ flow, setFlow, allIntegURL, conf: getgistConf, history, setIsLoading, setSnackbar })
     saveIntegConfig(integrations, setIntegration, allIntegURL, getgistConf, history)
 
   }
@@ -87,7 +86,6 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          // disabled={!getgistConf?.recipient_id}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
