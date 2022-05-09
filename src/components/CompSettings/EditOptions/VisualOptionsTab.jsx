@@ -198,17 +198,17 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
 
             <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
               <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
-                <button type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
+                <button data-testid="srtble-itm-add-optn-grp" type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
                   <span className={css(optionStyle.addbtnside)}><CloseIcn size="16" stroke="2" /></span>
                 </button>
               </Tip>
               <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
+                <button data-testid="srtble-itm-add-optn-cln-grp" type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
                   <CopyIcn size="16" stroke="2" />
                 </button>
               </Tip>
               <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
+                <button data-testid="srtble-itm-add-optn-dlt-grp" type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
                   <TrashIcn size="23" />
                 </button>
               </Tip>
@@ -314,11 +314,11 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
         />
       </SortContainer>
       <div className="flx">
-        <Button id="add-mor" className={css(optionStyle.add_btn)} onClick={() => addOption()}>
+        <Button data-testid="add-mor-opt-btn" id="add-mor" className={css(optionStyle.add_btn)} onClick={() => addOption()}>
           {__('Add More +', 'bitform')}
         </Button>
         {hasGroup && (
-          <Button id="add-grp" className={css(optionStyle.add_btn)} onClick={addGroup}>
+          <Button data-testid="add-mor-grp-btn" id="add-grp" className={css(optionStyle.add_btn)} onClick={addGroup}>
             {__('Add Group +', 'bitform')}
           </Button>
         )}

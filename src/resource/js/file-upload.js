@@ -157,7 +157,7 @@ export function handleFile(e) {
                           <br/>
                           <small>${getFileSize(e.target.files[i].size)}</small>
                       </div>
-                      <button type="button" data-index="${i}" title="Remove This File"><span style="pointer-events:none">&times;</span></button>
+                      <button data-testid="fil-del-btn-${i}" type="button" data-index="${i}" title="Remove This File"><span style="pointer-events:none">&times;</span></button>
                   </div>`)
     }
   }
