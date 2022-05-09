@@ -26,7 +26,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
     },
     // checkbox wrapper
     [`.${fk}-cw`]: {
-      margin: '0px 10px 0px 0px',
+      // margin: '0px 10px 0px 0px', // unused css
       // padding: '6px',
       // background: 'aliceblue',
       // 'border-color': 'var(--ck-bdr-c)important',
@@ -48,10 +48,11 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       // 'border-radius': 'var(--g-bdr-rad)!important',
     },
     [`.${fk}-ct`]: {
-      'font-size': 'var(--fld-fs) !important',
-      'font-family': 'var(--g-font-family)',
-      'line-height': 'initial',
-      color: 'var(--global-font-color) !important',
+      // unused css
+      // 'font-size': 'var(--fld-fs) !important',
+      // 'font-family': 'var(--g-font-family)',
+      // 'line-height': 'initial',
+      // color: 'var(--global-font-color) !important',
     },
     // checkbox input
     [`.${fk}-ci`]: {
