@@ -76,6 +76,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
               {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
             />
             <div
+              data-testid={`${fieldKey}-dpd-wrp`}
               className={`${fieldKey}-dpd-wrp`}
               aria-live="assertive"
               aria-label="Select a Country"
@@ -95,6 +96,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   />
                 )}
                 <span
+                  data-testid={`${fieldKey}-slctd-cntry-lbl`}
                   data-dev-selected-country-lbl={fieldKey}
                   className={`${fieldKey}-selected-country-lbl`}
                 >
@@ -102,29 +104,32 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 </span>
               </div>
               <div className={`${fieldKey}-dpd-btn-wrp`}>
-                <button
-                  type="button"
-                  title="Clear selected country value"
-                  data-dev-inp-clr-btn={fieldKey}
-                  className={`${fieldKey}-inp-clr-btn ${getCustomClsName(fieldKey, 'inp-clr-btn')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'inp-clr-btn') }}
-                >
-                  <svg
-                    width="15"
-                    height="15"
-                    role="img"
-                    title="Cross icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                {fieldData.config.selectedCountryClearable && (
+                  <button
+                    data-testid={`${fieldKey}-clr-slctd-cntry-btn`}
+                    type="button"
+                    title="Clear selected country value"
+                    data-dev-inp-clr-btn={fieldKey}
+                    className={`${fieldKey}-inp-clr-btn ${getCustomClsName(fieldKey, 'inp-clr-btn')}`}
+                    {... { ...getCustomAttributs(fieldKey, 'inp-clr-btn') }}
                   >
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
+                    <svg
+                      width="15"
+                      height="15"
+                      role="img"
+                      title="Cross icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                )}
                 <div className={`${fieldKey}-dpd-down-btn`}>
                   <svg
                     width="15"
@@ -147,6 +152,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div className={`${fieldKey}-option-search-wrp`} data-dev-option-search-wrp={fieldKey}>
                   <input
+                    data-testid={`${fieldKey}-opt-srch-inp`}
                     type="search"
                     data-dev-opt-search-input={fieldKey}
                     className={`${fieldKey}-opt-search-input ${getCustomClsName(fieldKey, 'opt-search-input')}`}
@@ -174,30 +180,33 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
-                  <button
-                    type="button"
-                    title="Clear search"
-                    data-dev-search-clear-btn={fieldKey}
-                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
-                    tabIndex="-1"
-                    {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
-                  >
-                    <svg
-                      width="15"
-                      height="15"
-                      role="img"
-                      title="Cross icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                  {fieldData.config.searchClearable && (
+                    <button
+                      data-testid={`${fieldKey}-srch-clr-btn`}
+                      type="button"
+                      title="Clear search"
+                      data-dev-search-clear-btn={fieldKey}
+                      className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
+                      tabIndex="-1"
+                      {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
                     >
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
+                      <svg
+                        width="15"
+                        height="15"
+                        role="img"
+                        title="Cross icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
                 <ul
                   className={`${fieldKey}-option-list`}
