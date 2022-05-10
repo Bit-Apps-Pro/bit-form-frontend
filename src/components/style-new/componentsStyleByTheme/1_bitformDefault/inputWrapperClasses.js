@@ -99,7 +99,7 @@ export default function inputWrapperClasses(fk) {
       'font-style': 'var(--hlp-txt-font-style)',
     },
 
-    [`.${fk}-inp-wrp`]: { width: 'var(--inp-wrp-width, auto)' },
+    [`.${fk}-inp-wrp`]: { /* width: 'var(--inp-wrp-width, auto)' */ },
 
     [`.${fk}-lbl-pre-i`]: {
       width: 'var(--lbl-pre-i-w)',

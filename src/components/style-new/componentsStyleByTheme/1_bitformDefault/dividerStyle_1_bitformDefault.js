@@ -3,10 +3,10 @@ export default function dividerStyle_1_bitformDefault({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',
-      'justify-content': 'center',
       height: '100%',
-      width: '100%',
-      padding: '10px 0px',
+      // 'justify-content': 'center', // unused css
+      // width: '100%', // unused css
+      // padding: '10px 0px', // unused css
       'align-items': 'center',
     },
     [`.${fk}-fld-wrp.fld-hide::after`]: {
@@ -21,7 +21,7 @@ export default function dividerStyle_1_bitformDefault({ fk }) {
     [`.${fk}-divider`]: {
       margin: '0px 10px 0px 10px',
       width: '100%',
-      border: '',
+      // border: '',
       'border-bottom': 'var(--global-fld-bdr)',
       'border-width': '1',
       // 'border-color': 'hsla(0, 0%, 62%, 100%)',

@@ -20,12 +20,11 @@ export default function FieldBlockWrapper({ layoutItem,
   navigateToFieldSettings,
   navigateToStyle,
   handleContextMenu,
-  resizingFld, }) {
+  resizingFld }) {
   const styleNavigation = e => {
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
   }
-
   return (
     <>
       {(resizingFld.fieldKey === layoutItem.i) && <span className="resize-txt">{`w: ${resizingFld.w || layoutItem.w}, x: ${resizingFld.x || layoutItem.x}`}</span>}
@@ -35,6 +34,7 @@ export default function FieldBlockWrapper({ layoutItem,
           className="drag g-c us-n blk-wrp-btn"
           style={{ cursor: 'move' }}
           title={__('Move', 'bitform')}
+          data-testid={`${layoutItem.i}-move-btn`}
         >
           <MoveIcn size="20" stroke="2" />
         </button>
@@ -43,6 +43,7 @@ export default function FieldBlockWrapper({ layoutItem,
           className="g-c drag curp us-n no-drg blk-wrp-btn"
           title={__('Style', 'bitform')}
           onClick={styleNavigation}
+          data-testid={`${layoutItem.i}-style-btn`}
         >
           <BrushIcn height="18" width="14" />
         </button>
@@ -51,6 +52,7 @@ export default function FieldBlockWrapper({ layoutItem,
           className="g-c drag curp us-n no-drg blk-wrp-btn"
           title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
+          data-testid={`${layoutItem.i}-settings-btn`}
         >
           <EditIcn size="20" />
         </button>
@@ -69,6 +71,7 @@ export default function FieldBlockWrapper({ layoutItem,
           style={{ cursor: 'pointer' }}
           title={__('More Options', 'bitform')}
           onClick={e => handleContextMenu(e, layoutItem.i)}
+          data-testid={`${layoutItem.i}-more-options`}
         >
           <ChevronDownIcn size="19" />
         </button>

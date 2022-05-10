@@ -6,7 +6,7 @@ import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import customInputControlStyle from '../../../../styles/customInputControl.style'
 
-const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
+const SliderInput = ({ min, max, step, val, onChangeHandler, dataTestId }) => {
   const { css } = useFela()
   const rangeRef = useRef(null)
 
@@ -22,6 +22,7 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
         type="range"
         ref={rangeRef}
         className={css(customInputControlStyle.range)}
+        data-testid={`${dataTestId}-range`}
         min={min}
         max={max}
         step={step}
@@ -134,7 +135,7 @@ export default function CustomInputControl(
         interactive
         maxWidth="100%"
         arrow
-        content={<SliderInput min={min} max={max} step={step} val={value} onChangeHandler={onChangeHandler} />}
+        content={<SliderInput dataTestId={dataTestId} min={min} max={max} step={step} val={value} onChangeHandler={onChangeHandler} />}
         visible={visible}
         onClickOutside={() => setVisible(false)}
       >

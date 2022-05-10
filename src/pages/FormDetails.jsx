@@ -309,6 +309,7 @@ function FormDetails() {
               className={css(navbar.btcd_bld_title_inp)}
               onChange={({ target: { value } }) => setFormName(value)}
               value={formName}
+              data-testid="form-name"
             />
           </div>
           <div className={css(navbar.btcd_bld_lnk)}>

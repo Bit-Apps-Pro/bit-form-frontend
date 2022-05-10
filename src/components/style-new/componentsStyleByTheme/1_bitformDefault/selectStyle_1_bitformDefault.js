@@ -8,7 +8,7 @@ export default function selectStyle_1_BitformDefault({ fk }) {
     [`.${fk}-fld`]: {
       display: ' inline-block !important',
       direction: 'inherit !important',
-      'max-width': '100% !important',
+      // 'max-width': '100% !important',
       'font-family': 'var(--g-font-family)',
       width: '100% !important',
       outline: 'none !important',

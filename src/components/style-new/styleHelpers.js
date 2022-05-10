@@ -607,7 +607,7 @@ export const findExistingFontStyleNWeidth = () => {
   const styles = getRecoil($styles)
   const themeVars = getRecoil($themeVars)
   const fontWeightVariant = []
-  const fontStyleParam = []
+  const fontStyleVariant = []
   const fieldsArr = Object.keys(styles.fields)
   const fieldsLenght = fieldsArr.length
 
@@ -625,11 +625,11 @@ export const findExistingFontStyleNWeidth = () => {
       if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-style')) {
         let style = clsProperties['font-style']
         style = getValueFromStateVar(themeVars, style)
-        if (style && !fontStyleParam.includes(style)) fontStyleParam.push(style)
+        if (style && !fontStyleVariant.includes(style)) fontStyleVariant.push(style)
       }
     }
   }
-  return [fontWeightVariant, fontStyleParam]
+  return [fontWeightVariant, fontStyleVariant]
 }
 
 export const updateGoogleFontUrl = () => {
@@ -639,12 +639,12 @@ export const updateGoogleFontUrl = () => {
   const fontWeightparam = []
   let string = ''
   const globalFont = themeVars['--g-font-family']
-  const [fontWeightVariant, fontStyleParam] = findExistingFontStyleNWeidth(styles, themeVars)
+  const [fontWeightVariant, fontStyleVariant] = findExistingFontStyleNWeidth(styles, themeVars)
 
   const fontWeightVLen = fontWeightVariant.length
   if (fontWeightVLen > 0) {
     for (let indx = 0; indx < fontWeightVLen; indx += 1) {
-      if (fontStyleParam.includes('italic')) {
+      if (fontStyleVariant.includes('italic')) {
         fontWeightparam.push(`1,${fontWeightVariant[indx]};`)
       }
       fontWeightparam.push(`0,${fontWeightVariant[indx]};`)
