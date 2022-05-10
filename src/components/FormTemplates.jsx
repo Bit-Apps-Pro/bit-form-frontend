@@ -30,12 +30,12 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
 
   return (
     <div className="btcd-tem-lay flx">
-      {staticTem.map(tem => (
-        <div key={tem.lbl} className="btcd-tem flx">
+      {staticTem.map((tem, i) => (
+        <div key={tem.lbl} className="btcd-tem flx" data-testid={`create-form-wrp-${i}`}>
           <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <Link to={`/form/builder/new/${newFormId}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>
+            <Link to={`/form/builder/new/${newFormId}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button" data-testid={`create-form-btn-${i}`}>{__('Create', 'bitform')}</Link>
           </div>
         </div>
       ))}
