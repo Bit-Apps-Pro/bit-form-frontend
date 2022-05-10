@@ -136,14 +136,17 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
         </>
       )}
       <br />
-      {((hubspotConf?.actionName === 'contact-create') || (hubspotConf?.pipeline && hubspotConf?.stage)) &&
-      <>
-      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div><div className="btcd-hr mt-1" /><div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-          <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-          <div className="txt-dp"><b>{__('Hubspot Fields', 'bitform')}</b></div>
-        </div>
+      {((hubspotConf?.actionName === 'contact-create') || (hubspotConf?.pipeline && hubspotConf?.stage))
+      && (
+        <>
+          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Hubspot Fields', 'bitform')}</b></div>
+          </div>
         </>
-    }
+      )}
       {((hubspotConf?.actionName === 'contact-create') || (hubspotConf?.pipeline && hubspotConf?.stage)) && hubspotConf?.field_map.map((itm, i) => (
         <HubspotFieldMap
           key={`rp-m-${i + 9}`}

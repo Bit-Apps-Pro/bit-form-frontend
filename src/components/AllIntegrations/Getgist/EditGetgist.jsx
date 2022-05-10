@@ -21,7 +21,6 @@ function EditGetgist({ formFields, setIntegration, integrations, allIntegURL }) 
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, getgistConf, history, id, 1)
-
   }
 
   return (

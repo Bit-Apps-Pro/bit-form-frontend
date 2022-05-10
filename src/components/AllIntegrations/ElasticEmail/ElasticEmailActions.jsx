@@ -1,15 +1,14 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function ElasticEmailActions({ elasticEmailConf, setElasticEmailConf, formFields }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
   const [isLoading, setIsLoading] = useState(false)
-
 
   const actionHandler = (e, type) => {
     const newConf = { ...elasticEmailConf }
@@ -52,7 +51,7 @@ export default function ElasticEmailActions({ elasticEmailConf, setElasticEmailC
     <div className="pos-rel d-flx w-8">
       {/* <TableCheckBox checked={elasticEmailConf.actions?.sendActivation || false} onChange={(e) => actionHandler(e, 'sendActivation')} className="wdt-200 mt-4 mr-2" value="sendActivation" title={__('Send Activation Email', 'bitform')} subTitle={__('Add Send Activation Email', 'bitform')} /> */}
       <TableCheckBox checked={elasticEmailConf?.actions?.status || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status', 'bitform')} subTitle={__('Add Status to contact', 'bitform')} />
-    
+
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"

@@ -35,7 +35,6 @@ function ElasticEmail({ formFields, setIntegration, integrations, allIntegURL })
 
   const saveConfig = () => {
     saveIntegConfig(integrations, setIntegration, allIntegURL, elasticEmailConf, history)
-
   }
   const nextPage = (pageNo) => {
     if (!checkMappedFields(elasticEmailConf)) {

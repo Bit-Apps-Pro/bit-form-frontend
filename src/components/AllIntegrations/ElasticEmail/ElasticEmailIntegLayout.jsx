@@ -54,7 +54,6 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
       <br />
       <br />
 
-
       {elasticEmailConf?.list_id && (
         <>
           <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>

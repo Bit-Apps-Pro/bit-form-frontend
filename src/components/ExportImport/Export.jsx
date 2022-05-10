@@ -24,8 +24,8 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
   const hidden = report ? report[report.length - 1]?.details?.hiddenColumns : []
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
 
-  let colHeading = []
-  let fieldKey = []
+  const colHeading = []
+  const fieldKey = []
 
   columns.map((col, index) => {
     if (!hidden?.includes(col.accessor)) {

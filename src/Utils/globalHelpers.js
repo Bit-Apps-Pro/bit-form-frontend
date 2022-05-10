@@ -43,7 +43,7 @@ export function escapeHTMLEntity(string) {
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    "'": '&#39;'
+    "'": '&#39;',
   }
 
   const reUnescapedHtml = /[&<>"']/g
@@ -60,7 +60,7 @@ export function unescapeHTMLEntity(string) {
     '&lt;': '<',
     '&gt;': '>',
     '&quot;': '"',
-    '&#39;': "'"
+    '&#39;': "'",
   }
 
   const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g

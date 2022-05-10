@@ -7,7 +7,6 @@ import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './GetgistCommonFunc'
 
 export default function GetgistFieldMap({ i, formFields, field, getgistConf, setGetgistConf }) {
-  
   const bits = useRecoilValue($bits)
   const { isPro } = bits
 
@@ -52,62 +51,62 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
     <div
       className="flx mt-2 mr-1"
     >
-        <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-            <option value="">{__('Select Field', 'bitform')}</option>
-            <optgroup label="Form Fields">
-              {
-                formFields.map(f => f.type !== 'file' && <option key={`ff-getgist-${f.key}`} value={f.key}>{f.name}</option>)
-              }
-            </optgroup>
-            <option value="custom">{__('Custom...', 'bitform')}</option>
-
-            <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-              {isPro && SmartTagField?.map(f => (
-                <option key={`ff-rm-${f.name}`} value={f.name}>
-                  {f.label}
-                </option>
-              ))}
-            </optgroup>
-
-          </select>
-
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
-
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="getgistFormField" value={i < requiredFlds.length ? (requiredFlds[i]?.key || '') : (field.getgistFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, getgistConf, setGetgistConf)}>
-            <option value="">{__('Select Field', 'bitform')}</option>
+      <div className="flx integ-fld-wrp">
+        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          <optgroup label="Form Fields">
             {
-              i < requiredFlds.length ? (
-                <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
-                  {requiredFlds[i].label}
-                </option>
-              ) : (
-                nonRequiredFlds.map(({ key, label }) => (
-                  <option key={key} value={key}>
-                    {label}
-                  </option>
-                ))
-              )
+              formFields.map(f => f.type !== 'file' && <option key={`ff-getgist-${f.key}`} value={f.key}>{f.name}</option>)
             }
-          </select>
+          </optgroup>
+          <option value="custom">{__('Custom...', 'bitform')}</option>
 
-        </div>
-        {
-          i >= requiredFlds?.length && (
-            <>
-              <button
-                onClick={() => addFieldMap(i)}
-                className="icn-btn sh-sm ml-2"
-                type="button"
-              >
-                +
-              </button>
-              <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
-                <TrashIcn />
-              </button>
-            </>
-          )
-        }
+          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+            {isPro && SmartTagField?.map(f => (
+              <option key={`ff-rm-${f.name}`} value={f.name}>
+                {f.label}
+              </option>
+            ))}
+          </optgroup>
+
+        </select>
+
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+
+        <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="getgistFormField" value={i < requiredFlds.length ? (requiredFlds[i]?.key || '') : (field.getgistFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, getgistConf, setGetgistConf)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            i < requiredFlds.length ? (
+              <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
+                {requiredFlds[i].label}
+              </option>
+            ) : (
+              nonRequiredFlds.map(({ key, label }) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))
+            )
+          }
+        </select>
+
+      </div>
+      {
+        i >= requiredFlds?.length && (
+          <>
+            <button
+              onClick={() => addFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+            >
+              +
+            </button>
+            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+              <TrashIcn />
+            </button>
+          </>
+        )
+      }
 
     </div>
   )

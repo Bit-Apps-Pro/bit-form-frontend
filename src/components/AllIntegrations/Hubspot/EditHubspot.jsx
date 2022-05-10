@@ -23,7 +23,6 @@ function EditHubspot({ formFields, setIntegration, integrations, allIntegURL }) 
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, hubspotConf, history, id, 1)
-
   }
 
   return (
@@ -35,7 +34,7 @@ function EditHubspot({ formFields, setIntegration, integrations, allIntegURL }) 
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, hubspotConf, setHubspotConf)} name="name" value={hubspotConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
       </div>
       <br />
-      
+
       <HubspotIntegLayout
         formFields={formFields}
         handleInput={(e) => handleInput(e, hubspotConf, setHubspotConf, setIsLoading, setSnackbar)}

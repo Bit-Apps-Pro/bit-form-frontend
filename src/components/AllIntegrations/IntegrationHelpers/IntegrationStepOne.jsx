@@ -1,8 +1,8 @@
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
-import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {

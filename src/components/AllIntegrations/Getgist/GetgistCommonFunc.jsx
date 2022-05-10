@@ -1,6 +1,6 @@
-import toast from "react-hot-toast"
+import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from "../../../Utils/bitsFetch"
+import bitsFetch from '../../../Utils/bitsFetch'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 export const handleInput = (e, getgistConf, setGetgistConf, setIsLoading) => {

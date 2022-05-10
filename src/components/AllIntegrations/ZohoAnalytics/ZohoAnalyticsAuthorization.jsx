@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import { checkValidEmail } from '../../../Utils/Helpers'
 import CopyText from '../../Utilities/CopyText'
@@ -7,7 +8,6 @@ import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import BackIcn from '../../../Icons/BackIcn'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {

@@ -21,10 +21,10 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
     newConf[name] = value
     if (value === 'User') {
       if (value === 'User') newConf.userId = uniqId()
-      newConf.field_map = [ { formField: '', getgistFormField: 'email' } ]
+      newConf.field_map = [{ formField: '', getgistFormField: 'email' }]
     } else {
       if (newConf?.userId) delete newConf.userId
-      newConf.field_map = [ { formField: '', getgistFormField: 'email' } ]
+      newConf.field_map = [{ formField: '', getgistFormField: 'email' }]
     }
     setGetgistConf({ ...newConf })
   }

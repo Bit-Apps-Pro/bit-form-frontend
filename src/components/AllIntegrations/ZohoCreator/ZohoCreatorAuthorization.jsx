@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -6,7 +7,6 @@ import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 
 export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {

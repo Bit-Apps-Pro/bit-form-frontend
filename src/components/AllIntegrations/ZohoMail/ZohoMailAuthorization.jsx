@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -6,7 +7,6 @@ import { handleAuthorize } from './ZohoMailCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 
 export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {

@@ -1,13 +1,13 @@
 import { useContext, useState } from 'react'
 
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import CopyText from './Utilities/CopyText'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from './Utilities/SnackMsg'
 import LoaderSm from './Loaders/LoaderSm'
-import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
 
 export default function Captcha() {

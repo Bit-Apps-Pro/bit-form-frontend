@@ -45,7 +45,6 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     saveIntegConfig(integrations, setIntegration, allIntegURL, getgistConf, history)
-
   }
   const nextPage = (pageNo) => {
     if (!checkMappedFields(getgistConf)) {

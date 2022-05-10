@@ -1,32 +1,32 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { __ } from "../../../Utils/i18nwrap";
-import SnackMsg from "../../Utilities/SnackMsg";
-import { saveIntegConfig } from "../IntegrationHelpers/IntegrationHelpers";
-import IntegrationStepThree from "../IntegrationHelpers/IntegrationStepThree";
-import { handleInput, checkMappedFields } from "./AutonamiCommonFunc";
-import AutonamiIntegLayout from "./AutonamiIntegLayout";
+import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { handleInput, checkMappedFields } from './AutonamiCommonFunc'
+import AutonamiIntegLayout from './AutonamiIntegLayout'
 
 function EditAutonami({ allIntegURL, formFields, integrations, setIntegration }) {
-  const history = useHistory();
-  const { id, formID } = useParams();
+  const history = useHistory()
+  const { id, formID } = useParams()
 
-  const [autonamiConf, setAutonamiConf] = useState({ ...integrations[id] });
-  const [isLoading, setIsLoading] = useState(false);
-  const [snack, setSnackbar] = useState({ show: false });
+  const [autonamiConf, setAutonamiConf] = useState({ ...integrations[id] })
+  const [isLoading, setIsLoading] = useState(false)
+  const [snack, setSnackbar] = useState({ show: false })
 
   const saveConfig = () => {
     if (!checkMappedFields(autonamiConf)) {
       setSnackbar({
         show: true,
-        msg: "Please map all required fields to continue.",
-      });
-      return;
+        msg: 'Please map all required fields to continue.',
+      })
+      return
     }
-    saveIntegConfig(integrations, setIntegration, allIntegURL, autonamiConf, history, id, 1);
-  };
+    saveIntegConfig(integrations, setIntegration, allIntegURL, autonamiConf, history, id, 1)
+  }
 
   return (
     <div style={{ width: 900 }}>
@@ -34,7 +34,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">
-          {__("Integration Name:", "bitform")}
+          {__('Integration Name:', 'bitform')}
         </b>
         <input
           className="btcd-paper-inp w-5"
@@ -42,7 +42,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
           name="name"
           value={autonamiConf.name}
           type="text"
-          placeholder={__("Integration Name...", "bitform")}
+          placeholder={__('Integration Name...', 'bitform')}
         />
       </div>
       <br />
@@ -67,7 +67,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
       />
       <br />
     </div>
-  );
+  )
 }
 
-export default EditAutonami;
+export default EditAutonami

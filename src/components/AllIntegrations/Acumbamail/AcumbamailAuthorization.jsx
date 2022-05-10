@@ -2,7 +2,6 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import CopyText from '../../Utilities/CopyText'
 import { fetchAllList, handleAuthorize } from './AcumbamailCommonFunc'
 
 export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
