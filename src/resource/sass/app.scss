@@ -4420,3 +4420,33 @@ _:-ms-fullscreen,
     transform: scale(1);
   }
 }
+
+
+
+.note {
+  color        : #666;
+  padding      : 15px;
+  border       : 2px dotted #bebebe;
+  border-radius: 8px;
+  margin-top   : 20px;
+  margin-bottom: 20px;
+  min-width    : 300px;
+  max-width    : 400px;
+
+  .note-text {
+    color: #888;
+
+    & * {
+      line-height: 22px !important;
+    }
+
+    ul {
+      margin-left: 15px;
+      list-style : disc;
+    }
+
+    b {
+      color: #777;
+    }
+  }
+}
