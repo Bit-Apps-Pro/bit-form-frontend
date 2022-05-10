@@ -46,6 +46,7 @@ const EditDropbox = lazy(() => import('./Dropbox/EditDropbox'))
 const EditOneDrive = lazy(() => import('./OneDrive/EditOneDrive'))
 const EditAcumbamail = lazy(() => import('./Acumbamail/EditAcumbamail'))
 const EditGroundhogg = lazy(() => import('./Groundhogg/EditGroundhogg'))
+const EditSendFox = lazy(() => import('./SendFox/EditSendFox'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -135,6 +136,8 @@ export default function EditInteg({ allIntegURL }) {
         return <EditOneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Groundhogg':
         return <EditGroundhogg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SendFox':
+        return <EditSendFox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }

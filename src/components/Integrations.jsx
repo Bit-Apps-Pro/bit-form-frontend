@@ -5,33 +5,38 @@ import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates'
+import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
+import Acumbamail from '../resource/img/integ/Acumbamail.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import autonami from '../resource/img/integ/autonami.svg'
-import dropbox from '../resource/img/integ/dropbox.svg'
-import Acumbamail from '../resource/img/integ/Acumbamail.svg'
-import oneDrive from '../resource/img/integ/OneDrive.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
 import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
+import dropbox from '../resource/img/integ/dropbox.svg'
+import elasticemail from '../resource/img/integ/elasticemail.svg'
 import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
+import getgist from '../resource/img/integ/getgist.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
+import hubspot from '../resource/img/integ/hubspot.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import metabox from '../resource/img/integ/metabox.svg'
+import oneDrive from '../resource/img/integ/OneDrive.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
+import rapidmail from '../resource/img/integ/rapidmail.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
 import sendinblue from '../resource/img/integ/sendinblue.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
@@ -41,12 +46,8 @@ import webhooks from '../resource/img/integ/webhooks.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
-import groundhogg from '../resource/img/integ/groundhogg.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import rapidmail from '../resource/img/integ/rapidmail.svg'
-import hubspot from '../resource/img/integ/hubspot.svg'
-import getgist from '../resource/img/integ/getgist.svg'
-import elasticemail from '../resource/img/integ/elasticemail.svg'
+import sendfox from '../resource/img/integ/sendfox.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -56,7 +57,6 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
-import CopyIcn from '../Icons/CopyIcn'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -102,6 +102,7 @@ function Integrations() {
     { type: 'Getgist', logo: getgist, pro },
     { type: 'ElasticEmail', logo: elasticemail, pro },
     { type: 'Groundhogg', logo: elasticemail, pro },
+    { type: 'SendFox', logo: sendfox, pro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro },
@@ -157,8 +158,7 @@ function Integrations() {
     return null
   }
 
-  const setNewInteg = indx => {
-    const inte = integs[indx]
+  const setNewInteg = inte => {
     if (inte.pro && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
       return false
@@ -242,8 +242,8 @@ function Integrations() {
                   {availableIntegs.map((inte, i) => (
                     <div
                       key={`inte-sm-${i + 2}`}
-                      onClick={() => !inte.disable && setNewInteg(i)}
-                      onKeyPress={() => !inte.disable && setNewInteg(i)}
+                      onClick={() => !inte.disable && setNewInteg(inte)}
+                      onKeyPress={() => !inte.disable && setNewInteg(inte)}
                       role="button"
                       tabIndex="0"
                       className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}
