@@ -23,7 +23,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       'font-family': 'var(--g-font-family)',
       color: 'var(--global-font-color) !important',
       overflow: 'hidden',
-      // display: 'flex',
+      display: 'flex',
       'flex-direction': 'column',
       transition: 'box-shadow .3s',
     },
@@ -188,6 +188,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
+      position: 'relative',
     },
 
     [`.${fk}-option-search-wrp`]: {

@@ -248,7 +248,7 @@ class CountryField {
       this.#selectedCountryImgElm.src = this.#placeholderImage
     }
     this.#setTextContent(this.#selectedCountryLblElm, this.#config.placeholder)
-    this.#selectedCountryClearBtnElm.style.display = 'none'
+    if (this.#config.selectedCountryClearable) this.#selectedCountryClearBtnElm.style.display = 'none'
     this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Selected country cleared')
     this.#dropdownWrapperElm.focus()
     this.value = ''
@@ -265,7 +265,7 @@ class CountryField {
     if (!selectedItem) return
 
     this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`)
-    this.#selectedCountryClearBtnElm = this.#select(`.${this.fieldKey}-inp-clr-btn`)
+    this.#selectedCountryClearBtnElm = this.#config.selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {}
     if (this.#config.selectedFlagImage && this.#selectedCountryImgElm) {
       this.#selectedCountryImgElm.src = `${bits.assetsURL}${selectedItem.img}`
     }
@@ -407,10 +407,10 @@ class CountryField {
         filteredOptions = [{ i: 0, lbl: 'No Country Found' }]
       }
       this.#options = filteredOptions
-      this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
     } else {
       this.#options = this.#config.options
-      this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
     }
 
     this.#reRenderVirtualOptions()
@@ -432,12 +432,12 @@ class CountryField {
 
   #openDropdownAsPerWindowSpace() {
     const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
-    const elementRect = this.#countryFieldWrapper.getBoundingClientRect()
+    const elementRect = this.#dropdownWrapperElm.getBoundingClientRect()
 
     const spaceAbove = elementRect.top
     const spaceBelow = iframeWindow.innerHeight - elementRect.bottom
 
-    if (spaceBelow < spaceAbove && spaceBelow < 250) {
+    if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
       this.#countryFieldWrapper.style.flexDirection = 'column-reverse'
       this.#countryFieldWrapper.style.bottom = '0%'
     } else {

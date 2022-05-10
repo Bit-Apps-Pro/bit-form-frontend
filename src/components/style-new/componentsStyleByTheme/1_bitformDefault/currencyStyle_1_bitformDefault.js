@@ -196,6 +196,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
+      position: 'relative',
     },
 
     [`.${fk}-option-search-wrp`]: {

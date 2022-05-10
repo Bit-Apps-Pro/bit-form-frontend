@@ -630,12 +630,12 @@ class DropdownField {
   }
 
   #openDropdownAsPerWindowSpace() {
-    const elementRect = this.#dropdownFieldWrapper.getBoundingClientRect()
+    const elementRect = this.#dropdownWrapperElm.getBoundingClientRect()
 
     const spaceAbove = elementRect.top
     const spaceBelow = window.innerHeight - elementRect.bottom
 
-    if (spaceBelow < spaceAbove && spaceBelow < 250) {
+    if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
       this.#dropdownFieldWrapper.style.flexDirection = 'column-reverse'
       this.#dropdownFieldWrapper.style.bottom = '0%'
     } else {
