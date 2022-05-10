@@ -41,6 +41,7 @@ import webhooks from '../resource/img/integ/webhooks.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
+import groundhogg from '../resource/img/integ/groundhogg.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import rapidmail from '../resource/img/integ/rapidmail.svg'
 import hubspot from '../resource/img/integ/hubspot.svg'
@@ -100,6 +101,7 @@ function Integrations() {
     { type: 'Hubspot', logo: hubspot, pro },
     { type: 'Getgist', logo: getgist, pro },
     { type: 'ElasticEmail', logo: elasticemail, pro },
+    { type: 'Groundhogg', logo: elasticemail, pro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro },
@@ -112,7 +114,6 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
-
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(integs)
