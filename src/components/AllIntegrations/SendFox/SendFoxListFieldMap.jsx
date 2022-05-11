@@ -1,10 +1,10 @@
-import { useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
-import { addFieldMap, addListFieldMap, delFieldMap, delListFieldMap, handleCustomValue, handleListCustomValue, handleListFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
+import MtInput from '../../Utilities/MtInput'
+import { addListFieldMap, delListFieldMap, handleListCustomValue, handleListFieldMapping } from './IntegrationHelpers'
 import { generateListMappedField } from './SendFoxCommonFunc'
 
 export default function SendFoxListFieldMap({ i, formFields, field, sendFoxConf, setSendFoxConf }) {

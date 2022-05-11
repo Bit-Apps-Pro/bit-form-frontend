@@ -1,10 +1,10 @@
-import { useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
-import { addListFieldMap, delFieldMap, delListFieldMap, handleCustomValue, handleListCustomValue, handleListFieldMapping, handleUnsubscribeCustomValue, handleUnsubscribeFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
+import MtInput from '../../Utilities/MtInput'
+import { addListFieldMap, delListFieldMap, handleUnsubscribeCustomValue, handleUnsubscribeFieldMapping } from './IntegrationHelpers'
 import { generateunsubscribeMappedField } from './SendFoxCommonFunc'
 
 export default function SendFoxUnsubscribeFieldMap({ i, formFields, field, sendFoxConf, setSendFoxConf }) {

@@ -4,7 +4,7 @@ import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { generateMappedField } from './ElasticEmailCommonFunc'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmailConf, setElasticEmailConf }) {
   if (elasticEmailConf?.field_map?.length === 1 && field.elasticEmailField === '') {

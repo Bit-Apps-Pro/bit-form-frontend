@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
+import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './HubspotCommonFunc'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 
 export default function HubspotFieldMap({ i, formFields, field, hubspotConf, setHubspotConf, actionName, hubspotFields }) {
   if (hubspotConf?.field_map?.length === 1 && field.hubspotField === '') {

@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
-import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
 import { generateMappedField } from './RapidmailCommonFunc'
-import TrashIcn from '../../../Icons/TrashIcn'
 
 export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf, setRapidmailConf }) {
   if (rapidmailConf?.field_map?.length === 1 && field.rapidmailFormField === '') {

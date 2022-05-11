@@ -1,11 +1,11 @@
-import { useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
-import { addMetaFieldMap, delMetaFieldMap, handleMetaCustomFieldValue, handleMetaCustomValue, handleMetaFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
+import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './GroundhoggCommonFunc'
+import { addMetaFieldMap, delMetaFieldMap, handleMetaCustomFieldValue, handleMetaCustomValue, handleMetaFieldMapping } from './IntegrationHelpers'
 
 export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhoggConf, setGroundhoggConf }) {
   useEffect(() => {

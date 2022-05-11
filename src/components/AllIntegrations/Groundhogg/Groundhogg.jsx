@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import BackIcn from '../../../Icons/BackIcn'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import GroundhoggAuthorization from './GroundhoggAuthorization'
-import { handleInput, checkMappedFields, checkMetaMappedFields } from './GroundhoggCommonFunc'
-import GroundhoggIntegLayout from './GroundhoggIntegLayout'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import GroundhoggAuthorization from './GroundhoggAuthorization'
+import { checkMappedFields, checkMetaMappedFields, handleInput } from './GroundhoggCommonFunc'
+import GroundhoggIntegLayout from './GroundhoggIntegLayout'
 
 function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
