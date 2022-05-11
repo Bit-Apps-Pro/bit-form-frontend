@@ -252,7 +252,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       'border-radius': '6px',
       'font-size': 'var(--fld-fs)',
       cursor: 'pointer',
-      'text-align': 'left',
+      // 'text-align': 'left', // unused css
       // border: 'none', // unused css
       padding: '5px 7px',
       display: 'flex',
