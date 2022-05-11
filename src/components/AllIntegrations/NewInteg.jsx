@@ -24,6 +24,10 @@ const ZohoSign = lazy(() => import('./ZohoSign/ZohoSign'))
 const ZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/ZohoWorkDrive'))
 const GoogleSheet = lazy(() => import('./GoogleSheet/GoogleSheet'))
 const MailChimp = lazy(() => import('./MailChimp/MailChimp'))
+const Rapidmail = lazy(() => import('./Rapidmail/Rapidmail'))
+const Hubspot = lazy(() => import('./Hubspot/Hubspot'))
+const Getgist = lazy(() => import('./Getgist/Getgist'))
+const ElasticEmail = lazy(() => import('./ElasticEmail/ElasticEmail'))
 const Acf = lazy(() => import('./Acf/Acf'))
 const Metabox = lazy(() => import('./Metabox/Metabox'))
 const MailPoet = lazy(() => import('./MailPoet/MailPoet'))
@@ -44,6 +48,9 @@ const Autonami = lazy(() => import('./Autonami/Autonami'))
 const Dropbox = lazy(() => import('./Dropbox/Dropbox'))
 const Acumbamail = lazy(() => import('./Acumbamail/Acumbamail'))
 const OneDrive = lazy(() => import('./OneDrive/OneDrive'))
+const Groundhogg = lazy(() => import('./Groundhogg/Groundhogg'))
+const SendFox = lazy(() => import('./SendFox/SendFox'))
+
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [integs, setIntegration] = useRecoilState($integrations)
@@ -83,6 +90,14 @@ export default function NewInteg({ allIntegURL }) {
         return <GoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Chimp':
         return <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Rapidmail':
+        return <Rapidmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Hubspot':
+        return <Hubspot allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Getgist':
+        return <Getgist allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ElasticEmail':
+        return <ElasticEmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ACF':
         return <Acf allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'MetaBox':
@@ -123,6 +138,10 @@ export default function NewInteg({ allIntegURL }) {
         return <Acumbamail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'OneDrive':
         return <OneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Groundhogg':
+        return <Groundhogg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SendFox':
+        return <SendFox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         return <></>
     }

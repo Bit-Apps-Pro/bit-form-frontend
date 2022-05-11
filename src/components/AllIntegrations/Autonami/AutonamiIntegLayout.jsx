@@ -17,9 +17,9 @@ export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, 
     const newConf = { ...autonamiConf }
     newConf.lists = val ? val.split(',') : []
     setAutonamiConf({ ...newConf })
-    console.log(newConf);
+    console.log(newConf)
   }
-  
+
   return (
     <>
       <br />
