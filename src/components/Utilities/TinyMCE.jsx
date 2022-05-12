@@ -90,9 +90,9 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
               const myTextarea = $(`#${id}-settings`)
               const myIframe = $(editor.iframeElement)
               myTextarea.value = editor.getContent({ source_view: true })
-              myIframe.toggleClass('hidden')
-              myTextarea.toggleClass('visible')
-              if ($('iframe.hidden').length > 0) {
+              myIframe.toggleClass('btcd-mce-tinymce-hidden')
+              myTextarea.toggleClass('btcd-mce-tinymce-visible')
+              if ($('iframe.btcd-mce-tinymce-hidden').length > 0) {
                 myTextarea.prependTo('.mce-edit-area')
               } else {
                 editor.setContent(document.getElementById(`${id}-settings`).value)

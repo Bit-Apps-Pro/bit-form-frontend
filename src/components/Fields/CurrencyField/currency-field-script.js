@@ -20,6 +20,8 @@ class CurrencyField {
 
   #searchInputElm = null
 
+  #currencyInnerWrp = null
+
   #currencyInputElm = null
 
   #clearSearchBtnElm = null
@@ -32,9 +34,11 @@ class CurrencyField {
     maxHeight: 370,
     searchCurrencyPlaceholder: 'Search Currency',
     noCurrencyFoundText: 'No Currency Found',
+    selectedCurrencyClearable: true,
     searchClearable: true,
     selectedFlagImage: true,
     defaultCurrencyKey: '',
+    optionFlagImage: true,
     inputFormatOptions: {
       formatter: 'browser',
       showCurrencySymbol: true,
@@ -66,6 +70,7 @@ class CurrencyField {
   }
 
   init() {
+    this.#currencyInnerWrp = this.#select(`.${this.fieldKey}-currency-inner-wrp`)
     this.#currencyInputElm = this.#select(`.${this.fieldKey}-currency-amount-input`)
     this.#currencyHiddenInputElm = this.#select(`.${this.fieldKey}-currency-hidden-input`)
     this.#clearCurrencyInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
@@ -87,7 +92,7 @@ class CurrencyField {
 
     observeElement(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
 
-    this.#addEvent(this.#clearCurrencyInputElm, 'click', e => { this.#handleClearCurrencyInput(e) })
+    if (this.#config.selectedCurrencyClearable) this.#addEvent(this.#clearCurrencyInputElm, 'click', e => { this.#handleClearCurrencyInput(e) })
 
     this.#handleDefaultCurrencyInputValue()
 
@@ -420,10 +425,12 @@ class CurrencyField {
       return false
     }
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue)
-    if (numValue) {
-      this.#clearCurrencyInputElm.style.display = 'grid'
-    } else {
-      this.#clearCurrencyInputElm.style.display = 'none'
+    if (this.#config.selectedCurrencyClearable) {
+      if (numValue) {
+        this.#clearCurrencyInputElm.style.display = 'grid'
+      } else {
+        this.#clearCurrencyInputElm.style.display = 'none'
+      }
     }
   }
 
@@ -474,18 +481,21 @@ class CurrencyField {
         const lblimgbox = this.#createElm('span')
         this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
-        const img = this.#createElm('img')
-        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
-        this.#setClassName(img, `${this.fieldKey}-opt-icn`)
-        img.src = `${bits.assetsURL}${opt.img}`
-        img.alt = `${opt.lbl} flag image`
-        img.loading = 'lazy'
-        this.#setAttribute(img, 'aria-hidden', true)
+        if (this.#config.optionFlagImage) {
+          const img = this.#createElm('img')
+          this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+          this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+          img.src = `${bits.assetsURL}${opt.img}`
+          img.alt = `${opt.lbl} flag image`
+          img.loading = 'lazy'
+          this.#setAttribute(img, 'aria-hidden', true)
+          lblimgbox.append(img)
+        }
         const lbl = this.#createElm('span')
         this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         this.#setTextContent(lbl, opt.lbl)
-        lblimgbox.append(img, lbl)
+        lblimgbox.append(lbl)
         const suffix = this.#createElm('span')
         this.#setAttribute(suffix, 'data-dev-opt-suffix', this.fieldKey)
         this.#setClassName(suffix, `${this.fieldKey}-opt-suffix`)
@@ -540,7 +550,7 @@ class CurrencyField {
     }
     const selectedItem = this.#getSelectedCurrencyItem()
     if (!selectedItem) return
-    this.#selectedCurrencyImgElm.src = `${bits.assetsURL}${selectedItem.img}`
+    if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${bits.assetsURL}${selectedItem.img}`
     this.setMenu({ open: false })
     this.#handleCurrencyInputBlur()
   }
@@ -582,10 +592,10 @@ class CurrencyField {
         filteredOptions = [{ i: 0, lbl: 'No Currency Found' }]
       }
       this.#options = filteredOptions
-      this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
     } else {
       this.#options = this.#config.options
-      this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
     }
 
     this.#reRenderVirtualOptions()
@@ -595,9 +605,25 @@ class CurrencyField {
     return this.#currencyNumberFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`)
   }
 
+  #openDropdownAsPerWindowSpace() {
+    const elementRect = this.#currencyInnerWrp.getBoundingClientRect()
+
+    const spaceAbove = elementRect.top
+    const spaceBelow = window.innerHeight - elementRect.bottom
+
+    if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
+      this.#currencyNumberFieldWrapper.style.flexDirection = 'column-reverse'
+      this.#currencyNumberFieldWrapper.style.bottom = '0%'
+    } else {
+      this.#currencyNumberFieldWrapper.style.flexDirection = 'column'
+      this.#currencyNumberFieldWrapper.style.removeProperty('bottom')
+    }
+  }
+
   setMenu({ open }) {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
+      this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#currencyNumberFieldWrapper, `${this.fieldKey}-menu-open`)
       this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
       this.#setAttribute(this.#searchInputElm, 'tabindex', 0)

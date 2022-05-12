@@ -12,6 +12,8 @@ const ActiveCampaignAuthorization = lazy(() => import('./ActiveCampaign/ActiveCa
 const GoogleSheetAuthorization = lazy(() => import('./GoogleSheet/GoogleSheetAuthorization'))
 const WebHooksIntegration = lazy(() => import('./IntegrationHelpers/WebHooksIntegration'))
 const MailChimpAuthorization = lazy(() => import('./MailChimp/MailChimpAuthorization'))
+const RapidmailAuthorization = lazy(() => import('./Rapidmail/RapidmailAuthorization'))
+const ElasticEmailAuthorization = lazy(() => import('./ElasticEmail/ElasticEmailAuthorization'))
 const SendinBlueAuthorization = lazy(() => import('./SendinBlue/SendinBlueAuthorization'))
 const TelegramAuthorization = lazy(() => import('./Telegram/TelegramAuthorization'))
 const ZohoAnalyticsAuthorization = lazy(() => import('./ZohoAnalytics/ZohoAnalyticsAuthorization'))
@@ -30,6 +32,8 @@ const ZohoWorkDriveAuthorization = lazy(() => import('./ZohoWorkDrive/ZohoWorkDr
 const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
 const OneDriveAuthorization = lazy(() => import('./OneDrive/OneDriveAuthorization'))
 const AcumbamailAuthorization = lazy(() => import('./Acumbamail/AcumbamailAuthorization'))
+const GroundhoggAuthorization = lazy(() => import('./Groundhogg/GroundhoggAuthorization'))
+const SendFoxAuthorization = lazy(() => import('./SendFox/SendFoxAuthorization'))
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
@@ -69,6 +73,10 @@ export default function IntegInfo({ allIntegURL }) {
         return <ZohoDeskAuthorization deskConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Mail Chimp':
         return <MailChimpAuthorization sheetConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Rapidmail':
+        return <RapidmailAuthorization rapidmailConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'ElasticEmail':
+        return <ElasticEmailAuthorization elasticEmailConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Zoho WorkDrive':
         return <ZohoWorkDriveAuthorization workDriveConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Zoho CRM':
@@ -103,6 +111,10 @@ export default function IntegInfo({ allIntegURL }) {
         return <OneDriveAuthorization oneDriveConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'Acumbamail':
         return <AcumbamailAuthorization acumbamailConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Groundhogg':
+        return <GroundhoggAuthorization groundhoggConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'SendFox':
+        return <SendFoxAuthorization sendFoxConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

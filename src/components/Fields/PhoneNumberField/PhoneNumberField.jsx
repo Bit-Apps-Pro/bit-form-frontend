@@ -13,6 +13,17 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
   const phoneNumberFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
+  const { selectedFlagImage,
+    selectedCountryClearable,
+    searchClearable,
+    optionFlagImage,
+    detectCountryByIp,
+    detectCountryByGeo,
+    defaultValue,
+    searchPlaceholder,
+    noCountryFoundText,
+    inputFormat,
+    valueFormat } = fieldData.config
 
   useEffect(() => {
     if (!phoneNumberWrapElmRef?.current) {
@@ -23,9 +34,23 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
       fldConstructor.destroy()
     }
-
-    const { options } = fieldData
-    const configOptions = { fieldKey, options, inputFormat: '+c #### ### ###' }
+    const { placeholderImage, options } = fieldData
+    const configOptions = {
+      fieldKey,
+      selectedFlagImage,
+      selectedCountryClearable,
+      searchClearable,
+      optionFlagImage,
+      detectCountryByIp,
+      detectCountryByGeo,
+      defaultValue,
+      searchPlaceholder,
+      noCountryFoundText,
+      placeholderImage,
+      options,
+      inputFormat,
+      valueFormat,
+    }
 
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i
@@ -57,6 +82,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
             />
             <div className={`${fieldKey}-phone-inner-wrp`} tabIndex={fieldData.disabled ? '-1' : '0'}>
               <div
+                data-testid={`${fieldKey}-dpd-wrp`}
                 className={`${fieldKey}-dpd-wrp`}
                 role="combobox"
                 aria-live="assertive"
@@ -64,16 +90,19 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 aria-expanded="false"
                 tabIndex={fieldData.disabled ? '-1' : '0'}
               >
-                <div className={`${fieldKey}-selected-country-wrp`}>
-                  <img
-                    data-dev-selected-phone-img={fieldKey}
-                    alt="Selected Country image"
-                    aria-hidden="true"
-                    className={`${fieldKey}-selected-country-img ${getCustomClsName(fieldKey, 'selected-phone-img')}`}
-                    src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                    {... { ...getCustomAttributs(fieldKey, 'selected-phone-img') }}
-                  />
-                </div>
+                {selectedFlagImage && (
+                  <div className={`${fieldKey}-selected-country-wrp`}>
+                    <img
+                      data-dev-selected-phone-img={fieldKey}
+                      alt="Selected Country image"
+                      aria-hidden="true"
+                      className={`${fieldKey}-selected-country-img ${getCustomClsName(fieldKey, 'selected-phone-img')}`}
+                      src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                      {... { ...getCustomAttributs(fieldKey, 'selected-phone-img') }}
+                    />
+                  </div>
+                )}
+
                 <div className={`${fieldKey}-dpd-down-btn`}>
                   <svg
                     width="15"
@@ -92,6 +121,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 </div>
               </div>
               <input
+                data-testid={`${fieldKey}-phone-nmbr-inp`}
                 data-dev-phone-number-input={fieldKey}
                 aria-label="Phone Number"
                 type="tel"
@@ -99,27 +129,31 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 autoComplete="tel"
                 tabIndex={fieldData.disabled ? '-1' : '0'}
               />
-              <button
-                data-dev-input-clear-btn={fieldKey}
-                type="button"
-                title="Clear value"
-                className={`${fieldKey}-icn ${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
-                {... { ...getCustomAttributs(fieldKey, 'input-clear-btn') }}
-              >
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {selectedCountryClearable && (
+                <button
+                  data-testid={`${fieldKey}-inp-clr-btn`}
+                  data-dev-input-clear-btn={fieldKey}
+                  type="button"
+                  title="Clear value"
+                  className={`${fieldKey}-icn ${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
+                  {... { ...getCustomAttributs(fieldKey, 'input-clear-btn') }}
                 >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              )}
+
             </div>
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
@@ -129,11 +163,12 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   {... { ...getCustomAttributs(fieldKey, 'option-search-wrp') }}
                 >
                   <input
+                    data-testid={`${fieldKey}-opt-srch-inp`}
                     data-dev-opt-search-input={fieldKey}
                     aria-label="Search for countries"
                     type="search"
                     className={`${fieldKey}-opt-search-input`}
-                    placeholder="Search for countries"
+                    placeholder={searchPlaceholder}
                     autoComplete="off"
                     tabIndex="-1"
                   />
@@ -154,28 +189,33 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
-                  <button
-                    type="button"
-                    aria-label="Clear search"
-                    className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
-                    data-dev-search-clear-btn={fieldKey}
-                    tabIndex="-1"
-                    {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
+                  {
+                    searchClearable && (
+                      <button
+                        data-testid={`${fieldKey}-srch-clr-btn`}
+                        type="button"
+                        aria-label="Clear search"
+                        className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
+                        data-dev-search-clear-btn={fieldKey}
+                        tabIndex="-1"
+                        {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+                    )
+                  }
                 </div>
                 <ul
                   className={`${fieldKey}-option-list`}

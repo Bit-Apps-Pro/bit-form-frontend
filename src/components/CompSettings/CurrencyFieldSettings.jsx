@@ -2,11 +2,12 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -26,12 +27,25 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 const CurrencyFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
-
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
   const [optionMdl, setOptionMdl] = useState(false)
   const fieldData = deepCopy(fields[fldKey])
+  const adminLabel = fieldData.adminLbl || ''
   const { options } = fieldData
+
+  const { selectedFlagImage,
+    selectedCurrencyClearable,
+    searchClearable,
+    optionFlagImage,
+    showSearchPh,
+    searchPlaceholder } = fieldData.config
+
+  const { showCurrencySymbol,
+    roundToClosestInteger,
+    roundToClosestFractionDigits } = fieldData.inputFormatOptions
 
   const openOptionModal = () => {
     setOptionMdl(true)
@@ -48,6 +62,27 @@ const CurrencyFieldSettings = () => {
   const handleConfigChange = (val, name, config) => {
     fieldData[config][name] = val
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  }
+
+  const toggleSearchPlaceholder = (e) => {
+    if (e.target.checked) {
+      fieldData.config.searchPlaceholder = 'Search Currency Here...'
+      fieldData.config.showSearchPh = true
+    } else {
+      fieldData.config.searchPlaceholder = ''
+      fieldData.config.showSearchPh = false
+    }
+    const req = e.target.checked ? 'Show' : 'Hide'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  function setSearchPlaceholder(e) {
+    fieldData.config.searchPlaceholder = e.target.value
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
@@ -121,7 +156,7 @@ const CurrencyFieldSettings = () => {
               tip="By disabling this option, the currency symbol will be show"
               title={__('Currency Symbol:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')}
-              isChecked={fieldData.inputFormatOptions.showCurrencySymbol}
+              isChecked={showCurrencySymbol}
             />
           </div>
 
@@ -131,20 +166,92 @@ const CurrencyFieldSettings = () => {
               tip="By disabling this option, the currency symbol will be show"
               title={__('Round to Closest Integer:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')}
-              isChecked={fieldData.inputFormatOptions.roundToClosestInteger}
+              isChecked={roundToClosestInteger}
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
             <SingleToggle
               id="rnd-to-clsst-frc-dgt"
+              tip="By Enabling this option, the Fraction Will Rounded"
               title={__('Round to Closest Fraction Digits:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
-              isChecked={fieldData.inputFormatOptions.roundToClosestFractionDigits}
+              isChecked={roundToClosestFractionDigits}
             />
           </div>
         </div>
       </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="srch-plchldr-stng"
+        title={__('Search Placeholder', 'bitform')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
+        tip="By disabling this option, the search placeholder text will be remove"
+        tipProps={{ width: 250, icnSize: 17 }}
+        toggleAction={toggleSearchPlaceholder}
+        toggleChecked={showSearchPh}
+        open={showSearchPh}
+        disable={!showSearchPh}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input
+            data-testid="srch-plchldr-stng-inp"
+            aria-label="Placeholer for Currency Search"
+            placeholder="Type Placeholder here..."
+            className={css(FieldStyle.input)}
+            type="text"
+            value={searchPlaceholder}
+            onChange={setSearchPlaceholder}
+          />
+        </div>
+      </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SingleToggle
+        id="shw-slctd-img-stng"
+        tip="By disabling this option, the show selected flag image will be hidden"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Show Selected Flag Image', 'bitform')}
+        action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
+        isChecked={selectedFlagImage}
+      />
+
+      <FieldSettingsDivider />
+
+      <SingleToggle
+        id="slctd-clrbl-stng"
+        tip="By disabling this option, the selected currency clearable button will be hidden"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        title={__('Selected Currency Clearable', 'bitform')}
+        action={e => handleConfigChange(e.target.checked, 'selectedCurrencyClearable', 'config')}
+        isChecked={selectedCurrencyClearable}
+      />
+
+      <FieldSettingsDivider />
+
+      <SingleToggle
+        id="srch-clrbl-stng"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, the selected currency search clearable button will be hidden"
+        title={__('Search Clearable', 'bitform')}
+        action={e => handleConfigChange(e.target.checked, 'searchClearable', 'config')}
+        isChecked={searchClearable}
+      />
+
+      <FieldSettingsDivider />
+
+      <SingleToggle
+        id="opt-icn-stng"
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
+        tip="By disabling this option, the option flags image will be hidden"
+        title={__('Option Flag Image', 'bitform')}
+        action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
+        isChecked={optionFlagImage}
+      />
 
       <FieldSettingsDivider />
 

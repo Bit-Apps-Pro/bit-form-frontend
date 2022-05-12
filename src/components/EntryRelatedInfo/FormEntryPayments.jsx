@@ -39,7 +39,7 @@ export default function FormEntryPayments({ formID, rowDtl }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('paymentInfo', paymentInfo);
+  console.log('paymentInfo', paymentInfo)
 
   const showPaymentInfo = () => {
     switch (payFld?.type) {

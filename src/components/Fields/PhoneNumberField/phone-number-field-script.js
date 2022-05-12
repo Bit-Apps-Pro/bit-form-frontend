@@ -25,6 +25,8 @@ class PhoneNumberField {
 
   #searchInputElm = null
 
+  #phoneInnerWrp = null
+
   #phoneInputElm = null
 
   #clearSearchBtnElm = null
@@ -69,10 +71,11 @@ class PhoneNumberField {
   }
 
   init() {
+    this.#phoneInnerWrp = this.#select(`.${this.fieldKey}-phone-inner-wrp`)
     this.#phoneInputElm = this.#select(`.${this.fieldKey}-phone-number-input`)
     this.#phoneHiddenInputElm = this.#select(`.${this.fieldKey}-phone-hidden-input`)
     this.#clearPhoneInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
-    this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
+    this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`) || {}
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
@@ -86,7 +89,7 @@ class PhoneNumberField {
 
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
     observeElement(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
-    this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
+    if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
 
     this.#handleDefaultPhoneInputValue()
@@ -102,7 +105,7 @@ class PhoneNumberField {
     }
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
-    console.log(this.#allEventListeners)
+    this.#placeholderImage = this.#config.placeholderImage ? this.#config.placeholderImage : this.#placeholderImage
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
@@ -298,9 +301,9 @@ class PhoneNumberField {
   #handlePhoneInput(e) {
     const { value } = e.target
     if (value) {
-      this.#clearPhoneInputElm.style.display = 'grid'
+      if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'grid'
     } else {
-      this.#clearPhoneInputElm.style.display = 'none'
+      if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'none'
       this.#countrySelectedFromList = false
     }
 
@@ -558,13 +561,13 @@ class PhoneNumberField {
         if (code.includes(searchText)) return true
       })
       if (!filteredOptions.length) {
-        filteredOptions = [{ i: 0, lbl: 'No Country Found' }]
+        filteredOptions = [{ i: 0, lbl: this.#config.noCountryFoundText }]
       }
       this.#options = filteredOptions
-      this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
     } else {
       this.#options = this.#config.options
-      this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
     }
 
     this.#reRenderVirtualOptions()
@@ -574,9 +577,25 @@ class PhoneNumberField {
     return this.#phoneNumberFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`)
   }
 
+  #openDropdownAsPerWindowSpace() {
+    const elementRect = this.#phoneInnerWrp.getBoundingClientRect()
+
+    const spaceAbove = elementRect.top
+    const spaceBelow = window.innerHeight - elementRect.bottom
+
+    if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
+      this.#phoneNumberFieldWrapper.style.flexDirection = 'column-reverse'
+      this.#phoneNumberFieldWrapper.style.bottom = '0%'
+    } else {
+      this.#phoneNumberFieldWrapper.style.flexDirection = 'column'
+      this.#phoneNumberFieldWrapper.style.removeProperty('bottom')
+    }
+  }
+
   setMenu({ open }) {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
+      this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#phoneNumberFieldWrapper, `${this.fieldKey}-menu-open`)
       this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
       this.#setAttribute(this.#searchInputElm, 'tabindex', 0)

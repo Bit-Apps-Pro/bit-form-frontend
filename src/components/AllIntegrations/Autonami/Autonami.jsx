@@ -11,7 +11,7 @@ import AutonamiAuthorization from './AutonamiAuthorization'
 import { checkMappedFields, getAutonamiFields } from './AutonamiCommonFunc'
 import AutonamiIntegLayout from './AutonamiIntegLayout'
 
-export default function Autonami({  formFields, setIntegration, integrations, allIntegURL  }) {
+export default function Autonami({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -39,7 +39,7 @@ export default function Autonami({  formFields, setIntegration, integrations, al
         setStep(val)
       }
     }
-    
+
     document.getElementById('btcd-settings-wrp').scrollTop = 0
   }
 
