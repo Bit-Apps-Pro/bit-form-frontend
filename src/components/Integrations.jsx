@@ -48,6 +48,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import sendfox from '../resource/img/integ/sendfox.svg'
+import groundhogg from '../resource/img/integ/groundhogg.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -101,7 +102,7 @@ function Integrations() {
     { type: 'Hubspot', logo: hubspot, pro },
     { type: 'Getgist', logo: getgist, pro },
     { type: 'ElasticEmail', logo: elasticemail, pro },
-    { type: 'Groundhogg', logo: elasticemail, pro },
+    { type: 'Groundhogg', logo: groundhogg, pro },
     { type: 'SendFox', logo: sendfox, pro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
