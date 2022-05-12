@@ -79,7 +79,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'recaptcha':
       return <ReCaptchaV2 fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'decision-box':
-      return <DecisionBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} onBlurHandler={props.onBlurHandler} resetFieldValue={resetFieldValue} />
+      return <DecisionBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'html':
       return <Html fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'button':
