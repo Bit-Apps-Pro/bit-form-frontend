@@ -24,6 +24,10 @@ const EditZohoSign = lazy(() => import('./ZohoSign/EditZohoSign'))
 const EditZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/EditZohoWorkDrive'))
 const EditGoogleSheet = lazy(() => import('./GoogleSheet/EditGoogleSheet'))
 const EditMailChimp = lazy(() => import('./MailChimp/EditMailChimp'))
+const EditRapidmail = lazy(() => import('./Rapidmail/EditRapidmail'))
+const EditHubspot = lazy(() => import('./Hubspot/EditHubspot'))
+const EditGetgist = lazy(() => import('./Getgist/EditGetgist'))
+const EditElasticEmail = lazy(() => import('./ElasticEmail/EditElasticEmail'))
 const EditAcf = lazy(() => import('./Acf/EditAcf'))
 const EditMetabox = lazy(() => import('./Metabox/EdtiMetabox'))
 const EditPod = lazy(() => import('./Pods/EditPod'))
@@ -44,6 +48,8 @@ const EditAutonami = lazy(() => import('./Autonami/EditAutonami'))
 const EditDropbox = lazy(() => import('./Dropbox/EditDropbox'))
 const EditOneDrive = lazy(() => import('./OneDrive/EditOneDrive'))
 const EditAcumbamail = lazy(() => import('./Acumbamail/EditAcumbamail'))
+const EditGroundhogg = lazy(() => import('./Groundhogg/EditGroundhogg'))
+const EditSendFox = lazy(() => import('./SendFox/EditSendFox'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -84,6 +90,14 @@ export default function EditInteg({ allIntegURL }) {
         return <EditGoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Chimp':
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Rapidmail':
+        return <EditRapidmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Hubspot':
+        return <EditHubspot allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Getgist':
+        return <EditGetgist allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ElasticEmail':
+        return <EditElasticEmail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ACF':
         return <EditAcf allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'MetaBox':
@@ -124,6 +138,10 @@ export default function EditInteg({ allIntegURL }) {
         return <EditAcumbamail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'OneDrive':
         return <EditOneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Groundhogg':
+        return <EditGroundhogg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SendFox':
+        return <EditSendFox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }

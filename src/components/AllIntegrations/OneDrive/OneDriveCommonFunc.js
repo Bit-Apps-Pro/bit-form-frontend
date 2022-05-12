@@ -65,8 +65,8 @@ export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf, set
     .catch(() => setIsLoading(false))
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading OneDrive Folders List...', 'bit-integrations'),
+    error: __('Error Occurred', 'bitform'),
+    loading: __('Loading OneDrive Folders List...', 'bitform'),
   })
 }
 
@@ -116,8 +116,8 @@ export const getSingleOneDriveFolders = (formID, oneDriveConf, setOneDriveConf, 
 export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading, setError) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __('Client Id can\'t be empty', 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret ? __('Client Secret can\'t be empty', 'bit-integrations') : '',
+      clientId: !confTmp.clientId ? __('Client Id can\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Client Secret can\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -139,7 +139,7 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isAuthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        toast.error(`${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`)
+        toast.error(`${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}`)
         setIsLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -163,11 +163,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
-        toast.success(__('Authorized Successfully', 'bit-integrations'))
+        toast.success(__('Authorized Successfully', 'bitform'))
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`)
+        toast.error(`${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}`)
       } else {
-        toast.error(__('Authorization failed. please try again', 'bit-integrations'))
+        toast.error(__('Authorization failed. please try again', 'bitform'))
       }
       setIsLoading(false)
     })

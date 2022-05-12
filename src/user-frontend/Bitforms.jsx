@@ -416,6 +416,7 @@ export default function Bitforms(props) {
         } else {
           handleFormValidationErrorMessages(result)
         }
+        console.log(hitCron, 'hitCron')
         if (responsedRedirectPage) {
           triggerIntegration(hitCron, newNonce)
           const timer = setTimeout(() => {

@@ -4,12 +4,13 @@
   z-index: 100;
 }
 
-.hidden {
+
+.btcd-mce-tinymce-hidden {
   visibility: hidden !important;
   display: none !important;
 }
 
-.visible {
+.btcd-mce-tinymce-visible {
   visibility: visible !important;
   display: block !important;
 }

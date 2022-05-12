@@ -38,7 +38,7 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, acumbamailConf, setAcumbamailConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
         <select className="btcd-paper-inp" name="acumbamailFormField" disabled={i < 1} value={field.acumbamailFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
-          <option value="">{__('Select Field', 'bit-integrations')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             isRequiredFld && requiredFlds && requiredFlds.map((listField, indx) => (
               (

@@ -56,7 +56,7 @@ const FieldStyle = {
     b: '1px solid #e6e6e6 !important',
     '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
     ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
-    'input[type="color" i]::-webkit-color-swatch': { brs: '5px !important', b: '0 !important' },
+    // 'input[type="color" i]::-webkit-color-swatch': { brs: '5px !important', b: '0 !important' },
   },
   multiselectInput: {
     fs: 14,

@@ -21,10 +21,13 @@ import zohoCreator from '../resource/img/integ/creator.svg'
 import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
 import dropbox from '../resource/img/integ/dropbox.svg'
+import elasticemail from '../resource/img/integ/elasticemail.svg'
 import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
+import getgist from '../resource/img/integ/getgist.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
+import hubspot from '../resource/img/integ/hubspot.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
@@ -35,7 +38,9 @@ import oneDrive from '../resource/img/integ/OneDrive.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
+import rapidmail from '../resource/img/integ/rapidmail.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
+import sendfox from '../resource/img/integ/sendfox.svg'
 import sendinblue from '../resource/img/integ/sendinblue.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
@@ -45,7 +50,6 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -96,6 +100,12 @@ function Integrations() {
     { type: 'OneDrive', logo: oneDrive, pro },
     { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
     { type: 'Encharge', logo: encharge, pro },
+    { type: 'Rapidmail', logo: rapidmail, pro, proVer: '1.5.0' },
+    { type: 'Hubspot', logo: hubspot, pro, proVer: '1.5.0' },
+    { type: 'Getgist', logo: getgist, pro, proVer: '1.5.0' },
+    { type: 'ElasticEmail', logo: elasticemail, pro, proVer: '1.5.0' },
+    { type: 'Groundhogg', logo: elasticemail, pro, proVer: '1.5.0' },
+    { type: 'SendFox', logo: sendfox, pro, proVer: '1.5.0' },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro },
@@ -108,7 +118,6 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
-
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(integs)
@@ -152,8 +161,7 @@ function Integrations() {
     return null
   }
 
-  const setNewInteg = indx => {
-    const inte = integs[indx]
+  const setNewInteg = inte => {
     if (inte.pro && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
       return false
@@ -237,8 +245,8 @@ function Integrations() {
                   {availableIntegs.map((inte, i) => (
                     <div
                       key={`inte-sm-${i + 2}`}
-                      onClick={() => !inte.disable && setNewInteg(i)}
-                      onKeyPress={() => !inte.disable && setNewInteg(i)}
+                      onClick={() => !inte.disable && setNewInteg(inte)}
+                      onKeyPress={() => !inte.disable && setNewInteg(inte)}
                       role="button"
                       tabIndex="0"
                       className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}

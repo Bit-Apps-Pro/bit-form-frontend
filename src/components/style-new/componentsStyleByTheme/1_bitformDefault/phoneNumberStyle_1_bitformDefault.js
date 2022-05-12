@@ -7,7 +7,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
 
     [`.${fk}-phone-fld-container`]: {
       position: 'relative',
-      height: '40px',
+      // height: '40px', // unused css
       width: '100%',
       display: 'inline-block',
     },
@@ -81,25 +81,25 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
 
     [`.${fk}-phone-inner-wrp`]: {
       display: 'flex',
-      height: '100%',
+      // height: '100%', // unused css
     },
 
     [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': ' 0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
 
     [`.${fk}-dpd-wrp`]: {
       'background-color': 'transparent',
-      overflow: 'hidden',
-      'font-weight': 500,
+      // overflow: 'hidden', // unused css
+      // 'font-weight': 500, // unused css
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
       cursor: 'pointer',
       height: '40px',
       padding: '8px 12px',
-      'box-sizing': 'border-box',
-      position: 'relative',
+      // 'box-sizing': 'border-box', // unused css
+      // position: 'relative', // unused css
       'font-size': '12px',
-      outline: 'none',
+      // outline: 'none', // unused css
     },
 
     [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
@@ -170,10 +170,10 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-option-wrp`]: {
-      'max-height': '0px',
-      'min-height': 'auto',
-      margin: 'auto',
-      width: '100%',
+      // 'max-height': '0px', // unused css
+      // 'min-height': 'auto', // unused css
+      // margin: 'auto', // unused css
+      // width: '100%', // unused css
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
@@ -182,10 +182,10 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     },
 
     [`.${fk}-option-inner-wrp`]: {
-      'padding-top': '0px',
-      'border-top': '0px',
-      margin: '0px',
-      overflow: 'hidden',
+      // 'padding-top': '0px', // unused css
+      // 'border-top': '0px', // unused css
+      // margin: '0px', // unused css
+      overflow: 'hidden', // unused css
       display: 'flex',
       'flex-direction': 'column',
       position: 'relative',
@@ -229,16 +229,16 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     [`.${fk}-search-clear-btn`]: {
       display: 'none',
       right: '6px',
-      height: '16px',
+      // height: '16px', // unused css
       padding: '0px',
-      margin: '0px',
+      // margin: '0px', // unused css
       background: 'transparent',
       border: '0px',
-      outline: '0px',
+      // outline: '0px', // unused css
       cursor: 'pointer',
       'margin-right': '5px',
       'place-content': 'center',
-      width: '16px',
+      // width: '16px', // unused css
       'border-radius': '50%',
       color: 'var(--global-font-color)',
     },
@@ -253,7 +253,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
     [`.${fk}-option-list`]: {
       padding: '0px',
       margin: '0px',
-      height: '100%',
+      // height: '100%', // unused css
       'overflow-y': 'auto',
 
       /* firefox */
@@ -275,7 +275,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       // 'font-size': 'var(--fld-fs) !important',
       cursor: 'pointer',
       'text-align': 'left',
-      border: 'none',
+      // border: 'none', // unused css
       padding: '5px 7px',
       display: 'flex',
       'align-items': 'center',

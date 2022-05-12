@@ -28,7 +28,7 @@ export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIs
     .catch(() => setIsLoading(false))
 }
 
-export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar, refreshFields=false) => {
+export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar, refreshFields = false) => {
   bitsFetch({}, 'bitforms_autonami_fields')
     .then(result => {
       if (result && result.success) {
@@ -38,7 +38,7 @@ export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, s
         }
         if (result.data.autonamiFields) {
           newConf.default.fields = result.data.autonamiFields
-          if(!refreshFields) {
+          if (!refreshFields) {
             const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', autonamiField: f.key, required: true }))
           }

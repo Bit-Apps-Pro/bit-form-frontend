@@ -72,19 +72,19 @@ export default function countryStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-dpd-wrp`]: {
       'background-color': 'transparent',
-      overflow: 'hidden',
-      'border-radius': '7px',
-      'font-weight': '500',
+      // overflow: 'hidden', // unused css
+      // 'border-radius': '7px', // unused css
+      // 'font-weight': '500', // unused css
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
       cursor: 'pointer',
       height: '40px',
       padding: '8px 12px',
-      'box-sizing': 'border-box',
+      // 'box-sizing': 'border-box', // unused css
       // 'font-size': '12px',
-      position: 'relative',
-      outline: 'none',
+      // position: 'relative', // unused css
+      // outline: 'none', // unused css
       /* border      : 1px solid red, */
     },
 
@@ -95,7 +95,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-selected-country-wrp`]: {
-      height: '100%',
+      // height: '100%', // unused css
       display: 'flex',
       'align-items': 'center',
     },
@@ -113,17 +113,17 @@ export default function countryStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-inp-clr-btn`]: {
       display: 'none',
-      right: '6px',
-      padding: '0',
-      margin: '0',
+      // right: '6px', // unused css
+      // padding: '0', // unused css
+      // margin: '0', // unused css
       background: 'transparent',
       border: '0',
-      outline: '0',
+      // outline: '0', // unused css
       cursor: 'pointer',
       'margin-right': '5px',
       'place-content': 'center',
       width: '16px',
-      height: '16px',
+      // height: '16px', // unused css
       'border-radius': '50%',
       color: 'var(--global-font-color) !important',
     },
@@ -132,17 +132,17 @@ export default function countryStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-dpd-btn-wrp`]: {
       display: 'flex',
-      'align-items': 'center',
+      // 'align-items': 'center', // unused css
     },
 
     [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-option-wrp`]: {
       'max-height': '0px',
-      'min-height': 'auto',
-      margin: 'auto',
-      width: '100%',
-      overflow: 'hidden',
+      // 'min-height': 'auto', // unused css
+      // margin: 'auto', // unused css
+      // width: '100%', // unused css
+      // overflow: 'hidden', // unused css
       display: 'flex',
       'flex-direction': 'column',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
@@ -151,10 +151,10 @@ export default function countryStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-option-inner-wrp`]: {
       /* padding: 5px, */
-      'padding-top': '0',
+      // 'padding-top': '0', // unused css
       /* border     : 1px solid #ddd, */
-      'border-top': '0',
-      margin: '0',
+      // 'border-top': '0', // unused css
+      // margin: '0', // unused css
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
@@ -163,7 +163,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     [`.${fk}-option-list`]: {
       padding: '0',
       margin: '0',
-      height: '100%',
+      // height: '100%', // unused css
       'overflow-y': 'auto',
 
       /* firefox */
@@ -199,7 +199,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-opt-search-input`]: {
       width: '100%',
-      padding: '5px',
+      // padding: '5px', // unused css
       'padding-left': '41px',
       outline: 'none',
       'box-shadow': 'none',
@@ -252,8 +252,8 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       'border-radius': '6px',
       'font-size': 'var(--fld-fs)',
       cursor: 'pointer',
-      'text-align': 'left',
-      border: 'none',
+      // 'text-align': 'left', // unused css
+      // border: 'none', // unused css
       padding: '5px 7px',
       display: 'flex',
       'align-items': 'center',
@@ -303,7 +303,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-dpd-down-btn`]: {
-      width: '15px',
+      // width: '15px', // unused css
       display: 'grid',
       'place-content': 'center',
       transition: 'transform 0.2s',
