@@ -3,7 +3,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ as i18n_, sprintf as i18nsprintf } from '@wordpress/i18n'
 
-const __ = (text, domain = null) => {
+const __ = (text) => {
+  const domain = 'bit-form'
   if (bits?.translations && bits.translations[text]) {
     return bits?.translations[text]
   }
@@ -23,5 +24,7 @@ const sprintf = (text, ...vars) => {
   return i18nsprintf(text, vars)
 }
 
-export { __,
-  sprintf }
+export {
+  __,
+  sprintf
+}
