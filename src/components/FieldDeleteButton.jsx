@@ -33,8 +33,8 @@ const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutI
           You can hide this field instead.
         </div>
         <div className="flx flx-c">
-          <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
-          <button onClick={removeLay} className="tip-btn red-btn" type="button">Delete</button>
+          <button onClick={() => hideAll()} data-testid={`${fieldId}-cancel-btn`} className="tip-btn mr-2" type="button">Cancel</button>
+          <button onClick={removeLay} data-testid={`${fieldId}-delete-btn`} className="tip-btn red-btn" type="button">Delete</button>
         </div>
       </div>
     </Downmenu>

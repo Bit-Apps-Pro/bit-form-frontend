@@ -564,7 +564,6 @@ function TextFieldSettings() {
           id="nam-stng"
           title={__('Name', 'bitform')}
           className={css(FieldStyle.fieldSection)}
-          open
         >
           <div className={css(FieldStyle.placeholder)}>
             <input
@@ -586,7 +585,6 @@ function TextFieldSettings() {
                 id="inp-mod-stng"
                 title={__('Input mode', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
-                open
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
@@ -616,7 +614,6 @@ function TextFieldSettings() {
                 id="ptrn-stng"
                 title={__('Pattern', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
-                open
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3, ut.pl1)}>

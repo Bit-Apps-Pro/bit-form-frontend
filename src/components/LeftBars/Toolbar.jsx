@@ -372,7 +372,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Phone Number', 'bitform'),
         config: {
           selectedFlagImage: true,
-          selectedCurrencyClearable: true,
+          selectedCountryClearable: true,
           searchClearable: true,
           optionFlagImage: true,
           defaultValue: '',
