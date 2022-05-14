@@ -604,9 +604,6 @@ function TextFieldSettings() {
           )
         }
 
-        <RequiredSettings />
-
-        <FieldSettingsDivider />
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
             <>
@@ -696,6 +693,10 @@ function TextFieldSettings() {
           )
         }
 
+        <RequiredSettings />
+
+        <FieldSettingsDivider />
+
         <FieldHideSettings />
 
         <FieldSettingsDivider />
@@ -743,7 +744,7 @@ function TextFieldSettings() {
         {
           fieldData.typ === 'number' && (
             <>
-              <SimpleAccordion id="nmbr-stng" title="Number:" className={css(FieldStyle.fieldSection)} open>
+              <SimpleAccordion id="nmbr-stng" title="Number:" className={css(FieldStyle.fieldSection)}>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css({ mx: 5 })}>
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>

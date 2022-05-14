@@ -13,11 +13,11 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
     if (attr.val !== undefined && !attr.userinput) {
       setvalue(attr.val)
     } else if (!attr.val && !attr.userinput) {
-      setvalue('')
+      setvalue(attr.defaultValue || '')
     } else if (attr.conditional) {
       setvalue(attr.val)
     }
-  }, [attr.val, attr.userinput, attr.conditional])
+  }, [attr.val, attr.defaultValue, attr.userinput, attr.conditional])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue('')
