@@ -26,6 +26,7 @@ import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
 import getgist from '../resource/img/integ/getgist.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
+import groundhogg from '../resource/img/integ/groundhogg.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
 import hubspot from '../resource/img/integ/hubspot.svg'
 import integrately from '../resource/img/integ/integrately.svg'
@@ -104,7 +105,7 @@ function Integrations() {
     { type: 'Hubspot', logo: hubspot, pro, proVer: '1.5.0' },
     { type: 'Getgist', logo: getgist, pro, proVer: '1.5.0' },
     { type: 'ElasticEmail', logo: elasticemail, pro, proVer: '1.5.0' },
-    { type: 'Groundhogg', logo: elasticemail, pro, proVer: '1.5.0' },
+    { type: 'Groundhogg', logo: groundhogg, pro, proVer: '1.5.0' },
     { type: 'SendFox', logo: sendfox, pro, proVer: '1.5.0' },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
