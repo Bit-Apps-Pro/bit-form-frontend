@@ -29,6 +29,8 @@ const ZohoWorkDriveAuthorization = lazy(() => import('./ZohoWorkDrive/ZohoWorkDr
 const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
 const OneDriveAuthorization = lazy(() => import('./OneDrive/OneDriveAuthorization'))
 const AcumbamailAuthorization = lazy(() => import('./Acumbamail/AcumbamailAuthorization'))
+const TwilioAuthorization = lazy(() => import('./Twilio/TwilioAuthorization'))
+const GetgistAuthorization = lazy(() => import('./Getgist/GetgistAuthorization'))
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
@@ -105,6 +107,10 @@ export default function IntegInfo({ allIntegURL }) {
         return <OneDriveAuthorization oneDriveConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'Acumbamail':
         return <AcumbamailAuthorization acumbamailConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Twilio':
+        return <TwilioAuthorization twilioConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Getgist':
+        return <GetgistAuthorization getgist={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

@@ -45,6 +45,7 @@ const Autonami = lazy(() => import('./Autonami/Autonami'))
 const Dropbox = lazy(() => import('./Dropbox/Dropbox'))
 const Acumbamail = lazy(() => import('./Acumbamail/Acumbamail'))
 const OneDrive = lazy(() => import('./OneDrive/OneDrive'))
+const Twilio = lazy(() => import('./Twilio/Twilio'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
   const [integs, setIntegration] = useRecoilState($integrations)
@@ -131,7 +132,9 @@ export default function NewInteg({ allIntegURL }) {
         return <Acumbamail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'OneDrive':
         return <OneDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-      default:
+      case 'Twilio':
+        return <Twilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        default:
         return <></>
     }
   }

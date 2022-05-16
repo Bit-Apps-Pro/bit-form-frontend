@@ -43,6 +43,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import rapidmail from '../resource/img/integ/rapidmail.svg'
+import twilio from '../resource/img/integ/twilio.svg'
 import hubspot from '../resource/img/integ/hubspot.svg'
 import getgist from '../resource/img/integ/getgist.svg'
 import elasticemail from '../resource/img/integ/elasticemail.svg'
@@ -112,6 +113,7 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
+    { type: 'Twilio', logo: twilio, pro },
 
   ]
 
