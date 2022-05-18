@@ -38,6 +38,7 @@ class CountryField {
     defaultValue: '',
     placeholder: 'Select a Country',
     searchPlaceholder: 'Search Country',
+    noCountryFoundText: 'No Currency Found',
     maxHeight: 370,
     options: [],
     onChange: val => { console.log(val) },
@@ -404,7 +405,7 @@ class CountryField {
     if (value) {
       filteredOptions = this.#config.options.filter(opt => opt.lbl.toLowerCase().includes(value.toLowerCase()))
       if (!filteredOptions.length) {
-        filteredOptions = [{ i: 0, lbl: 'No Country Found' }]
+        filteredOptions = [{ i: 0, lbl: this.#config.noCountryFoundText }]
       }
       this.#options = filteredOptions
       if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'

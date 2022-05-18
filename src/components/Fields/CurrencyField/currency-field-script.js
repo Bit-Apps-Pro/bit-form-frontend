@@ -589,7 +589,7 @@ class CurrencyField {
         if (code.includes(searchText)) return true
       })
       if (!filteredOptions.length) {
-        filteredOptions = [{ i: 0, lbl: 'No Currency Found' }]
+        filteredOptions = [{ i: 0, lbl: this.#config.noCurrencyFoundText }]
       }
       this.#options = filteredOptions
       if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
