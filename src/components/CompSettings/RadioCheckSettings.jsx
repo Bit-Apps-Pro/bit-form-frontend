@@ -402,7 +402,6 @@ function RadioCheckSettings() {
         id="opt-clm-stng"
         title={__('Options Column', 'bitform')}
         className={css(FieldStyle.fieldSection)}
-        open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -436,7 +435,6 @@ function RadioCheckSettings() {
               title={__('Minimum', 'bitform')}
               className={css(FieldStyle.fieldSection)}
               tip="Set minimum number to be selected for checkbox option"
-              open
               isPro
             >
               {/* <div>
@@ -478,7 +476,6 @@ function RadioCheckSettings() {
               title={__('Maximum', 'bitform')}
               className={css(FieldStyle.fieldSection)}
               tip="Set maximum number to be selected for checkbox option"
-              open
               isPro
             >
               <div className={css(FieldStyle.placeholder)}>

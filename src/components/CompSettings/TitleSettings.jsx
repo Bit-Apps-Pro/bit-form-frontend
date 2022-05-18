@@ -278,7 +278,7 @@ function TitleSettings() {
             </div>
 
             <AutoResizeInput
-              id="sub-titl"
+              id="sub-titl-stng"
               placeholder="Sub Title..."
               name="subtitle"
               value={fieldData?.subtitle}
@@ -361,12 +361,13 @@ function TitleSettings() {
 
         <Icons
           iconType={fieldName}
-          selected="Upload Image"
+          selected={fieldName === 'logo' ? 'Upload Image' : 'Icons'}
           uploadLbl="Upload Image"
           setModal={setIcnMdl}
           addPaddingOnSelect={false}
         />
       </Modal>
+
     </>
   )
 }
