@@ -7,9 +7,9 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-currency-fld-container`]: {
       position: 'relative',
-      // height: '40px', // unused css
+      height: '40px', // unused css
       width: '100%',
-      // display: 'inline-block', // unused css
+      display: 'inline-block', // unused css
     },
     [`.${fk}-currency-fld-wrp`]: {
       position: 'absolute',
@@ -82,18 +82,18 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-dpd-wrp`]: {
       'background-color': 'transparent',
-      // overflow: 'hidden', // unused css
-      // 'font-weight': 500, // unused css
+      overflow: 'hidden', // unused css
+      'font-weight': 500, // unused css
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
       cursor: 'pointer',
       height: '40px',
       padding: '8px 12px',
-      // 'box-sizing': 'border-box', // unused css
-      // position: 'relative', // unused css
+      'box-sizing': 'border-box', // unused css
+      position: 'relative', // unused css
       'font-size': '12px',
-      // outline: 'none', // unused css
+      outline: 'none', // unused css
     },
     [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
     [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
@@ -101,7 +101,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-selected-currency-wrp`]: {
       display: 'flex',
       'align-items': 'center',
-      // height: '100%', // unused css
+      height: '100%', // unused css
     },
 
     [`.${fk}-selected-currency-lbl`]: {
@@ -112,8 +112,8 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-selected-currency-img`]: {
       height: '17px',
       width: '25px',
-      // border: 'none', // unused css
-      // 'border-width': '0px', // unused css
+      border: 'none', // unused css
+      'border-width': '0px', // unused css
       'border-radius': '3px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       margin: '0px 10px 0px 0px',
@@ -146,9 +146,9 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-dpd-down-btn`]: {
-      // width: '15px', // unused css
-      // display: 'grid', // unused css
-      // 'place-content': 'center', // unused css
+      width: '15px', // unused css
+      display: 'grid', // unused css
+      'place-content': 'center', // unused css
       transition: 'transform 0.2s',
     },
 
@@ -179,10 +179,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-option-wrp`]: {
       'max-height': '0px',
-      // 'min-height': 'auto', // unused css
-      // margin: 'auto', // unused css
-      // width: '100%', // unused css
-      // overflow: 'hidden', // unused css
+      'min-height': 'auto', // unused css
+      margin: 'auto', // unused css
+      width: '100%', // unused css
+      overflow: 'hidden', // unused css
       display: 'flex',
       'flex-direction': 'column',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
@@ -190,9 +190,9 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option-inner-wrp`]: {
-      // 'padding-top': 0, // unused css
-      // 'border-top': 0, // unused css
-      // margin: 0, // unused css
+      'padding-top': 0, // unused css
+      'border-top': 0, // unused css
+      margin: 0, // unused css
       overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
@@ -265,7 +265,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-option-list`]: {
       padding: 0,
       margin: 0,
-      // height: '100%', // unused css
+      height: '100%', // unused css
       'overflow-y': 'auto',
 
       /* firefox */
@@ -281,13 +281,13 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option`]: {
-      // margin: '0 5px', // unused css
+      margin: '0 5px', // unused css
       transition: 'background 0.2s',
       'border-radius': '6px',
       // 'font-size': 'var(--fld-fs)',
       cursor: 'pointer',
-      // 'text-align': 'left', // unused css
-      // border: 'none', // unused css
+      'text-align': 'left', // unused css
+      border: 'none', // unused css
       padding: '5px 7px',
       display: 'flex',
       'align-items': 'center',
@@ -325,7 +325,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       height: '17px',
       width: '25px',
       'border-radius': '3px',
-      // 'border-width': '1px', // unused css
+      'border-width': '1px', // unused css
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
