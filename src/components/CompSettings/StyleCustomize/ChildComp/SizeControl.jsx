@@ -53,14 +53,14 @@ export default function SizeControl({ label, className, width, options = [], siz
         >
           {options.length === 0 && (
             <>
-              <option data-testid={`${dataTestId}-unit-px`} value="px">px</option>
-              <option data-testid={`${dataTestId}-unit-par`} value="%">%</option>
-              <option data-testid={`${dataTestId}-unit-em`} value="em">em</option>
-              <option data-testid={`${dataTestId}-unit-rem`} value="rem">rem</option>
+              <option value="px">px</option>
+              <option value="%">%</option>
+              <option value="em">em</option>
+              <option value="rem">rem</option>
             </>
           )}
           {options && options?.map((item, i) => (
-            <option data-testid={`${dataTestId}-unit-${item}`} key={`scopt-${i * 2}`} value={item}>{item}</option>
+            <option key={`scopt-${i * 2}`} value={item}>{item}</option>
           ))}
         </select>
       )}
