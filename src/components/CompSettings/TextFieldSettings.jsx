@@ -504,6 +504,7 @@ function TextFieldSettings() {
           || fieldData.typ === 'color'
           || fieldData.typ === 'month'
           || fieldData.typ === 'week'
+          || fieldData.typ === 'textarea'
         ) && (
             <>
               <SimpleAccordion

@@ -51,6 +51,7 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -204,7 +205,7 @@ function Integrations() {
   const inteClone = (i) => {
     const existInteg = { ...integrations[i] }
     const tmpInteg = [...integrations]
-    toast.loading('cloneing...')
+    toast.loading('cloning...')
     bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
       .then(response => {
         if (response && response.success) {
