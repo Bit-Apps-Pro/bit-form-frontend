@@ -1,17 +1,21 @@
 import { useState } from 'react'
-
-import { Link } from 'react-router-dom'
 import { useFela } from 'react-fela'
-import { __ } from '../Utils/i18nwrap'
-import Modal from './Utilities/Modal'
-import FormImporter from './FormImporter'
+import { useHistory } from 'react-router-dom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { $formInfo, $newFormId } from '../GlobalStates/GlobalStates'
 import DownloadIcon from '../Icons/DownloadIcon'
 import FormIcn from '../Icons/FormIcn'
 // import bitsFetch from '../Utils/bitsFetch'
 import app from '../styles/app.style'
-import TableCheckBox from './Utilities/TableCheckBox'
+import { __ } from '../Utils/i18nwrap'
+import FormImporter from './FormImporter'
+import Modal from './Utilities/Modal'
 
-export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {
+
+export default function FormTemplates({ setTempModal, setSnackbar }) {
+  const newFormId = useRecoilValue($newFormId)
+  const setFormInfo = useSetRecoilState($formInfo)
+  const history = useHistory()
   const [modal, setModal] = useState(false)
 
   // const [, setTemplates] = useState(null)
@@ -28,6 +32,13 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
     return function cleanup() { mount = false }
   }, []) */
 
+  const handleTemplateBtnClick = (e, tem) => {
+    e.preventDefault()
+    setFormInfo(oldInfo => ({ ...oldInfo, formName: tem.lbl === 'Blank' ? oldInfo.formName : tem.lbl, template: tem.lbl }))
+
+    history.push(`/form/builder/new/${newFormId}/fields-list`)
+  }
+
   return (
     <div className="btcd-tem-lay flx">
       {staticTem.map((tem, i) => (
@@ -35,7 +46,7 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
           <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <Link to={`/form/builder/new/${newFormId}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button" data-testid={`create-form-btn-${i}`}>{__('Create', 'bitform')}</Link>
+            <button onClick={e => handleTemplateBtnClick(e, tem)} className={`${css(app.btn)} btn-white sh-sm`} type="button" data-testid={`create-form-btn-${i}`}>{__('Create', 'bitform')}</button>
           </div>
         </div>
       ))}
