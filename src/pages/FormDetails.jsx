@@ -14,7 +14,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -48,7 +48,8 @@ function FormDetails() {
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const updateBtn = useRecoilValue($updateBtn)
-  const [formName, setFormName] = useRecoilState($formName)
+  const [formInfo, setFormInfo] = useRecoilState($formInfo)
+  const { formName } = formInfo
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const setMailTem = useSetRecoilState($mailTemplates)
@@ -58,6 +59,7 @@ function FormDetails() {
   const setConfirmations = useSetRecoilState($confirmations)
   const resetFieldLabels = useResetRecoilState($fieldLabels)
   const resetFields = useResetRecoilState($fields)
+  const resetFormInfo = useResetRecoilState($formInfo)
   const resetReports = useResetRecoilState($reports)
   const resetLayouts = useResetRecoilState($layouts)
   const resetMailTemplates = useResetRecoilState($mailTemplates)
@@ -124,6 +126,7 @@ function FormDetails() {
     resetIntegrations()
     resetConfirmations()
     resetUpdateBtn()
+    resetFormInfo()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -137,7 +140,7 @@ function FormDetails() {
       }
       setFields(formData.fields)
       setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = formData.fields }))
-      setFormName(formData.form_name)
+      setFormInfo(oldInfo => ({ ...oldInfo, formName: formData.form_name }))
       setworkFlows(formData.workFlows)
       setAdditional(formData.additional)
       setIntegration(formData.formSettings.integrations)
@@ -168,7 +171,7 @@ function FormDetails() {
   }, [])
 
   const fetchTemplate = () => {
-    if (formType === 'new' && formID !== 'Blank') {
+    if (formType === 'new' && formInfo.template !== 'Blank') {
       bitsFetch({ template: formID, newFormId }, 'bitforms_get_template')
         .then(res => {
           if (res?.success && componentMounted) {
@@ -181,7 +184,7 @@ function FormDetails() {
             setFields(responseData.form_content.fields)
             // setBuilderHistory(oldHistory => oldHistory.histories[0].state.fields = responseData.form_content.fields)
             setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
-            setFormName(responseData.form_content.form_name)
+            setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
             setisLoading(false)
             sessionStorage.setItem('btcd-lc', '-')
           } else {
@@ -215,7 +218,7 @@ function FormDetails() {
 
             setFields(responseData.form_content.fields)
             setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
-            setFormName(responseData.form_content.form_name)
+            setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
@@ -307,7 +310,7 @@ function FormDetails() {
             </div>
             <input
               className={css(navbar.btcd_bld_title_inp)}
-              onChange={({ target: { value } }) => setFormName(value)}
+              onChange={({ target: { value } }) => setFormInfo(oldInfo => ({ ...oldInfo, formName: value }))}
               value={formName}
               data-testid="form-name"
             />

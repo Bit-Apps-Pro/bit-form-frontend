@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -29,7 +29,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [buttonDisabled, setbuttonDisabled] = useState(false)
   const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
   const fields = useRecoilValue($fields)
-  const formName = useRecoilValue($formName)
+  const formInfo = useRecoilValue($formInfo)
+  const formName = { formInfo }
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
   const builderHelperStates = useSetRecoilState($builderHelperStates)
