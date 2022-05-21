@@ -32,7 +32,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       detectCountryByIp,
       detectCountryByGeo,
       defaultValue,
-      searchPlaceholder } = fieldData.config
+      searchPlaceholder,
+      noCountryFoundText } = fieldData.config
 
     const configOptions = {
       fieldKey,
@@ -45,6 +46,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       defaultValue,
       placeholder: ph,
       searchPlaceholder,
+      noCountryFoundText,
       options,
     }
 

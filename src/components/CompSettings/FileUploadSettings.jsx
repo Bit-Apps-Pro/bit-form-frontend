@@ -149,6 +149,7 @@ export default function FileUploadSettings() {
         open
       >
         <input
+          data-testid="upld-btn-txt-inp"
           className={css(FieldStyle.input)}
           type="text"
           value={btnTxt}

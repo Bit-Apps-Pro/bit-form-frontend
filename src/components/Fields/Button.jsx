@@ -15,11 +15,13 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
       <div
+        data-testid={`${fieldKey}-fld-wrp`}
         data-dev-fld-wrp={fieldKey}
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
         {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
       >
         <button
+          data-testid={fieldKey}
           data-dev-btn={fieldKey}
           className={`${fieldKey}-btn ${getCustomClsName(fieldKey, 'btn')}`}
           {... { ...getCustomAttributs(fieldKey, 'btn') }}
@@ -30,6 +32,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
         >
           {fieldData.btnPreIcn && (
             <img
+              data-testid={`${fieldKey}-btn-pre-i`}
               data-dev-btn-pre-i={fieldKey}
               className={`${fieldKey}-btn-pre-i ${getCustomClsName(fieldKey, 'btn-pre-i')}`}
               src={fieldData.btnPreIcn}
@@ -40,6 +43,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
           {renderHTMR(fieldData.txt || '')}
           {fieldData.btnSufIcn && (
             <img
+              data-testid={`${fieldKey}-btn-suf-i`}
               data-dev-btn-suf-i={fieldKey}
               className={`${fieldKey}-btn-suf-i ${getCustomClsName(fieldKey, 'btn-suf-i')}`}
               src={fieldData.btnSufIcn}
@@ -51,6 +55,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
         {
           (fieldData.helperTxt) && (
             <div
+              data-testid={`${fieldKey}-hlp-txt`}
               data-dev-hlp-txt={fieldKey}
               {... { ...getCustomAttributs(fieldKey, 'hlp-txt') }}
               className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}
@@ -58,6 +63,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               {/* Prefix icon */}
               {fieldData.hlpPreIcn && (
                 <img
+                  data-testid={`${fieldKey}-hlp-txt-pre-i`}
                   data-dev-hlp-txt-pre-i={fieldKey}
                   className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`}
                   src={fieldData.hlpPreIcn}
@@ -70,6 +76,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               {/* suffix icon */}
               {fieldData.hlpSufIcn && (
                 <img
+                  data-testid={`${fieldKey}-hlp-txt-suf-i`}
                   data-dev-hlp-txt-suf-i={fieldKey}
                   className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`}
                   src={fieldData.hlpSufIcn}

@@ -16,10 +16,12 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
@@ -125,6 +127,10 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <RequiredSettings />
 
       <FieldSettingsDivider />
 
@@ -318,6 +324,10 @@ const PhoneNumberFieldSettings = () => {
           }
         </div>
       </div>
+
+      <FieldSettingsDivider />
+
+      <FieldHideSettings />
 
       <FieldSettingsDivider />
 

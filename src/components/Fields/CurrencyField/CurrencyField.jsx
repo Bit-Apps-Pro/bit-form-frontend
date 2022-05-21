@@ -18,7 +18,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     searchClearable,
     optionFlagImage,
     defaultValue,
-    searchPlaceholder } = fieldData.config
+    searchPlaceholder,
+    noCurrencyFoundText } = fieldData.config
 
   useEffect(() => {
     if (!currencyWrapElmRef?.current) {
@@ -42,6 +43,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       optionFlagImage,
       defaultValue,
       searchPlaceholder,
+      noCurrencyFoundText,
       options,
     }
 

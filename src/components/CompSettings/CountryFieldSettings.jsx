@@ -19,6 +19,7 @@ import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -43,7 +44,8 @@ const CountryFieldSettings = () => {
     detectCountryByIp,
     detectCountryByGeo,
     showSearchPh,
-    searchPlaceholder } = fieldData.config
+    searchPlaceholder,
+    noCountryFoundText } = fieldData.config
 
   const openOptionModal = () => {
     setOptionMdl(true)
@@ -107,6 +109,10 @@ const CountryFieldSettings = () => {
 
       <FieldSettingsDivider />
 
+      <RequiredSettings />
+
+      <FieldSettingsDivider />
+
       <FieldReadOnlySettings />
 
       <FieldSettingsDivider />
@@ -140,6 +146,30 @@ const CountryFieldSettings = () => {
             type="text"
             value={searchPlaceholder}
             onChange={setSearchPlaceholder}
+          />
+        </div>
+      </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="cntry-nt-fund-stng"
+        title={__('Country Not Found Text', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+      // switching
+      // toggleAction={hideAdminLabel}
+      // toggleChecked={fieldData?.adminLblHide}
+      // disable={!fieldData?.adminLblHide}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input
+            data-testid="cntry-nt-fund-inp"
+            aria-label="Country Not Found Text"
+            placeholder="Type no country found text here..."
+            className={css(FieldStyle.input)}
+            type="text"
+            value={noCountryFoundText}
+            onChange={e => handleConfigChange(e.target.value, 'noCountryFoundText', 'config')}
           />
         </div>
       </SimpleAccordion>

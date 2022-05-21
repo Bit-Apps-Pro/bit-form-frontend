@@ -68,7 +68,7 @@ export default function DropdownFieldSettings() {
 
   const toggleSearchPlaceholder = (e) => {
     if (e.target.checked) {
-      fieldData.config.searchPlaceholder = 'Search Country Here...'
+      fieldData.config.searchPlaceholder = 'Search Options...'
       fieldData.config.showSearchPh = true
     } else {
       fieldData.config.searchPlaceholder = ''

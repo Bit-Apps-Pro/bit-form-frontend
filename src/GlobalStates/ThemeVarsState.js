@@ -192,9 +192,9 @@ const $themeVarsLg = atom({
     '--err-txt-pre-i-bdr-width': '', // error txt prefix icon border width
     '--err-txt-pre-i-bdr-rad': '8px', // error txt prefix icon message border radius
 
-    '--err-txt-suf-i-h': '10px', // error txt suffix icon height
-    '--err-txt-suf-i-w': '10px', // error txt suffix icon width
-    '--err-txt-suf-i-m': '2px', // error txt suffix icon margin
+    '--err-txt-suf-i-h': '20px', // error txt suffix icon height
+    '--err-txt-suf-i-w': '20px', // error txt suffix icon width
+    '--err-txt-suf-i-m': '5px', // error txt suffix icon margin
     '--err-txt-suf-i-p': '', // error txt suffix icon padding
     '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
     '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius

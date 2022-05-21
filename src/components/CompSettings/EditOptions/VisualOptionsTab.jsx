@@ -154,7 +154,7 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
   }
 
   return (
-    <div className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}>
+    <div data-testid={`sortable-itm-wrp-${optIndx}`} className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}>
       {!isGroupEnd && (
         <div className={css(optionStyle.inputContainer)}>
           <div className="flx">
@@ -198,17 +198,17 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
 
             <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
               <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
-                <button data-testid="srtble-itm-add-optn-grp" type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
+                <button data-testid={`srtble-itm-add-optn-grp-${optIndx}`} type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
                   <span className={css(optionStyle.addbtnside)}><CloseIcn size="16" stroke="2" /></span>
                 </button>
               </Tip>
               <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button data-testid="srtble-itm-add-optn-cln-grp" type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
+                <button data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`} type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
                   <CopyIcn size="16" stroke="2" />
                 </button>
               </Tip>
               <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button data-testid="srtble-itm-add-optn-dlt-grp" type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
+                <button data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`} type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
                   <TrashIcn size="23" />
                 </button>
               </Tip>

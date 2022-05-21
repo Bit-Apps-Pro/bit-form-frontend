@@ -96,7 +96,7 @@ export default function ReCaptchaSettings() {
 
       <div className={css(FieldStyle.fieldSection)}>
         <div className={css(ut.flxcb)}>
-          <span className={css(style.label)}>Label Alignment</span>
+          <span className={css(style.label)}>Position Alignment</span>
           <StyleSegmentControl
             show={['icn']}
             tipPlace="bottom"

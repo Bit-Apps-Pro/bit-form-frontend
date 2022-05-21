@@ -468,33 +468,34 @@ function TextFieldSettings() {
         <FieldSettingsDivider />
 
         {!(fieldData.typ === 'password') && (
-          <SimpleAccordion
-            id="dflt-val-stng"
-            title={__('Default value', 'bitform')}
-            className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-            switching
-            tip="By disabling this option, the field default will be hidden"
-            tipProps={{ width: 250, icnSize: 17 }}
-            toggleAction={hideDefalutValue}
-            toggleChecked={fieldData?.defaultValueHide}
-            open={fieldData?.defaultValueHide}
-            disable={!fieldData?.defaultValueHide}
-          >
-            <div className={css(FieldStyle.placeholder)}>
-              <input
-                data-testid="dflt-val-stng-inp"
-                aria-label="Default value for this Field"
-                placeholder="Type default value here..."
-                className={css(FieldStyle.input)}
-                type={fieldData.typ === 'textarea' ? 'text' : fieldData.typ}
-                value={defaultValue}
-                onChange={setDefaultValue}
-              />
-            </div>
-          </SimpleAccordion>
+          <>
+            <SimpleAccordion
+              id="dflt-val-stng"
+              title={__('Default value', 'bitform')}
+              className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+              switching
+              tip="By disabling this option, the field default will be hidden"
+              tipProps={{ width: 250, icnSize: 17 }}
+              toggleAction={hideDefalutValue}
+              toggleChecked={fieldData?.defaultValueHide}
+              open={fieldData?.defaultValueHide}
+              disable={!fieldData?.defaultValueHide}
+            >
+              <div className={css(FieldStyle.placeholder)}>
+                <input
+                  data-testid="dflt-val-stng-inp"
+                  aria-label="Default value for this Field"
+                  placeholder="Type default value here..."
+                  className={css(FieldStyle.input)}
+                  type={fieldData.typ === 'textarea' ? 'text' : fieldData.typ}
+                  value={defaultValue}
+                  onChange={setDefaultValue}
+                />
+              </div>
+            </SimpleAccordion>
+            <FieldSettingsDivider />
+          </>
         )}
-
-        <FieldSettingsDivider />
 
         {!(fieldData.typ === 'password'
           || fieldData.typ === 'date'
@@ -815,7 +816,6 @@ function TextFieldSettings() {
                 id="pass-vldsn-stng"
                 title={__('Validations', 'bitform')}
                 className={css(FieldStyle.fieldSection)}
-                open
                 isPro
               >
                 <div className={css(ut.mt1, ut.flxClm)}>

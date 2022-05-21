@@ -19,6 +19,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -41,7 +42,8 @@ const CurrencyFieldSettings = () => {
     searchClearable,
     optionFlagImage,
     showSearchPh,
-    searchPlaceholder } = fieldData.config
+    searchPlaceholder,
+    noCurrencyFoundText } = fieldData.config
 
   const { showCurrencySymbol,
     roundToClosestInteger,
@@ -106,6 +108,10 @@ const CurrencyFieldSettings = () => {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <RequiredSettings />
 
       <FieldSettingsDivider />
 
@@ -205,6 +211,30 @@ const CurrencyFieldSettings = () => {
             type="text"
             value={searchPlaceholder}
             onChange={setSearchPlaceholder}
+          />
+        </div>
+      </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="cntry-nt-fund-stng"
+        title={__('Currency Not Found Text', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+      // switching
+      // toggleAction={hideAdminLabel}
+      // toggleChecked={fieldData?.adminLblHide}
+      // disable={!fieldData?.adminLblHide}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input
+            data-testid="cntry-nt-fund-inp"
+            aria-label="Currency Not Found Text"
+            placeholder="Type no Currency found text here..."
+            className={css(FieldStyle.input)}
+            type="text"
+            value={noCurrencyFoundText}
+            onChange={e => handleConfigChange(e.target.value, 'noCurrencyFoundText', 'config')}
           />
         </div>
       </SimpleAccordion>
