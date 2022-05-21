@@ -30,7 +30,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
   const fields = useRecoilValue($fields)
   const formInfo = useRecoilValue($formInfo)
-  const formName = { formInfo }
+  const { formName } = formInfo
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
   const builderHelperStates = useSetRecoilState($builderHelperStates)
