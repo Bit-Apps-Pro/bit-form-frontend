@@ -52,7 +52,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
+import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -122,7 +122,9 @@ function Integrations() {
     { type: 'Twilio', logo: twilio, pro },
   ]
 
-  const [availableIntegs, setAvailableIntegs] = useState(integs)
+
+
+  const [availableIntegs, setAvailableIntegs] = useState(sortArrOfObj(integs, 'type'))
 
   const removeInteg = i => {
     const tempIntegration = { ...integrations[i] }
@@ -179,7 +181,7 @@ function Integrations() {
 
   const closeIntegModal = () => {
     setShowMdl(false)
-    setTimeout(() => setAvailableIntegs(integs), 500)
+    setTimeout(() => setAvailableIntegs(sortArrOfObj(integs, 'type')), 500)
   }
 
   const closeConfMdl = () => {
@@ -190,7 +192,7 @@ function Integrations() {
   const searchInteg = e => {
     const { value } = e.target
     const filtered = integs.filter(integ => integ.type.toLowerCase().includes(value.toLowerCase()))
-    setAvailableIntegs(filtered)
+    setAvailableIntegs(sortArrOfObj(filtered, 'type'))
   }
 
   const inteCloneConf = i => {
