@@ -28,7 +28,7 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
       { formField: '', mailerLiteFormField: 'email' },
     ],
     mailer_lite_type: '',
-    mailerLiteFields:[],
+    mailerLiteFields: [],
     groups: [],
     group_ids: [],
     actions: {},
@@ -52,8 +52,8 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
       return
     }
     mailerLiteConf.field_map.length > 0 && setstep(pageNo)
+    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   return (
     <div>
