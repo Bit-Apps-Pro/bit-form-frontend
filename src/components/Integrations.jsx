@@ -49,6 +49,8 @@ import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import sendfox from '../resource/img/integ/sendfox.svg'
 import groundhogg from '../resource/img/integ/groundhogg.svg'
+import mailerLite from '../resource/img/integ/mailerLite.svg'
+
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -116,6 +118,7 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
+    { type: 'MailerLite', logo: mailerLite, pro },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(integs)
@@ -202,6 +205,7 @@ function Integrations() {
     const existInteg = { ...integrations[i] }
     const tmpInteg = [...integrations]
     toast.loading('cloneing...')
+    console.log('mailerlite', formID,existInteg)
     bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
       .then(response => {
         if (response && response.success) {

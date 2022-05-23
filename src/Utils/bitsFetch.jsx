@@ -13,7 +13,6 @@ export default async function bitsFetch(data, action, contentType = null, queryP
       }
     }
   }
-
   return fetch(uri, {
     method: 'POST',
     headers: {},

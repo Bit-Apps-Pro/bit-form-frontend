@@ -31,6 +31,8 @@ const OneDriveAuthorization = lazy(() => import('./OneDrive/OneDriveAuthorizatio
 const AcumbamailAuthorization = lazy(() => import('./Acumbamail/AcumbamailAuthorization'))
 const GroundhoggAuthorization = lazy(() => import('./Groundhogg/GroundhoggAuthorization'))
 const SendFoxAuthorization = lazy(() => import('./SendFox/SendFoxAuthorization'))
+const MailerLiteAuthorization = lazy(() => import('./MailerLite/MailerLiteAuthorization'))
+
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
@@ -111,7 +113,9 @@ export default function IntegInfo({ allIntegURL }) {
         return <GroundhoggAuthorization groundhoggConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'SendFox':
         return <SendFoxAuthorization sendFoxConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
-      default:
+        case 'MailerLite':
+          return <MailerLiteAuthorization mailerLiteConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+        default:
         return ''
     }
   }
