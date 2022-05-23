@@ -32,7 +32,8 @@ const AcumbamailAuthorization = lazy(() => import('./Acumbamail/AcumbamailAuthor
 const GroundhoggAuthorization = lazy(() => import('./Groundhogg/GroundhoggAuthorization'))
 const SendFoxAuthorization = lazy(() => import('./SendFox/SendFoxAuthorization'))
 const MailerLiteAuthorization = lazy(() => import('./MailerLite/MailerLiteAuthorization'))
-
+const TwilioAuthorization = lazy(() => import('./Twilio/TwilioAuthorization'))
+const GetgistAuthorization = lazy(() => import('./Getgist/GetgistAuthorization'))
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
@@ -113,9 +114,13 @@ export default function IntegInfo({ allIntegURL }) {
         return <GroundhoggAuthorization groundhoggConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'SendFox':
         return <SendFoxAuthorization sendFoxConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
-        case 'MailerLite':
-          return <MailerLiteAuthorization mailerLiteConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
-        default:
+      case 'MailerLite':
+        return <MailerLiteAuthorization mailerLiteConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Twilio':
+        return <TwilioAuthorization twilioConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Getgist':
+        return <GetgistAuthorization getgist={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      default:
         return ''
     }
   }

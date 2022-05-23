@@ -48,6 +48,7 @@ const EditAcumbamail = lazy(() => import('./Acumbamail/EditAcumbamail'))
 const EditGroundhogg = lazy(() => import('./Groundhogg/EditGroundhogg'))
 const EditSendFox = lazy(() => import('./SendFox/EditSendFox'))
 const EditMailerLite = lazy(() => import('./MailerLite/EditMailerLite'))
+const EditTwilio = lazy(() => import('./Twilio/EditTwilio'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
@@ -139,9 +140,11 @@ export default function EditInteg({ allIntegURL }) {
         return <EditGroundhogg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'SendFox':
         return <EditSendFox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        case 'MailerLite':
-          return <EditMailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        default:
+      case 'MailerLite':
+        return <EditMailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Twilio':
+        return <EditTwilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      default:
         break
     }
     return ''

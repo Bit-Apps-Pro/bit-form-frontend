@@ -24,12 +24,14 @@ import encharge from '../resource/img/integ/encharge .svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
 import getgist from '../resource/img/integ/getgist.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
+import groundhogg from '../resource/img/integ/groundhogg.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
 import hubspot from '../resource/img/integ/hubspot.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
+import mailerLite from '../resource/img/integ/mailerLite.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import metabox from '../resource/img/integ/metabox.svg'
 import oneDrive from '../resource/img/integ/OneDrive.svg'
@@ -38,19 +40,17 @@ import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
 import rapidmail from '../resource/img/integ/rapidmail.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
+import sendfox from '../resource/img/integ/sendfox.svg'
 import sendinblue from '../resource/img/integ/sendinblue.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
 import telegram from '../resource/img/integ/telegram.svg'
+import twilio from '../resource/img/integ/twilio.svg'
 import webhooks from '../resource/img/integ/webhooks.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import sendfox from '../resource/img/integ/sendfox.svg'
-import groundhogg from '../resource/img/integ/groundhogg.svg'
-import mailerLite from '../resource/img/integ/mailerLite.svg'
-
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -119,6 +119,7 @@ function Integrations() {
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
     { type: 'MailerLite', logo: mailerLite, pro },
+    { type: 'Twilio', logo: twilio, pro },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(integs)
@@ -205,7 +206,7 @@ function Integrations() {
     const existInteg = { ...integrations[i] }
     const tmpInteg = [...integrations]
     toast.loading('cloneing...')
-    console.log('mailerlite', formID,existInteg)
+    console.log('mailerlite', formID, existInteg)
     bitsFetch({ formID, id: existInteg.id }, 'bitforms_clone_integration')
       .then(response => {
         if (response && response.success) {

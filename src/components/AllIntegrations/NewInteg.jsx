@@ -48,7 +48,7 @@ const OneDrive = lazy(() => import('./OneDrive/OneDrive'))
 const Groundhogg = lazy(() => import('./Groundhogg/Groundhogg'))
 const SendFox = lazy(() => import('./SendFox/SendFox'))
 const MailerLite = lazy(() => import('./MailerLite/MailerLite'))
-
+const Twilio = lazy(() => import('./Twilio/Twilio'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -140,10 +140,11 @@ export default function NewInteg({ allIntegURL }) {
         return <Groundhogg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'SendFox':
         return <SendFox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        case 'MailerLite':
-          return <MailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-       
-        default:
+      case 'MailerLite':
+        return <MailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Twilio':
+        return <Twilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      default:
         return <></>
     }
   }
