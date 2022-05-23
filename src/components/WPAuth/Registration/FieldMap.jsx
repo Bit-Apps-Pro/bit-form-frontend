@@ -1,4 +1,5 @@
 import TrashIcn from '../../../Icons/TrashIcn'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './UserHelperFunction'
@@ -17,7 +18,7 @@ export default function FieldMap({ i, type, formFields, field, userConf, setUser
   const { propName, fldName } = fldType[type]
 
   const handleCustomValue = (event, indx) => {
-    const newConf = { ...userConf }
+    const newConf = deepCopy(userConf)
     newConf[authType][propName][indx].customValue = event.target.value
     setUserConf(newConf)
   }
