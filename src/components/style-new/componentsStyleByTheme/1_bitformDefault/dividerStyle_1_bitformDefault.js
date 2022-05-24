@@ -23,7 +23,7 @@ export default function dividerStyle_1_bitformDefault({ fk }) {
       width: '100%',
       // border: '',
       'border-bottom': 'var(--global-fld-bdr)',
-      'border-width': '1',
+      'border-width': '1px !important',
       // 'border-color': 'hsla(0, 0%, 62%, 100%)',
     },
   }
