@@ -56,11 +56,13 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
         fieldData={attr}
       >
         <div
+          data-testid={`${fieldKey}-inp-fld-wrp`}
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
           {... { ...getCustomAttributs(fieldKey, 'inp-fld-wrp') }}
         >
           <textarea
+            data-testid={fieldKey}
             data-dev-fld={fieldKey}
             id={fieldKey}
             className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')}`}

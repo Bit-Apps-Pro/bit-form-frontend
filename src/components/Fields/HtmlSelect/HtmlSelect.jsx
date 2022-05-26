@@ -18,12 +18,14 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
         fieldData={fieldData}
       >
         <select
+          data-testid={fieldKey}
           data-dev-fld={fieldKey}
           id={fieldKey}
           className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')} no-drg ${fieldData.readonly ? 'readonly' : ''}`}
           {...'disabled' in fieldData && { disabled: fieldData.disabled }}
           {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
           {... { ...getCustomAttributs(fieldKey, 'fld') }}
+          {...'req' in fieldData.valid && { required: fieldData.valid.req }}
         >
           {fieldData.phHide && (
             <option

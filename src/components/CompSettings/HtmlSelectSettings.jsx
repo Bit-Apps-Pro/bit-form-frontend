@@ -61,10 +61,6 @@ export default function HtmlSelectSettings() {
 
       <FieldSettingsDivider />
 
-      <RequiredSettings />
-
-      <FieldSettingsDivider />
-
       <PlaceholderSettings />
 
       <FieldSettingsDivider />
@@ -76,6 +72,10 @@ export default function HtmlSelectSettings() {
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         isUnique="show"
       />
+      <FieldSettingsDivider />
+
+      <RequiredSettings />
+
       <FieldSettingsDivider />
 
       <FieldHideSettings />

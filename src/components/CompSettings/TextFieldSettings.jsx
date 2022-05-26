@@ -562,6 +562,14 @@ function TextFieldSettings() {
             </>
           )}
 
+        {(fieldData.typ === 'textarea'
+        || fieldData.typ === 'password') && (
+          <>
+            <PlaceholderSettings />
+            <FieldSettingsDivider />
+          </>
+        )}
+
         <SimpleAccordion
           id="nam-stng"
           title={__('Name', 'bitform')}
