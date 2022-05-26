@@ -28,9 +28,9 @@ export const checkMappedFields = (mailerLiteConf) => {
   }
   return true
 }
-export const mailerliteRefreshFields = (confTmp, setConf, setError, setisAuthorized, setIsLoading) => {
+export const mailerliteRefreshFields = (confTmp, setConf, setError,setisAuthorized, setIsLoading, type) => {
   if (!confTmp.auth_token) {
-    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty', 'bit-integrations') : '' })
+    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty', 'bitform') : '' })
     return
   }
   setError({})
@@ -40,19 +40,32 @@ export const mailerliteRefreshFields = (confTmp, setConf, setError, setisAuthori
   console.log('requestParams', requestParams)
   bitsFetch(requestParams, 'bitforms_mailerlite_refresh_fields')
     .then(result => {
+      console.log('result', result)
       if (result && result.success) {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.mailerLiteFields = result.data
         }
         setConf(newConf)
-        setisAuthorized(true)
-        setIsLoading(false)
-        toast.success(__('Authorized successfully', 'bit-integrations'))
+        if (type === 'authorization') {
+          setIsLoading(false)
+          setisAuthorized(true)
+          toast.success(__('Authorized successfully', 'bitform'))
+        } else {
+          setIsLoading(false)
+          toast.success(__('Fields refresh successfully', 'bitform'))
+        }
         return
       }
-      setIsLoading(false)
-      toast.error(__('Authorized failed', 'bit-integrations'))
+      if (type === 'authorization') {
+        setIsLoading(false)
+        setisAuthorized(false)
+        toast.error(__(result.data, 'bitform'))
+        toast.error(__('Authorized Failed', 'bitform'))
+      } else {
+        setIsLoading(false)
+        toast.error(__('Fields refresh failed', 'bitform'))
+      }
     })
 }
 
@@ -69,11 +82,11 @@ export const getAllGroups = (confTmp, setConf, setIsLoading) => {
         }
         setConf(newConf)
         setIsLoading(false)
-        toast.success(__('Group fetch successfully', 'bit-integrations'))
+        toast.success(__('Group fetch successfully', 'bitform'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Group fetch failed', 'bit-integrations'))
+      toast.error(__('Group fetch failed', 'bitform'))
     })
 
 }
