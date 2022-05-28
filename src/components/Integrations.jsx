@@ -118,8 +118,8 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
-    { type: 'MailerLite', logo: mailerLite, pro },
-    { type: 'Twilio', logo: twilio, pro },
+    { type: 'MailerLite', logo: mailerLite, pro, proVer: '1.5.1' },
+    { type: 'Twilio', logo: twilio, pro, proVer: '1.5.1' },
   ]
 
 
