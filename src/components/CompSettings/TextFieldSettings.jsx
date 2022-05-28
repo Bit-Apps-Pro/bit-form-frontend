@@ -36,6 +36,7 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -562,30 +563,7 @@ function TextFieldSettings() {
             </>
           )}
 
-        {(fieldData.typ === 'textarea'
-        || fieldData.typ === 'password') && (
-          <>
-            <PlaceholderSettings />
-            <FieldSettingsDivider />
-          </>
-        )}
-
-        <SimpleAccordion
-          id="nam-stng"
-          title={__('Name', 'bitform')}
-          className={css(FieldStyle.fieldSection)}
-        >
-          <div className={css(FieldStyle.placeholder)}>
-            <input
-              data-testid="nam-stng-inp"
-              aria-label="Name for this Field"
-              placeholder="Type field name here..."
-              className={css(FieldStyle.input)}
-              value={fieldName}
-              onChange={handleFieldName}
-            />
-          </div>
-        </SimpleAccordion>
+        <FieldNameSettings />
 
         <FieldSettingsDivider />
         {
