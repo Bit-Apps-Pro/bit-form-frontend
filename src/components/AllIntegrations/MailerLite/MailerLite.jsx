@@ -20,6 +20,7 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
 
 
 
+
   const [mailerLiteConf, setMailerLiteConf] = useState({
     name: 'MailerLite',
     type: 'MailerLite',
@@ -87,11 +88,10 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          // disabled={!mailerLiteConf?.recipient_id}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bit-integrations')}
+          {__('Next', 'bitform')}
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
@@ -102,10 +102,7 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
       <IntegrationStepThree
         step={step}
         saveConfig={() => saveConfig()}
-        isLoading={isLoading}
-        dataConf={mailerLiteConf}
-        setDataConf={setMailerLiteConf}
-        formFields={formFields}
+
       />
     </div>
   )
