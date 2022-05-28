@@ -109,6 +109,11 @@ const FieldStyle = {
     py: 10,
   },
 
+  nameErr: {
+    cr: 'red',
+    ml: 5,
+  },
+
   inputNumber: {
     w: 80,
     bd: 'var(--b-79-96) !important',
