@@ -84,7 +84,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     }
   }, [fieldChangeCounter])
 
-  useEffect(() => { margeNewData() }, [newData, fields])
+  useEffect(() => { margeNewData() }, [newData])
   useEffect(() => {
     const lgLength = layouts.lg.length
     const mdLength = layouts.md.length
