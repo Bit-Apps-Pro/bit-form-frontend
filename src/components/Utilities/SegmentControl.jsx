@@ -175,6 +175,7 @@ function SegmentControl({ defaultActive,
             onKeyPress={e => eventHandler(e, i)}
             href={`#${item.label}`}
             data-label={item.label}
+            data-testid={`${item.label}-tab`}
           >
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
@@ -190,6 +191,7 @@ function SegmentControl({ defaultActive,
             onClick={e => eventHandler(e, i)}
             onKeyPress={e => eventHandler(e, i)}
             data-label={item.label}
+            data-testid={`${item.label}-tab`}
           >
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
