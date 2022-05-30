@@ -3,7 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTwilioConf }) {
   const bits = useRecoilValue($bits)
@@ -43,11 +43,11 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
           <select className="btcd-paper-inp" disabled name="twilioField" value={field.twilioField} onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {
-                twilioConf?.twilioFields.map(({ key, label }) => (
-                  <option key={key} value={key}>
-                    {label}
-                  </option>
-                ))
+              twilioConf?.twilioFields.map(({ key, label }) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))
             }
           </select>
         </div>

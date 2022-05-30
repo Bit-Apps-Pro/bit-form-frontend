@@ -3,8 +3,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates'
 import { generateMappedField } from './MailerLiteCommonFunc'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteConf, setMailerLiteConf }) {
   console.log('formFields2', formFields)
