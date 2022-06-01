@@ -10,6 +10,7 @@ import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../Gl
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -20,6 +21,7 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
@@ -122,6 +124,10 @@ export default function FileUploadSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
+  if (isDev) {
+    window.selectedFieldData = fieldData
+  }
+
   return (
     <>
       <FieldSettingTitle
@@ -204,6 +210,10 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldHideSettings />
 
       <FieldSettingsDivider />
 

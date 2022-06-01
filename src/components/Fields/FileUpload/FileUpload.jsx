@@ -134,6 +134,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   id={fieldKey}
                   name="file-upload"
                   fieldData
+                  {...'req' in fieldData.valid && { required: fieldData.valid.req }}
                   {...'disabled' in fieldData && { disabled: fieldData.disabled }}
                   {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
                 />

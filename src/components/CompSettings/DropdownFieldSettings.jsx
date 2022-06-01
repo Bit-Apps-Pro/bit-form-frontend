@@ -9,6 +9,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -136,6 +137,9 @@ export default function DropdownFieldSettings() {
     }
   }
 
+  if (isDev) {
+    window.selectedFieldData = fieldData
+  }
   return (
     <>
       <FieldSettingTitle
@@ -337,7 +341,7 @@ export default function DropdownFieldSettings() {
                   >
                     <EditIcn size={19} />
                   </button>
-                  {listLength > 1 && (
+                  {listLength > 1 && index !== activeList && (
                     <button
                       data-testid={`lst-opt-del-btn-${index}`}
                       type="button"
@@ -379,7 +383,7 @@ export default function DropdownFieldSettings() {
         <div className="pos-rel">
           <EditOptions
             optionMdl={optionMdl}
-            options={Object.values(optionsList[currentOptList])[0]}
+            options={Object.values(optionsList[currentOptList] || {})[0]}
             setOptions={newOpts => handleEditOptions(newOpts)}
             lblKey="lbl"
             valKey="val"

@@ -7,6 +7,7 @@ import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalS
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -85,6 +86,10 @@ const CurrencyFieldSettings = () => {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  if (isDev) {
+    window.selectedFieldData = fieldData
   }
 
   return (

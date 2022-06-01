@@ -1,12 +1,13 @@
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpoint, $draggingField } from '../../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHookStates, $draggingField } from '../../GlobalStates/GlobalStates'
 
 function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, title }) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   const setDraggingField = useSetRecoilState($draggingField)
   const [brkPoint] = useRecoilState($breakpoint)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
 
   const { css } = useFela()
 
@@ -14,7 +15,7 @@ function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, titl
     e.dataTransfer.setData('text/plain', '')
     setDraggingField(value)
     if (brkPoint !== 'lg') {
-      setBuilderHelperStates(prv => ({ ...prv, forceBuilderWidthToLG: !prv.forceBuilderWidthToLG }))
+      setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToLG: prv.forceBuilderWidthToLG + 1 }))
     }
   }
 
