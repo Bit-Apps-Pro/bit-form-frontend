@@ -9,6 +9,7 @@ import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -104,6 +105,10 @@ const PhoneNumberFieldSettings = () => {
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
     }
+  }
+
+  if (isDev) {
+    window.selectedFieldData = fieldData
   }
 
   return (

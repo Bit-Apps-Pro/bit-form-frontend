@@ -9,6 +9,7 @@ import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory, assignNestedObj, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -201,6 +202,7 @@ function RadioCheckSettings() {
       fieldData.err.mn.show = true
       if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
     }
+
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } }, setUpdateBtn)
@@ -292,7 +294,9 @@ function RadioCheckSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
-
+  if (isDev) {
+    window.selectedFieldData = fieldData
+  }
   return (
     <div className="">
       <FieldSettingTitle
