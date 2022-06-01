@@ -33,6 +33,7 @@ import integrately from '../resource/img/integ/integrately.svg'
 import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
+import mailerLite from '../resource/img/integ/mailerLite.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import metabox from '../resource/img/integ/metabox.svg'
 import oneDrive from '../resource/img/integ/OneDrive.svg'
@@ -46,6 +47,7 @@ import sendinblue from '../resource/img/integ/sendinblue.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
 import telegram from '../resource/img/integ/telegram.svg'
+import twilio from '../resource/img/integ/twilio.svg'
 import webhooks from '../resource/img/integ/webhooks.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
@@ -53,7 +55,7 @@ import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
-import { compareBetweenVersions, deepCopy } from '../Utils/Helpers'
+import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -120,9 +122,13 @@ function Integrations() {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
     { type: 'Zoho Creator', logo: zohoCreator, pro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro },
+    { type: 'MailerLite', logo: mailerLite, pro, proVer: '1.5.1' },
+    { type: 'Twilio', logo: twilio, pro, proVer: '1.5.1' },
   ]
 
-  const [availableIntegs, setAvailableIntegs] = useState(integs)
+
+
+  const [availableIntegs, setAvailableIntegs] = useState(sortArrOfObj(integs, 'type'))
 
   const removeInteg = i => {
     const tempIntegration = { ...integrations[i] }
@@ -179,7 +185,7 @@ function Integrations() {
 
   const closeIntegModal = () => {
     setShowMdl(false)
-    setTimeout(() => setAvailableIntegs(integs), 500)
+    setTimeout(() => setAvailableIntegs(sortArrOfObj(integs, 'type')), 500)
   }
 
   const closeConfMdl = () => {
@@ -190,7 +196,7 @@ function Integrations() {
   const searchInteg = e => {
     const { value } = e.target
     const filtered = integs.filter(integ => integ.type.toLowerCase().includes(value.toLowerCase()))
-    setAvailableIntegs(filtered)
+    setAvailableIntegs(sortArrOfObj(filtered, 'type'))
   }
 
   const inteCloneConf = i => {

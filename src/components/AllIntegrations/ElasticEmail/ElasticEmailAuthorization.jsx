@@ -56,10 +56,10 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
       <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={elasticEmailConf.api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={elasticEmailConf.api_key} type="text" placeholder={__('API Key...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get API , Please Visit', 'bitform')}
+        {__('To get API Key, Please Visit', 'bitform')}
         {' '}
         <a className="btcd-link" href="https://elasticemail.com/account#/settings/new/manage-api" target="_blank" rel="noreferrer">{__('Elastic Email API Console', 'bitform')}</a>
       </small>

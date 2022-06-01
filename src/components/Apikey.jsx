@@ -47,19 +47,22 @@ export default function Apikey() {
   }
 
   useEffect(() => {
-    const loadApiKeyProm = bitsFetch({}, 'bitforms_api_key').then((res) => {
-      if (res !== undefined && res.success) {
-        if (isPro) setKey(res.data)
-        else setKey('**********************************')
-      }
-      if (res?.data) return 'Successfully fetched API key.'
-      return 'Error'
-    })
-    toast.promise(loadApiKeyProm, {
-      success: data => data,
-      error: __('Error Occured', 'bitform'),
-      loading: __('Loading API key...'),
-    })
+    if (isPro) {
+      const loadApiKeyProm = bitsFetch({}, 'bitforms_api_key').then((res) => {
+        if (res !== undefined && res.success) {
+          setKey(res.data)
+        }
+        if (res?.data) return 'Successfully fetched API key.'
+        return 'Error'
+      })
+      toast.promise(loadApiKeyProm, {
+        success: data => data,
+        error: __('Error Occured', 'bitform'),
+        loading: __('Loading API key...'),
+      })
+    } else {
+      setKey('**********************************')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

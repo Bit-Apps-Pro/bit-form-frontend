@@ -18,6 +18,7 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       'background-color': 'hsla(216, 85%, 18%, 100%)',
       border: 'solid hsla(216, 85%, 18%, 100%)',
       'border-width': '1px',
+      padding: 0,
       // color: 'hsla(0, 0%, 100%, 100%)',
       'box-shadow': 'hsla(0, 0%, 0%, 0.1) 0px 4px 12px',
     },
@@ -48,6 +49,8 @@ export default function razorpayStyle_1_BitformDefault({ fk }) {
       padding: '4px 28px 4px 60px',
       margin: '1px 0px',
       color: 'hsla(0, 0%, 100%, 100%)',
+      display: 'flex',
+      'flex-direction': 'column',
     },
 
     [`.${fk}-razorpay-btn-title`]: {
