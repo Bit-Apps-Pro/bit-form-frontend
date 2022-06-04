@@ -173,7 +173,7 @@ export default function ButtonSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select data-destid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
+            <select data-testid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
@@ -188,7 +188,7 @@ export default function ButtonSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select data-destid="btn-typ-slct" className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
+            <select data-testid="btn-typ-slct" className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
               {type.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
