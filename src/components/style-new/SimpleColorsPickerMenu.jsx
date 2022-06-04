@@ -282,7 +282,7 @@ function SimpleColorsPickerMenu({ stateObjName,
                   title={__('Transparant', 'bitform')}
                   action={transparantColor}
                   isChecked={checkTransparant()}
-                  id={`${id}-bg-transparant`}
+                  id="color-transparant"
                 />
               </div>
               <ColorPicker
@@ -301,7 +301,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               title={__('Transparant', 'bitform')}
               action={transparantColor}
               isChecked={checkTransparant()}
-              id={`${id}-bg-transparant`}
+              id="color-transparant"
             />
           </div>
           <ColorPicker

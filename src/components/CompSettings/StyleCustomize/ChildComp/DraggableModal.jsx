@@ -113,7 +113,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
             <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
           </div>
           <button
-            data-testid={`${id}-close-modal`}
+            data-testid="draggable-modal-close-btn"
             type="button"
             className={css(draggableModalStyle.button)}
             onClick={() => setDraggableModal({ show: false })}
