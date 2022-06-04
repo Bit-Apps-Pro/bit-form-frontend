@@ -69,7 +69,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         <div className={`${fieldKey}-phone-fld-container`}>
           <div
             data-dev-phone-fld-wrp={fieldKey}
-            className={`${fieldKey}-phone-fld-wrp ${getCustomClsName(fieldKey, 'phone-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            className={`${fieldKey}-phone-fld-wrp ${getCustomClsName(fieldKey, 'phone-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={phoneNumberWrapElmRef}
             {... { ...getCustomAttributs(fieldKey, 'phone-fld-wrp') }}
           >
@@ -77,10 +77,10 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
               name={fieldKey}
               type="hidden"
               className={`${fieldKey}-phone-hidden-input`}
-              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+              {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+              {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
             />
-            <div className={`${fieldKey}-phone-inner-wrp`} tabIndex={fieldData.disabled ? '-1' : '0'}>
+            <div className={`${fieldKey}-phone-inner-wrp`} tabIndex={fieldData.valid.disabled ? '-1' : '0'}>
               <div
                 data-testid={`${fieldKey}-dpd-wrp`}
                 className={`${fieldKey}-dpd-wrp`}
@@ -88,7 +88,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 aria-live="assertive"
                 aria-labelledby="country-label-2"
                 aria-expanded="false"
-                tabIndex={fieldData.disabled ? '-1' : '0'}
+                tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               >
                 {selectedFlagImage && (
                   <div className={`${fieldKey}-selected-country-wrp`}>
@@ -127,7 +127,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 type="tel"
                 className={`${fieldKey}-phone-number-input`}
                 autoComplete="tel"
-                tabIndex={fieldData.disabled ? '-1' : '0'}
+                tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />
               {selectedCountryClearable && (
                 <button

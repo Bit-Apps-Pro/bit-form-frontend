@@ -118,8 +118,8 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
           type="file"
           className="filepond"
           name="filepond"
-          {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-          {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+          {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+          {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
         />
         <div id={`filepond-${fieldKey}-container`} className={`filepond-${fieldKey}-container ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} />
 

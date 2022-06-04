@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useId, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -10,6 +10,7 @@ import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy, renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -17,6 +18,8 @@ import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -30,36 +33,6 @@ export default function DecisionBoxSettings() {
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const isDiasabled = fieldData.valid.disabled
-
-  function setAdminLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.adminLbl
-    } else {
-      fieldData.adminLbl = e.target.value
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${fieldData.adminLbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function setRequired(e) {
-    if (e.target.checked) {
-      const tmp = { ...fieldData.valid }
-      tmp.req = true
-      fieldData.valid = tmp
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    const req = e.target.checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${fieldData.adminLbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
 
   function setChecked(e) {
     const { checked } = e.target
@@ -72,7 +45,7 @@ export default function DecisionBoxSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${ 5 }`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
@@ -112,6 +85,10 @@ export default function DecisionBoxSettings() {
     setFields(allFields)
     const req = checked ? 'on' : 'off'
     addToBuilderHistory(setBuilderHistory, { event: `Readonly field ${req}`, type: `readobly_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  if (isDev) {
+    window.selectedFieldData = fieldData
   }
 
   return (
@@ -169,7 +146,7 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
+      {/* <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
           id="fld-dsbl-stng"
           tip="By disabling this option, the field disable will be hidden"
@@ -177,12 +154,12 @@ export default function DecisionBoxSettings() {
           action={setDiasabled}
           isChecked={isDiasabled}
         />
-      </div>
-      {/* <FieldDisabledSettings /> */}
+      </div> */}
+      <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
+      {/* <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
         <SingleToggle
           id="rdonly-stng"
           tip="By disabling this option, the field readonly will be hidden"
@@ -190,8 +167,8 @@ export default function DecisionBoxSettings() {
           action={setReadOnly}
           isChecked={fieldData.valid.readonly}
         />
-      </div>
-      {/* <FieldReadOnlySettings /> */}
+      </div> */}
+      <FieldReadOnlySettings />
 
       <FieldSettingsDivider />
 

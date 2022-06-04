@@ -60,7 +60,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
         <div className={`${fieldKey}-file-up-container ${getCustomClsName(fieldKey, 'file-up-container')}`}>
           <div
             data-dev-file-up-wrpr={fieldKey}
-            className={`${fieldKey}-file-up-wrpr ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''} ${getCustomClsName(fieldKey, 'file-up-wrpr')}`}
+            className={`${fieldKey}-file-up-wrpr ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''} ${getCustomClsName(fieldKey, 'file-up-wrpr')}`}
             ref={fileUploadWrapElmRef}
             {... { ...getCustomAttributs(fieldKey, 'file-up-wrpr') }}
           >
@@ -135,8 +135,8 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   name="file-upload"
                   fieldData
                   {...'req' in fieldData.valid && { required: fieldData.valid.req }}
-                  {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-                  {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+                  {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+                  {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
                 />
               </div>
               {fieldData.config.showFileList && (

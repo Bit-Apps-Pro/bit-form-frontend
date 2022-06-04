@@ -70,8 +70,8 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             className={`${fieldKey}-fld no-drg ${getCustomClsName(fieldKey, 'fld')}`}
             type={type}
             {...'req' in attr.valid && { required: attr.valid.req }}
-            {...'disabled' in attr && { disabled: attr.disabled }}
-            {...'readonly' in attr && { readOnly: attr.readonly }}
+            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+            {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
             {...'ph' in attr && { placeholder: attr.ph }}
             {...'mn' in attr && { min: attr.mn }}
             {...'mx' in attr && { max: attr.mx }}

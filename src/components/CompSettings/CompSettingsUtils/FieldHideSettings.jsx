@@ -7,7 +7,6 @@ import { $breakpoint, $builderHistory, $fields, $updateBtn } from '../../../Glob
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
-import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings({ cls }) {
@@ -15,7 +14,7 @@ export default function FieldHideSettings({ cls }) {
   const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const isHidden = fields[fldKey].hidden?.includes(breakpoint) || false
+  const isHidden = fields[fldKey].valid.hidden?.includes(breakpoint) || false
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
   const setHidden = e => {
@@ -23,13 +22,13 @@ export default function FieldHideSettings({ cls }) {
 
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
-      if (!fldData.hidden) fldData.hidden = []
+      if (!fldData.valid.hidden) fldData.valid.hidden = []
       if (checked) {
-        fldData.hidden.push(breakpoint)
+        fldData.valid.hidden.push(breakpoint)
       } else {
-        fldData.hidden.splice(fldData.hidden.indexOf(breakpoint), 1)
+        fldData.valid.hidden.splice(fldData.valid.hidden.indexOf(breakpoint), 1)
       }
-      if (!fldData.hidden.length) delete fldData.hidden
+      if (!fldData.valid.hidden.length) delete fldData.valid.hidden
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)

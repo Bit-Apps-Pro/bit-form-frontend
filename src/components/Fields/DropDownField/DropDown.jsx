@@ -59,7 +59,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
         >
           <div
             data-dev-dpd-fld-wrp={fieldKey}
-            className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={dropdownWrapElmRef}
             {... { ...getCustomAttributs(fieldKey, 'dpd-fld-wrp') }}
           >
@@ -68,8 +68,8 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               name={fieldKey}
               type="hidden"
               className={`${fieldKey}-dpd-hidden-input ${getCustomClsName(fieldKey, 'dpd-hidden-input')}`}
-              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+              {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+              {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}

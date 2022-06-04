@@ -84,17 +84,18 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
             {... { ...getCustomAttributs(fieldKey, 'cw') }}
           >
             <input
+              data-testid={fieldKey}
               id={`${fieldKey}-decision`}
               type="checkbox"
               className={`${fieldKey}-ci`}
-              disabled={attr.valid.disabled}
-              readOnly={attr.valid.readonly}
+              {...'req' in attr.valid && { required: attr.valid.req }}
+              {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+              {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
               defaultValue={attr?.info?.lbl}
-              required={attr.valid.req}
-              name={attr?.info?.lbl}
-              checked={checked}
-              value={value}
-              onChange={(e) => onChangeHandler(e)}
+              {...'name' in attr && { name: attr.name }}
+              {...{ checked }}
+              {...{ value }}
+              {...{ onChange: onChangeHandler }}
             />
             <label
               data-dev-cl={fieldKey}

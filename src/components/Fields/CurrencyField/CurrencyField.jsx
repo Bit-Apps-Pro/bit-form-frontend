@@ -63,7 +63,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
         <div className={`${fieldKey}-currency-fld-container`}>
           <div
             data-dev-currency-fld-wrp={fieldKey}
-            className={`${fieldKey}-currency-fld-wrp ${getCustomClsName(fieldKey, 'currency-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            className={`${fieldKey}-currency-fld-wrp ${getCustomClsName(fieldKey, 'currency-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={currencyWrapElmRef}
             {... { ...getCustomAttributs(fieldKey, 'currency-fld-wrp') }}
           >
@@ -71,8 +71,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
               name={fieldKey}
               type="hidden"
               className={`${fieldKey}-currency-hidden-input`}
-              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+              {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+              {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
             />
             <div className={`${fieldKey}-currency-inner-wrp`}>
               <div
@@ -83,7 +83,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 aria-live="assertive"
                 aria-labelledby="currency-label-2"
                 aria-expanded="false"
-                tabIndex={fieldData.disabled ? '-1' : '0'}
+                tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               >
                 {selectedFlagImage && (
                   <div className={`${fieldKey}-selected-currency-wrp`}>
@@ -119,7 +119,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 aria-label="Currency Input"
                 type="text"
                 className={`${fieldKey}-currency-amount-input`}
-                tabIndex={fieldData.disabled ? '-1' : '0'}
+                tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />
               {selectedCurrencyClearable && (
                 <button

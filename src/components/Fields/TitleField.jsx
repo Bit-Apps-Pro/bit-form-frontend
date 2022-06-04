@@ -9,7 +9,7 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const { logo, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = fieldData
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
-  const isHidden = fieldData.hidden?.includes(breakpoint) || false
+  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
 
   const titleGenerator = (tag, text, cls, preIcn, sufIcn) => renderHTMR(
     `<${tag} data-dev-${cls}=${fieldKey} className="${fieldKey}-${cls} ${getCustomClsName(fieldKey, cls)}">

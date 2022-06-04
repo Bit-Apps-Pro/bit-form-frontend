@@ -66,7 +66,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
         <div className={`${fieldKey}-country-fld-container`}>
           <div
             data-dev-country-fld-wrp={fieldKey}
-            className={`${fieldKey}-country-fld-wrp ${getCustomClsName(fieldKey, 'country-fld-wrp')} ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`}
+            className={`${fieldKey}-country-fld-wrp ${getCustomClsName(fieldKey, 'country-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={countryWrapElmRef}
             {... { ...getCustomAttributs(fieldKey, 'country-fld-wrp') }}
           >
@@ -74,8 +74,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
               name="country-name"
               type="hidden"
               className={`${fieldKey}-country-hidden-input`}
-              {...'disabled' in fieldData && { disabled: fieldData.disabled }}
-              {...'readonly' in fieldData && { readOnly: fieldData.readonly }}
+              {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+              {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}
@@ -84,7 +84,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
               aria-label="Select a Country"
               role="combobox"
               aria-expanded="false"
-              tabIndex={fieldData.disabled ? '-1' : '0'}
+              tabIndex={fieldData.valid.disabled ? '-1' : '0'}
             >
               <div className={`${fieldKey}-selected-country-wrp`}>
                 {fieldData.config.selectedFlagImage && (

@@ -8,7 +8,7 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function Button({ fieldKey, attr: fieldData, styleClasses, buttonDisabled, handleReset, formID, data }) {
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
-  const isHidden = fieldData.hidden?.includes(breakpoint) || false
+  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
   styleClassesForRender[`.${fieldKey}-fld-wrp`]['align-items'] = fieldData.align
   return (
@@ -28,7 +28,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
           // eslint-disable-next-line react/button-has-type
           type={fieldData.btnTyp}
           {...fieldData.btnTyp === 'reset' && { onClick: handleReset }}
-          {...'disabled' in fieldData && { disabled: fieldData.disabled }}
+          {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
         >
           {fieldData.btnPreIcn && (
             <img

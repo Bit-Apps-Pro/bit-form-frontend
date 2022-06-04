@@ -7,7 +7,7 @@ import RenderStyle from '../style-new/RenderStyle'
 function Divider({ fieldKey, styleClasses, attr: fieldData }) {
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
-  const isHidden = fieldData.hidden?.includes(breakpoint) || false
+  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />

@@ -12,7 +12,7 @@ function Image({ fieldKey, attr: fieldData, styleClasses }) {
   const height = wrap?.clientHeight || 80
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
-  const isHidden = fieldData.hidden?.includes(breakpoint) || false
+  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
   styleClassesForRender[`.${fieldKey}-img`].width = width
   styleClassesForRender[`.${fieldKey}-img`].height = height

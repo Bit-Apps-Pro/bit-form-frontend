@@ -667,6 +667,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 10 },
       elm: {
         typ: 'image',
+        valid: {},
         img: {},
         err: {},
         customClasses: {},
@@ -680,6 +681,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 20, w: 60, i: 'shadow_block', minH: 8 },
       elm: {
         typ: 'divider',
+        valid: {},
         divider: {},
         err: {},
         customClasses: {},

@@ -13,7 +13,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const isDiasabled = fields[fldKey].disabled || false
+  const isDiasabled = fields[fldKey].valid.disabled || false
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
   const setDiasabled = e => {
@@ -22,9 +22,9 @@ export default function FieldDisabledSettings({ cls, tip }) {
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if (checked) {
-        fldData.disabled = true
+        fldData.valid.disabled = true
       } else {
-        delete fldData.disabled
+        delete fldData.valid.disabled
       }
     })
     const req = checked ? 'on' : 'off'
