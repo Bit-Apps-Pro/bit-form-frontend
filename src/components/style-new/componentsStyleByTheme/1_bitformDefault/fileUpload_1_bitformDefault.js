@@ -55,7 +55,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
       'margin-left': '5px',
       filter: 'invert(1)',
     },
-    [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)' },
+    [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)', 'font-size': '14px' },
 
     [`.${fk}-file-select-status`]: { 'font-size': '14px' },
 
