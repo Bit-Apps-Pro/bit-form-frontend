@@ -143,7 +143,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 // {...itm.check && { defaultChecked: true }}
                 // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
                 defaultValue={itm.val || itm.lbl}
-                {...itm.valid.req && { required: true }}
+                {...attr.valid.req && { required: true }}
                 // {...'name' in attr && { name: `${attr.name}[]` }}
                 name={`${fieldData.lbl}[]`}
                 checked={checkBoxes.checked.includes(i) || itm?.check}
