@@ -96,14 +96,7 @@ export default function ThemeQuickTweaksCustomizer() {
 
   return (
     <>
-      <SimpleColorPicker
-        title="Field Wrapper Background Color"
-        subtitle="Theme Quick Tweaks Background Color"
-        value={globalBgColor}
-        stateObjName="themeColors"
-        propertyPath="--global-bg-color"
-        modalId="global-bg-clr"
-      />
+
 
       <SimpleColorPicker
         title="Accent Color"
@@ -199,6 +192,15 @@ export default function ThemeQuickTweaksCustomizer() {
         <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
         <SingleToggle id="rtl" isChecked={direction === 'rtl'} action={handleDir} />
       </div>
+
+      <SimpleColorPicker
+        title="Field Wrapper Background Color"
+        subtitle="Theme Quick Tweaks Background Color"
+        value={globalBgColor}
+        stateObjName="themeColors"
+        propertyPath="--global-bg-color"
+        modalId="global-bg-clr"
+      />
     </>
   )
 }
