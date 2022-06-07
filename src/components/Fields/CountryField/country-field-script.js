@@ -44,6 +44,8 @@ class CountryField {
     onChange: val => { console.log(val) },
   }
 
+  // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
+
   #debounceTimeout = null
 
   #dropdownSearchTerm = ''
@@ -53,6 +55,7 @@ class CountryField {
   constructor(selector, config) {
     Object.assign(this.#config, config)
     if (typeof selector === 'string') {
+      // TODO: builder e queryselector kaj korbena. so, jodi builder hoi taile builder theke select korte hobe
       this.#countryFieldWrapper = document.querySelector(selector)
     } else {
       this.#countryFieldWrapper = selector
@@ -65,6 +68,9 @@ class CountryField {
   }
 
   init() {
+    // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
+
+
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
@@ -108,6 +114,7 @@ class CountryField {
 
   #setCountryNameFromURL() {
     const param = this.#countryHiddenInputElm.name
+    // TODO document.URL k isBuilder diye check korte hobe
     const url = decodeURIComponent((`${document.URL}`).replace(/\+/g, '%20'))
     const selectedValue = url.replace(new RegExp(`.*${param}=([^&]*).*|(.*)`), '$1')
     if (selectedValue) {
@@ -146,6 +153,7 @@ class CountryField {
   }
 
   #handleKeyboardNavigation(e) {
+    // TODO: document e activeElement isbuilder e check korte hobe
     const activeEl = document.activeElement
     let focussableEl = null
     const isMenuOpen = this.#isMenuOpen()
@@ -319,13 +327,14 @@ class CountryField {
     this.virtualOptionList = new VirtualizedList(this.#optionListElm, {
       height: this.#config.maxHeight,
       rowCount: this.#options.length,
-      rowHeight: 31,
+      rowHeight: 31, // TODO - calculate this
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
+        // TODO - eta only isBuilder e kaj korbe
         this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
@@ -335,9 +344,11 @@ class CountryField {
         this.#setClassName(li, `${this.fieldKey}-option`)
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        // TODO - eta only isBuilder e kaj korbe
         this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
+          // TODO - eta only isBuilder e kaj korbe
           this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
           this.#setClassName(img, `${this.fieldKey}-opt-icn`)
           img.src = `${bits.assetsURL}${opt.img}`
@@ -347,6 +358,7 @@ class CountryField {
           lblimgbox.append(img)
         }
         const lbl = this.#createElm('span')
+        // TODO - eta only isBuilder e kaj korbe
         this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         this.#setTextContent(lbl, opt.lbl)
@@ -432,6 +444,7 @@ class CountryField {
   }
 
   #openDropdownAsPerWindowSpace() {
+    // window select korte hobe isBuilder onujayi
     const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
     const elementRect = this.#dropdownWrapperElm.getBoundingClientRect()
 
