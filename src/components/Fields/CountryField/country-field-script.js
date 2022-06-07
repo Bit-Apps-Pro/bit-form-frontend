@@ -575,7 +575,17 @@ export default CountryField
 //   searchPlaceholder: 'Search for countries',
 //   maxHeight: 400,
 //   onChange: val => { console.log(val) },
-//   options: countryList
+//   options: countryList,
+// document,
+// window,
+// attributes: {
+//   optionLbl: {
+//     'data-dev-opt-lbl': fldKey,
+//   },
+//   optionIcn: {
+//     'data-dev-opt-icn': fldKey,
+//   }
+// }
 // })
 // list.value = 'Afghanistan'
 // list.disabled = true
