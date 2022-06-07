@@ -3,11 +3,11 @@
 import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import DropdownField from './dropdown-filed-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
+import DropdownField from '../../resource/js/dropdown-filed-script'
 
 function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder }) {
   const dropdownWrapElmRef = useRef(null)

@@ -1,4 +1,4 @@
-import { observeElement } from '../../../Utils/globalHelpers'
+import { observeElement } from '../../Utils/globalHelpers'
 import VirtualizedList from './virtualized-list.min'
 
 class CurrencyField {

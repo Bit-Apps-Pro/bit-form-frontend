@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
 export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
   const fields = useRecoilValue($fields)

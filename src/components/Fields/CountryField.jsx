@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import CountryFieldClass from './country-field-script.js'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import CountryFieldClass from '../../resource/js/country-field-script'
+import RenderStyle from '../style-new/RenderStyle'
 
 const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   const countryWrapElmRef = useRef(null)

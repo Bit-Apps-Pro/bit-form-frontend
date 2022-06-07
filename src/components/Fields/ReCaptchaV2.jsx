@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits, $breakpoint, $fields, $flags } from '../../../GlobalStates/GlobalStates'
-import { reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
-import { loadScript, selectInGrid } from '../../../Utils/globalHelpers'
-import RenderStyle from '../../style-new/RenderStyle'
-import RecaptchaField from './re-captchaV2'
+import { $bits, $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { loadScript, selectInGrid } from '../../Utils/globalHelpers'
+import RenderStyle from '../style-new/RenderStyle'
+import RecaptchaField from '../../resource/js/re-captchaV2'
 
 export const onLoadCallback = () => {
   console.log('on load complete')

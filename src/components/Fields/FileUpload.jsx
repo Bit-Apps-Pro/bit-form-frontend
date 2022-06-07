@@ -2,18 +2,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import FileUploadField from './file-upload-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
+import FileUploadField from '../../resource/js/file-upload-script'
 
 export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
   const fileUploadFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  const assetsUrl = bits.assetsURL
+  // const assetsUrl = bits.assetsURL
 
   useEffect(() => {
     if (!fileUploadWrapElmRef?.current) {

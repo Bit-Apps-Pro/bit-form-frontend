@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import PhoneNumberFieldClass from './phone-number-field-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import PhoneNumberFieldClass from '../../resource/js/phone-number-field-script'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
 export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses }) {
   const phoneNumberWrapElmRef = useRef(null)

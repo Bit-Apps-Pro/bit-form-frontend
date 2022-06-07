@@ -2,11 +2,11 @@
 // import './currency-field-style.css'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import CurrencyFieldClass from './currency-field-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import CurrencyFieldClass from '../../resource/js/currency-field-script'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
 const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, styleClasses }) => {
   const currencyWrapElmRef = useRef(null)

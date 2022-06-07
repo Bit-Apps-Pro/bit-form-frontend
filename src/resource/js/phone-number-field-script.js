@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import { observeElement } from '../../../Utils/globalHelpers'
-import VirtualizedList from '../CurrencyField/virtualized-list.min'
+import { observeElement } from '../../Utils/globalHelpers'
+import VirtualizedList from './virtualized-list.min'
 
 class PhoneNumberField {
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
