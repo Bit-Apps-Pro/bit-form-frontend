@@ -190,6 +190,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             setModal={setModal}
             className="o-v"
             title=""
+            closeOnOutsideClick={false}
           >
             <div className="pos-rel" />
             <Editor />
