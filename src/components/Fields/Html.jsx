@@ -15,7 +15,7 @@ export default function HtmlField({ fieldKey, attr, styleClasses }) {
       <div
         data-dev-fld-wrp={fieldKey}
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
-        {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
+        {...getCustomAttributs(fieldKey, 'fld-wrp')}
       >
         {renderHTMR(attr.content || attr?.info?.content)}
       </div>
