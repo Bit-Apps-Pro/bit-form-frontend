@@ -118,6 +118,7 @@ export const getCustomClsName = (fk, element) => {
 export const getCustomAttributs = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
+  if (!attr) return
   const obj = {}
   if (attr) {
     const attrLen = attr.length
@@ -130,4 +131,21 @@ export const getCustomAttributs = (fk, element) => {
     }
   }
   return obj
+}
+export const getDataDavAttrArr = (fk, element) => {
+  const fields = getRecoil($fields)
+  const attr = fields[fk]?.customAttributes?.[element]
+  if (!([element] in fields[fk].customAttributes)) return {}
+  const dataDevObj = { [`data-dev-${element}`]: fk }
+  if (attr) {
+    const attrLen = attr.length
+    let i = 0
+    while (i < attrLen) {
+      if (attr[i].key && attr[i].value) {
+        dataDevObj[[attr[i].key]] = attr[i].value
+      }
+      i += 1
+    }
+  }
+  return dataDevObj
 }

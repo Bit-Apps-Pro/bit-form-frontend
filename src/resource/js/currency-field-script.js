@@ -55,7 +55,7 @@ class CurrencyField {
 
   #allEventListeners = []
 
-  constructor(selector, config) {
+  constructor(selector, config, window, ) {
     Object.assign(this.#config, config)
     if (typeof selector === 'string') {
       this.#currencyNumberFieldWrapper = document.querySelector(selector)
