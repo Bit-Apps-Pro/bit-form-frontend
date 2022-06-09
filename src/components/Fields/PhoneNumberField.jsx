@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import PhoneNumberFieldClass from '../../resource/js/phone-number-field-script'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -50,6 +50,20 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       options,
       inputFormat,
       valueFormat,
+      attributes: {
+        option: getDataDavAttrArr(fieldKey, 'option'),
+        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
+        'opt-prefix': getDataDavAttrArr(fieldKey, 'opt-prefix'),
+      },
+      classNames: {
+        option: getCustomClsName(fieldKey, 'option'),
+        'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getCustomClsName(fieldKey, 'opt-icn'),
+        'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
+        'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
+      },
     }
 
     const alreadyChecked = options.find(opt => opt.check)

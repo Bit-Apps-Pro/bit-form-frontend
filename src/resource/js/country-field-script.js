@@ -374,13 +374,13 @@ class CountryField {
         this.#setClassName(li, `${this.fieldKey}-option`)
         if ('option' in this.#config.classNames) {
           const optCls = this.#config.classNames.option
-          this.#setClassName(li, optCls)
+          if (optCls) this.#setClassName(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
         if ('opt-lbl-wrp' in this.#config.classNames) {
           const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
-          this.#setClassName(lblimgbox, optLblWrpCls)
+          if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
         }
         // TODO - eta only isBuilder e kaj korbe
         // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
@@ -394,12 +394,12 @@ class CountryField {
           // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
           if ('opt-icn' in this.#config.attributes) {
             const optIcn = this.#config.attributes['opt-icn']
-            this.#setCustomAttr(lblimgbox, optIcn)
+            if (optIcn) this.#setCustomAttr(lblimgbox, optIcn)
           }
           this.#setClassName(img, `${this.fieldKey}-opt-icn`)
           if ('opt-icn' in this.#config.classNames) {
             const optIcnCls = this.#config.classNames['opt-icn']
-            this.#setClassName(img, optIcnCls)
+            if (optIcnCls) this.#setClassName(img, optIcnCls)
           }
           img.src = `${this.#config.assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
@@ -417,7 +417,7 @@ class CountryField {
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
         if ('opt-lbl' in this.#config.classNames) {
           const optLblCls = this.#config.classNames['opt-lbl']
-          this.#setClassName(lbl, optLblCls)
+          if (optLblCls) this.#setClassName(lbl, optLblCls)
         }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)

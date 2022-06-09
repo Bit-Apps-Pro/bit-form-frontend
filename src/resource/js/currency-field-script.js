@@ -497,13 +497,7 @@ class CurrencyField {
         this.#setClassName(li, `${this.fieldKey}-option`)
         if ('option' in this.#config.classNames) {
           const optCls = this.#config.classNames.option
-          if (li.getAttribute('class')) {
-            const oldCls = li.getAttribute('class')
-            const newCls = `${oldCls} ${optCls}`
-            // console.log(newCls)
-            // this.#setClassName(li, newCls)
-          }
-          // this.#setClassName(li, optCls)
+          if (optCls) this.#setClassName(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
         // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
@@ -512,10 +506,10 @@ class CurrencyField {
           this.#setCustomAttr(lblimgbox, optLblWrp)
         }
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
-        // if ('opt-lbl-wrp' in this.#config.classNames) {
-        //   const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
-        //   this.#setClassName(lblimgbox, optLblWrpCls)
-        // }
+        if ('opt-lbl-wrp' in this.#config.classNames) {
+          const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
+          if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+        }
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
           // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
@@ -524,10 +518,10 @@ class CurrencyField {
             this.#setCustomAttr(img, optIcn)
           }
           this.#setClassName(img, `${this.fieldKey}-opt-icn`)
-          // if ('opt-icn' in this.#config.classNames) {
-          //   const optIcnCls = this.#config.classNames['opt-icn']
-          //   this.#setClassName(img, optIcnCls)
-          // }
+          if ('opt-icn' in this.#config.classNames) {
+            const optIcnCls = this.#config.classNames['opt-icn']
+            if (optIcnCls) this.#setClassName(img, optIcnCls)
+          }
           img.src = `${bits.assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
           img.loading = 'lazy'
@@ -541,10 +535,10 @@ class CurrencyField {
           this.#setCustomAttr(lbl, optLbl)
         }
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
-        // if ('opt-lbl' in this.#config.classNames) {
-        //   const optLblCls = this.#config.classNames['opt-lbl']
-        //   this.#setClassName(lbl, optLblCls)
-        // }
+        if ('opt-lbl' in this.#config.classNames) {
+          const optLblCls = this.#config.classNames['opt-lbl']
+          if (optLblCls) this.#setClassName(lbl, optLblCls)
+        }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)
         const suffix = this.#createElm('span')
@@ -554,10 +548,10 @@ class CurrencyField {
           this.#setCustomAttr(suffix, optsufix)
         }
         this.#setClassName(suffix, `${this.fieldKey}-opt-suffix`)
-        // if ('opt-suffix' in this.#config.classNames) {
-        //   const optsuffix = this.#config.classNames['opt-suffix']
-        //   this.#setClassName(suffix, optsuffix)
-        // }
+        if ('opt-suffix' in this.#config.classNames) {
+          const optsuffixCls = this.#config.classNames['opt-suffix']
+          if (optsuffixCls) this.#setClassName(suffix, optsuffixCls)
+        }
         this.#setTextContent(suffix, opt.i)
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
         this.#setAttribute(li, 'role', 'option')
@@ -585,10 +579,8 @@ class CurrencyField {
         } else {
           this.#setAttribute(li, 'aria-selected', false)
         }
-
         return li
       },
-
     })
   }
 

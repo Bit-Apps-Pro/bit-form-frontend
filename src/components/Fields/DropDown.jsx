@@ -4,7 +4,7 @@ import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 import DropdownField from '../../resource/js/dropdown-filed-script'
@@ -43,6 +43,18 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       selectedOptImgSrc,
       closeOnSelect,
       activeList,
+      attributes: {
+        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
+        'opt-prefix': getDataDavAttrArr(fieldKey, 'opt-prefix'),
+      },
+      classNames: {
+        'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getCustomClsName(fieldKey, 'opt-icn'),
+        'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
+        'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
+      },
     }
     dropdownFieldRef.current = new DropdownField(fldElm, configOptions)
   }, [fieldData])
