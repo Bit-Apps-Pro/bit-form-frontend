@@ -415,8 +415,8 @@ class CountryField {
           this.#setCustomAttr(lblimgbox, optLbl)
         }
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
-        if ('opt-lb' in this.#config.classNames) {
-          const optLblCls = this.#config.classNames['opt-lb']
+        if ('opt-lbl' in this.#config.classNames) {
+          const optLblCls = this.#config.classNames['opt-lbl']
           this.#setClassName(lbl, optLblCls)
         }
         this.#setTextContent(lbl, opt.lbl)
