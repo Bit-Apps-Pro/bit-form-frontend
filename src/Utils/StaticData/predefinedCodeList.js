@@ -28,7 +28,7 @@ export const jsPredefinedCodeList = [
   },
   {
     type: 'group-opts',
-    name: 'Form Fields',
+    name: 'Field Keys',
     childs: [
       ...generateFieldsOpts()
     ]
@@ -120,6 +120,16 @@ document.querySelector(window.bf_globals['formId']).addEventListener('bf-form-va
     name: 'Button',
     childs: [
       generateEventChild('click'),
+    ]
+  }
+]
+
+export const cssPredefinedCodeList = [
+  {
+    type: 'group-opts',
+    name: 'Field Keys',
+    childs: [
+      ...generateFieldsOpts()
     ]
   }
 ]
