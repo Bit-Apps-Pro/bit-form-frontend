@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CurrencyFieldClass from '../../resource/js/currency-field-script'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -31,7 +31,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       fldConstructor.destroy()
     }
 
-    const { options, inputFormatOptions, valueFormatOptions } = fieldData
+    const { options, inputFormatOptions, valueFormatOptions, customAttributes, customClasses } = fieldData
+    console.log(customAttributes, customClasses)
 
     const configOptions = {
       fieldKey,
@@ -45,6 +46,20 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       searchPlaceholder,
       noCurrencyFoundText,
       options,
+      attributes: {
+        option: getDataDavAttrArr(fieldKey, 'option'),
+        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
+        'opt-suffix': getDataDavAttrArr(fieldKey, 'opt-suffix'),
+      },
+      classNames: {
+        option: getCustomClsName(fieldKey, 'option'),
+        'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getCustomClsName(fieldKey, 'opt-icn'),
+        'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
+        'opt-suffix': getCustomClsName(fieldKey, 'opt-suffix'),
+      },
     }
 
     const alreadyChecked = options.find(opt => opt.check)
