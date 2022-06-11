@@ -5,21 +5,16 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $fields, $selectedFieldId, $unsplashImgUrl } from '../../../GlobalStates/GlobalStates'
-import { $styles } from '../../../GlobalStates/StylesState'
+import { useSetRecoilState } from 'recoil'
+import { $unsplashImgUrl } from '../../../GlobalStates/GlobalStates'
 import CPTIcn from '../../../Icons/CPTIcn'
 import SearchIcon from '../../../Icons/SearchIcon'
 import ut from '../../../styles/2.utilities'
-import { deepCopy } from '../../../Utils/Helpers'
 import LoaderSm from '../../Loaders/LoaderSm'
 
-function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '', uploadLbl = '' }) {
+function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
   const setUnsplashImgUrl = useSetRecoilState($unsplashImgUrl)
-  const fieldData = deepCopy(fields[fldKey])
-  const [controller, setController] = useState({ parent: selected || 'Icons' })
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [dnLoading, setDnLoading] = useState(false)
@@ -28,57 +23,41 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
   const [searchTerm, setSearchTerm] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
   const [scrollLoading, setScrollLoading] = useState(false)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const setStyles = useSetRecoilState($styles)
   const [pageNo, setPageNo] = useState(1)
   const [collectionPageNo, setCollectionPageNo] = useState(1)
   const [total, setTotal] = useState(10001)
   const { css } = useFela()
-  const url = 'https://raw.githack.com'
+  const clientId = 'n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU'
   const ref = useRef()
 
-  const iconPacks = [
-    { label: 'Font Awesome', value: 't=2_id_fontawesome', id: 'font-awesome', status: false },
-    { label: 'Bootstrap', value: 't=2_id_bootstrapicons', id: 'bootstrap-icons', status: false },
-    { label: 'Material Design', value: 't=2_id_materialdesign-icons', id: 'material-design-icons', status: false },
-    { label: 'Ion', value: 't=2_id_ionicons', id: 'ionicons', status: false },
-    { label: 'Octicons', value: 't=2_id_octicons', id: 'octicons', status: false },
-    { label: 'CSS.GG', value: 't=2_id_css.gg', id: 'css.gg', status: false },
-    { label: 'Feather', value: 't=2_id_feather', id: 'feather', status: false },
-    { label: 'Carbon', value: 't=2_id_carbonicons', id: 'carbon-icons', status: false },
-    { label: 'Typicons', value: 't=2_id_typicons', id: 'typicons', status: false },
-    { label: 'Vscode', value: 't=2_id_vscodecodicons', id: 'vscode-codicons', status: false },
-    { label: 'Simple', value: 't=2_id_simpleicons', id: 'simple-icons', status: false },
-  ]
   const [collections, setCollections] = useState([])
-
-  const existFilter = () => {
-    if (searchTerm) return 'nofilter=true'
-    const exit = collections.find(item => item.status === true)
-    let filterByIconPack = ''
-    if (exit) {
-      filterByIconPack = collections.map((elem) => elem.value).join('&')
-    }
-    return filterByIconPack
-  }
 
   const onFetchData = (val) => {
     setSearchLoading(true)
-    const searchValue = searchTerm !== '' ? `&t=1_tag_${val}` : ''
-    fetch(`https://icons.bitapps.pro/search?c=0&${existFilter()}${searchValue}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data) {
-          let icns = data.results
-          if (collections.find(term => term.status)) {
-            icns = icns?.filter(icn => collections.find(f => f.id === icn.id)?.status)
+    // const searchValue = searchTerm !== '' ? `&t=1_tag_${val}` : ''
+    if (val) {
+      fetch(`https://api.unsplash.com/search/photos/?query=${val}&client_id=${clientId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setImages(data.results)
+            setTotal(data.results.length)
+            setPageNo(1)
           }
-          // setImages(icns)
-          setTotal(data.length)
-        }
-        ref?.current?.scrollToTop(0)
-        setSearchLoading(false)
-      })
+          ref?.current?.scrollToTop(0)
+          setSearchLoading(false)
+        })
+    } else {
+      fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=1`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setTotal(data.length)
+            setImages(data)
+          }
+          setSearchLoading(false)
+        })
+    }
   }
   const debouncedSearchTerm = useAsyncDebounce(onFetchData, 500)
 
@@ -92,7 +71,7 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
     setFiles([])
     setImages([])
     setLoading(true)
-    fetch(`https://api.unsplash.com/photos/?client_id=n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU&per_page=30&page=${pageNo}`)
+    fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=${pageNo}`)
       .then(response => response.json())
       .then(data => {
         if (data) {
@@ -102,7 +81,7 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
         setLoading(false)
       })
 
-    fetch(`https://api.unsplash.com/collections/?client_id=n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU&page=${collectionPageNo}`)
+    fetch(`https://api.unsplash.com/collections/?client_id=${clientId}&page=${collectionPageNo}`)
       .then(response => response.json())
       .then(data => {
         if (data) {
@@ -124,10 +103,9 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
 
   const onScrollFetch = (e) => {
     const bottom = (e.target.scrollHeight - e.target.scrollTop) - e.target.clientHeight - 100
-    const searchValue = searchTerm !== '' ? `&t=1_tag_${searchTerm}` : ''
     if (bottom <= 0 && images.length <= total) {
       setScrollLoading(true)
-      fetch(`https://api.unsplash.com/photos/?client_id=n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU&per_page=30&page=${pageNo + 1}`)
+      fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=${pageNo + 1}`)
         .then(response => response.json())
         .then(data => {
           if (data) {
@@ -142,14 +120,27 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
 
   const searchByCollections = (index, id, status) => {
     const tmp = [...collections]
-    if (status === false) {
+    tmp.map(item => {
+      item.status = false
+    })
+    if (!status) {
       tmp[index].status = true
     } else {
       tmp[index].status = false
     }
     setCollections(tmp)
-    if (collections !== []) {
-      fetch(`https://api.unsplash.com/collections/${id}/photos?client_id=n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU&per_page=30`)
+
+    if (collections !== [] && !status) {
+      fetch(`https://api.unsplash.com/collections/${id}/photos?client_id=${clientId}&per_page=30`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setImages(data)
+            setTotal(data.length)
+          }
+        })
+    } else {
+      fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=${pageNo}`)
         .then(response => response.json())
         .then(data => {
           if (data) {
@@ -174,7 +165,7 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
             title={collection.title}
             onClick={() => searchByCollections(i, collection.id, collection.status)}
             type="button"
-            className={`${css(s.chip, ut.mr2)} ${collection.status && css(s.active)}`}
+            className={`${css(s.chip, ut.mr2)} ${collection.status && css(s.collectionActive)}`}
           >
             {collection.title}
           </button>
@@ -220,7 +211,7 @@ function UnsplashImageViewer({ addPaddingOnSelect = true, setModal, selected = '
             <button
               type="button"
               key={`(${item.id})`}
-              title={`(${item.id})`}
+              title={`(${item.description})`}
               className={`${css(s.imageBtn)} ${item.urls.regular === selectUrl && css(s.active)}`}
               onClick={() => handlePrefixIcon(item.urls.regular)}
             >
@@ -282,6 +273,10 @@ const s = {
   },
   active: {
     b: '3px solid var(--b-50)',
+    cr: 'var(--white-100) !important',
+  },
+  collectionActive: {
+    bd: 'var(--b-50) !important',
     cr: 'var(--white-100) !important',
   },
   imageBtn: {

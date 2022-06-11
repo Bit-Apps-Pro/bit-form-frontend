@@ -6,7 +6,7 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $unsplashImgUrl, $unsplashMdl, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -55,7 +55,8 @@ function BackgroundControlMenu({ stateObjName,
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
-  const unsplashImgUrl = useRecoilValue($unsplashImgUrl)
+  const resetUnsplashImgUrl = useResetRecoilState($unsplashImgUrl)
+  const [unsplashImgUrl, setUnsplashImgUrl] = useRecoilState($unsplashImgUrl)
 
   const stateObj = getObjByKey(object, { styles })
 
@@ -81,6 +82,7 @@ function BackgroundControlMenu({ stateObjName,
     }
     // setStyleStateObj(object, pathName, val, { setStyles })
   }
+
   const gradientChangeHandler = (e) => {
     onValueChange(paths['background-image'], e.style)
     setBgImage(e.style)
@@ -155,16 +157,24 @@ function BackgroundControlMenu({ stateObjName,
     e.stopPropagation()
     setBgImage('')
     onValueChange(paths['background-image'], '')
+    setUnsplashImgUrl('')
   }
 
   useEffect(() => {
-    setBgImage(getValueByObjPath(stateObj, paths['background-image']))
+    const tempBgImg = getValueByObjPath(stateObj, paths['background-image'])
+    setBgImage(tempBgImg)
     setColor(str2Color(getValueByObjPath(stateObj, paths['background-color'])))
-  }, [id])
+    // setUnsplashImgUrl(tempBgImg)
+  }, [])
 
   useEffect(() => {
-    onValueChange(paths['background-image'], `url(${unsplashImgUrl})`)
-    setBgImage(`url(${unsplashImgUrl})`)
+    if (unsplashImgUrl) {
+      onValueChange(paths['background-image'], `url(${unsplashImgUrl})`)
+      setBgImage(`url(${unsplashImgUrl})`)
+    }
+    return () => {
+      resetUnsplashImgUrl()
+    }
   }, [unsplashImgUrl])
 
   const sizeSelectHandler = e => {
@@ -421,6 +431,17 @@ function BackgroundControlMenu({ stateObjName,
           </>
         )}
       </div>
+      {/* <Modal
+        md
+        autoHeight
+        show={unsplashMdl}
+        setModal={setUnsplashMdl}
+        className="o-v"
+        title={__('Unsplash Images', 'bitform')}
+      >
+        <div className="pos-rel" />
+        <UnsplashImageViewer setModal={setUnsplashMdl} />
+      </Modal> */}
     </div>
   )
 }
