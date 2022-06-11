@@ -28,8 +28,8 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-btn`]: {
       'font-size': 'var(--btn-fs)',
       padding: 'var(--btn-p)',
+      // 'background-color': 'var(--btn-bgc)',
       background: 'var(--btn-bg)',
-      'background-color': 'var(--btn-bgc)',
       color: 'var(--btn-c)',
       'font-weight': 'var(--btn-fw)',
       border: 'var(--btn-br)',
