@@ -44,6 +44,8 @@ class DropdownField {
     maxHeight: 370,
     closeOnSelect: true,
     options: [],
+    attributes: {},
+    classNames: {},
     onChange: val => { console.log(val) },
   }
 
@@ -431,6 +433,16 @@ class DropdownField {
     elm?.setAttribute?.(name, value)
   }
 
+  #setCustomAttr(element, obj) {
+    const optObjKey = Object.keys(obj)
+    const optLen = optObjKey.length
+    if (optLen) {
+      for (let i = 0; i < optLen; i += 1) {
+        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+      }
+    }
+  }
+
   #generateOptions() {
     this.#optionListElm.innerHTML = ''
 
@@ -450,11 +462,27 @@ class DropdownField {
       this.#setClassName(li, `${this.fieldKey}-option`)
       const lblimgbox = this.#createElm('span')
       this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
-      this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+      if ('opt-lbl-wrp' in this.#config.classNames) {
+        const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
+        if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+      }
+      // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+      if ('opt-lbl-wrp' in this.#config.attributes) {
+        const optLblWrp = this.#config.attributes['opt-lbl-wrp']
+        this.#setCustomAttr(lblimgbox, optLblWrp)
+      }
       if (this.#config.optionIcon) {
         const img = this.#createElm('img')
         this.#setClassName(img, `${this.fieldKey}-opt-icn`)
-        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#config.classNames) {
+          const optIcnCls = this.#config.classNames['opt-icn']
+          if (optIcnCls) this.#setClassName(img, optIcnCls)
+        }
+        if ('opt-icn' in this.#config.attributes) {
+          const optIcn = this.#config.attributes['opt-icn']
+          this.#setCustomAttr(img, optIcn)
+        }
         img.src = opt.img
         img.alt = opt.lbl
         img.loading = 'lazy'
@@ -462,11 +490,27 @@ class DropdownField {
       }
       const lbl = this.#createElm('span')
       this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
-      this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+      if ('opt-lbl' in this.#config.classNames) {
+        const optLblCls = this.#config.classNames['opt-lbl']
+        if (optLblCls) this.#setClassName(lbl, optLblCls)
+      }
+      // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+      if ('opt-lbl' in this.#config.attributes) {
+        const optLbl = this.#config.attributes['opt-lbl']
+        this.#setCustomAttr(lbl, optLbl)
+      }
       this.#setTextContent(lbl, opt.lbl)
       lblimgbox.append(lbl)
       const prefix = this.#createElm('span')
       this.#setClassName(prefix, 'opt-prefix')
+      if ('opt-prefix' in this.#config.classNames) {
+        const optPrefix = this.#config.classNames['opt-prefix']
+        if (optPrefix) this.#setClassName(prefix, optPrefix)
+      }
+      if ('opt-prefix' in this.#config.attributes) {
+        const optPrefix = this.#config.attributes['opt-prefix']
+        this.#setCustomAttr(lbl, optPrefix)
+      }
       this.#setTextContent(prefix, opt.code)
 
       li.append(lblimgbox, prefix)

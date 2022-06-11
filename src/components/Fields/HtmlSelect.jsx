@@ -24,7 +24,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
           className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')} no-drg ${fieldData.readonly ? 'readonly' : ''}`}
           {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
           {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
-          {... { ...getCustomAttributs(fieldKey, 'fld') }}
+          {...getCustomAttributs(fieldKey, 'fld')}
           {...'req' in fieldData.valid && { required: fieldData.valid.req }}
         >
           {fieldData.phHide && (
@@ -32,7 +32,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
               data-dev-slct-optn={fieldKey}
               className={`${fieldKey}-slct-optn ${getCustomClsName(fieldKey, 'slct-optn')}`}
               value=""
-              {... { ...getCustomAttributs(fieldKey, 'slct-optn') }}
+              {...getCustomAttributs(fieldKey, 'slct-optn')}
             >
               {fieldData.ph}
             </option>

@@ -135,8 +135,8 @@ export const getCustomAttributs = (fk, element) => {
 export const getDataDavAttrArr = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
-  if (!([element] in fields[fk].customAttributes)) return {}
   const dataDevObj = { [`data-dev-${element}`]: fk }
+  if (!([element] in fields[fk].customAttributes)) return dataDevObj
   if (attr) {
     const attrLen = attr.length
     let i = 0
