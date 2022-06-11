@@ -124,6 +124,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'err-msg': return 'Error Messages Container'
       case 'currency-fld-wrp': return 'Currency Field Wrapper'
       case 'btn': return 'Button'
+      case 'btn-pre-i': return 'Button Prefix Icon'
+      case 'btn-suf-i': return 'Button Suffix Icon'
       default:
         break
     }
@@ -826,6 +828,29 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 subtitle={`${fldTitle}`}
                 objectPaths={objPaths}
                 id="filter-control"
+                allowImportant
+              />
+            </div>
+          </StylePropertyBlock>
+        )
+      case 'backdrop-filter':
+        objPaths.paths.filter = objPaths.paths?.['backdrop-filter']
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('backdrop-filter', state)}
+            title="Backdrop Filter"
+          >
+            <ResetStyle
+              propertyPath={objPaths.paths?.['backdrop-filter']}
+              stateObjName="styles"
+              id="backdrop-filter-control"
+            />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <FilterController
+                action={{ type: 'filter-control' }}
+                subtitle={`${fldTitle}`}
+                objectPaths={objPaths}
+                id="backdrop-filter-control"
                 allowImportant
               />
             </div>
