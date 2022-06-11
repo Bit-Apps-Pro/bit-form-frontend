@@ -143,6 +143,7 @@ function BackgroundControlMenu({ stateObjName,
               assignNestedObj(drftStyles, path, clr)
             })
           } else {
+            assignNestedObj(drftStyles, paths['background-image'], '')
             assignNestedObj(drftStyles, paths['background-color'], clr)
           }
         }))
@@ -284,7 +285,7 @@ function BackgroundControlMenu({ stateObjName,
                   <div className={css(ut.flxClm)}>
                     <span className={css(bgImgControlStyle.title)}>URL</span>
                     <div className={css(bgImgControlStyle.linkWrap)}>
-                      <input type="url" className={css(bgImgControlStyle.urlinput, { pr: '30px !important' })} value={bgImage?.replace(/(url\(|\))/gi, '')} onChange={urlChangeHandler} placeholder="ex: https://www.example.com" />
+                      <input type="url" className={css(bgImgControlStyle.urlinput, { pr: '30px !important' })} value={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''} onChange={urlChangeHandler} placeholder="ex: https://www.example.com" />
                       <button type="button" title="search" className={css(bgImgControlStyle.browse)} onClick={() => setUnsplashMdl(true)}>
                         <BrowserIcon size="20" />
                       </button>
