@@ -111,7 +111,7 @@ export const $lightThemeColors = atom({
     '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
     '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
 
-    '--btn-bg': '', // button backgrond
+    '--btn-bg': 'var(--global-accent-color)', // button backgrond
     '--btn-bgc': 'var(--global-accent-color)', // button backgrond color
     '--btn-c': 'hsla(0, 0%, 100%, 100%)', // button font color color
     '--btn-br': 'none', // button border
