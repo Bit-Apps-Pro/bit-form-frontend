@@ -58,11 +58,10 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
       attr: {
         async: true,
         defer: true,
-      }
+      },
     }
 
     loadScript(srcData)
-
 
     const { theme, size } = fieldData.config
     const configOptions = {
@@ -71,8 +70,6 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
     }
 
     recaptchaFieldRef.current = new RecaptchaField(fldElm, configOptions)
-
-
   }, [fieldData])
 
   return (

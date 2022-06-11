@@ -102,7 +102,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
           data-testid={`${fieldKey}-cc`}
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
-          {... { ...getCustomAttributs(fieldKey, 'cc') }}
+          {...getCustomAttributs(fieldKey, 'cc')}
         >
           {/* <svg
             className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}
@@ -131,7 +131,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
               data-dev-cw={fieldKey}
               key={`opt-${i + 24}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-              {... { ...getCustomAttributs(fieldKey, 'cw') }}
+              {...getCustomAttributs(fieldKey, 'cw')}
             >
               <input
                 data-testid={`${fieldKey}-ci`}
@@ -155,14 +155,14 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 data-cl
                 htmlFor={`${fieldKey}-chk-${i}`}
                 className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-                {... { ...getCustomAttributs(fieldKey, 'cl') }}
+                {...getCustomAttributs(fieldKey, 'cl')}
               >
                 <span
                   data-testid={`${fieldKey}-bx`}
                   data-dev-ck={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'ck') }}
+                  {...getCustomAttributs(fieldKey, 'ck')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -172,7 +172,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'ct') }}
+                  {...getCustomAttributs(fieldKey, 'ct')}
                 >
                   {renderHTMR(itm.lbl)}
                 </span>

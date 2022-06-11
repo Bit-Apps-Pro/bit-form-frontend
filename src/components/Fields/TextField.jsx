@@ -59,7 +59,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
           data-testid={`${fieldKey}-inp-fld-wrp`}
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
-          {... { ...getCustomAttributs(fieldKey, 'inp-fld-wrp') }}
+          {...getCustomAttributs(fieldKey, 'inp-fld-wrp')}
         >
           <input
             data-testid={fieldKey}
@@ -82,7 +82,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             onBlur={handleBlur}
             {...{ value }}
             {...{ onChange: onChangeHandler }}
-            {... { ...getCustomAttributs(fieldKey, 'fld') }}
+            {...getCustomAttributs(fieldKey, 'fld')}
           />
 
           {attr.prefixIcn && (
@@ -93,7 +93,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
               height="90%"
               src={attr.prefixIcn}
               alt=""
-              {... { ...getCustomAttributs(fieldKey, 'pre-i') }}
+              {...getCustomAttributs(fieldKey, 'pre-i')}
             />
           )}
           {attr.suffixIcn && (
@@ -104,7 +104,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
               height="90%"
               src={attr.suffixIcn}
               alt=""
-              {... { ...getCustomAttributs(fieldKey, 'suf-i') }}
+              {...getCustomAttributs(fieldKey, 'suf-i')}
             />
           )}
 

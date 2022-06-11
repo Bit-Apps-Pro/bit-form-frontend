@@ -43,7 +43,7 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
       <RenderStyle styleClasses={styleClasses} />
       <div
         data-dev-fld-wrp={fieldKey}
-        {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
+        {...getCustomAttributs(fieldKey, 'fld-wrp')}
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
       >
         {logo
@@ -53,13 +53,13 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
               className={`${fieldKey}-logo ${getCustomClsName(fieldKey, 'logo')}`}
               src={logo}
               alt="img"
-              {... { ...getCustomAttributs(fieldKey, 'logo') }}
+              {...getCustomAttributs(fieldKey, 'logo')}
             />
           )}
         <div
           data-dev-titl-wrp={fieldKey}
           className={`${fieldKey}-titl-wrp ${getCustomClsName(fieldKey, 'titl-wrp')}`}
-          {... { ...getCustomAttributs(fieldKey, 'titl-wrp') }}
+          {...getCustomAttributs(fieldKey, 'titl-wrp')}
         >
           {!titleHide && titleGenerator(titleTag, title, 'title', titlePreIcn, titleSufIcn)}
           {!subtitleHide && titleGenerator(subTitleTag, subtitle, 'sub-titl', subTitlPreIcn, subTitlSufIcn)}

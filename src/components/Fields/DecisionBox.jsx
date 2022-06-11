@@ -67,7 +67,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
         <div
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
-          {... { ...getCustomAttributs(fieldKey, 'cc') }}
+          {...getCustomAttributs(fieldKey, 'cc')}
         >
           <svg className={`${fieldKey}-cks`}>
             <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
@@ -81,7 +81,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
           <div
             data-dev-cw={fieldKey}
             className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-            {... { ...getCustomAttributs(fieldKey, 'cw') }}
+            {...getCustomAttributs(fieldKey, 'cw')}
           >
             <input
               data-testid={fieldKey}
@@ -102,13 +102,13 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
               data-cl
               htmlFor={`${fieldKey}-decision`}
               className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-              {... { ...getCustomAttributs(fieldKey, 'cl') }}
+              {...getCustomAttributs(fieldKey, 'cl')}
             >
               <span
                 data-dev-ck={fieldKey}
                 data-bx
                 className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
-                {... { ...getCustomAttributs(fieldKey, 'ck') }}
+                {...getCustomAttributs(fieldKey, 'ck')}
               >
                 <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
                   <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
@@ -117,7 +117,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
               <span
                 data-dev-ct={fieldKey}
                 className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                {... { ...getCustomAttributs(fieldKey, 'ct') }}
+                {...getCustomAttributs(fieldKey, 'ct')}
               >
                 {renderHTMR(attr.lbl || attr?.info?.lbl)}
               </span>
