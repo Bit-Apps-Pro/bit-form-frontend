@@ -801,3 +801,67 @@ export const sortArrOfObjByMultipleProps = (props = []) => {
 }
 
 export const lowerCaseAllAndReplaceSpaceToHipen = (str) => str.toLowerCase().replace(/ /g, '-')
+
+export const styleToGradientObj = (styleStr) => {
+  // get linera or radial type from style string
+  const type = styleStr.match(/^(linear|radial)/g)
+
+  // get numbers/values from style string
+  const values = styleStr.match(/-?[\d\.]+/g) || []
+
+  const len = values.length
+  let degree = 0
+  let points = [{
+    left: 0,
+    red: 0,
+    green: 0,
+    blue: 0,
+    alpha: 1,
+  },
+  {
+    left: 100,
+    red: 255,
+    green: 0,
+    blue: 0,
+    alpha: 1,
+  }]
+
+  if (!type) {
+    return {
+      degree,
+      type: 'liner',
+      points,
+    }
+  }
+  points = []
+
+  if (type[0] === 'linear') {
+    [degree] = len > 5 ? values : [0]
+    for (let i = 1; i < len; i += 5) {
+      points.push({
+        red: values[i],
+        green: values[i + 1],
+        blue: values[i + 2],
+        alpha: values[i + 3],
+        left: values[i + 4],
+      })
+    }
+  } else if (type[0] === 'radial') {
+    for (let i = 0; i < len; i += 5) {
+      points.push({
+        red: values[i],
+        green: values[i + 1],
+        blue: values[i + 2],
+        alpha: values[i + 3],
+        left: values[i + 4],
+      })
+    }
+  }
+
+  const gardient = {
+    degree,
+    type: type[0],
+    points,
+  }
+  return gardient
+}
