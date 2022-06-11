@@ -14,6 +14,7 @@ import BlockIcn from '../Icons/BlockIcn'
 import BlurIcn from '../Icons/BlurIcn'
 import BoxFullIcon from '../Icons/BoxFullIcon'
 import BoxIcon from '../Icons/BoxIcon'
+import BrowserIcon from '../Icons/BrowserIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
@@ -776,6 +777,11 @@ export default function ShowIcon() {
       key: 'Currency doller Icon',
       icon: <CurrencyIcn />,
       com: '<CurrencyIcn />',
+    },
+    {
+      key: 'Browser Icon',
+      icon: <BrowserIcon size={20} />,
+      com: '<BrowserIcon size={20}/>',
     },
 
   ]
