@@ -3,7 +3,7 @@
 import { createRenderer } from 'fela'
 import felaPluginCustomProperty from 'fela-plugin-custom-property'
 import { RendererProvider } from 'react-fela'
-import BackgroundImageControl from '../components/CompSettings/StyleCustomize/ChildComp/BackgroundImageControl'
+import SimpleGradientColorPicker from '../components/style-new/SimpleGradientColorPicker'
 import customProperties from '../styles/1.customProperties'
 
 const renderer = createRenderer({
@@ -14,8 +14,8 @@ const renderer = createRenderer({
 })
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: 'Example/BackgroundImageControl',
-  component: BackgroundImageControl,
+  title: 'Example/GradientColorPicker',
+  component: SimpleGradientColorPicker,
   argTypes: {
     // backgroundColor: { control: 'color' },
     // size: { control: { type: 'range', min: 50, max: 200, step: 1 } },
@@ -30,7 +30,7 @@ export default {
 
 const Template = (args) => (
   <RendererProvider renderer={renderer}>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh', background: 'white', padding: 50 }}><BackgroundImageControl {...args} /></div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh', background: 'white', padding: 50 }}><SimpleGradientColorPicker {...args} /></div>
   </RendererProvider>
 )
 
