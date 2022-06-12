@@ -17,5 +17,5 @@ const s = {
     bc: '#fff',
     bi: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N89erVfwY0ICYmxoguxjgUFKI7GsTH5m4M3w1ChQC1/Ca8i2n1WgAAAABJRU5ErkJggg==)',
   },
-  preview: { se: '100%' },
+  preview: { se: '100%', 'background-size': 'cover !important' },
 }

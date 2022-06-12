@@ -1,5 +1,5 @@
 const backgroundControlStyle = {
-  container: { w: 250, cr: '#888' },
+  container: { w: 250, cr: '#888', fw: 500 },
   innercontainer: { p: 10 },
 
   title: { fs: 12 },
@@ -43,17 +43,9 @@ const backgroundControlStyle = {
     dy: 'flex',
   },
   browse: {
-    pn: 'absolute',
-    rt: 2,
-    tp: '11%',
     curp: 'pointer',
-    cr: 'hsla(0, 0%, 33%, 1)',
-    flx: 'center',
-    p: '0px 5px',
-    h: 32,
-    b: 'none',
-    brs: '0px 8px 8px 0px',
-    ':hover': { bc: 'var(--white-0-93)' },
+    cr: 'var(--b-50)',
+    ':hover': { cr: 'var(--b-35-33)' },
   },
 
   icon: { fs: 15, lh: '15px', mr: 5, curp: 1 },
