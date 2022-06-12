@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "name": "bit-virtualized-list",
+  "packageManager": "yarn@3.1.0",
+  "main": "dist/virtualized-list.min.js",
+  "module": "src/virtualized-list.js",
+  "scripts": {
+    "build-r": "rollup -c",
+    "build-w": "webpack --mode=production"
+  },
+  "dependencies": {
+    "virtualized-list": "^2.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.75.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "terser-webpack-plugin": "^5.3.3",
+    "webpack": "^5.73.0"
+  }
+}
