@@ -1,5 +1,6 @@
 const labelCssProps = {
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -58,6 +59,7 @@ const iconCssProps = {
   filter: '',
   transition: '',
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -69,6 +71,7 @@ const iconCssProps = {
 
 const fieldWrpCssProps = {
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -188,6 +191,7 @@ const textFldCssProps = {
 
 const buttonCssProps = {
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -221,6 +225,7 @@ const chackProps = {
   margin: '',
   padding: '',
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -240,6 +245,7 @@ const chackProps = {
 }
 const formCommonCssProps = {
   background: {
+    'background-color': true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
@@ -280,6 +286,7 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
+        'background-color': true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
@@ -300,6 +307,7 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
+        'background-color': true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
@@ -320,6 +328,7 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
+        'background-color': true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
@@ -567,6 +576,7 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
+        'background-color': true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
@@ -1137,6 +1147,7 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
+          'background-color': true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
@@ -1366,6 +1377,7 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
+          'background-color': true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
@@ -1725,6 +1737,7 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
+          'background-color': true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
@@ -1935,6 +1948,7 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
+          'background-color': true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,

@@ -4,7 +4,7 @@ export default function ColorPreview({ w = 30, h = 30, bg, className }) {
   const { css } = useFela()
   return (
     <div className={`${css(s.wrp)} ${className}`} style={{ height: h, width: w }}>
-      <div className={css(s.preview)} style={{ background: bg }} />
+      <div className={css(s.preview)} style={{ background: bg, backgroundSize: 'cover' }} />
     </div>
   )
 }

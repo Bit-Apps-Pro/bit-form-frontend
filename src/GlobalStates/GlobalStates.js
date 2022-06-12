@@ -31,6 +31,8 @@ export const $builderHookStates = atom({ key: '$builderHookStates', default: { r
 export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
+export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
+export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })

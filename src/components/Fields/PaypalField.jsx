@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { AppSettings } from '../../../Utils/AppSettingsContext'
-import { reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
-import { loadScript, removeScript, selectInGrid } from '../../../Utils/globalHelpers'
-import RenderStyle from '../../style-new/RenderStyle'
-import PayPalField from './paypal-field-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { AppSettings } from '../../Utils/AppSettingsContext'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
+import RenderStyle from '../style-new/RenderStyle'
+import PayPalField from '../../resource/js/paypal-field-script'
 
 export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
   const appSettingsContext = useContext(AppSettings)

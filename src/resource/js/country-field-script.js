@@ -1,5 +1,14 @@
-import { observeElement } from '../../../Utils/globalHelpers'
+import { observeElement } from '../../Utils/globalHelpers'
 import VirtualizedList from './virtualized-list.min'
+
+// TODO
+
+// let document = {}
+// if(this.#config.document) {
+//   {document} = this.#config
+// }else {
+//   document = document
+// }
 
 class CountryField {
   #countryFieldWrapper = null
@@ -40,7 +49,12 @@ class CountryField {
     searchPlaceholder: 'Search Country',
     noCountryFoundText: 'No Currency Found',
     maxHeight: 370,
+    document: {},
+    window: {},
     options: [],
+    attributes: {},
+    classNames: {},
+    assetsURL: '',
     onChange: val => { console.log(val) },
   }
 
@@ -56,7 +70,7 @@ class CountryField {
     Object.assign(this.#config, config)
     if (typeof selector === 'string') {
       // TODO: builder e queryselector kaj korbena. so, jodi builder hoi taile builder theke select korte hobe
-      this.#countryFieldWrapper = document.querySelector(selector)
+      this.#countryFieldWrapper = this.#config.document.querySelector(selector)
     } else {
       this.#countryFieldWrapper = selector
     }
@@ -69,7 +83,7 @@ class CountryField {
 
   init() {
     // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
-
+    console.log('form script', this.#config)
 
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
@@ -95,6 +109,7 @@ class CountryField {
       this.#searchInputElm.style.paddingRight = '25px'
       this.#clearSearchBtnElm.style.display = 'none'
     }
+    // this.#url = decodeURIComponent((`${this.#config.document.URL}`).replace(/\+/g, '%20'))
   }
 
   #addEventListenersToElm() {
@@ -115,6 +130,7 @@ class CountryField {
   #setCountryNameFromURL() {
     const param = this.#countryHiddenInputElm.name
     // TODO document.URL k isBuilder diye check korte hobe
+    // const url = decodeURIComponent((`${this.#config.document.URL}`).replace(/\+/g, '%20'))
     const url = decodeURIComponent((`${document.URL}`).replace(/\+/g, '%20'))
     const selectedValue = url.replace(new RegExp(`.*${param}=([^&]*).*|(.*)`), '$1')
     if (selectedValue) {
@@ -154,7 +170,7 @@ class CountryField {
 
   #handleKeyboardNavigation(e) {
     // TODO: document e activeElement isbuilder e check korte hobe
-    const activeEl = document.activeElement
+    const activeEl = this.#config.document.activeElement
     let focussableEl = null
     const isMenuOpen = this.#isMenuOpen()
 
@@ -276,7 +292,7 @@ class CountryField {
     this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`)
     this.#selectedCountryClearBtnElm = this.#config.selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {}
     if (this.#config.selectedFlagImage && this.#selectedCountryImgElm) {
-      this.#selectedCountryImgElm.src = `${bits.assetsURL}${selectedItem.img}`
+      this.#selectedCountryImgElm.src = `${this.#config.assetsURL}${selectedItem.img}`
     }
     this.#setTextContent(this.#selectedCountryLblElm, selectedItem.lbl)
     this.setMenu({ open: false })
@@ -301,7 +317,7 @@ class CountryField {
   }
 
   #createElm(elm) {
-    return document.createElement(elm)
+    return this.#config.document.createElement(elm)
   }
 
   #setClassName(elm, cn) {
@@ -322,6 +338,16 @@ class CountryField {
     this.virtualOptionList?.scrollToIndex(selectedIndex === -1 ? 0 : selectedIndex)
   }
 
+  #setCustomAttr(element, obj) {
+    const optObjKey = Object.keys(obj)
+    const optLen = optObjKey.length
+    if (optLen) {
+      for (let i = 0; i < optLen; i += 1) {
+        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+      }
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new VirtualizedList(this.#optionListElm, {
@@ -335,23 +361,47 @@ class CountryField {
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
         // TODO - eta only isBuilder e kaj korbe
-        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+        if ('option' in this.#config.attributes) {
+          const optAttr = this.#config.attributes.option
+          this.#setCustomAttr(li, optAttr)
+        }
+        // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, 'opt-not-found')
           return li
         }
         this.#setClassName(li, `${this.fieldKey}-option`)
+        if ('option' in this.#config.classNames) {
+          const optCls = this.#config.classNames.option
+          if (optCls) this.#setClassName(li, optCls)
+        }
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        if ('opt-lbl-wrp' in this.#config.classNames) {
+          const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
+          if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+        }
         // TODO - eta only isBuilder e kaj korbe
-        this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+        // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+        if ('opt-lbl-wrp' in this.#config.attributes) {
+          const optLblWrp = this.#config.attributes['opt-lbl-wrp']
+          this.#setCustomAttr(lblimgbox, optLblWrp)
+        }
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
           // TODO - eta only isBuilder e kaj korbe
-          this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+          // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+          if ('opt-icn' in this.#config.attributes) {
+            const optIcn = this.#config.attributes['opt-icn']
+            if (optIcn) this.#setCustomAttr(lblimgbox, optIcn)
+          }
           this.#setClassName(img, `${this.fieldKey}-opt-icn`)
-          img.src = `${bits.assetsURL}${opt.img}`
+          if ('opt-icn' in this.#config.classNames) {
+            const optIcnCls = this.#config.classNames['opt-icn']
+            if (optIcnCls) this.#setClassName(img, optIcnCls)
+          }
+          img.src = `${this.#config.assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
           img.loading = 'lazy'
           this.#setAttribute(img, 'aria-hidden', true)
@@ -359,8 +409,16 @@ class CountryField {
         }
         const lbl = this.#createElm('span')
         // TODO - eta only isBuilder e kaj korbe
-        this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+        // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+        if ('opt-lbl' in this.#config.attributes) {
+          const optLbl = this.#config.attributes['opt-lbl']
+          this.#setCustomAttr(lblimgbox, optLbl)
+        }
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+        if ('opt-lbl' in this.#config.classNames) {
+          const optLblCls = this.#config.classNames['opt-lbl']
+          if (optLblCls) this.#setClassName(lbl, optLblCls)
+        }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)
         const prefix = this.#createElm('span')
@@ -445,7 +503,8 @@ class CountryField {
 
   #openDropdownAsPerWindowSpace() {
     // window select korte hobe isBuilder onujayi
-    const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
+    // const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
+    const iframeWindow = window
     const elementRect = this.#dropdownWrapperElm.getBoundingClientRect()
 
     const spaceAbove = elementRect.top
@@ -465,7 +524,8 @@ class CountryField {
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#countryFieldWrapper.classList.add(`${this.fieldKey}-menu-open`)
-      this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
+      // this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
+      this.#addEvent(this.#config.document, 'click', e => this.#handleOutsideClick(e))
       this.#searchInputElm.tabIndex = '0'
       this.#clearSearchBtnElm.tabIndex = '0'
       this.#dropdownWrapperElm.setAttribute('aria-expanded', 'true')
@@ -474,7 +534,8 @@ class CountryField {
       this.#reRenderVirtualOptions()
     } else {
       this.#countryFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
-      document.removeEventListener('click', this.#handleOutsideClick)
+      // document.removeEventListener('click', this.#handleOutsideClick)
+      this.#config.document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#searchInputElm.blur()
       this.#searchInputElm.tabIndex = '-1'

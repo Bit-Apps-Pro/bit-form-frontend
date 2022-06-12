@@ -2,18 +2,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import FileUploadField from './file-upload-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
+import FileUploadField from '../../resource/js/file-upload-script'
 
 export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
   const fileUploadFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  const assetsUrl = bits.assetsURL
+  // const assetsUrl = bits.assetsURL
 
   useEffect(() => {
     if (!fileUploadWrapElmRef?.current) {
@@ -62,24 +62,24 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
             data-dev-file-up-wrpr={fieldKey}
             className={`${fieldKey}-file-up-wrpr ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''} ${getCustomClsName(fieldKey, 'file-up-wrpr')}`}
             ref={fileUploadWrapElmRef}
-            {... { ...getCustomAttributs(fieldKey, 'file-up-wrpr') }}
+            {...getCustomAttributs(fieldKey, 'file-up-wrpr')}
           >
             <div
               data-dev-file-input-wrpr={fieldKey}
               className={`${fieldKey}-file-input-wrpr ${getCustomClsName(fieldKey, 'file-input-wrpr')}`}
-              {... { ...getCustomAttributs(fieldKey, 'file-input-wrpr') }}
+              {...getCustomAttributs(fieldKey, 'file-input-wrpr')}
             >
               <div
                 data-dev-btn-wrpr={fieldKey}
                 className={`${fieldKey}-btn-wrpr ${getCustomClsName(fieldKey, 'btn-wrpr')}`}
-                {... { ...getCustomAttributs(fieldKey, 'btn-wrpr') }}
+                {...getCustomAttributs(fieldKey, 'btn-wrpr')}
               >
                 <button
                   data-testid={`${fieldKey}-inp-btn`}
                   data-dev-inp-btn={fieldKey}
                   type="button"
                   className={`${fieldKey}-inp-btn ${getCustomClsName(fieldKey, 'inp-btn')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'inp-btn') }}
+                  {...getCustomAttributs(fieldKey, 'inp-btn')}
                 >
                   {fieldData.prefixIcn && (
                     <img
@@ -88,13 +88,13 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                       src={`${fieldData.prefixIcn}`}
                       alt="Upload icon"
                       srcSet=""
-                      {... { ...getCustomAttributs(fieldKey, 'pre-i') }}
+                      {...getCustomAttributs(fieldKey, 'pre-i')}
                     />
                   )}
                   <span
                     data-dev-btn-txt={fieldKey}
                     className={`${fieldKey}-btn-txt ${getCustomClsName(fieldKey, 'btn-txt')}`}
-                    {... { ...getCustomAttributs(fieldKey, 'btn-txt') }}
+                    {...getCustomAttributs(fieldKey, 'btn-txt')}
                   >
                     {fieldData.btnTxt}
                   </span>
@@ -105,7 +105,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                       src={`${fieldData.suffixIcn}`}
                       alt="Upload icon"
                       srcSet=""
-                      {... { ...getCustomAttributs(fieldKey, 'suf-i') }}
+                      {...getCustomAttributs(fieldKey, 'suf-i')}
                     />
                   )}
                 </button>
@@ -113,7 +113,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   <div
                     data-dev-file-select-status={fieldKey}
                     className={`${fieldKey}-file-select-status ${getCustomClsName(fieldKey, 'file-select-status')}`}
-                    {... { ...getCustomAttributs(fieldKey, 'file-select-status') }}
+                    {...getCustomAttributs(fieldKey, 'file-select-status')}
                   >
                     No Choosen File
                   </div>
@@ -122,7 +122,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   <small
                     data-dev-max-size-lbl={fieldKey}
                     className={`${fieldKey}-max-size-lbl ${getCustomClsName(fieldKey, 'max-size-lbl')}`}
-                    {... { ...getCustomAttributs(fieldKey, 'max-size-lbl') }}
+                    {...getCustomAttributs(fieldKey, 'max-size-lbl')}
                   >
                     {`(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}
                   </small>
@@ -137,17 +137,18 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...'req' in fieldData.valid && { required: fieldData.valid.req }}
                   {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
                   {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
+                  {...getCustomAttributs(fieldKey, 'file-upload-input')}
                 />
               </div>
               {fieldData.config.showFileList && (
                 <div
                   data-dev-files-list={fieldKey}
                   className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'files-list') }}
+                  {...getCustomAttributs(fieldKey, 'files-list')}
                 />
               )}
             </div>
-            <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} />
+            <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} {...getCustomAttributs(fieldKey, 'option')} />
           </div>
         </div>
       </InputWrapper>

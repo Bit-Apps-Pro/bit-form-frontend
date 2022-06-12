@@ -2,11 +2,11 @@
 // import './currency-field-style.css'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import CurrencyFieldClass from './currency-field-script'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import CurrencyFieldClass from '../../resource/js/currency-field-script'
+import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
 const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, styleClasses }) => {
   const currencyWrapElmRef = useRef(null)
@@ -31,7 +31,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       fldConstructor.destroy()
     }
 
-    const { options, inputFormatOptions, valueFormatOptions } = fieldData
+    const { options, inputFormatOptions, valueFormatOptions, customAttributes, customClasses } = fieldData
+    console.log(customAttributes, customClasses)
 
     const configOptions = {
       fieldKey,
@@ -45,6 +46,20 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       searchPlaceholder,
       noCurrencyFoundText,
       options,
+      attributes: {
+        option: getDataDavAttrArr(fieldKey, 'option'),
+        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
+        'opt-suffix': getDataDavAttrArr(fieldKey, 'opt-suffix'),
+      },
+      classNames: {
+        option: getCustomClsName(fieldKey, 'option'),
+        'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getCustomClsName(fieldKey, 'opt-icn'),
+        'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
+        'opt-suffix': getCustomClsName(fieldKey, 'opt-suffix'),
+      },
     }
 
     const alreadyChecked = options.find(opt => opt.check)
@@ -65,7 +80,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             data-dev-currency-fld-wrp={fieldKey}
             className={`${fieldKey}-currency-fld-wrp ${getCustomClsName(fieldKey, 'currency-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={currencyWrapElmRef}
-            {... { ...getCustomAttributs(fieldKey, 'currency-fld-wrp') }}
+            {...getCustomAttributs(fieldKey, 'currency-fld-wrp')}
           >
             <input
               name={fieldKey}
@@ -93,7 +108,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                       aria-hidden="true"
                       className={`${fieldKey}-selected-currency-img ${getCustomClsName(fieldKey, 'selected-currency-img')}`}
                       src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                      {... { ...getCustomAttributs(fieldKey, 'selected-currency-img') }}
+                      {...getCustomAttributs(fieldKey, 'selected-currency-img')}
                     />
                   </div>
                 )}
@@ -128,7 +143,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   type="button"
                   title="Clear value"
                   className={`${fieldKey}-icn ${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'input-clear-btn') }}
+                  {...getCustomAttributs(fieldKey, 'input-clear-btn')}
                 >
                   <svg
                     width="13"
@@ -151,7 +166,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 <div
                   data-dev-opt-search-wrp={fieldKey}
                   className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-wrp')}`}
-                  {... { ...getCustomAttributs(fieldKey, 'opt-search-wrp') }}
+                  {...getCustomAttributs(fieldKey, 'opt-search-wrp')}
                 >
                   <input
                     data-testid={`${fieldKey}-opt-srch-inp`}
@@ -161,7 +176,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     placeholder={fieldData.config.searchPlaceholder}
                     autoComplete="off"
                     tabIndex="-1"
-                    {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
+                    {...getCustomAttributs(fieldKey, 'opt-search-input')}
                   />
                   <svg
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
@@ -175,7 +190,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    {... { ...getCustomAttributs(fieldKey, 'opt-search-icn') }}
+                    {...getCustomAttributs(fieldKey, 'opt-search-icn')}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -188,7 +203,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                       aria-label="Clear search"
                       className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                       tabIndex="-1"
-                      {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
+                      {...getCustomAttributs(fieldKey, 'search-clear-btn')}
                     >
                       <svg
                         width="16"

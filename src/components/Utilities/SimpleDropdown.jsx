@@ -4,7 +4,7 @@ import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import ut from '../../styles/2.utilities'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 
-export default function SimpleDropdown({ options, value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25 , id}) {
+export default function SimpleDropdown({ options, value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25, id }) {
   let defaultVal = null
   const selected = options.find(opt => opt.value === value)
   if (Number.isInteger(value)) {
@@ -97,6 +97,7 @@ export default function SimpleDropdown({ options, value, cls, onChange = () => {
           </div>
           <div
             className={css([simppleDpdStyle.down_btn, ut['g-c']])}
+            style={{ height: h - 8 }}
           >
             <ChevronDownIcn size="18" rotate={menu.open} />
           </div>

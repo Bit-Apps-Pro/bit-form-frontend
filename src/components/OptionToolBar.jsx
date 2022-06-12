@@ -17,7 +17,7 @@ import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
-import Editor from './CompSettings/Editor'
+import CustomCodeEditor from './CompSettings/CustomCodeEditor'
 import FormBuilderHistory from './FormBuilderHistory'
 import { removeUnuseStyles } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
@@ -190,9 +190,10 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             setModal={setModal}
             className="o-v"
             title=""
+            closeOnOutsideClick={false}
           >
             <div className="pos-rel" />
-            <Editor />
+            <CustomCodeEditor />
           </Modal>
 
           <div className={css(OptionToolBarStyle.border_right)} />

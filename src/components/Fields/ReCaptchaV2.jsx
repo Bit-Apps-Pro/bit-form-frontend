@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits, $breakpoint, $fields, $flags } from '../../../GlobalStates/GlobalStates'
-import { reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
-import { loadScript, selectInGrid } from '../../../Utils/globalHelpers'
-import RenderStyle from '../../style-new/RenderStyle'
-import RecaptchaField from './re-captchaV2'
+import { $bits, $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { loadScript, selectInGrid } from '../../Utils/globalHelpers'
+import RenderStyle from '../style-new/RenderStyle'
+import RecaptchaField from '../../resource/js/re-captchaV2'
 
 export const onLoadCallback = () => {
   console.log('on load complete')
@@ -58,11 +58,10 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
       attr: {
         async: true,
         defer: true,
-      }
+      },
     }
 
     loadScript(srcData)
-
 
     const { theme, size } = fieldData.config
     const configOptions = {
@@ -71,8 +70,6 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
     }
 
     recaptchaFieldRef.current = new RecaptchaField(fldElm, configOptions)
-
-
   }, [fieldData])
 
   return (

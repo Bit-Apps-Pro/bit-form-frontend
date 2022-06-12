@@ -14,12 +14,12 @@ function Divider({ fieldKey, styleClasses, attr: fieldData }) {
       <div
         data-dev-fld-wrp={fieldKey}
         className={`${fieldKey}-fld-wrp drag ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
-        {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
+        {...getCustomAttributs(fieldKey, 'fld-wrp')}
       >
         <div
           data-dev-divider={fieldKey}
           className={`${fieldKey}-divider ${getCustomClsName(fieldKey, 'divider')}`}
-          {... { ...getCustomAttributs(fieldKey, 'divider') }}
+          {...getCustomAttributs(fieldKey, 'divider')}
         />
       </div>
     </>

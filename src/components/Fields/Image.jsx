@@ -23,14 +23,14 @@ function Image({ fieldKey, attr: fieldData, styleClasses }) {
         data-dev-fld-wrp={fieldKey}
         ref={setWrap}
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
-        {... { ...getCustomAttributs(fieldKey, 'fld-wrp') }}
+        {...getCustomAttributs(fieldKey, 'fld-wrp')}
       >
         <img
           data-dev-img={fieldKey}
           className={`${fieldKey}-img ${getCustomClsName(fieldKey, 'img')}`}
           src={fieldData?.bg_img || `https://via.placeholder.com/${width}x${height}`}
           alt="bg"
-          {... { ...getCustomAttributs(fieldKey, 'img') }}
+          {...getCustomAttributs(fieldKey, 'img')}
         />
       </div>
     </>

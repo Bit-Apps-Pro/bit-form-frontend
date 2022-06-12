@@ -123,6 +123,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
       case 'err-msg': return 'Error Messages Container'
       case 'currency-fld-wrp': return 'Currency Field Wrapper'
+      case 'btn': return 'Button'
       default:
         break
     }
@@ -290,7 +291,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <BackgroundControl
             title="Background"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-image']}
+            value={existCssPropsObj?.['background-image'] || existCssPropsObj?.['background-color']}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
             objectPaths={objPaths}

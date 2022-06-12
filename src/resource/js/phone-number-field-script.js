@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import { observeElement } from '../../../Utils/globalHelpers'
-import VirtualizedList from '../CurrencyField/virtualized-list.min'
+import { observeElement } from '../../Utils/globalHelpers'
+import VirtualizedList from './virtualized-list.min'
 
 class PhoneNumberField {
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
@@ -48,6 +48,8 @@ class PhoneNumberField {
     searchCountryPlaceholder: 'Search Country',
     noCountryFoundText: 'No Country Found',
     searchClearable: true,
+    attributes: {},
+    classNames: {},
   }
 
   #debounceTimeout = null
@@ -414,6 +416,16 @@ class PhoneNumberField {
     elm?.setAttribute?.(name, value)
   }
 
+  #setCustomAttr(element, obj) {
+    const optObjKey = Object.keys(obj)
+    const optLen = optObjKey.length
+    if (optLen) {
+      for (let i = 0; i < optLen; i += 1) {
+        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+      }
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new VirtualizedList(this.#optionListElm, {
@@ -426,32 +438,68 @@ class PhoneNumberField {
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
-        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+        // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+        if ('option' in this.#config.attributes) {
+          const optAttr = this.#config.attributes.option
+          this.#setCustomAttr(li, optAttr)
+        }
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
           return li
         }
         this.#setClassName(li, `${this.fieldKey}-option`)
+        if ('option' in this.#config.classNames) {
+          const optCls = this.#config.classNames['option']
+          if (optCls) this.#setClassName(li, optCls)
+        }
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
-        this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+        if ('opt-lbl-wrp' in this.#config.classNames) {
+          const optLblwrpCls = this.#config.classNames['opt-lbl-wrp']
+          if (optLblwrpCls) this.#setClassName(lblimgbox, optLblwrpCls)
+        }
+        // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+        if ('opt-lbl-wrp' in this.#config.attributes) {
+          const optLblWrp = this.#config.attributes['opt-lbl-wrp']
+          this.#setCustomAttr(lblimgbox, optLblWrp)
+        }
         const img = this.#createElm('img')
         this.#setClassName(img, `${this.fieldKey}-opt-icn`)
-        this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#config.classNames) {
+          const optIcnCls = this.#config.classNames['opt-icn']
+          if (optIcnCls) this.#setClassName(img, optIcnCls)
+        }
+        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#config.attributes) {
+          const optIcn = this.#config.attributes['opt-icn']
+          this.#setCustomAttr(img, optIcn)
+        }
         img.src = `${bits.assetsURL}/${opt.img}`
         img.alt = `${opt.lbl} flag image`
         img.loading = 'lazy'
         this.#setAttribute(img, 'aria-hidden', true)
         const lbl = this.#createElm('span')
         this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
-        this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+        if ('opt-lbl' in this.#config.classNames) {
+          const optLblCls = this.#config.classNames['opt-lbl']
+          if (optLblCls) this.#setClassName(lbl, optLblCls)
+        }
+        // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+        if ('opt-lbl' in this.#config.attributes) {
+          const optLbl = this.#config.attributes['opt-lbl']
+          this.#setCustomAttr(lbl, optLbl)
+        }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(img, lbl)
         const prefix = this.#createElm('span')
         this.#setClassName(prefix, `${this.fieldKey}-opt-prefix`)
         this.#setTextContent(prefix, opt.code)
-        this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
+        // this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
+        if ('opt-prefix' in this.#config.attributes) {
+          const optsufix = this.#config.attributes['opt-prefix']
+          this.#setCustomAttr(prefix, optsufix)
+        }
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
         this.#setAttribute(li, 'role', 'option')
         this.#setAttribute(li, 'aria-posinset', index + 1)

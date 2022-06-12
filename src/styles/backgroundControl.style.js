@@ -1,35 +1,59 @@
-const backgroundImageControlStyle = {
+const backgroundControlStyle = {
   container: { w: 250, cr: '#888' },
   innercontainer: { p: 10 },
 
   title: { fs: 12 },
 
   urlinput: {
-    brs: 10,
-    flx: 'align-center',
-    h: 30,
+    fs: 14,
+    fw: 500,
     w: '100%',
-    p: 2,
-    bc: 'var(--white-0-95)',
-    cr: 'var(--white-0-50)',
-    b: '1px solid transparent',
-    ':focus-within': { focusShadow: 1 },
-    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
-    oe: 0,
+    h: 35,
+    bd: 'var(--b-79-96) !important',
+    oe: 'none !important',
+    ml: 'auto',
+    dy: 'block',
+    lh: '2 !important',
+    px: 8,
+    mt: 3,
+    mb: 3,
+    bs: 'none !important',
+    brs: '8px !important',
+    tn: 'box-shadow .3s',
+    b: '1px solid #e6e6e6 !important',
+    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
+    ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
   },
 
-  select: {
-    w: 100,
-    bi: 'none',
-    ae: '',
-    p: 5,
-    pb: 8,
-    brs: 10,
-    bc: 'var(--white-0-95)',
-    b: 0,
-    oe: 0,
+  // select: {
+  //   w: 100,
+  //   bi: 'none',
+  //   ae: '',
+  //   p: 5,
+  //   pb: 8,
+  //   brs: 10,
+  //   bc: 'var(--white-0-95)',
+  //   b: 0,
+  //   oe: 0,
 
-    ':focus': { bs: 'none' },
+  //   ':focus': { bs: 'none' },
+  // },
+  linkWrap: {
+    pn: 'relative',
+    dy: 'flex',
+  },
+  browse: {
+    pn: 'absolute',
+    rt: 2,
+    tp: '11%',
+    curp: 'pointer',
+    cr: 'hsla(0, 0%, 33%, 1)',
+    flx: 'center',
+    p: '0px 5px',
+    h: 32,
+    b: 'none',
+    brs: '0px 8px 8px 0px',
+    ':hover': { bc: 'var(--white-0-93)' },
   },
 
   icon: { fs: 15, lh: '15px', mr: 5, curp: 1 },
@@ -101,4 +125,4 @@ const backgroundImageControlStyle = {
   },
 }
 
-export default backgroundImageControlStyle
+export default backgroundControlStyle

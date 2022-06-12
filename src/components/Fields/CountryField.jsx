@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../../Utils/globalHelpers'
-import InputWrapper from '../../InputWrapper'
-import RenderStyle from '../../style-new/RenderStyle'
-import CountryFieldClass from './country-field-script.js'
+import { $fields, $bits } from '../../GlobalStates/GlobalStates'
+import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
+import CountryFieldClass from '../../resource/js/country-field-script'
+import RenderStyle from '../style-new/RenderStyle'
 
 const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   const countryWrapElmRef = useRef(null)
   const countryFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-
+  const bits = useRecoilValue($bits)
   const { options, ph } = fieldData
 
   useEffect(() => {
@@ -48,6 +48,21 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       searchPlaceholder,
       noCountryFoundText,
       options,
+      assetsURL: bits.assetsURL,
+      document: document.getElementById('bit-grid-layout').document,
+      widnow: document.getElementById('bit-grid-layout').contentWindow,
+      attributes: {
+        option: getDataDavAttrArr(fieldKey, 'option'),
+        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
+      },
+      classNames: {
+        option: getCustomClsName(fieldKey, 'option'),
+        'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getCustomClsName(fieldKey, 'opt-icn'),
+        'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
+      },
     }
 
     const alreadyChecked = options.find(opt => opt.check)
@@ -68,7 +83,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
             data-dev-country-fld-wrp={fieldKey}
             className={`${fieldKey}-country-fld-wrp ${getCustomClsName(fieldKey, 'country-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={countryWrapElmRef}
-            {... { ...getCustomAttributs(fieldKey, 'country-fld-wrp') }}
+            {...getCustomAttributs(fieldKey, 'country-fld-wrp')}
           >
             <input
               name="country-name"
@@ -94,7 +109,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     aria-hidden="true"
                     alt="selected country flag"
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                    {... { ...getCustomAttributs(fieldKey, 'selected-country-img') }}
+                    {...getCustomAttributs(fieldKey, 'selected-country-img')}
                   />
                 )}
                 <span
@@ -113,7 +128,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     title="Clear selected country value"
                     data-dev-inp-clr-btn={fieldKey}
                     className={`${fieldKey}-inp-clr-btn ${getCustomClsName(fieldKey, 'inp-clr-btn')}`}
-                    {... { ...getCustomAttributs(fieldKey, 'inp-clr-btn') }}
+                    {...getCustomAttributs(fieldKey, 'inp-clr-btn')}
                   >
                     <svg
                       width="15"
@@ -161,7 +176,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     placeholder={fieldData.config.searchPlaceholder}
                     autoComplete="country-name"
                     tabIndex="-1"
-                    {... { ...getCustomAttributs(fieldKey, 'opt-search-input') }}
+                    {...getCustomAttributs(fieldKey, 'opt-search-input')}
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
@@ -177,7 +192,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    {... { ...getCustomAttributs(fieldKey, 'opt-search-icn') }}
+                    {...getCustomAttributs(fieldKey, 'opt-search-icn')}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -190,7 +205,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                       data-dev-search-clear-btn={fieldKey}
                       className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                       tabIndex="-1"
-                      {... { ...getCustomAttributs(fieldKey, 'search-clear-btn') }}
+                      {...getCustomAttributs(fieldKey, 'search-clear-btn')}
                     >
                       <svg
                         width="15"
@@ -224,5 +239,4 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
     </>
   )
 }
-
 export default CountryField
