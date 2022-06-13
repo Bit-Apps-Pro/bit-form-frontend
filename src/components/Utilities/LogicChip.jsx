@@ -1,6 +1,6 @@
 import { __ } from '../../Utils/i18nwrap'
 
-function LogicChip({ logic, nested, onChange }) {
+function LogicChip({ logic, nested, onChange, className = null }) {
   return (
     <>
       <div style={{ height: nested ? 5 : 10 }}>
@@ -10,7 +10,7 @@ function LogicChip({ logic, nested, onChange }) {
       </div>
 
       <div>
-        <select value={logic} onChange={onChange} className={`btcd-logic-chip ${nested && 'scl-7 op-8'}`}>
+        <select value={logic} onChange={onChange} className={`btcd-logic-chip ${className} ${nested && 'scl-7 op-8'}`}>
           <option value="or">{__('OR', 'bitform')}</option>
           <option value="and">{__('AND', 'bitform')}</option>
         </select>

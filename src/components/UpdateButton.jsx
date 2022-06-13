@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
+import { $additionalSettings, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $workflows } from '../GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
@@ -26,6 +26,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setAllForms = useSetRecoilState($forms)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const [reports, setReports] = useRecoilState($reports)
+  const currentReport = useRecoilValue($reportSelector)
+  const [reportId, setReportId] = useRecoilState($reportId)
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [workFlows, setworkFlows] = useRecoilState($workflows)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
@@ -138,10 +140,11 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const formData = {
       ...(savedFormId && { id: savedFormId }),
       ...(!savedFormId && { form_id: newFormId }),
-      ...(savedFormId && { reports }),
+      ...(savedFormId && { currentReport }),
       layout: sortLayoutLG,
       fields,
       form_name: formName,
+      report_id: reportId.id,
       additional: additionalSettings,
       workFlows,
       formStyle,
@@ -159,7 +162,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (savedFormId && deletedFldKey.length !== 0) {
       formData.deletedFldKey = deletedFldKey
     }
-
     const fetchProm = bitsFetch(formData, action)
       .then(response => {
         if (response?.success && componentMounted) {
@@ -176,7 +178,15 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
-          data?.reports && setReports(reprts => reportsReducer(reprts, { type: 'set', reports: data?.reports || [] }))
+          data?.reports && setReports(data?.reports || [])
+          data?.form_content?.report_id && setReportId(
+            {
+              id: data?.form_content?.report_id,
+              isDefault: data?.form_content?.is_default || 0,
+            },
+
+          )
+
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
             data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },

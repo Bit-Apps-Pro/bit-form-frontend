@@ -4,13 +4,16 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
+import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
+import EntriesFilter from '../components/Report/EntriesFilter'
+import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
+import { $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy, number2Ipv6 } from '../Utils/Helpers'
@@ -38,18 +41,20 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
   const bits = useRecoilValue($bits)
-  const reportData = useRecoilValue($reportSelector(0))
+  const currentReportData = useRecoilValue($reportSelector)
+  const reportId = useRecoilValue($reportId)
+  const reports = useRecoilValue($reports)
+  const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
 
   useEffect(() => {
-    if (reportData) {
+    if (currentReportData) {
       const allLabelObj = {}
-
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      console.log('reportData', reportData, allLabels)
-      reportData.details?.order?.forEach((field) => {
+      console.log('currentReportData', currentReportData, allLabels)
+      currentReportData.details?.order?.forEach((field) => {
         if (
           field
           && field !== 'sl'
@@ -64,8 +69,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     } else if (allLabels.length) {
       tableHeaderHandler(allLabels)
     }
-    // console.log(`reportData`, reportData)
-    // tableHeaderHandler(reportData?.details?.order || allLabels)
+    // tableHeaderHandler(currentReportData?.details?.order || allLabels)
   }, [allLabels])
 
   const closeConfMdl = useCallback(() => {
@@ -219,6 +223,13 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             if (val.key === '__user_id') {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
+            if (val.key === '__entry_status') {
+              const status = Number(row.cell.value)
+              if (status === 1) { return 'Unapproved' }
+              if (status === 0) { return 'Approved' }
+              if (status === 2) { return 'Unapproved' }
+              if (status === 3) { return 'Approved' }
+            }
 
             if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
               return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
@@ -307,7 +318,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     setshowRelatedInfoMdl(true)
   }
 
-  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
+  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter, conditions, entriesFilterByDate }) => {
     // eslint-disable-next-line no-plusplus
     if (refreshResp) {
       setRefreshResp(0)
@@ -330,6 +341,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           sortBy,
           filters,
           globalFilter,
+          conditions,
+          entriesFilterByDate,
         },
         'bitforms_get_form_entries',
       ).then((res) => {
@@ -354,6 +367,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     (e, row, idx, rowFetchData) => {
       if (!e.target.classList.contains('prevent-drawer')) {
         const newRowDtl = { ...rowDtl }
+        console.log('e', e, 'row', row, 'idx', idx, 'rowFetchData', rowFetchData)
         if (newRowDtl.show && rowDtl.idx === idx) {
           newRowDtl.show = false
         } else {
@@ -432,38 +446,21 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
-  // const formatRespData = (respData = []) => {
-  //   const passwordFields = allLabels.filter(label => label.type === 'password').map(lbl => lbl.key)
-  //   if (passwordFields.length) {
-  //     const newResp = [...respData]
-  //     newResp.forEach((resp, i) => {
-  //       passwordFields.forEach(passField => {
-  //         if (resp[passField]) {
-  //           newResp[i][passField] = '**** (encrypted)'
-  //         }
-  //       })
-  //     })
-
-  //     return newResp
-  //   }
-
-  //   return respData
-  // }
+  const loadRightHeaderComponent = () => (
+    <>
+      <EntriesFilter fetchData={fetchData} />
+      <ExportImportMenu data={allResp} cols={entryLabels} formID={formID} report={reports} />
+    </>
+  )
+  const loadLeftHeaderComponent = () => (
+    <>
+      <FldEntriesByCondition fetchData={fetchData} setRefreshResp={setRefreshResp} />
+    </>
+  )
 
   return (
     <div id="form-res">
-      <div className="af-header flx">
-        <h2>{__('Form Responses', 'bitform')}</h2>
-        <button
-          className="icn-btn ml-2 mr-2 tooltip"
-          onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': `'${__('Refresh', 'bitform')}'` }}
-          type="button"
-          disabled={isloading}
-        >
-          &#x21BB;
-        </button>
-      </div>
+
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <ConfirmModal
@@ -527,7 +524,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       <div className="forms">
         <Table
           className="f-table btcd-entries-f"
-          height="60vh"
+          height="76vh"
           columns={entryLabels}
           data={allResp}
           loading={isloading}
@@ -537,7 +534,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           columnHidable
           hasAction
           rowClickable
-          exportImportMenu
+          rightHeader={loadRightHeaderComponent()}
+          leftHeader={loadLeftHeaderComponent()}
+          reportActiveMenu
           formID={formID}
           setTableCols={setEntryLabels}
           fetchData={fetchData}
@@ -546,7 +545,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
-          report={0} // index - 0 setted as default report
+          report={rprtIndx || 0}// index - 0 setted as default report
         />
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
