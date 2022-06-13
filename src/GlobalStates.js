@@ -19,16 +19,27 @@ export const $confirmations = atom({ key: '$confirmations', default: {}, dangero
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
+export const $reportId = atom({ key: '$reportId', default: {} })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
 
-export const $reportSelector = selectorFamily({
+// export const $reportSelector = selector({
+//   key: '$reportSelector',
+//   get: ({ get }) => get($reports)[get($reportId)],
+//   set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+//     const id = get($reportId)
+//     draft[id] = newReport
+//   })),
+// })
+export const $reportSelector = selector({
   key: '$reportSelector',
-  get: (reportID) => ({ get }) => get($reports)[reportID],
-  set: (reportID) => ({ set }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
-    draft[reportID] = newReport
+  get: ({ get }) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
+  set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+    const reprtId = get($reportId)?.id?.toString()
+    const rportIndx = oldReports.findIndex(r => r?.id && r.id.toString() === reprtId)
+    draft[rportIndx] = newReport
   })),
 })

@@ -7,7 +7,7 @@ import Loader from '../components/Loaders/Loader'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
+import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
@@ -51,6 +51,7 @@ function FormDetails() {
   const resetWorkflows = useResetRecoilState($workflows)
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
+  const setReportId = useSetRecoilState($reportId)
 
   const setNewFormProps = () => {
     if (formType === 'new') {
@@ -191,6 +192,8 @@ function FormDetails() {
           if (res?.success && componentMounted) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
+            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
+            //
             setFields(responseData.form_content.fields)
             setFormName(responseData.form_content.form_name)
             setworkFlows(responseData.workFlows)
@@ -198,6 +201,11 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+
+            setReportId({
+              id: responseData?.form_content?.report_id || defaultReport?.id,
+              isDefault: responseData?.form_content?.report_id === null,
+            })
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
             setReports(responseData.reports || [])
