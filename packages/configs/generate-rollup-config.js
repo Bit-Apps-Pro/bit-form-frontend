@@ -2,6 +2,7 @@
 import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import babel from '@rollup/plugin-babel'
+import serve from 'rollup-plugin-serve'
 
 const terserOptions = {
   compress: {
@@ -19,9 +20,12 @@ const terserOptions = {
 export default function generateRollupConfig() {
   const packageJson = require('./package.json') // eslint-disable-line global-require, import/no-unresolved
   const inputFileName = packageJson.name
-  const libName = `bf_${packageJson.name.replace('-', '_')}`
+  const libName = packageJson.name.replaceAll('-', '_')
   const inputFilePath = `src/${inputFileName}.js`
   const outputFilePath = `dist/${inputFileName}.min.js`
+  const devOutputFilePath = `dist/${inputFileName}.dev.js`
+
+  const isDev = process.env.NODE_ENV === 'dev'
 
   return [
     {
@@ -29,27 +33,42 @@ export default function generateRollupConfig() {
       external: [
         'window',
         'document',
+        'bit_virtualized_list',
       ],
 
       output: [
-        {
-          file: outputFilePath,
-          name: libName,
-          format: 'umd',
-          plugins: [terser(terserOptions)],
-          globals: {
-            document: 'document',
-            window: 'window',
+        ...isDev ? [
+          {
+            file: devOutputFilePath,
+            name: libName,
+            format: 'umd',
+            globals: {
+              document: 'document',
+              window: 'window',
+            },
           },
-        },
+        ] : [
+          {
+            file: outputFilePath,
+            name: libName,
+            format: 'umd',
+            plugins: [terser(terserOptions)],
+            globals: {
+              document: 'document',
+              window: 'window',
+            },
+          },
+        ],
+
       ],
       plugins: [
+        ...isDev ? [serve({ open: true, port: 3030 })] : [],
         resolve(),
         babel({
           presets: [
             [
               '@babel/preset-env',
-              { targets: '> 2%' },
+              { targets: isDev ? '> 20%' : '> 2%' },
             ],
           ],
           babelHelpers: 'bundled',

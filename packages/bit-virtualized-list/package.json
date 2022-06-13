@@ -5,7 +5,7 @@
   "main": "dist/virtualized-list.min.js",
   "module": "src/virtualized-list.js",
   "scripts": {
-    "build-r": "rollup -c",
+    "build": "rollup -c",
     "build-w": "webpack --mode=production"
   },
   "dependencies": {

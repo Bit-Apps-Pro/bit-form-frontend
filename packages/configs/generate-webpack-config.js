@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 function generateWebpackConfig({ dir }) {
   const packageJson = require(`${dir}/package.json`) // eslint-disable-line global-require, import/no-unresolved, import/no-dynamic-require
   const inputFileName = packageJson.name
-  const libName = `bf_${packageJson.name.replace('-', '_')}`
+  const libName = packageJson.name.replaceAll('-', '_')
   const inputFilePath = `${dir}/src/${inputFileName}.js`
   const outputFileName = `${inputFileName}.min.js`
 
@@ -14,12 +14,11 @@ function generateWebpackConfig({ dir }) {
     output: {
       path: path.resolve(dir, 'dist'),
       filename: outputFileName,
-      clean: true,
+      // clean: true,
       library: {
         name: libName,
         type: 'umd',
       },
-
     },
     module: {
       rules: [
