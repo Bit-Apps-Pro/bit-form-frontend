@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import DownloadIcon from '../../Icons/DownloadIcon'
+import OutlineDownloadIcn from '../../Icons/OutlineDownloadIcn'
+import { __ } from '../../Utils/i18nwrap'
 import Export from './Export'
 
 export default function ExportImportMenu({ formID, cols, report }) {
@@ -28,13 +31,11 @@ export default function ExportImportMenu({ formID, cols, report }) {
       <div className="btcd-menu">
         {/* <button onClick={() => importShow()} className="" type="button">Import Data</button>
         {' '} */}
-        <button onClick={() => exportShow()} className="btn ml-2 mt-0 mb-0" type="button">Export</button>
-        {/* <button onClick={() => exportData('pdf')} className="" type="button">pdf</button>
-        <button onClick={() => exportData('csv')} className="" type="button">csv</button>
-        <button onClick={() => exportData('xlsx')} className="" type="button">xls</button>
-        <button onClick={() => exportData('ods')} className="" type="button">ods</button>
-        <button onClick={() => exportData('fods')} className="" type="button">fods</button>
-        <button onClick={() => exportData('prn')} className="" type="button">prn</button> */}
+        <button onClick={() => exportShow()} className="btn btn-date-range  mb3 tooltip" style={{ '--tooltip-txt': `'${__('Export')}'` }} type="button">
+          {' '}
+          <OutlineDownloadIcn size="16" />
+          {' '}
+        </button>
       </div>
     </div>
 
