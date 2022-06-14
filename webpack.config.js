@@ -126,39 +126,60 @@ module.exports = (env, argv) => {
         filename: hot ? '[name].css' : '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
       }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'public/wp_index.html'),
+            to: path.resolve(__dirname, '../views/view-root.php'),
+          },
+          {
+            from: path.resolve(__dirname, 'manifest.json'),
+            to: path.resolve(__dirname, '../assets/js/manifest.json'),
+          },
+          {
+            from: path.resolve(__dirname, 'bitform-logo-icon.ico'),
+            to: path.resolve(__dirname, '../assets/img/bitform-logo-icon.ico'),
+          },
+          {
+            from: path.resolve(__dirname, 'logo-256.png'),
+            to: path.resolve(__dirname, '../assets/img/logo-256.png'),
+          },
+          {
+            from: path.resolve(__dirname, 'logo-bg.svg'),
+            to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
+          },
+          {
+            from: path.resolve(__dirname, 'logo.svg'),
+            to: path.resolve(__dirname, '../assets/img/logo.svg'),
+          },
+          {
+            from: path.resolve(__dirname, 'redirect.php'),
+            to: path.resolve(__dirname, '../assets/js/index.php'),
+          },
+        ],
+      }),
+      // new BrowserSyncPlugin({
+      //   // browse to http://localhost:3000/ during development,
+      //   // ./public directory is being served
+      //   host: 'localhost',
+      //   port: 3000,
+      //   // files: ['.php'],
+      //   // server: { baseDir: [path.resolve(__dirname, '../assets/')] },
+      //   proxy: 'http://bitcode.io',
+      //   files: [{
+      //     match: [
+      //       '.php',
+      //       // '**/*.php'
+      //     ],
+      //     fn(event, file) {
+      //       if (event === 'change') {
+      //         const bs = require('browser-sync').get('bs-webpack-plugin')
+      //         bs.reload()
+      //       }
+      //     },
+      //   }],
+      // }, { reload: false }),
       ...(!production ? [] : [
-        new CopyPlugin({
-          patterns: [
-            {
-              from: path.resolve(__dirname, 'public/wp_index.html'),
-              to: path.resolve(__dirname, '../views/view-root.php'),
-            },
-            {
-              from: path.resolve(__dirname, 'manifest.json'),
-              to: path.resolve(__dirname, '../assets/js/manifest.json'),
-            },
-            {
-              from: path.resolve(__dirname, 'bitform-logo-icon.ico'),
-              to: path.resolve(__dirname, '../assets/img/bitform-logo-icon.ico'),
-            },
-            {
-              from: path.resolve(__dirname, 'logo-256.png'),
-              to: path.resolve(__dirname, '../assets/img/logo-256.png'),
-            },
-            {
-              from: path.resolve(__dirname, 'logo-bg.svg'),
-              to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
-            },
-            {
-              from: path.resolve(__dirname, 'logo.svg'),
-              to: path.resolve(__dirname, '../assets/img/logo.svg'),
-            },
-            {
-              from: path.resolve(__dirname, 'redirect.php'),
-              to: path.resolve(__dirname, '../assets/js/index.php'),
-            },
-          ],
-        }),
         new WorkboxPlugin.GenerateSW({
           clientsClaim: production,
           skipWaiting: production,
@@ -192,56 +213,38 @@ module.exports = (env, argv) => {
     module: {
       strictExportPresence: true,
       rules: [
-        ...production ? [
-          {
-            test: /\.(jsx?)$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    // useBuiltIns: 'entry',
-                    // corejs: 3,
-                    targets: { browsers: !production ? ['Chrome > 99'] : ['>0.3%'] },
-                    loose: production,
+        {
+          test: /\.(jsx?)$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          // include: path.resolve(__dirname, 'src'),
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  // useBuiltIns: 'entry',
+                  // corejs: 3,
+                  targets: {
+                    // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
+                    browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
                   },
-                ],
-                ['@babel/preset-react', { runtime: 'automatic' }],
-              ],
-              plugins: [
-                '@babel/plugin-transform-runtime',
-                ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
-                ['@babel/plugin-proposal-class-properties', { loose: production }],
-                ['@babel/plugin-proposal-private-methods', { loose: production }],
-                ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
-                // "@babel/plugin-transform-regenerator",
-                ...(!hot ? [] : ['react-refresh/babel']),
-              ],
-            },
-          },
-        ] : [
-          {
-            test: /\.[jt]sx?$/,
-            exclude: /node_modules/,
-            use: [
-              {
-                loader: require.resolve('swc-loader'),
-                options: {
-                  jsc: {
-                    transform: {
-                      react: {
-                        development: true,
-                        refresh: true,
-                      },
-                    },
-                  },
+                  loose: true,
                 },
-              },
+              ],
+              ['@babel/preset-react', { runtime: 'automatic' }],
+            ],
+            plugins: [
+              '@babel/plugin-transform-runtime',
+              ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              ['@babel/plugin-proposal-private-methods', { loose: true }],
+              ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
+              // "@babel/plugin-transform-regenerator",
+              ...(!hot ? [] : ['react-refresh/babel']),
             ],
           },
-        ],
+        },
         {
           test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
@@ -260,7 +263,7 @@ module.exports = (env, argv) => {
                     ['autoprefixer'],
                     postcssPresetEnv({
                       stage: 1,
-                      browsers: production ? '>0.1%' : 'Chrome >= 99',
+                      browsers: production ? '>0.1%' : 'Chrome >= 95',
                     }),
                   ],
                 },

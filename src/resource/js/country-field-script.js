@@ -1,7 +1,16 @@
-/* eslint-disable class-methods-use-this */
-import { observeElement } from './helper'
+import { observeElement } from '../../Utils/globalHelpers'
+import VirtualizedList from './virtualized-list.min'
 
-export default class BitCountryField {
+// TODO
+
+// let document = {}
+// if(this.#config.document) {
+//   {document} = this.#config
+// }else {
+//   document = document
+// }
+
+class CountryField {
   #countryFieldWrapper = null
 
   #countryHiddenInputElm = null
@@ -40,7 +49,7 @@ export default class BitCountryField {
     searchPlaceholder: 'Search Country',
     noCountryFoundText: 'No Currency Found',
     maxHeight: 370,
-    document,
+    document: {},
     window: {},
     options: [],
     attributes: {},
@@ -74,6 +83,7 @@ export default class BitCountryField {
 
   init() {
     // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
+    console.log('form script', this.#config)
 
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
@@ -128,7 +138,7 @@ export default class BitCountryField {
     }
   }
 
-  #select(selector) { return this.#countryFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
+  #select(selector) { return this.#countryFieldWrapper.querySelector(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -140,9 +150,8 @@ export default class BitCountryField {
       .then(resp => resp.text())
       .then(data => {
         const ipinfo = data.trim().split('\n').reduce((obj, pair) => {
-          const [key, value] = pair.split('=')
-          obj[key] = value
-          return obj
+          pair = pair.split('=')
+          return obj[pair[0]] = pair[1], obj
         }, {})
         this.setSelectedCountryItem(ipinfo?.loc)
       })
@@ -238,12 +247,12 @@ export default class BitCountryField {
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
     if (direction === 'next') {
       const optsLength = this.#config.options.length
-      for (let i = activeIndex + 1; i < optsLength; i += 1) {
+      for (let i = activeIndex + 1; i < optsLength; i++) {
         const opt = this.#config.options[i]
         if (!opt.disabled) return i
       }
     } else if (direction === 'previous') {
-      for (let i = activeIndex - 1; i >= 0; i -= 1) {
+      for (let i = activeIndex - 1; i >= 0; i--) {
         const opt = this.#config.options[i]
         if (!opt.disabled) return i
       }
@@ -341,7 +350,7 @@ export default class BitCountryField {
 
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
-    this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
+    this.virtualOptionList = new VirtualizedList(this.#optionListElm, {
       height: this.#config.maxHeight,
       rowCount: this.#options.length,
       rowHeight: 31, // TODO - calculate this
@@ -612,3 +621,33 @@ export default class BitCountryField {
     this.#detachAllEvents()
   }
 }
+
+export default CountryField
+
+// const list = new CountryField('.country-fld-wrp', {
+//   selectedFlagImage: true,
+//   selectedCountryClearable: true,
+//   searchClearable: true,
+//   optionFlagImage: true,
+//   detectCountryByIp: false,
+//   detectCountryByGeo: false,
+//   defaultValue: '',
+//   placeholder: 'Select a Country',
+//   searchPlaceholder: 'Search for countries',
+//   maxHeight: 400,
+//   onChange: val => { console.log(val) },
+//   options: countryList,
+// document,
+// window,
+// attributes: {
+//   optionLbl: {
+//     'data-dev-opt-lbl': fldKey,
+//   },
+//   optionIcn: {
+//     'data-dev-opt-icn': fldKey,
+//   }
+// }
+// })
+// list.value = 'Afghanistan'
+// list.disabled = true
+// list.readonly = true
