@@ -14,7 +14,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -68,6 +68,7 @@ function FormDetails() {
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const resetCustomCodes = useResetRecoilState($customCodes)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
@@ -127,6 +128,7 @@ function FormDetails() {
     resetConfirmations()
     resetUpdateBtn()
     resetFormInfo()
+    resetCustomCodes()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
