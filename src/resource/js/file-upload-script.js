@@ -117,7 +117,7 @@ export default class FileUploadField {
             this.#files[fileName] = file
             if (showFileList) {
               this.#filesList.innerHTML += `<div id="file-wrp-${fileName}" data-dev-file-wrpr='${this.fieldKey}' class="${this.fieldKey}-file-wrpr">
-                ${ showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="${this.fieldKey}-file-preview" />` : ''}
+                ${showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="${this.fieldKey}-file-preview" />` : ''}
                   <div class="${this.fieldKey}-file-details">
                     <span data-dev-file-title='${this.fieldKey}' class="${this.fieldKey}-file-title">${file.name}</span>
                     ${showFileSize ? `<span data-dev-file-size='${this.fieldKey}' class="${this.fieldKey}-file-size">${this.#returnFileSize(file.size)}</span>` : ''}
