@@ -5,8 +5,8 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { useRecoilState } from 'recoil'
-import { $reportSelector } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $reportId, $reportSelector } from '../../GlobalStates'
 import SearchIcn from '../../Icons/SearchIcn'
 import { __ } from '../../Utils/i18nwrap'
 import TableLoader2 from '../Loaders/TableLoader2'
@@ -98,6 +98,7 @@ function Table(props) {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData, report } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)
+  const reportId = useRecoilValue($reportId)
 
   const { getTableProps,
     getTableBodyProps,
@@ -112,6 +113,8 @@ function Table(props) {
     nextPage,
     previousPage,
     setPageSize,
+    setSortBy,
+    setHiddenColumns,
     state,
     preGlobalFilteredRows,
     selectedFlatRows, // row select
@@ -170,9 +173,9 @@ function Table(props) {
   const [search, setSearch] = useState(globalFilter)
   useEffect(() => {
     if (fetchData) {
-      fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search, conditions })
+      fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search, conditions: currentReportData?.details?.conditions })
     }
-  }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
+  }, [fetchData, pageIndex, pageSize, sortBy, filters, search, reportId])
 
   useEffect(() => {
     if (pageIndex > pageCount) {
@@ -198,11 +201,22 @@ function Table(props) {
   }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
 
   useEffect(() => {
+    if (currentReportData && currentReportData.details && typeof currentReportData.details === 'object' && report !== undefined) {
+      setHiddenColumns(currentReportData?.details?.hiddenColumns || [])
+      setPageSize(currentReportData?.details?.pageSize || 10)
+      setSortBy(currentReportData?.details?.sortBy || [])
+      setGlobalFilter(currentReportData?.details?.globalFilter || '')
+
+      //  setFilters(currentReportData.details.filters)
+      // setColumnOrder(currentReportData.details.order)
+    }
+  }, [reportId])
+
+  useEffect(() => {
     if (columns.length && allColumns.length >= columns.length) {
       if (currentReportData && 'details' in currentReportData) {
         if (stateSavable && currentReportData.details) {
-          let details
-          details = { ...currentReportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+          const details = { ...currentReportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
           if (state.columnOrder.length === 0 && typeof currentReportData.details === 'object' && 'order' in currentReportData.details) {
             setColumnOrder(currentReportData.details.order)
           } else {

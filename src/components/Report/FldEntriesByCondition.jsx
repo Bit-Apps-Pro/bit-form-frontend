@@ -67,9 +67,8 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
 
   const reportFetchById = (rprtId) => {
     const rprt = reports.find(r => r?.id?.toString() === rprtId.toString())
-    console.log('reports', reports, rprt)
-    const { pageIndex, pageSize, sortBy, filters, globalFilter, conditions } = rprt.details
-    fetchData({ pageIndex, pageSize, sortBy, filters, conditions })
+    // const { pageIndex, pageSize, sortBy, filters, globalFilter, conditions } = rprt.details
+    // fetchData({ pageIndex, pageSize, sortBy, filters, conditions })
     setReportId({ id: rprtId, isDefault: rprt?.isDefault === '1' })
   }
 
@@ -156,7 +155,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       details: {
         report_name: 'new report ',
         hiddenColumns: [],
-        pazeSize: 10,
+        pageSize: 10,
         sortBy: [],
         filters: [],
         globalFilter: '',
@@ -217,7 +216,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     confMdl.show = false
     setconfMdl({ ...confMdl })
   }
-  console.log('reportId currentReport', reportId, currentReport)
+  console.log('reportId currentReport', reportId, currentReport, reports)
 
   return (
     <div className="flx w-10">
