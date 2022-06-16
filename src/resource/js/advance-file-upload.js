@@ -71,6 +71,7 @@ export default class AdvanceFileUpload {
       FilePondPluginMediaPreview,
     )
     this.#filePondRef = create(this.#configSetting)
+    this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
 
     // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
     if (this.#uploadFileToServer) {

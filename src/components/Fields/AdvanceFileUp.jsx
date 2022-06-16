@@ -66,12 +66,10 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     }
     const fldConstructor = advanceFileFieldRef.current
     const fldElm = container.current
-    if (fldConstructor.current?.element) {
-      destroy(fldConstructor.current.element)
+    if (fldConstructor?.element) {
+      destroy(fldConstructor.element)
       if (container.firstChild) container.removeChild(container.firstChild)
     }
-
-    // filePondRef.current = create(fieldData?.config)
 
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--root`)?.setAttribute('data-dev-pond-root', fieldKey)
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--drop-label`)?.setAttribute('data-dev-pond-drop-lbl', fieldKey)
@@ -83,7 +81,6 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
 
     container.current = new AdvanceFileUpload(fldElm, configuration)
-    advanceFileFieldRef.current.appendChild(container.current.element)
   }, [fieldData?.config])
 
   return (
