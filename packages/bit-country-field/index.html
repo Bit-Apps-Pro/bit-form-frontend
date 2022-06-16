@@ -74,11 +74,11 @@
   <script src="/dist/bit-country-field.dev.js"></script>
 
   <script type="module">
-    import countryList from '/country-list.js'
+    import countryList from './country-list.js'
 
     const list = new bit_country_field('.__fld-key__-country-fld-wrp', {
       selectedFlagImage: true,
-      selectedCountryClearable: true,
+      selectedCountryClearable: false,
       // searchClearable: true,
       optionFlagImage: true,
       detectCountryByIp: false,
@@ -92,8 +92,8 @@
       fieldKey: '__fld-key__'
     })
     list.value = 'Afghanistan'
-    list.disabled = true
-    list.readonly = true
+    // list.disabled = true
+    // list.readonly = true
   </script>
 
   <!-- DEV -->
