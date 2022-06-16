@@ -14,6 +14,7 @@
     "ace-builds": "^1.5.1",
     "array-move": "^4.0.0",
     "bit-country-field": "file:./packages/bit-country-field",
+    "bit-virtualized-list": "file:./packages/bit-virtualized-list",
     "core-js": "3.22.7",
     "create-file-list": "^1.1.0",
     "deepmerge-alt": "^0.3.0",
@@ -189,5 +190,5 @@
       }
     ]
   },
-  "packageManager": "yarn@3.1.0"
+  "packageManager": "yarn@3.2.1"
 }
