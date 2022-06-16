@@ -27,9 +27,8 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const fieldData = fields[fieldKey]
   const { config } = fieldData
 
-  const filePondRef = useRef(null)
-  const advanceFileUpWrapElmRef = useRef(null)
-  const AdvanceFileUPFieldRef = useRef(null)
+  const advanceFileFieldRef = useRef(null)
+  const container = useRef(null)
 
   useEffect(() => {
     registerPlugin(
@@ -62,20 +61,17 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       uploadFileToServer: true,
     }
 
-    if (!advanceFileUpWrapElmRef?.current) {
-      advanceFileUpWrapElmRef.current = selectInGrid(`#filepond-${fieldKey}-container`)
+    if (!container?.current) {
+      container.current = selectInGrid(`#filepond-${fieldKey}-container`)
     }
-    const fldConstructor = AdvanceFileUPFieldRef.current
-    const fldElm = advanceFileUpWrapElmRef.current
-    if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
-      fldConstructor.destroy()
-    }
-    if (filePondRef.current?.element) {
-      destroy(filePondRef.current.element)
-      if (advanceFileUpWrapElmRef.current.firstChild) advanceFileUpWrapElmRef.current.removeChild(advanceFileUpWrapElmRef.current.firstChild)
+    const fldConstructor = advanceFileFieldRef.current
+    const fldElm = container.current
+    if (fldConstructor.current?.element) {
+      destroy(fldConstructor.current.element)
+      if (container.firstChild) container.removeChild(container.firstChild)
     }
 
-    filePondRef.current = create(fieldData?.config)
+    // filePondRef.current = create(fieldData?.config)
 
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--root`)?.setAttribute('data-dev-pond-root', fieldKey)
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--drop-label`)?.setAttribute('data-dev-pond-drop-lbl', fieldKey)
@@ -86,8 +82,8 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--drip-blob`)?.setAttribute('data-dev-pond-drip-blob', fieldKey)
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
 
-    AdvanceFileUPFieldRef.current = new AdvanceFileUpload(fldElm, configuration)
-    advanceFileUpWrapElmRef.current.appendChild(filePondRef.current.element)
+    container.current = new AdvanceFileUpload(fldElm, configuration)
+    advanceFileFieldRef.current.appendChild(container.current.element)
   }, [fieldData?.config])
 
   return (
@@ -107,7 +103,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
           {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
           {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
         />
-        <div useRef={AdvanceFileUPFieldRef} id={`filepond-${fieldKey}-container`} className={`filepond-${fieldKey}-container ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} />
+        <div useRef={container} id={`filepond-${fieldKey}-container`} className={`filepond-${fieldKey}-container ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} />
       </InputWrapper>
     </>
   )

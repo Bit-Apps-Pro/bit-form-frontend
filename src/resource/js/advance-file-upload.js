@@ -62,9 +62,15 @@ export default class AdvanceFileUpload {
       //   // [imp.val] = import(imp.key)
       // }),
       FilePondPluginFileValidateSize,
+      FilePondPluginFileValidateType,
+      FilePondPluginImageCrop,
+      FilePondPluginImagePreview,
+      FilePondPluginImageResize,
+      FilePondPluginImageTransform,
+      FilePondPluginImageValidateSize,
+      FilePondPluginMediaPreview,
     )
     this.#filePondRef = create(this.#configSetting)
-    console.log(this.#filePondRef)
 
     // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
     if (this.#uploadFileToServer) {
