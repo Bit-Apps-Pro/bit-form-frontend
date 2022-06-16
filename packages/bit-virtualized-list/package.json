@@ -2,8 +2,8 @@
   "private": true,
   "name": "bit-virtualized-list",
   "packageManager": "yarn@3.1.0",
-  "main": "dist/virtualized-list.min.js",
-  "module": "src/virtualized-list.js",
+  "main": "dist/bit-virtualized-list.min.js",
+  "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
     "build-w": "webpack --mode=production"
@@ -12,6 +12,7 @@
     "virtualized-list": "^2.2.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "rollup": "^2.75.6",
