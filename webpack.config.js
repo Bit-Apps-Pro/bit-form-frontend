@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
       validation: path.resolve(__dirname, 'src/user-frontend/validation'),
       components: [
         path.resolve(__dirname, 'src/resource/sass/components.scss'),
-        path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
+        // path.resolve(__dirname, ' /react-multiple-select-dropdown-lite/dist/index.css'),
         path.resolve(__dirname, 'src/resource/css/tinymce.css'),
       ],
     },
