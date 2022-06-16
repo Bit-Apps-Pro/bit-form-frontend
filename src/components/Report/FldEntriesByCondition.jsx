@@ -25,6 +25,7 @@ import ConfirmModal from '../Utilities/ConfirmModal'
 import Modal from '../Utilities/Modal'
 import ConditionalLogic from './ConditionalLogic'
 import LoaderSm from '../Loaders/LoaderSm'
+import SnackMsg from '../Utilities/SnackMsg'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -43,6 +44,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const [isLoading, setisLoading] = useState(false)
+  const [snack, setSnackbar] = useState({ show: false })
 
   useEffect(() => {
     setReportIndex(rprtIndx)
@@ -84,6 +86,10 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
 
     if (!reportUpdate) {
       id = 0
+    }
+    if (reports[reportIndex]?.details?.report_name === '') {
+      setSnackbar({ show: true, msg: __('report name cann\'t be empty', 'bitform') })
+      return
     }
     setisLoading(true)
     const reportSaveProm = bitsFetch({ report: reports[reportIndex].details, formId: formID, reportId: id }, 'bitforms_save_report')
@@ -219,134 +225,138 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   console.log('reportId currentReport', reportId, currentReport, reports)
 
   return (
-    <div className="flx w-10">
-      <div className="flx btcd-custom-report-dpdw mr-2">
-        <div className="w-9">
-          {currentReport?.details?.report_name?.length > 11 ? (
-            `${currentReport.details.report_name?.slice(0, 11) }...`
-          ) : (
-            currentReport?.details?.report_name
-          )}
-        </div>
-        <button className="sm b-none tooltip pos-rel" title="Refresh" onClick={() => setRefreshResp(1)} type="button" style={{ '--tooltip-txt': `'${__('Refresh')}'` }}>
-          <RefreshIcn size="15" />
-        </button>
-      </div>
-      <div className="mr-2">
-        <ConfirmModal
-          show={confMdl.show}
-          close={closeConfMdl}
-          btnTxt={confMdl.btnTxt}
-          btnClass={confMdl.btnClass}
-          body={confMdl.body}
-          action={confMdl.action}
-        />
+    <>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-        <Tippy
-          animation="shift-away-extreme"
-          theme="light-border"
-          trigger="click"
-          arrow={roundArrow}
-          interactive="true"
-          placement="bottom"
-          appendTo="parent"
-          className="tippy-box2"
-          content={(
-            <div style={{ height: 250 }}>
-              <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>All Reports</div>
-              <div className="report-search mb-3">
-                <span><SearchIcn size="16" /></span>
-                <input type="text" placeholder="Search reports" onChange={searchReport} className="dpdw-input-box" />
-
-              </div>
-              {availableReports.length === 0 && (
-                <>
-                  <div style={{ color: '#000' }}>No matching report found</div>
-                </>
-              )}
-              <Scrollbars style={{ height: '70%' }} autoHide>
-                <div>
-                  {availableReports?.map(report => (
-                    <div className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
-                      <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
-
-                        {report?.label?.length > 14 ? (
-                          `${report?.label?.slice(0, 14) }...`
-                        ) : (
-                          report?.label
-                        )}
-                      </button>
-                      {(report.isDefault.toString() === '0') && (
-                        <div className="show_tippy_action">
-                          <button className="icn-btn sm" title="Edit" onClick={() => editCurrentReport(report.value)} type="button">
-                            <OutlineEditIcn size={12} />
-                          </button>
-                          {report.value !== currentReport?.id && (
-                            <button className="icn-btn sm" title="Delete" onClick={() => deleteReportAlert(report.value)} type="button">
-                              <OutlineDeleteIcn size={12} />
-                            </button>
-                          )}
-
-                        </div>
-                      )}
-
-                    </div>
-
-                  ))}
-                </div>
-              </Scrollbars>
-            </div>
-          )}
-        >
-
-          <div>
-            <button className="btn btcd-btn-sm br-15" type="button">
-              <MoreVerticalIcn size="14" />
-            </button>
+      <div className="flx w-10">
+        <div className="flx btcd-custom-report-dpdw mr-2">
+          <div className="w-9">
+            {currentReport?.details?.report_name?.length > 11 ? (
+              `${currentReport.details.report_name?.slice(0, 11) }...`
+            ) : (
+              currentReport?.details?.report_name
+            )}
           </div>
-        </Tippy>
+          <button className="sm b-none tooltip pos-rel" title="Refresh" onClick={() => setRefreshResp(1)} type="button" style={{ '--tooltip-txt': `'${__('Refresh')}'` }}>
+            <RefreshIcn size="15" />
+          </button>
+        </div>
+        <div className="mr-2">
+          <ConfirmModal
+            show={confMdl.show}
+            close={closeConfMdl}
+            btnTxt={confMdl.btnTxt}
+            btnClass={confMdl.btnClass}
+            body={confMdl.body}
+            action={confMdl.action}
+          />
 
-        <Modal md show={showMdl} setModal={setshowMdl} title="Report" style={{ overflow: 'auto' }} onCloseMdl={onCloseMdl}>
-          <>
-            <div className="flx mt-4">
-              <label> Name  </label>
-              <input type="text" name="report_name" value={reports[reportIndex]?.details?.report_name || ''} onChange={reportHandler} placeholder="Please enter report name" className="ml-2 btcd-paper-inp w-6" />
-            </div>
-            <div className="mt-4">
-              <ConditionalLogic formFields={formFields} dataConf={reports} setDataConf={setReports} reportInd={reportIndex || 0} />
-            </div>
+          <Tippy
+            animation="shift-away-extreme"
+            theme="light-border"
+            trigger="click"
+            arrow={roundArrow}
+            interactive="true"
+            placement="bottom"
+            appendTo="parent"
+            className="tippy-box2"
+            content={(
+              <div style={{ height: 250 }}>
+                <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>All Reports</div>
+                <div className="report-search mb-3">
+                  <span><SearchIcn size="16" /></span>
+                  <input type="text" placeholder="Search reports" onChange={searchReport} className="dpdw-input-box" />
 
-            <div className="mt-2 f-left">
-              <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
-                Save
-                {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+                </div>
+                {availableReports.length === 0 && (
+                  <>
+                    <div style={{ color: '#000' }}>No matching report found</div>
+                  </>
+                )}
+                <Scrollbars style={{ height: '70%' }} autoHide>
+                  <div>
+                    {availableReports?.map(report => (
+                      <div className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
+                        <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
+
+                          {report?.label?.length > 14 ? (
+                            `${report?.label?.slice(0, 14) }...`
+                          ) : (
+                            report?.label
+                          )}
+                        </button>
+                        {(report.isDefault.toString() === '0') && (
+                          <div className="show_tippy_action">
+                            <button className="icn-btn sm" title="Edit" onClick={() => editCurrentReport(report.value)} type="button">
+                              <OutlineEditIcn size={12} />
+                            </button>
+                            {report.value !== currentReport?.id && (
+                              <button className="icn-btn sm" title="Delete" onClick={() => deleteReportAlert(report.value)} type="button">
+                                <OutlineDeleteIcn size={12} />
+                              </button>
+                            )}
+
+                          </div>
+                        )}
+
+                      </div>
+
+                    ))}
+                  </div>
+                </Scrollbars>
+              </div>
+            )}
+          >
+
+            <div>
+              <button className="btn btcd-btn-sm br-15" type="button">
+                <MoreVerticalIcn size="14" />
               </button>
             </div>
-          </>
-        </Modal>
-      </div>
-      <div className="w-1 mt-2">
-        <button className="btn btcd-btn-sm mt-0 br-15 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Create New Report')}'` }} onClick={createNewReport} type="button">
-          <PlusIcn size={14} />
-        </button>
-      </div>
-      <div>
-        <Modal
-          sm
-          show={proModal.show}
-          setModal={() => setProModal({ show: false })}
-          title={__('Premium Feature', 'bitform')}
-          className="pro-modal"
-        >
-          <h4 className="txt-center mt-5">
-            {proModal.msg}
-          </h4>
-          <div className="txt-center">
-            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
-          </div>
+          </Tippy>
 
-        </Modal>
+          <Modal md show={showMdl} setModal={setshowMdl} title="Report" style={{ overflow: 'auto' }} onCloseMdl={onCloseMdl}>
+            <>
+              <div className="flx mt-4">
+                <label> Name  </label>
+                <input type="text" name="report_name" value={reports[reportIndex]?.details?.report_name || ''} onChange={reportHandler} placeholder="Please enter report name" className="ml-2 btcd-paper-inp w-6" />
+              </div>
+              <div className="mt-4">
+                <ConditionalLogic formFields={formFields} dataConf={reports} setDataConf={setReports} reportInd={reportIndex || 0} />
+              </div>
+
+              <div className="mt-2 f-left">
+                <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
+                  Save
+                  {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+                </button>
+              </div>
+            </>
+          </Modal>
+        </div>
+        <div className="w-1 mt-2">
+          <button className="btn btcd-btn-sm mt-0 br-15 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Create New Report')}'` }} onClick={createNewReport} type="button">
+            <PlusIcn size={14} />
+          </button>
+        </div>
+        <div>
+          <Modal
+            sm
+            show={proModal.show}
+            setModal={() => setProModal({ show: false })}
+            title={__('Premium Feature', 'bitform')}
+            className="pro-modal"
+          >
+            <h4 className="txt-center mt-5">
+              {proModal.msg}
+            </h4>
+            <div className="txt-center">
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            </div>
+
+          </Modal>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
