@@ -1,14 +1,3 @@
-import { registerPlugin, setOptions, create } from 'filepond'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import FilePondPluginImageResize from 'filepond-plugin-image-resize'
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
-import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
-import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
-
 export default class AdvanceFileUpload {
   #fieldUploadWrapper = null
 
@@ -47,7 +36,7 @@ export default class AdvanceFileUpload {
     }
     this.#doument = this.#config.document
     this.#formID = this.#config.formID
-    this.#registerPlugin = this.#config.registerPlugin
+    this.#registerPlugin = [...this.#config.registerPlugin]
     this.#configSetting = this.#config.configSetting
     this.#ajaxURL = this.#config.ajaxURL
     this.#nonce = this.#config.nonce

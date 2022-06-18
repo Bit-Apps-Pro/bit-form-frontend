@@ -1,26 +1,23 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable func-names */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { create, destroy, registerPlugin, setOptions } from 'filepond'
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+// import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
+import bitFilePond from 'bit-file-pond'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginImageResize from 'filepond-plugin-image-resize'
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
-import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
-import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import AdvanceFileUpload from '../../resource/js/advance-file-upload'
 import { selectInGrid } from '../../Utils/globalHelpers'
-// import 'filepond-plugin-media-preview/dist/filepond-plugin-media-preview.min.css'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+
+const { create, destroy, registerPlugin, setOptions, FilePondPluginImagePreview,
+  FilePondPluginFileValidateSize, FilePondPluginFileValidateType, FilePondPluginImageCrop, FilePondPluginImageResize, FilePondPluginImageTransform,
+  FilePondPluginImageValidateSize, FilePondPluginMediaPreview } = bitFilePond
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
@@ -31,31 +28,39 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const container = useRef(null)
 
   useEffect(() => {
-    registerPlugin(
-      FilePondPluginImagePreview,
-      FilePondPluginFileValidateSize,
-      FilePondPluginImageValidateSize,
-      FilePondPluginFileValidateType,
-      FilePondPluginImageResize,
-      FilePondPluginImageCrop,
-      FilePondPluginMediaPreview,
-      FilePondPluginImageTransform,
-    )
+    if (!window.create) window.create = create
+    if (!window.registerPlugin) window.registerPlugin = registerPlugin
+    if (!window.setOptions) window.setOptions = setOptions
+
+    if (!window.FilePondPluginImagePreview) {
+      window.FilePondPluginImagePreview = FilePondPluginImagePreview
+    }
+    if (!window.FilePondPluginFileValidateSize) {
+      window.FilePondPluginFileValidateSize = FilePondPluginFileValidateSize
+    }
+    if (!window.FilePondPluginFileValidateType) {
+      window.FilePondPluginFileValidateType = FilePondPluginFileValidateType
+    }
+    if (!window.FilePondPluginImageCrop) {
+      window.FilePondPluginImageCrop = FilePondPluginImageCrop
+    }
+    if (!window.FilePondPluginImageResize) {
+      window.FilePondPluginImageResize = FilePondPluginImageResize
+    }
+    if (!window.FilePondPluginImageTransform) {
+      window.FilePondPluginImageTransform = FilePondPluginImageTransform
+    }
+    if (!window.FilePondPluginImageValidateSize) {
+      window.FilePondPluginImageValidateSize = FilePondPluginImageValidateSize
+    }
+    if (!window.FilePondPluginMediaPreview) {
+      window.FilePondPluginMediaPreview = FilePondPluginMediaPreview
+    }
 
     const configuration = {
       configSetting: config,
       document,
       formID,
-      registerPlugin: [
-        { key: 'filepond-plugin-file-validate-size', val: 'FilePondPluginFileValidateSize' },
-        { key: 'filepond-plugin-file-validate-type', val: 'FilePondPluginFileValidateType' },
-        { key: 'filepond-plugin-image-crop', val: 'FilePondPluginImageCrop' },
-        { key: 'filepond-plugin-image-preview', val: 'FilePondPluginImagePreview' },
-        { key: 'filepond-plugin-image-resize', val: 'FilePondPluginImageResize' },
-        { key: 'filepond-plugin-image-transform', val: 'FilePondPluginImageTransform' },
-        { key: 'filepond-plugin-image-validate-size', val: 'FilePondPluginImageValidateSize' },
-        { key: 'filepond-plugin-media-preview', val: 'FilePondPluginMediaPreview' },
-      ],
       ajaxURL: typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL,
       nonce: typeof bits === 'undefined' ? '' : bits.nonce,
       uploadFileToServer: true,
@@ -79,6 +84,8 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file-action-button`)?.setAttribute('data-dev-pond-action-btn', fieldKey)
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--drip-blob`)?.setAttribute('data-dev-pond-drip-blob', fieldKey)
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
+
+    // TODO set the filepond packages to window global
 
     container.current = new AdvanceFileUpload(fldElm, configuration)
   }, [fieldData?.config])
