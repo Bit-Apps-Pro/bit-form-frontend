@@ -3,6 +3,7 @@ import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import babel from '@rollup/plugin-babel'
 import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 
 const terserOptions = {
   compress: {
@@ -62,7 +63,10 @@ export default function generateRollupConfig() {
 
       ],
       plugins: [
-        ...isDev ? [serve({ open: true, port: 3030 })] : [],
+        ...isDev ? [
+          serve({ open: true, port: 3030 }),
+          livereload()
+        ] : [],
         resolve(),
         babel({
           presets: [

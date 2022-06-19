@@ -18,7 +18,7 @@ const style = {
       w: '100%',
       m: 0,
     },
-    '& .ui-color-picker>.gradient-controls': { p: 0 },
+    '& .ui-color-picker>.gradient-controls': { p: '0px 0px 0px 5px' },
     '& .ui-color-picker>.picker-area': { p: 0 },
     '& .ui-color-picker>.color-preview-area': { p: 0 },
   },

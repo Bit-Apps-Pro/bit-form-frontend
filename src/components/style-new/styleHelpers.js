@@ -804,10 +804,10 @@ export const lowerCaseAllAndReplaceSpaceToHipen = (str) => str.toLowerCase().rep
 
 export const styleToGradientObj = (styleStr) => {
   // get linera or radial type from style string
-  const type = styleStr.match(/^(linear|radial)/g)
+  const type = styleStr?.match(/^(linear|radial)/g) || false
 
   // get numbers/values from style string
-  const values = styleStr.match(/-?[\d\.]+/g) || []
+  const values = styleStr?.match(/-?[\d\.]+/g) || []
 
   const len = values.length
   let degree = 0

@@ -51,6 +51,7 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
     case 'transition-control': return <TransitionControlMenu stateObjName={stateObjName} propertyPath={propertyPath} id={id} />
     case 'transform-control': return <TransformControlMenu stateObjName={stateObjName} propertyPath={propertyPath} id={id} />
     case 'filter-control': return <FilterControlMenu value={value} objectPaths={objectPaths} id={id} />
+    case 'backdrop-filter-control': return <FilterControlMenu title="Backdrop-Filter" value={value} objectPaths={objectPaths} id={id} />
     default: return 'loading'
   }
 }
@@ -75,6 +76,7 @@ const setTitle = (component) => {
     case 'transition-control': return 'Transition Control'
     case 'transform-control': return 'Transform Control'
     case 'filter-control': return 'Filter Control'
+    case 'backdrop-filter-control': return 'Backdrop Filter Control'
     case 'filter-color': return 'Filter Color'
     default: return '...'
   }

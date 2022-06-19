@@ -57,6 +57,7 @@ const iconCssProps = {
   size: { width: '100%', height: '100%' },
   'box-shadow': '',
   filter: '',
+  'backdrop-filter': '',
   transition: '',
   background: {
     'background-color': true,
@@ -602,6 +603,7 @@ const editorConfig = {
       'border-radius': '',
       transition: '',
       filter: '',
+      'backdrop-filter': '',
       'font-weight': '',
       'font-style': '',
       'line-height': '',
@@ -1133,6 +1135,7 @@ const editorConfig = {
         'background-color': '',
         stroke: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'input-clear-btn': {
@@ -1157,6 +1160,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'search-clear-btn': {
@@ -1174,6 +1178,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     option: {
@@ -1222,6 +1227,7 @@ const editorConfig = {
         height: '',
         'box-shadow': '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'opt-lbl': {
@@ -1363,6 +1369,7 @@ const editorConfig = {
         'background-color': '',
         stroke: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'input-clear-btn': {
@@ -1387,6 +1394,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'search-clear-btn': {
@@ -1404,6 +1412,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     option: {
@@ -1456,6 +1465,7 @@ const editorConfig = {
         height: '',
         'box-shadow': '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'opt-lbl': {
@@ -1653,23 +1663,6 @@ const editorConfig = {
         transition: '',
       },
     },
-    'inp-clr-btn': {
-      states: ['hover', 'focus'],
-      properties: {
-        border: {
-          border: true,
-          'border-width': true,
-          'border-radius': true,
-        },
-        margin: '',
-        padding: '',
-        'background-color': '',
-        stroke: '',
-        width: '',
-        height: '',
-        filter: '',
-      },
-    },
     'option-search-wrp': {
       states: ['hover', 'focus'],
       properties: {
@@ -1723,6 +1716,7 @@ const editorConfig = {
         'background-color': '',
         stroke: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'inp-clr-btn': {
@@ -1747,6 +1741,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'search-clear-btn': {
@@ -1764,6 +1759,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     option: {
@@ -1812,6 +1808,7 @@ const editorConfig = {
         height: '',
         'box-shadow': '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'opt-lbl': {
@@ -1899,6 +1896,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'opt-search-input': {
@@ -1934,6 +1932,7 @@ const editorConfig = {
         'background-color': '',
         stroke: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'inp-clr-btn': {
@@ -1958,6 +1957,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'search-clear-btn': {
@@ -1975,6 +1975,7 @@ const editorConfig = {
         width: '',
         height: '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     option: {
@@ -2027,6 +2028,7 @@ const editorConfig = {
         height: '',
         'box-shadow': '',
         filter: '',
+        'backdrop-filter': '',
       },
     },
     'opt-lbl': {
