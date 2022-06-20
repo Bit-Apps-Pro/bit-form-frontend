@@ -480,49 +480,49 @@ function Workflow({ formID }) {
   const setEmailSetting = (typ, e, lgcGrpInd) => {
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.id = e.target.value
           break
         }
       }
     } else if (typ === 'from') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.from = e
           break
         }
       }
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.to = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'cc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.cc = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'bcc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.bcc = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'replyto') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.replyto = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'attachment') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
-        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+        if (['mailNotify', 'dblOptin'].includes(workFlows[lgcGrpInd].successAction[i].type)) {
           workFlows[lgcGrpInd].successAction[i].details.attachment = e ? e.split(',') : []
           break
         }
@@ -537,6 +537,8 @@ function Workflow({ formID }) {
     } */
     if (checked) {
       if (typ === 'mailNotify') {
+        workFlows[lgcGrpInd].successAction.push({ type: typ, details: {} })
+      } else if (typ === 'dblOptin') {
         workFlows[lgcGrpInd].successAction.push({ type: typ, details: {} })
       } else {
         workFlows[lgcGrpInd].successAction.push({ type: typ, details: { id: '' } })
@@ -744,60 +746,73 @@ function Workflow({ formID }) {
                   </div>
                 )}
 
-                <h3 className="txt-dp mt-3">
+                <h3 className="txt-dp mt-3 mb-1">
                   {lgcGrp.action_behaviour === 'cond' ? 'Then ' : ''}
                   Action
                 </h3>
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
-                  <div className="mb-2">
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title={__('Redirect URL', 'bitform')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title={__('Web Hook', 'bitform')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification', 'bitform')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title={__('Integration', 'bitform')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
-                  </div>
+                  <>
+                    <div className="mb-2">
+                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                      {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-5 mt-2" title={__('Redirect URL', 'bitform')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-5 mt-2" title={__('Web Hook', 'bitform')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-5 mt-2" title={__('Integration', 'bitform')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                    </div>
+                    <div className="mb-3">
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification', 'bitform')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'dblOptin', lgcGrpInd)} className="ml-4 mt-2" title={__('Double Opt-In', 'bitform')} checked={checkKeyInArr('dblOptin', lgcGrpInd)} />
+                    </div>
+                  </>
                 )}
                 {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
 
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
-                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={confirmations?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
-                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
+                    <div className="ml-2">
+                      {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown className="mt-1" action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7 mt-1" isMultiple options={confirmations?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
+                    </div>
+                    <div className="ml-2">
+                      {checkKeyInArr('integ', lgcGrpInd) && <DropDown className="mt-1" action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m mt-1">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
+                    </div>
 
                     {lgcGrp.action_run !== 'delete' && (
-                      <>
-                        <div className="mt-2" />
-                        {checkKeyInArr('successMsg', lgcGrpInd) && (
-                          <label className="f-m">
-                            {__('Success Message:', 'bitform')}
-                            <br />
-                            <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
-                              <option value="">{__('Select Message', 'bitform')}</option>
-                              {confirmations?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                            </select>
-                          </label>
-                        )}
-                        <div className="mt-2" />
-                        {checkKeyInArr('redirectPage', lgcGrpInd) && (
-                          <label className="f-m">
-                            {__('Redirect URL:', 'bitform')}
-                            <br />
-                            <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
-                              <option value="">{__('Select Page To Redirect', 'bitform')}</option>
-                              {confirmations?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                            </select>
-                          </label>
-                        )}
-                      </>
+
+                      <div className="ml-2">
+                        <div className="mt-2">
+                          {checkKeyInArr('successMsg', lgcGrpInd) && (
+                            <label className="f-m ">
+                              {__('Success Message:', 'bitform')}
+                              <br />
+                              <select className="btcd-paper-inp w-7 mt-1" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
+                                <option value="">{__('Select Message', 'bitform')}</option>
+                                {confirmations?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              </select>
+                            </label>
+                          )}
+                        </div>
+
+                        <div className="mt-2">
+                          {checkKeyInArr('redirectPage', lgcGrpInd) && (
+                            <label className="f-m">
+                              {__('Redirect URL:', 'bitform')}
+                              <br />
+                              <select className="btcd-paper-inp w-7 mt-1" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
+                                <option value="">{__('Select Page To Redirect', 'bitform')}</option>
+                                {confirmations?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              </select>
+                            </label>
+                          )}
+                        </div>
+                      </div>
                     )}
 
-                    <div className="mt-2">
+                    <div className="mt-2 ml-2">
                       {checkKeyInArr('mailNotify', lgcGrpInd) && (
                         <>
                           <label className="f-m">
                             {__('Email Notification:', 'bitform')}
                             <br />
-                            <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
+                            <select className="btcd-paper-inp w-7  mt-1" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
                               <option value="">{__('Select Email Template', 'bitform')}</option>
                               {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
@@ -864,7 +879,80 @@ function Workflow({ formID }) {
                       )}
                     </div>
 
-                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
+                    <div className="mt-2 ml-2">
+                      {checkKeyInArr('dblOptin', lgcGrpInd) && (
+                        <>
+                          <label className="f-m ">
+                            {__('Double optin tamplate:', 'bitform')}
+                            <br />
+                            <select className="btcd-paper-inp w-7 mt-1" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('dblOptin', 'id', lgcGrpInd)}>
+                              <option value="">{__('Select Email Template', 'bitform')}</option>
+                              {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            </select>
+                          </label>
+                          <DropDown
+                            action={val => setEmailSetting('to', val, lgcGrpInd)}
+                            value={getValueFromArr('dblOptin', 'to', lgcGrpInd)}
+                            placeholder={__('Add Email Receiver', 'bitform')}
+                            title={<span className="f-m">{__('To', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('dblOptin', 'to', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('from', val, lgcGrpInd)}
+                            placeholder={__('Add mail from address', 'bitform')}
+                            value={getValueFromArr('dblOptin', 'from', lgcGrpInd)}
+                            title={<span className="f-m">{__('From', 'bitform')}</span>}
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('dblOptin', 'from', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('cc', val, lgcGrpInd)}
+                            value={getValueFromArr('dblOptin', 'cc', lgcGrpInd)}
+                            placeholder={__('Add Email CC', 'bitform')}
+                            title={<span className="f-m">{__('CC', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('dblOptin', 'cc', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('bcc', val, lgcGrpInd)}
+                            placeholder={__('Add Email BCC', 'bitform')}
+                            value={getValueFromArr('dblOptin', 'bcc', lgcGrpInd)}
+                            title={<span className="f-m">{__('BCC', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('dblOptin', 'bcc', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('replyto', val, lgcGrpInd)}
+                            placeholder={__('Reply To', 'bitform')}
+                            value={getValueFromArr('dblOptin', 'replyto', lgcGrpInd)}
+                            title={<span className="f-m">{__('Reply To', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('dblOptin', 'replyto', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('attachment', val, lgcGrpInd)}
+                            placeholder={__('Attachment', 'bitform')}
+                            value={getValueFromArr('dblOptin', 'attachment', lgcGrpInd)}
+                            title={<span className="f-m">{__('Attachment', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            options={fileInFormField()}
+                          />
+                        </>
+                      )}
+                    </div>
+
+                    {lgcGrp.action_run !== 'delete' && <div className="mt-2 ml-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
                   </>
                 )}
 
