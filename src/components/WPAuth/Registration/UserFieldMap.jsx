@@ -202,7 +202,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
                 <EditIcn size={21} />
               </span>
               <div className="f-m ml-1">{__('Redirect after verification', 'bitform')}</div>
-              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} />
+              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} title="Redirect after verification" />
 
             </div>
           </div>
