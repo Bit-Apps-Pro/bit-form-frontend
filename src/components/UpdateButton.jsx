@@ -179,13 +179,15 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
           data?.reports && setReports(data?.reports || [])
-          data?.form_content?.report_id && setReportId(
-            {
-              id: data?.form_content?.report_id,
-              isDefault: data?.form_content?.is_default || 0,
-            },
+          if (!reportId?.id && data?.form_content?.report_id) {
+            setReportId(
+              {
+                id: data?.form_content?.report_id,
+                isDefault: data?.form_content?.is_default || 0,
+              },
 
-          )
+            )
+          }
 
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
