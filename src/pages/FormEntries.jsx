@@ -225,10 +225,10 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             }
             if (val.key === '__entry_status') {
               const status = Number(row.cell.value)
-              if (status === 1) { return 'Unapproved' }
-              if (status === 0) { return 'Approved' }
-              if (status === 2) { return 'Unapproved' }
-              if (status === 3) { return 'Approved' }
+              if (status === 1) { return 'Unread' }
+              if (status === 0) { return 'Read' }
+              if (status === 2) { return 'Unconfirmed' }
+              if (status === 3) { return 'Confirmed' }
             }
 
             if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
