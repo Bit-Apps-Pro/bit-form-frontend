@@ -551,6 +551,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
+          refreshResp={refreshResp}
           report={rprtIndx || 0}// index - 0 setted as default report
         />
         {!isloading && allResp.length === 0 && (

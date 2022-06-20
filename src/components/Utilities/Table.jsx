@@ -96,7 +96,7 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const { columns, data, fetchData, report } = props
+  const { columns, data, fetchData, refreshResp, report } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)
   const reportId = useRecoilValue($reportId)
 
@@ -175,7 +175,7 @@ function Table(props) {
     if (fetchData) {
       fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search, conditions: currentReportData?.details?.conditions })
     }
-  }, [fetchData, pageIndex, pageSize, sortBy, filters, search, reportId])
+  }, [refreshResp, pageIndex, pageSize, sortBy, filters, search, reportId])
 
   useEffect(() => {
     if (pageIndex > pageCount) {
