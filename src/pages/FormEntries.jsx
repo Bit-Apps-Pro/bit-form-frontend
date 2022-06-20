@@ -225,8 +225,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             }
             if (val.key === '__entry_status') {
               const status = Number(row.cell.value)
-              if (status === 1) { return 'Unread' }
               if (status === 0) { return 'Read' }
+              if (status === 1) { return 'Unread' }
               if (status === 2) { return 'Unconfirmed' }
               if (status === 3) { return 'Confirmed' }
             }
@@ -374,10 +374,24 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         } else {
           newRowDtl.data = row
           newRowDtl.idx = idx
-          // newRowDtl.fetchData = rowFetchData
           newRowDtl.show = true
         }
         setRowDtl({ ...newRowDtl })
+
+        const findStatusCol = row.find(col => col.column.id === '__entry_status')
+        if (findStatusCol && findStatusCol.value === '1') {
+          const entry = allResp[idx]
+          const entryId = entry.entry_id
+          bitsFetch({ formId: formID, entryId }, 'bitforms_entry_status_update')
+            .then(resp => {
+              if (resp.success) {
+                const newAllResp = [...allResp]
+                // eslint-disable-next-line dot-notation
+                newAllResp[idx]['__entry_status'] = '0'
+                setAllResp(newAllResp)
+              }
+            })
+        }
       }
     },
     [rowDtl],
