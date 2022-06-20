@@ -36,6 +36,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
+  const [tableColumns, setTableColumns] = useState([])
   const [entryLabels, setEntryLabels] = useState([])
   const setForms = useSetRecoilState($forms)
   const [countEntries, setCountEntries] = useState(0)
@@ -53,7 +54,6 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      console.log('currentReportData', currentReportData, allLabels)
       currentReportData.details?.order?.forEach((field) => {
         if (
           field
@@ -293,6 +293,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         />
       ),
     })
+    const filteredEntryLabels = filteredEntryLabelsForTable(cols)
+    setTableColumns(filteredEntryLabels)
     setEntryLabels(cols)
   }
 
@@ -367,13 +369,12 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     (e, row, idx, rowFetchData) => {
       if (!e.target.classList.contains('prevent-drawer')) {
         const newRowDtl = { ...rowDtl }
-        console.log('e', e, 'row', row, 'idx', idx, 'rowFetchData', rowFetchData)
         if (newRowDtl.show && rowDtl.idx === idx) {
           newRowDtl.show = false
         } else {
           newRowDtl.data = row
           newRowDtl.idx = idx
-          newRowDtl.fetchData = rowFetchData
+          // newRowDtl.fetchData = rowFetchData
           newRowDtl.show = true
         }
         setRowDtl({ ...newRowDtl })
@@ -382,7 +383,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     [rowDtl],
   )
 
-  const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
+  const filterEntryLabels = () => entryLabels.filter(el => el.accessor !== 'sl' && el.accessor !== 'table_ac')
 
   const getUploadedFilesArr = files => {
     try {
@@ -458,6 +459,11 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     </>
   )
 
+  const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
+    const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
+    return !ignoreLbls.includes(lbl.accessor)
+  })
+
   return (
     <div id="form-res">
 
@@ -525,7 +531,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         <Table
           className="f-table btcd-entries-f"
           height="76vh"
-          columns={entryLabels}
+          columns={tableColumns}
           data={allResp}
           loading={isloading}
           countEntries={countEntries}
@@ -538,7 +544,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           leftHeader={loadLeftHeaderComponent()}
           reportActiveMenu
           formID={formID}
-          setTableCols={setEntryLabels}
+          setTableCols={setTableColumns}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           duplicateData={bulkDuplicateData}
