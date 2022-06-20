@@ -18,9 +18,7 @@ module.exports = {
       presets: [
         [
           '@babel/preset-env',
-          {
-            targets: { browsers: ['Chrome >= 88'] }, loose: true
-          },
+          { targets: { browsers: ['Chrome >= 88'] }, loose: true },
         ],
         ['@babel/preset-react', { runtime: 'automatic' }],
       ],
@@ -40,8 +38,9 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'airbnb',
     'react-app',
+    'plugin:es/no-new-in-esnext',
   ],
-  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node'],
+  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node', 'es'],
   rules: {
     semi: ['error', 'never'],
     indent: ['error', 2, { SwitchCase: 1 }],
@@ -71,5 +70,6 @@ module.exports = {
     'array-callback-return': 'off',
     'consistent-return': 'off',
     'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
+    'es/no-string-prototype-replaceall': ['error', { aggressive: true }],
   },
 }
