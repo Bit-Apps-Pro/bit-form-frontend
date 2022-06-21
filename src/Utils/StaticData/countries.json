@@ -2,1525 +2,1271 @@
   {
     "i": "AF",
     "lbl": "Afghanistan",
-    "val": "Afghanistan",
-    "img": "/../static/countries/af.png"
+    "img": "af.png"
   },
   {
     "i": "AL",
     "lbl": "Albania",
-    "val": "Albania",
-    "img": "/../static/countries/al.png"
+    "img": "al.png"
   },
   {
     "i": "DZ",
     "lbl": "Algeria",
-    "val": "Algeria",
-    "img": "/../static/countries/dz.png"
+    "img": "dz.png"
   },
   {
     "i": "AS",
     "lbl": "American Samoa",
-    "val": "American Samoa",
-    "img": "/../static/countries/as.png"
+    "img": "as.png"
   },
   {
     "i": "AD",
     "lbl": "Andorra",
-    "val": "Andorra",
-    "img": "/../static/countries/ad.png"
+    "img": "ad.png"
   },
   {
     "i": "AO",
     "lbl": "Angola",
-    "val": "Angola",
-    "img": "/../static/countries/ao.png"
+    "img": "ao.png"
   },
   {
     "i": "AI",
     "lbl": "Anguilla",
-    "val": "Anguilla",
-    "img": "/../static/countries/ai.png"
+    "img": "ai.png"
   },
   {
     "i": "AQ",
     "lbl": "Antarctica",
-    "val": "Antarctica",
-    "img": "/../static/countries/aq.png"
+    "img": "aq.png"
   },
   {
     "i": "AG",
     "lbl": "Antigua and Barbuda",
-    "val": "Antigua and Barbuda",
-    "img": "/../static/countries/ag.png"
+    "img": "ag.png"
   },
   {
     "i": "AR",
     "lbl": "Argentina",
-    "val": "Argentina",
-    "img": "/../static/countries/ar.png"
+    "img": "ar.png"
   },
   {
     "i": "AM",
     "lbl": "Armenia",
-    "val": "Armenia",
-    "img": "/../static/countries/am.png"
+    "img": "am.png"
   },
   {
     "i": "AW",
     "lbl": "Aruba",
-    "val": "Aruba",
-    "img": "/../static/countries/aw.png"
+    "img": "aw.png"
   },
   {
     "i": "AU",
     "lbl": "Australia",
-    "val": "Australia",
-    "img": "/../static/countries/au.png"
+    "img": "au.png"
   },
   {
     "i": "AT",
     "lbl": "Austria",
-    "val": "Austria",
-    "img": "/../static/countries/at.png"
+    "img": "at.png"
   },
   {
     "i": "AZ",
     "lbl": "Azerbaijan",
-    "val": "Azerbaijan",
-    "img": "/../static/countries/az.png"
+    "img": "az.png"
   },
   {
     "i": "BS",
     "lbl": "Bahamas (the)",
-    "val": "Bahamas (the)",
-    "img": "/../static/countries/bs.png"
+    "img": "bs.png"
   },
   {
     "i": "BH",
     "lbl": "Bahrain",
-    "val": "Bahrain",
-    "img": "/../static/countries/bh.png"
+    "img": "bh.png"
   },
   {
     "i": "BD",
     "lbl": "Bangladesh",
-    "val": "Bangladesh",
-    "img": "/../static/countries/bd.png"
+    "img": "bd.png"
   },
   {
     "i": "BB",
     "lbl": "Barbados",
-    "val": "Barbados",
-    "img": "/../static/countries/bb.png"
+    "img": "bb.png"
   },
   {
     "i": "BY",
     "lbl": "Belarus",
-    "val": "Belarus",
-    "img": "/../static/countries/by.png"
+    "img": "by.png"
   },
   {
     "i": "BE",
     "lbl": "Belgium",
-    "val": "Belgium",
-    "img": "/../static/countries/be.png"
+    "img": "be.png"
   },
   {
     "i": "BZ",
     "lbl": "Belize",
-    "val": "Belize",
-    "img": "/../static/countries/bz.png"
+    "img": "bz.png"
   },
   {
     "i": "BJ",
     "lbl": "Benin",
-    "val": "Benin",
-    "img": "/../static/countries/bj.png"
+    "img": "bj.png"
   },
   {
     "i": "BM",
     "lbl": "Bermuda",
-    "val": "Bermuda",
-    "img": "/../static/countries/bm.png"
+    "img": "bm.png"
   },
   {
     "i": "BT",
     "lbl": "Bhutan",
-    "val": "Bhutan",
-    "img": "/../static/countries/bt.png"
+    "img": "bt.png"
   },
   {
     "i": "BO",
     "lbl": "Bolivia (Plurinational State of)",
-    "val": "Bolivia (Plurinational State of)",
-    "img": "/../static/countries/bo.png"
+    "img": "bo.png"
   },
   {
     "i": "BQ",
     "lbl": "Bonaire, Sint Eustatius and Saba",
-    "val": "Bonaire, Sint Eustatius and Saba",
-    "img": "/../static/countries/bq.png"
+    "img": "bq.png"
   },
   {
     "i": "BA",
     "lbl": "Bosnia and Herzegovina",
-    "val": "Bosnia and Herzegovina",
-    "img": "/../static/countries/ba.png"
+    "img": "ba.png"
   },
   {
     "i": "BW",
     "lbl": "Botswana",
-    "val": "Botswana",
-    "img": "/../static/countries/bw.png"
+    "img": "bw.png"
   },
   {
     "i": "BV",
     "lbl": "Bouvet Island",
-    "val": "Bouvet Island",
-    "img": "/../static/countries/bv.png"
+    "img": "bv.png"
   },
   {
     "i": "BR",
     "lbl": "Brazil",
-    "val": "Brazil",
-    "img": "/../static/countries/br.png"
+    "img": "br.png"
   },
   {
     "i": "IO",
     "lbl": "British Indian Ocean Territory (the)",
-    "val": "British Indian Ocean Territory (the)",
-    "img": "/../static/countries/io.png"
+    "img": "io.png"
   },
   {
     "i": "BN",
     "lbl": "Brunei Darussalam",
-    "val": "Brunei Darussalam",
-    "img": "/../static/countries/bn.png"
+    "img": "bn.png"
   },
   {
     "i": "BG",
     "lbl": "Bulgaria",
-    "val": "Bulgaria",
-    "img": "/../static/countries/bg.png"
+    "img": "bg.png"
   },
   {
     "i": "BF",
     "lbl": "Burkina Faso",
-    "val": "Burkina Faso",
-    "img": "/../static/countries/bf.png"
+    "img": "bf.png"
   },
   {
     "i": "BI",
     "lbl": "Burundi",
-    "val": "Burundi",
-    "img": "/../static/countries/bi.png"
+    "img": "bi.png"
   },
   {
     "i": "CV",
     "lbl": "Cabo Verde",
-    "val": "Cabo Verde",
-    "img": "/../static/countries/cv.png"
+    "img": "cv.png"
   },
   {
     "i": "KH",
     "lbl": "Cambodia",
-    "val": "Cambodia",
-    "img": "/../static/countries/kh.png"
+    "img": "kh.png"
   },
   {
     "i": "CM",
     "lbl": "Cameroon",
-    "val": "Cameroon",
-    "img": "/../static/countries/cm.png"
+    "img": "cm.png"
   },
   {
     "i": "CA",
     "lbl": "Canada",
-    "val": "Canada",
-    "img": "/../static/countries/ca.png"
+    "img": "ca.png"
   },
   {
     "i": "KY",
     "lbl": "Cayman Islands (the)",
-    "val": "Cayman Islands (the)",
-    "img": "/../static/countries/ky.png"
+    "img": "ky.png"
   },
   {
     "i": "CF",
     "lbl": "Central African Republic (the)",
-    "val": "Central African Republic (the)",
-    "img": "/../static/countries/cf.png"
+    "img": "cf.png"
   },
   {
     "i": "TD",
     "lbl": "Chad",
-    "val": "Chad",
-    "img": "/../static/countries/td.png"
+    "img": "td.png"
   },
   {
     "i": "CL",
     "lbl": "Chile",
-    "val": "Chile",
-    "img": "/../static/countries/cl.png"
+    "img": "cl.png"
   },
   {
     "i": "CN",
     "lbl": "China",
-    "val": "China",
-    "img": "/../static/countries/cn.png"
+    "img": "cn.png"
   },
   {
     "i": "CX",
     "lbl": "Christmas Island",
-    "val": "Christmas Island",
-    "img": "/../static/countries/cx.png"
+    "img": "cx.png"
   },
   {
     "i": "CC",
     "lbl": "Cocos (Keeling) Islands (the)",
-    "val": "Cocos (Keeling) Islands (the)",
-    "img": "/../static/countries/cc.png"
+    "img": "cc.png"
   },
   {
     "i": "CO",
     "lbl": "Colombia",
-    "val": "Colombia",
-    "img": "/../static/countries/co.png"
+    "img": "co.png"
   },
   {
     "i": "KM",
     "lbl": "Comoros (the)",
-    "val": "Comoros (the)",
-    "img": "/../static/countries/km.png"
+    "img": "km.png"
   },
   {
     "i": "CD",
     "lbl": "Congo (the Democratic Republic of the)",
-    "val": "Congo (the Democratic Republic of the)",
-    "img": "/../static/countries/cd.png"
+    "img": "cd.png"
   },
   {
     "i": "CG",
     "lbl": "Congo (the)",
-    "val": "Congo (the)",
-    "img": "/../static/countries/cg.png"
+    "img": "cg.png"
   },
   {
     "i": "CK",
     "lbl": "Cook Islands (the)",
-    "val": "Cook Islands (the)",
-    "img": "/../static/countries/ck.png"
+    "img": "ck.png"
   },
   {
     "i": "CR",
     "lbl": "Costa Rica",
-    "val": "Costa Rica",
-    "img": "/../static/countries/cr.png"
+    "img": "cr.png"
   },
   {
     "i": "HR",
     "lbl": "Croatia",
-    "val": "Croatia",
-    "img": "/../static/countries/hr.png"
+    "img": "hr.png"
   },
   {
     "i": "CU",
     "lbl": "Cuba",
-    "val": "Cuba",
-    "img": "/../static/countries/cu.png"
+    "img": "cu.png"
   },
   {
     "i": "CW",
     "lbl": "Curaçao",
-    "val": "Curaçao",
-    "img": "/../static/countries/cw.png"
+    "img": "cw.png"
   },
   {
     "i": "CY",
     "lbl": "Cyprus",
-    "val": "Cyprus",
-    "img": "/../static/countries/cy.png"
+    "img": "cy.png"
   },
   {
     "i": "CZ",
     "lbl": "Czechia",
-    "val": "Czechia",
-    "img": "/../static/countries/cz.png"
+    "img": "cz.png"
   },
   {
     "i": "CI",
     "lbl": "Côte d'Ivoire",
-    "val": "Côte d'Ivoire",
-    "img": "/../static/countries/ci.png"
+    "img": "ci.png"
   },
   {
     "i": "DK",
     "lbl": "Denmark",
-    "val": "Denmark",
-    "img": "/../static/countries/dk.png"
+    "img": "dk.png"
   },
   {
     "i": "DJ",
     "lbl": "Djibouti",
-    "val": "Djibouti",
-    "img": "/../static/countries/dj.png"
+    "img": "dj.png"
   },
   {
     "i": "DM",
     "lbl": "Dominica",
-    "val": "Dominica",
-    "img": "/../static/countries/dm.png"
+    "img": "dm.png"
   },
   {
     "i": "DO",
     "lbl": "Dominican Republic (the)",
-    "val": "Dominican Republic (the)",
-    "img": "/../static/countries/do.png"
+    "img": "do.png"
   },
   {
     "i": "EU",
     "lbl": "Drapeau européen",
-    "val": "Drapeau européen",
-    "img": "/../static/countries/eu.png"
+    "img": "eu.png"
   },
   {
     "i": "EC",
     "lbl": "Ecuador",
-    "val": "Ecuador",
-    "img": "/../static/countries/ec.png"
+    "img": "ec.png"
   },
   {
     "i": "EG",
     "lbl": "Egypt",
-    "val": "Egypt",
-    "img": "/../static/countries/eg.png"
+    "img": "eg.png"
   },
   {
     "i": "GB-ENG",
     "lbl": "England",
-    "val": "England",
-    "img": "/../static/countries/gb-eng.png"
+    "img": "gb-eng.png"
   },
   {
     "i": "SV",
     "lbl": "El Salvador",
-    "val": "El Salvador",
-    "img": "/../static/countries/sv.png"
+    "img": "sv.png"
   },
   {
     "i": "GQ",
     "lbl": "Equatorial Guinea",
-    "val": "Equatorial Guinea",
-    "img": "/../static/countries/gq.png"
+    "img": "gq.png"
   },
   {
     "i": "ER",
     "lbl": "Eritrea",
-    "val": "Eritrea",
-    "img": "/../static/countries/er.png"
+    "img": "er.png"
   },
   {
     "i": "EE",
     "lbl": "Estonia",
-    "val": "Estonia",
-    "img": "/../static/countries/ee.png"
+    "img": "ee.png"
   },
   {
     "i": "SZ",
     "lbl": "Eswatini",
-    "val": "Eswatini",
-    "img": "/../static/countries/sz.png"
+    "img": "sz.png"
   },
   {
     "i": "ET",
     "lbl": "Ethiopia",
-    "val": "Ethiopia",
-    "img": "/../static/countries/et.png"
+    "img": "et.png"
   },
   {
     "i": "FK",
     "lbl": "Falkland Islands (the) [Malvinas]",
-    "val": "Falkland Islands (the) [Malvinas]",
-    "img": "/../static/countries/fk.png"
+    "img": "fk.png"
   },
   {
     "i": "FO",
     "lbl": "Faroe Islands (the)",
-    "val": "Faroe Islands (the)",
-    "img": "/../static/countries/fo.png"
+    "img": "fo.png"
   },
   {
     "i": "FJ",
     "lbl": "Fiji",
-    "val": "Fiji",
-    "img": "/../static/countries/fj.png"
+    "img": "fj.png"
   },
   {
     "i": "FI",
     "lbl": "Finland",
-    "val": "Finland",
-    "img": "/../static/countries/fi.png"
+    "img": "fi.png"
   },
   {
     "i": "FR",
     "lbl": "France",
-    "val": "France",
-    "img": "/../static/countries/fr.png"
+    "img": "fr.png"
   },
   {
     "i": "GF",
     "lbl": "French Guiana",
-    "val": "French Guiana",
-    "img": "/../static/countries/gf.png"
+    "img": "gf.png"
   },
   {
     "i": "PF",
     "lbl": "French Polynesia",
-    "val": "French Polynesia",
-    "img": "/../static/countries/pf.png"
+    "img": "pf.png"
   },
   {
     "i": "TF",
     "lbl": "French Southern Territories (the)",
-    "val": "French Southern Territories (the)",
-    "img": "/../static/countries/tf.png"
+    "img": "tf.png"
   },
   {
     "i": "GA",
     "lbl": "Gabon",
-    "val": "Gabon",
-    "img": "/../static/countries/ga.png"
+    "img": "ga.png"
   },
   {
     "i": "GM",
     "lbl": "Gambia (the)",
-    "val": "Gambia (the)",
-    "img": "/../static/countries/gm.png"
+    "img": "gm.png"
   },
   {
     "i": "GE",
     "lbl": "Georgia",
-    "val": "Georgia",
-    "img": "/../static/countries/ge.png"
+    "img": "ge.png"
   },
   {
     "i": "DE",
     "lbl": "Germany",
-    "val": "Germany",
-    "img": "/../static/countries/de.png"
+    "img": "de.png"
   },
   {
     "i": "GH",
     "lbl": "Ghana",
-    "val": "Ghana",
-    "img": "/../static/countries/gh.png"
+    "img": "gh.png"
   },
   {
     "i": "GI",
     "lbl": "Gibraltar",
-    "val": "Gibraltar",
-    "img": "/../static/countries/gi.png"
+    "img": "gi.png"
   },
   {
     "i": "GR",
     "lbl": "Greece",
-    "val": "Greece",
-    "img": "/../static/countries/gr.png"
+    "img": "gr.png"
   },
   {
     "i": "GL",
     "lbl": "Greenland",
-    "val": "Greenland",
-    "img": "/../static/countries/gl.png"
+    "img": "gl.png"
   },
   {
     "i": "GD",
     "lbl": "Grenada",
-    "val": "Grenada",
-    "img": "/../static/countries/gd.png"
+    "img": "gd.png"
   },
   {
     "i": "GP",
     "lbl": "Guadeloupe",
-    "val": "Guadeloupe",
-    "img": "/../static/countries/gp.png"
+    "img": "gp.png"
   },
   {
     "i": "GU",
     "lbl": "Guam",
-    "val": "Guam",
-    "img": "/../static/countries/gu.png"
+    "img": "gu.png"
   },
   {
     "i": "GT",
     "lbl": "Guatemala",
-    "val": "Guatemala",
-    "img": "/../static/countries/gt.png"
+    "img": "gt.png"
   },
   {
     "i": "GG",
     "lbl": "Guernsey",
-    "val": "Guernsey",
-    "img": "/../static/countries/gg.png"
+    "img": "gg.png"
   },
   {
     "i": "GN",
     "lbl": "Guinea",
-    "val": "Guinea",
-    "img": "/../static/countries/gn.png"
+    "img": "gn.png"
   },
   {
     "i": "GW",
     "lbl": "Guinea-Bissau",
-    "val": "Guinea-Bissau",
-    "img": "/../static/countries/gw.png"
+    "img": "gw.png"
   },
   {
     "i": "GY",
     "lbl": "Guyana",
-    "val": "Guyana",
-    "img": "/../static/countries/gy.png"
+    "img": "gy.png"
   },
   {
     "i": "HT",
     "lbl": "Haiti",
-    "val": "Haiti",
-    "img": "/../static/countries/ht.png"
+    "img": "ht.png"
   },
   {
     "i": "HM",
     "lbl": "Heard Island and McDonald Islands",
-    "val": "Heard Island and McDonald Islands",
-    "img": "/../static/countries/hm.png"
+    "img": "hm.png"
   },
   {
     "i": "VA",
     "lbl": "Holy See (the)",
-    "val": "Holy See (the)",
-    "img": "/../static/countries/va.png"
+    "img": "va.png"
   },
   {
     "i": "HN",
     "lbl": "Honduras",
-    "val": "Honduras",
-    "img": "/../static/countries/hn.png"
+    "img": "hn.png"
   },
   {
     "i": "HK",
     "lbl": "Hong Kong",
-    "val": "Hong Kong",
-    "img": "/../static/countries/hk.png"
+    "img": "hk.png"
   },
   {
     "i": "HU",
     "lbl": "Hungary",
-    "val": "Hungary",
-    "img": "/../static/countries/hu.png"
+    "img": "hu.png"
   },
   {
     "i": "IS",
     "lbl": "Iceland",
-    "val": "Iceland",
-    "img": "/../static/countries/is.png"
+    "img": "is.png"
   },
   {
     "i": "IN",
     "lbl": "India",
-    "val": "India",
-    "img": "/../static/countries/in.png"
+    "img": "in.png"
   },
   {
     "i": "ID",
     "lbl": "Indonesia",
-    "val": "Indonesia",
-    "img": "/../static/countries/id.png"
+    "img": "id.png"
   },
   {
     "i": "IR",
     "lbl": "Iran (Islamic Republic of)",
-    "val": "Iran (Islamic Republic of)",
-    "img": "/../static/countries/ir.png"
+    "img": "ir.png"
   },
   {
     "i": "IQ",
     "lbl": "Iraq",
-    "val": "Iraq",
-    "img": "/../static/countries/iq.png"
+    "img": "iq.png"
   },
   {
     "i": "IE",
     "lbl": "Ireland",
-    "val": "Ireland",
-    "img": "/../static/countries/ie.png"
+    "img": "ie.png"
   },
   {
     "i": "IM",
     "lbl": "Isle of Man",
-    "val": "Isle of Man",
-    "img": "/../static/countries/im.png"
+    "img": "im.png"
   },
   {
     "i": "IL",
     "lbl": "Israel",
-    "val": "Israel",
-    "img": "/../static/countries/il.png"
+    "img": "il.png"
   },
   {
     "i": "IT",
     "lbl": "Italy",
-    "val": "Italy",
-    "img": "/../static/countries/it.png"
+    "img": "it.png"
   },
   {
     "i": "JM",
     "lbl": "Jamaica",
-    "val": "Jamaica",
-    "img": "/../static/countries/jm.png"
+    "img": "jm.png"
   },
   {
     "i": "JP",
     "lbl": "Japan",
-    "val": "Japan",
-    "img": "/../static/countries/jp.png"
+    "img": "jp.png"
   },
   {
     "i": "JE",
     "lbl": "Jersey",
-    "val": "Jersey",
-    "img": "/../static/countries/je.png"
+    "img": "je.png"
   },
   {
     "i": "JO",
     "lbl": "Jordan",
-    "val": "Jordan",
-    "img": "/../static/countries/jo.png"
+    "img": "jo.png"
   },
   {
     "i": "KZ",
     "lbl": "Kazakhstan",
-    "val": "Kazakhstan",
-    "img": "/../static/countries/kz.png"
+    "img": "kz.png"
   },
   {
     "i": "KE",
     "lbl": "Kenya",
-    "val": "Kenya",
-    "img": "/../static/countries/ke.png"
+    "img": "ke.png"
   },
   {
     "i": "KI",
     "lbl": "Kiribati",
-    "val": "Kiribati",
-    "img": "/../static/countries/ki.png"
+    "img": "ki.png"
   },
   {
     "i": "KP",
     "lbl": "Korea (the Democratic People's Republic of)",
-    "val": "Korea (the Democratic People's Republic of)",
-    "img": "/../static/countries/kp.png"
+    "img": "kp.png"
   },
   {
     "i": "KR",
     "lbl": "Korea (the Republic of)",
-    "val": "Korea (the Republic of)",
-    "img": "/../static/countries/kr.png"
+    "img": "kr.png"
   },
   {
     "i": "KW",
     "lbl": "Kuwait",
-    "val": "Kuwait",
-    "img": "/../static/countries/kw.png"
+    "img": "kw.png"
   },
   {
     "i": "KG",
     "lbl": "Kyrgyzstan",
-    "val": "Kyrgyzstan",
-    "img": "/../static/countries/kg.png"
+    "img": "kg.png"
   },
   {
     "i": "LA",
     "lbl": "Lao People's Democratic Republic (the)",
-    "val": "Lao People's Democratic Republic (the)",
-    "img": "/../static/countries/la.png"
+    "img": "la.png"
   },
   {
     "i": "LV",
     "lbl": "Latvia",
-    "val": "Latvia",
-    "img": "/../static/countries/lv.png"
+    "img": "lv.png"
   },
   {
     "i": "LB",
     "lbl": "Lebanon",
-    "val": "Lebanon",
-    "img": "/../static/countries/lb.png"
+    "img": "lb.png"
   },
   {
     "i": "LS",
     "lbl": "Lesotho",
-    "val": "Lesotho",
-    "img": "/../static/countries/ls.png"
+    "img": "ls.png"
   },
   {
     "i": "LR",
     "lbl": "Liberia",
-    "val": "Liberia",
-    "img": "/../static/countries/lr.png"
+    "img": "lr.png"
   },
   {
     "i": "LY",
     "lbl": "Libya",
-    "val": "Libya",
-    "img": "/../static/countries/ly.png"
+    "img": "ly.png"
   },
   {
     "i": "LI",
     "lbl": "Liechtenstein",
-    "val": "Liechtenstein",
-    "img": "/../static/countries/li.png"
+    "img": "li.png"
   },
   {
     "i": "LT",
     "lbl": "Lithuania",
-    "val": "Lithuania",
-    "img": "/../static/countries/lt.png"
+    "img": "lt.png"
   },
   {
     "i": "LU",
     "lbl": "Luxembourg",
-    "val": "Luxembourg",
-    "img": "/../static/countries/lu.png"
+    "img": "lu.png"
   },
   {
     "i": "MO",
     "lbl": "Macao",
-    "val": "Macao",
-    "img": "/../static/countries/mo.png"
+    "img": "mo.png"
   },
   {
     "i": "MG",
     "lbl": "Madagascar",
-    "val": "Madagascar",
-    "img": "/../static/countries/mg.png"
+    "img": "mg.png"
   },
   {
     "i": "MW",
     "lbl": "Malawi",
-    "val": "Malawi",
-    "img": "/../static/countries/mw.png"
+    "img": "mw.png"
   },
   {
     "i": "MY",
     "lbl": "Malaysia",
-    "val": "Malaysia",
-    "img": "/../static/countries/my.png"
+    "img": "my.png"
   },
   {
     "i": "MV",
     "lbl": "Maldives",
-    "val": "Maldives",
-    "img": "/../static/countries/mv.png"
+    "img": "mv.png"
   },
   {
     "i": "ML",
     "lbl": "Mali",
-    "val": "Mali",
-    "img": "/../static/countries/ml.png"
+    "img": "ml.png"
   },
   {
     "i": "MT",
     "lbl": "Malta",
-    "val": "Malta",
-    "img": "/../static/countries/mt.png"
+    "img": "mt.png"
   },
   {
     "i": "MH",
     "lbl": "Marshall Islands (the)",
-    "val": "Marshall Islands (the)",
-    "img": "/../static/countries/mh.png"
+    "img": "mh.png"
   },
   {
     "i": "MQ",
     "lbl": "Martinique",
-    "val": "Martinique",
-    "img": "/../static/countries/mq.png"
+    "img": "mq.png"
   },
   {
     "i": "MR",
     "lbl": "Mauritania",
-    "val": "Mauritania",
-    "img": "/../static/countries/mr.png"
+    "img": "mr.png"
   },
   {
     "i": "MU",
     "lbl": "Mauritius",
-    "val": "Mauritius",
-    "img": "/../static/countries/mu.png"
+    "img": "mu.png"
   },
   {
     "i": "YT",
     "lbl": "Mayotte",
-    "val": "Mayotte",
-    "img": "/../static/countries/yt.png"
+    "img": "yt.png"
   },
   {
     "i": "MX",
     "lbl": "Mexico",
-    "val": "Mexico",
-    "img": "/../static/countries/mx.png"
+    "img": "mx.png"
   },
   {
     "i": "FM",
     "lbl": "Micronesia (Federated States of)",
-    "val": "Micronesia (Federated States of)",
-    "img": "/../static/countries/fm.png"
+    "img": "fm.png"
   },
   {
     "i": "MD",
     "lbl": "Moldova (the Republic of)",
-    "val": "Moldova (the Republic of)",
-    "img": "/../static/countries/md.png"
+    "img": "md.png"
   },
   {
     "i": "MC",
     "lbl": "Monaco",
-    "val": "Monaco",
-    "img": "/../static/countries/mc.png"
+    "img": "mc.png"
   },
   {
     "i": "MN",
     "lbl": "Mongolia",
-    "val": "Mongolia",
-    "img": "/../static/countries/mn.png"
+    "img": "mn.png"
   },
   {
     "i": "ME",
     "lbl": "Montenegro",
-    "val": "Montenegro",
-    "img": "/../static/countries/me.png"
+    "img": "me.png"
   },
   {
     "i": "MS",
     "lbl": "Montserrat",
-    "val": "Montserrat",
-    "img": "/../static/countries/ms.png"
+    "img": "ms.png"
   },
   {
     "i": "MA",
     "lbl": "Morocco",
-    "val": "Morocco",
-    "img": "/../static/countries/ma.png"
+    "img": "ma.png"
   },
   {
     "i": "MZ",
     "lbl": "Mozambique",
-    "val": "Mozambique",
-    "img": "/../static/countries/mz.png"
+    "img": "mz.png"
   },
   {
     "i": "MM",
     "lbl": "Myanmar",
-    "val": "Myanmar",
-    "img": "/../static/countries/mm.png"
+    "img": "mm.png"
   },
   {
     "i": "NA",
     "lbl": "Namibia",
-    "val": "Namibia",
-    "img": "/../static/countries/na.png"
+    "img": "na.png"
   },
   {
     "i": "NR",
     "lbl": "Nauru",
-    "val": "Nauru",
-    "img": "/../static/countries/nr.png"
+    "img": "nr.png"
   },
   {
     "i": "NP",
     "lbl": "Nepal",
-    "val": "Nepal",
-    "img": "/../static/countries/np.png"
+    "img": "np.png"
   },
   {
     "i": "NL",
     "lbl": "Netherlands (the)",
-    "val": "Netherlands (the)",
-    "img": "/../static/countries/nl.png"
+    "img": "nl.png"
   },
   {
     "i": "NC",
     "lbl": "New Caledonia",
-    "val": "New Caledonia",
-    "img": "/../static/countries/nc.png"
+    "img": "nc.png"
   },
   {
     "i": "NZ",
     "lbl": "New Zealand",
-    "val": "New Zealand",
-    "img": "/../static/countries/nz.png"
+    "img": "nz.png"
   },
   {
     "i": "NI",
     "lbl": "Nicaragua",
-    "val": "Nicaragua",
-    "img": "/../static/countries/ni.png"
+    "img": "ni.png"
   },
   {
     "i": "NE",
     "lbl": "Niger (the)",
-    "val": "Niger (the)",
-    "img": "/../static/countries/ne.png"
+    "img": "ne.png"
   },
   {
     "i": "NG",
     "lbl": "Nigeria",
-    "val": "Nigeria",
-    "img": "/../static/countries/ng.png"
+    "img": "ng.png"
   },
   {
     "i": "NU",
     "lbl": "Niue",
-    "val": "Niue",
-    "img": "/../static/countries/nu.png"
+    "img": "nu.png"
   },
   {
     "i": "NF",
     "lbl": "Norfolk Island",
-    "val": "Norfolk Island",
-    "img": "/../static/countries/nf.png"
+    "img": "nf.png"
   },
   {
     "i": "GB-NIR",
     "lbl": "Northern Ireland",
-    "val": "Northern Ireland",
-    "img": "/../static/countries/gb-nir.png"
+    "img": "gb-nir.png"
   },
   {
     "i": "MP",
     "lbl": "Northern Mariana Islands (the)",
-    "val": "Northern Mariana Islands (the)",
-    "img": "/../static/countries/mp.png"
+    "img": "mp.png"
   },
   {
     "i": "NO",
     "lbl": "Norway",
-    "val": "Norway",
-    "img": "/../static/countries/no.png"
+    "img": "no.png"
   },
   {
     "i": "OM",
     "lbl": "Oman",
-    "val": "Oman",
-    "img": "/../static/countries/om.png"
+    "img": "om.png"
   },
   {
     "i": "PK",
     "lbl": "Pakistan",
-    "val": "Pakistan",
-    "img": "/../static/countries/pk.png"
+    "img": "pk.png"
   },
   {
     "i": "PW",
     "lbl": "Palau",
-    "val": "Palau",
-    "img": "/../static/countries/pw.png"
+    "img": "pw.png"
   },
   {
     "i": "PS",
     "lbl": "Palestine, State of",
-    "val": "Palestine, State of",
-    "img": "/../static/countries/ps.png"
+    "img": "ps.png"
   },
   {
     "i": "PA",
     "lbl": "Panama",
-    "val": "Panama",
-    "img": "/../static/countries/pa.png"
+    "img": "pa.png"
   },
   {
     "i": "PG",
     "lbl": "Papua New Guinea",
-    "val": "Papua New Guinea",
-    "img": "/../static/countries/pg.png"
+    "img": "pg.png"
   },
   {
     "i": "PY",
     "lbl": "Paraguay",
-    "val": "Paraguay",
-    "img": "/../static/countries/py.png"
+    "img": "py.png"
   },
   {
     "i": "PE",
     "lbl": "Peru",
-    "val": "Peru",
-    "img": "/../static/countries/pe.png"
+    "img": "pe.png"
   },
   {
     "i": "PH",
     "lbl": "Philippines (the)",
-    "val": "Philippines (the)",
-    "img": "/../static/countries/ph.png"
+    "img": "ph.png"
   },
   {
     "i": "PN",
     "lbl": "Pitcairn",
-    "val": "Pitcairn",
-    "img": "/../static/countries/pn.png"
+    "img": "pn.png"
   },
   {
     "i": "PL",
     "lbl": "Poland",
-    "val": "Poland",
-    "img": "/../static/countries/pl.png"
+    "img": "pl.png"
   },
   {
     "i": "PT",
     "lbl": "Portugal",
-    "val": "Portugal",
-    "img": "/../static/countries/pt.png"
+    "img": "pt.png"
   },
   {
     "i": "PR",
     "lbl": "Puerto Rico",
-    "val": "Puerto Rico",
-    "img": "/../static/countries/pr.png"
+    "img": "pr.png"
   },
   {
     "i": "QA",
     "lbl": "Qatar",
-    "val": "Qatar",
-    "img": "/../static/countries/qa.png"
+    "img": "qa.png"
   },
   {
     "i": "MK",
     "lbl": "Republic of North Macedonia",
-    "val": "Republic of North Macedonia",
-    "img": "/../static/countries/mk.png"
+    "img": "mk.png"
   },
   {
     "i": "RO",
     "lbl": "Romania",
-    "val": "Romania",
-    "img": "/../static/countries/ro.png"
+    "img": "ro.png"
   },
   {
     "i": "RU",
     "lbl": "Russian Federation (the)",
-    "val": "Russian Federation (the)",
-    "img": "/../static/countries/ru.png"
+    "img": "ru.png"
   },
   {
     "i": "RW",
     "lbl": "Rwanda",
-    "val": "Rwanda",
-    "img": "/../static/countries/rw.png"
+    "img": "rw.png"
   },
   {
     "i": "RE",
     "lbl": "Réunion",
-    "val": "Réunion",
-    "img": "/../static/countries/re.png"
+    "img": "re.png"
   },
   {
     "i": "BL",
     "lbl": "Saint Barthélemy",
-    "val": "Saint Barthélemy",
-    "img": "/../static/countries/bl.png"
+    "img": "bl.png"
   },
   {
     "i": "SH",
     "lbl": "Saint Helena, Ascension and Tristan da Cunha",
-    "val": "Saint Helena, Ascension and Tristan da Cunha",
-    "img": "/../static/countries/sh.png"
+    "img": "sh.png"
   },
   {
     "i": "KN",
     "lbl": "Saint Kitts and Nevis",
-    "val": "Saint Kitts and Nevis",
-    "img": "/../static/countries/kn.png"
+    "img": "kn.png"
   },
   {
     "i": "LC",
     "lbl": "Saint Lucia",
-    "val": "Saint Lucia",
-    "img": "/../static/countries/lc.png"
+    "img": "lc.png"
   },
   {
     "i": "MF",
     "lbl": "Saint Martin (French part)",
-    "val": "Saint Martin (French part)",
-    "img": "/../static/countries/mf.png"
+    "img": "mf.png"
   },
   {
     "i": "PM",
     "lbl": "Saint Pierre and Miquelon",
-    "val": "Saint Pierre and Miquelon",
-    "img": "/../static/countries/pm.png"
+    "img": "pm.png"
   },
   {
     "i": "VC",
     "lbl": "Saint Vincent and the Grenadines",
-    "val": "Saint Vincent and the Grenadines",
-    "img": "/../static/countries/vc.png"
+    "img": "vc.png"
   },
   {
     "i": "WS",
     "lbl": "Samoa",
-    "val": "Samoa",
-    "img": "/../static/countries/ws.png"
+    "img": "ws.png"
   },
   {
     "i": "SM",
     "lbl": "San Marino",
-    "val": "San Marino",
-    "img": "/../static/countries/sm.png"
+    "img": "sm.png"
   },
   {
     "i": "ST",
     "lbl": "Sao Tome and Principe",
-    "val": "Sao Tome and Principe",
-    "img": "/../static/countries/st.png"
+    "img": "st.png"
   },
   {
     "i": "SA",
     "lbl": "Saudi Arabia",
-    "val": "Saudi Arabia",
-    "img": "/../static/countries/sa.png"
+    "img": "sa.png"
   },
   {
     "i": "GB-SCT",
     "lbl": "Scotland",
-    "val": "Scotland",
-    "img": "/../static/countries/gb-sct.png"
+    "img": "gb-sct.png"
   },
   {
     "i": "SN",
     "lbl": "Senegal",
-    "val": "Senegal",
-    "img": "/../static/countries/sn.png"
+    "img": "sn.png"
   },
   {
     "i": "RS",
     "lbl": "Serbia",
-    "val": "Serbia",
-    "img": "/../static/countries/rs.png"
+    "img": "rs.png"
   },
   {
     "i": "SC",
     "lbl": "Seychelles",
-    "val": "Seychelles",
-    "img": "/../static/countries/sc.png"
+    "img": "sc.png"
   },
   {
     "i": "SL",
     "lbl": "Sierra Leone",
-    "val": "Sierra Leone",
-    "img": "/../static/countries/sl.png"
+    "img": "sl.png"
   },
   {
     "i": "SG",
     "lbl": "Singapore",
-    "val": "Singapore",
-    "img": "/../static/countries/sg.png"
+    "img": "sg.png"
   },
   {
     "i": "SX",
     "lbl": "Sint Maarten (Dutch part)",
-    "val": "Sint Maarten (Dutch part)",
-    "img": "/../static/countries/sx.png"
+    "img": "sx.png"
   },
   {
     "i": "SK",
     "lbl": "Slovakia",
-    "val": "Slovakia",
-    "img": "/../static/countries/sk.png"
+    "img": "sk.png"
   },
   {
     "i": "SI",
     "lbl": "Slovenia",
-    "val": "Slovenia",
-    "img": "/../static/countries/si.png"
+    "img": "si.png"
   },
   {
     "i": "SB",
     "lbl": "Solomon Islands",
-    "val": "Solomon Islands",
-    "img": "/../static/countries/sb.png"
+    "img": "sb.png"
   },
   {
     "i": "SO",
     "lbl": "Somalia",
-    "val": "Somalia",
-    "img": "/../static/countries/so.png"
+    "img": "so.png"
   },
   {
     "i": "ZA",
     "lbl": "South Africa",
-    "val": "South Africa",
-    "img": "/../static/countries/za.png"
+    "img": "za.png"
   },
   {
     "i": "GS",
     "lbl": "South Georgia and the South Sandwich Islands",
-    "val": "South Georgia and the South Sandwich Islands",
-    "img": "/../static/countries/gs.png"
+    "img": "gs.png"
   },
   {
     "i": "SS",
     "lbl": "South Sudan",
-    "val": "South Sudan",
-    "img": "/../static/countries/ss.png"
+    "img": "ss.png"
   },
   {
     "i": "ES",
     "lbl": "Spain",
-    "val": "Spain",
-    "img": "/../static/countries/es.png"
+    "img": "es.png"
   },
   {
     "i": "LK",
     "lbl": "Sri Lanka",
-    "val": "Sri Lanka",
-    "img": "/../static/countries/lk.png"
+    "img": "lk.png"
   },
   {
     "i": "SD",
     "lbl": "Sudan (the)",
-    "val": "Sudan (the)",
-    "img": "/../static/countries/sd.png"
+    "img": "sd.png"
   },
   {
     "i": "SR",
     "lbl": "Suriname",
-    "val": "Suriname",
-    "img": "/../static/countries/sr.png"
+    "img": "sr.png"
   },
   {
     "i": "SJ",
     "lbl": "Svalbard and Jan Mayen",
-    "val": "Svalbard and Jan Mayen",
-    "img": "/../static/countries/sj.png"
+    "img": "sj.png"
   },
   {
     "i": "SE",
     "lbl": "Sweden",
-    "val": "Sweden",
-    "img": "/../static/countries/se.png"
+    "img": "se.png"
   },
   {
     "i": "CH",
     "lbl": "Switzerland",
-    "val": "Switzerland",
-    "img": "/../static/countries/ch.png"
+    "img": "ch.png"
   },
   {
     "i": "SY",
     "lbl": "Syrian Arab Republic",
-    "val": "Syrian Arab Republic",
-    "img": "/../static/countries/sy.png"
+    "img": "sy.png"
   },
   {
     "i": "TW",
     "lbl": "Taiwan (Province of China)",
-    "val": "Taiwan (Province of China)",
-    "img": "/../static/countries/tw.png"
+    "img": "tw.png"
   },
   {
     "i": "TJ",
     "lbl": "Tajikistan",
-    "val": "Tajikistan",
-    "img": "/../static/countries/tj.png"
+    "img": "tj.png"
   },
   {
     "i": "TZ",
     "lbl": "Tanzania, United Republic of",
-    "val": "Tanzania, United Republic of",
-    "img": "/../static/countries/tz.png"
+    "img": "tz.png"
   },
   {
     "i": "TH",
     "lbl": "Thailand",
-    "val": "Thailand",
-    "img": "/../static/countries/th.png"
+    "img": "th.png"
   },
   {
     "i": "TL",
     "lbl": "Timor-Leste",
-    "val": "Timor-Leste",
-    "img": "/../static/countries/tl.png"
+    "img": "tl.png"
   },
   {
     "i": "TG",
     "lbl": "Togo",
-    "val": "Togo",
-    "img": "/../static/countries/tg.png"
+    "img": "tg.png"
   },
   {
     "i": "TK",
     "lbl": "Tokelau",
-    "val": "Tokelau",
-    "img": "/../static/countries/tk.png"
+    "img": "tk.png"
   },
   {
     "i": "TO",
     "lbl": "Tonga",
-    "val": "Tonga",
-    "img": "/../static/countries/to.png"
+    "img": "to.png"
   },
   {
     "i": "TT",
     "lbl": "Trinidad and Tobago",
-    "val": "Trinidad and Tobago",
-    "img": "/../static/countries/tt.png"
+    "img": "tt.png"
   },
   {
     "i": "TN",
     "lbl": "Tunisia",
-    "val": "Tunisia",
-    "img": "/../static/countries/tn.png"
+    "img": "tn.png"
   },
   {
     "i": "TR",
     "lbl": "Turkey",
-    "val": "Turkey",
-    "img": "/../static/countries/tr.png"
+    "img": "tr.png"
   },
   {
     "i": "TM",
     "lbl": "Turkmenistan",
-    "val": "Turkmenistan",
-    "img": "/../static/countries/tm.png"
+    "img": "tm.png"
   },
   {
     "i": "TC",
     "lbl": "Turks and Caicos Islands (the)",
-    "val": "Turks and Caicos Islands (the)",
-    "img": "/../static/countries/tc.png"
+    "img": "tc.png"
   },
   {
     "i": "TV",
     "lbl": "Tuvalu",
-    "val": "Tuvalu",
-    "img": "/../static/countries/tv.png"
+    "img": "tv.png"
   },
   {
     "i": "UG",
     "lbl": "Uganda",
-    "val": "Uganda",
-    "img": "/../static/countries/ug.png"
+    "img": "ug.png"
   },
   {
     "i": "UA",
     "lbl": "Ukraine",
-    "val": "Ukraine",
-    "img": "/../static/countries/ua.png"
+    "img": "ua.png"
   },
   {
     "i": "AE",
     "lbl": "United Arab Emirates (the)",
-    "val": "United Arab Emirates (the)",
-    "img": "/../static/countries/ae.png"
+    "img": "ae.png"
   },
   {
     "i": "GB",
     "lbl": "United Kingdom",
-    "val": "United Kingdom",
-    "img": "/../static/countries/gb.png"
+    "img": "gb.png"
   },
   {
     "i": "UM",
     "lbl": "United States Minor Outlying Islands (the)",
-    "val": "United States Minor Outlying Islands (the)",
-    "img": "/../static/countries/um.png"
+    "img": "um.png"
   },
   {
     "i": "US",
     "lbl": "United States of America (the)",
-    "val": "United States of America (the)",
-    "img": "/../static/countries/us.png"
+    "img": "us.png"
   },
   {
     "i": "UY",
     "lbl": "Uruguay",
-    "val": "Uruguay",
-    "img": "/../static/countries/uy.png"
+    "img": "uy.png"
   },
   {
     "i": "UZ",
     "lbl": "Uzbekistan",
-    "val": "Uzbekistan",
-    "img": "/../static/countries/uz.png"
+    "img": "uz.png"
   },
   {
     "i": "VU",
     "lbl": "Vanuatu",
-    "val": "Vanuatu",
-    "img": "/../static/countries/vu.png"
+    "img": "vu.png"
   },
   {
     "i": "VE",
     "lbl": "Venezuela (Bolivarian Republic of)",
-    "val": "Venezuela (Bolivarian Republic of)",
-    "img": "/../static/countries/ve.png"
+    "img": "ve.png"
   },
   {
     "i": "VN",
     "lbl": "Viet Nam",
-    "val": "Viet Nam",
-    "img": "/../static/countries/vn.png"
+    "img": "vn.png"
   },
   {
     "i": "VG",
     "lbl": "Virgin Islands (British)",
-    "val": "Virgin Islands (British)",
-    "img": "/../static/countries/vg.png"
+    "img": "vg.png"
   },
   {
     "i": "VI",
     "lbl": "Virgin Islands (U.S.)",
-    "val": "Virgin Islands (U.S.)",
-    "img": "/../static/countries/vi.png"
+    "img": "vi.png"
   },
   {
     "i": "WF",
     "lbl": "Wallis and Futuna",
-    "val": "Wallis and Futuna",
-    "img": "/../static/countries/wf.png"
+    "img": "wf.png"
   },
   {
     "i": "GB-WLS",
     "lbl": "Wales",
-    "val": "Wales",
-    "img": "/../static/countries/gb-wls.png"
+    "img": "gb-wls.png"
   },
   {
     "i": "EH",
     "lbl": "Western Sahara",
-    "val": "Western Sahara",
-    "img": "/../static/countries/eh.png"
+    "img": "eh.png"
   },
   {
     "i": "YE",
     "lbl": "Yemen",
-    "val": "Yemen",
-    "img": "/../static/countries/ye.png"
+    "img": "ye.png"
   },
   {
     "i": "ZM",
     "lbl": "Zambia",
-    "val": "Zambia",
-    "img": "/../static/countries/zm.png"
+    "img": "zm.png"
   },
   {
     "i": "ZW",
     "lbl": "Zimbabwe",
-    "val": "Zimbabwe",
-    "img": "/../static/countries/zw.png"
+    "img": "zw.png"
   },
   {
     "i": "AX",
     "lbl": "Åland Islands",
-    "val": "Åland Islands",
-    "img": "/../static/countries/ax.png"
+    "img": "ax.png"
   }
 ]
