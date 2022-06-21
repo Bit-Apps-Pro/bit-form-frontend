@@ -26,14 +26,14 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'flex-direction': 'column',
       transition: 'box-shadow .3s',
     },
-    [`.disabled .${fk}-currency-inner-wrp`]: {
+    [`.${fk}-currency-inner-wrp.disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.readonly .${fk}-currency-inner-wrp`]: {
+    [`.${fk}-currency-inner-wrp.readonly`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -41,26 +41,26 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
-    [`.disabled .${fk}-currency-amount-input`]: {
+    [`.disabled .currency-amount-input`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.readonly .${fk}-currency-amount-input`]: {
+    [`.readonly .currency-amount-input`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.${fk}-menu-open, .${fk}-disabled)`]: {
+    [`.${fk}-currency-fld-wrp:hover:not(.menu-open):not(.disabled)`]: {
       // border: 'solid hsla(0, 0%, 93%, 100%)',
       // 'border-width': '1px',
       'border-color': 'var(--global-accent-color) !important',
     },
-    [`.${fk}-currency-fld-wrp:focus-within:not(.${fk}-menu-open, .${fk}-disabled)`]: {
+    [`.${fk}-currency-fld-wrp:focus-within:not(.menu-open):not(.disabled)`]: {
       // border: 'solid hsla(205, 95%, 55%, 100%)',
       // 'border-width': '1px',
       // 'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
@@ -122,6 +122,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'user-select': 'none',
     },
     [`.${fk}-input-clear-btn`]: {
+      position: 'absolute',
+      stroke: 'hsla(0, 1%, 68%, 100%)',
+      top: '50%',
+      transform: 'translateY(-50%)',
       display: 'none',
       right: '6px',
       padding: '0px',
@@ -213,7 +217,14 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       color: 'var(--global-font-color) !important',
     },
 
-    [`.${fk}-opt-search-icn`]: { left: '13px' },
+    [`.${fk}-opt-search-icn`]: {
+      position: 'absolute',
+      stroke: 'hsla(0, 1%, 68%, 100%)',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      color: 'var(--global-font-color) !important',
+      left: '13px'
+    },
 
     [`.${fk}-opt-search-input`]: {
       width: '100%',
@@ -238,6 +249,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-opt-search-input::-webkit-search-results-decoration`]: { display: 'none' },
 
     [`.${fk}-search-clear-btn`]: {
+      position: 'absolute',
+      stroke: 'hsla(0, 1%, 68%, 100%)',
+      top: '50%',
+      transform: 'translateY(-50%)',
       display: 'none',
       right: '6px',
       padding: '0px',
@@ -333,6 +348,6 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
 
-    [`.${fk}-menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
+    [`.menu-open .dpd-down-btn`]: { transform: 'rotate(180deg)' },
   }
 }

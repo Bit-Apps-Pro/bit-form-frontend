@@ -103,7 +103,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}
-              className={`${fieldKey}-dpd-wrp`}
+              className={`${fieldKey}-dpd-wrp drp-wrp`}
               aria-live="assertive"
               aria-label="Select a Country"
               role="combobox"
@@ -124,12 +124,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <span
                   data-testid={`${fieldKey}-slctd-cntry-lbl`}
                   data-dev-selected-country-lbl={fieldKey}
-                  className={`${fieldKey}-selected-country-lbl`}
+                  className={`${fieldKey}-selected-country-lbl selected-country-lbl`}
                 >
                   {ph}
                 </span>
               </div>
-              <div className={`${fieldKey}-dpd-btn-wrp`}>
+              <div className={`${fieldKey}-dpd-btn-wrp dpd-down-btn`}>
                 {fieldData.config.selectedCountryClearable && (
                   <button
                     data-testid={`${fieldKey}-clr-slctd-cntry-btn`}
@@ -189,7 +189,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
-                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
+                    className={`${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     aria-hidden="true"
                     width="22"
                     height="22"
@@ -212,7 +212,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                       type="button"
                       title="Clear search"
                       data-dev-search-clear-btn={fieldKey}
-                      className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
+                      className={`${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                       tabIndex="-1"
                       {...getCustomAttributs(fieldKey, 'search-clear-btn')}
                     >

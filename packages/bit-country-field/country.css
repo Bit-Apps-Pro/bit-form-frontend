@@ -172,14 +172,11 @@ body * {
   padding: 0 7px;
 }
 
-.icn {
+.__fld-key__-opt-search-icn {
   position: absolute;
   stroke: #afadad;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.__fld-key__-opt-search-icn {
   left: 13px;
 }
 
