@@ -16,7 +16,7 @@ import TableFileLink from '../components/Utilities/TableFileLink'
 import { $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy, number2Ipv6 } from '../Utils/Helpers'
+import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
@@ -225,16 +225,11 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             }
             if (val.key === '__entry_status') {
               const status = Number(row.cell.value)
-              if (status === 0) { return 'Read' }
-              if (status === 1) { return 'Unread' }
-              if (status === 2) { return 'Unconfirmed' }
-              if (status === 3) { return 'Confirmed' }
+              return getEntryStatus(status)
             }
 
-            if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
-              return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
-            } if (val.key === '__user_ip' && row.cell.value > 10) {
-              return number2Ipv6(row.cell.value)
+            if (val.key === '__user_ip' && isFinite(Number(row.cell.value))) {
+              return formatIpNumbers(row.cell.value)
             }
             return row.cell.value
           }
@@ -296,6 +291,13 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     const filteredEntryLabels = filteredEntryLabelsForTable(cols)
     setTableColumns(filteredEntryLabels)
     setEntryLabels(cols)
+  }
+
+  const getEntryStatus = status => {
+    if (status === 0) { return 'Read' }
+    if (status === 1) { return 'Unread' }
+    if (status === 2) { return 'Unconfirmed' }
+    if (status === 3) { return 'Confirmed' }
   }
 
   const editData = useCallback((row) => {
@@ -456,14 +458,18 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
-      return [allResp[rowDtl.idx]?.[entry.accessor] >>> 24 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 16 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 8 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] & 0xFF].join('.')
+      return formatIpNumbers(allResp[rowDtl.idx]?.[entry.accessor])
+    }
+    if (entry.accessor === '__entry_status') {
+      const status = Number(allResp[rowDtl.idx]?.[entry.accessor])
+      return getEntryStatus(status)
     }
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
   const loadRightHeaderComponent = () => (
     <>
-      <EntriesFilter fetchData={fetchData} />
+      {/* <EntriesFilter fetchData={fetchData} /> */}
       <ExportImportMenu data={allResp} cols={entryLabels} formID={formID} report={reports} />
     </>
   )
@@ -517,7 +523,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         )}
 
       <Drawer
-        title={__('Response Details', 'bitform')}
+        title={__(`Response Details #${rowDtl.idx + 1}`, 'bitform')}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
