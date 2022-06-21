@@ -55,8 +55,8 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
       options = [
         { label: __('Read entries'), value: '0' },
         { label: __('Unread entries'), value: '1' },
-        { label: __('Confirmed entries'), value: '2' },
-        { label: __('Unconfirmed entries'), value: '3' },
+        { label: __('Confirmed entries'), value: '3' },
+        { label: __('Unconfirmed entries'), value: '2' },
       ]
     }
 
