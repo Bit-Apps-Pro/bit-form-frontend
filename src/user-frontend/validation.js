@@ -35,7 +35,7 @@ export default function validateForm({ form, input }) {
 
     if (!fldValue) {
       if (fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
-      if (fldData?.valid?.req) errKey = 'req'
+      errKey = requiredFldValidation(fldData)
       generateErrMsg(errKey, fldKey, fldData)
       if (errKey) formCanBeSumbitted = false
       continue
@@ -61,6 +61,10 @@ export default function validateForm({ form, input }) {
     if (errKey) formCanBeSumbitted = false
   }
   return formCanBeSumbitted
+}
+
+const getFuncBasedOnFileType = (fldValue, fldData) => {
+
 }
 
 const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, fldKey.length - 2) : fldKey)
@@ -114,6 +118,8 @@ const isElementInViewport = elm => {
     && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }
+
+const requiredFldValidation = fldData => fldData?.valid?.req ? 'required' : ''
 
 const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
 
