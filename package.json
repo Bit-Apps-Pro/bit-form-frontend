@@ -88,7 +88,7 @@
     "clean-install-run": "yarn run clean && yarn install && yarn run hot",
     "sb": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build-package": "cd packages/bit-country-field && yarn build && cd ../packages/bit-file-pond && yarn build && cd ../packages/bit-virtualized-list && yarn build && yarn pda"
+    "build-packages-pda": "cd packages/bit-country-field && yarn build && cd ../ && cd bit-file-pond && yarn build && cd ../ && cd bit-virtualized-list && yarn build && cd ../../ && yarn pda"
   },
   "husky": {
     "hooks": {
