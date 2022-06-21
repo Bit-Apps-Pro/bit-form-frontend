@@ -14,6 +14,7 @@
     "ace-builds": "^1.5.1",
     "array-move": "^4.0.0",
     "bit-country-field": "file:./packages/bit-country-field",
+    "bit-file-pond": "file:./packages/bit-file-pond",
     "bit-virtualized-list": "file:./packages/bit-virtualized-list",
     "core-js": "3.22.7",
     "create-file-list": "^1.1.0",
@@ -86,7 +87,8 @@
     "clean": "rimraf node_modules yarn.lock package-lock.json",
     "clean-install-run": "yarn run clean && yarn install && yarn run hot",
     "sb": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "build-package": "cd packages/bit-country-field && yarn build && cd ../packages/bit-file-pond && yarn build && cd ../packages/bit-virtualized-list && yarn build && yarn pda"
   },
   "husky": {
     "hooks": {

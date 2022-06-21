@@ -3,12 +3,12 @@ import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 // import 'bit-virtualized-list'
 import BitCountryField from 'bit-country-field'
+import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { $fields, $bits } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 // import CountryFieldClass from '../../resource/js/country-field-script'
 import RenderStyle from '../style-new/RenderStyle'
-import { default as bit_virtualized_list } from 'bit-virtualized-list'
 
 const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   // console.log(bit_virtualized_list, '###');
@@ -69,7 +69,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       },
     }
 
-    // add bit_virtualized_list to global 
+    // add bit_virtualized_list to global
     if (!window.bit_virtualized_list) {
       window.bit_virtualized_list = bit_virtualized_list
     }

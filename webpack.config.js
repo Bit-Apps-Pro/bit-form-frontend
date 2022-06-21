@@ -157,6 +157,18 @@ module.exports = (env, argv) => {
               from: path.resolve(__dirname, 'redirect.php'),
               to: path.resolve(__dirname, '../assets/js/index.php'),
             },
+            {
+              from: path.resolve(__dirname, 'packages/bit-country-field/dist/bit-country-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-country-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-virtualized-list/dist/bit-virtualized-list.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-virtualized-list.min.js'),
+            },
           ],
         }),
         new WorkboxPlugin.GenerateSW({
