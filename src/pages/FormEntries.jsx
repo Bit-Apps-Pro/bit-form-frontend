@@ -390,6 +390,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
                 const newAllResp = [...allResp]
                 // eslint-disable-next-line dot-notation
                 newAllResp[idx]['__entry_status'] = '0'
+                newAllResp[idx]['__updated_at'] = resp?.data?.update_at_time
                 setAllResp(newAllResp)
               }
             })
