@@ -19,22 +19,23 @@
     <div class="__fld-key__-country-fld-container">
       <div class="__fld-key__-country-fld-wrp">
         <input name="country-name" type="hidden" class="__fld-key__-country-hidden-input">
-        <div class="__fld-key__-dpd-wrp" aria-live="assertive" aria-label="Select a Country" role="combobox"
+        <div class="__fld-key__-dpd-wrp drp-wrp" aria-live="assertive" aria-label="Select a Country" role="combobox"
           aria-expanded="false" tabindex="0">
           <div class="__fld-key__-selected-country-wrp">
             <img class="__fld-key__-selected-country-img" aria-hidden="true" alt="selected country flag"
               src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>">
-            <span class="__fld-key__-selected-country-lbl">Select a country</span>
+            <span class="__fld-key__-selected-country-lbl selected-country-lbl">Select a country</span>
           </div>
           <div class="__fld-key__-dpd-btn-wrp">
-            <button type="button" title="Clear selected country value" class="__fld-key__-selected-country-clear-btn">
+            <button type="button" title="Clear selected country value"
+              class="__fld-key__-selected-country-clear-btn selected-country-clear-btn">
               <svg width="13" height="13" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
-            <div class="__fld-key__-dpd-down-btn">
+            <div class="__fld-key__-dpd-down-btn dpd-down-btn">
               <svg width="15" height="15" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -77,22 +78,22 @@
     import countryList from './country-list.js'
 
     const list = new bit_country_field('.__fld-key__-country-fld-wrp', {
-      selectedFlagImage: true,
+      selectedFlagImage: false,
       selectedCountryClearable: false,
       // searchClearable: true,
-      optionFlagImage: true,
+      optionFlagImage: false,
       detectCountryByIp: false,
       detectCountryByGeo: false,
       defaultValue: '',
       placeholder: 'Select a Country',
       searchPlaceholder: 'Search for countries',
-      maxHeight: 400,
+      maxHeight: 425,
       onChange: val => { console.log(val) },
       options: countryList,
       fieldKey: '__fld-key__'
     })
-    list.value = 'Afghanistan'
-    // list.disabled = true
+    list.value = 'Pakistan'
+    list.disabled = true
     // list.readonly = true
   </script>
 

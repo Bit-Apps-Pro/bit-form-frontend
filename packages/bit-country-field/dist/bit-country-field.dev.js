@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -34,63 +36,77 @@
 
   /* eslint-disable class-methods-use-this */
   class BitCountryField {
-    #countryFieldWrapper = null;
-    #countryHiddenInputElm = null;
-    #dropdownWrapperElm = null;
-    #selectedCountryImgElm = null;
-    #selectedCountryLblElm = null;
-    #selectedCountryClearBtnElm = null;
+    #countryFieldWrapper;
+    #countryHiddenInputElm;
+    #dropdownWrapperElm;
+    #selectedCountryImgElm;
+    #selectedCountryLblElm;
+    #selectedCountryClearBtnElm;
     #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>";
-    #searchInputElm = null;
-    #clearSearchBtnElm = null;
-    #optionWrapperElm = null;
-    #optionListElm = null;
+    #searchInputElm;
+    #clearSearchBtnElm;
+    #optionWrapperElm;
+    #optionListElm;
     #selectedCountryCode = '';
-    #options = [];
-    #config = {
-      selectedFlagImage: true,
-      selectedCountryClearable: true,
-      searchClearable: true,
-      optionFlagImage: true,
-      detectCountryByIp: false,
-      detectCountryByGeo: false,
-      defaultValue: '',
-      placeholder: 'Select a Country',
-      searchPlaceholder: 'Search Country',
-      noCountryFoundText: 'No Currency Found',
-      maxHeight: 370,
-      document,
-      window: {},
-      options: [],
-      attributes: {},
-      classNames: {},
-      assetsURL: '',
-      onChange: val => {
-        console.log(val);
-      }
-    }; // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
-
+    #listOptions = [];
+    #selectedFlagImage = true;
+    #selectedCountryClearable = true;
+    #searchClearable = true;
+    #optionFlagImage = true;
+    #detectCountryByIp = false;
+    #detectCountryByGeo = false;
+    #defaultValue = '';
+    #placeholder = 'Select a Country';
+    #searchPlaceholder = 'Search Country';
+    #noCountryFoundText = 'No Currency Found';
+    #maxHeight = 370;
+    #document;
+    #window = {};
+    #initialOptions = [];
+    #attributes = {};
+    #classNames = {};
+    #assetsURL = '';
+    #fieldKey = '';
     #debounceTimeout = null;
     #dropdownSearchTerm = '';
     #allEventListeners = [];
+    #onChange;
 
     constructor(selector, config) {
-      Object.assign(this.#config, config);
+      this.#setConfigPropertiesToVariables(config);
 
       if (typeof selector === 'string') {
-        // TODO: builder e queryselector kaj korbena. so, jodi builder hoi taile builder theke select korte hobe
-        this.#countryFieldWrapper = this.#config.document.querySelector(selector);
+        this.#countryFieldWrapper = this.#document.querySelector(selector);
       } else {
         this.#countryFieldWrapper = selector;
       }
 
-      this.#options = [...this.#config.options];
-      this.fieldKey = this.#config.fieldKey;
+      this.fieldKey = this.#fieldKey;
       this.init();
     }
 
+    #setConfigPropertiesToVariables(config) {
+      this.#fieldKey = config.fieldKey;
+      this.#defaultValue = config.defaultValue;
+      this.#placeholder = config.placeholder;
+      this.#searchPlaceholder = config.searchPlaceholder || 'Search Country';
+      this.#noCountryFoundText = config.noCountryFoundText || 'No Country Found';
+      this.#maxHeight = config.maxHeight || 370;
+      this.#selectedFlagImage = config.selectedFlagImage;
+      this.#selectedCountryClearable = config.selectedCountryClearable;
+      this.#searchClearable = config.searchClearabl;
+      this.#optionFlagImage = config.optionFlagImage;
+      this.#detectCountryByIp = config.detectCountryByIp;
+      this.#detectCountryByGeo = config.detectCountryByGeo;
+      this.#assetsURL = config.assetsURL;
+      this.#onChange = config.onChange;
+      this.#initialOptions = config.options;
+      this.#listOptions = [...this.#initialOptions];
+      if (config.document) this.#document = config.document;else this.#document = document;
+      if (config.window) this.#window = config.window;else this.#window = window;
+    }
+
     init() {
-      // TODO - isBuilder diye check kora hobe emn sob variable, ekhane define korte hobe
       this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`);
       this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`);
       this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`);
@@ -98,21 +114,21 @@
       this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`);
       this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`);
       this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`);
-      this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress();
-      this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation();
-      this.#config.defaultValue && this.setSelectedCountryItem(this.#config.defaultValue);
+      this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress();
+      this.#detectCountryByGeo && this.#detectCountryCodeFromGeoLocation();
+      this.#defaultValue && this.setSelectedCountryItem(this.#defaultValue);
       this.#setCountryNameFromURL();
       this.#addEventListenersToElm();
       this.#generateOptions();
 
-      if (!this.#config.selectedFlagImage) {
+      if (!this.#selectedFlagImage) {
         this.#selectedCountryImgElm?.remove();
       }
 
-      if (this.#config.searchClearable) {
+      if (this.#searchClearable) {
         this.#searchInputElm.style.paddingRight = '25px';
         this.#clearSearchBtnElm.style.display = 'none';
-      } // this.#url = decodeURIComponent((`${this.#config.document.URL}`).replace(/\+/g, '%20'))
+      } // this.#url = decodeURIComponent((`${this.#document.URL}`).replace(/\+/g, '%20'))
 
     }
 
@@ -127,7 +143,7 @@
         this.#handleKeyboardNavigation(e);
       });
 
-      if (this.#config.searchClearable) {
+      if (this.#searchClearable) {
         this.#addEvent(this.#clearSearchBtnElm, 'click', () => {
           this.searchOptions('');
         });
@@ -142,10 +158,8 @@
     }
 
     #setCountryNameFromURL() {
-      const param = this.#countryHiddenInputElm.name; // TODO document.URL k isBuilder diye check korte hobe
-      // const url = decodeURIComponent((`${this.#config.document.URL}`).replace(/\+/g, '%20'))
-
-      const url = decodeURIComponent(`${document.URL}`.replace(/\+/g, '%20'));
+      const param = this.#countryHiddenInputElm.name;
+      const url = decodeURIComponent(`${this.#document.URL}`.replace(/\+/g, '%20'));
       const selectedValue = url.replace(new RegExp(`.*${param}=([^&]*).*|(.*)`), '$1');
 
       if (selectedValue) {
@@ -155,6 +169,10 @@
 
     #select(selector) {
       return this.#countryFieldWrapper.querySelector(selector) || console.error('selector not found', selector);
+    }
+
+    #selectAll(selector) {
+      return this.#countryFieldWrapper.querySelectorAll(selector) || console.error('selector not found', selector);
     }
 
     #addEvent(selector, eventType, cb) {
@@ -190,8 +208,7 @@
     }
 
     #handleKeyboardNavigation(e) {
-      // TODO: document e activeElement isbuilder e check korte hobe
-      const activeEl = this.#config.document.activeElement;
+      const activeEl = this.#document.activeElement;
       let focussableEl = null;
       const isMenuOpen = this.#isMenuOpen();
 
@@ -203,13 +220,14 @@
 
           if (activeEl === this.#searchInputElm) {
             focussableEl = this.#select(`.${this.fieldKey}-option:not(.disabled-opt)`);
-          } else if (activeEl.classList.contains('option')) {
+          } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
             const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next');
             const nextElm = this.#selectOptElmByIndex(nextIndex);
+            console.log('nextElm', nextElm);
 
             if (nextElm) {
               focussableEl = nextElm;
-            } else if (nextIndex + 1 < this.#options.length) {
+            } else if (nextIndex + 1 < this.#listOptions.length) {
               this.virtualOptionList?.scrollToIndex(nextIndex, 'center');
               setTimeout(() => {
                 const nextElm2 = this.#selectOptElmByIndex(nextIndex);
@@ -228,7 +246,7 @@
                 open: false
               });
             }
-          } else if (activeEl.classList.contains('option')) {
+          } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
             const prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous');
             const prevElm = this.#selectOptElmByIndex(prevIndex);
 
@@ -255,7 +273,7 @@
         this.#debounceTimeout = setTimeout(() => {
           this.#dropdownSearchTerm = '';
         }, 300);
-        const searchedOption = this.#config.options.find(option => !option.disabled && option.lbl.toLowerCase().startsWith(this.#dropdownSearchTerm));
+        const searchedOption = this.#initialOptions.find(option => !option.disabled && option.lbl.toLowerCase().startsWith(this.#dropdownSearchTerm));
 
         if (searchedOption) {
           this.setSelectedCountryItem(searchedOption.i);
@@ -265,8 +283,8 @@
         const direction = e.key === 'ArrowDown' ? 'next' : 'previous';
         const optIndex = this.#findNotDisabledOptIndex(selectedCountryIndex, direction);
 
-        if (optIndex > -1 && optIndex < this.#config.options.length) {
-          this.value = this.#config.options[optIndex].val;
+        if (optIndex > -1 && optIndex < this.#initialOptions.length) {
+          this.value = this.#initialOptions[optIndex].val;
         }
       }
 
@@ -279,22 +297,22 @@
 
     #findNotDisabledOptIndex(activeIndex = -1, direction) {
       if (direction === 'next') {
-        const optsLength = this.#config.options.length;
+        const optsLength = this.#initialOptions.length;
 
         for (let i = activeIndex + 1; i < optsLength; i += 1) {
-          const opt = this.#config.options[i];
+          const opt = this.#initialOptions[i];
           if (!opt.disabled) return i;
         }
       } else if (direction === 'previous') {
         for (let i = activeIndex - 1; i >= 0; i -= 1) {
-          const opt = this.#config.options[i];
+          const opt = this.#initialOptions[i];
           if (!opt.disabled) return i;
         }
       }
     }
 
     #handleInputValueChange(oldVal, newVal) {
-      const searchedOption = this.#config.options.find(option => option.val === newVal);
+      const searchedOption = this.#initialOptions.find(option => option.val === newVal);
 
       if (searchedOption && oldVal !== newVal) {
         this.setSelectedCountryItem(searchedOption.i);
@@ -305,17 +323,17 @@
       e.stopPropagation();
       this.#selectedCountryCode = '';
 
-      if (this.#config.selectedFlagImage) {
+      if (this.#selectedFlagImage) {
         this.#selectedCountryImgElm.src = this.#placeholderImage;
       }
 
-      this.#setTextContent(this.#selectedCountryLblElm, this.#config.placeholder);
-      if (this.#config.selectedCountryClearable) this.#selectedCountryClearBtnElm.style.display = 'none';
+      this.#setTextContent(this.#selectedCountryLblElm, this.#placeholder);
+      if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm.style.display = 'none';
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Selected country cleared');
       this.#dropdownWrapperElm.focus();
       this.value = '';
       setTimeout(() => {
-        this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#config.placeholder);
+        this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder);
       }, 100);
       this.#reRenderVirtualOptions();
     }
@@ -326,10 +344,13 @@
       const selectedItem = this.#getSelectedCountryItem();
       if (!selectedItem) return;
       this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`);
-      this.#selectedCountryClearBtnElm = this.#config.selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {};
 
-      if (this.#config.selectedFlagImage && this.#selectedCountryImgElm) {
-        this.#selectedCountryImgElm.src = `${this.#config.assetsURL}${selectedItem.img}`;
+      if (this.#selectedCountryClearable) {
+        this.#selectedCountryClearBtnElm = this.#selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {};
+      }
+
+      if (this.#selectedFlagImage && this.#selectedCountryImgElm) {
+        this.#selectedCountryImgElm.src = `${this.#assetsURL}${selectedItem.img}`;
       }
 
       this.#setTextContent(this.#selectedCountryLblElm, selectedItem.lbl);
@@ -338,14 +359,14 @@
       });
       this.value = selectedItem.val;
 
-      if (this.#config.selectedCountryClearable) {
+      if (this.#selectedCountryClearable) {
         this.#selectedCountryClearBtnElm.style.display = 'grid';
         this.#addEvent(this.#selectedCountryClearBtnElm, 'click', e => {
           this.#clearSelectedCountry(e);
         });
       }
 
-      if (this.#config.onChange) this.#config.onChange(selectedItem.val);
+      if (this.#onChange) this.#onChange(selectedItem.val);
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', `${selectedItem.lbl} selected`);
       setTimeout(() => {
         this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', selectedItem.lbl);
@@ -353,15 +374,15 @@
     }
 
     #getSelectedCountryIndex() {
-      return this.#options.findIndex(ot => ot.i === this.#selectedCountryCode);
+      return this.#listOptions.findIndex(ot => ot.i === this.#selectedCountryCode);
     }
 
     #getSelectedCountryItem() {
-      return this.#config.options.find(opt => opt.i === this.#selectedCountryCode);
+      return this.#initialOptions.find(opt => opt.i === this.#selectedCountryCode);
     }
 
     #createElm(elm) {
-      return this.#config.document.createElement(elm);
+      return this.#document.createElement(elm);
     }
 
     #setClassName(elm, cn) {
@@ -377,7 +398,7 @@
     }
 
     #reRenderVirtualOptions() {
-      this.virtualOptionList?.setRowCount(this.#options.length);
+      this.virtualOptionList?.setRowCount(this.#listOptions.length);
       const selectedIndex = this.#getSelectedCountryIndex();
       this.virtualOptionList?.scrollToIndex(selectedIndex === -1 ? 0 : selectedIndex);
     }
@@ -393,22 +414,26 @@
       }
     }
 
+    #getRowHeight = () => {
+      return 27;
+    };
+
     #generateOptions() {
+      const height = this.#getRowHeight();
       const selectedIndex = this.#getSelectedCountryIndex();
       this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
-        height: this.#config.maxHeight,
-        rowCount: this.#options.length,
-        rowHeight: 31,
-        // TODO - calculate this
+        height: this.#maxHeight,
+        rowCount: this.#listOptions.length,
+        rowHeight: height,
         initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
         renderRow: index => {
-          const opt = this.#options[index];
+          const opt = this.#listOptions[index];
           const li = this.#createElm('li');
           this.#setAttribute(li, 'data-key', opt.i);
           this.#setAttribute(li, 'data-index', index); // TODO - eta only isBuilder e kaj korbe
 
-          if ('option' in this.#config.attributes) {
-            const optAttr = this.#config.attributes.option;
+          if ('option' in this.#attributes) {
+            const optAttr = this.#attributes.option;
             this.#setCustomAttr(li, optAttr);
           } // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
 
@@ -421,43 +446,43 @@
 
           this.#setClassName(li, `${this.fieldKey}-option`);
 
-          if ('option' in this.#config.classNames) {
-            const optCls = this.#config.classNames.option;
+          if ('option' in this.#classNames) {
+            const optCls = this.#classNames.option;
             if (optCls) this.#setClassName(li, optCls);
           }
 
           const lblimgbox = this.#createElm('span');
           this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`);
 
-          if ('opt-lbl-wrp' in this.#config.classNames) {
-            const optLblWrpCls = this.#config.classNames['opt-lbl-wrp'];
+          if ('opt-lbl-wrp' in this.#classNames) {
+            const optLblWrpCls = this.#classNames['opt-lbl-wrp'];
             if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls);
           } // TODO - eta only isBuilder e kaj korbe
           // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
 
 
-          if ('opt-lbl-wrp' in this.#config.attributes) {
-            const optLblWrp = this.#config.attributes['opt-lbl-wrp'];
+          if ('opt-lbl-wrp' in this.#attributes) {
+            const optLblWrp = this.#attributes['opt-lbl-wrp'];
             this.#setCustomAttr(lblimgbox, optLblWrp);
           }
 
-          if (this.#config.optionFlagImage) {
+          if (this.#optionFlagImage) {
             const img = this.#createElm('img'); // TODO - eta only isBuilder e kaj korbe
             // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
 
-            if ('opt-icn' in this.#config.attributes) {
-              const optIcn = this.#config.attributes['opt-icn'];
+            if ('opt-icn' in this.#attributes) {
+              const optIcn = this.#attributes['opt-icn'];
               if (optIcn) this.#setCustomAttr(lblimgbox, optIcn);
             }
 
             this.#setClassName(img, `${this.fieldKey}-opt-icn`);
 
-            if ('opt-icn' in this.#config.classNames) {
-              const optIcnCls = this.#config.classNames['opt-icn'];
+            if ('opt-icn' in this.#classNames) {
+              const optIcnCls = this.#classNames['opt-icn'];
               if (optIcnCls) this.#setClassName(img, optIcnCls);
             }
 
-            img.src = `${this.#config.assetsURL}${opt.img}`;
+            img.src = `${this.#assetsURL}${opt.img}`;
             img.alt = `${opt.lbl} flag image`;
             img.loading = 'lazy';
             this.#setAttribute(img, 'aria-hidden', true);
@@ -467,15 +492,15 @@
           const lbl = this.#createElm('span'); // TODO - eta only isBuilder e kaj korbe
           // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
 
-          if ('opt-lbl' in this.#config.attributes) {
-            const optLbl = this.#config.attributes['opt-lbl'];
+          if ('opt-lbl' in this.#attributes) {
+            const optLbl = this.#attributes['opt-lbl'];
             this.#setCustomAttr(lblimgbox, optLbl);
           }
 
           this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`);
 
-          if ('opt-lbl' in this.#config.classNames) {
-            const optLblCls = this.#config.classNames['opt-lbl'];
+          if ('opt-lbl' in this.#classNames) {
+            const optLblCls = this.#classNames['opt-lbl'];
             if (optLblCls) this.#setClassName(lbl, optLblCls);
           }
 
@@ -487,7 +512,7 @@
           li.tabIndex = this.#isMenuOpen() ? '0' : '-1';
           this.#setAttribute(li, 'role', 'option');
           this.#setAttribute(li, 'aria-posinset', index + 1);
-          this.#setAttribute(li, 'aria-setsize', this.#options.length);
+          this.#setAttribute(li, 'aria-setsize', this.#listOptions.length);
           this.#addEvent(li, 'click', e => {
             this.setSelectedCountryItem(e.currentTarget.dataset.key);
           });
@@ -498,13 +523,13 @@
           });
 
           if (opt.disabled) {
-            this.#setClassName(li, 'disabled-opt');
+            this.#setClassName(li, `${this.fieldKey}-disabled-opt`);
           }
 
           li.append(lblimgbox, prefix);
 
           if (this.#selectedCountryCode === opt.i) {
-            this.#setClassName(li, 'selected-opt');
+            this.#setClassName(li, '__fld-key__-selected-opt');
             this.#setAttribute(li, 'aria-selected', true);
           } else {
             this.#setAttribute(li, 'aria-selected', false);
@@ -516,8 +541,8 @@
     }
 
     #handleSearchInput(e) {
-      if (e.key === 'Enter' && this.#options.length) {
-        const optKey = this.#options?.[0].i;
+      if (e.key === 'Enter' && this.#listOptions.length) {
+        const optKey = this.#listOptions?.[0].i;
 
         if (optKey) {
           this.setSelectedCountryItem(optKey);
@@ -533,20 +558,20 @@
       let filteredOptions = [];
 
       if (value) {
-        filteredOptions = this.#config.options.filter(opt => opt.lbl.toLowerCase().includes(value.toLowerCase()));
+        filteredOptions = this.#initialOptions.filter(opt => opt.lbl.toLowerCase().includes(value.toLowerCase()));
 
         if (!filteredOptions.length) {
           filteredOptions = [{
             i: 0,
-            lbl: this.#config.noCountryFoundText
+            lbl: this.#noCountryFoundText
           }];
         }
 
-        this.#options = filteredOptions;
-        if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid';
+        this.#listOptions = filteredOptions;
+        if (this.#searchClearable) this.#clearSearchBtnElm.style.display = 'grid';
       } else {
-        this.#options = this.#config.options;
-        if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none';
+        this.#listOptions = this.#initialOptions;
+        if (this.#searchClearable) this.#clearSearchBtnElm.style.display = 'none';
       }
 
       this.#reRenderVirtualOptions();
@@ -565,18 +590,17 @@
     }
 
     #isMenuOpen() {
-      return this.#countryFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`);
+      return this.#countryFieldWrapper.classList.contains(`menu-open`);
     }
 
     #openDropdownAsPerWindowSpace() {
       // window select korte hobe isBuilder onujayi
-      // const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
-      const iframeWindow = window;
+      const iframeWindow = this.#window;
       const elementRect = this.#dropdownWrapperElm.getBoundingClientRect();
       const spaceAbove = elementRect.top;
       const spaceBelow = iframeWindow.innerHeight - elementRect.bottom;
 
-      if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
+      if (spaceBelow < spaceAbove && spaceBelow < this.#maxHeight) {
         this.#countryFieldWrapper.style.flexDirection = 'column-reverse';
         this.#countryFieldWrapper.style.bottom = '0%';
       } else {
@@ -588,13 +612,12 @@
     setMenu({
       open
     }) {
-      this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`;
+      this.#optionWrapperElm.style.maxHeight = `${open ? this.#maxHeight : 0}px`;
 
       if (open) {
         this.#openDropdownAsPerWindowSpace();
-        this.#countryFieldWrapper.classList.add(`${this.fieldKey}-menu-open`); // this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
-
-        this.#addEvent(this.#config.document, 'click', e => this.#handleOutsideClick(e));
+        this.#countryFieldWrapper.classList.add(`menu-open`);
+        this.#addEvent(this.#document, 'click', e => this.#handleOutsideClick(e));
         this.#searchInputElm.tabIndex = '0';
         this.#clearSearchBtnElm.tabIndex = '0';
         this.#dropdownWrapperElm.setAttribute('aria-expanded', 'true');
@@ -602,9 +625,8 @@
         this.#setAttribute(this.#searchInputElm, 'aria-hidden', false);
         this.#reRenderVirtualOptions();
       } else {
-        this.#countryFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`); // document.removeEventListener('click', this.#handleOutsideClick)
-
-        this.#config.document.removeEventListener('click', this.#handleOutsideClick);
+        this.#countryFieldWrapper.classList.remove(`menu-open`);
+        this.#document.removeEventListener('click', this.#handleOutsideClick);
         this.searchOptions('');
         this.#searchInputElm.blur();
         this.#searchInputElm.tabIndex = '-1';
@@ -642,17 +664,27 @@
         this.#countryFieldWrapper.classList.add('disabled');
         this.#countryHiddenInputElm.disabled = true;
         this.#dropdownWrapperElm.tabIndex = '-1';
-        this.#selectedCountryClearBtnElm.tabIndex = '-1';
+
+        if (this.#selectedCountryClearable) {
+          this.#selectedCountryClearBtnElm.tabIndex = '-1';
+        }
+
         this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Country Field disabled');
         this.setMenu({
           open: false
         });
+        removeEventListener();
       } else if (String(status).toLowerCase() === 'false') {
         this.#countryFieldWrapper.classList.remove('disabled');
         this.#countryHiddenInputElm.removeAttribute('disabled');
         this.#dropdownWrapperElm.tabIndex = '0';
-        this.#selectedCountryClearBtnElm.tabIndex = '0';
-        this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#config.placeholder);
+
+        if (this.#selectedCountryClearable) {
+          this.#selectedCountryClearBtnElm.tabIndex = '0';
+        }
+
+        this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder);
+        this.#addEventListenersToElm();
       }
     }
 
@@ -665,14 +697,22 @@
         this.#countryFieldWrapper.classList.add('disabled');
         this.#countryHiddenInputElm.readOnly = true;
         this.#dropdownWrapperElm.tabIndex = '-1';
-        this.#selectedCountryClearBtnElm.tabIndex = '-1';
+
+        if (this.#selectedCountryClearable) {
+          this.#selectedCountryClearBtnElm.tabIndex = '-1';
+        }
+
         this.setMenu({
           open: false
         });
       } else if (String(status).toLowerCase() === 'false') {
         this.#countryFieldWrapper.classList.remove('disabled');
         this.#countryHiddenInputElm.removeAttribute('readonly');
-        this.#dropdownWrapperElm.tabIndex = '0';
+
+        if (this.#selectedCountryClearable) {
+          this.#dropdownWrapperElm.tabIndex = '0';
+        }
+
         this.#selectedCountryClearBtnElm.tabIndex = '0';
       }
     }

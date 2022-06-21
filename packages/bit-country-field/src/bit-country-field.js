@@ -61,7 +61,7 @@ export default class BitCountryField {
     this.#selectedFlagImage = config.selectedFlagImage
     this.#selectedCountryClearable = config.selectedCountryClearable
     this.#searchClearable = config.searchClearabl
-    this.#optionFlagImage = config.optionFlagImag
+    this.#optionFlagImage = config.optionFlagImage
     this.#detectCountryByIp = config.detectCountryByIp
     this.#detectCountryByGeo = config.detectCountryByGeo
     this.#assetsURL = config.assetsURL
@@ -76,7 +76,6 @@ export default class BitCountryField {
   }
 
   init() {
-    console.log('inits')
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
@@ -129,6 +128,7 @@ export default class BitCountryField {
   }
 
   #select(selector) { return this.#countryFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
+  #selectAll(selector) { return this.#countryFieldWrapper.querySelectorAll(selector) || console.error('selector not found', selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -341,12 +341,17 @@ export default class BitCountryField {
     }
   }
 
+  #getRowHeight = () => {
+    return 27
+  }
+
   #generateOptions() {
+    const height = this.#getRowHeight()
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
       height: this.#maxHeight,
       rowCount: this.#listOptions.length,
-      rowHeight: 31, // TODO - calculate this
+      rowHeight: height,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#listOptions[index]
@@ -491,7 +496,7 @@ export default class BitCountryField {
   }
 
   #isMenuOpen() {
-    return this.#countryFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`)
+    return this.#countryFieldWrapper.classList.contains(`menu-open`)
   }
 
   #openDropdownAsPerWindowSpace() {
@@ -515,7 +520,7 @@ export default class BitCountryField {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
-      this.#countryFieldWrapper.classList.add(`${this.fieldKey}-menu-open`)
+      this.#countryFieldWrapper.classList.add(`menu-open`)
       this.#addEvent(this.#document, 'click', e => this.#handleOutsideClick(e))
       this.#searchInputElm.tabIndex = '0'
       this.#clearSearchBtnElm.tabIndex = '0'
@@ -524,7 +529,7 @@ export default class BitCountryField {
       this.#setAttribute(this.#searchInputElm, 'aria-hidden', false)
       this.#reRenderVirtualOptions()
     } else {
-      this.#countryFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
+      this.#countryFieldWrapper.classList.remove(`menu-open`)
       this.#document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#searchInputElm.blur()
@@ -561,6 +566,7 @@ export default class BitCountryField {
       }
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Country Field disabled')
       this.setMenu({ open: false })
+      removeEventListener()
     } else if (String(status).toLowerCase() === 'false') {
       this.#countryFieldWrapper.classList.remove('disabled')
       this.#countryHiddenInputElm.removeAttribute('disabled')
@@ -569,6 +575,7 @@ export default class BitCountryField {
         this.#selectedCountryClearBtnElm.tabIndex = '0'
       }
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder)
+      this.#addEventListenersToElm()
     }
   }
 
