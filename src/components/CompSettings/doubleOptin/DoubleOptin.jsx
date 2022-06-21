@@ -231,13 +231,13 @@ export default function DoubleOptin() {
               </button>
 
               <br />
-              {/* <div className="br-5 w-6  ">
+              <div className="br-5 w-6  ">
                 <p className="p-1 f-m">
-                  <strong>Note : </strong>
+                  <strong>Note : the integrations & webhook will only trigger when the responder confirms their Opt-In. </strong>
                   {' '}
                   Only when your respondents confirm their Opt-In will the following action be triggered: Integrations, webhook.
                 </p>
-              </div> */}
+              </div>
             </div>
           )
       }
