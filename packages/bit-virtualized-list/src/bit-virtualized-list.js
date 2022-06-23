@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import VirtualizedList from 'virtualized-list';
+import VirtualizedList from 'virtualized-list/es/VirtualList'
 
 export default VirtualizedList
