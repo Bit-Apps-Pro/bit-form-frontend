@@ -166,11 +166,11 @@ function Integrations() {
   }
 
   const setNewInteg = inte => {
-    if (inte.pro && !isPro) {
+    if (inte.pro && !proInfo?.installedVersion && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
       return false
     }
-    if (inte.proVer && isPro && compareBetweenVersions(inte.proVer, proInfo.installedVersion) === 1) {
+    if (inte.proVer && isPro && proInfo?.installedVersion && compareBetweenVersions(inte?.proVer, proInfo.installedVersion) === 1) {
       toast.error('Please update to the latest version of Bit Form Pro.')
       return false
     }
