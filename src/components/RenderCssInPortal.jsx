@@ -1232,7 +1232,7 @@ export default function RenderCssInPortal() {
   white-space: normal;
   outline: 0;
   transition-property: transform, visibility, opacity;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Outfit", sans-serif !important;
 }
 
 .tippy-box[data-placement^=top]>.tippy-arrow {
@@ -1775,7 +1775,7 @@ arrow:after,
     width: 100%;
   }
   .context-btn {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Outfit", sans-serif;
     border: 0px;
     padding: 6px 6px;
     padding-right: 36px;
@@ -1834,7 +1834,7 @@ arrow:after,
       place-content: center;
    }
    .f-rob {font-family: "Roboto",sans-serif}
-    .f-mon {font-family:"Montserrat", sans-serif !important; } 
+    .f-mon {font-family:"Outfit", sans-serif !important; } 
    .wdt-200 {width: 200px !important;}
    .curp{cursor:pointer}
    .us-n {

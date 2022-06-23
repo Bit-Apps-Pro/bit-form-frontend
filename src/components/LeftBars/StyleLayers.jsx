@@ -766,7 +766,7 @@ const s = {
     ':hover': { '& .toggle-icn': { oy: '1' } },
   },
   title: {
-    ff: '"Montserrat", sans-serif',
+    ff: '"Outfit", sans-serif',
     mt: 7,
     bs: 'none',
     mb: 10,
