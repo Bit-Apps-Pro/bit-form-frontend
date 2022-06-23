@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
@@ -120,6 +121,7 @@ function SegmentControl({ defaultActive,
   const selectorTransition = useRef(null)
   const tabsRef = useRef(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
+  const As = component
 
   useEffect(() => {
     if (active !== defaultActive) setactive(defaultActive)
@@ -171,40 +173,27 @@ function SegmentControl({ defaultActive,
     <div className={css(style.wrapper)}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
-        {component === 'a' && options?.map((item, i) => (
-          <a
+        {options?.map((item, i) => (
+          <As
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
             onClick={e => eventHandler(e, i)}
             onKeyPress={e => eventHandler(e, i)}
+            data-label={item.label}
+            data-testid={`${item.label}-tab`}
+            {...(component === 'button' && { type: 'button' })}
+            {...(component === 'a' && { href: `#${item.label}` })}
             href={`#${item.label}`}
-            data-label={item.label}
-            data-testid={`${item.label}-tab`}
-          >
-            {checkToShow(item, 'icn') && (
-              <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
-            )}
-            {checkToShow(item, 'label') && __(item.label, 'bitform')}
-          </a>
-        ))}
-        {component === 'button' && options?.map((item, i) => (
-          <button
-            key={`segment-option-${i * 10}`}
             type="button"
-            className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-            onClick={e => eventHandler(e, i)}
-            onKeyPress={e => eventHandler(e, i)}
-            data-label={item.label}
-            data-testid={`${item.label}-tab`}
           >
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {checkToShow(item, 'label') && __(item.label, 'bitform')}
-          </button>
+            {checkToShow(item, 'label') && __(item.label)}
+          </As>
         ))}
       </div>
-    </div>
+    </div >
   )
 }
 
