@@ -1,13 +1,12 @@
 /* eslint-disable no-undef */
-import { useState } from 'react'
 
-import { Switch, Route, useRouteMatch, NavLink } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom'
+import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import ConfMsg from './ConfirmMessage/ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
-import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType({ formID }) {
   const { path } = useRouteMatch()
