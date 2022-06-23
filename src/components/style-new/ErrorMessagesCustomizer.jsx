@@ -40,7 +40,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-bdr"
           />
           <BorderControl
-            subtitle="Error Message Border Control"
+            subtitle="Error Message Border"
             objectPaths={borderPathsObj}
             id="err-msg-bdr"
           />

@@ -55,7 +55,7 @@ export default function ButtonCustomizer() {
             id="btn-bdr"
           />
           <BorderControl
-            subtitle="Button Border Control"
+            subtitle="Button Border"
             objectPaths={borderPathsObj}
             id="btn-bdr"
           />
@@ -82,7 +82,7 @@ export default function ButtonCustomizer() {
             id="btn-sh"
           />
           <ShadowControl
-            subtitle="Button Shadow Control"
+            subtitle="Button Shadow"
             value={btnSh}
             objectPaths={btnShObj}
             id="btn-sh"

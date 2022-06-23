@@ -61,22 +61,22 @@ const setTitle = (component) => {
     case 'border-style': return 'Border'
     case 'border-image': return 'Border Image'
     case 'color-picker': return 'Color picker'
-    case 'background': return 'Background Control'
-    case 'individual-shadow-control': return 'Shadow control'
+    case 'background': return 'Background'
+    case 'individual-shadow-control': return 'Shadow'
     case 'font': return 'Fonts'
-    case 'label-control': return 'Label Placement Control'
-    case 'spacing-control': return 'Label Spacing Control'
-    case 'text-decoration': return 'Text Decoration Control'
-    case 'field-margin-control': return 'Field Margin Control'
+    case 'label-control': return 'Label Placement'
+    case 'spacing-control': return 'Label Spacing'
+    case 'text-decoration': return 'Text Decoration'
+    case 'field-margin-control': return 'Field Margin'
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
-    case 'space-control': return 'Margin & Padding Control'
-    case 'size-control': return 'Width,Height Control'
-    case 'shadow-control': return 'Shadow Control'
-    case 'transition-control': return 'Transition Control'
-    case 'transform-control': return 'Transform Control'
-    case 'filter-control': return 'Filter Control'
-    case 'backdrop-filter-control': return 'Backdrop Filter Control'
+    case 'space-control': return 'Margin & Padding'
+    case 'size-control': return 'Width & Height'
+    case 'shadow-control': return 'Shadow'
+    case 'transition-control': return 'Transition'
+    case 'transform-control': return 'Transform'
+    case 'filter-control': return 'Filter'
+    case 'backdrop-filter-control': return 'Backdrop Filter'
     case 'filter-color': return 'Filter Color'
     default: return '...'
   }
@@ -112,7 +112,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handle`}>
           <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
             <span className={css(draggableModalStyle.title)}>{mainTitle || setTitle(component)}</span>
-            <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
+            <span className={css(draggableModalStyle.subTitle, ut.fontBody)}>{subtitle}</span>
           </div>
           <button
             data-testid="draggable-modal-close-btn"

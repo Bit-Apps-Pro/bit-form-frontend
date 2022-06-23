@@ -81,7 +81,7 @@ export default function AsteriskCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Color"
-        subtitle="Asterisk Color Control"
+        subtitle="Asterisk Color"
         value={flc}
         stateObjName="themeColors"
         propertyPath="--req-smbl-c"
