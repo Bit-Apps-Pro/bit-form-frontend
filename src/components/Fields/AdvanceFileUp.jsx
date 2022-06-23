@@ -4,8 +4,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
 // import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
-import bitFilePond from 'bit-file-pond'
+import { create, destroy, registerPlugin, setOptions } from 'filepond'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import FilePondPluginImageResize from 'filepond-plugin-image-resize'
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
+import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
+import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
@@ -15,9 +23,9 @@ import { selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
-const { create, destroy, registerPlugin, setOptions, FilePondPluginImagePreview,
-  FilePondPluginFileValidateSize, FilePondPluginFileValidateType, FilePondPluginImageCrop, FilePondPluginImageResize, FilePondPluginImageTransform,
-  FilePondPluginImageValidateSize, FilePondPluginMediaPreview } = bitFilePond
+// const { create, destroy, registerPlugin, setOptions, FilePondPluginImagePreview,
+//   FilePondPluginFileValidateSize, FilePondPluginFileValidateType, FilePondPluginImageCrop, FilePondPluginImageResize, FilePondPluginImageTransform,
+//   FilePondPluginImageValidateSize, FilePondPluginMediaPreview } = bitFilePond
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
