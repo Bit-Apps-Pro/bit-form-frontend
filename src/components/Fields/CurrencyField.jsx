@@ -112,7 +112,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     />
                   </div>
                 )}
-                <div className={`${fieldKey}-dpd-down-btn`}>
+                <div className={`${fieldKey}-dpd-down-btn dpd-down-btn`}>
                   <svg
                     width="15"
                     height="15"
@@ -133,7 +133,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 data-testid={`${fieldKey}-crncy-amnt-inp`}
                 aria-label="Currency Input"
                 type="text"
-                className={`${fieldKey}-currency-amount-input`}
+                className={`${fieldKey}-currency-amount-input currency-amount-input`}
                 tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />
               {selectedCurrencyClearable && (
@@ -142,7 +142,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   data-dev-input-clear-btn={fieldKey}
                   type="button"
                   title="Clear value"
-                  className={`${fieldKey}-icn ${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
+                  className={`${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
                   {...getCustomAttributs(fieldKey, 'input-clear-btn')}
                 >
                   <svg
@@ -179,7 +179,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     {...getCustomAttributs(fieldKey, 'opt-search-input')}
                   />
                   <svg
-                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
+                    className={`${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     data-dev-opt-search-icn={fieldKey}
                     aria-hidden="true"
                     width="22"
@@ -201,7 +201,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                       data-dev-search-clear-btn={fieldKey}
                       type="button"
                       aria-label="Clear search"
-                      className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
+                      className={`${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                       tabIndex="-1"
                       {...getCustomAttributs(fieldKey, 'search-clear-btn')}
                     >

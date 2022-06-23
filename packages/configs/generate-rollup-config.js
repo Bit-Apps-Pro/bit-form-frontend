@@ -65,7 +65,7 @@ export default function generateRollupConfig() {
       plugins: [
         ...isDev ? [
           serve({ open: true, port: 3030 }),
-          livereload()
+          livereload(),
         ] : [],
         resolve(),
         babel({
