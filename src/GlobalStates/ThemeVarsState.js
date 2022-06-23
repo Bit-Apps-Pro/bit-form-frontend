@@ -77,11 +77,11 @@ const $themeVarsLg = atom({
 
     '--lbl-wrp-sa': '',
     '--lbl-wrp-width': '100%', // label wrapper  width
-    '--lbl-wrp-m': '', // label wrapper for margin
+    '--lbl-wrp-m': '0 0 5px 0', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
     '--lbl-wrp-bdr-width': '', // label wrapper border width
     '--lbl-wrp-bdr-rad': '', // label wrapper border radius
-    '--lbl-font-w': 700, // field font weight
+    '--lbl-font-w': 500, // field font weight
     '--lbl-font-style': '', // field font style
 
     '--fld-lbl-m': '', // field label margin
@@ -90,7 +90,7 @@ const $themeVarsLg = atom({
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
     '--fld-lbl-pn': '', // field label position
-    '--fld-font-w': 700, // field font weight
+    '--fld-font-w': 500, // field font weight
     '--fld-font-style': '', // field font style
 
     '--req-smbl-m': '', // Required Symbol Margin
