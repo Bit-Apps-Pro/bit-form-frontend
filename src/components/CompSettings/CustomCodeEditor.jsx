@@ -23,6 +23,7 @@ import { $customCodes, $newFormId } from '../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
+import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import { cssPredefinedCodeList, jsPredefinedCodeList } from '../../Utils/StaticData/predefinedCodeList'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
@@ -91,6 +92,10 @@ function CustomCodeEditor() {
   }
 
   const saveCode = e => {
+    if (formType === 'new') {
+      select('#update-btn').click()
+      return
+    }
     const formData = {
       form_id: formID,
       customCodes,
