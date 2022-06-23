@@ -5,6 +5,7 @@ import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
+import { useTransition } from 'react'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -44,6 +45,7 @@ function SimpleColorsPickerMenu({ stateObjName,
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
+  const [, startColorTransition] = useTransition()
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
@@ -183,7 +185,9 @@ function SimpleColorsPickerMenu({ stateObjName,
   const setColorState = (colorObj) => {
     if (typeof colorObj === 'object') {
       setColor(colorObj)
-      handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
+      startColorTransition(() => {
+        handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
+      })
     } else {
       const str = `var(${colorObj})`
       const getColor = themeColors[colorObj]
@@ -191,9 +195,13 @@ function SimpleColorsPickerMenu({ stateObjName,
         const [_h, _s, _v, _a] = getColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
         const [h, s, v, a] = hsla2hsva(_h, _s, _v, _a)
         setColor({ h, s, v, a })
-        handleColor(h, s, v, a, str)
+        startColorTransition(() => {
+          handleColor(h, s, v, a, str)
+        })
       } else {
-        handleColor('', '', '', '', str)
+        startColorTransition(() => {
+          handleColor('', '', '', '', str)
+        })
       }
     }
   }
