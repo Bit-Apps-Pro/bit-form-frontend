@@ -51,11 +51,11 @@ export default function advancedFileUp_1_bitformDefault({ fk, type, direction })
     },
 
     /* error state color */
-    [`.${fk}-fld-wrp  [data-filepond-item-state*='error'] .filepond--item-panel`]: { 'background-color': 'red' },
-    [`.${fk}-fld-wrp  [data-filepond-item-state*='invalid'] .filepond--item-panel`]: { 'background-color': 'red' },
+    [`.${fk}-fld-wrp [data-filepond-item-state*='error'] .filepond--item-panel`]: { 'background-color': 'red' },
+    [`.${fk}-fld-wrp [data-filepond-item-state*='invalid'] .filepond--item-panel`]: { 'background-color': 'red' },
 
     /* complete state color */
-    [`.${fk}-fld-wrp  [data-filepond-item-state='processing-complete'] .filepond--item-panel`]: { 'background-color': 'green' },
+    [`.${fk}-fld-wrp [data-filepond-item-state='processing-complete'] .filepond--item-panel`]: { 'background-color': 'green' },
 
     /* the background color of the drop circle */
     [`.${fk}-fld-wrp .filepond--drip-blob`]: { 'background-color': '#999' },
