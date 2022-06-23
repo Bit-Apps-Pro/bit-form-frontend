@@ -1,21 +1,30 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import produce from 'immer'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { $confirmations } from '../../GlobalStates/GlobalStates'
 import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 import confirmMsgCssStyles from './confirm_msg_css_styles'
 
-export default function ConfirmMsgPreview({ active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
+export default function ConfirmMsgPreview({ index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)
   const { formID } = useParams()
-  const styleObject = confirmMsgCssStyles(formID, msgType, position, animation, confirmationStyles)
+  const setAllConf = useSetRecoilState($confirmations)
+  const styleObject = confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles)
   const delayTimeoutFunc = useRef(null)
   const handleBackdrop = ({ target }) => {
     if (target.dataset.modalBackdrop || target.parentNode.dataset.modalBackdrop) {
       setActive(false)
     }
   }
+  useEffect(() => {
+    setAllConf(prevConf => produce(prevConf, draft => {
+      draft.type.successMsg[index].config.stylesObj = styleObject
+    }))
+  }, [])
 
   useEffect(() => {
     if (autoHide) {
@@ -29,25 +38,28 @@ export default function ConfirmMsgPreview({ active, setActive, position, animati
     }
   }, [active])
 
+  useEffect(() => {
+
+  }, [styleObject])
+
   return (
     <>
       <RenderStyle styleClasses={styleObject} />
       <div
-        tabIndex={-1}
         role="dialog"
-        ariaHidden="true"
+        aria-hidden="true"
         data-modal-backdrop
         onClick={handleBackdrop}
-        className={`msg-container-${formID} ${active ? 'active' : 'deactive'}`}
+        className={`msg-container-${formID}-${msgId} ${active ? 'active' : 'deactive'}`}
       >
-        <div role="button" className={`msg-background-${formID}`}>
-          <div className={`msg-content-${formID}`}>
+        <div role="button" className={`msg-background-${formID}-${msgId}`}>
+          <div className={`msg-content-${formID}-${msgId}`}>
             <button
-              className={`close-${formID}`}
+              className={`close-${formID}-${msgId}`}
               type="button"
               onClick={() => setActive(false)}
             >
-              <svg className={`close-icn-${formID}`} viewBox="0 0 30 30">
+              <svg className={`close-icn-${formID}-${msgId}`} viewBox="0 0 30 30">
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="4" y1="3.88" x2="26" y2="26.12" />
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
               </svg>

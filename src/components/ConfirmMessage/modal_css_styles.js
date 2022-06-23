@@ -1,13 +1,13 @@
-import fade from './Animations/fade'
-import scale from './Animations/scale'
-import modalSlide from './Animations/modal-slide'
 import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
+import fade from './Animations/fade'
+import modalSlide from './Animations/modal-slide'
+import scale from './Animations/scale'
 
-export default function modalCssStyles(formID, position, animation, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
-  const boxShadowString = objectArrayToStyleStringGenarator(boxShadow)
+export default function modalCssStyles(formID, msgId, position, animation, padding, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
+  const boxShadowString = objectArrayToStyleStringGenarator(boxShadow || [])
 
   return {
-    [`.msg-container-${formID}`]: {
+    [`.msg-container-${formID}-${msgId}`]: {
       display: 'flex',
       'justify-content': 'center',
       'align-items': 'center',
@@ -22,18 +22,18 @@ export default function modalCssStyles(formID, position, animation, width, backg
       transition: 'opacity 100ms, visibility 0s',
     },
 
-    [`.msg-container-${formID}.active`]: {
+    [`.msg-container-${formID}-${msgId}.active`]: {
       opacity: 1,
       visibility: 'visible',
     },
 
-    [`.msg-container-${formID}.deactive`]: {
+    [`.msg-container-${formID}-${msgId}.deactive`]: {
       opacity: 0,
       'transition-delay': '400ms',
       visibility: 'hidden',
     },
 
-    [`.msg-background-${formID}`]: {
+    [`.msg-background-${formID}-${msgId}`]: {
       width: '100%',
       height: '100%',
       display: 'flex',
@@ -42,9 +42,9 @@ export default function modalCssStyles(formID, position, animation, width, backg
       background: 'rgba(0, 0, 0, 0.4)',
     },
 
-    [`.msg-content-${formID}`]: {
+    [`.msg-content-${formID}-${msgId}`]: {
       background,
-      padding: '20px',
+      padding,
       'border-width': borderWidth,
       'border-style': borderType,
       'border-color': borderColor,
@@ -61,21 +61,21 @@ export default function modalCssStyles(formID, position, animation, width, backg
 
     },
 
-    [`.active .msg-content-${formID}`]: {
+    [`.active .msg-content-${formID}-${msgId}`]: {
       ...animation === 'fade' && fade(position).activeMsgContent,
       ...animation === 'scale' && scale(position).activeMsgContent,
       ...animation === 'slide-down' && modalSlide(position, 'down').activeMsgContent,
       ...animation === 'slide-up' && modalSlide(position, 'up').activeMsgContent,
 
     },
-    [`.deactive .msg-content-${formID}`]: {
+    [`.deactive .msg-content-${formID}-${msgId}`]: {
       ...animation === 'fade' && fade(position).deactiveMsgContent,
       ...animation === 'scale' && scale(position).deactiveMsgContent,
       ...animation === 'slide-down' && modalSlide(position, 'down').deactiveMsgContent,
       ...animation === 'slide-up' && modalSlide(position, 'up').deactiveMsgContent,
     },
 
-    [`.close-${formID}`]: {
+    [`.close-${formID}-${msgId}`]: {
       color: closeIconColor,
       background: closeBackground,
       position: 'absolute',
@@ -91,11 +91,11 @@ export default function modalCssStyles(formID, position, animation, width, backg
       cursor: 'pointer',
     },
 
-    [`.close-${formID}:hover`]: { color: closeIconHover, bd: closeHover },
+    [`.close-${formID}-${msgId}:hover`]: { color: closeIconHover, bd: closeHover },
 
-    [`.close-${formID}:focus`]: { color: '#000' },
+    [`.close-${formID}-${msgId}:focus`]: { color: '#000' },
 
-    [`.close-icn-${formID}`]: {
+    [`.close-icn-${formID}-${msgId}`]: {
       width: '15px',
       height: '15px',
       'stroke-width': 2,
