@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
       validation: path.resolve(__dirname, 'src/user-frontend/validation'),
       components: [
         path.resolve(__dirname, 'src/resource/sass/components.scss'),
-        path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
+        // path.resolve(__dirname, ' /react-multiple-select-dropdown-lite/dist/index.css'),
         path.resolve(__dirname, 'src/resource/css/tinymce.css'),
       ],
     },
@@ -180,6 +180,50 @@ module.exports = (env, argv) => {
       //   }],
       // }, { reload: false }),
       ...(!production ? [] : [
+        new CopyPlugin({
+          patterns: [
+            {
+              from: path.resolve(__dirname, 'public/wp_index.html'),
+              to: path.resolve(__dirname, '../views/view-root.php'),
+            },
+            {
+              from: path.resolve(__dirname, 'manifest.json'),
+              to: path.resolve(__dirname, '../assets/js/manifest.json'),
+            },
+            {
+              from: path.resolve(__dirname, 'bitform-logo-icon.ico'),
+              to: path.resolve(__dirname, '../assets/img/bitform-logo-icon.ico'),
+            },
+            {
+              from: path.resolve(__dirname, 'logo-256.png'),
+              to: path.resolve(__dirname, '../assets/img/logo-256.png'),
+            },
+            {
+              from: path.resolve(__dirname, 'logo-bg.svg'),
+              to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
+            },
+            {
+              from: path.resolve(__dirname, 'logo.svg'),
+              to: path.resolve(__dirname, '../assets/img/logo.svg'),
+            },
+            {
+              from: path.resolve(__dirname, 'redirect.php'),
+              to: path.resolve(__dirname, '../assets/js/index.php'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-country-field/dist/bit-country-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-country-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-virtualized-list/dist/bit-virtualized-list.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-virtualized-list.min.js'),
+            },
+          ],
+        }),
         new WorkboxPlugin.GenerateSW({
           clientsClaim: production,
           skipWaiting: production,

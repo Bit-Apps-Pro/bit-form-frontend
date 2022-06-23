@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
+// import 'bit-virtualized-list'
+import BitCountryField from 'bit-country-field'
+import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { $fields, $bits } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -8,6 +11,7 @@ import CountryFieldClass from '../../resource/js/country-field-script'
 import RenderStyle from '../style-new/RenderStyle'
 
 const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
+  // console.log(bit_virtualized_list, '###');
   const countryWrapElmRef = useRef(null)
   const countryFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
@@ -65,6 +69,11 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       },
     }
 
+    // add bit_virtualized_list to global
+    if (!window.bit_virtualized_list) {
+      window.bit_virtualized_list = bit_virtualized_list
+    }
+
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultValue = alreadyChecked.i
     countryFieldRef.current = new CountryFieldClass(fldElm, configOptions)
@@ -94,7 +103,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}
-              className={`${fieldKey}-dpd-wrp`}
+              className={`${fieldKey}-dpd-wrp drp-wrp`}
               aria-live="assertive"
               aria-label="Select a Country"
               role="combobox"
@@ -115,12 +124,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <span
                   data-testid={`${fieldKey}-slctd-cntry-lbl`}
                   data-dev-selected-country-lbl={fieldKey}
-                  className={`${fieldKey}-selected-country-lbl`}
+                  className={`${fieldKey}-selected-country-lbl selected-country-lbl`}
                 >
                   {ph}
                 </span>
               </div>
-              <div className={`${fieldKey}-dpd-btn-wrp`}>
+              <div className={`${fieldKey}-dpd-btn-wrp dpd-down-btn`}>
                 {fieldData.config.selectedCountryClearable && (
                   <button
                     data-testid={`${fieldKey}-clr-slctd-cntry-btn`}
@@ -180,7 +189,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
-                    className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
+                    className={`${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     aria-hidden="true"
                     width="22"
                     height="22"
@@ -203,7 +212,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                       type="button"
                       title="Clear search"
                       data-dev-search-clear-btn={fieldKey}
-                      className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
+                      className={`${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                       tabIndex="-1"
                       {...getCustomAttributs(fieldKey, 'search-clear-btn')}
                     >
