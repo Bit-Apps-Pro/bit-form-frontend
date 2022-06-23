@@ -170,6 +170,7 @@ function SimpleColorsPickerMenu({ stateObjName,
   }
 
   const setColorState = (colorObj) => {
+    console.log('setColorState Called=', colorObj)
     if (typeof colorObj === 'object') {
       setColor(colorObj)
       handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
@@ -320,6 +321,7 @@ export default memo(SimpleColorsPickerMenu)
 
 const c = {
   preview_wrp: {
+    w: 248,
     '& div[role="group"]': { p: 4, b: 0 },
     '& input': {
       brs: 8,
@@ -339,6 +341,7 @@ const c = {
   container: {
     dy: 'flex',
     fd: 'column',
+    '& .styles-module_container__2LiHz': { w: '100%' },
   },
   subContainer: {
     m: 5,

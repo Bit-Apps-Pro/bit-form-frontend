@@ -39,7 +39,7 @@ export function hsva2hsla(hsvH, hsvS, hsvV, alpha = 100) {
   const s = Math.round(hslS)
   const l = Math.round(hslV)
 
-  return [h, s, l, alpha, `hsla(${h}, ${s}%, ${l}%, ${alpha})`]
+  return [h, s, l, alpha, `hsla(${h}, ${s}%, ${l}%, ${alpha}%)`]
 }
 
 /**
