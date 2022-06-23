@@ -88,7 +88,7 @@
     "clean-install-run": "yarn run clean && yarn install && yarn run hot",
     "sb": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build-packages-pda": "cd packages/bit-country-field && yarn build && cd ../ && cd bit-file-pond && yarn build && cd ../ && cd bit-virtualized-list && yarn build && cd ../../ && yarn pda"
+    "build-packages-pda": "cd packages/bit-country-field && yarn build && cd ../ && cd bit-file-pond && yarn build && cd ../ && cd filepond-plugin-file-validate-size && cd ../ && cd filepond-plugin-file-validate-type && yarn build && cd ../ && cd filepond-plugin-image-crop && yarn build && cd ../ && cd filepond-plugin-image-preview && yarn build && cd ../ && cd filepond-plugin-image-resize && yarn build && cd ../ && cd filepond-plugin-image-transform && yarn build && cd ../ && cd filepond-plugin-image-validate-size && yarn build && cd ../ && cd filepond-plugin-media-preview && yarn build && cd ../ && cd bit-virtualized-list && yarn build && cd ../../ && yarn pda"
   },
   "husky": {
     "hooks": {
