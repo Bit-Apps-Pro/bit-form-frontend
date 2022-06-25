@@ -3,15 +3,20 @@ import TrashIcn from '../Icons/TrashIcn'
 import { __ } from '../Utils/i18nwrap'
 import Downmenu from './Utilities/Downmenu'
 
-const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutItem, resetContextMenu }) => {
+const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutItem, resetContextMenu, toggleSubMenu }) => {
   const removeLay = e => {
     e.stopPropagation()
     removeLayoutItem(fieldId)
     if (resetContextMenu) resetContextMenu()
   }
 
+  const downMenuProps = {
+    onShow: toggleSubMenu ? () => toggleSubMenu('delete') : null,
+    onHide: toggleSubMenu ? () => toggleSubMenu('delete') : null,
+  }
+
   return (
-    <Downmenu place={placement || 'top'}>
+    <Downmenu place={placement || 'top'} {...downMenuProps}>
       <button
         data-close
         type="button"
