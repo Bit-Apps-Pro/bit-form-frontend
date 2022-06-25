@@ -1791,6 +1791,9 @@ arrow:after,
   .context-btn:hover {
     background-color: var(--white-0-93);
   }
+  .context-btn.active {
+    background-color: var(--white-0-93);
+  }
   .context-btn:hover svg {
     filter: drop-shadow(1px 1px 0.5px #b3b3b3);
   }

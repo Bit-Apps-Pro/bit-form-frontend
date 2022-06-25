@@ -1,4 +1,5 @@
 import produce from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -43,6 +44,7 @@ export default function FieldContextMenu({ isContextMenu,
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
+  const [subMenuParent, setSubMenuParent] = useState(false)
 
   const handleFieldHide = brkpnt => {
     // setFields(allFields => produce(allFields, draft => {
@@ -123,11 +125,11 @@ export default function FieldContextMenu({ isContextMenu,
           <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
-              <Downmenu place="right-start" arrow={false} trigger="mouseenter click">
+              <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => setSubMenuParent('hide')} onHide={() => setSubMenuParent(false)} >
                 <button
                   data-close
                   type="button"
-                  className="context-btn"
+                  className={`context-btn ${subMenuParent === 'hide' ? 'active' : ''}`}
                   unselectable="on"
                   draggable="false"
                   title={__('More Options', 'bitform')}
