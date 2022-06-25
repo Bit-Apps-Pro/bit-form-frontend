@@ -626,7 +626,7 @@ export default class BitCountryField {
   }
 }
 
-export default CountryField
+// export default CountryField
 
 // const list = new CountryField('.country-fld-wrp', {
 //   selectedFlagImage: true,
