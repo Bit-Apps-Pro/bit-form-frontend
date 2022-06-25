@@ -10,7 +10,6 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
-  styleClassesForRender[`.${fieldKey}-fld-wrp`]['align-items'] = fieldData.align
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
