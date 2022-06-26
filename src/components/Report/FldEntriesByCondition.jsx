@@ -35,7 +35,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
 
   const formFields = useRecoilValue($fieldsArr)
   const [showMdl, setshowMdl] = useState(false)
-  const [reportIndex, setReportIndex] = useState(rprtIndx)
+  const [reportIndex, setReportIndex] = useState(rprtIndx || 0)
   const { formID } = useParams()
   const [confMdl, setconfMdl] = useState({ show: false })
   const [availableReports, setAvailableReports] = useState([])
@@ -55,14 +55,17 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   }, [reports])
 
   useEffect(() => {
+    
     if (reports[reportIndex] && reports[reportIndex]?.details) {
       if (!reports[reportIndex]?.details?.conditions) {
         const tmpConf = deepCopy([...reports])
-        tmpConf[reportIndex].details.conditions = [
-          { field: '', logic: '', val: '' },
-          'or',
-          { field: '', logic: '', val: '' }]
-        setReports(tmpConf)
+        if(tmpConf[reportIndex]){
+          tmpConf[reportIndex].details.conditions = [
+            { field: '', logic: '', val: '' },
+            'or',
+            { field: '', logic: '', val: '' }]
+          setReports(tmpConf)
+        }
       }
     }
   }, [])
