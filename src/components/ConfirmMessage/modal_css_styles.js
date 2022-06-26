@@ -3,7 +3,7 @@ import fade from './Animations/fade'
 import modalSlide from './Animations/modal-slide'
 import scale from './Animations/scale'
 
-export default function modalCssStyles(formID, msgId, position, animation, padding, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
+export default function modalCssStyles(formID, msgId, position, animation, padding, width, background, color, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
   const boxShadowString = objectArrayToStyleStringGenarator(boxShadow || [])
 
   return {
@@ -44,6 +44,7 @@ export default function modalCssStyles(formID, msgId, position, animation, paddi
 
     [`.msg-content-${msgId}`]: {
       background,
+      color,
       padding,
       'border-width': borderWidth,
       'border-style': borderType,

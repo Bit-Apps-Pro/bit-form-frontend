@@ -373,6 +373,7 @@ const defaultConfirmationValue = (formID) => {
   const styles = {
     width: '300px',
     padding: '5px 35px 5px 20px',
+    color: '#000000',
     background: '#fafafa',
     borderWidth: '1px',
     borderType: 'solid',

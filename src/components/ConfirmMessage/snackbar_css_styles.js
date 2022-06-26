@@ -3,7 +3,7 @@ import snackbarFade from './Animations/snackbar-fade'
 import snackbarScale from './Animations/snackbar-scale'
 import snackbarSlide from './Animations/snackbar-slide'
 
-export default function snackbarCssStyles(formID, msgId, position, animation, padding, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
+export default function snackbarCssStyles(formID, msgId, position, animation, padding, width, background, color, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
   const boxShadowString = objectArrayToStyleStringGenarator(boxShadow || [])
   return {
     [`.msg-container-${msgId}`]: {
@@ -59,6 +59,7 @@ export default function snackbarCssStyles(formID, msgId, position, animation, pa
 
     [`.msg-content-${msgId}`]: {
       background,
+      color,
       padding,
       'border-width': borderWidth,
       'border-style': borderType,
