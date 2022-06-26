@@ -19,7 +19,7 @@ import EmailNotification from '../../WPAuth/EmailNotification'
 import RedirectEmailVerified from '../../WPAuth/Registration/RedirectEmailVerified'
 
 export default function DoubleOptin() {
-  const [tem, setTem] = useState({ sub: 'Confirm the submission', body: dblOptinTamplate, dflt_temp: true, day: 1 })
+  const [tem, setTem] = useState({ sub: 'Confirm the submission', body: dblOptinTamplate, dflt_temp: true, day: 1,custom_redirect :0  })
   const bits = useRecoilValue($bits)
   const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
   const [dfltTampMdl, setDfltTamMdl] = useState(false)
@@ -37,7 +37,8 @@ export default function DoubleOptin() {
     bitsFetch({ formID }, 'bitforms_get_double_opt_in').then((res) => {
       if (res?.success && !res?.data?.errors) {
         setStatus(Number(res.data[0]?.status))
-        setTem(JSON.parse(res.data[0]?.integration_details))
+        const details = JSON.parse(res.data[0]?.integration_details)
+        setTem(details)
       }
       setIsLoad(false)
     })
@@ -145,7 +146,7 @@ export default function DoubleOptin() {
               <SnackMsg snack={snack} setSnackbar={setSnackbar} />
               <div className="mt-6 flx">
                 <label htmlFor="status">
-                  <b>{__('Enable Double Opt-In', 'bitform')}</b>
+                  <b>{__('Enable', 'bitform')}</b>
                 </label>
                 <SingleToggle2 name="status" action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
@@ -231,7 +232,7 @@ export default function DoubleOptin() {
                             &nbsp;
                             {__('Edit verification messages', 'bitform')}
                           </button>
-                          <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
+                          <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Edit verification messages" />
                         </div>
                       )}
                     </div>

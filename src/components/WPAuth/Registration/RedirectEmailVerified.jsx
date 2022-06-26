@@ -1,59 +1,62 @@
 import produce from 'immer'
+import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
+import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
-import SingleToggle2 from '../../Utilities/SingleToggle2'
+import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '' }) {
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
+    console.log('name value', name, typeof value)
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp[name] = value
     }))
+    console.log('dataconf', dataConf)
   }
 
-  const handleCustomRedirect = (e) => {
-    const { checked } = e.target
-    if (checked) {
+  const tinymceHandle = (val, name) => {
+    console.log('clg', val)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      // eslint-disable-next-line no-param-reassign
+      const tmp = type ? draft[type] : draft
+      tmp[name] = val
+    }))
+  }
+
+  useEffect(() => {
+    if(!dataConf?.custom_redirect){
       setDataConf(tmpConf => produce(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         const tmp = type ? draft[type] : draft
-        tmp.custom_redirect = 1
-      }))
-    } else {
-      setDataConf(tmpConf => produce(tmpConf, draft => {
-        // eslint-disable-next-line no-param-reassign
-        const tmp = type ? draft[type] : draft
-        delete tmp.custom_redirect
+        tmp.custom_redirect = 0
       }))
     }
-  }
+  },[])
+
 
   return (
     <div>
-      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800 }}>
+      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight:400,overflow: 'auto' }}>
         <>
           <div>
-            <div className="mt-2 ml-1 flx">
-              <label htmlFor="status">
-                <b>{__('Custom Redirect Page Enable', 'bitform')}</b>
-              </label>
-              <SingleToggle2 action={handleCustomRedirect} checked={data?.custom_redirect === 1} className="ml-4 flx" />
-              <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">
-                  Enable this option to add the custom redirect URL or pages for the success, already activated, and invalid verification. by default BitForm will redirect to the default page.
-                  <br />
-                </div>
-              </Cooltip>
-            </div>
-            {data?.custom_redirect === 1 && (
-              <div className="mt-3">
-                <div className="flx integ-fld-wrp">
+               <div className="mt-2">
+                <label htmlFor="status">
+                  <b>{__('', 'bitform')}</b>
+                  <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1}  />
+                  <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
+
+                </label>
+              </div>
+            {data?.custom_redirect?.toString() === '1' && (
+              <div className="mt-3 ml-2">
+                <div className="flx ">
                   <div className="w-5 ">
-                    <div className="f-m">
+                    <div className="f-m ml-1">
                       {__('Success redirect Page:', 'bitform')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
@@ -73,11 +76,11 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input onChange={handleInput} name="succ_url" className="btcd-paper-inp mt-1" type="text" value={data?.succ_url} />
+                    <input placeholder="success page link" onChange={handleInput} name="succ_url" className="btcd-paper-inp mt-1" type="text" value={data?.succ_url} />
                   </div>
                 </div>
 
-                <div className="flx integ-fld-wrp mt-3">
+                <div className="flx mt-3">
                   <div className="w-5 ">
                     <div className="f-m">
                       {__('Redirect page (already activated):', 'bitform')}
@@ -98,11 +101,11 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input onChange={handleInput} name="already_activated_url" className="btcd-paper-inp mt-1" type="text" value={data?.already_activated_url} />
+                    <input placeholder="already  activated page link"onChange={handleInput} name="already_activated_url" className="btcd-paper-inp mt-1" type="text" value={data?.already_activated_url} />
                   </div>
                 </div>
 
-                <div className="flx integ-fld-wrp mt-3">
+                <div className="flx mt-3">
                   <div className="w-5 ">
                     <div className="f-m">
                       {__('Invalid redirect page:', 'bitform')}
@@ -124,25 +127,56 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input onChange={handleInput} name="invalid_key_url" className="btcd-paper-inp mt-1" type="text" value={data?.invalid_key_url} />
+                    <input placeholder="invalid page link" onChange={handleInput} name="invalid_key_url" className="btcd-paper-inp mt-1" type="text" value={data?.invalid_key_url} />
                   </div>
                 </div>
               </div>
             )}
-            {!data?.custom_redirect && (
+            {data?.custom_redirect?.toString() === '0' && (
               <div className="mt-3">
-                <span>{__('Custom messages', 'bitform')}</span>
-                <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} />
+                <div className="mt-2">
+                  {/* <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} /> */}
+                      <div className="mt-3">
+                    <b>{__('Activation success', 'bitform')}</b>
+                    <label htmlFor={`mail-tem-acti_succ_msg`} className="mt-2">
+                      <TinyMCE
+                        id={`acti_succ_msg`}
+                        value={data?.acti_succ_msg}
+                        onChangeHandler={val => tinymceHandle(val, 'acti_succ_msg')}
+                        // width="100%"
+                        height="5px"
+                      />
+                    </label>
+        </div>
                 </div>
-                <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} />
+                <div className=" mt-2">
+                  {/* <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} /> */}
+                    <b>{__('Already activated account', 'bitform')}</b>
+          <label htmlFor={`already_activated_msg`} className="mt-2">
+            <TinyMCE
+              id={`already_activated_msg`}
+              value={data?.already_activated_msg}
+              onChangeHandler={val => tinymceHandle(val, 'already_activated_msg')}
+              // width="100%"
+              height="5px"
+            />
+          </label>
                 </div>
-                <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} />
+                <div className="mt-2">
+                  {/* <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} /> */}
+                                <b>{__('Already activated account', 'bitform')}</b>
+          <label htmlFor={`invalid_key_msg`} className="mt-2">
+            <TinyMCE
+              id={`invalid_key_msg`}
+              value={data?.invalid_key_msg}
+              onChangeHandler={val => tinymceHandle(val, 'invalid_key_msg')}
+              // width="100%"
+              height="5px"
+            />
+          </label>
                 </div>
               </div>
             )}
