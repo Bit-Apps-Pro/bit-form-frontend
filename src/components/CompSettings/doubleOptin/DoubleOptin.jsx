@@ -11,6 +11,7 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { dblOptinTamplate } from '../../../Utils/StaticData/tamplate'
 import Loader from '../../Loaders/Loader'
+import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle2 from '../../Utilities/SingleToggle2'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -91,8 +92,31 @@ export default function DoubleOptin() {
     })
   }
 
+  const wrpStyle = {}
+  if (status) {
+    wrpStyle.opacity = 1
+    wrpStyle.pointerEvents = 'auto'
+    wrpStyle.userSelect = 'auto'
+  } else {
+    wrpStyle.opacity = 0.6
+    wrpStyle.pointerEvents = 'none'
+    wrpStyle.userSelect = 'none'
+  }
+
   return (
     <div className="pos-rel">
+      <h2>{__('Double Opt-In', 'bitform')}</h2>
+      <h5>
+        How to setup Double Opt-In & Send Email Notification:
+        &nbsp;
+        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="yt-txt">
+          YouTube
+        </a>
+        &nbsp;
+        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="doc-txt">
+          Documentation
+        </a>
+      </h5>
       {!isPro && (
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
@@ -119,14 +143,13 @@ export default function DoubleOptin() {
           ) : (
             <div>
               <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-              <div style={{ opacity: !tem?.status === 1 && 0.6 }}>
-
-                <div className="mt-2 ml-1 flx">
-                  <label htmlFor="status">
-                    <b>{__('Enable Double Opt-In', 'bitform')}</b>
-                  </label>
-                  <SingleToggle2 action={handleStatus} checked={status === 1} className="ml-4 flx" />
-                </div>
+              <div className="mt-6 flx">
+                <label htmlFor="status">
+                  <b>{__('Enable Double Opt-In', 'bitform')}</b>
+                </label>
+                <SingleToggle2 name="status" action={handleStatus} checked={status === 1} className="ml-4 flx" />
+              </div>
+              <div style={wrpStyle}>
                 <br />
 
                 {/* <div className="mt-1 ml-0 flx">
@@ -136,54 +159,45 @@ export default function DoubleOptin() {
                   </label>
                 </div> */}
 
-                <div className="mt-2 ml-0 flx">
-                  <SingleToggle2 action={(e) => toggleHandle(e, 'auto_unconfirmed_deleted')} checked={'auto_unconfirmed_deleted' in tem} className="ml-4 flx" />
+                <div className="flx">
+                  <SingleToggle2 name="auto_unconfirmed_deleted" action={(e) => toggleHandle(e, 'auto_unconfirmed_deleted')} checked={'auto_unconfirmed_deleted' in tem} className="flx" />
 
-                  <label htmlFor="status">
-                    {__('Specify after how many days unconfirmed entires  will be deleted.', 'bitform')}
+                  <label htmlFor="auto_unconfirmed_deleted">
+                    {__('Delete the unconfirmed entries from responses after days: ', 'bitform')}
                   </label>
-               &nbsp;
+                  &nbsp;
                   <input onChange={handleInput} name="day" value={tem?.day || 1} disabled={!tem.auto_unconfirmed_deleted} className="btcd-paper-inp mr-2 wdt-100" placeholder="1" type="number" min="1" />
 
                 </div>
 
-                <div className="mt-2 ml-0 flx">
-                  <SingleToggle2 action={(e) => toggleHandle(e, 'disable_loggin_user')} checked={'disable_loggin_user' in tem} className="ml-4 flx" />
+                <div className="mt-2 flx">
+                  <SingleToggle2 name="disable_loggin_user" action={(e) => toggleHandle(e, 'disable_loggin_user')} checked={'disable_loggin_user' in tem} className="flx" />
                   <label htmlFor="disable_loggin_user">
-                    {__('Disable for logged in users.', 'bitform')}
+                    {__('Disable double opt-in confirmation for logged in users.', 'bitform')}
                   </label>
                 </div>
-                <br />
 
-                <div className="flx w-8">
+                {/* <div className="flx w-8">
 
-                  <div className="w-4 ml-4 mt-4">
+                  <div className="w-4 mt-3">
                     <TableCheckBox name="dflt_temp" onChange={(e) => toggleHandle(e, 'dflt_temp')} title={__('Enable default template', 'bitform')} checked={!!tem?.dflt_temp} value={false} />
                   </div>
-
-                  <div className="flx w-4 ml-2 mt-4">
-                    <span
-                      role="button"
-                      tabIndex="-1"
-                      className="cp"
-                      onClick={() => setCustomRedirectMdl(true)}
-                      onKeyPress={() => setCustomRedirectMdl(true)}
-                    >
-                      <EditIcn size={21} />
-                    </span>
-                    <div className="f-m ml-1">{__('Show after verification', 'bitform')}</div>
-                    <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
-
-                  </div>
-
+                </div> */}
+                <div className="mt-4 flx">
+                  <SingleToggle2 name="dflt_temp" action={(e) => toggleHandle(e, 'dflt_temp')} checked={!!tem?.dflt_temp} className="flx" />
+                  <label htmlFor="dflt_temp">
+                    {__('Configure default confirmation email template')}
+                    <Cooltip className="ml-1" icnSize={14}>
+                      {__('By disabling this option, you can configure the double opt-in confirmation email from Conditional Logics manually.')}
+                    </Cooltip>
+                  </label>
                 </div>
                 {tem?.dflt_temp && (
-                  <div className="flx w-8">
-                    <div className="w-4 ml-4 mt-4">
-
-                      <b className="mb-2">Email</b>
+                  <div className="w-8">
+                    <div className="w-5 mt-4">
+                      <b>Email</b>
                       <br />
-                      <select className="btcd-paper-inp w-9" name="fldkey" value={tem?.fldkey} onChange={handleInput}>
+                      <select className="btcd-paper-inp mt-1 w-9" name="fldkey" value={tem?.fldkey} onChange={handleInput}>
                         <option selected disabled>{__('Select Email Field', 'bitform')}</option>
                         {
                           formFields?.filter(fld => (fld.type === 'email')).map(header => (
@@ -195,51 +209,74 @@ export default function DoubleOptin() {
                       </select>
 
                     </div>
-                    <div className="flx w-4 ml-2 mt-4">
-                      <span
-                        role="button"
-                        tabIndex="-1"
-                        className="cp"
-                        onClick={() => setDfltTamMdl(true)}
-                        onKeyPress={() => setDfltTamMdl(true)}
-                      >
-                        <EditIcn size={21} />
-                      </span>
-                      <div className="f-m ml-1">{__('Customize email template', 'bitform')}</div>
-                      <EmailNotification
-                        dataConf={tem}
-                        setDataConf={setTem}
-                        showMdl={dfltTampMdl}
-                        setshowMdl={setDfltTamMdl}
-                        title="Customize  Email template"
-                      />
-
+                    <div className="flx">
+                      <div>
+                        <button type="button" className="btn" onClick={() => setDfltTamMdl(true)}>
+                          <EditIcn size={18} />
+                          &nbsp;
+                          {__('Customize Email template')}
+                        </button>
+                        <EmailNotification
+                          dataConf={tem}
+                          setDataConf={setTem}
+                          showMdl={dfltTampMdl}
+                          setshowMdl={setDfltTamMdl}
+                          title="Customize Email template"
+                        />
+                      </div>
+                      {tem?.dflt_temp && (
+                        <div className="ml-2">
+                          <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
+                            <EditIcn size={18} />
+                            &nbsp;
+                            {__('Edit verification messages', 'bitform')}
+                          </button>
+                          <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
+                {!tem?.dflt_temp && (
+                  <>
+                    <p className="mb-0">
+                      <strong>Note: </strong>
+                      <span>Please make sure you have configured the </span>
+                      <strong>double opt-in</strong>
+                      <span> from </span>
+                      <strong>conditional logics.</strong>
+                      <br />
+                      <span>Otherwise, the confirmation message will not sent to the responder.</span>
+                    </p>
+                    <div>
+                      <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
+                        <EditIcn size={18} />
+                        &nbsp;
+                        {__('Edit verification messages', 'bitform')}
+                      </button>
+                      <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
+                    </div>
+                  </>
+                )}
               </div>
-              <br />
-              <br />
+              <div className="br-5 w-6">
+                <p className="mt-0">
+                  <strong>Note : </strong>
+                  The webhook, email notification & integrations will trigger after the responder confirms their Opt-In.
+                </p>
+              </div>
               <button
                 type="button"
                 id="secondary-update-btn"
                 onClick={saveSettings}
-                className="btn btcd-btn-lg blue flx ml-4"
+                className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
               >
                 {__('Save ', 'bitform')}
               </button>
-
-              <br />
-              <div className="br-5 w-6  ">
-                <p className="p-1 f-m">
-                  <strong>Note : </strong>
-                  {' '}
-                  the integrations & webhook will only trigger when the responder confirms their Opt-In.</p>
-              </div>
             </div>
           )
       }
-    </div>
+    </div >
   )
 }
