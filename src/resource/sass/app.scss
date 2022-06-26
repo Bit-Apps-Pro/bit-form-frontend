@@ -4586,28 +4586,29 @@ _:-ms-fullscreen,
   //padding: 0px;
 }
 
-.tippy-content{
-  background: #fff;
-  //
-  // max-height: 251px;
-  //overflow-y: scroll;
-  min-width: 241px !important;
-  //padding:8px 4px 3px 8px !important;
- 
-  //border:1px solid;
-}
+// .tippy-content{
+//   background: #fff;
+//   //
+//   // max-height: 251px;
+//   //overflow-y: scroll;
 
-.tippy-box2{
+//   //padding:8px 4px 3px 8px !important;
+ 
+//   //border:1px solid;
+// }
+
+.report-tippy-box{
   // background-color: #FFFFFF !important;
 
   // border:1px solid #E0E0E0 !important;
   // border-radius: 8px !important;
   border-radius:16px !important;
   bottom:7px;
+  min-width: 241px !important;
 }
-.tippy-content{
-  border-radius: 15px !important;
-}
+// .tippy-content{
+//   border-radius: 15px !important;
+// }
 .tippy-box-datepicker{
   max-width: 380px !important;
   max-height:397px !important;
@@ -4649,7 +4650,7 @@ _:-ms-fullscreen,
 .b-none{
   border: none;
 }
-/*css for reponse report*/
+// /*css for reponse report*/
 
 @keyframes scale-in {
   from {
