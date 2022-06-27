@@ -47,6 +47,7 @@ function ConfMsg({ removeIntegration }) {
           width: '300px',
           padding: '5px 35px 5px 20px',
           background: '#fafafa',
+          color: '#000000',
           borderWidth: '1px',
           borderType: 'solid',
           borderColor: 'gray',

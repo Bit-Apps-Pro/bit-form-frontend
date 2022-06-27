@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
+import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_styles'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
@@ -83,7 +84,7 @@ function FormDetails() {
     // for all kind of template
     if (formType === 'new') {
       setworkFlows(defaultWorkflowValue)
-      setConfirmations(defaultConfirmationValue)
+      setConfirmations(defaultConfirmationValue(formID))
     }
     // form blank form only
     // if (formId === 'Blank') {
@@ -363,38 +364,48 @@ function FormDetails() {
 
 export default memo(withRouter(FormDetails))
 
-const defaultConfirmationValue = {
-  type: {
-    successMsg: [{
-      title: 'Untitled Message 1',
-      msg: __('<p>Successfully Submitted.</p>', 'bitform'),
-      config: {
-        msgType: 'snackbar',
-        position: 'top-center',
-        animation: 'fade',
-        autoHide: false,
-        duration: 1,
-        styles: {
-          width: '300px',
-          padding: '5px 35px 5px 20px',
-          background: '#fafafa',
-          borderWidth: '1px',
-          borderType: 'solid',
-          borderColor: 'gray',
-          borderRadius: '10px',
-          boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-            { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-            { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
-          closeBackground: '#48484829',
-          closeHover: '#dfdfdf',
-          closeIconColor: '#5a5a5a',
-          closeIconHover: '#000',
+const defaultConfirmationValue = (formID) => {
+  const msgType = 'snackbar'
+  const position = 'bottom-right'
+  const animation = 'fade'
+  const autoHide = true
+  const duration = 5
+  const styles = {
+    width: '300px',
+    padding: '5px 35px 5px 20px',
+    color: '#000000',
+    background: '#fafafa',
+    borderWidth: '1px',
+    borderType: 'solid',
+    borderColor: 'gray',
+    borderRadius: '10px',
+    boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
+      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    closeBackground: '#48484829',
+    closeHover: '#dfdfdf',
+    closeIconColor: '#5a5a5a',
+    closeIconHover: '#000',
+  }
+  return {
+    type: {
+      successMsg: [{
+        title: 'Untitled Message 1',
+        msg: __('<p>Successfully Submitted.</p>', 'bitform'),
+        config: {
+          msgType,
+          position,
+          animation,
+          autoHide,
+          duration,
+          styles,
+          stylesObj: confirmMsgCssStyles(formID, 0, msgType, position, animation, styles),
         },
-      },
-    }],
-    redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
-    webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
-  },
+      }],
+      redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
+      webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
+    },
+  }
 }
 const defaultWorkflowValue = [
   {

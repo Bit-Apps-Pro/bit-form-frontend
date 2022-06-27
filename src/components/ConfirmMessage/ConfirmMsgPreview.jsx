@@ -50,16 +50,16 @@ export default function ConfirmMsgPreview({ index, msgId, active, setActive, pos
         aria-hidden="true"
         data-modal-backdrop
         onClick={handleBackdrop}
-        className={`msg-container-${formID}-${msgId} ${active ? 'active' : 'deactive'}`}
+        className={`msg-container-${msgId} ${active ? 'active' : 'deactive'}`}
       >
-        <div role="button" className={`msg-background-${formID}-${msgId}`}>
-          <div className={`msg-content-${formID}-${msgId}`}>
+        <div role="button" className={`msg-background-${msgId}`}>
+          <div className={`msg-content-${msgId}`}>
             <button
-              className={`close-${formID}-${msgId}`}
+              className={`close-${msgId}`}
               type="button"
               onClick={() => setActive(false)}
             >
-              <svg className={`close-icn-${formID}-${msgId}`} viewBox="0 0 30 30">
+              <svg className={`close-icn-${msgId}`} viewBox="0 0 30 30">
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="4" y1="3.88" x2="26" y2="26.12" />
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
               </svg>
