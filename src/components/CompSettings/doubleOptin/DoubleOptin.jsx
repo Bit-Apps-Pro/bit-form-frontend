@@ -14,12 +14,22 @@ import Loader from '../../Loaders/Loader'
 import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle2 from '../../Utilities/SingleToggle2'
 import SnackMsg from '../../Utilities/SnackMsg'
-import TableCheckBox from '../../Utilities/TableCheckBox'
 import EmailNotification from '../../WPAuth/EmailNotification'
 import RedirectEmailVerified from '../../WPAuth/Registration/RedirectEmailVerified'
 
 export default function DoubleOptin() {
-  const [tem, setTem] = useState({ sub: 'Confirm the submission', body: dblOptinTamplate, dflt_temp: true, day: 1,custom_redirect :0  })
+  const [tem, setTem] = useState(
+    {
+      sub: 'Confirm the submission',
+      body: dblOptinTamplate,
+      dflt_temp: true,
+      day: 1,
+      custom_redirect: 0,
+      acti_succ_msg: 'Thanks for the confirmation.',
+      already_activated_msg: 'Your mail is already confirmed!',
+      invalid_key_msg: 'Sorry! Your URL Is Invalid!',
+    },
+  )
   const bits = useRecoilValue($bits)
   const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
   const [dfltTampMdl, setDfltTamMdl] = useState(false)
@@ -278,6 +288,6 @@ export default function DoubleOptin() {
             </div>
           )
       }
-    </div >
+    </div>
   )
 }

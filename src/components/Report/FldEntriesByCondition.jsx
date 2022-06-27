@@ -262,7 +262,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             interactive="true"
             placement="bottom"
             appendTo="parent"
-            className="tippy-box2"
+            className="report-tippy-box"
             content={(
               <div style={{ height: 250 }}>
                 <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>All Reports</div>

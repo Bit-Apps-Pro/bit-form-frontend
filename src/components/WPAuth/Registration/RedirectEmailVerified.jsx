@@ -20,7 +20,6 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
   }
 
   const tinymceHandle = (val, name) => {
-    console.log('clg', val)
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
@@ -29,29 +28,28 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
   }
 
   useEffect(() => {
-    if(!dataConf?.custom_redirect){
+    if (!dataConf?.custom_redirect) {
       setDataConf(tmpConf => produce(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         const tmp = type ? draft[type] : draft
         tmp.custom_redirect = 0
       }))
     }
-  },[])
-
-
+  }, [])
+  console.log('clg', dataConf)
   return (
     <div>
-      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight:400,overflow: 'auto' }}>
+      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, overflow: 'auto' }}>
         <>
           <div>
-               <div className="mt-2">
-                <label htmlFor="status">
-                  <b>{__('', 'bitform')}</b>
-                  <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1}  />
-                  <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
+            <div className="mt-2">
+              <label htmlFor="status">
+                <b>{__('', 'bitform')}</b>
+                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
+                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
 
-                </label>
-              </div>
+              </label>
+            </div>
             {data?.custom_redirect?.toString() === '1' && (
               <div className="mt-3 ml-2">
                 <div className="flx ">
@@ -101,7 +99,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input placeholder="already  activated page link"onChange={handleInput} name="already_activated_url" className="btcd-paper-inp mt-1" type="text" value={data?.already_activated_url} />
+                    <input placeholder="already  activated page link" onChange={handleInput} name="already_activated_url" className="btcd-paper-inp mt-1" type="text" value={data?.already_activated_url} />
                   </div>
                 </div>
 
@@ -137,46 +135,50 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                 <div className="mt-2">
                   {/* <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} /> */}
-                      <div className="mt-3">
+                  <div className="mt-3">
                     <b>{__('Activation success', 'bitform')}</b>
-                    <label htmlFor={`mail-tem-acti_succ_msg`} className="mt-2">
+                    <label htmlFor="mail-tem-acti_succ_msg" className="mt-2">
                       <TinyMCE
-                        id={`acti_succ_msg`}
+                        id="acti_succ_msg"
                         value={data?.acti_succ_msg}
                         onChangeHandler={val => tinymceHandle(val, 'acti_succ_msg')}
                         // width="100%"
                         height="5px"
+                        toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
                       />
                     </label>
-        </div>
+                  </div>
                 </div>
                 <div className=" mt-2">
                   {/* <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} /> */}
-                    <b>{__('Already activated account', 'bitform')}</b>
-          <label htmlFor={`already_activated_msg`} className="mt-2">
-            <TinyMCE
-              id={`already_activated_msg`}
-              value={data?.already_activated_msg}
-              onChangeHandler={val => tinymceHandle(val, 'already_activated_msg')}
-              // width="100%"
-              height="5px"
-            />
-          </label>
+                  <b>{__('Already activated account', 'bitform')}</b>
+                  <label htmlFor="already_activated_msg" className="mt-2">
+                    <TinyMCE
+                      id="already_activated_msg"
+                      value={data?.already_activated_msg}
+                      onChangeHandler={val => tinymceHandle(val, 'already_activated_msg')}
+                      // width="100%"
+                      height="5px"
+                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+
+                    />
+                  </label>
                 </div>
                 <div className="mt-2">
                   {/* <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} /> */}
-                                <b>{__('Already activated account', 'bitform')}</b>
-          <label htmlFor={`invalid_key_msg`} className="mt-2">
-            <TinyMCE
-              id={`invalid_key_msg`}
-              value={data?.invalid_key_msg}
-              onChangeHandler={val => tinymceHandle(val, 'invalid_key_msg')}
-              // width="100%"
-              height="5px"
-            />
-          </label>
+                  <b>{__('Invalid activation key', 'bitform')}</b>
+                  <label htmlFor="invalid_key_msg" className="mt-2">
+                    <TinyMCE
+                      id="invalid_key_msg"
+                      value={data?.invalid_key_msg}
+                      onChangeHandler={val => tinymceHandle(val, 'invalid_key_msg')}
+                      // width="100%"
+                      height="5px"
+                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+                    />
+                  </label>
                 </div>
               </div>
             )}

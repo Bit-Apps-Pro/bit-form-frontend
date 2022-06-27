@@ -35,7 +35,9 @@ export default function AdditionalSettings() {
       meta_map: [{}],
       sub: 'Activate Your Account',
       body: activationTamplate,
-      acti_succ_msg: activationMessage,
+      acti_succ_msg: 'Your account has been activated successfully.&nbsp;You can now login.',
+      already_activated_msg: 'Your account is already activated!',
+      invalid_key_msg: 'Sorry! Your URL Is Invalid!!',
     },
     login: {
       login_map: [{}],
