@@ -175,7 +175,7 @@ function Table(props) {
     if (fetchData) {
       fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search, conditions: currentReportData?.details?.conditions })
     }
-  }, [refreshResp, pageIndex, pageSize, sortBy, filters, search, reportId])
+  }, [refreshResp, pageIndex, pageSize, sortBy, filters, search])
 
   useEffect(() => {
     if (pageIndex > pageCount) {
