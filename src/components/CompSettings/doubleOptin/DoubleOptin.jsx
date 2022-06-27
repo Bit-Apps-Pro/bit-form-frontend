@@ -78,8 +78,8 @@ export default function DoubleOptin() {
   const saveSettings = (e) => {
     e.preventDefault()
 
-    if (tem.dflt_temp && tem?.fldkey === undefined || tem?.fldkey === '') {
-      setSnackbar({ show: true, msg: __('form field cann\'t be empty', 'bitform') })
+    if (tem.dflt_temp && (tem?.fldkey === undefined || tem?.fldkey === '')) {
+      setSnackbar({ show: true, msg: __('Email field is mandatory for double opt-in.') })
       return
     }
     setIsLoading(true)
@@ -198,10 +198,10 @@ export default function DoubleOptin() {
                   <SingleToggle2 name="dflt_temp" action={(e) => toggleHandle(e, 'dflt_temp')} checked={!!tem?.dflt_temp} className="flx" />
                   <label htmlFor="dflt_temp">
                     {__('Configure default confirmation email template')}
-                    <Cooltip className="ml-1" icnSize={14}>
-                      {__('By disabling this option, you can configure the double opt-in confirmation email from Conditional Logics manually.')}
-                    </Cooltip>
                   </label>
+                  <Cooltip className="ml-1" icnSize={14} width={600}>
+                    {__('By disabling this option, you can configure the double opt-in confirmation email from Conditional Logics manually.')}
+                  </Cooltip>
                 </div>
                 {tem?.dflt_temp && (
                   <div className="w-8">

@@ -5,6 +5,7 @@ import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
+import Scrollbars from 'react-custom-scrollbars-2'
 
 export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '' }) {
   const data = type ? dataConf[type] : dataConf
@@ -36,27 +37,26 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
       }))
     }
   }, [])
-  console.log('clg', dataConf)
+
   return (
     <div>
-      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, overflow: 'auto' }}>
-        <>
-          <div>
+      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, maxHeight: 600, display: 'block' }} className="o-a">
+        <Scrollbars autoHide>
+          <div className="mr-2">
             <div className="mt-2">
               <label htmlFor="status">
                 <b>{__('', 'bitform')}</b>
-                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
                 <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
-
+                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
               </label>
             </div>
             {data?.custom_redirect?.toString() === '1' && (
               <div className="mt-3 ml-2">
                 <div className="flx ">
                   <div className="w-5 ">
-                    <div className="f-m ml-1">
-                      {__('Success redirect Page:', 'bitform')}
-                      <Cooltip width={250} icnSize={17} className="ml-2">
+                    <div className="f-m fw-500 ml-1">
+                      {__('Success redirect Page:')}
+                      <Cooltip icnSize={14} className="ml-1">
                         <div className="txt-body">
                           This page will show when the verification is successful.
                           <br />
@@ -80,9 +80,9 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
 
                 <div className="flx mt-3">
                   <div className="w-5 ">
-                    <div className="f-m">
-                      {__('Redirect page (already activated):', 'bitform')}
-                      <Cooltip width={250} icnSize={17} className="ml-2">
+                    <div className="f-m fw-500">
+                      {__('Redirect page (already activated):')}
+                      <Cooltip icnSize={14} className="ml-1">
                         <div className="txt-body">
                           This page will show if the account had already been activated.
                           {' '}
@@ -105,9 +105,9 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
 
                 <div className="flx mt-3">
                   <div className="w-5 ">
-                    <div className="f-m">
-                      {__('Invalid redirect page:', 'bitform')}
-                      <Cooltip width={250} icnSize={17} className="ml-2">
+                    <div className="f-m fw-500">
+                      {__('Invalid redirect page:')}
+                      <Cooltip icnSize={14} className="ml-1">
                         <div className="txt-body">
                           This page will show if the account activation fails or if the activation URL is invalid.
                           {' '}
@@ -131,25 +131,23 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
               </div>
             )}
             {data?.custom_redirect?.toString() === '0' && (
-              <div className="mt-3">
-                <div className="mt-2">
+              <div className="ml-2">
+                <div className="mt-4">
                   {/* <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} /> */}
-                  <div className="mt-3">
-                    <b>{__('Activation success', 'bitform')}</b>
-                    <label htmlFor="mail-tem-acti_succ_msg" className="mt-2">
-                      <TinyMCE
-                        id="acti_succ_msg"
-                        value={data?.acti_succ_msg}
-                        onChangeHandler={val => tinymceHandle(val, 'acti_succ_msg')}
-                        // width="100%"
-                        height="5px"
-                        toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
-                      />
-                    </label>
-                  </div>
+                  <b>{__('Activation success', 'bitform')}</b>
+                  <label htmlFor="mail-tem-acti_succ_msg" className="mt-2">
+                    <TinyMCE
+                      id="acti_succ_msg"
+                      value={data?.acti_succ_msg}
+                      onChangeHandler={val => tinymceHandle(val, 'acti_succ_msg')}
+                      // width="100%"
+                      height="5px"
+                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+                    />
+                  </label>
                 </div>
-                <div className=" mt-2">
+                <div className="mt-4">
                   {/* <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} /> */}
                   <b>{__('Already activated account', 'bitform')}</b>
@@ -165,7 +163,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                     />
                   </label>
                 </div>
-                <div className="mt-2">
+                <div className="mt-4">
                   {/* <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
                   <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} /> */}
                   <b>{__('Invalid activation key', 'bitform')}</b>
@@ -180,13 +178,11 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                     />
                   </label>
                 </div>
+                <br />
               </div>
             )}
-            <div className="mt-2 f-right">
-              <button type="button" className="btn blue" onClick={() => setCustomRedirectMdl(false)}>Close</button>
-            </div>
           </div>
-        </>
+        </Scrollbars>
       </Modal>
     </div>
   )
