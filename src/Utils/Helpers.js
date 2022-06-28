@@ -230,8 +230,8 @@ export const checkValidEmail = email => {
   }
   return false
 }
-export const makeFieldsArrByLabel = (fields, labels) => {
-  const fldArrByLabel = Object.entries(fields).filter(fld => fld[1].typ !== 'button').map(([fldKey, fld]) => {
+export const makeFieldsArrByLabel = (fields, labels = [], fldsToFilter = ['button']) => {
+  const fldArrByLabel = Object.entries(fields).filter(fld => !fldsToFilter.includes(fld[1].typ)).map(([fldKey, fld]) => {
     const fldByLabel = labels.find(lbl => lbl.key === fldKey)
     return {
       ...fld,
