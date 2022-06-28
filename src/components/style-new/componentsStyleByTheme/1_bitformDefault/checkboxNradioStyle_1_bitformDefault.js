@@ -63,7 +63,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       background: 'var(--global-accent-color)',
       'border-color': 'var(--global-accent-color)',
     },
-    [`.${fk}-ci:checked ~ .${fk}-other-inp`]: { display: 'inline-block !important' },
+    [`.${fk}-ci:checked ~ .${fk}-other-inp-wrp`]: { display: 'block !important' },
     [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
     [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
     [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
@@ -85,9 +85,9 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       'justify-content': 'center',
       'align-items': 'center',
     },
-
+    [`.${fk}-other-inp-wrp`]: { display: 'none' },
     [`.${fk}-other-inp`]: {
-      display: 'none',
+      display: 'inline-block !important',
       direction: 'inherit !important',
       // 'max-width': '100% !important',
       'font-family': 'var(--g-font-family)',
@@ -110,7 +110,6 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       'border-color': 'var(--global-accent-color) !important',
     },
     [`.${fk}-other-inp:hover`]: { 'border-color': 'var(--global-accent-color) !important' },
-    [`.${fk}-other-inp-wrp`]: { padding: '0px 30px' },
 
     ...type === 'check' && {
       [`.${fk}-ck`]: { 'border-radius': '5px' },

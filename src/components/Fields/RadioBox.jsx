@@ -190,16 +190,18 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   Others..
                 </span>
               </label>
-              <input
-                data-testid={`${fieldKey}-other-inp`}
-                data-dev-other-inp={fieldKey}
-                type="text"
-                className={`${fieldKey}-other-inp ${getCustomClsName(fieldKey, 'other-inp')}`}
-                {...attr.valid.otherOptReq && { required: true }}
-                {...'otherInpPh' in attr && { placeholder: attr.otherInpPh }}
-                value={otherOptValue}
-                onChange={handleOtherOptInput}
-              />
+              <div className={`${fieldKey}-other-inp-wrp`}>
+                <input
+                  data-testid={`${fieldKey}-other-inp`}
+                  data-dev-other-inp={fieldKey}
+                  type="text"
+                  className={`${fieldKey}-other-inp ${getCustomClsName(fieldKey, 'other-inp')}`}
+                  {...attr.valid.otherOptReq && { required: true }}
+                  {...'otherInpPh' in attr && { placeholder: attr.otherInpPh }}
+                  value={otherOptValue}
+                  onChange={handleOtherOptInput}
+                />
+              </div>
             </div>
           )}
         </div>
