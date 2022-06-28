@@ -296,6 +296,17 @@ export default function StyleLayers() {
                 />
               )}
 
+              {fldData.typ.match(/(check|radio)/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="other-inp"
+                  label="Other Option Input"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-other-inp="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'other-inp')}
+                />
+              )}
+
               {fldData.typ === 'razorpay' && (
                 <>
                   <NavBtn

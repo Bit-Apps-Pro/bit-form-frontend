@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
+import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
 import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
@@ -10,6 +11,7 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   const [value, setvalue] = useState(attr.val || '')
   const radioRef = useRef([])
+  const [otherOptValue, setOtherOptValue] = useState('')
   radioRef.current = attr.opt.map((_, i) => radioRef.current[i] ?? createRef())
   // useEffect(() => {
   //   if (attr.val && !attr.userinput) {
@@ -52,12 +54,19 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
     if (onBlurHandler) {
       onBlurHandler(event)
     }
+    reCalculateFieldHeights(fieldKey)
   }
 
   const handleBlur = e => {
     const { name, form } = e.target
     validateForm({ input: { name, form, value } })
   }
+
+  const handleOtherOptInput = (e) => {
+    setvalue(e.target.value)
+    setOtherOptValue(e.target.value)
+  }
+
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -129,6 +138,70 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               </label>
             </div>
           ))}
+          {attr.addOtherOpt && (
+            <div
+              data-testid={`${fieldKey}-cw`}
+              data-dev-cw={fieldKey}
+              key={`opt-${attr.opt.length + 24}`}
+              className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
+              {...getCustomAttributs(fieldKey, 'cw')}
+            >
+              <input
+                data-testid={`${fieldKey}-ci`}
+                data-other-opt
+                id={`${fieldKey}-chk-${attr.opt.length}`}
+                type="radio"
+                className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}
+                ref={radioRef.current[attr.opt.length]}
+                name={fieldKey}
+                value={otherOptValue}
+                {...attr.valid.req && { required: true }}
+                {...'name' in attr && { name: attr.name }}
+                disabled={attr.valid.disabled}
+                onChange={onChangeHandler}
+                onBlur={handleBlur}
+                {...getCustomAttributs(fieldKey, 'ci')}
+              />
+              <label
+                data-testid={`${fieldKey}-cl`}
+                data-dev-cl={fieldKey}
+                data-cl
+                htmlFor={`${fieldKey}-chk-${attr.opt.length}`}
+                className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
+                {...getCustomAttributs(fieldKey, 'cl')}
+              >
+                <span
+                  data-testid={`${fieldKey}-bx`}
+                  data-dev-ck={fieldKey}
+                  data-bx
+                  className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
+                  {...getCustomAttributs(fieldKey, 'rdo')}
+                >
+                  <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
+                    <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
+                  </svg>
+                </span>
+                <span
+                  data-testid={`${fieldKey}-ct`}
+                  data-dev-ct={fieldKey}
+                  className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
+                  {...getCustomAttributs(fieldKey, 'ct')}
+                >
+                  Others..
+                </span>
+              </label>
+              <input
+                data-testid={`${fieldKey}-other-inp`}
+                data-dev-other-inp={fieldKey}
+                type="text"
+                className={`${fieldKey}-other-inp ${getCustomClsName(fieldKey, 'other-inp')}`}
+                {...attr.valid.otherOptReq && { required: true }}
+                {...'otherInpPh' in attr && { placeholder: attr.otherInpPh }}
+                value={otherOptValue}
+                onChange={handleOtherOptInput}
+              />
+            </div>
+          )}
         </div>
       </InputWrapper>
     </>

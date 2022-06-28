@@ -20,6 +20,7 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import OtherOptionSettings from './CompSettingsUtils/OtherOptionSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
@@ -272,7 +273,7 @@ function RadioCheckSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     let colStr = ''
     for (let colindx = 0; colindx < value; colindx += 1) {
-      colStr += 'auto '
+      colStr += '1fr '
     }
     setStyles(prvStyle => produce(prvStyle, drft => {
       const gridStyle = {
@@ -293,6 +294,7 @@ function RadioCheckSettings() {
     }))
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    reCalculateFieldHeights(fldKey)
   }
   if (isDev) {
     window.selectedFieldData = fieldData
@@ -540,6 +542,10 @@ function RadioCheckSettings() {
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         isUnique="show"
       />
+
+      <FieldSettingsDivider />
+
+      <OtherOptionSettings id={`${fldKey}-other-stng`} />
 
       <FieldSettingsDivider />
 

@@ -193,7 +193,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             title={__('Icons', 'bitform')}
           >
             <div className="pos-rel" />
-            <Icons iconType={icnType} setModal={setIcnMdl} />
+            <Icons iconType={icnType} setModal={setIcnMdl} addPaddingOnSelect={false} />
           </Modal>
         </>
       )}

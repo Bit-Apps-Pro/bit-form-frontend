@@ -665,6 +665,10 @@ const editorConfig = {
         'letter-spacing': '',
       },
     },
+    'other-inp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
 
   },
   'decision-box': {
@@ -739,7 +743,10 @@ const editorConfig = {
         'letter-spacing': '',
       },
     },
-
+    'other-inp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
   },
   title: {
     'fld-wrp': {
