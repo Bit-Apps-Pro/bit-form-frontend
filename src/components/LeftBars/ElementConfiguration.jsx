@@ -88,7 +88,7 @@ export default function ElementConfiguration({ fldKey }) {
                     cssSelector={`.${fldKey}-${styleClasses.titleSufIcn[0]}`}
                     subRoute={fldKey}
                     route="title-suf-i"
-                    label="Suffix Icon"
+                    label="Trailing Icon"
                     offset="3.3"
                     highlightSelector={`[data-dev-title-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'title-suf-i')}
@@ -155,7 +155,7 @@ export default function ElementConfiguration({ fldKey }) {
                   cssSelector={`.${fldKey}-${styleClasses.lblSufIcn[0]}`}
                   subRoute={fldKey}
                   route="lbl-suf-i"
-                  label="Suffix Icon"
+                  label="Trailing Icon"
                   offset="3.3"
                   highlightSelector={`[data-dev-lbl-suf-i="${fldKey}"]`}
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-suf-i')}
@@ -218,7 +218,7 @@ export default function ElementConfiguration({ fldKey }) {
                     cssSelector={`.${fldKey}-${styleClasses.subTleSufIcn[0]}`}
                     subRoute={fldKey}
                     route="sub-titl-suf-i"
-                    label="Suffix Icon"
+                    label="Trailing Icon"
                     offset="3.3"
                     highlightSelector={`[data-dev-sub-titl-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'sub-titl-suf-i')}
@@ -292,7 +292,7 @@ export default function ElementConfiguration({ fldKey }) {
                     cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`}
                     subRoute={fldKey}
                     route="suf-i"
-                    label="Suffix Icon"
+                    label="Trailing Icon"
                     offset="3.3"
                     highlightSelector={`[data-dev-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')}
@@ -479,7 +479,7 @@ export default function ElementConfiguration({ fldKey }) {
                   cssSelector={`.${fldKey}-${styleClasses.suffixIcn[0]}`}
                   subRoute={fldKey}
                   route="suf-i"
-                  label="Suffix Icon"
+                  label="Trailing Icon"
                   offset="3.1"
                   highlightSelector={`[data-dev-suf-i="${fldKey}"]`}
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'suf-i')}
@@ -618,7 +618,7 @@ export default function ElementConfiguration({ fldKey }) {
                     cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`}
                     subRoute={fldKey}
                     route="btn-suf-i"
-                    label="Suffix Icon"
+                    label="Trailing Icon"
                     offset="3.3"
                     highlightSelector={`[data-dev-btn-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn-suf-i')}
@@ -671,7 +671,7 @@ export default function ElementConfiguration({ fldKey }) {
                     cssSelector={`.${fldKey}-${styleClasses.hlpSufIcn[0]}`}
                     subRoute={fldKey}
                     route="hlp-txt-suf-i"
-                    label="Suffix Icon"
+                    label="Trailing Icon"
                     offset="3.3"
                     highlightSelector={`[data-dev-hlp-txt-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'hlp-txt-suf-i')}

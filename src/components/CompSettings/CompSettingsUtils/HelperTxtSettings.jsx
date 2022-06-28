@@ -108,14 +108,14 @@ export default function HelperTxtSettings() {
           />
         </div>
         <FieldIconSettings
-          label="Prefix Icon"
+          label="Leading Icon"
           iconSrc={fieldData?.hlpPreIcn}
           styleRoute="hlp-txt-pre-i"
           setIcon={() => setIconModel('hlpPreIcn')}
           removeIcon={() => removeIcon('hlpPreIcn')}
         />
         <FieldIconSettings
-          label="Suffix Icon"
+          label="Trailing Icon"
           iconSrc={fieldData?.hlpSufIcn}
           styleRoute="hlp-txt-suf-i"
           setIcon={() => setIconModel('hlpSufIcn')}

@@ -108,7 +108,7 @@ export default function SubTitleSettings() {
         </div>
 
         <FieldIconSettings
-          label="Prefix Icon"
+          label="Leading Icon"
           iconSrc={fieldData?.subTlePreIcn}
           styleRoute="sub-titl-pre-i"
           setIcon={() => setIconModel('subTlePreIcn')}
@@ -116,7 +116,7 @@ export default function SubTitleSettings() {
         />
 
         <FieldIconSettings
-          label="Suffix Icon"
+          label="Trailing Icon"
           iconSrc={fieldData?.subTleSufIcn}
           styleRoute="sub-titl-suf-i"
           setIcon={() => setIconModel('subTleSufIcn')}

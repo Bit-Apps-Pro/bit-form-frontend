@@ -176,7 +176,7 @@ export default function FileUploadSettings() {
       >
         <div className={css(ut.mt1)}>
           <FieldIconSettings
-            label="Prefix Icon"
+            label="Leading Icon"
             iconSrc={fieldData?.prefixIcn}
             styleRoute="pre-i"
             setIcon={() => setIconModel('prefixIcn')}
@@ -184,7 +184,7 @@ export default function FileUploadSettings() {
           />
 
           <FieldIconSettings
-            label="Suffix Icon"
+            label="Trailing Icon"
             iconSrc={fieldData?.suffixIcn}
             styleRoute="suf-i"
             setIcon={() => setIconModel('suffixIcn')}

@@ -5,20 +5,20 @@ export const getElementTitle = (element) => {
     case 'fld-wrp': return 'Field Container'
     case 'lbl-wrp': return 'Label & Subtitle Container'
     case 'lbl': return 'Label Container'
-    case 'lbl-pre-i': return 'Label Prefix Icon'
-    case 'lbl-suf-i': return 'Label Suffix Icon'
+    case 'lbl-pre-i': return 'Label Leading Icon'
+    case 'lbl-suf-i': return 'Label Trailing Icon'
     case 'sub-titl': return 'Subtitle Container'
-    case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
-    case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
+    case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
+    case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
 
     case 'fld':
     case 'file-up-wrpr': return 'Input Container'
 
-    case 'pre-i': return 'Field Prefix Icon'
-    case 'suf-i': return 'Field Suffix Icon'
+    case 'pre-i': return 'Field Leading Icon'
+    case 'suf-i': return 'Field Trailing Icon'
     case 'hlp-txt': return 'Helper Text Container'
-    case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
-    case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
+    case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
+    case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
     case 'err-msg': return 'Error Messages Container'
 
     case 'currency-fld-wrp':
