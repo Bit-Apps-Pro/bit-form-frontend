@@ -125,10 +125,10 @@ function WebHooks({ removeIntegration }) {
         setIsLoading(false)
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
-        setSnackbar({ show: true, msg: `${msg}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${msg}. ${__('please try again')}` })
         setIsLoading(false)
       } else {
-        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again') })
         setIsLoading(false)
       }
     })
@@ -169,8 +169,8 @@ function WebHooks({ removeIntegration }) {
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body={__('Are you sure to delete this web hook?', 'bitform')}
-        btnTxt={__('Delete', 'bitform')}
+        body={__('Are you sure to delete this web hook?')}
+        btnTxt={__('Delete')}
         close={closeMdl}
       />
       {allConf?.type?.webHooks
@@ -185,12 +185,12 @@ function WebHooks({ removeIntegration }) {
               <br />
               <div className="flx">
                 <div className="w-7 mr-2">
-                  <div className="f-m">{__('Link:', 'bitform')}</div>
+                  <div className="f-m">{__('Link:')}</div>
                   <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp mt-1" type="text" value={itm.url} />
                 </div>
 
                 <div className="w-3">
-                  <div className="f-m">{__('Method:', 'bitform')}</div>
+                  <div className="f-m">{__('Method:')}</div>
                   <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp mt-1">
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
@@ -204,18 +204,18 @@ function WebHooks({ removeIntegration }) {
                 </div>
               </div>
               <Button onClick={() => testWebhook(i)} className={css(app.btn, app.btn_blue_otln)}>
-                {__('Test Webhook', 'bitform')}
+                {__('Test Webhook')}
                 {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
                 <ExternalLinkIcn size={18} className="ml-1" />
               </Button>
               <br />
               <br />
-              <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
+              <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
               <div className="btcd-param-t-wrp mt-1">
                 <div className="btcd-param-t">
                   <div className="tr">
-                    <div className="td">{__('Key', 'bitform')}</div>
-                    <div className="td">{__('Value', 'bitform')}</div>
+                    <div className="td">{__('Key')}</div>
+                    <div className="td">{__('Value')}</div>
                   </div>
                   {itm?.params && itm.params.map(({ key, value }, paramIdx) => (
                     <div key={`url-p-${paramIdx + 11}`} className="tr">
@@ -248,11 +248,11 @@ function WebHooks({ removeIntegration }) {
         )) : (
           <div className={css(ut.btcdEmpty, ut.txCenter)}>
             <StackIcn size="50" />
-            {__('Empty', 'bitform')}
+            {__('Empty')}
           </div>
         )}
       <div className="txt-center">
-        <Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Hook', 'bitform')}'` }}>
+        <Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Hook')}'` }}>
           <CloseIcn size="14" stroke="3" className="icn-rotate-45" />
         </Button>
       </div>

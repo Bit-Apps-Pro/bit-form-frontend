@@ -26,7 +26,7 @@ export default function WooCommerceProductActions({ wcConf, setWcConf, formField
           className="wdt-200 mt-4 mr-2"
           value="price"
           title={__('Downloadable', 'bitofrm')}
-          subTitle={__('Downloadable products give access to a file upon purchase.', 'bitform')}
+          subTitle={__('Downloadable products give access to a file upon purchase.')}
           checked={wcConf.actions?.product?.downloadable || false}
           onChange={() => setActionMdl({ show: 'downloadable' })}
         />
@@ -36,18 +36,18 @@ export default function WooCommerceProductActions({ wcConf, setWcConf, formField
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt={__('Ok', 'bitform')}
+        btnTxt={__('Ok')}
         show={actionMdl.show === 'downloadable'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title={__('Downloadable Product', 'bitform')}
+        title={__('Downloadable Product')}
       >
         <DropDown
           action={val => handleActionInput('downloadable', val)}
           value={wcConf.actions?.product?.downloadable}
-          title={<span className="f-m">{__('Select File Upload Fields', 'bitform')}</span>}
+          title={<span className="f-m">{__('Select File Upload Fields')}</span>}
           titleClassName="w-10 mt-2"
-          placeholder={__('Select Fields', 'bitform')}
+          placeholder={__('Select Fields')}
           className="w-a"
           options={formFields.filter(fld => fld.type === 'file-up').map(fl => ({ label: fl.name, value: fl.key }))}
           isMultiple

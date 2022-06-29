@@ -107,7 +107,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             className={`${css(ut.mr2)} ${css(ut.fw500)} `}
             name={type}
             checked={fieldData?.err?.[type]?.show || false}
-            title={__('Show Error Message', 'bitform')}
+            title={__('Show Error Message')}
             onChange={setShowErrMsg}
           />
           <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
@@ -129,7 +129,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
                 className={`${css(ut.mr2)} ${css(ut.fw500)} `}
                 name={type}
                 checked={fieldData?.err?.[type]?.custom || false}
-                title={__('Custom Error Message', 'bitform')}
+                title={__('Custom Error Message')}
                 onChange={setCustomErrMsg}
               />
               <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
@@ -190,7 +190,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             show={icnMdl}
             setModal={setIcnMdl}
             className="o-v"
-            title={__('Icons', 'bitform')}
+            title={__('Icons')}
           >
             <div className="pos-rel" />
             <Icons iconType={icnType} setModal={setIcnMdl} addPaddingOnSelect={false} />

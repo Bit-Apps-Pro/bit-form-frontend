@@ -332,7 +332,7 @@ function Message({ id, msgItem }) {
         <div className={css({ flx: 1, fd: 'column', rg: 5 })}>
           <div>
             <div className={css({ flx: 'align-center', cg: 5 })}>
-              <span className={css({ w: 130 })}>{__('Message Styles', 'bitform')}</span>
+              <span className={css({ w: 130 })}>{__('Message Styles')}</span>
               <select
                 className={css(styles.selectInput)}
                 name="animation"
@@ -347,7 +347,7 @@ function Message({ id, msgItem }) {
             </div>
           </div>
           <div>
-            <span className={css({ w: 130 })}>{__('Message Type', 'bitform')}</span>
+            <span className={css({ w: 130 })}>{__('Message Type')}</span>
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
           </div>

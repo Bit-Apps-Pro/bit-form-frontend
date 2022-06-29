@@ -9,16 +9,16 @@ export default function Welcome({ setModal }) {
   return (
     <div className="btcd-greeting">
       <img src={greeting} alt="" />
-      <h2>{__('Welcome to Bit Form', 'bitform')}</h2>
+      <h2>{__('Welcome to Bit Form')}</h2>
       <div className="sub">
-        {__('Thank you for installing Bit Form.', 'bitform')}
+        {__('Thank you for installing Bit Form.')}
       </div>
       <div>
-        {__('Modern Form builder and database management  system', 'bitform')}
+        {__('Modern Form builder and database management  system')}
         <br />
-        {__('for Wordpress', 'bitform')}
+        {__('for Wordpress')}
       </div>
-      <button data-testid="create-form-btn" onClick={() => setModal(true)} type="button" className={`${css(app.btn)} round btcd-btn-lg dp-blue`}>{__('Create First Form', 'bitform')}</button>
+      <button data-testid="create-form-btn" onClick={() => setModal(true)} type="button" className={`${css(app.btn)} round btcd-btn-lg dp-blue`}>{__('Create First Form')}</button>
     </div>
   )
 }

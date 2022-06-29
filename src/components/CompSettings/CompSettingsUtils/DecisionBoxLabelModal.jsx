@@ -42,7 +42,7 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
       md
       show={labelModal}
       setModal={cancelModal}
-      title={__('Edit Decision Box Label', 'bitform')}
+      title={__('Edit Decision Box Label')}
     >
       <TinyMCE
         id={fldKey}

@@ -20,7 +20,7 @@ const bitformsIcon = () => (
 )
 
 registerBlockType('bitforms/form-shortcode', {
-  title: __('Bit Form', 'bitform'),
+  title: __('Bit Form'),
   icon: bitformsIcon,
   category: 'widgets',
   keywords: ['Form', 'Contact Form', 'Bitform'],
@@ -35,7 +35,7 @@ registerBlockType('bitforms/form-shortcode', {
     },
   },
   edit: props => {
-    const AllForms = [{ value: 0, label: __('Select a Form', 'bitform'), disabled: true }]
+    const AllForms = [{ value: 0, label: __('Select a Form'), disabled: true }]
 
     bitformsBlock.forms.map(form => {
       AllForms.push({ label: form.form_name, value: form.id })
@@ -71,8 +71,8 @@ registerBlockType('bitforms/form-shortcode', {
           />
         </div>,
 
-        <InspectorControls key={__('Bitform block settings', 'bitform')}>
-          <PanelBody title={__('Form settings', 'bitform')}>
+        <InspectorControls key={__('Bitform block settings')}>
+          <PanelBody title={__('Form settings')}>
             <SelectControl
               value={attributes.formID}
               options={AllForms}

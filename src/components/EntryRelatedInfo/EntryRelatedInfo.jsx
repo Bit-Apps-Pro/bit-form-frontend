@@ -14,25 +14,25 @@ function EntryRelatedInfo({ formID, entryID, rowDtl, setSnackbar, integrations, 
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   return (
-    <Modal lg show setModal={close} title={__('Related Info', 'bitform')}>
+    <Modal lg show setModal={close} title={__('Related Info')}>
       <Tabs
         selectedTabClassName="s-t-l-active"
       >
         <TabList className="flx m-0">
           {!!(paymentFields?.length) && (
             <Tab className="btcd-s-tab-link">
-              {__('Payment', 'bitform')}
+              {__('Payment')}
             </Tab>
           )}
           <Tab className="btcd-s-tab-link">
-            {__('Timeline', 'bitform')}
+            {__('Timeline')}
           </Tab>
           <Tab className="btcd-s-tab-link">
-            {__('Notes', 'bitform')}
+            {__('Notes')}
           </Tab>
           {!!(rowDtl?.GCLID) && (
             <Tab className="btcd-s-tab-link">
-              {__('Google Ads Information', 'bitform')}
+              {__('Google Ads Information')}
             </Tab>
           )}
         </TabList>

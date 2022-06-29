@@ -38,7 +38,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const nextPage = val => {
     if (val === 3) {
       if (!checkAllRequired(projectsConf, setSnackbar)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+        setSnackbar({ show: true, msg: __('Please map mandatory fields') })
         return
       }
       setstep(3)
@@ -92,7 +92,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

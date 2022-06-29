@@ -31,8 +31,8 @@ export default function SendinBlueActions({ sendinBlueConf, setSendinBlueConf, s
   return (
 
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={sendinBlueConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Sendinblue', 'bitform')} subTitle={__('Update Responses with Sendinblue existing email?', 'bitform')} />
-      {/* <TableCheckBox checked={sendinBlueConf.actions?.double_optin || false} onChange={(e) => actionHandler(e, 'double_optin')} className="wdt-200 mt-4 mr-2" value="double_optin" title={__('Double Opt-in', 'bitform')} subTitle={__('Double Opt-In for confirm subscription.', 'bitform')} /> */}
+      <TableCheckBox checked={sendinBlueConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Sendinblue')} subTitle={__('Update Responses with Sendinblue existing email?')} />
+      {/* <TableCheckBox checked={sendinBlueConf.actions?.double_optin || false} onChange={(e) => actionHandler(e, 'double_optin')} className="wdt-200 mt-4 mr-2" value="double_optin" title={__('Double Opt-in')} subTitle={__('Double Opt-In for confirm subscription.')} /> */}
     </div>
   )
 }

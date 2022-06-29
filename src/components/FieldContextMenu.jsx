@@ -141,7 +141,7 @@ export default function FieldContextMenu({ isContextMenu,
                   className={`context-btn ${subMenuParent('hide') ? 'active' : ''}`}
                   unselectable="on"
                   draggable="false"
-                  title={__('More Options', 'bitform')}
+                  title={__('More Options')}
                 >
                   <EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />
                   <span>Hide</span>

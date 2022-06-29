@@ -83,7 +83,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
 
           editor.addButton('toogleCode', {
             text: '</>',
-            tooltip: __('Toggle preview', 'bitform'),
+            tooltip: __('Toggle preview'),
             icon: false,
             onclick(e) {
               const { $ } = e.control

@@ -83,7 +83,7 @@ export default function FieldLabelSettings() {
     <>
       <SimpleAccordion
         id="fld-lbl-stng"
-        title={__('Field Label:', 'bitform')}
+        title={__('Field Label:')}
         className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
         switching
         tip="By disabling this option, the field label will be hidden"
@@ -128,7 +128,7 @@ export default function FieldLabelSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons', 'bitform')}
+        title={__('Icons')}
       >
         <div className="pos-rel" />
         <Icons iconType={icnType} setModal={setIcnMdl} />

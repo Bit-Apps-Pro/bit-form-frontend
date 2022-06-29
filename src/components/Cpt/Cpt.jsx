@@ -28,11 +28,11 @@ export default function Cpt() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', marginTop: 15 }}>
             <div className="pro">
-              {__('Available On', 'bitform')}
+              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   &nbsp;
-                  {__('Premium', 'bitform')}
+                  {__('Premium')}
                 </span>
               </a>
             </div>
@@ -43,10 +43,10 @@ export default function Cpt() {
         >
           <TabList className="flx mt-0">
             <Tab className="btcd-s-tab-link pb-2">
-              <b>{__('Add New Post Type', 'bitform')}</b>
+              <b>{__('Add New Post Type')}</b>
             </Tab>
             <Tab className="btcd-s-tab-link pb-2">
-              <b>{__('Edit Post Types', 'bitform')}</b>
+              <b>{__('Edit Post Types')}</b>
             </Tab>
           </TabList>
           <TabPanel>

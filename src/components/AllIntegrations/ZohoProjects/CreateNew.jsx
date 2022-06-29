@@ -24,18 +24,18 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
         <div className="d-flx flx-between">
           <div>
             <b className="wdt-100">
-              {__('Create', 'bitform')}
+              {__('Create')}
               {` ${event}`}
             </b>
-            <button onClick={() => refreshFields(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar, event)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button onClick={() => refreshFields(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar, event)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           {projectsConf.event !== event && <button onClick={removeSubEvent} className="icn-btn sh-sm ml-2 mr-2" type="button" aria-label="delete"><TrashIcn /></button>}
         </div>
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-1">
-        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-        <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
       </div>
 
       {projectsConf.field_map?.[event]?.map((itm, i) => (
@@ -59,7 +59,7 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
         <b className="wdt-100">
           {`${event}`}
           {' '}
-          {__('Actions', 'bitform')}
+          {__('Actions')}
         </b>
       </div>
       <div className="btcd-hr mt-1" />

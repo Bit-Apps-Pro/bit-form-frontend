@@ -19,7 +19,7 @@ function EditZohoMarketingHub({ formFields, setIntegration, integrations, allInt
 
   const saveConfig = () => {
     if (!checkMappedFields(marketingHubConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, marketingHubConf, history, id, 1)
@@ -30,8 +30,8 @@ function EditZohoMarketingHub({ formFields, setIntegration, integrations, allInt
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, formID, marketingHubConf, setMarketingHubConf)} name="name" value={marketingHubConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, formID, marketingHubConf, setMarketingHubConf)} name="name" value={marketingHubConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
       <br />
       <br />

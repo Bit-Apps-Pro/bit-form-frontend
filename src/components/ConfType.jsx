@@ -32,16 +32,16 @@ export default function ConfType({ formID }) {
 
   return (
     <div className="mt-4" style={{ width: 900 }}>
-      <h2>{__('Confirmations', 'bitform')}</h2>
+      <h2>{__('Confirmations')}</h2>
       <div>
         <NavLink exact to={`/form/settings/edit/${formID}/confirmations`} className="btcd-f-c-t-o mr-4 sh-sm" activeClassName="btcd-f-c-t-o-a">
-          {__('Success/Error Messages', 'bitform')}
+          {__('Success/Error Messages')}
         </NavLink>
         <NavLink to={`/form/settings/edit/${formID}/confirmations/redirect-url`} className="btcd-f-c-t-o mr-4 sh-sm" activeClassName="btcd-f-c-t-o-a">
-          {__('Redirect Page', 'bitform')}
+          {__('Redirect Page')}
         </NavLink>
         <NavLink to={`/form/settings/edit/${formID}/confirmations/webhooks`} className="btcd-f-c-t-o mr-4 sh-sm" activeClassName="btcd-f-c-t-o-a">
-          {__('Web Hooks', 'bitform')}
+          {__('Web Hooks')}
         </NavLink>
       </div>
       <br />

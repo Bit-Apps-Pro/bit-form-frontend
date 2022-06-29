@@ -36,7 +36,7 @@ function ConfMsg({ removeIntegration }) {
     }
     confirmation.type.successMsg.push({
       title: `Untitled Message ${confirmation.type.successMsg.length + 1}`,
-      msg: __('<p>Successfully Submitted.</p>', 'bitform'),
+      msg: __('<p>Successfully Submitted.</p>'),
       config: {
         msgType: 'snackbar',
         position: 'top-center',
@@ -53,8 +53,8 @@ function ConfMsg({ removeIntegration }) {
           borderColor: 'gray',
           borderRadius: '10px',
           boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-            { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-            { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+          { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+          { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
           closeBackground: '#48484829',
           closeHover: '#dfdfdf',
           closeIconColor: '#5a5a5a',
@@ -98,8 +98,8 @@ function ConfMsg({ removeIntegration }) {
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body={__('Are you sure to delete this message ?', 'bitform')}
-        btnTxt={__('Delete', 'bitform')}
+        body={__('Are you sure to delete this message ?')}
+        btnTxt={__('Delete')}
         close={closeMdl}
       />
 
@@ -118,10 +118,10 @@ function ConfMsg({ removeIntegration }) {
       )) : (
         <div className={css(ut.btcdEmpty, ut.txCenter)}>
           <StackIcn size="50" />
-          {__('Empty', 'bitform')}
+          {__('Empty')}
         </div>
       )}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative Success Message', 'bitform')}'` }}><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative Success Message')}'` }}><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button></div>
     </div>
   )
 }

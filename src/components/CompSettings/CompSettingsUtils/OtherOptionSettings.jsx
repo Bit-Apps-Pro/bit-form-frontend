@@ -87,7 +87,7 @@ export default function OtherOptionSettings() {
   return (
     <SimpleAccordion
       id="other-opt-stng"
-      title={__('Add Other Option', 'bitform')}
+      title={__('Add Other Option')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
       tip="By enable this settings, a option will added with name 'Other'"

@@ -26,8 +26,8 @@ export default function FluentCrmActions({ fluentCrmConf, setFluentCrmConf, form
   return (
 
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={fluentCrmConf.actions?.skip_if_exists || false} onChange={(e) => actionHandler(e, 'exists')} className="wdt-200 mt-4 mr-2" value="skip_if_exists" title={__('Skip exist Contact', 'bitform')} subTitle={__('Skip if contact already exist in FluentCRM', 'bitform')} />
-      <TableCheckBox checked={fluentCrmConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'doubleOpIn')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in', 'bitform')} subTitle={__('Enable Double Option for new contacts', 'bitform')} />
+      <TableCheckBox checked={fluentCrmConf.actions?.skip_if_exists || false} onChange={(e) => actionHandler(e, 'exists')} className="wdt-200 mt-4 mr-2" value="skip_if_exists" title={__('Skip exist Contact')} subTitle={__('Skip if contact already exist in FluentCRM')} />
+      <TableCheckBox checked={fluentCrmConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'doubleOpIn')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in')} subTitle={__('Enable Double Option for new contacts')} />
     </div>
 
   )

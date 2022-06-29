@@ -51,15 +51,16 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
   const getLogicsBasedOnFieldType = fldType => {
     if (!fldType) return []
     const logicsArr = Object.entries(conditionalLogicsList)
-    return logicsArr.reduce((acc, [key, val]) => {
-      if (val.notFields && val.notFields.includes(fldType)) return acc
-      if (val.fields) {
-        if (val.fields.includes(fldType)) return [...acc, { key, val }]
+    return logicsArr.reduce((acc, [key, data]) => {
+      if (data.notFields && data.notFields.includes(fldType)) return acc
+      if (data.fields) {
+        if (data.fields.includes(fldType)) return [...acc, { key, lbl: data.label }]
         return acc
       }
-      return [...acc, { key, val }]
+      return [...acc, { key, lbl: data.label }]
     }, [])
   }
+  console.log('----------qweqwe-------------------')
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
@@ -70,7 +71,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
         style={{ width: 720 }}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
-        <option value="">{__('Select Form Field', 'bitform')}</option>
+        <option value="">{__('Select Form Fieldss')}</option>
         {/* {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)} */}
         <optgroup label="Form Fields">
           {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
@@ -97,10 +98,10 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-5"
       >
-        <option value="">{__('Select One', 'bitform')}</option>
-        {getLogicsBasedOnFieldType(fldType).map(itm => (
-          <option key={`lgc-lb-${itm.key}`} value={itm.key}>
-            {itm.val.label}
+        <option value="">{__('Select One')}</option>
+        {getLogicsBasedOnFieldType(fldType).map(({ key, lbl }) => (
+          <option key={key} value={key}>
+            {lbl}
           </option>
         ))}
       </MtSelect>

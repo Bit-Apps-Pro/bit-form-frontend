@@ -28,11 +28,11 @@ export default function ZohoBiginNewRecord({ tab, settab, formID, formFields, bi
       {biginConf.default?.moduleData?.[biginConf.module]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">{__('Map Fields', 'bitform')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Map Fields')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
             </div>
 
             {biginConf.field_map.map((itm, i) => (
@@ -52,11 +52,11 @@ export default function ZohoBiginNewRecord({ tab, settab, formID, formFields, bi
             <br />
             {Object.keys(biginConf.default?.moduleData?.[biginConf.module]?.fileUploadFields).length !== 0 && (
               <>
-                <div className="mt-4"><b className="wdt-100">{__('Map Attachments', 'bitform')}</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Map Attachments')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
                 </div>
 
                 {biginConf.upload_field_map.map((itm, i) => (
@@ -77,7 +77,7 @@ export default function ZohoBiginNewRecord({ tab, settab, formID, formFields, bi
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoBiginActions

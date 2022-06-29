@@ -60,7 +60,7 @@ export default function App() {
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
-              <div className="logo flx" title={__('Bit Form', 'bitform')}>
+              <div className="logo flx" title={__('Bit Form')}>
                 <Link to="/" className="flx">
                   <img src={logo} alt="bit form logo" className="ml-2" />
                   <span className="ml-2">Bit Form</span>
@@ -72,7 +72,7 @@ export default function App() {
                   to="/"
                   activeClassName="app-link-active"
                 >
-                  {__('My Forms', 'bitform')}
+                  {__('My Forms')}
                 </NavLink>
 
                 <NavLink
@@ -80,7 +80,7 @@ export default function App() {
                   activeClassName="app-link-active"
                   isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
-                  {__('App Settings', 'bitform')}
+                  {__('App Settings')}
                 </NavLink>
               </nav>
             </div>

@@ -34,7 +34,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
           <h4 className="w-9 m-a flx txt-dp">
             <button className="icn-btn" type="button" aria-label="back btn"><BackIcn /></button>
             <div className="flx w-10">
-              <span>{__('Back', 'bitform')}</span>
+              <span>{__('Back')}</span>
               <div className="txt-center w-10 f-5">{editorLabel}</div>
             </div>
           </h4>

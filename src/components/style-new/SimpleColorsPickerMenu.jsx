@@ -280,7 +280,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             <div className={css(c.container)}>
               <div className={css(c.subContainer)}>
                 <SingleToggle
-                  title={__('Transparant', 'bitform')}
+                  title={__('Transparant')}
                   action={transparantColor}
                   isChecked={checkTransparant()}
                   id="color-transparant"
@@ -299,7 +299,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         <div className={css(c.container)}>
           <div className={css(c.subContainer)}>
             <SingleToggle
-              title={__('Transparant', 'bitform')}
+              title={__('Transparant')}
               action={transparantColor}
               isChecked={checkTransparant()}
               id="color-transparant"

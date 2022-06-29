@@ -9,9 +9,9 @@ import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { checkMappedFields, handleInput } from './MailerLiteCommonFunc'
 import MailerLiteIntegLayout from './MailerLiteIntegLayout'
 
-function EditMailerLite({  formFields, setIntegration, integrations, allIntegURL  }) {
+function EditMailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
-  const { id,formID } = useParams()
+  const { id, formID } = useParams()
   const [mailerLiteConf, setMailerLiteConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
@@ -20,7 +20,7 @@ function EditMailerLite({  formFields, setIntegration, integrations, allIntegURL
 
   const saveConfig = () => {
     if (!checkMappedFields(mailerLiteConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, mailerLiteConf, history, id, 1)
@@ -32,8 +32,8 @@ function EditMailerLite({  formFields, setIntegration, integrations, allIntegURL
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-200 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailerLiteConf, setMailerLiteConf)} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailerLiteConf, setMailerLiteConf)} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
       <br />
       <MailerLiteIntegLayout

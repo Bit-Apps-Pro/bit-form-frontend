@@ -150,7 +150,7 @@ function FormDetails() {
       setConfirmations(formData.formSettings.confirmation)
       setMailTem(formData.formSettings.mailTem)
       sessionStorage.removeItem('bitformData')
-      toast.error(__('Please try again. Token was expired', 'bitform'))
+      toast.error(__('Please try again. Token was expired'))
       if (isLoading) { setisLoading(!isLoading) }
     } else {
       setNewFormProps()
@@ -285,14 +285,14 @@ function FormDetails() {
           sm
           show={proModal.show}
           setModal={() => setProModal({ show: false })}
-          title={__('Premium Feature', 'bitform')}
+          title={__('Premium Feature')}
           className="pro-modal"
         >
           <h4 className="txt-center mt-5">
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
           </div>
         </Modal>
         <ConfirmModal
@@ -380,8 +380,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',
@@ -391,7 +391,7 @@ const defaultConfirmationValue = (formID) => {
     type: {
       successMsg: [{
         title: 'Untitled Message 1',
-        msg: __('<p>Successfully Submitted.</p>', 'bitform'),
+        msg: __('<p>Successfully Submitted.</p>'),
         config: {
           msgType,
           position,
@@ -409,7 +409,7 @@ const defaultConfirmationValue = (formID) => {
 }
 const defaultWorkflowValue = [
   {
-    title: __('Show Success Message', 'bitform'),
+    title: __('Show Success Message'),
     action_type: 'onsubmit',
     action_run: 'create_edit',
     action_behaviour: 'always',

@@ -25,7 +25,7 @@ export default function Back2FldBtn({ className, size }) {
       onClick={navigate2fldList}
     >
       <ChevronLeft size={size} />
-      <span>{__('Back to fields list', 'bitform')}</span>
+      <span>{__('Back to fields list')}</span>
     </button>
   )
 }

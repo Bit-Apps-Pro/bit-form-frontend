@@ -106,7 +106,7 @@ function CustomCodeEditor() {
     toast.promise(fetchProm, {
       loading: __('Updating...', 'biform'),
       success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.', 'bitform'),
+      error: __('Error occurred, Please try again.'),
     })
     e.preventDefault()
   }
@@ -182,7 +182,7 @@ function CustomCodeEditor() {
                   unselectable="on"
                   draggable="false"
                   style={{ cursor: 'pointer' }}
-                  title={__('Snippets', 'bitform')}
+                  title={__('Snippets')}
                 >
                   <BdrDottedIcn size="16" />
                 </button>

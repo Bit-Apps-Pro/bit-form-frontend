@@ -312,7 +312,7 @@ function RadioCheckSettings() {
       <FieldSettingsDivider />
 
       {/* <SimpleAccordion
-        title={__('Admin Label', 'bitform')}
+        title={__('Admin Label')}
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={hideAdminLabel}
@@ -350,7 +350,7 @@ function RadioCheckSettings() {
 
       <SimpleAccordion
         id="nam-stng"
-        title={__('Name', 'bitform')}
+        title={__('Name')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -370,7 +370,7 @@ function RadioCheckSettings() {
 
       {/* <SimpleAccordion
         id="rqrd-stng"
-        title={__('Required', 'bitform')}
+        title={__('Required')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field required will be hidden"
@@ -397,7 +397,7 @@ function RadioCheckSettings() {
         <SingleToggle
           id="rnd-stng"
           tip="By disabling this option, the field rounded will be remove"
-          title={__('Rounded', 'bitform')}
+          title={__('Rounded')}
           action={e => setRound(e)}
           isChecked={isRound}
         />
@@ -406,7 +406,7 @@ function RadioCheckSettings() {
       <FieldSettingsDivider />
       <SimpleAccordion
         id="opt-clm-stng"
-        title={__('Options Column', 'bitform')}
+        title={__('Options Column')}
         className={css(FieldStyle.fieldSection)}
       >
         <div className={css(FieldStyle.placeholder)}>
@@ -423,9 +423,9 @@ function RadioCheckSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
 
-      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
+      {/* <SingleInput inpType="text" title={__('Admin Label:')} value={adminLabel} action={setAdminLabel} /> */}
 
-      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+      {/* <SingleToggle title={__('Required:')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
           type="req"
@@ -438,18 +438,18 @@ function RadioCheckSettings() {
           <>
             <SimpleAccordion
               id="mnmm-stng"
-              title={__('Minimum', 'bitform')}
+              title={__('Minimum')}
               className={css(FieldStyle.fieldSection)}
               tip="Set minimum number to be selected for checkbox option"
               isPro
             >
               {/* <div>
                 <div className="flx mt-2 mb-2">
-                  <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                  <h4 className="m-0">{__('Minimum:')}</h4>
                   <Cooltip width={250} icnSize={17} className="ml-2">
-                    <div className="txt-body">{__('Set minimum number to be selected for checkbox option', 'bitform')}</div>
+                    <div className="txt-body">{__('Set minimum number to be selected for checkbox option')}</div>
                   </Cooltip>
-                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro')}</span>}
                 </div>
                 <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
               </div> */}
@@ -479,7 +479,7 @@ function RadioCheckSettings() {
 
             <SimpleAccordion
               id="mxmm-stng"
-              title={__('Maximum', 'bitform')}
+              title={__('Maximum')}
               className={css(FieldStyle.fieldSection)}
               tip="Set maximum number to be selected for checkbox option"
               isPro
@@ -504,7 +504,7 @@ function RadioCheckSettings() {
                     title="Max Error Message"
                     tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
                   />
-                  <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+                  <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
                 </>
               )}
             </SimpleAccordion>
@@ -513,11 +513,11 @@ function RadioCheckSettings() {
 
             {/* <div>
               <div className="flx mt-2 mb-2">
-                <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
+                <h4 className="m-0">{__('Maximum:')}</h4>
                 <Cooltip width={250} icnSize={17} className="ml-2">
-                  <div className="txt-body">{__('Set maximum number to be selected for checkbox option', 'bitform')}</div>
+                  <div className="txt-body">{__('Set maximum number to be selected for checkbox option')}</div>
                 </Cooltip>
-                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro')}</span>}
               </div>
               <input className="btcd-paper-inp" type="number" value={max} onChange={setMax} disabled={!isPro} />
             </div>
@@ -528,7 +528,7 @@ function RadioCheckSettings() {
                   title="Max Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
                 />
-                <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+                <SingleToggle title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
               </>
             )} */}
 
@@ -550,7 +550,7 @@ function RadioCheckSettings() {
       <FieldSettingsDivider />
 
       {/* <SimpleAccordion
-        title={__('Options', 'bitform')}
+        title={__('Options')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -558,22 +558,22 @@ function RadioCheckSettings() {
           <button onClick={openImportModal} className={css(app.btn)} type="button">
             <DownloadIcon size="16" />
             &nbsp;
-            {__('Import Options', 'bitform')}
+            {__('Import Options')}
           </button>
           <div className="opt mt-1">
-            <span className="font-w-m">{__('Options:', 'bitform')}</span>
+            <span className="font-w-m">{__('Options:')}</span>
             {options.map((itm, i) => (
               <div key={`opt-${i + 8}`} className="flx flx-between">
                 <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
                 <div className="flx mt-1">
                   {fieldData.typ === 'check'
                     && (
-                      <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
+                      <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required')}'` }}>
                         <input aria-label="checkbox" onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
                         <span className="btcd-mrk ck br-50 " />
                       </label>
                     )}
-                  <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+                  <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default')}'` }}>
                     <input aria-label="checkbox" onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                     <span className="btcd-mrk ck br-50 " />
                   </label>
@@ -582,7 +582,7 @@ function RadioCheckSettings() {
               </div>
             ))}
             <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">
-              {__('Add More +', 'bitform')}
+              {__('Add More +')}
             </button>
           </div>
         </>
@@ -591,7 +591,7 @@ function RadioCheckSettings() {
       <div className={css(FieldStyle.fieldSection)}>
         <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
-          {__('Edit Options', 'bitform')}
+          {__('Edit Options')}
         </button>
       </div>
       <FieldSettingsDivider />
@@ -601,17 +601,17 @@ function RadioCheckSettings() {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options', 'bitform')}
+        title={__('Options')}
       >
         <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On', 'bitform')}
+                {__('Available On')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium', 'bitform')}
+                    {__('Premium')}
                   </span>
                 </a>
               </div>
@@ -633,17 +633,17 @@ function RadioCheckSettings() {
         show={importOpts.show}
         setModal={closeImportModal}
         className="o-v"
-        title={__('Import Options', 'bitform')}
+        title={__('Import Options')}
       >
         <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On', 'bitform')}
+                {__('Available On')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium', 'bitform')}
+                    {__('Premium')}
                   </span>
                 </a>
               </div>

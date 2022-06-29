@@ -50,7 +50,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
       md
       show={errorModal}
       setModal={cancelModal}
-      title={__('Edit Custom Error Message', 'bitform')}
+      title={__('Edit Custom Error Message')}
     >
       <TinyMCE
         id={`${fldKey}-${type}`}

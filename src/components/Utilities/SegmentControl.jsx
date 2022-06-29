@@ -180,7 +180,7 @@ function SegmentControl({ defaultActive,
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {checkToShow(item, 'label') && __(item.label, 'bitform')}
+            {checkToShow(item, 'label') && __(item.label)}
           </a>
         ))}
         {component === 'button' && options?.map((item, i) => (
@@ -196,7 +196,7 @@ function SegmentControl({ defaultActive,
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {checkToShow(item, 'label') && __(item.label, 'bitform')}
+            {checkToShow(item, 'label') && __(item.label)}
           </button>
         ))}
       </div>

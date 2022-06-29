@@ -182,7 +182,7 @@ export default function DropdownFieldSettings() {
 
       <SimpleAccordion
         id="srch-plchldr-stng"
-        title={__('Search Placeholder', 'bitform')}
+        title={__('Search Placeholder')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field search placeholder will be remove"
@@ -210,7 +210,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="shw-slctd-img-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Show Selected Option Image', 'bitform')}
+        title={__('Show Selected Option Image')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptImage')}
         isChecked={selectedOptImage}
         tip="By disabling this option, the field show selected option image will be hidden"
@@ -221,7 +221,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="slctd-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Selected Option Clearable:', 'bitform')}
+        title={__('Selected Option Clearable:')}
         action={e => handleConfigChange(e.target.checked, 'selectedOptClearable')}
         isChecked={selectedOptClearable}
         tip="By disabling this option, the field selected option clearable will be hidden"
@@ -232,7 +232,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Search Clearable:', 'bitform')}
+        title={__('Search Clearable:')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable')}
         isChecked={searchClearable}
         tip="By disabling this option, the field search clearable will be hidden"
@@ -243,7 +243,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Option Icon:', 'bitform')}
+        title={__('Option Icon:')}
         action={e => handleConfigChange(e.target.checked, 'optionIcon')}
         isChecked={optionIcon}
         tip="By disabling this option, the field option icon will be hidden"
@@ -254,7 +254,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="alw-cstm-opt-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Allow Custom Option:', 'bitform')}
+        title={__('Allow Custom Option:')}
         action={e => handleConfigChange(e.target.checked, 'allowCustomOption')}
         isChecked={allowCustomOption}
         tip="By disabling this option, the field allow custom option will be hidden"
@@ -265,7 +265,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="mltpl-slct-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Multiple Select:', 'bitform')}
+        title={__('Multiple Select:')}
         action={e => handleMultiSelect(e.target.checked, 'multipleSelect')}
         isChecked={multipleSelect}
         tip="By disabling this option, the field multiple will be hidden"
@@ -276,7 +276,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="cls-on-slct-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Close On Select:', 'bitform')}
+        title={__('Close On Select:')}
         action={e => handleConfigChange(e.target.checked, 'closeOnSelect')}
         isChecked={closeOnSelect}
         tip="By disabling this option, the field close on select will be hidden"
@@ -364,7 +364,7 @@ export default function DropdownFieldSettings() {
             type="button"
           >
             &nbsp;
-            {__('Add Options List', 'bitform')}
+            {__('Add Options List')}
           </button>
 
         </div>
@@ -378,7 +378,7 @@ export default function DropdownFieldSettings() {
         show={optionMdl}
         setModal={() => setOptionMdl(false)}
         className="o-v"
-        title={__('Options', 'bitform')}
+        title={__('Options')}
       >
         <div className="pos-rel">
           <EditOptions

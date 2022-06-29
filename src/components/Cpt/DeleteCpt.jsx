@@ -33,7 +33,7 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
       'bitforms_delete_post_type',
     ).then((res) => {
       if (res !== undefined && res.success) {
-        setsnack({ ...{ show: true, msg: __('Delete successfully, refresh your window', 'bitform') } })
+        setsnack({ ...{ show: true, msg: __('Delete successfully, refresh your window') } })
       }
       setLoading(false)
     })
@@ -41,7 +41,7 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
   return (
     <div>
       <button type="button" onClick={(e) => confDelete(e)} className={`${css(app.btn)} f-left btcd-btn-lg blue sh-sm flx ml-4`} disabled={isLoading}>
-        {__('Delete Post Type', 'bitform')}
+        {__('Delete Post Type')}
         {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
 
@@ -53,10 +53,10 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
         show={confMdl.show}
         close={closeConfMdl}
         action={handleDelete}
-        title={__('Confirmation', 'bitform')}
+        title={__('Confirmation')}
       >
         <div className="txt-center mt-5 mb-4">
-          {__('Are you sure to delete post type?', 'bitform')}
+          {__('Are you sure to delete post type?')}
         </div>
         {isLoading && (
           <Loader style={{

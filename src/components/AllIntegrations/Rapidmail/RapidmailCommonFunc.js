@@ -54,7 +54,7 @@ export const getAllRecipient = (
   })
   toast.promise(loadPostTypes, {
     success: (data) => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Recipientslist...'),
   })
   // .catch(() => setIsLoading(false))
@@ -76,9 +76,9 @@ export const checkMappedFields = (rapidmailConf) => {
   const mappedFields = rapidmailConf?.field_map
     ? rapidmailConf.field_map.filter(
       (mappedField) => !mappedField.formField
-                  || !mappedField.rapidmailFormField
-                  || (!mappedField.formField === 'custom'
-                      && !mappedField.customValue),
+        || !mappedField.rapidmailFormField
+        || (!mappedField.formField === 'custom'
+          && !mappedField.customValue),
     )
     : []
   if (mappedFields.length > 0) {
@@ -97,10 +97,10 @@ export const handleAuthorize = (
   if (!confTmp.username || !confTmp.password) {
     setError({
       username: !confTmp.username
-        ? __("Username can't be empty", 'bitform')
+        ? __("Username can't be empty")
         : '',
       password: !confTmp.password
-        ? __("Password can't be empty", 'bitform')
+        ? __("Password can't be empty")
         : '',
     })
     return
@@ -124,17 +124,16 @@ export const handleAuthorize = (
         setisAuthorized(true)
         setSnackbar({
           show: true,
-          msg: __('Authorized Successfully', 'bitform'),
+          msg: __('Authorized Successfully'),
         })
       } else if (
         (result && result.data && result.data.data)
-                || (!result.success && typeof result.data === 'string')
+        || (!result.success && typeof result.data === 'string')
       ) {
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed Cause:', 'bitform')}${
-            result.data.data || result.data
-          }. ${__('please try again', 'bitform')}`,
+          msg: `${__('Authorization failed Cause:')}${result.data.data || result.data
+            }. ${__('please try again')}`,
         })
       } else {
         setSnackbar({

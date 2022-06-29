@@ -149,7 +149,7 @@ const PhoneNumberFieldSettings = () => {
 
       <SimpleAccordion
         id="inp-frmt-opt-stng"
-        title={__('Input Format Option', 'bitform')}
+        title={__('Input Format Option')}
         className={css(FieldStyle.fieldSection)}
       // switching
       // toggleAction={hideAdminLabel}
@@ -173,7 +173,7 @@ const PhoneNumberFieldSettings = () => {
 
       <SimpleAccordion
         id="val-frmt-opt-stng"
-        title={__('Value Format Option', 'bitform')}
+        title={__('Value Format Option')}
         className={css(FieldStyle.fieldSection)}
       // switching
       // toggleAction={hideAdminLabel}
@@ -197,7 +197,7 @@ const PhoneNumberFieldSettings = () => {
 
       <SimpleAccordion
         id="srch-plchldr-stng"
-        title={__('Search Placeholder', 'bitform')}
+        title={__('Search Placeholder')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the search placeholder text will be remove"
@@ -224,7 +224,7 @@ const PhoneNumberFieldSettings = () => {
 
       <SimpleAccordion
         id="cntry-nt-fund-stng"
-        title={__('Country Not Found Text', 'bitform')}
+        title={__('Country Not Found Text')}
         className={css(FieldStyle.fieldSection)}
       // switching
       // toggleAction={hideAdminLabel}
@@ -250,7 +250,7 @@ const PhoneNumberFieldSettings = () => {
         id="shw-slctd-img-stng"
         tip="By disabling this option, the show selected flag image will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Show Selected Flag Image', 'bitform')}
+        title={__('Show Selected Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
       />
@@ -261,7 +261,7 @@ const PhoneNumberFieldSettings = () => {
         id="slctd-clrbl-stng"
         tip="By disabling this option, the selected country clearable button will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Selected Country Clearable', 'bitform')}
+        title={__('Selected Country Clearable')}
         action={e => handleConfigChange(e.target.checked, 'selectedCountryClearable', 'config')}
         isChecked={selectedCountryClearable}
       />
@@ -272,7 +272,7 @@ const PhoneNumberFieldSettings = () => {
         id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the selected country search clearable button will be hidden"
-        title={__('Search Clearable', 'bitform')}
+        title={__('Search Clearable')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable', 'config')}
         isChecked={searchClearable}
       />
@@ -283,7 +283,7 @@ const PhoneNumberFieldSettings = () => {
         id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the option flags image will be hidden"
-        title={__('Option Flag Image', 'bitform')}
+        title={__('Option Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
       />
@@ -294,7 +294,7 @@ const PhoneNumberFieldSettings = () => {
         id="dtct-cntry-by-ip-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by ip"
-        title={__('Detect Country By IP', 'bitform')}
+        title={__('Detect Country By IP')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
         isChecked={detectCountryByIp}
       />
@@ -305,7 +305,7 @@ const PhoneNumberFieldSettings = () => {
         id="dtct-cntry-by-geo-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by Geo location"
-        title={__('Detect Country By Geo', 'bitform')}
+        title={__('Detect Country By Geo')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
         isChecked={detectCountryByGeo}
       />
@@ -339,7 +339,7 @@ const PhoneNumberFieldSettings = () => {
       <div className={css(FieldStyle.fieldSection)}>
         <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
-          {__('Edit Options', 'bitform')}
+          {__('Edit Options')}
         </button>
       </div>
 
@@ -351,7 +351,7 @@ const PhoneNumberFieldSettings = () => {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options', 'bitform')}
+        title={__('Options')}
       >
         <div className="pos-rel">
           <EditOptions

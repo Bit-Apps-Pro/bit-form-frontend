@@ -76,7 +76,7 @@ export default function ErrorMessagesCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
           subtitle="Error Messages Spacing Control"

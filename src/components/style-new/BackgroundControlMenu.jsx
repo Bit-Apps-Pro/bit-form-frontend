@@ -387,7 +387,7 @@ function BackgroundControlMenu({ stateObjName,
                   <div className={css(c.container, style.container, style.preview_wrp)}>
                     <div className={css(c.subContainer)}>
                       <SingleToggle
-                        title={__('Transparant', 'bitform')}
+                        title={__('Transparant')}
                         action={transparantColor}
                         isChecked={checkTransparant()}
                         id="color-transparant"
@@ -406,7 +406,7 @@ function BackgroundControlMenu({ stateObjName,
               <div className={css(c.container)}>
                 <div className={css(c.subContainer)}>
                   <SingleToggle
-                    title={__('Transparant', 'bitform')}
+                    title={__('Transparant')}
                     action={transparantColor}
                     isChecked={checkTransparant()}
                     id="color-transparant"
@@ -590,7 +590,7 @@ function BackgroundControlMenu({ stateObjName,
         show={unsplashMdl}
         setModal={setUnsplashMdl}
         className="o-v"
-        title={__('Unsplash Images', 'bitform')}
+        title={__('Unsplash Images')}
       >
         <div className="pos-rel" />
         <UnsplashImageViewer setModal={setUnsplashMdl} />

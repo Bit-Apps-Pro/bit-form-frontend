@@ -181,18 +181,18 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (!checkSubmitBtn()) {
       const mdl = { ...modal }
       mdl.show = true
-      mdl.title = __('Sorry', 'bitform')
-      mdl.btnTxt = __('Close', 'bitform')
-      mdl.msg = __('Please add a submit button', 'bitform')
+      mdl.title = __('Sorry')
+      mdl.btnTxt = __('Close')
+      mdl.msg = __('Please add a submit button')
       setModal(mdl)
       return
     }
     if (lay.md.length === 0 || typeof lay === 'undefined') {
       const mdl = { ...modal }
       mdl.show = true
-      mdl.title = __('Sorry', 'bitform')
-      mdl.btnTxt = __('Close', 'bitform')
-      mdl.msg = __('You can not save a blank form', 'bitform')
+      mdl.title = __('Sorry')
+      mdl.btnTxt = __('Close')
+      mdl.msg = __('You can not save a blank form')
       setModal(mdl)
       return
     }
@@ -285,12 +285,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     toast.promise(fetchProm, {
       loading: __('Updating...', 'biform'),
       success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.', 'bitform'),
+      error: __('Error occurred, Please try again.'),
     })
   }
 
   return (
-    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>

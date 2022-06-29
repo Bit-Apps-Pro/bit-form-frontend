@@ -43,7 +43,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (!checkMappedFields(recruitConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     if (recruitConf.module !== '' && recruitConf.field_map.length > 0) {
@@ -90,7 +90,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 
