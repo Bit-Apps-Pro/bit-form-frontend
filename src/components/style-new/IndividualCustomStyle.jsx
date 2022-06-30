@@ -126,8 +126,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       case 'btn': return 'Button'
       case 'btn-pre-i': return 'Button Leading Icon'
       case 'btn-suf-i': return 'Button Trailing Icon'
+      case 'other-inp': return 'Other Option Input'
       default:
-        break
+        return ''
     }
   }
 
@@ -491,7 +492,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Margin"
           >
             <SpacingControl
-              mainTitle="Margin Control"
+              mainTitle="Margin"
               allowImportant
               action={{ type: 'spacing-control' }}
               subtitle={`${fldTitle}`}
@@ -507,7 +508,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Padding"
           >
             <SpacingControl
-              mainTitle="Padding Control"
+              mainTitle="Padding"
               allowImportant
               action={{ type: 'spacing-control' }}
               subtitle={`${fldTitle}`}
@@ -528,7 +529,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           >
             <SizeControler
               action={{ type: 'size-control' }}
-              subtitle={`${fldTitle} Size Control`}
+              subtitle={`${fldTitle} Size`}
               objectPaths={objPaths}
               id="size-control"
               width="128px"
@@ -766,7 +767,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         return (
           <IndividualShadowControl
             title="Text-shadow"
-            subtitle={`${fldTitle} Text Shadow Control`}
+            subtitle={`${fldTitle} Text Shadow`}
             value={existCssPropsObj?.['text-shadow']}
             defaultValue="0px 1px 2px hsla(0, 0%, 0%, 35%)"
             modalId="fld-crn-txt-shad"
