@@ -85,13 +85,18 @@ export const getLogicOptionByFieldType = (type, fields, fieldKey) => {
       childs: [
         { label: __('Equal'), value: 'equal' },
         { label: __('Not equal'), value: 'not_equal' },
-        { label: __('Empty'), value: 'empty' },
-        { label: __('Not empty'), value: 'not_empty' },
+
       ],
     },
   ]
+  if (!type.match(/^(boolean)$/)) {
+    options[0].childs.push(
+      { label: __('Empty'), value: 'empty' },
+      { label: __('Not empty'), value: 'not_empty' },
+    )
+  }
 
-  if (!type.match(/^(number|color|url|password|email|date|time|datetime|month|week|boolean)$/)) {
+  if (!type.match(/^(number|color|url|password|date|time|datetime|month|week|boolean)$/)) {
     options[0].childs.push(
       { label: __('Start With'), value: 'start_with' },
       { label: __('End With'), value: 'end_with' },
@@ -101,7 +106,8 @@ export const getLogicOptionByFieldType = (type, fields, fieldKey) => {
   }
 
   if (!type.match(/^(number|date|time|datetime|month|week|boolean)$/) && !type.match(/^(check|radio)$/)) {
-    options[0].childs.push({ label: __('Not contains'), value: 'not_contains' })
+    options[0].childs.push({ label: __('Not contains'), value: 'not_contain' })
+    options[0].childs.push({ label: __('Contains'), value: 'contain' })
   }
 
   if (((type === 'select' && fields?.[fieldKey]?.mul) || type === 'check')) {
@@ -176,4 +182,3 @@ export const stringToArray = (type, val) => {
   }
   return val
 }
-
