@@ -45,9 +45,30 @@ export default function bitformDefaultTheme(fk, type, direction) {
         },
         form: {},
         fields: {},
+        font: {},
       }
     case 'form':
-      return { _frm: { background: 'var(--global-bg-color)' } }
+      return {
+        light: {
+          _frm: { 'background-color': 'var(--global-bg-color)' },
+          '_frm-bg': {
+            padding: '10px',
+            border: 'solid hsla(215, 20%, 93%, 100%)',
+            'border-width': '1px',
+          },
+        },
+        dark: {
+          _frm: { 'background-color': 'var(--global-bg-color)' },
+          '_frm-bg': { padding: '10px' },
+        },
+      }
+    case 'font':
+      return {
+        fontType: '',
+        fontURL: '',
+        fontWeightVariants: [],
+        fontStyle: [],
+      }
     case 'text':
     case 'number':
     case 'password':

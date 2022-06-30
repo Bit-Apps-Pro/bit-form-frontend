@@ -49,6 +49,7 @@ export const objectArrayToStyleStringGenarator = shadows => {
 }
 
 export const json2CssStr = (className, jsonValue) => {
+  if (!jsonValue) return ''
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
   objArr.forEach(([property, value]) => {

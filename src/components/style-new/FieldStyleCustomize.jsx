@@ -29,6 +29,7 @@ import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
 import bitformDefaultTheme from './themes/1_bitformDefault'
+import redColorTheme from './themes/3_redColorTheme'
 
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, fieldKey, element } = useParams()
@@ -66,7 +67,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const title = getElementTitle(element)
 
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
-    if (theme === 'material') return
+    // if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
         drft.fields[fieldKey].overrideGlobalTheme = [...prvStyle.fields[fieldKey].overrideGlobalTheme, elmnt]
@@ -77,8 +78,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         prvElmnt.splice(prvElmnt.findIndex(el => el === elmnt), 1)
         drft.fields[fieldKey].overrideGlobalTheme = prvElmnt
 
-        if (theme === 'bitformDefault') {
-          const { classes: getElementStyleClasses } = bitformDefaultTheme(fieldKey, fieldType)
+        if (theme === 'bitformDefault' || theme === 'redColorTheme') {
+          const { classes: getElementStyleClasses } = theme === 'bitformDefault' ? bitformDefaultTheme(fieldKey, fieldType) : redColorTheme(fieldKey, fieldType)
 
           switch (elmnt) {
             case 'currency-fld-wrp':

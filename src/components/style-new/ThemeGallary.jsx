@@ -20,11 +20,11 @@ export default function ThemeGallary() {
   const [modal, setModal] = useState({ show: false })
   const themes = [
     { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
-    { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
+    // { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
+    { name: 'Red Color Theme', slug: 'redColorTheme', img: 'defaultTheme.svg' },
   ]
-
+  // console.log(fieldsArray)
   const handleThemeApply = (themeSlug) => {
-    console.log(themeProvider(themeSlug, fieldsArray))
     setStyles(themeProvider(themeSlug, fieldsArray))
   }
 

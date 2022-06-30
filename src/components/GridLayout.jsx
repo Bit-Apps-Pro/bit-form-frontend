@@ -30,6 +30,7 @@ import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import materialTheme from './style-new/themes/2_material'
+import redColorTheme from './style-new/themes/3_redColorTheme'
 
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
@@ -265,8 +266,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
         const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
-      if (globalTheme === 'material') {
-        const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+
+      // if (globalTheme === 'material') {
+      //   const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+      //   draftStyle.fields[newBlk] = fieldStyle
+      // }
+
+      if (globalTheme === 'redColorTheme') {
+        const fieldStyle = redColorTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
     }))
@@ -514,9 +521,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
   const getBuilderWidth = () => {
     let width = builderWidth - 10
-    const builderPadding = styles.form[colorScheme]['_frm-bg'].padding || ''
-    const builderBorderWidth = styles.form[colorScheme]['_frm-bg']['border-width'] || ''
-    const builderMargin = styles.form[colorScheme]['_frm-bg'].margin || ''
+    const builderPadding = styles.form?.[colorScheme]?.['_frm-bg']?.padding || ''
+    const builderBorderWidth = styles.form?.[colorScheme]?.['_frm-bg']?.['border-width'] || ''
+    const builderMargin = styles.form?.[colorScheme]?.['_frm-bg']?.margin || ''
     if (builderPadding && builderPadding !== '10px') {
       width -= (parseInt(builderPadding.replace('px', ''), 10) * 2) - 3
     }
