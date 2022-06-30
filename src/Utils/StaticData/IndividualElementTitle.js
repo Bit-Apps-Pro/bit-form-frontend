@@ -64,9 +64,9 @@ export const getElementTitle = (element) => {
     case 'selected-country-img': return 'Selected Image'
     case 'selected-country-lbl': return 'Selected Label'
 
-    case 'opt-prefix': return 'Option Suffix'
-    case 'opt-suffix': return 'Option Suffix'
+    case 'opt-prefix': return 'Option Leading'
+    case 'opt-suffix': return 'Option Trailing'
     default:
-      break
+      return ''
   }
 }
