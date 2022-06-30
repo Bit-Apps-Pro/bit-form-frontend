@@ -75,13 +75,13 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="lbl-pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-lbl-pre-i]"
             />
             <NavBtn
               route="lbl-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icons"
               offset="3.5"
               highlightSelector="[data-dev-lbl-suf-i]"
             />
@@ -102,13 +102,13 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="sub-titl-pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-sub-titl-pre-i]"
             />
             <NavBtn
               route="sub-titl-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icons"
               offset="3.5"
               highlightSelector="[data-dev-sub-titl-suf-i]"
             />
@@ -123,13 +123,13 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-pre-i]"
             />
             <NavBtn
               route="suf-i"
-              label="Suffix Icons"
+              label="Trailing Icons"
               offset="3.5"
               highlightSelector="[data-dev-suf-i]"
             />
@@ -144,13 +144,13 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="hlp-txt-pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-hlp-txt-pre-i]"
             />
             <NavBtn
               route="hlp-txt-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icons"
               offset="3.5"
               highlightSelector="[data-dev-hlp-txt-suf-i]"
             />
@@ -166,13 +166,13 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="err-txt-pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-err-txt-pre-i]"
             />
             <NavBtn
               route="err-txt-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icons"
               offset="3.5"
               highlightSelector="[data-dev-err-txt-suf-i]"
             />
@@ -188,7 +188,7 @@ export default function StyleLayers() {
           >
             <NavBtn
               route="btn-pre-i"
-              label="Prefix Icons"
+              label="Leading Icons"
               offset="3.5"
               highlightSelector="[data-dev-btn-pre-i]"
             />
