@@ -1,7 +1,8 @@
-import inputWrapperClasses from './inputWrapperClasses'
+/* eslint-disable object-curly-newline */
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function checkboxNradioStyle_3_redTheme({ fk, type, direction }) {
+export default function checkboxNradioStyle_3_atlassian({ fk, type, direction }) {
   return {
     ...inputWrapperClasses(fk),
 

@@ -1,6 +1,7 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 export default function countryStyle_1_BitformDefault({ fk }) {
   return {
@@ -29,14 +30,14 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       transition: 'box-shadow .3s',
     },
 
-    [`.disabled .dpd-wrp`]: {
+    '.disabled .dpd-wrp': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.readonly .dpd-wrp`]: {
+    '.readonly .dpd-wrp': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -193,7 +194,7 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       stroke: 'hsla(0, 1%, 68%, 100%)',
       top: '50%',
       transform: 'translateY(-50%)',
-      left: '13px'
+      left: '13px',
     },
 
     [`.${fk}-opt-search-input`]: {
@@ -311,11 +312,11 @@ export default function countryStyle_1_BitformDefault({ fk }) {
       transition: 'transform 0.2s',
     },
 
-    [`.menu-open .dpd-down-btn`]: { transform: 'rotate(180deg)' },
+    '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
 
-    [`.disabled .selected-country-lbl`]: { color: 'hsla(0, 0%, 33%, 100%) !important' },
+    '.disabled .selected-country-lbl': { color: 'hsla(0, 0%, 33%, 100%) !important' },
 
-    [`.disabled .selected-country-clear-btn`]: { cursor: 'not-allowed' },
+    '.disabled .selected-country-clear-btn': { cursor: 'not-allowed' },
 
     '.disabled-opt': {
       'pointer-events': 'none',

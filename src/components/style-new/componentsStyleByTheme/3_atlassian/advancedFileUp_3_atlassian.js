@@ -1,7 +1,7 @@
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function advancedFileUp_3_redTheme({ fk, type, direction }) {
+export default function advancedFileUp_3_atlassian({ fk }) {
   return {
     ...inputWrapperClasses(fk),
     [`.filepond-${fk}-container.readonly`]: {

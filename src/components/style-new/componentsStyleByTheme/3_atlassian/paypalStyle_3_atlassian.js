@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function paypalStyle_3_redTheme({ fk }) {
+export default function paypalStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-paypal-wrp`]: {
       width: '750px',

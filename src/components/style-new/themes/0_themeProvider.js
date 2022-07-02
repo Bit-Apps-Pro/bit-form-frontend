@@ -1,17 +1,18 @@
-import bitformDefaultTheme from './1_bitformDefault'
-import redColorTheme from './3_redColorTheme'
-import materialTheme from './2_material'
+import bitformDefaultTheme from './bitformDefault/1_bitformDefault'
+import atlassianTheme from './atlassianTheme/3_atlassianTheme'
 
 export default function themeProvider(themeSlug, fieldsArr) {
-  if (themeSlug === 'bitformDefault') {
-    const thm = bitformDefaultTheme(null, 'theme')
-    thm.form = bitformDefaultTheme(null, 'form')
-    thm.font = bitformDefaultTheme(null, 'font')
+  const theme = {
+    styles: {},
+    themeVars: {},
+    themeColors: {},
+  }
 
-    fieldsArr?.map(([fieldKey, fieldData]) => {
-      thm.fields[fieldKey] = bitformDefaultTheme(fieldKey, fieldData.typ)
-    })
-    return thm
+  if (themeSlug === 'bitformDefault') {
+    theme.styles = bitformDefaultTheme({ fieldsArr })
+    theme.themeColors = bitformDefaultTheme({ type: 'themeColors' })
+    theme.themeVars = bitformDefaultTheme({ type: 'themeVars' })
+    return theme
   }
 
   // if (themeSlug === 'material') {
@@ -24,14 +25,10 @@ export default function themeProvider(themeSlug, fieldsArr) {
   //   return thm
   // }
 
-  if (themeSlug === 'redColorTheme') {
-    const thm = redColorTheme(null, 'theme')
-    thm.form = redColorTheme(null, 'form')
-    thm.font = redColorTheme(null, 'font')
-
-    fieldsArr?.map(([fieldKey, fieldData]) => {
-      thm.fields[fieldKey] = redColorTheme(fieldKey, fieldData.typ)
-    })
-    return thm
+  if (themeSlug === 'atlassian') {
+    theme.styles = atlassianTheme({ fieldsArr })
+    theme.themeColors = atlassianTheme({ type: 'themeColors' })
+    theme.themeVars = atlassianTheme({ type: 'themeVars' })
+    return theme
   }
 }

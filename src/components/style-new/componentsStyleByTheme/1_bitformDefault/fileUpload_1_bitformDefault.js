@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }) {
+export default function fileUploadStyle_1_BitformDefault({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 

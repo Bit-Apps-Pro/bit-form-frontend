@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function razorpayStyle_3_redTheme({ fk }) {
+export default function razorpayStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-razorpay-wrp`]: {
       display: 'flex',

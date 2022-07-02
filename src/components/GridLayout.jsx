@@ -5,7 +5,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-
 import produce from 'immer'
 import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
@@ -28,9 +27,8 @@ import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
-import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
-import materialTheme from './style-new/themes/2_material'
-import redColorTheme from './style-new/themes/3_redColorTheme'
+import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
+import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
@@ -263,7 +261,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     setStyles(preStyles => produce(preStyles, draftStyle => {
       const globalTheme = draftStyle.theme
       if (globalTheme === 'bitformDefault') {
-        const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+        const fieldStyle = bitformDefaultTheme({ type: processedFieldData.typ, fieldKey: newBlk, direction: themeVars['--dir'] })
         draftStyle.fields[newBlk] = fieldStyle
       }
 
@@ -272,8 +270,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       //   draftStyle.fields[newBlk] = fieldStyle
       // }
 
-      if (globalTheme === 'redColorTheme') {
-        const fieldStyle = redColorTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+      if (globalTheme === 'atlassianTheme') {
+        const fieldStyle = atlassianTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
     }))

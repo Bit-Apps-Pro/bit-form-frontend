@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function titleStyle_3_redTheme({ fk, type, direction }) {
+export default function titleStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',

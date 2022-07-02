@@ -8,9 +8,8 @@ import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
-import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault'
-import materialTheme from '../components/style-new/themes/2_material'
-import redColorTheme from '../components/style-new/themes/3_redColorTheme'
+import bitformDefaultTheme from '../components/style-new/themes/bitformDefault/1_bitformDefault'
+import atlassianTheme from '../components/style-new/themes/atlassianTheme/3_atlassianTheme'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
@@ -106,7 +105,7 @@ function FormDetails() {
       setStyles(styles => produce(styles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
-          const fieldStyle = bitformDefaultTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+          const fieldStyle = bitformDefaultTheme({ fieldKey: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] })
           draftStyle.fields[btnFieldKey] = fieldStyle
         }
 
@@ -115,8 +114,8 @@ function FormDetails() {
         //   draftStyle.fields[btnFieldKey] = fieldStyle
         // }
 
-        if (globalTheme === 'redColorTheme') {
-          const fieldStyle = redColorTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+        if (globalTheme === 'atlassian') {
+          const fieldStyle = atlassianTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
           draftStyle.fields[btnFieldKey] = fieldStyle
         }
       }))

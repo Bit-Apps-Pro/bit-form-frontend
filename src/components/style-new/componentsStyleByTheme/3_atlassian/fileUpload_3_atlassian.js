@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function fileUploadStyle_3_redTheme({ fk, type, direction }) {
+export default function fileUploadStyle_3_atlassian({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 

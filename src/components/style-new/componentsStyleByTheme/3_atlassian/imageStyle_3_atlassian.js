@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function imageStyle_3_redTheme({ fk, type, direction }) {
+export default function imageStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-fld-wrp`]:
       { height: '100%', width: '100%' },

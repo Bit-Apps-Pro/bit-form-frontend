@@ -10,28 +10,20 @@ import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import Tip from '../Utilities/Tip'
-import bitformDefaultTheme from './themes/1_bitformDefault'
-import materialTheme from './themes/2_material'
-import redColorTheme from './themes/3_redColorTheme'
+import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
+import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
+import themes from './themes/themeList'
 
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const selectedFieldId = useRecoilValue($selectedFieldId)
 
-  console.log(styles.fields[fldKey])
-
-  const themes = [
-    { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
-    // { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
-    { name: 'Red Color Theme', slug: 'redColorTheme', img: 'defaultTheme.svg' },
-  ]
-  console.log('themes', themes)
   const handleThemeApply = (themeSlug) => {
     const fk = fldKey || selectedFieldId
     if (themeSlug === 'bitformDefault') {
       setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[fk] = bitformDefaultTheme(fk, prvStyle.fields[fk].fieldType)
+        drftStyle.fields[fk] = bitformDefaultTheme({ fieldKey: fk, type: prvStyle.fields[fk].fieldType })
       }))
     }
     // if (themeSlug === 'material') {
@@ -39,9 +31,9 @@ export default function CustomThemeGallary({ fldKey }) {
     //     drftStyle.fields[fk] = materialTheme(fk, prvStyle.fields[fk].fieldType)
     //   }))
     // }
-    if (themeSlug === 'redColorTheme') {
+    if (themeSlug === 'atlassian') {
       setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[fk] = redColorTheme(fk, prvStyle.fields[fk].fieldType)
+        drftStyle.fields[fk] = atlassianTheme(fk, prvStyle.fields[fk].fieldType)
       }))
     }
   }

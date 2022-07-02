@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function dividerStyle_3_redTheme({ fk }) {
+export default function dividerStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',

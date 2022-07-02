@@ -1,33 +1,35 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import SliderModal from '../Utilities/SliderModal'
 import Tip from '../Utilities/Tip'
 import themeProvider from './themes/0_themeProvider'
+import themes from './themes/themeList'
 
 export default function ThemeGallary() {
   const { css } = useFela()
 
   const [styles, setStyles] = useRecoilState($styles)
+  const setThemeVars = useSetRecoilState($themeVars)
+  const setThemeColors = useSetRecoilState($themeColors)
   const fields = useRecoilValue($fields)
   const fieldsArray = Object.entries(fields)
   const [modal, setModal] = useState({ show: false })
-  const themes = [
-    { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
-    // { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
-    { name: 'Red Color Theme', slug: 'redColorTheme', img: 'defaultTheme.svg' },
-  ]
-  // console.log(fieldsArray)
-  const handleThemeApply = (themeSlug) => {
-    setStyles(themeProvider(themeSlug, fieldsArray))
-  }
 
+  const handleThemeApply = (themeSlug) => {
+    const themeStyle = themeProvider(themeSlug, fieldsArray)
+    setStyles(themeStyle.styles)
+    setThemeVars(themeStyle.themeVars)
+    setThemeColors(themeStyle.themeColors)
+  }
   return (
     <div className={css(themeGalStyle.wrp)}>
       <SliderModal show={modal.show} setModal={setModal}>

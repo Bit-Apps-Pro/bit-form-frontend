@@ -16,7 +16,7 @@ export const $stylesLg = atom({
   key: '$stylesLg',
   default: {
     theme: 'bitformDefault',
-    fieldSizes: 'medium',
+    fieldsSize: 'medium',
     font: {
       fontType: '',
       fontURL: '',
@@ -26,11 +26,11 @@ export const $stylesLg = atom({
     form: {
       light: {
         // _frm: { 'background-color': 'var(--global-bg-color)' },
-        // '_frm-bg': {
-        //   padding: '10px',
-        //   border: 'solid hsla(215, 20%, 93%, 100%)',
-        //   'border-width': '1px',
-        // },
+        '_frm-bg': {
+          padding: '10px',
+          border: 'solid hsla(215, 20%, 93%, 100%)',
+          'border-width': '1px',
+        },
       },
       dark: {
         // _frm: { 'background-color': 'var(--global-bg-color)' },

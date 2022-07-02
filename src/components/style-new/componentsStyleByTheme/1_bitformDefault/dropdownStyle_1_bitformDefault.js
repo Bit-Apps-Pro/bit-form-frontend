@@ -1,5 +1,6 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 export default function dropdownStyle_1_BitformDefault({ fk }) {
   return {
