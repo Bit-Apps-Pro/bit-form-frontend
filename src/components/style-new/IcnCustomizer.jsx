@@ -124,7 +124,7 @@ export default function IcnCustomizer({ elementKey }) {
             action={{ type: 'filter-control' }}
             subtitle={`${title()} Filter`}
             objectPaths={preIcnFltrObj}
-            id={`${elementKey}-fltr-ctrl`}
+            id="filter-control"
           />
         </div>
       </ThemeStylePropertyBlock>
