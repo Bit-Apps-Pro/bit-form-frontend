@@ -5,7 +5,9 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignJustifyIcn from '../../Icons/TxtAlignJustifyIcn'
@@ -43,6 +45,9 @@ import TransitionControl from './TransitionControl'
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const themeVars = useRecoilValue($themeVars)
+  const themeColors = useRecoilValue($themeColors)
+  const fields = useRecoilValue($fields)
+  const fieldObj = fields[fldKey]
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
 
@@ -89,7 +94,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }
     return state
   }
-
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
@@ -101,7 +105,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
-  const getPropertyPath = (cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}->${cssProperty}`
+  const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}${selector}->${cssProperty}`
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
 
@@ -294,7 +298,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <BackgroundControl
             title="Background"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-image'] || existCssPropsObj?.['background-color']}
+            value={existCssPropsObj?.['background-image'] || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
             objectPaths={objPaths}
@@ -339,7 +343,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <SimpleColorPicker
             title="Background Color"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-color']}
+            value={getValueFromStateVar(themeColors, existCssPropsObj?.['background-color'])}
             modalId="fld-cnr-bg"
             stateObjName="styles"
             propertyPath={objPaths.paths?.['background-color']}
@@ -1111,6 +1115,40 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           // eslint-disable-next-line react/no-array-index-key
           <Grow overflw="" key={`grow-${i}`} open={stateController.toLowerCase() === state}>
             <div className={css(cls.space)}>
+              {elementKey === 'fld' && (state === 'hover' || state === 'focus') && fieldObj.prefixIcn && (
+                <FilterColorPicker
+                  title="Leading Icon Color"
+                  subtitle="Icon Fill Color(Filter)"
+                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()} ~ .${fldKey}-pre-i`}`]?.color}
+                  stateObjName="styles"
+                  propertyPath={[getPropertyPath('color', state, ` ~ .${fldKey}-pre-i`), getPropertyPath('filter', state, ` ~ .${fldKey}-pre-i`)]}
+                  objectPaths={{
+                    object: 'styles',
+                    paths: {
+                      'icon-color': getPropertyPath('color', state, ` ~ .${fldKey}-pre-i`),
+                      filter: getPropertyPath('filter', state, ` ~ .${fldKey}-pre-i`),
+                    },
+                  }}
+                  modalId={`${elementKey}-${state}-pre-i`}
+                />
+              )}
+              { elementKey === 'fld' && (state === 'hover' || state === 'focus') && fieldObj.suffixIcn && (
+                <FilterColorPicker
+                  title="Trailing Icon Color"
+                  subtitle="Icon Fill Color(Filter)"
+                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`} ~ .${fldKey}-suf-i`]?.color}
+                  stateObjName="styles"
+                  propertyPath={[getPropertyPath('color', state, ` ~ .${fldKey}-suf-i`), getPropertyPath('filter', state, ` ~ .${fldKey}-suf-i`)]}
+                  objectPaths={{
+                    object: 'styles',
+                    paths: {
+                      'icon-color': getPropertyPath('color', state, ` ~ .${fldKey}-suf-i`),
+                      filter: getPropertyPath('filter', state, ` ~ .${fldKey}-suf-i`),
+                    },
+                  }}
+                  modalId={`${elementKey}-${state}-suf-i`}
+                />
+              )}
               {
                 existCssProps.map((propName, indx) => (
                   <div key={`propName-${indx * 20}`}>

@@ -100,7 +100,7 @@ export default function IcnCustomizer({ elementKey }) {
 
       <FilterColorPicker
         title="Color"
-        subtitle="Label Text Color"
+        subtitle="Icon Fill Color"
         value={fltrColorValue}
         stateObjName="themeColors"
         propertyPath={`--${elementKey}-clr`}
