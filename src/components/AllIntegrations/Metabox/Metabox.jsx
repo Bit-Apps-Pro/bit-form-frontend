@@ -22,7 +22,9 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   const [data, setData] = useState({
     name: 'CPT/Post Creation with MetaBox',
     type: 'MetaBox',
-    post_map: [{}],
+    post_map: [
+      { post_author: 'logged_in_user' },
+    ],
     metabox_map: [{}],
     metabox_file_map: [{}],
   })
@@ -154,6 +156,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       <div>
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
           <option disabled selected>{__('Select Author', 'bitform')}</option>
+          <option value="logged_in_user">Logged In User</option>
           {users.map((user, i) => (
             <option key={`pauth-${i + 4}`} value={user.ID}>{user.display_name}</option>
           ))}
