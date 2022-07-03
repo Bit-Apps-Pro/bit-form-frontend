@@ -209,7 +209,15 @@ function Table(props) {
 
       //  setFilters(currentReportData.details.filters)
       // setColumnOrder(currentReportData.details.order)
+      return
     }
+
+    setHiddenColumns([])
+    setPageSize(10)
+    setSortBy([])
+    setGlobalFilter('')
+    // setFilters([])
+    // setColumnOrder([])
   }, [reportId])
 
   useEffect(() => {

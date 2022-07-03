@@ -51,6 +51,7 @@ function FormDetails() {
   const resetWorkflows = useResetRecoilState($workflows)
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
+  const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
 
   const setNewFormProps = () => {
@@ -130,6 +131,7 @@ function FormDetails() {
     resetWorkflows()
     resetIntegrations()
     resetConfirmations()
+    resetReportId()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
