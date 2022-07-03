@@ -115,7 +115,8 @@ function FormDetails() {
         // }
 
         if (globalTheme === 'atlassian') {
-          const fieldStyle = atlassianTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+          const obj = { fk: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] }
+          const fieldStyle = atlassianTheme(obj)
           draftStyle.fields[btnFieldKey] = fieldStyle
         }
       }))

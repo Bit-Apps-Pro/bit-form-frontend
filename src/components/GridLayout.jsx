@@ -270,8 +270,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       //   draftStyle.fields[newBlk] = fieldStyle
       // }
 
-      if (globalTheme === 'atlassianTheme') {
-        const fieldStyle = atlassianTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+      if (globalTheme === 'atlassian') {
+        const obj = {
+          type: processedFieldData.typ,
+          fk: newBlk,
+          direction: themeVars['--dir'],
+        }
+        const fieldStyle = atlassianTheme(obj)
         draftStyle.fields[newBlk] = fieldStyle
       }
     }))

@@ -275,7 +275,7 @@ const themeColors = {
   '--gbg-s': '0%', // global background color saturation
   '--gbg-l': '100%', // global background color lightness
   '--gbg-a': 100, // global background color opacity
-  '--global-fld-bdr': 'solid hsla(0, 0%, 67%, 100)', // field Border
+  '--global-fld-bdr': 'solid hsla(0, 80%, 80%, 25)', // field Border
   '--gfbc-h': 0, // global field border color hue
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness

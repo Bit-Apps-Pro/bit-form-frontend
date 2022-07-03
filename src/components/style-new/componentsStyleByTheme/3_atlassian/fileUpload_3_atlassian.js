@@ -31,7 +31,7 @@ export default function fileUploadStyle_3_atlassian({ fk }) {
 
     [`.${fk}-inp-btn`]: {
       'align-items': 'center',
-      'background-color': 'hsla(208, 100%, 48%, 100%)',
+      'background-color': 'var(--btn-bg)',
       border: 'none',
       'border-radius': '8px',
       'box-shadow': 'none',

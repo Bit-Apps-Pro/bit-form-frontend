@@ -77,7 +77,6 @@ export default function bitformDefaultTheme({ type, fieldKey: fk, direction, fie
     case 'razorpay':
       return razorpay(type, fk)
     default:
-      console.log('bitformDefaultTheme: type not found', fieldsArr)
       fieldsArr?.map(([fieldKey, fieldData]) => {
         fieldsStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ })
       })

@@ -33,7 +33,8 @@ export default function CustomThemeGallary({ fldKey }) {
     // }
     if (themeSlug === 'atlassian') {
       setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[fk] = atlassianTheme(fk, prvStyle.fields[fk].fieldType)
+        const type = prvStyle.fields[fk].fieldType
+        drftStyle.fields[fk] = atlassianTheme({ fk, type })
       }))
     }
   }
