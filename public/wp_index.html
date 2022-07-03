@@ -1,8 +1,5 @@
-<?php
-if (!defined('ABSPATH') && !defined('BITFORMS_ASSET_URI')) {
-  exit;
-}
-?>
+<?php if (!defined('ABSPATH') && !defined('BITFORMS_ASSET_URI')) { exit; } ?>
+
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="btcd-app">
   <div
@@ -13,3 +10,15 @@ if (!defined('ABSPATH') && !defined('BITFORMS_ASSET_URI')) {
   </div>
 </div>
 <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"></script>
+
+<?php if(defined('BIT_DEV') && BIT_DEV){ ?>
+<script type="module">
+  import RefreshRuntime from "<?php echo BIT_DEV; ?>/@react-refresh"
+  RefreshRuntime.injectIntoGlobalHook(window)
+  window.$RefreshReg$ = () => { }
+  window.$RefreshSig$ = () => (type) => type
+  window.__vite_plugin_react_preamble_installed__ = true
+</script>
+<script type="module" src="<?php echo BIT_DEV; ?>/@vite/client"></script>
+<script type="module" src="<?php echo BIT_DEV; ?>/index.jsx"></script>
+<?php } ?>
