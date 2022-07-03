@@ -3,8 +3,8 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import { useEffect, lazy, Suspense } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { lazy, Suspense, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import Loader from './components/Loaders/Loader'
@@ -13,7 +13,6 @@ import { $bits } from './GlobalStates'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import './resource/sass/app.scss'
-import { compareBetweenVersions } from './Utils/Helpers'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
 

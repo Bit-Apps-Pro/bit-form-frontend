@@ -2,28 +2,24 @@
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-    document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
-    document.getElementById('wpadminbar').style.display = 'none'
-    document.getElementById('adminmenumain').style.display = 'none'
-    document.getElementById('adminmenuback').style.display = 'none'
-    document.getElementById('adminmenuwrap').style.display = 'none'
-    document.getElementById('wpfooter').style.display = 'none'
-    document.getElementById('wpcontent').style.marginLeft = 0
-  }
+  document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
+  document.getElementById('wpadminbar').style.display = 'none'
+  document.getElementById('adminmenumain').style.display = 'none'
+  document.getElementById('adminmenuback').style.display = 'none'
+  document.getElementById('adminmenuwrap').style.display = 'none'
+  document.getElementById('wpfooter').style.display = 'none'
+  document.getElementById('wpcontent').style.marginLeft = 0
 }
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-    document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
-    document.getElementById('wpadminbar').style.display = 'block'
-    document.getElementById('adminmenumain').style.display = 'block'
-    document.getElementById('adminmenuback').style.display = 'block'
-    document.getElementById('adminmenuwrap').style.display = 'block'
-    document.getElementById('wpcontent').style.marginLeft = null
-    document.getElementById('wpfooter').style.display = 'block'
-  }
+  document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
+  document.getElementById('wpadminbar').style.display = 'block'
+  document.getElementById('adminmenumain').style.display = 'block'
+  document.getElementById('adminmenuback').style.display = 'block'
+  document.getElementById('adminmenuwrap').style.display = 'block'
+  document.getElementById('wpcontent').style.marginLeft = null
+  document.getElementById('wpfooter').style.display = 'block'
 }
 
 export const getNewId = flds => {
@@ -261,8 +257,7 @@ export const isType = (type, val) => !!(val?.constructor && val.constructor.name
 
 export const getFormsByPhpVar = () => {
   let allForms = []
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
-    && typeof bits !== 'undefined'
+  if (typeof bits !== 'undefined'
     //  eslint-disable-next-line no-undef
     && bits.allForms !== null) {
     //  eslint-disable-next-line no-undef

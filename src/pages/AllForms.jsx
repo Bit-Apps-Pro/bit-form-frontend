@@ -66,15 +66,15 @@ function AllFroms() {
   ])
 
   useEffect(() => {
-    if (Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-      bitsFetch(null, 'bitforms_get_all_form')
-        .then(res => {
-          if (res?.success) {
-            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, created_at: form.created_at }))
-            setAllForms(allforms => formsReducer(allforms, { data: dbForms, type: 'set' }))
-          }
-        })
-    }
+    // if (env in process && process.env==='deevelopment') {
+    //   bitsFetch(null, 'bitforms_get_all_form')
+    //     .then(res => {
+    //       if (res?.success) {
+    //         const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, created_at: form.created_at }))
+    //         setAllForms(allforms => formsReducer(allforms, { data: dbForms, type: 'set' }))
+    //       }
+    //     })
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
