@@ -192,7 +192,7 @@ function BackgroundControlMenu({ stateObjName,
             })
           } else {
             assignNestedObj(drftStyles, paths['background-image'], '')
-            assignNestedObj(drftStyles, paths['background-color'], clr)
+            assignNestedObj(drftStyles, paths.background, clr)
           }
         }))
         break
@@ -212,7 +212,7 @@ function BackgroundControlMenu({ stateObjName,
   useEffect(() => {
     const tempBgImg = getValueByObjPath(stateObj, paths['background-image'])
     setBgImage(tempBgImg)
-    setColor(str2Color(getValueByObjPath(stateObj, paths['background-color'])))
+    setColor(str2Color(getValueByObjPath(stateObj, paths.background)))
     // setUnsplashImgUrl(tempBgImg)
   }, [])
 
