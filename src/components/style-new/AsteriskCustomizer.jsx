@@ -81,7 +81,7 @@ export default function AsteriskCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Color"
-        subtitle="Asterisk Color Control"
+        subtitle="Asterisk Color"
         value={flc}
         stateObjName="themeColors"
         propertyPath="--req-smbl-c"
@@ -92,7 +92,7 @@ export default function AsteriskCustomizer() {
         <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Label Spacing Control"
+          subtitle="Label Spacing"
           objectPaths={flSpacingObj}
           id="lbl-spacing-control"
         />

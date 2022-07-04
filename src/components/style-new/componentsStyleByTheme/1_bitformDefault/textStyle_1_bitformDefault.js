@@ -87,5 +87,8 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       'border-width': 'var(--suf-i-bdr-width)',
       'border-radius': 'var(--suf-i-bdr-rad)',
     },
+
+    [`.${fk}-fld:focus ~ .${fk}-pre-i`]: { filter: 'var(--fld-focs-i-fltr)' },
+    [`.${fk}-fld:focus ~ .${fk}-suf-i`]: { filter: 'var(--fld-focs-i-fltr)' },
   }
 }

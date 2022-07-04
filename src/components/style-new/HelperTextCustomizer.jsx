@@ -23,7 +23,7 @@ export default function HelperTextCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Helper Text Background Color Control"
+        subtitle="Helper Text Background Color"
         value={htBg}
         stateObjName="themeColors"
         propertyPath="--hlp-txt-bg"
@@ -39,7 +39,7 @@ export default function HelperTextCustomizer() {
             id="hlp-txt-bdr"
           />
           <BorderControl
-            subtitle="Helper Text Border Control"
+            subtitle="Helper Text Border"
             objectPaths={borderPathsObj}
             id="hlp-txt-bdr"
           />
@@ -76,7 +76,7 @@ export default function HelperTextCustomizer() {
             id="hlp-txt-sh"
           />
           <ShadowControl
-            subtitle="Helper Text Shadow Control"
+            subtitle="Helper Text Shadow"
             value={htSh}
             objectPaths={hlpTxtShObj}
             id="hlp-txt-sh"
@@ -86,7 +86,7 @@ export default function HelperTextCustomizer() {
 
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Helper Text Color Control"
+        subtitle="Helper Text Color"
         value={htC}
         stateObjName="themeColors"
         propertyPath="--hlp-txt-c"
