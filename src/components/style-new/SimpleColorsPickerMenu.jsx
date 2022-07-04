@@ -55,7 +55,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
   const { '--global-bg-color': themeBgColor,
-    '--global-fld-bdr': themeFldBdrClr,
+    '--global-fld-bdr-clr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
     '--global-font-color': themeFontColor,
     '--global-accent-color': themePrimaryColor } = themeColors
@@ -267,9 +267,9 @@ function SimpleColorsPickerMenu({ stateObjName,
               </button>
 
               <button
-                className={css(c.clrItem, color === '--global-fld-bdr' ? c.active : null)}
+                className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)}
                 type="button"
-                onClick={() => setColorState('--global-fld-bdr')}
+                onClick={() => setColorState('--global-fld-bdr-clr')}
                 data-testid={`${id}-g-f-b`}
               >
                 <ColorPreview bg={themeFldBdrClr} className={css(ut.mr2)} />

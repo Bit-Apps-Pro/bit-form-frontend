@@ -58,6 +58,7 @@ import { $breakpoint } from './GlobalStates'
 const $themeVarsLg = atom({
   key: '$themeVarsLg',
   default: {
+    '--global-fld-bdr': 'solid', // field border color
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--g-font-family': 'inherit', // default font family inherit from theme
@@ -72,6 +73,7 @@ const $themeVarsLg = atom({
     '--fld-wrp-fdir': '', // field wrapper flex direction
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
+    '--fld-wrp-bdr': '', // field wrapper border
     '--fld-wrp-bdr-width': '', // field wrapper border width
     '--fld-wrp-bdr-rad': '', // field wrapper border radius
 
@@ -79,6 +81,7 @@ const $themeVarsLg = atom({
     '--lbl-wrp-width': '100%', // label wrapper  width
     '--lbl-wrp-m': '0 0 5px 0', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
+    '--lbl-wrp-bdr': '', // label wrapper border
     '--lbl-wrp-bdr-width': '', // label wrapper border width
     '--lbl-wrp-bdr-rad': '', // label wrapper border radius
     '--lbl-font-w': 500, // field font weight
@@ -87,6 +90,7 @@ const $themeVarsLg = atom({
     '--fld-lbl-m': '', // field label margin
     '--fld-lbl-p': '', // field label padding
     '--fld-lbl-fs': '1rem', // field label font size
+    '--fld-lbl-bdr': '', // field label border
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
     '--fld-lbl-pn': '', // field label position
@@ -106,6 +110,7 @@ const $themeVarsLg = atom({
     '--sub-titl-p': '3px 0', // subtitle padding
     '--sub-titl-al': '', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
+    '--sub-titl-bdr': '', // subtitle border
     '--sub-titl-bdr-width': '', // subtitle border width
     '--sub-titl-bdr-rad': '', // subtitle border radius
     '--sub-titl-font-w': 500, // sub title font weight
@@ -115,6 +120,7 @@ const $themeVarsLg = atom({
     '--hlp-txt-p': '3px 0', // hepler text padding
     '--hlp-txt-fs': '12px', // hepler text font size
     '--hlp-txt-al': '', // helper text align
+    '--hlp-txt-bdr': '', // helper text border
     '--hlp-txt-bdr-width': '', // helper text border width
     '--hlp-txt-bdr-rad': '', // helper text border radius
     '--hlp-txt-font-w': 400, // helper text font weight
@@ -122,6 +128,7 @@ const $themeVarsLg = atom({
 
     '--err-m': '1px', // error messages margin
     '--err-p': '5px', // error messages padding
+    '--err-bdr': 'solid', // error message border
     '--err-bdr-width': '1px', // error message border width
     '--err-bdr-rad': '8px', // error message border radius
     '--err-txt-al': '', // error text align
@@ -133,6 +140,7 @@ const $themeVarsLg = atom({
     '--pre-i-w': '40px', // fld prefix icon width
     '--pre-i-m': '', // fld prefix icon margin
     '--pre-i-p': '7px', // fld prefix icon padding
+    '--pre-i-bdr': '', // prefix icon border
     '--pre-i-bdr-width': '', // fld prefix icon border width
     '--pre-i-bdr-rad': '8px', // fld prefix icon message border radius
 
@@ -140,6 +148,7 @@ const $themeVarsLg = atom({
     '--suf-i-w': '40px', // fld suffix icon width
     '--suf-i-m': '', // fld suffix icon margin
     '--suf-i-p': '7px', // fld suffix icon padding
+    '--suf-i-bdr': '', // suffix icon border
     '--suf-i-bdr-width': '', // fld suffix icon border width
     '--suf-i-bdr-rad': '8px', // fld suffix icon border radius
 
@@ -147,6 +156,7 @@ const $themeVarsLg = atom({
     '--lbl-pre-i-w': '20px', // label prefix icon width
     '--lbl-pre-i-m': '0 5px 0 0', // label prefix icon margin
     '--lbl-pre-i-p': '', // label prefix icon padding
+    '--lbl-pre-i-bdr': '', // label prefix icon border
     '--lbl-pre-i-bdr-width': '', // label prefix icon border width
     '--lbl-pre-i-bdr-rad': '8px', // label prefix icon message border radius
 
@@ -154,6 +164,7 @@ const $themeVarsLg = atom({
     '--lbl-suf-i-w': '20px', // Label suffix icon width
     '--lbl-suf-i-m': '5px', // Label suffix icon margin
     '--lbl-suf-i-p': '', // Label suffix icon padding
+    '--lbl-suf-i-bdr': '', // label suffix icon border
     '--lbl-suf-i-bdr-width': '', // Label suffix icon border width
     '--lbl-suf-i-bdr-rad': '8px', // Label suffix icon border radius
 
@@ -161,6 +172,7 @@ const $themeVarsLg = atom({
     '--sub-titl-pre-i-w': '20px', // sub title prefix icon width
     '--sub-titl-pre-i-m': '5px', // sub title prefix icon margin
     '--sub-titl-pre-i-p': '', // sub title prefix icon padding
+    '--sub-titl-pre-i-bdr': '', // sub title prefix icon border
     '--sub-titl-pre-i-bdr-width': '', // sub title prefix icon border width
     '--sub-titl-pre-i-bdr-rad': '8px', // sub title prefix icon message border radius
 
@@ -168,6 +180,7 @@ const $themeVarsLg = atom({
     '--sub-titl-suf-i-w': '20px', // sub title suffix icon width
     '--sub-titl-suf-i-m': '5px', // sub title suffix icon margin
     '--sub-titl-suf-i-p': '', // sub title suffix icon padding
+    '--sub-titl-suf-i-bdr': '', // sub title suffix icon border
     '--sub-titl-suf-i-bdr-width': '', // sub title suffix icon border width
     '--sub-titl-suf-i-bdr-rad': '8px', // sub title suffix icon border radius
 
@@ -175,6 +188,7 @@ const $themeVarsLg = atom({
     '--hlp-txt-pre-i-w': '20px', // helper txt prefix icon width
     '--hlp-txt-pre-i-m': '5px', // helper txt prefix icon margin
     '--hlp-txt-pre-i-p': '', // helper txt prefix icon padding
+    '--hlp-txt-pre-i-bdr': '', // helper txt prefix icon border
     '--hlp-txt-pre-i-bdr-width': '', // helper txt prefix icon border width
     '--hlp-txt-pre-i-bdr-rad': '8px', // helper txt prefix icon message border radius
 
@@ -182,6 +196,7 @@ const $themeVarsLg = atom({
     '--hlp-txt-suf-i-w': '20px', // helper txt suffix icon width
     '--hlp-txt-suf-i-m': '5px', // helper txt suffix icon margin
     '--hlp-txt-suf-i-p': '', // helper txt suffix icon padding
+    '--hlp-txt-suf-i-bdr': '', // helper txt suffix icon border
     '--hlp-txt-suf-i-bdr-width': '', // helper txt suffix icon border width
     '--hlp-txt-suf-i-bdr-rad': '8px', // helper txt suffix icon border radius
 
@@ -189,6 +204,7 @@ const $themeVarsLg = atom({
     '--err-txt-pre-i-w': '20px', // error txt prefix icon width
     '--err-txt-pre-i-m': '5px', // error txt prefix icon margin
     '--err-txt-pre-i-p': '', // error txt prefix icon padding
+    '--err-txt-pre-i-bdr': '', // helper txt prefix icon border
     '--err-txt-pre-i-bdr-width': '', // error txt prefix icon border width
     '--err-txt-pre-i-bdr-rad': '8px', // error txt prefix icon message border radius
 
@@ -196,6 +212,7 @@ const $themeVarsLg = atom({
     '--err-txt-suf-i-w': '20px', // error txt suffix icon width
     '--err-txt-suf-i-m': '5px', // error txt suffix icon margin
     '--err-txt-suf-i-p': '', // error txt suffix icon padding
+    '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
     '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
     '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius
 
@@ -204,8 +221,9 @@ const $themeVarsLg = atom({
     '--btn-m': '10px 0px', // button marging
     '--btn-fw': 700, // button font weight
     '--btn-f-style': '', // button font style (italic, bold, etc)
-    '--btn-brs': '5px', // button border radius
-    '--btn-brw': '1px', // button border radius
+    '--btn-bdr': 'none', // button border
+    '--btn-bdr-rad': '5px', // button border radius
+    '--btn-bdr-width': '1px', // button border radius
 
   },
 })
