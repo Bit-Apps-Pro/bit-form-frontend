@@ -40,7 +40,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-bdr"
           />
           <BorderControl
-            subtitle="Error Message Border Control"
+            subtitle="Error Message Border"
             objectPaths={borderPathsObj}
             id="err-msg-bdr"
           />
@@ -67,7 +67,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-sh"
           />
           <ShadowControl
-            subtitle="Error Messages Shadow Control"
+            subtitle="Error Messages Shadow"
             value={errSh}
             objectPaths={errShObj}
             id="err-msg-sh"
@@ -79,7 +79,7 @@ export default function ErrorMessagesCustomizer() {
         <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Error Messages Spacing Control"
+          subtitle="Error Messages Spacing"
           objectPaths={errMsgSpacingObj}
           id="err-msg-spacing-ctrl"
         />

@@ -3,6 +3,7 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
+import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
@@ -18,7 +19,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsla2hsva, hsva2hsla } from './colorHelpers'
+import { hsla2hsva, hslToHex, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -114,6 +115,12 @@ function SimpleColorsPickerMenu({ stateObjName,
             if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = `${l}%` }
             if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = `${a}%` }
           }
+
+          if (propertyPath === '--global-accent-color') {
+            const hexValue = hslToHex(h, s, l)
+            const setFilterValue = hexToCSSFilter(hexValue)
+            drftThmClr['--fld-focs-i-fltr'] = setFilterValue.filter
+          }
         })
         setThemeColors(newThemeColors)
         historyData.state.themeColors = newThemeColors
@@ -156,7 +163,11 @@ function SimpleColorsPickerMenu({ stateObjName,
               const pathArr = path.split('->')
               const lastIndx = pathArr.length - 1
               if (pathArr[lastIndx] === 'box-shadow') assignNestedObj(drftStyles, path, sc)
-              else assignNestedObj(drftStyles, path, clr)
+              else if (pathArr[lastIndx] === 'filter') {
+                const hexValue = hslToHex(h, s, l)
+                const setFilterValue = hexToCSSFilter(hexValue)
+                assignNestedObj(drftStyles, path, setFilterValue.filter)
+              } else assignNestedObj(drftStyles, path, clr)
             })
           } else {
             assignNestedObj(drftStyles, propertyPath, clr)
@@ -170,7 +181,6 @@ function SimpleColorsPickerMenu({ stateObjName,
   }
 
   const setColorState = (colorObj) => {
-    console.log('setColorState Called=', colorObj)
     if (typeof colorObj === 'object') {
       setColor(colorObj)
       handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
@@ -192,6 +202,8 @@ function SimpleColorsPickerMenu({ stateObjName,
     const colorObj = { h: 0, s: 0, v: 0, a: 0 }
     if (e.target.checked) {
       setColorState(colorObj)
+    } else {
+      setColorState('--global-accent-color')
     }
   }
 
