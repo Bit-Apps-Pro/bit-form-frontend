@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -17,16 +15,6 @@ function EditGroundhogg({ formFields, setIntegration, integrations, allIntegURL 
   const [groundhoggConf, setGroundhoggConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-
-  const isUpdateAble = () => {
-    if (groundhoggConf.mainAction === '1' && !checkMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
-      return
-    }
-    if (groundhoggConf.showMeta && !checkMetaMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
-    }
-  }
 
   const isDisabled = !((groundhoggConf.mainAction === '2' && groundhoggConf.addTagToUser !== ''))
 

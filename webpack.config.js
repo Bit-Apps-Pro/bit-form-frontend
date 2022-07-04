@@ -24,7 +24,7 @@ module.exports = (env, argv) => {
     // devtool: production ? false : 'source-map',
     devtool: production ? false : 'eval',
     entry: {
-      index: path.resolve(__dirname, 'src/index.js'),
+      index: path.resolve(__dirname, 'src/index.jsx'),
       // bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
       bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
