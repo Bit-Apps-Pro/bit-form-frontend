@@ -47,7 +47,6 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
     }
 
     if (fldType === 'user') {
-      console.log('click status ', typeof options)
       options = userMail?.map(opt => ({ label: opt.label, value: opt.id }))
     }
 
@@ -97,23 +96,23 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
       )}
 
       {
-        fldType.match(/select|check|radio|user|boolean/g)
-          ? (
-            <>
-              <MultiSelect
-                className="msl-wrp-options btcd-paper-drpdwn w-10"
-                defaultValue={value.toString() || ''}
-                onChange={e => changeValue(e, lgcInd, fldType)}
-                options={getOptions()}
-                customValue
-                singleSelect={fldType === 'select' ? !fields?.[fieldKey]?.mul : fldType === 'check' ? false : fldType.match(/radio|boolean/g) && true}
-                fldType={fldType}
+        (!disabledLogics.includes(logicValue) && (
+          fldType.match(/select|check|radio|user|boolean/g)
+            ? (
+              <>
+                <MultiSelect
+                  className="msl-wrp-options btcd-paper-drpdwn w-10"
+                  defaultValue={value.toString() || ''}
+                  onChange={e => changeValue(e, lgcInd, fldType)}
+                  options={getOptions()}
+                  customValue
+                  singleSelect={fldType === 'select' ? !fields?.[fieldKey]?.mul : fldType === 'check' ? false : fldType.match(/radio|boolean/g) && true}
+                  fldType={fldType}
 
-              />
-            </>
-          ) : (
+                />
+              </>
+            ) : (
 
-            !disabledLogics.includes(logicValue) && (
               <MtInput
                 label="Value"
                 type={type}
@@ -122,7 +121,9 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
                 value={value || ''}
               />
             )
-          )
+
+        ))
+
       }
 
       <div className="w-1">
