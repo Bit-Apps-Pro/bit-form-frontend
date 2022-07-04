@@ -88,7 +88,11 @@ function BackgroundControlMenu({ stateObjName,
         break
       case 'styles':
         setStyles(preStyle => produce(preStyle, drftStyle => {
-          assignNestedObj(drftStyle, pathName, val)
+          let tempValue = val
+          const value = getValueByObjPath(drftStyle, pathName)
+          const checkExistImportant = value?.match(/(!important)/gi)?.[0]
+          if (checkExistImportant) tempValue = `${val} !important`
+          assignNestedObj(drftStyle, pathName, tempValue)
         }))
         break
       default:
@@ -185,13 +189,14 @@ function BackgroundControlMenu({ stateObjName,
           const value = getValueByObjPath(drftStyles, propertyPathArr)
           const checkExistImportant = value?.match(/(!important)/gi)?.[0]
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
-          const clr = str || hslaColor
+          const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
           if (Array.isArray(paths)) {
             paths.forEach(path => {
               assignNestedObj(drftStyles, path, clr)
             })
           } else {
-            assignNestedObj(drftStyles, paths['background-image'], '')
+            if (checkExistImportant) assignNestedObj(drftStyles, paths['background-image'], ' !important')
+            else assignNestedObj(drftStyles, paths['background-image'], '')
             assignNestedObj(drftStyles, paths.background, clr)
           }
         }))

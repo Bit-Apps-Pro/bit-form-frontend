@@ -177,15 +177,17 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       Object.keys(configProperty).map(prop => {
         if (configProperty[prop]) {
           const propPath = getPropertyPath(prop, state)
+          const defaultPropPath = getPropertyPath(prop)
           setStyles(prvStyle => produce(prvStyle, drft => {
-            assignNestedObj(drft, propPath, getValueByObjPath(styles, propPath))
+            assignNestedObj(drft, propPath, getValueByObjPath(styles, defaultPropPath))
           }))
         }
       })
     } else {
       const propPath = getPropertyPath(property, state)
+      const defaultPropPath = getPropertyPath(property)
       setStyles(prvStyle => produce(prvStyle, drft => {
-        assignNestedObj(drft, propPath, getValueByObjPath(styles, propPath))
+        assignNestedObj(drft, propPath, getValueByObjPath(styles, defaultPropPath))
       }))
     }
   }
@@ -298,9 +300,10 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <BackgroundControl
             title="Background"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-image'] || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
+            value={existCssPropsObj?.['background-image'].replace(' !important', '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
+            propertyPath={objPaths.paths?.background}
             objectPaths={objPaths}
             deleteable
             delPropertyHandler={() => delPropertyHandler('background', state)}
