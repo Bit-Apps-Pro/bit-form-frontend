@@ -36,7 +36,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, addableCssPropsObj, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'
 import TransformControl from './TransformControl'
@@ -100,6 +100,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {}
+  Object.entries(addableCssPropsObj(fieldType, elementKey) || {}).forEach(([prop, propObj]) => {
+    if (typeof propObj === 'object' && !existCssProps?.includes(prop)) {
+      if (Object.keys(propObj).find(propName => existCssProps.includes(propName))) existCssProps.push(prop)
+    }
+  })
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
   const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
@@ -380,7 +385,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Border"
           >
             <ResetStyle
-              propertyPath={[objPaths.paths?.[propertyKeys[0]], objPaths.paths?.['border-width'], objPaths.paths?.['border-radius']]}
+              propertyPath={Object.values(objPaths.paths)}
               stateObjName="styles"
               id="fld-wrp-bdr"
             />

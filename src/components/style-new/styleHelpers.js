@@ -348,7 +348,7 @@ export function arrDiff(arr1, arr2) {
     .filter(x => !arr2.includes(x))
     .concat(arr2.filter(x => !arr1.includes(x)))
 }
-
+export const addableCssPropsObj = (fieldType, elementKey = 'fld-wrp') => editorConfig[fieldType][elementKey].properties
 export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => Object.keys(editorConfig[fieldType][elementKey].properties)
 // return Object.keys(editorConfig.texfieldStyle.properties)
 // switch (fieldType) {

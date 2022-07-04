@@ -7,7 +7,8 @@ const labelCssProps = {
     'background-size': true,
   },
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -44,7 +45,8 @@ const selectOptionCssProps = {
 }
 const iconCssProps = {
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -78,7 +80,8 @@ const fieldWrpCssProps = {
   },
   'background-color': '',
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -196,7 +199,8 @@ const buttonCssProps = {
     'background-size': true,
   },
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -229,7 +233,8 @@ const chackProps = {
     'background-size': true,
   },
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -252,7 +257,8 @@ const formCommonCssProps = {
   padding: '5px',
   margin: '5px',
   border: {
-    border: true,
+    'border-style': true,
+    'border-color': true,
     'border-width': true,
     'border-radius': true,
   },
@@ -271,7 +277,8 @@ const editorConfig = {
   'quick-tweaks': {
     properties: {
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -290,7 +297,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -310,7 +318,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -330,7 +339,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -343,7 +353,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -358,7 +369,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -372,7 +384,8 @@ const editorConfig = {
     properties: {
       'background-color': '',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -391,7 +404,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -406,7 +420,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -420,7 +435,8 @@ const editorConfig = {
     properties: {
       'background-color': '',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -439,7 +455,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -454,7 +471,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -468,7 +486,8 @@ const editorConfig = {
     properties: {
       'background-color': '',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -487,7 +506,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -502,7 +522,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -516,7 +537,8 @@ const editorConfig = {
     properties: {
       'background-color': '',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -535,7 +557,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -550,7 +573,8 @@ const editorConfig = {
       padding: '5px',
       margin: '5px',
       border: {
-        border: true,
+        'border-style': true,
+        'border-color': true,
         'border-width': true,
         'border-radius': true,
       },
@@ -1056,7 +1080,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1067,7 +1092,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1083,7 +1109,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1103,7 +1130,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1123,7 +1151,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1139,7 +1168,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1163,7 +1193,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1187,7 +1218,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1203,7 +1235,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1219,7 +1252,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1236,7 +1270,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1256,7 +1291,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1279,7 +1315,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1290,7 +1327,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1306,7 +1344,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1322,7 +1361,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1342,7 +1382,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1362,7 +1403,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1378,7 +1420,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1402,7 +1445,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1426,7 +1470,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1442,7 +1487,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1462,7 +1508,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1479,7 +1526,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1499,7 +1547,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1533,7 +1582,8 @@ const editorConfig = {
       states: ['before'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1552,7 +1602,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1572,7 +1623,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1598,7 +1650,8 @@ const editorConfig = {
       states: [],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1627,7 +1680,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1638,7 +1692,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1654,7 +1709,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1674,7 +1730,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1694,7 +1751,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1714,7 +1772,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1730,7 +1789,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1754,7 +1814,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1778,7 +1839,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1794,7 +1856,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1810,7 +1873,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1827,7 +1891,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1850,7 +1915,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1861,7 +1927,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1877,7 +1944,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1897,7 +1965,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1915,7 +1984,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1935,7 +2005,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1951,7 +2022,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1975,7 +2047,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -1999,7 +2072,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -2015,7 +2089,8 @@ const editorConfig = {
       states: ['hover', 'focus'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -2035,7 +2110,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
@@ -2052,7 +2128,8 @@ const editorConfig = {
       states: ['hover'],
       properties: {
         border: {
-          border: true,
+          'border-style': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
