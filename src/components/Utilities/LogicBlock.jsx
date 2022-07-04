@@ -48,19 +48,36 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
   }
   const customSmartTags = ['_bf_custom_date_format()', '_bf_user_meta_key()', '_bf_query_param()']
 
+  const findFldTypeFromLogicsArr = (fldType, logicsArr) => {
+    const foundFieldType = logicsArr.find(itm => {
+      if (itm === fldType) return true
+      if (!itm.includes('.')) return false
+      const firstDot = itm.indexOf('.')
+      const fieldType = itm.substring(0, firstDot)
+      if (fldType !== fieldType) return false
+      const dataProps = itm.substring(firstDot + 1)
+      if (!dataProps) return false
+      const [propsPath, propValue] = dataProps.split(':')
+      const nestedProps = propsPath.split('.')
+      const nestedPropsValue = nestedProps.reduce((acc, itm) => acc[itm], fields[fieldKey])
+      if (nestedPropsValue === propValue) return true
+      return false
+    })
+    return foundFieldType
+  }
+
   const getLogicsBasedOnFieldType = fldType => {
     if (!fldType) return []
     const logicsArr = Object.entries(conditionalLogicsList)
     return logicsArr.reduce((acc, [key, data]) => {
-      if (data.notFields && data.notFields.includes(fldType)) return acc
+      if (data.notFields && findFldTypeFromLogicsArr(fldType, data.notFields)) return acc
       if (data.fields) {
-        if (data.fields.includes(fldType)) return [...acc, { key, lbl: data.label }]
+        if (findFldTypeFromLogicsArr(fldType, data.fields)) return [...acc, { key, lbl: data.label }]
         return acc
       }
       return [...acc, { key, lbl: data.label }]
     }, [])
   }
-  console.log('----------qweqwe-------------------')
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
