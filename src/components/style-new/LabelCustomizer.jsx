@@ -24,7 +24,7 @@ export default function LabelCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Label Background Color"
+        subtitle="Label Background Color Control"
         value={flBg}
         stateObjName="themeColors"
         propertyPath="--fld-lbl-bg"
@@ -32,17 +32,17 @@ export default function LabelCustomizer() {
       />
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Label Text Color"
+        subtitle="Label Text Color Control"
         value={flc}
         stateObjName="themeColors"
         propertyPath="--fld-lbl-c"
         modalId="fld-lbl-c"
       />
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Label Spacing"
+          subtitle="Label Spacing Control"
           objectPaths={flSpacingObj}
           id="lbl-spacing-control"
         />
@@ -55,7 +55,7 @@ export default function LabelCustomizer() {
             id="fld-lbl-sh"
           />
           <ShadowControl
-            subtitle="Label Shadow"
+            subtitle="Label Shadow Control"
             value={flSh}
             objectPaths={fldLblShObj}
             id="fld-lbl-sh"
@@ -71,7 +71,7 @@ export default function LabelCustomizer() {
             id="fld-lbl-bdr"
           />
           <BorderControl
-            subtitle="Label Border"
+            subtitle="Label Border Control"
             objectPaths={borderPathsObj}
             id="fld-lbl-bdr"
           />

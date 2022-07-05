@@ -91,23 +91,23 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
       <div className="d-flx flx-wrp">
         {sheetConf.default?.worksheets?.headers?.[sheetConf.worksheet]?.[sheetConf.headerRow] && (
           <TitleModal action={openUpdateModal}>
-            <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in sheetConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row')} subTitle={__('Control how the row gets updated.')} />
+            <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in sheetConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row', 'bitform')} subTitle={__('Control how the row gets updated.', 'bitform')} />
           </TitleModal>
         )}
 
-        <TableCheckBox onChange={openShareModal} checked={sheetConf?.actions?.share?.find(userShare => userShare.email) || false} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Workbook')} subTitle={__('Share workbook with users pushed to Zoho Sheet.')} />
+        <TableCheckBox onChange={openShareModal} checked={sheetConf?.actions?.share?.find(userShare => userShare.email) || false} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Workbook', 'bitform')} subTitle={__('Share workbook with users pushed to Zoho Sheet.', 'bitform')} />
       </div>
 
       <Modal
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-        title={__('Update Row')}
+        title={__('Update Row', 'bitform')}
       >
         <div className="o-a">
           {sheetConf?.actions?.update && (
             <>
-              <small>{__('Enter the criteria to update rows. Please use the below format.')}</small>
+              <small>{__('Enter the criteria to update rows. Please use the below format.', 'bitform')}</small>
               <br />
               <div className="mt-4">
                 <small>
@@ -123,16 +123,16 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={sheetConf.actions?.update?.criteria} />
               </div>
 
-              <div className="font-w-m mt-3">{__('Update Preferance')}</div>
-              <small>{__('update row for first match only?')}</small>
+              <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
+              <small>{__('update row for first match only?', 'bitform')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'firstMatch')} radio checked={sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'firstMatch')} radio checked={!sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('No')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'firstMatch')} radio checked={sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'firstMatch')} radio checked={!sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('No', 'bitform')} />
               </div>
-              <small>{__('insert new row if the above criteria doesn\'t met?')}</small>
+              <small>{__('insert new row if the above criteria doesn\'t met?', 'bitform')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={sheetConf.actions.update?.insert} name="up-row" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!sheetConf.actions.update?.insert} name="up-row" title={__('No')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={sheetConf.actions.update?.insert} name="up-row" title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!sheetConf.actions.update?.insert} name="up-row" title={__('No', 'bitform')} />
               </div>
             </>
           )}
@@ -143,7 +143,7 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
         md
         show={actionMdl.show === 'share'}
         setModal={() => setActionMdl({ show: false })}
-        title={__('Share Settings')}
+        title={__('Share Settings', 'bitform')}
       >
         <div className="o-a" style={{ height: '95%' }}>
           {sheetConf?.actions?.share?.length > 0 && sheetConf.actions.share.map((user, i) => (

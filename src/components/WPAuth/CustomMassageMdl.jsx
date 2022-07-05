@@ -27,7 +27,7 @@ export default function CustomMassageMdl({ dataConf, setDataConf, type, showMdl,
     <Modal md show={showMdl} setModal={setshowMdl} title={title} style={{ overflow: 'auto' }}>
       <>
         <div className="mt-3">
-          <b>{__('Message:')}</b>
+          <b>{__('Message:', 'bitform')}</b>
           <label htmlFor={`mail-tem-${dataConf[type]?.formID}`} className="mt-2 w-10">
             <TinyMCE
               id={`mail-tem-${dataConf[type]?.formID}`}

@@ -23,7 +23,7 @@ export default function HelperTextCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Helper Text Background Color"
+        subtitle="Helper Text Background Color Control"
         value={htBg}
         stateObjName="themeColors"
         propertyPath="--hlp-txt-bg"
@@ -39,7 +39,7 @@ export default function HelperTextCustomizer() {
             id="hlp-txt-bdr"
           />
           <BorderControl
-            subtitle="Helper Text Border"
+            subtitle="Helper Text Border Control"
             objectPaths={borderPathsObj}
             id="hlp-txt-bdr"
           />
@@ -59,7 +59,7 @@ export default function HelperTextCustomizer() {
       />
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
           subtitle="Helper Text Spacing control"
@@ -76,7 +76,7 @@ export default function HelperTextCustomizer() {
             id="hlp-txt-sh"
           />
           <ShadowControl
-            subtitle="Helper Text Shadow"
+            subtitle="Helper Text Shadow Control"
             value={htSh}
             objectPaths={hlpTxtShObj}
             id="hlp-txt-sh"
@@ -86,7 +86,7 @@ export default function HelperTextCustomizer() {
 
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Helper Text Color"
+        subtitle="Helper Text Color Control"
         value={htC}
         stateObjName="themeColors"
         propertyPath="--hlp-txt-c"

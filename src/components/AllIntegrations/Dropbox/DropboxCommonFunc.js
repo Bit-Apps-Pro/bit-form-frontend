@@ -39,14 +39,14 @@ export const getAllDropboxFolders = (formID = null, dropboxConf, setDropboxConf)
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred'),
-    loading: __('Loading Dropbox Folders List...'),
+    error: __('Error Occurred', 'bitform'),
+    loading: __('Loading Dropbox Folders List...', 'bitform'),
   })
 }
 
 export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading) => {
   if (!confTmp.accessCode || !confTmp.apiKey || !confTmp.apiSecret) {
-    toast.error(__('Dropbox ApiKey, ApiSecret & Access Code can\'t be empty'))
+    toast.error(__('Dropbox ApiKey, ApiSecret & Access Code can\'t be empty', 'bitform'))
     return
   }
   setIsLoading(true)
@@ -64,11 +64,11 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading)
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
-        toast.success(__('Authorized Successfully'))
+        toast.success(__('Authorized Successfully', 'bitform'))
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        toast.error(`${__('Authorization failed Cause: ')}${result.data.data || result.data}. ${__('please try again')}`)
+        toast.error(`${__('Authorization failed Cause: ', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}`)
       } else {
-        toast.error(__('Authorization failed. please try again'))
+        toast.error(__('Authorization failed. please try again', 'bitform'))
       }
       setIsLoading(false)
     })

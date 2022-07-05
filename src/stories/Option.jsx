@@ -128,7 +128,7 @@ export default function Option({ options }) {
       </SortableContainer>
       <div className="flx">
         <Button className={css(optionStyle.add_btn)} onClick={addOption}>
-          {__('Add More +')}
+          {__('Add More +', 'bitform')}
         </Button>
       </div>
     </div>

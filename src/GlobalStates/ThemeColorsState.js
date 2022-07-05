@@ -31,8 +31,6 @@ export const $lightThemeColors = atom({
     '--gfbg-l': '100%', // global field background color lightness
     '--gfbg-a': 100, // global field background color opacity
 
-    '--fld-focs-i-fltr': 'invert(26%) sepia(41%) saturate(6015%) hue-rotate(211deg) brightness(100%) contrast(108%)',
-
     '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-bdr': '', // field wrapper border
     '--fld-wrp-sh': '', // field wrapper box shadow

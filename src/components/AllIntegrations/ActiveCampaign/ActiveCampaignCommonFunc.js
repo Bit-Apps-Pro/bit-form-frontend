@@ -22,14 +22,14 @@ export const refreshActiveCampaingList = (activeCampaingConf, setActiveCampaingC
             newConf.default = {}
           }
           newConf.default.activeCampaignLists = result.data.activeCampaignLists
-          setSnackbar({ show: true, msg: __('ActiveCampaign lists refreshed') })
+          setSnackbar({ show: true, msg: __('ActiveCampaign lists refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No ActiveCampaign lists found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No ActiveCampaign lists found. Try changing the header row number or try again', 'bitform') })
         }
 
         setActiveCampaingConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('ActiveCampaign lists refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('ActiveCampaign lists refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })
@@ -50,14 +50,14 @@ export const refreshActiveCampaingTags = (activeCampaingConf, setActiveCampaingC
             newConf.default = {}
           }
           newConf.default.activeCampaignTags = result.data.activeCampaignTags
-          setSnackbar({ show: true, msg: __('ActiveCampaign tags refreshed') })
+          setSnackbar({ show: true, msg: __('ActiveCampaign tags refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No ActiveCampaign tags found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No ActiveCampaign tags found. Try changing the header row number or try again', 'bitform') })
         }
 
         setActiveCampaingConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('ActiveCampaign tags refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('ActiveCampaign tags refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })
@@ -79,14 +79,14 @@ export const refreshActiveCampaingHeader = (activeCampaingConf, setActiveCampain
           newConf.default.fields = result.data.activeCampaignField
           const { fields } = newConf.default
           newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', activeCampaignField: f.fieldId, required: true }))
-          setSnackbar({ show: true, msg: __('ActiveCampaign fields refreshed') })
+          setSnackbar({ show: true, msg: __('ActiveCampaign fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No ActiveCampaign fields found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No ActiveCampaign fields found. Try changing the header row number or try again', 'bitform') })
         }
 
         setActiveCampaingConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('ActiveCampaign fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('ActiveCampaign fields refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })

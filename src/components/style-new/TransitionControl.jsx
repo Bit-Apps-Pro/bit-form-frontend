@@ -69,7 +69,7 @@ export default function TransitionControl({ title,
             <TrashIcn size="14" />
           </button>
         )}
-        <span className={css(ut.fw500)}>{__(title)}</span>
+        <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
 
       <div className={css(ut.flxc)}>

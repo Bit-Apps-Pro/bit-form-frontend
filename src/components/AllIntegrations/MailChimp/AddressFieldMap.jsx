@@ -11,13 +11,13 @@ export default function AddressFieldMap({ i, formFields, field, sheetConf, setSh
       className="flx flx-around mt-2 mr-1"
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleAddress(ev, i, sheetConf, setSheetConf)}>
-        <option value="">{__('Select Field')}</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {
           formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
         }
       </select>
       <select className="btcd-paper-inp" name="mailChimpAddressField" value={field.mailChimpAddressField || ''} onChange={(ev) => handleAddress(ev, i, sheetConf, setSheetConf, addressField)} disabled={isRequired}>
-        <option value="">{__('Select Field')}</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {isRequired
           ? Object.values(addressField).map((listField, indx) => (
             <option key={`add-${indx * 2}`} value={listField.tag}>

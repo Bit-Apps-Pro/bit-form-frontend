@@ -90,11 +90,11 @@ export const refreshModules = (formID, biginConf, setBiginConf, setisLoading, se
           newConf.tokenDetails = result.data.tokenDetails
         }
         setBiginConf({ ...newConf })
-        setSnackbar({ show: true, msg: __('Modules refreshed') })
+        setSnackbar({ show: true, msg: __('Modules refreshed', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Modules refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -128,11 +128,11 @@ export const refreshRelatedList = (formID, biginConf, setBiginConf, setisLoading
           newConf.tokenDetails = result.data.tokenDetails
         }
         setBiginConf({ ...newConf })
-        setSnackbar({ show: true, msg: __('RelatedLists refreshed') })
+        setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -181,7 +181,7 @@ export const getFields = (recordTab, formID, biginConf, setBiginConf, setisLoadi
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -212,7 +212,7 @@ export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setisLoa
             newConf.default.moduleData = {}
           }
           newConf.default.moduleData[module].tags = result.data.tags
-          setSnackbar({ show: true, msg: __('Tags Refreshed') })
+          setSnackbar({ show: true, msg: __('Tags Refreshed', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -220,7 +220,7 @@ export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setisLoa
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Tags refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Tags refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -245,7 +245,7 @@ export const refreshUsers = (formID, biginConf, setBiginConf, setisLoading, setS
             newConf.default = {}
           }
           newConf.default.users = result.data.users
-          setSnackbar({ show: true, msg: __('Users Refreshed') })
+          setSnackbar({ show: true, msg: __('Users Refreshed', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -253,7 +253,7 @@ export const refreshUsers = (formID, biginConf, setBiginConf, setisLoading, setS
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Users refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -282,9 +282,9 @@ export const checkMappedFields = (biginConf) => {
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty') : '',
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty') : '',
+      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -306,7 +306,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
         setisLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -331,11 +331,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

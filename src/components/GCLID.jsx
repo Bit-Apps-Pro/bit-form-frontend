@@ -44,15 +44,15 @@ export default function GCLID() {
 
   const handleAuthorize = () => {
     if (!gclidConf.clientId) {
-      setError({ clientId: !gclidConf.clientId ? __('Client ID cann\'t be empty') : '' })
+      setError({ clientId: !gclidConf.clientId ? __('Client ID cann\'t be empty', 'bitform') : '' })
       return
     }
     if (!gclidConf.clientSecret) {
-      setError({ clientSecret: !gclidConf.clientSecret ? __('Secret key cann\'t be empty') : '' })
+      setError({ clientSecret: !gclidConf.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '' })
       return
     }
     if (!gclidConf.clientCustomerId) {
-      setError({ clientCustomerId: !gclidConf.clientCustomerId ? __('Customer ID key cann\'t be empty') : '' })
+      setError({ clientCustomerId: !gclidConf.clientCustomerId ? __('Customer ID key cann\'t be empty', 'bitform') : '' })
       return
     }
     setisLoading(true)
@@ -71,7 +71,7 @@ export default function GCLID() {
         }
         if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
           const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-          setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
+          setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
           setisLoading(false)
         } else {
           const newConf = produce(gclidConf, draft => {
@@ -98,11 +98,11 @@ export default function GCLID() {
           newConf.tokenDetails = result.data
           setConf(newConf)
           setisAuthorized(true)
-          setSnackbar({ show: true, msg: __('Authorized Successfully') })
+          setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
         } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-          setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+          setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
         } else {
-          setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+          setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
         }
         setisLoading(false)
       })
@@ -112,11 +112,11 @@ export default function GCLID() {
       .then(result => result)
       .then(result => {
         if (result && result.success) {
-          setSnackbar({ show: true, msg: __('save Successfully') })
+          setSnackbar({ show: true, msg: __('save Successfully', 'bitform') })
         } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-          setSnackbar({ show: true, msg: `${__('save failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+          setSnackbar({ show: true, msg: `${__('save failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
         } else {
-          setSnackbar({ show: true, msg: __('save failed. please try again') })
+          setSnackbar({ show: true, msg: __('save failed. please try again', 'bitform') })
         }
         setisLoading(false)
       })
@@ -133,11 +133,11 @@ export default function GCLID() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '99%', left: -15, width: '104%' }}>
             <div className="pro">
-              {__('Available On')}
+              {__('Available On', 'bitform')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
-                  {__('Premium')}
+                  {__('Premium', 'bitform')}
                 </span>
               </a>
             </div>
@@ -145,39 +145,39 @@ export default function GCLID() {
         )}
         <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-        <h2>{__('Google Ads')}</h2>
+        <h2>{__('Google Ads', 'bitform')}</h2>
         <br />
         <div className="btcd-hr" />
 
         <div className="mt-2">
           <label htmlFor="client_id">
-            <b>{__('Client ID')}</b>
+            <b>{__('Client ID', 'bitform')}</b>
             <input id="clientId" name="clientId" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientId} className="btcd-paper-inp mt-1" placeholder="Client ID" type="text" />
           </label>
           <div style={{ color: 'red' }}>{error.clientId}</div>
         </div>
         <div className="mt-2">
           <label htmlFor="client_secret">
-            <b>{__('Client Secret')}</b>
+            <b>{__('Client Secret', 'bitform')}</b>
             <input id="clientSecret" name="clientSecret" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientSecret} className="btcd-paper-inp mt-1" placeholder="Client Secret" type="text" />
           </label>
           <div style={{ color: 'red' }}>{error.clientSecret}</div>
         </div>
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
         <CopyText value={`${bits.googleRedirectURL}`} className="field-key-cpy w-12 ml-0" />
 
         <div className="mt-2">
           <small className="d-blk mt-2">
-            {__('To get Client ID and SECRET , Please Visit Google API Console')}
+            {__('To get Client ID and SECRET , Please Visit Google API Console', 'bitform')}
             {' '}
-            <a className="btcd-link" href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noreferrer">{__('Google API Console')}</a>
+            <a className="btcd-link" href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noreferrer">{__('Google API Console', 'bitform')}</a>
           </small>
         </div>
 
         <div className="mt-4">
           <label htmlFor="clientCustomerId">
-            <b>{__('Customer Id (non manager account)')}</b>
+            <b>{__('Customer Id (non manager account)', 'bitform')}</b>
             <input id="clientCustomerId" name="clientCustomerId" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientCustomerId} className="btcd-paper-inp mt-1" placeholder="client Customer Id" type="text" />
           </label>
           <div style={{ color: 'red' }}>{error.clientCustomerId}</div>
@@ -185,14 +185,14 @@ export default function GCLID() {
 
         <div className="mt-2">
           <small className="d-blk mt-2">
-            {__('To get Customer ID , Please Visit')}
+            {__('To get Customer ID , Please Visit', 'bitform')}
             {' '}
-            <a className="btcd-link" href="https://ads.google.com/home/tools/manager-accounts/" target="_blank" rel="noreferrer">{__('Google Ads Manager Account')}</a>
+            <a className="btcd-link" href="https://ads.google.com/home/tools/manager-accounts/" target="_blank" rel="noreferrer">{__('Google Ads Manager Account', 'bitform')}</a>
           </small>
         </div>
 
         <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-          {isAuthorized ? __('Authorized ✔') : __('Authorize')}
+          {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />

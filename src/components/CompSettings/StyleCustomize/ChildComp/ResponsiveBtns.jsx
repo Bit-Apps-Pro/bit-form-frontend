@@ -9,9 +9,9 @@ export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
     <div className="resp-btn pos-rel flx">
 
       {[
-        { lbl: 'sm', icn: <MobileIcon size="15" />, tip: __('Phone View') },
-        { lbl: 'md', icn: <TabletIcon size="15" />, tip: __('Tablet View') },
-        { lbl: 'lg', icn: <LaptopIcn size="17" />, tip: __('Laptop View') }]
+        { lbl: 'sm', icn: <MobileIcon size="15" />, tip: __('Phone View', 'bitform') },
+        { lbl: 'md', icn: <TabletIcon size="15" />, tip: __('Tablet View', 'bitform') },
+        { lbl: 'lg', icn: <LaptopIcn size="17" />, tip: __('Laptop View', 'bitform') }]
         .map(itm => (
           <button
             key={`${itm.lbl}+${useId()}`}

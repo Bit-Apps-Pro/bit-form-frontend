@@ -93,7 +93,7 @@ export default function HtmlSelectSettings() {
       <div className={css(FieldStyle.fieldSection)}>
         <button data-testid="edt-opt-stng" onClick={() => setOptionMdl(true)} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
-          {__('Edit Options')}
+          {__('Edit Options', 'bitform')}
         </button>
       </div>
       <FieldSettingsDivider />
@@ -103,17 +103,17 @@ export default function HtmlSelectSettings() {
         show={optionMdl}
         setModal={() => setOptionMdl(false)}
         className="o-v"
-        title={__('Options')}
+        title={__('Options', 'bitform')}
       >
         <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On')}
+                {__('Available On', 'bitform')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium')}
+                    {__('Premium', 'bitform')}
                   </span>
                 </a>
               </div>

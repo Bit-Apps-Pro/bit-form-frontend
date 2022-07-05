@@ -31,9 +31,9 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('User Type:')}</b>
+      <b className="wdt-200 d-in-b">{__('User Type:', 'bitform')}</b>
       <select onChange={handleInput} name="user_type" value={getgistConf?.user_type} className="btcd-paper-inp w-5">
-        <option value="">{__('Select User Type')}</option>
+        <option value="">{__('Select User Type', 'bitform')}</option>
         {
           contactTypes.map(({ key, label }) => (
             <option key={key} value={key}>
@@ -43,12 +43,12 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
         }
       </select>
       <div className="mt-4">
-        <b className="wdt-100">{__('Map Fields')}</b>
+        <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-        <div className="txt-dp"><b>{__('Gist Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Gist Fields', 'bitform')}</b></div>
       </div>
       {getgistConf?.field_map.map((itm, i) => (
         <GetgistFieldMap
@@ -66,7 +66,7 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
 
       {getgistConf?.user_type && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
           <div className="btcd-hr mt-1" />
           <GetgistActions
             getgistConf={getgistConf}

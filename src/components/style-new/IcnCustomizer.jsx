@@ -25,8 +25,8 @@ export default function IcnCustomizer({ elementKey }) {
 
   const title = () => {
     const value = elementKey.match(/(pre|suf)/gi)?.[0]
-    if (value === 'pre') return 'Leading'
-    if (value === 'suf') return 'Trailing'
+    if (value === 'pre') return 'Prefix'
+    if (value === 'suf') return 'Suffix'
   }
 
   const icnValue = (varName) => getNumFromStr(themeVars[varName])
@@ -91,7 +91,7 @@ export default function IcnCustomizer({ elementKey }) {
             id={`${elementKey}-bdr`}
           />
           <BorderControl
-            subtitle={`${title()} Icon Border`}
+            subtitle={`${title()} Icon Border Control`}
             objectPaths={borderPathsObj}
             id={`${elementKey}-bdr`}
           />
@@ -100,7 +100,7 @@ export default function IcnCustomizer({ elementKey }) {
 
       <FilterColorPicker
         title="Color"
-        subtitle="Icon Fill Color"
+        subtitle="Label Text Color Control"
         value={fltrColorValue}
         stateObjName="themeColors"
         propertyPath={`--${elementKey}-clr`}
@@ -122,18 +122,18 @@ export default function IcnCustomizer({ elementKey }) {
           />
           <FilterController
             action={{ type: 'filter-control' }}
-            subtitle={`${title()} Filter`}
+            subtitle={`${title()} Filter control`}
             objectPaths={preIcnFltrObj}
-            id="filter-control"
+            id={`${elementKey}-fltr-ctrl`}
           />
         </div>
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle={`${title()} Icon Spacing`}
+          subtitle={`${title()} Icon Spacing Control`}
           objectPaths={preIconSpacingObj}
           id="pre-i-spacing-control"
         />
@@ -147,7 +147,7 @@ export default function IcnCustomizer({ elementKey }) {
             id={`${elementKey}-sh`}
           />
           <ShadowControl
-            subtitle={`${title()} Icon Shadow`}
+            subtitle={`${title()} Icon Shadow Control`}
             value={themeColors[`--${elementKey}-sh`]}
             objectPaths={preIcnShObj}
             id={`${elementKey}-sh`}

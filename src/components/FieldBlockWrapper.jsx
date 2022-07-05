@@ -33,7 +33,7 @@ export default function FieldBlockWrapper({ layoutItem,
           type="button"
           className="drag g-c us-n blk-wrp-btn"
           style={{ cursor: 'move' }}
-          title={__('Move')}
+          title={__('Move', 'bitform')}
           data-testid={`${layoutItem.i}-move-btn`}
         >
           <MoveIcn size="20" stroke="2" />
@@ -41,7 +41,7 @@ export default function FieldBlockWrapper({ layoutItem,
         <button
           type="button"
           className="g-c drag curp us-n no-drg blk-wrp-btn"
-          title={__('Style')}
+          title={__('Style', 'bitform')}
           onClick={styleNavigation}
           data-testid={`${layoutItem.i}-style-btn`}
         >
@@ -50,7 +50,7 @@ export default function FieldBlockWrapper({ layoutItem,
         <button
           type="button"
           className="g-c drag curp us-n no-drg blk-wrp-btn"
-          title={__('Settings')}
+          title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
           data-testid={`${layoutItem.i}-settings-btn`}
         >
@@ -69,7 +69,7 @@ export default function FieldBlockWrapper({ layoutItem,
           // unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}
-          title={__('More Options')}
+          title={__('More Options', 'bitform')}
           onClick={e => handleContextMenu(e, layoutItem.i)}
           data-testid={`${layoutItem.i}-more-options`}
         >

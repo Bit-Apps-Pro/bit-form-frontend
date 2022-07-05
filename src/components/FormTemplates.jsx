@@ -46,7 +46,7 @@ export default function FormTemplates({ setTempModal, setSnackbar }) {
           <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <button onClick={e => handleTemplateBtnClick(e, tem)} className={`${css(app.btn)} btn-white sh-sm`} type="button" data-testid={`create-form-btn-${i}`}>{__('Create')}</button>
+            <button onClick={e => handleTemplateBtnClick(e, tem)} className={`${css(app.btn)} btn-white sh-sm`} type="button" data-testid={`create-form-btn-${i}`}>{__('Create', 'bitform')}</button>
           </div>
         </div>
       ))}
@@ -55,14 +55,14 @@ export default function FormTemplates({ setTempModal, setSnackbar }) {
         <DownloadIcon size="60" />
         <div>Form Import</div>
         <div className="btcd-hid-btn">
-          <button onClick={() => setModal(true)} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Import')}</button>
+          <button onClick={() => setModal(true)} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Import', 'bitform')}</button>
         </div>
       </div>
 
       <Modal
         show={modal}
         setModal={setModal}
-        title={__('Import Form')}
+        title={__('Import Form', 'bitform')}
         subTitle=""
       >
         <FormImporter setModal={setModal} setTempModal={setTempModal} newFormId={newFormId} setSnackbar={setSnackbar} />

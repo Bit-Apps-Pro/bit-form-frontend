@@ -85,7 +85,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next')}
+          {__('Next', 'bitform')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>

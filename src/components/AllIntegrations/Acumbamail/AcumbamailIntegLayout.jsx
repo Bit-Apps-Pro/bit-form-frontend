@@ -8,9 +8,9 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('Actions:')}</b>
+      <b className="wdt-200 d-in-b">{__('Actions:', 'bitform')}</b>
       <select onChange={handleInput} name="mainAction" value={acumbamailConf.mainAction} className="btcd-paper-inp w-5">
-        <option value="">{__('Select Actions')}</option>
+        <option value="">{__('Select Actions', 'bitform')}</option>
         {
           acumbamailConf.allActions && acumbamailConf.allActions.map(({ key, label }) => (
             <option key={key} value={key}>
@@ -21,9 +21,9 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
       </select>
       <br />
       <br />
-      <b className="wdt-200 d-in-b">{__('All List:')}</b>
+      <b className="wdt-200 d-in-b">{__('All List:', 'bitform')}</b>
       <select onChange={handleInput} name="listId" value={acumbamailConf.listId} className="btcd-paper-inp w-5">
-        <option value="">{__('Select List')}</option>
+        <option value="">{__('Select List', 'bitform')}</option>
         {
           acumbamailConf?.default?.allLists && Object.entries(acumbamailConf.default.allLists).map((item) => (
             <option key={item[0]} value={item[0]}>
@@ -32,7 +32,7 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
           ))
         }
       </select>
-      <button onClick={() => fetchAllList(acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch Subscriber List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => fetchAllList(acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch Subscriber List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       {isLoading && (
         <Loader style={{
@@ -45,14 +45,14 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
         />
       )}
       <div className="mt-5">
-        <b className="wdt-100">{__('Field Map')}</b>
-        <button onClick={() => refreshFields(null, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <b className="wdt-100">{__('Field Map', 'bitform')}</b>
+        <button onClick={() => refreshFields(null, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
 
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-        <div className="txt-dp"><b>{__('Acumbamail Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Acumbamail Fields', 'bitform')}</b></div>
       </div>
       {acumbamailConf.default?.allFields
         && (

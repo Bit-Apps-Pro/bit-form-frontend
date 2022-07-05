@@ -49,18 +49,18 @@ export default function ElasticEmailActions({ elasticEmailConf, setElasticEmailC
   return (
 
     <div className="pos-rel d-flx w-8">
-      {/* <TableCheckBox checked={elasticEmailConf.actions?.sendActivation || false} onChange={(e) => actionHandler(e, 'sendActivation')} className="wdt-200 mt-4 mr-2" value="sendActivation" title={__('Send Activation Email')} subTitle={__('Add Send Activation Email')} /> */}
-      <TableCheckBox checked={elasticEmailConf?.actions?.status || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status')} subTitle={__('Add Status to contact')} />
+      {/* <TableCheckBox checked={elasticEmailConf.actions?.sendActivation || false} onChange={(e) => actionHandler(e, 'sendActivation')} className="wdt-200 mt-4 mr-2" value="sendActivation" title={__('Send Activation Email', 'bitform')} subTitle={__('Add Send Activation Email', 'bitform')} /> */}
+      <TableCheckBox checked={elasticEmailConf?.actions?.status || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status', 'bitform')} subTitle={__('Add Status to contact', 'bitform')} />
 
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt={__('Ok')}
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Status')}
+        title={__('Status', 'bitform')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         {isLoading

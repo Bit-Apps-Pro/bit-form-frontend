@@ -24,9 +24,9 @@ export const checkMappedFields = (twilioConf) => {
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
   if (!confTmp.sid || !confTmp.token || !confTmp.from_num) {
     setError({
-      sid: !confTmp.sid ? __('Account SID can\'t be empty') : '',
-      token: !confTmp.token ? __('Auth Token can\'t be empty') : '',
-      from_num: !confTmp.from_num ? __('Phone number can\'t be empty') : '',
+      sid: !confTmp.sid ? __('Account SID can\'t be empty', 'bitform') : '',
+      token: !confTmp.token ? __('Auth Token can\'t be empty', 'bitform') : '',
+      from_num: !confTmp.from_num ? __('Phone number can\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -48,11 +48,11 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })

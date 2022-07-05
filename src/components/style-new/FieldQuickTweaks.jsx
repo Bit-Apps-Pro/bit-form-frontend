@@ -285,8 +285,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
           `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->border-color`,
           `fields->${fieldKey}->classes->.${fieldKey}-fld:focus->box-shadow`,
           `fields->${fieldKey}->classes->.${fieldKey}-fld:hover->border-color`,
-          `fields->${fieldKey}->classes->.${fieldKey}-fld:focus ~ .${fieldKey}-pre-i->filter`,
-          `fields->${fieldKey}->classes->.${fieldKey}-fld:focus ~ .${fieldKey}-suf-i->filter`,
         ]
         break
       default:

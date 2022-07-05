@@ -20,14 +20,14 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Block Gap')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Block Gap', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
         info={[
-          { icn: <b>R</b>, lbl: __('Row Gap') },
-          { icn: <b>C</b>, lbl: __('Column Gap') },
-          { icn: <XYordinateIcn />, lbl: __('Both Side Gap') },
+          { icn: <b>R</b>, lbl: __('Row Gap', 'bitform') },
+          { icn: <b>C</b>, lbl: __('Column Gap', 'bitform') },
+          { icn: <XYordinateIcn />, lbl: __('Both Side Gap', 'bitform') },
         ]}
         className="btc-range"
         unit="px"

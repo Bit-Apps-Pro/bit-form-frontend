@@ -11,13 +11,13 @@ export default function CustomFieldMap({ formFields, userConf, setUserConf, type
 
       <div>
         <div className="mt-3 mb-1">
-          <b>{__('User Meta Field Mappping')}</b>
+          <b>{__('User Meta Field Mappping', 'bitform')}</b>
         </div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
-          <div className="txt-dp"><b>{__('Meta Value')}</b></div>
+          <div className="txt-dp"><b>{__('Meta Value', 'bitform')}</b></div>
           <div className="txt-dp">
-            <b>{__('Meta Key')}</b>
+            <b>{__('Meta Key', 'bitform')}</b>
           </div>
         </div>
       </div>

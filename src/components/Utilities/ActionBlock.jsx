@@ -69,7 +69,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
         onChange={e => changeAtnField(e.target.value)}
         style={{ width: 720 }}
       >
-        <option value="">{__('Select One')}</option>
+        <option value="">{__('Select One', 'bitform')}</option>
         {[...formFields, ...btnFields].map(itm => <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
@@ -84,15 +84,15 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
         style={{ width: 400 }}
         className="w-4"
       >
-        <option value="">{__('Select One')}</option>
-        {(isNotFileUpField && isNotButtonField && isNotValidateAction) && <option value="value">{__('Value')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
-        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="readonly">{__('Readonly')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
-        {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
-        {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required')}</option>}
+        <option value="">{__('Select One', 'bitform')}</option>
+        {(isNotFileUpField && isNotButtonField && isNotValidateAction) && <option value="value">{__('Value', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="readonly">{__('Readonly', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show', 'bitform')}</option>}
+        {actionType === 'onvalidate' && <option value="required">{__('Required', 'bitform')}</option>}
+        {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required', 'bitform')}</option>}
       </MtSelect>
 
       {action.action === 'value' && (

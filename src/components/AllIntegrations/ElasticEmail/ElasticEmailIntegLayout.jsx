@@ -16,7 +16,7 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Lists:')}</b>
+        <b className="wdt-200 d-in-b">{__('Lists:', 'bitform')}</b>
 
         <MultiSelect
           defaultValue={elasticEmailConf.list_id}
@@ -25,14 +25,14 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
           onChange={val => setLists(val)}
         />
 
-        <button onClick={() => getAllList(elasticEmailConf, setElasticEmailConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Recipients')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => getAllList(elasticEmailConf, setElasticEmailConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
-      <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
+      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-        <div className="txt-dp"><b>{__('Elastic Email Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Elastic Email Fields', 'bitform')}</b></div>
       </div>
 
       {elasticEmailConf.list_id && elasticEmailConf?.field_map.map((itm, i) => (
@@ -56,7 +56,7 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
 
       {elasticEmailConf?.list_id && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
           <div className="btcd-hr mt-1" />
           <ElasticEmailActions
             elasticEmailConf={elasticEmailConf}

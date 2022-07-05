@@ -1788,10 +1788,10 @@ arrow:after,
     background-color: var(--white-100);
     cursor: pointer;
   }
-  .context-btn:hover, .context-btn.active {
+  .context-btn:hover {
     background-color: var(--white-0-93);
   }
-  .context-btn:hover svg, .context-btn.active svg {
+  .context-btn:hover svg {
     filter: drop-shadow(1px 1px 0.5px #b3b3b3);
   }
   .context-btn:focus-visible {
@@ -1813,10 +1813,10 @@ arrow:after,
   .context-btn-color { 
     color: var(--b-50)
   }
-  .delete:hover,.delete.active { 
+  .delete:hover { 
     color: var(--red-100-49) !important;
   }
-  .delete:hover svg,.delete.active svg {
+  .delete:hover svg {
     stroke: var(--red-100-49) !important;
   }
   .right-click-context-menu{

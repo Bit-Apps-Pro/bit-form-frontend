@@ -33,10 +33,10 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
     return str
   }
 
-  const titlePreIcn = fieldData.titlePreIcn ? `<img data-dev-title-pre-i="${fieldKey}" ${attFunction('title-pre-i')} classname="${fieldKey}-title-pre-i ${getCustomClsName(fieldKey, 'title-pre-i')}"  src="${fieldData.titlePreIcn}" alt="Title Leading Icon" />` : ''
-  const titleSufIcn = fieldData.titleSufIcn ? `<img data-dev-title-suf-i="${fieldKey}" ${attFunction('title-suf-i')} classname="${fieldKey}-title-suf-i ${getCustomClsName(fieldKey, 'title-suf-i')}" src="${fieldData.titleSufIcn}" alt="Title Trailing Icon" />` : ''
-  const subTitlPreIcn = fieldData.subTitlPreIcn ? `<img data-dev-sub-titl-pre-i="${fieldKey}" ${attFunction('sub-titl-pre-i')} classname="${fieldKey}-sub-titl-pre-i ${getCustomClsName(fieldKey, 'sub-titl-pre-i')}" src="${fieldData.subTitlPreIcn}" alt="Subtitle Leading Icon" />` : ''
-  const subTitlSufIcn = fieldData.subTitlSufIcn ? `<img data-dev-sub-titl-suf-i="${fieldKey}" ${attFunction('sub-titl-suf-i')} classname="${fieldKey}-sub-titl-suf-i ${getCustomClsName(fieldKey, 'sub-titl-suf-i')}" src="${fieldData.subTitlSufIcn}" alt="Subtitle Trailing Icon" />` : ''
+  const titlePreIcn = fieldData.titlePreIcn ? `<img data-dev-title-pre-i="${fieldKey}" ${attFunction('title-pre-i')} classname="${fieldKey}-title-pre-i ${getCustomClsName(fieldKey, 'title-pre-i')}"  src="${fieldData.titlePreIcn}" alt="Title Prefix Icon" />` : ''
+  const titleSufIcn = fieldData.titleSufIcn ? `<img data-dev-title-suf-i="${fieldKey}" ${attFunction('title-suf-i')} classname="${fieldKey}-title-suf-i ${getCustomClsName(fieldKey, 'title-suf-i')}" src="${fieldData.titleSufIcn}" alt="Title Suffix Icon" />` : ''
+  const subTitlPreIcn = fieldData.subTitlPreIcn ? `<img data-dev-sub-titl-pre-i="${fieldKey}" ${attFunction('sub-titl-pre-i')} classname="${fieldKey}-sub-titl-pre-i ${getCustomClsName(fieldKey, 'sub-titl-pre-i')}" src="${fieldData.subTitlPreIcn}" alt="Subtitle Prefix Icon" />` : ''
+  const subTitlSufIcn = fieldData.subTitlSufIcn ? `<img data-dev-sub-titl-suf-i="${fieldKey}" ${attFunction('sub-titl-suf-i')} classname="${fieldKey}-sub-titl-suf-i ${getCustomClsName(fieldKey, 'sub-titl-suf-i')}" src="${fieldData.subTitlSufIcn}" alt="Subtitle Suffix Icon" />` : ''
 
   return (
     <>

@@ -19,7 +19,7 @@ export default function ActiveCampaignActions({ activeCampaingConf, setActiveCam
   return (
 
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={activeCampaingConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update ActiveCampaign')} subTitle={__('Update Responses with ActiveCampaign existing email?')} />
+      <TableCheckBox checked={activeCampaingConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update ActiveCampaign', 'bitform')} subTitle={__('Update Responses with ActiveCampaign existing email?', 'bitform')} />
     </div>
   )
 }

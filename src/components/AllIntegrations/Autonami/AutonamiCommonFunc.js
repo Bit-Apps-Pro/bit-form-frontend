@@ -16,12 +16,12 @@ export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIs
         if (result.data.autonamiTags) {
           newConf.default.autonamiTags = result.data.autonamiTags
         }
-        setSnackbar({ show: true, msg: __('Autonami lists and tags refreshed') })
+        setSnackbar({ show: true, msg: __('Autonami lists and tags refreshed', 'bitform') })
         setAutonamiConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Autonami lists and tags refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Autonami lists and tags refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Autonami lists and tags refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Autonami lists and tags refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })
@@ -42,13 +42,13 @@ export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, s
             const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', autonamiField: f.key, required: true }))
           }
-          setSnackbar({ show: true, msg: __('Autonami fields refreshed') })
+          setSnackbar({ show: true, msg: __('Autonami fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No Autonami fields found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No Autonami fields found. Try changing the header row number or try again', 'bitform') })
         }
         setAutonamiConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Autonami fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Autonami fields refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })

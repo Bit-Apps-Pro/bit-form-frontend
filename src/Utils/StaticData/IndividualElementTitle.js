@@ -5,20 +5,20 @@ export const getElementTitle = (element) => {
     case 'fld-wrp': return 'Field Container'
     case 'lbl-wrp': return 'Label & Subtitle Container'
     case 'lbl': return 'Label Container'
-    case 'lbl-pre-i': return 'Label Leading Icon'
-    case 'lbl-suf-i': return 'Label Trailing Icon'
+    case 'lbl-pre-i': return 'Label Prefix Icon'
+    case 'lbl-suf-i': return 'Label Suffix Icon'
     case 'sub-titl': return 'Subtitle Container'
-    case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
-    case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
+    case 'sub-titl-pre-i': return 'Subtitle Prefix Icon'
+    case 'sub-titl-suf-i': return 'Subtitle Suffix Icon'
 
     case 'fld':
     case 'file-up-wrpr': return 'Input Container'
 
-    case 'pre-i': return 'Field Leading Icon'
-    case 'suf-i': return 'Field Trailing Icon'
+    case 'pre-i': return 'Field Prefix Icon'
+    case 'suf-i': return 'Field Suffix Icon'
     case 'hlp-txt': return 'Helper Text Container'
-    case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
-    case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
+    case 'hlp-txt-pre-i': return 'Helper Text Prefix Icon'
+    case 'hlp-txt-suf-i': return 'Helper Text Suffix Icon'
     case 'err-msg': return 'Error Messages Container'
 
     case 'currency-fld-wrp':
@@ -64,9 +64,9 @@ export const getElementTitle = (element) => {
     case 'selected-country-img': return 'Selected Image'
     case 'selected-country-lbl': return 'Selected Label'
 
-    case 'opt-prefix': return 'Option Leading'
-    case 'opt-suffix': return 'Option Trailing'
+    case 'opt-prefix': return 'Option Suffix'
+    case 'opt-suffix': return 'Option Suffix'
     default:
-      return ''
+      break
   }
 }

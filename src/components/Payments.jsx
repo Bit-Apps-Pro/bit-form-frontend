@@ -45,18 +45,18 @@ export default function Payments() {
         } else if (response && response.data && response.data.data) {
           newInteg.splice(i, 0, tmpPayments)
           setPayments([...newInteg])
-          setSnackbar({ show: true, msg: `${__('Integration deletion failed Cause')}:${response.data.data}. ${__('please try again')}` })
+          setSnackbar({ show: true, msg: `${__('Integration deletion failed Cause', 'bitform')}:${response.data.data}. ${__('please try again', 'bitform')}` })
         } else {
           newInteg.splice(i, 0, tmpPayments)
           setPayments([...newInteg])
-          setSnackbar({ show: true, msg: __('Integration deletion failed. please try again') })
+          setSnackbar({ show: true, msg: __('Integration deletion failed. please try again', 'bitform') })
         }
       })
   }
 
   const payDelConf = i => {
-    confMdl.btnTxt = __('Delete')
-    confMdl.body = __('Are you sure to delete this integration?')
+    confMdl.btnTxt = __('Delete', 'bitform')
+    confMdl.body = __('Are you sure to delete this integration?', 'bitform')
     confMdl.btnClass = ''
     confMdl.action = () => { removeInteg(i); closeConfMdl() }
     confMdl.show = true
@@ -97,24 +97,24 @@ export default function Payments() {
         />
         <Switch>
           <Route exact path={path}>
-            <h2>{__('Payment Settings')}</h2>
+            <h2>{__('Payment Settings', 'bitform')}</h2>
             <div className="btcd-hr" />
             <div className="flx flx-wrp pos-rel">
               {!isPro && (
                 <div className="pro-blur flx w-10" style={{ top: 5, left: -10 }}>
                   <div className="pro">
-                    {__('Available On')}
+                    {__('Available On', 'bitform')}
                     <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                       <span className="txt-pro">
                         {' '}
-                        {__('Premium')}
+                        {__('Premium', 'bitform')}
                       </span>
                     </a>
                   </div>
                 </div>
               )}
               <Modal
-                title={__('Available Payments')}
+                title={__('Available Payments', 'bitform')}
                 show={showMdl}
                 setModal={setShowMdl}
                 style={{ width: 700 }}
@@ -131,7 +131,7 @@ export default function Payments() {
                     >
                       {pay.pro && (
                         <div className="pro-filter">
-                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium')}</a></span>
+                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
                       <img src={pay.logo} alt="" style={{ padding: 0 }} />
@@ -151,10 +151,10 @@ export default function Payments() {
                 <div role="button" className="btcd-inte-card  mr-4 mt-3 inte-edit" key={`inte-${i + 3}`}>
                   {getLogo(pay.type)}
                   <div className="btcd-inte-atn txt-center">
-                    <Link to={`${allIntegURL}/${pay.type}/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit')}'` }} type="button">
+                    <Link to={`${allIntegURL}/${pay.type}/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
                       <EditIcn size="15" />
                     </Link>
-                    <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'` }} onClick={() => payDelConf(i)} type="button">
+                    <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => payDelConf(i)} type="button">
                       <TrashIcn />
                     </button>
                   </div>

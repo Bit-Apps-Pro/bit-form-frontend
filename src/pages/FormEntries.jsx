@@ -120,9 +120,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
 
   const dupConfMdl = useCallback(
     (row, data, pCount) => {
-      confMdl.btnTxt = __('Duplicate')
+      confMdl.btnTxt = __('Duplicate', 'bitform')
       confMdl.btnClass = 'blue'
-      confMdl.body = __('Are you sure to duplicate this entry?')
+      confMdl.body = __('Are you sure to duplicate this entry?', 'bitform')
       confMdl.action = () => {
         bulkDuplicateData(row, data, pCount)
         closeConfMdl()
@@ -252,7 +252,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       minWidth: 70,
       sticky: 'right',
       Header: (
-        <span className="ml-2" title={__('Settings')}>
+        <span className="ml-2" title={__('Settings', 'bitform')}>
           <SettingsIcn size="20" />
         </span>
       ),
@@ -454,11 +454,11 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   return (
     <div id="form-res">
       <div className="af-header flx">
-        <h2>{__('Form Responses')}</h2>
+        <h2>{__('Form Responses', 'bitform')}</h2>
         <button
           className="icn-btn ml-2 mr-2 tooltip"
           onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
+          style={{ '--tooltip-txt': `'${__('Refresh', 'bitform')}'` }}
           type="button"
           disabled={isloading}
         >
@@ -501,7 +501,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         )}
 
       <Drawer
-        title={__('Response Details')}
+        title={__('Response Details', 'bitform')}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
@@ -552,7 +552,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
             <img src={noData} alt="no data found" />
-            <div className="mt-2 data-txt">{__('No Response Found.')}</div>
+            <div className="mt-2 data-txt">{__('No Response Found.', 'bitform')}</div>
           </div>
         )}
       </div>

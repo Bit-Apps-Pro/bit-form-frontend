@@ -33,7 +33,7 @@ export default function AllCpt({ posts, types }) {
     bitsFetch(formData, 'bitforms_update_post_type')
       .then((res) => {
         if (res !== undefined && res.success) {
-          setsnack({ ...{ show: true, msg: __('cpt type update successfully, refresh your window') } })
+          setsnack({ ...{ show: true, msg: __('cpt type update successfully, refresh your window', 'bitform') } })
         }
         setLoading(false)
       })
@@ -65,9 +65,9 @@ export default function AllCpt({ posts, types }) {
             && e.preventDefault()
         }}
       >
-        <div className="mt-2"><b>{__('Post Type')}</b></div>
+        <div className="mt-2"><b>{__('Post Type', 'bitform')}</b></div>
         <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)} value="">
-          <option disabled value="">{__('Select Type *')}</option>
+          <option disabled value="">{__('Select Type *', 'bitform')}</option>
           {Object.values(types).map((type, key) => (
             <option key={`k${key * 43}`} value={type}>{type}</option>
           ))}
@@ -76,25 +76,25 @@ export default function AllCpt({ posts, types }) {
           <div>
             <div className="mt-2">
               <label htmlFor="slug">
-                {__('Post Type Slug *')}
+                {__('Post Type Slug *', 'bitform')}
                 <input id="name" name="name" className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e, 'text')} placeholder="" value={editPost?.name} type="text" readOnly />
               </label>
             </div>
             <div className="mt-2">
               <label htmlFor="singular_label">
-                {__('Singular Label *')}
+                {__('Singular Label *', 'bitform')}
                 <input id="singular_label" name="singular_label" className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e, 'text')} value={editPost?.singular_label} placeholder="(e.g. Video)" type="text" required />
               </label>
             </div>
             <div className="mt-2">
               <label htmlFor="singular_label">
-                {__('Menu Name *')}
+                {__('Menu Name *', 'bitform')}
                 <input id="menu_name" name="menu_name" onChange={(e) => handleInput(e, 'text')} value={editPost?.menu_name} className="btcd-paper-inp mt-1" placeholder="(e.g. My Videos)" type="text" required />
               </label>
             </div>
             <div className="mt-2">
               <label htmlFor="singular_label">
-                {__('Menu Icon *')}
+                {__('Menu Icon *', 'bitform')}
                 <input id="menu_icon" name="menu_icon" onChange={(e) => handleInput(e, 'text')} value={editPost?.menu_icon} className="btcd-paper-inp mt-1" placeholder="" type="text" />
                 <span className="mt-1">
                   <a target="blank" href="https://developer.wordpress.org/resource/dashicons/#admin-site-alt">Dashicon class name </a>
@@ -104,19 +104,19 @@ export default function AllCpt({ posts, types }) {
               </label>
             </div>
             <div className="d-flx flx-wrp">
-              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.public === 1} className="wdt-200 mt-4 mr-2" name="public" value={editPost?.public} title={__('public')} subTitle={__('Posts of this type should be shown in the admin UI and is publicly queryable')} />
-              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.public_queryable === 1} className="wdt-200 mt-4 mr-2" value={editPost?.public_queryable} name="public_queryable" style={{ marginLeft: 60 }} title={__('Publicly Queryable')} subTitle={__('Queries can be performed on the front end as part of parse_request()')} />
+              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.public === 1} className="wdt-200 mt-4 mr-2" name="public" value={editPost?.public} title={__('public', 'bitform')} subTitle={__('Posts of this type should be shown in the admin UI and is publicly queryable', 'bitform')} />
+              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.public_queryable === 1} className="wdt-200 mt-4 mr-2" value={editPost?.public_queryable} name="public_queryable" style={{ marginLeft: 60 }} title={__('Publicly Queryable', 'bitform')} subTitle={__('Queries can be performed on the front end as part of parse_request()', 'bitform')} />
             </div>
             <div className="d-flx flx-wrp">
-              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_in_rest === 1} className="wdt-200 mt-4 mr-2" value={editPost?.show_in_rest} name="show_in_rest" title={__('Show in REST API')} subTitle={__('To show this post type data in the WP REST API')} />
-              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_in_menu === 1} className="wdt-200 mt-4 mr-2" value={editPost?.show_in_menu} name="show_in_menu" style={{ marginLeft: 60 }} title={__('Show in Menu')} subTitle={__('This show the post type in the admin menu and where to show that menu')} />
+              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_in_rest === 1} className="wdt-200 mt-4 mr-2" value={editPost?.show_in_rest} name="show_in_rest" title={__('Show in REST API', 'bitform')} subTitle={__('To show this post type data in the WP REST API', 'bitform')} />
+              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_in_menu === 1} className="wdt-200 mt-4 mr-2" value={editPost?.show_in_menu} name="show_in_menu" style={{ marginLeft: 60 }} title={__('Show in Menu', 'bitform')} subTitle={__('This show the post type in the admin menu and where to show that menu', 'bitform')} />
             </div>
             <div className="d-flx flx-wrp">
-              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_ui === 1} name="show_ui" className="wdt-200 mt-4 mr-2 " value={editPost?.show_ui} title={__('Show UI')} subTitle={__('Generate a default UI for managing this post type')} />
+              <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_ui === 1} name="show_ui" className="wdt-200 mt-4 mr-2 " value={editPost?.show_ui} title={__('Show UI', 'bitform')} subTitle={__('Generate a default UI for managing this post type', 'bitform')} />
             </div>
             <div className="d-flx flx-wrp">
               <button type="submit" className={`${css(app.btn)} f-left btcd-btn-lg blue sh-sm flx`} disabled={isLoading}>
-                {__('Update Post Type')}
+                {__('Update Post Type', 'bitform')}
                 {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
               </button>
               {'  '}

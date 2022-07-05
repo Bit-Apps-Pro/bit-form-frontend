@@ -67,29 +67,29 @@ export default function RazorpayInfo({ paymentInfo, payInfoFound, fldKey, transa
       {payInfoFound.current === 1
         ? (
           <>
-            <h1>{__('Razorpay')}</h1>
+            <h1>{__('Razorpay', 'bitform')}</h1>
             <div>
               <small>
                 {dateTimeFormatter(createdatToMiliSeconds, dateTimeFormat)}
               </small>
               <br />
               <br />
-              <small>{`${__('Status')}: ${razorpayResp.status}`}</small>
+              <small>{`${__('Status', 'bitform')}: ${razorpayResp.status}`}</small>
               <br />
               <br />
               <small>
-                <b>{`${__('Transaction ID')}: ${razorpayResp.id}`}</b>
+                <b>{`${__('Transaction ID', 'bitform')}: ${razorpayResp.id}`}</b>
               </small>
               <br />
               <br />
               {/* <h3>{`${userInfo.name.given_name} ${userInfo.name.surname}`}</h3> */}
-              <small>{`${__('Email')}: ${razorpayResp.email}`}</small>
+              <small>{`${__('Email', 'bitform')}: ${razorpayResp.email}`}</small>
               <br />
               <br />
-              <small>{`${__('Contact')}: ${razorpayResp.contact}`}</small>
+              <small>{`${__('Contact', 'bitform')}: ${razorpayResp.contact}`}</small>
               <br />
               <p>
-                {__('Total Paid')}
+                {__('Total Paid', 'bitform')}
                 :
                 {' '}
                 {razorpayResp.amount / 100}
@@ -99,7 +99,7 @@ export default function RazorpayInfo({ paymentInfo, payInfoFound, fldKey, transa
             </div>
           </>
         )
-        : !loading && <img src={noData} alt={__('no data found')} style={{ height: 150, width: '100%' }} />}
+        : !loading && <img src={noData} alt={__('no data found', 'bitform')} style={{ height: 150, width: '100%' }} />}
     </div>
   )
 }

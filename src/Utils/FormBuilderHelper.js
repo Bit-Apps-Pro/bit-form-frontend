@@ -217,24 +217,24 @@ const FIELDS_EXTRA_ATTR = {
 export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], additionalSettings, bits, __) => {
   // eslint-disable-next-line no-undef
   if (field.lbl === 'Select Country' && !bits.isPro) {
-    return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.') }
+    return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.', 'bitform') }
   }
 
   if (field.typ === 'recaptcha' && additionalSettings?.enabled?.recaptchav3) {
-    return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
+    return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.', 'bitform') }
   }
 
   // eslint-disable-next-line no-undef
   if (FIELDS_EXTRA_ATTR[field.typ]?.pro && !bits.isPro) {
-    return { validType: 'pro', msg: __(`${field.typ} field is available in Pro Version!`) }
+    return { validType: 'pro', msg: __(`${field.typ} field is available in Pro Version!`, 'bitform') }
   }
 
   if (FIELDS_EXTRA_ATTR[field.typ]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
-    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.typ} field in the same form.`) }
+    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.typ} field in the same form.`, 'bitform') }
   }
 
   if (field.typ === 'button' && FIELDS_EXTRA_ATTR[field.btnTyp]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
-    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`) }
+    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`, 'bitform') }
   }
 
   if (FIELDS_EXTRA_ATTR[field.typ]?.setDefaultPayConfig) {

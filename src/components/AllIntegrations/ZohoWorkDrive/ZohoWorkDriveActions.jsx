@@ -140,37 +140,37 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openCreateFolderMdl}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'create_folder')} checked={'create_folder' in workDriveConf?.actions} className="wdt-200 mt-4 mr-2" value="Create_Folder" title={__('Create New Folder')} subTitle={__('Create a new folder in the selected folder')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'create_folder')} checked={'create_folder' in workDriveConf?.actions} className="wdt-200 mt-4 mr-2" value="Create_Folder" title={__('Create New Folder', 'bitform')} subTitle={__('Create a new folder in the selected folder', 'bitform')} />
         </TitleModal>
-        <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in workDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files')} subTitle={__('Add attachments from BitForm to Zoho Workdrive folder.')} />
+        <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in workDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files', 'bitform')} subTitle={__('Add attachments from BitForm to Zoho Workdrive folder.', 'bitform')} />
       </div>
 
       <Modal
         md
         show={actionMdl.show === 'create_folder'}
         setModal={clsActionMdl}
-        title={__('Create New Folder')}
+        title={__('Create New Folder', 'bitform')}
       >
         <div className="o-a" style={{ height: '95%' }}>
           <div className="btcd-hr mt-2" />
-          <div className="mt-2">{__('Add field value to use as folder name')}</div>
+          <div className="mt-2">{__('Add field value to use as folder name', 'bitform')}</div>
           <select
             value=""
             className="btcd-paper-inp mt-2 w-5"
             onChange={e => setCreateFolderSettings(e, 'name', 1)}
           >
-            <option value="">{__('Select Field')}</option>
+            <option value="">{__('Select Field', 'bitform')}</option>
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
           </select>
           <input type="text" className="btcd-paper-inp mt-2 w-9" value={workDriveConf.actions?.create_folder?.name} onChange={e => setCreateFolderSettings(e, 'name')} placeholder="New Folder Name" />
-          <TableCheckBox onChange={(e) => setCreateFolderSettings(e, 'suffix')} checked={workDriveConf?.actions?.create_folder?.suffix} className="wd-100 mt-4 mr-2" value="Add_Suffix" title={__('Add Random Number')} subTitle="Zoho doesn't support duplicate folder name, if you want to make it uniquely you can add random number after the folder name." />
+          <TableCheckBox onChange={(e) => setCreateFolderSettings(e, 'suffix')} checked={workDriveConf?.actions?.create_folder?.suffix} className="wd-100 mt-4 mr-2" value="Add_Suffix" title={__('Add Random Number', 'bitform')} subTitle="Zoho doesn't support duplicate folder name, if you want to make it uniquely you can add random number after the folder name." />
 
           {workDriveConf.default?.teamFolders?.[workDriveConf.team]?.[folder]?.type === 'private'
             && (
               <>
                 <div className="btcd-hr mt-2" />
                 <div className="flx mt-2">
-                  <div>{__('Share with users: (optional)')}</div>
+                  <div>{__('Share with users: (optional)', 'bitform')}</div>
                   <button onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Team Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
                 {isLoading
@@ -198,7 +198,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'folder')} checked={workDriveConf?.actions?.share?.folder?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail')} />
+                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'folder')} checked={workDriveConf?.actions?.share?.folder?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail', 'bitform')} />
               </>
             )}
         </div>
@@ -208,10 +208,10 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
         md
         show={actionMdl.show === 'attachments'}
         setModal={clsActionMdl}
-        title={__('Select Attachment')}
+        title={__('Select Attachment', 'bitform')}
       >
         <div className="o-a" style={{ height: '95%' }}>
-          <div className="mt-2">{__('Select file upload fields')}</div>
+          <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
           <MultiSelect
             defaultValue={workDriveConf.actions.attachments}
             className="mt-2 w-5"
@@ -251,7 +251,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'file')} checked={workDriveConf?.actions?.share?.file?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail')} />
+                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'file')} checked={workDriveConf?.actions?.share?.file?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail', 'bitform')} />
               </>
             )}
         </div>

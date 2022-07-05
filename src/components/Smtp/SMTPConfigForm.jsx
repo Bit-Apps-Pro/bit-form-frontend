@@ -33,9 +33,9 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
         }
       })
     toast.promise(prom, {
-      success: __('SMTP config saved successfully.'),
-      loading: __('Saving...'),
-      error: __('Something went wrong, Try again.'),
+      success: __('SMTP config saved successfully.', 'bitform'),
+      loading: __('Saving...', 'bitform'),
+      error: __('Something went wrong, Try again.', 'bitform'),
     })
   }
   const handleInput = (typ, val, isNumber) => {
@@ -84,11 +84,11 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
       }}
     >
       <small className="d-blk mt-3">
-        <a className="btcd-link" href="https://docs.form.bitapps.pro/wpbitform-form-settings#smtp-configuration" target="_blank" rel="noreferrer">{__('Learn more about SMTP configuration')}</a>
+        <a className="btcd-link" href="https://docs.form.bitapps.pro/wpbitform-form-settings#smtp-configuration" target="_blank" rel="noreferrer">{__('Learn more about SMTP configuration', 'bitform')}</a>
       </small>
       <div className="mt-2">
         <label htmlFor="status">
-          <b>{__('Enable SMTP')}</b>
+          <b>{__('Enable SMTP', 'bitform')}</b>
           <CheckBox radio name="status" onChange={e => handleStatus(e)} checked={status === 1} title={<small className="txt-dp"><b>Yes</b></small>} value="1" />
           <CheckBox radio name="status" onChange={e => handleStatus(e)} checked={status !== 1} title={<small className="txt-dp"><b>No</b></small>} value="0" />
         </label>
@@ -98,31 +98,31 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
         <div>
           <div className="mt-2">
             <label htmlFor="form_email_address">
-              <b>{__('From Email Address')}</b>
+              <b>{__('From Email Address', 'bitform')}</b>
               <input id="form_email_address" onChange={(e) => handleInput(e.target.name, e.target.value)} name="form_email_address" className="btcd-paper-inp mt-1" value={mail.form_email_address} placeholder="From Email Address" type="email" required />
             </label>
           </div>
           <div className="mt-2">
             <label htmlFor="from_name">
-              <b>{__('From Name')}</b>
+              <b>{__('From Name', 'bitform')}</b>
               <input id="form_name" onChange={(e) => handleInput(e.target.name, e.target.value)} value={mail.form_name} name="form_name" className="btcd-paper-inp mt-1" placeholder="From Name" type="text" required />
             </label>
           </div>
           <div className="mt-2">
             <label htmlFor="re_email_address">
-              <b>{__('Reply-To Email Address')}</b>
+              <b>{__('Reply-To Email Address', 'bitform')}</b>
               <input id="re_email_address" onChange={(e) => handleInput(e.target.name, e.target.value)} value={mail.re_email_address} name="re_email_address" className="btcd-paper-inp mt-1" placeholder="Reply-To Email Address" type="email" />
             </label>
           </div>
           <div className="mt-2">
             <label htmlFor="smtp_host">
-              <b>{__('SMTP Host')}</b>
+              <b>{__('SMTP Host', 'bitform')}</b>
               <input id="smtp_host" value={mail.smtp_host} onChange={(e) => handleInput(e.target.name, e.target.value)} name="smtp_host" className="btcd-paper-inp mt-1" placeholder="SMTP Host" type="text" required />
             </label>
           </div>
           <div className="mt-2">
             <label htmlFor="encryption">
-              <b>{__('Type of Encryption')}</b>
+              <b>{__('Type of Encryption', 'bitform')}</b>
               <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'none' || mail.encryption !== 'tls' || mail.encryption !== 'ssl'} title={<small className="txt-dp"><b>NONE</b></small>} value="none" />
               <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'tls'} title={<small className="txt-dp"><b>TLS</b></small>} value="tls" />
               <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'ssl'} title={<small className="txt-dp"><b>SSL</b></small>} value="ssl" />
@@ -130,13 +130,13 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
           </div>
           <div className="mt-2">
             <label htmlFor="encryption">
-              <b>{__('SMTP Port')}</b>
+              <b>{__('SMTP Port', 'bitform')}</b>
               <input id="port" value={mail.port} onChange={(e) => handleInput(e.target.name, e.target.value)} name="port" className="btcd-paper-inp mt-1" placeholder="SMTP port" type="number" required />
             </label>
           </div>
           <div className="mt-2">
             <label htmlFor="encryption">
-              <b>{__('SMTP Authentication')}</b>
+              <b>{__('SMTP Authentication', 'bitform')}</b>
               <CheckBox radio name="smtp_auth" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.smtp_auth === '1'} title={<small className="txt-dp">Yes</small>} value="1" />
               <CheckBox radio name="smtp_auth" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.smtp_auth !== '1'} title={<small className="txt-dp">No</small>} value="0" />
             </label>
@@ -145,13 +145,13 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
             <div>
               <div className="mt-2">
                 <label htmlFor="smtp_user_name">
-                  <b>{__('SMTP Username')}</b>
+                  <b>{__('SMTP Username', 'bitform')}</b>
                   <input id="smtp_user_name" value={mail.smtp_user_name} onChange={(e) => handleInput(e.target.name, e.target.value)} name="smtp_user_name" className="btcd-paper-inp mt-1" placeholder=" SMTP Username" type="text" required />
                 </label>
               </div>
               <div className="mt-2">
                 <label htmlFor="smtp_password">
-                  <b>{__('SMTP Password')}</b>
+                  <b>{__('SMTP Password', 'bitform')}</b>
                   <input id="smtp_password" onChange={(e) => handleInput(e.target.name, e.target.value)} value={mail.smtp_password} name="smtp_password" className="btcd-paper-inp mt-1" placeholder="SMTP Password" type="password" required />
                 </label>
               </div>
@@ -160,7 +160,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
         </div>
       )}
       <button type="submit" className={`${css(app.btn)} btcd-btn-lg blue flx`} disabled={isLoading}>
-        {__('Save Changes')}
+        {__('Save Changes', 'bitform')}
         {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
     </form>

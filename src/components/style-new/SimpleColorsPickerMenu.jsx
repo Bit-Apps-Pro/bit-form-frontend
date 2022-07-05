@@ -3,7 +3,6 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
-import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { useTransition } from 'react'
 import { memo, useEffect, useState } from 'react'
@@ -20,7 +19,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsla2hsva, hslToHex, hsva2hsla } from './colorHelpers'
+import { hsla2hsva, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -117,12 +116,6 @@ function SimpleColorsPickerMenu({ stateObjName,
             if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = `${l}%` }
             if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = `${a}%` }
           }
-
-          if (propertyPath === '--global-accent-color') {
-            const hexValue = hslToHex(h, s, l)
-            const setFilterValue = hexToCSSFilter(hexValue)
-            drftThmClr['--fld-focs-i-fltr'] = setFilterValue.filter
-          }
         })
         setThemeColors(newThemeColors)
         historyData.state.themeColors = newThemeColors
@@ -165,11 +158,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               const pathArr = path.split('->')
               const lastIndx = pathArr.length - 1
               if (pathArr[lastIndx] === 'box-shadow') assignNestedObj(drftStyles, path, sc)
-              else if (pathArr[lastIndx] === 'filter') {
-                const hexValue = hslToHex(h, s, l)
-                const setFilterValue = hexToCSSFilter(hexValue)
-                assignNestedObj(drftStyles, path, setFilterValue.filter)
-              } else assignNestedObj(drftStyles, path, clr)
+              else assignNestedObj(drftStyles, path, clr)
             })
           } else {
             assignNestedObj(drftStyles, propertyPath, clr)
@@ -210,8 +199,6 @@ function SimpleColorsPickerMenu({ stateObjName,
     const colorObj = { h: 0, s: 0, v: 0, a: 0 }
     if (e.target.checked) {
       setColorState(colorObj)
-    } else {
-      setColorState('--global-accent-color')
     }
   }
 
@@ -300,7 +287,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             <div className={css(c.container)}>
               <div className={css(c.subContainer)}>
                 <SingleToggle
-                  title={__('Transparant')}
+                  title={__('Transparant', 'bitform')}
                   action={transparantColor}
                   isChecked={checkTransparant()}
                   id="color-transparant"
@@ -319,7 +306,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         <div className={css(c.container)}>
           <div className={css(c.subContainer)}>
             <SingleToggle
-              title={__('Transparant')}
+              title={__('Transparant', 'bitform')}
               action={transparantColor}
               isChecked={checkTransparant()}
               id="color-transparant"
@@ -341,7 +328,6 @@ export default memo(SimpleColorsPickerMenu)
 
 const c = {
   preview_wrp: {
-    w: 248,
     '& div[role="group"]': { p: 4, b: 0 },
     '& input': {
       brs: 8,
@@ -361,7 +347,6 @@ const c = {
   container: {
     dy: 'flex',
     fd: 'column',
-    '& .styles-module_container__2LiHz': { w: '100%' },
   },
   subContainer: {
     m: 5,

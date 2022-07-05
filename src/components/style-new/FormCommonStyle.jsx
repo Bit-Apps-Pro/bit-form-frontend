@@ -137,7 +137,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Padding"
           >
             <SpacingControl
-              mainTitle="Padding"
+              mainTitle="Padding Control"
               allowImportant
               action={{ type: 'spacing-control' }}
               subtitle={`${componentTitle} Padding`}
@@ -153,7 +153,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
             title="Margin"
           >
             <SpacingControl
-              mainTitle="Margin"
+              mainTitle="Margin Control"
               allowImportant
               action={{ type: 'spacing-control' }}
               subtitle={`${componentTitle} Margin`}

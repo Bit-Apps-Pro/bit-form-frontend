@@ -1,0 +1,14 @@
+{
+  "jsc": {
+    "target": "es2018",
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}

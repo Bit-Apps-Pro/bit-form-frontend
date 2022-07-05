@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -52,7 +52,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const lightThemeColors = useRecoilValue($lightThemeColors)
   const darkThemeColors = useRecoilValue($darkThemeColors)
   const themeColors = { lightThemeColors, darkThemeColors }
-  const customCodes = useRecoilValue($customCodes)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -181,18 +180,18 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (!checkSubmitBtn()) {
       const mdl = { ...modal }
       mdl.show = true
-      mdl.title = __('Sorry')
-      mdl.btnTxt = __('Close')
-      mdl.msg = __('Please add a submit button')
+      mdl.title = __('Sorry', 'bitform')
+      mdl.btnTxt = __('Close', 'bitform')
+      mdl.msg = __('Please add a submit button', 'bitform')
       setModal(mdl)
       return
     }
     if (lay.md.length === 0 || typeof lay === 'undefined') {
       const mdl = { ...modal }
       mdl.show = true
-      mdl.title = __('Sorry')
-      mdl.btnTxt = __('Close')
-      mdl.msg = __('You can not save a blank form')
+      mdl.title = __('Sorry', 'bitform')
+      mdl.btnTxt = __('Close', 'bitform')
+      mdl.msg = __('You can not save a blank form', 'bitform')
       setModal(mdl)
       return
     }
@@ -219,7 +218,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       themeColors,
       breakpointSize,
       themeVars,
-      customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {
@@ -285,12 +283,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     toast.promise(fetchProm, {
       loading: __('Updating...', 'biform'),
       success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.'),
+      error: __('Error occurred, Please try again.', 'bitform'),
     })
   }
 
   return (
-    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}>
+    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>

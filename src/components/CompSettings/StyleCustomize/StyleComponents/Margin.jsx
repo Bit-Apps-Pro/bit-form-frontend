@@ -15,16 +15,16 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Margin')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Margin', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
         info={[
-          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Margin Top') },
-          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Margin Right') },
-          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Margin Bottom') },
-          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Margin Left') },
-          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side') },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Margin Top', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Margin Right', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Margin Bottom', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Margin Left', 'bitform') },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side', 'bitform') },
         ]}
         className="btc-range"
         unit="px"

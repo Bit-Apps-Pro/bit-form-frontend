@@ -67,7 +67,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-sh"
           />
           <ShadowControl
-            subtitle="Error Messages Shadow"
+            subtitle="Error Messages Shadow Control"
             value={errSh}
             objectPaths={errShObj}
             id="err-msg-sh"
@@ -76,10 +76,10 @@ export default function ErrorMessagesCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Error Messages Spacing"
+          subtitle="Error Messages Spacing Control"
           objectPaths={errMsgSpacingObj}
           id="err-msg-spacing-ctrl"
         />

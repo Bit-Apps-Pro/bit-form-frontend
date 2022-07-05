@@ -26,7 +26,7 @@ export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmai
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
           <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, elasticEmailConf, setElasticEmailConf)}>
-            <option value="">{__('Select Field')}</option>
+            <option value="">{__('Select Field', 'bitform')}</option>
             <optgroup label="Form Fields">
               {
 
@@ -37,7 +37,7 @@ export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmai
                 ))
               }
             </optgroup>
-            <option value="custom">{__('Custom...')}</option>
+            <option value="custom">{__('Custom...', 'bitform')}</option>
             <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
               {isPro && SmartTagField?.map(f => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -48,10 +48,10 @@ export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmai
 
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, elasticEmailConf, setElasticEmailConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, elasticEmailConf, setElasticEmailConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
           <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="elasticEmailField" value={i < requiredFlds.length ? (requiredFlds[i].label || '') : (field.elasticEmailField || '')} onChange={(ev) => handleFieldMapping(ev, i, elasticEmailConf, setElasticEmailConf)}>
-            <option value="">{__('Select Field')}</option>
+            <option value="">{__('Select Field', 'bitform')}</option>
             {
               i < requiredFlds.length ? (
                 <option key={requiredFlds[i].key} value={requiredFlds[i].key}>

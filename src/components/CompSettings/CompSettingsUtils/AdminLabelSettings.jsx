@@ -47,7 +47,7 @@ export default function AdminLabelSettings() {
   return (
     <SimpleAccordion
       id="admn-lbl-stng"
-      title={__('Admin Label')}
+      title={__('Admin Label', 'bitform')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
       tip="By disabling this option, the field admin label will be hidden"

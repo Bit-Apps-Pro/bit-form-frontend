@@ -58,7 +58,7 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openUpdateModal}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in creatorConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Record')} subTitle={__('Control how the record gets updated.')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in creatorConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Record', 'bitform')} subTitle={__('Control how the record gets updated.', 'bitform')} />
         </TitleModal>
       </div>
 
@@ -66,34 +66,34 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-        title={__('Update Row')}
+        title={__('Update Row', 'bitform')}
       >
         <div className="o-a">
           {creatorConf?.actions?.update && (
             <>
-              <small>{__('Enter the criteria to update records. Please use the below format.')}</small>
+              <small>{__('Enter the criteria to update records. Please use the below format.', 'bitform')}</small>
               <br />
               <div className="mt-4">
                 <small>
-                  {__('Example:')}
-                  &nbsp;
+                  {__('Example:', 'bitform')}
+&nbsp;
                   {'(Email==\\"test@mail.com\\")'}
                 </small>
                 <br />
                 <br />
                 <small>
-                  {__('Here Email is Zoho Creator Field link name. info:')}
+                  {__('Here Email is Zoho Creator Field link name. info:', 'bitform')}
                   {' '}
-                  <a href="https://www.zoho.com/creator/help/api/v2/update-records.html" target="_blank" rel="noreferrer">{__('Zoho Creator Criteria Guide')}</a>
+                  <a href="https://www.zoho.com/creator/help/api/v2/update-records.html" target="_blank" rel="noreferrer">{__('Zoho Creator Criteria Guide', 'bitform')}</a>
                 </small>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={creatorConf.actions?.update?.criteria} />
               </div>
 
-              <div className="font-w-m mt-3">{__('Update Preferance')}</div>
+              <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
               <small>{__('insert new record if the above criteria doesn&apos;t met?', 'bitfomr')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row" title={__('No')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row" title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row" title={__('No', 'bitform')} />
               </div>
             </>
           )}

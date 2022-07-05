@@ -66,11 +66,11 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!checkMappedPostFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     if (!checkMappedPodFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, data, history, id, 'edit')
@@ -80,10 +80,10 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-      <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
-      <div className="mt-3"><b>{__('Post Type')}</b></div>
+      <div className="mt-3"><b>{__('Post Type', 'bitform')}</b></div>
       <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} value={data?.post_type} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
@@ -91,9 +91,9 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         ))}
       </select>
 
-      <div className="mt-3"><b>{__('Post Status')}</b></div>
+      <div className="mt-3"><b>{__('Post Status', 'bitform')}</b></div>
       <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_status} className="btcd-paper-inp w-5 mt-1">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="inherit">Inherit</option>
@@ -102,14 +102,14 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         <option value="pending">Pending</option>
       </select>
 
-      <div className="mt-3"><b>{__('Comment Status')}</b></div>
+      <div className="mt-3"><b>{__('Comment Status', 'bitform')}</b></div>
       <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.comment_status} className="btcd-paper-inp w-5 mt-1">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
 
-      <div className="mt-3"><b>{__('Author')}</b></div>
+      <div className="mt-3"><b>{__('Author', 'bitform')}</b></div>
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_author} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
@@ -129,8 +129,8 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         <div className="mt-3 mb-1"><b>Pod Fields Mapping</b></div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
-          <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-          <div className="txt-dp"><b>{__('Pod Fields')}</b></div>
+          <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+          <div className="txt-dp"><b>{__('Pod Fields', 'bitform')}</b></div>
         </div>
       </div>
       {
@@ -153,8 +153,8 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         <div className="mt-3 mb-1"><b>Post Fields Mapping</b></div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
-          <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-          <div className="txt-dp"><b>{__('Post Fields')}</b></div>
+          <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+          <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
         </div>
       </div>
 
@@ -179,7 +179,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         type="button"
         onClick={() => saveConfig()}
       >
-        {__('Save')}
+        {__('Save', 'bitform')}
         {' '}
       </button>
     </div>

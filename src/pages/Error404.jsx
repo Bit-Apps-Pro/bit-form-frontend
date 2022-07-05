@@ -21,15 +21,15 @@ export default function Error404() {
   return (
     <div className="error-404">
       <div>
-        <div className="four">{__('404')}</div>
-        <div className="t">{__('Lost In Space')}</div>
+        <div className="four">{__('404', 'bitform')}</div>
+        <div className="t">{__('Lost In Space', 'bitform')}</div>
         <br />
-        {__('Redirecting Home in')}
+        {__('Redirecting Home in', 'bitform')}
         {' '}
         {sec}
         <br />
         <br />
-        <Link to="/" className={`${css(app.btn)} dp-blue btcd-btn-lg`}>{__('Go Home')}</Link>
+        <Link to="/" className={`${css(app.btn)} dp-blue btcd-btn-lg`}>{__('Go Home', 'bitform')}</Link>
       </div>
       <img src={space} alt="404 not found" />
     </div>

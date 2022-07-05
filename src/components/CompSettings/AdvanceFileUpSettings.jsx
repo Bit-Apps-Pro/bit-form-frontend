@@ -122,7 +122,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="cptr-stng"
-        title={__('Capture')}
+        title={__('Capture', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
         tip="The capture option will only work on mobile devices."
@@ -144,7 +144,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="nam-stng"
-        title={__('Name')}
+        title={__('Name', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -171,14 +171,14 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
       <SimpleAccordion
         id="basic-stng"
-        title={__('Basic')}
+        title={__('Basic', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(ut.p2)}>
           <div className={css(ut.flxcb, FieldStyle.labelTip)}>
             <div className={css(ut.flxcb)}>
-              <div className={css(ut.fw500)}>{__('Multiple file upload')}</div>
+              <div className={css(ut.fw500)}>{__('Multiple file upload', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Enable or disable adding multiple files
@@ -197,7 +197,7 @@ function AdvanceFileUpSettings() {
 
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Allow File Browse')}</div>
+              <div className={css(ut.fw500)}>{__('Allow File Browse', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Enable or disable file browser
@@ -215,7 +215,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Drag n Drop')}</div>
+              <div className={css(ut.fw500)}>{__('Drag n Drop', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Enable or disable drag n drop
@@ -233,7 +233,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Allow copy to Pasting of files')}</div>
+              <div className={css(ut.fw500)}>{__('Allow copy to Pasting of files', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Enable or disable pasting of files
@@ -252,7 +252,7 @@ function AdvanceFileUpSettings() {
           {/* {!fieldData?.config?.allowMultiple && (
             <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
               <div className={css(ut.flxb)}>
-                <div className={css(ut.fw500)}>{__('File Replace')}</div>
+                <div className={css(ut.fw500)}>{__('File Replace', 'bitform')}</div>
                 <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                   <div className={css(ut.tipBody)}>
                     Enable or disable File Replace
@@ -265,7 +265,7 @@ function AdvanceFileUpSettings() {
           )} */}
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Allow reorder files')}</div>
+              <div className={css(ut.fw500)}>{__('Allow reorder files', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2, FieldStyle.hover_tip)}>
                 <div className={css(ut.tipBody)}>
                   Allow users to reorder files with drag and drop interaction
@@ -283,7 +283,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Upload on select')}</div>
+              <div className={css(ut.fw500)}>{__('Upload on select', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Immediately upload new files to the server
@@ -301,7 +301,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Full page droppable')}</div>
+              <div className={css(ut.fw500)}>{__('Full page droppable', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   dropped on the webpage
@@ -319,7 +319,7 @@ function AdvanceFileUpSettings() {
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Labels Customization')}</div>
+              <div className={css(ut.fw500)}>{__('Labels Customization', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   All Label Customization
@@ -352,7 +352,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="fil-siz-vldtn-stng"
-        title={__('File size validation')}
+        title={__('File size validation', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowFileSizeValidation')}
@@ -368,7 +368,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
       <SimpleAccordion
         id="fil-typ-vldtn-stng"
-        title={__('File type validation')}
+        title={__('File type validation', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowFileTypeValidation')}
@@ -384,11 +384,11 @@ function AdvanceFileUpSettings() {
             disableChip={false}
             customValue={false}
             titleClassName={css(ut.mt2, ut.fw500)}
-            title={__('Allowed File Type:')}
+            title={__('Allowed File Type:', 'bitform')}
             isMultiple
             addable
             options={fileFormats}
-            placeholder={__('Select File Type')}
+            placeholder={__('Select File Type', 'bitform')}
             jsonValue
             action={(e) => setFileFilter(e, 'acceptedFileTypes')}
             value={fieldData?.config?.acceptedFileTypes}
@@ -441,7 +441,7 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
       <SimpleAccordion
         id="img-prvw-stng"
-        title={__('Image Preview')}
+        title={__('Image Preview', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImagePreview')}
@@ -520,7 +520,7 @@ function AdvanceFileUpSettings() {
 
       <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip, FieldStyle.fieldSection)}>
         <div className={css(ut.flxb)}>
-          <div>{__('Video/Pdf Preview')}</div>
+          <div>{__('Video/Pdf Preview', 'bitform')}</div>
           <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
             <div className={css(ut.tipBody)}>
               Enable or disable Video or Pdf preview mode
@@ -541,7 +541,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="img-crp-stng"
-        title={__('Image Crop')}
+        title={__('Image Crop', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageCrop')}
@@ -578,7 +578,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="img-resiz-stng"
-        title={__('Image Resize')}
+        title={__('Image Resize', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageResize')}
@@ -657,7 +657,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="img-trnsfrm"
-        title={__('Image Transform')}
+        title={__('Image Transform', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageTransform')}
@@ -750,7 +750,7 @@ function AdvanceFileUpSettings() {
 
       <SimpleAccordion
         id="img-vldtn-siz"
-        title={__('Image validate size')}
+        title={__('Image validate size', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         toggleAction={(e) => enablePlugin(e, 'allowImageValidateSize')}
@@ -761,7 +761,7 @@ function AdvanceFileUpSettings() {
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(ut.flxc, ut.mt2)}>
-          <div className={css(ut.fw500, ut.w8)}>{__('Customized')}</div>
+          <div className={css(ut.fw500, ut.w8)}>{__('Customized', 'bitform')}</div>
 
           <button
             data-testid="img-vldtn-cstmztn-btn"

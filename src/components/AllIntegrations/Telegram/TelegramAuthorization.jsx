@@ -22,8 +22,8 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
 
     if (!newConf.name || !newConf.bot_api_key) {
       setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty') : '',
-        bot_api_key: !newConf.bot_api_key ? __('API Key cann\'t be empty') : '',
+        name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
+        bot_api_key: !newConf.bot_api_key ? __('API Key cann\'t be empty', 'bitform') : '',
       })
       return
     }
@@ -67,11 +67,11 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
         youTubeLink={tutorialLinks.telegram.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.name}</div>
-        <div className="mt-3"><b>{__('Bot API Key:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="bot_api_key" value={telegramConf.bot_api_key} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('Bot API Key:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="bot_api_key" value={telegramConf.bot_api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.bot_api_key}</div>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -91,12 +91,12 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
         {!isInfo && (
           <>
             <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-              {isAuthorized ? __('Authorized ✔') : __('Authorize')}
+              {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
             <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-              {__('Next')}
+              {__('Next', 'bitform')}
               <BackIcn className="ml-1 rev-icn" />
             </button>
           </>

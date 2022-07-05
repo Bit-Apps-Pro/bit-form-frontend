@@ -16,12 +16,12 @@ export const refreshCrmList = (formID, fluentCrmConf, setFluentCrmConf, setisLoa
         if (result.data.fluentCrmTags) {
           newConf.default.fluentCrmTags = result.data.fluentCrmTags
         }
-        setSnackbar({ show: true, msg: __('FluentCRM list refreshed') })
+        setSnackbar({ show: true, msg: __('FluentCRM list refreshed', 'bitform') })
         refreshfluentCrmHeader(newConf, setFluentCrmConf, setisLoading, setSnackbar)
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('FluentCRM list refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('FluentCRM list refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('FluentCRM list refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('FluentCRM list refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -36,13 +36,13 @@ export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setisLoa
         if (result.data.fluentCrmFlelds) {
           newConf.default.fields = result.data.fluentCrmFlelds
           newConf.field_map = mapNewRequiredFields(fluentCrmConf)
-          setSnackbar({ show: true, msg: __('Fluent CRM fields refreshed') })
+          setSnackbar({ show: true, msg: __('Fluent CRM fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No Fluent CRM fields found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No Fluent CRM fields found. Try changing the header row number or try again', 'bitform') })
         }
         setFluentCrmConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Fluent CRM fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Fluent CRM fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

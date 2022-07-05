@@ -9,9 +9,9 @@ export default function RapidmailIntegLayout({ formFields, handleInput, rapidmai
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('Recipient:')}</b>
+      <b className="wdt-200 d-in-b">{__('Recipient:', 'bitform')}</b>
       <select onChange={handleInput} name="recipient_id" value={rapidmailConf?.recipient_id} className="btcd-paper-inp w-5">
-        <option value="">{__('Select Recipients')}</option>
+        <option value="">{__('Select Recipients', 'bitform')}</option>
         {
           rapidmailConf?.default?.recipientlists && rapidmailConf.default.recipientlists.map(({ id, name }) => (
             <option key={id} value={id}>
@@ -20,13 +20,13 @@ export default function RapidmailIntegLayout({ formFields, handleInput, rapidmai
           ))
         }
       </select>
-      <button onClick={() => getAllRecipient(rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Recipients')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => getAllRecipient(rapidmailConf, setRapidmailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Recipients', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
-      <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
+      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-        <div className="txt-dp"><b>{__('Rapidmail Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Rapidmail Fields', 'bitform')}</b></div>
       </div>
 
       {rapidmailConf?.recipient_id && rapidmailConf?.field_map.map((itm, i) => (
@@ -46,7 +46,7 @@ export default function RapidmailIntegLayout({ formFields, handleInput, rapidmai
 
       {rapidmailConf?.recipient_id && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
           <div className="btcd-hr mt-1" />
           <RapidmailActions
             rapidmailConf={rapidmailConf}

@@ -77,12 +77,12 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setisLoadin
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Spreadsheet refreshed') })
+        setSnackbar({ show: true, msg: __('Spreadsheet refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Spreadsheet refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Spreadsheet refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Spreadsheet refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Spreadsheet refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -116,10 +116,10 @@ export const refreshWorksheets = (formID, sheetConf, setSheetConf, setisLoading,
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Worksheets refreshed') })
+        setSnackbar({ show: true, msg: __('Worksheets refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Worksheets refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Worksheets refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -161,9 +161,9 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
           }
-          setSnackbar({ show: true, msg: __('Worksheet Headers refreshed') })
+          setSnackbar({ show: true, msg: __('Worksheet Headers refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No Worksheet headers found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No Worksheet headers found. Try changing the header row number or try again', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -171,7 +171,7 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
         }
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Worksheet Headers refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Worksheet Headers refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -181,8 +181,8 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty') : '',
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -204,7 +204,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
         setisLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -230,11 +230,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

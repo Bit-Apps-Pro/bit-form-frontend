@@ -24,7 +24,7 @@ export default function SubTitleCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Subtitle Background Color"
+        subtitle="Subtitle Background Color Control"
         value={stBg}
         stateObjName="themeColors"
         propertyPath="--sub-titl-bg"
@@ -40,7 +40,7 @@ export default function SubTitleCustomizer() {
             id="sub-titl-bdr"
           />
           <BorderControl
-            subtitle="Subtitle Border"
+            subtitle="Subtitle Border Control"
             objectPaths={borderPathsObj}
             id="sub-titl-bdr"
           />
@@ -67,7 +67,7 @@ export default function SubTitleCustomizer() {
             id="sub-titl-sh"
           />
           <ShadowControl
-            subtitle="Subtitle Shadow"
+            subtitle="Subtitle Shadow Control"
             value={stSh}
             objectPaths={subTitlShObj}
             id="sub-titl-sh"
@@ -76,10 +76,10 @@ export default function SubTitleCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Subtitle Spacing"
+          subtitle="Subtitle Spacing Control"
           objectPaths={stSpacingObj}
           id="subtitl-spacing-ctrl"
         />
@@ -87,7 +87,7 @@ export default function SubTitleCustomizer() {
 
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Subtitle Text Color"
+        subtitle="Subtitle Text Color Control"
         value={stC}
         stateObjName="themeColors"
         propertyPath="--sub-titl-c"

@@ -70,19 +70,19 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!data.post_type) {
-      setSnackbar({ show: true, msg: __('Pod cann\'t be empty') })
+      setSnackbar({ show: true, msg: __('Pod cann\'t be empty', 'bitform') })
       return
     }
     if (!data.post_status) {
-      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty') })
+      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty', 'bitform') })
       return
     }
     if (!checkMappedPostFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     if (!checkMappedPodFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)
@@ -95,11 +95,11 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         title={tutorialLinks.pods.title}
         youTubeLink={tutorialLinks.pods.link}
       />
-      <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
       <div className="mt-3">
-        <b>{__('Pod')}</b>
+        <b>{__('Pod', 'bitform')}</b>
         {' '}
         <span style={{ color: 'red' }}>*</span>
       </div>
@@ -111,12 +111,12 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3">
-        <b>{__('Post Status')}</b>
+        <b>{__('Post Status', 'bitform')}</b>
         {' '}
         <span style={{ color: 'red' }}>*</span>
       </div>
       <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="inherit">Inherit</option>
@@ -125,14 +125,14 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         <option value="pending">Pending</option>
       </select>
 
-      <div className="mt-3"><b>{__('Comment Status')}</b></div>
+      <div className="mt-3"><b>{__('Comment Status', 'bitform')}</b></div>
       <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
 
-      <div className="mt-3"><b>{__('Author')}</b></div>
+      <div className="mt-3"><b>{__('Author', 'bitform')}</b></div>
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
@@ -151,8 +151,8 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           <div className="mt-3 mb-1"><b>Pod Fields Mapping</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-            <div className="txt-dp"><b>{__('Pod Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Pod Fields', 'bitform')}</b></div>
           </div>
         </div>
         {
@@ -175,8 +175,8 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           <div className="mt-3 mb-1"><b>Post Fields Mapping</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-            <div className="txt-dp"><b>{__('Post Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
           </div>
         </div>
         {
@@ -204,7 +204,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         // onClick={() => saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)}
         onClick={() => saveConfig()}
       >
-        {__('Save')}
+        {__('Save', 'bitform')}
         {' '}
       </button>
 

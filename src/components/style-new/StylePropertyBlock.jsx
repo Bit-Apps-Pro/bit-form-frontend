@@ -17,7 +17,7 @@ export default function StylePropertyBlock({ title, delPropertyHandler, children
         >
           <TrashIcn size="14" />
         </button>
-        <span className={css(ut.fw500)}>{__(title)}</span>
+        <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       {children}
     </div>
