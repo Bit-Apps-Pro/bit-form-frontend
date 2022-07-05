@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-syntax */
-
 import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
 
 /* eslint-disable class-methods-use-this */
@@ -23,6 +22,10 @@ export default class FileUploadField {
   #files = {}
 
   #allEventListeners = []
+
+  #document = null
+
+  #window = {}
 
   #assetsURL = ''
 
@@ -58,14 +61,17 @@ export default class FileUploadField {
   constructor(selector, config) {
     Object.assign(this.#config, config)
 
+    this.#document = config.document ? config.document : document
+    this.#window = config.window ? config.window : window
+
     if (typeof selector === 'string') {
-      this.#fileUploadWrap = document.querySelector(selector)
+      this.#fileUploadWrap = this.#document.querySelector(selector)
     } else {
       this.#fileUploadWrap = selector
     }
     this.fieldKey = this.#config.fieldKey
 
-    this.#assetsURL = config.assetsURL
+    this.#assetsURL = config.assetsURL ? config.assetsURL : ''
 
     this.init()
   }
@@ -188,7 +194,7 @@ export default class FileUploadField {
 
   #select(selector) { return this.#fileUploadWrap.querySelector(selector) }
 
-  #remove(selector) { document.querySelector(selector)?.remove() }
+  #remove(selector) { this.#document.querySelector(selector)?.remove() }
 
   #getPreviewUrl(file) {
     const extention = file.name.substring(file.name.lastIndexOf('.') + 1)

@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -13,7 +13,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  // const assetsUrl = bits.assetsURL
+  const bits = useRecoilValue($bits)
 
   useEffect(() => {
     if (!fileUploadWrapElmRef?.current) {
@@ -44,6 +44,9 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       accept,
       minFile,
       maxFile,
+      assetsURL: bits.assetsURL,
+      document: document.getElementById('bit-grid-layout').document,
+      widnow: document.getElementById('bit-grid-layout').contentWindow,
     }
 
     fileUploadFieldRef.current = new FileUploadField(fldElm, configOptions)
