@@ -142,18 +142,18 @@ function Integrations() {
         } else if (response?.data?.data) {
           newInteg.splice(i, 0, tempIntegration)
           setIntegration(newInteg)
-          toast.error(`${__('Integration deletion failed Cause', 'bitform')}:${response.data.data}. ${__('please try again', 'bitform')}`)
+          toast.error(`${__('Integration deletion failed Cause')}:${response.data.data}. ${__('please try again')}`)
         } else {
           newInteg.splice(i, 0, tempIntegration)
           setIntegration(newInteg)
-          toast.error(__('Integration deletion failed. please try again', 'bitform'))
+          toast.error(__('Integration deletion failed. please try again'))
         }
       })
   }
 
   const inteDelConf = i => {
-    confMdl.btnTxt = __('Delete', 'bitform')
-    confMdl.body = __('Are you sure to delete this integration?', 'bitform')
+    confMdl.btnTxt = __('Delete')
+    confMdl.body = __('Are you sure to delete this integration?')
     confMdl.btnClass = ''
     confMdl.action = () => { removeInteg(i); closeConfMdl() }
     confMdl.show = true
@@ -200,8 +200,8 @@ function Integrations() {
   }
 
   const inteCloneConf = i => {
-    confMdl.btnTxt = __('Clone', 'bitform')
-    confMdl.body = __('Are you sure to clone this integration?', 'bitform')
+    confMdl.btnTxt = __('Clone')
+    confMdl.body = __('Are you sure to clone this integration?')
     confMdl.btnClass = ''
     confMdl.action = () => { inteClone(i); closeConfMdl() }
     confMdl.show = true
@@ -221,9 +221,9 @@ function Integrations() {
           setIntegration(tmpInteg)
           toast.success('Integration clone successfully done.')
         } else {
-          toast.error(`${__('Integration clone failed Cause', 'bitform')}: ${response.data} ${__('please try again', 'bitform')}`)
+          toast.error(`${__('Integration clone failed Cause')}: ${response.data} ${__('please try again')}`)
         }
-      }).catch(() => toast.error(__('Integration clone failed.', 'bitform')))
+      }).catch(() => toast.error(__('Integration clone failed.')))
   }
 
   return (
@@ -239,10 +239,10 @@ function Integrations() {
       />
       <Switch>
         <Route exact path={path}>
-          <h2>{__('Integrations', 'bitform')}</h2>
+          <h2>{__('Integrations')}</h2>
           <div className="flx flx-wrp">
             <Modal
-              title={__('Available Integrations', 'bitform')}
+              title={__('Available Integrations')}
               show={showMdl}
               setModal={closeIntegModal}
               style={{ width: 1000 }}
@@ -261,7 +261,7 @@ function Integrations() {
                     >
                       {(inte.pro && !isPro) && (
                         <div className="pro-filter">
-                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
+                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium')}</a></span>
                         </div>
                       )}
                       <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
@@ -282,17 +282,17 @@ function Integrations() {
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
+                  <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit')}'` }} type="button">
                     <EditIcn size="15" />
                   </Link>
-                  <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
+                  <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <TrashIcn />
                   </button>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone', 'bitform')}'` }} onClick={() => inteCloneConf(i)} type="button">
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone')}'` }} onClick={() => inteCloneConf(i)} type="button">
                     <CopyIcn size="15" />
                   </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
-                    <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
+                    <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info')}'` }} type="button">
                       <InfoIcn />
                     </Link>
                   )}

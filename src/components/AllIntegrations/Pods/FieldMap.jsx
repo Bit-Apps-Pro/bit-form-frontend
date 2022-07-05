@@ -28,13 +28,13 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...', 'bitform')}</option>
+          <option value="custom">{__('Custom...')}</option>
 
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
@@ -46,7 +46,7 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
         </select>
 
         <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           {
             podFields?.map(header => (
               <option key={`${header.key}-1`} value={header.key}>

@@ -42,7 +42,7 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
       md
       show={labelModal}
       setModal={cancelModal}
-      title={__('Edit Decision Box Label', 'bitform')}
+      title={__('Edit Decision Box Label')}
     >
       <TinyMCE
         id={fldKey}

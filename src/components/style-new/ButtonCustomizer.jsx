@@ -50,12 +50,12 @@ export default function ButtonCustomizer() {
         <div className={css(ut.flxc)}>
           {/* <ResetStyle propertyPath={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateObjName="themeVars" /> */}
           <ResetStyle
-            propertyPath={['--btn-brw', '--btn-brs']}
+            propertyPath={['--btn-bdr-width', '--btn-bdr-rad']}
             stateObjName="themeVars"
             id="btn-bdr"
           />
           <BorderControl
-            subtitle="Button Border Control"
+            subtitle="Button Border"
             objectPaths={borderPathsObj}
             id="btn-bdr"
           />
@@ -82,7 +82,7 @@ export default function ButtonCustomizer() {
             id="btn-sh"
           />
           <ShadowControl
-            subtitle="Button Shadow Control"
+            subtitle="Button Shadow"
             value={btnSh}
             objectPaths={btnShObj}
             id="btn-sh"
@@ -91,10 +91,10 @@ export default function ButtonCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Button Spacing Control"
+          subtitle="Button Spacing"
           objectPaths={btnMsgSpacingObj}
           id="btn-spacing-ctrl"
         />
@@ -126,12 +126,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
-      'border-width': '--btn-brw',
-      'border-radius': '--btn-brs',
+      'border-style': '--btn-bdr',
+      'border-width': '--btn-bdr-width',
+      'border-radius': '--btn-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--btn-br' },
+    paths: { 'border-color': '--btn-bdr-clr' },
   },
 ]

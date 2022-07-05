@@ -56,7 +56,7 @@ export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
   })
   toast.promise(loadAcfFields, {
     success: data => data,
-    error: __('Error Occured', 'bitform'),
+    error: __('Error Occured'),
     loading: __('Loading ACF Fields...'),
   })
 }
@@ -76,7 +76,7 @@ export const refreshPostTypes = (postTypes, setPostTypes) => {
 
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occured', 'bitform'),
+    error: __('Error Occured'),
     loading: __('Loading Post Types...'),
   })
 }

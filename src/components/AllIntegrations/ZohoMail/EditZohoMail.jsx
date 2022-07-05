@@ -30,8 +30,8 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, mailConf, setMailConf)} name="name" value={mailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, mailConf, setMailConf)} name="name" value={mailConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
       <br />
       <br />

@@ -42,11 +42,11 @@ function AllFroms() {
       .then(res => {
         if ('success' in res && !res.success) {
           setAllForms(allforms => formsReducer(allforms, { type: 'update', data: { formID: id, status: data.status } }))
-          setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status', 'bitform') } })
+          setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status') } })
         }
       }).catch(() => {
         setAllForms(allforms => formsReducer(allforms, { type: 'update', data: { formID: id, status: !status } }))
-        setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status', 'bitform') } })
+        setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status') } })
       })
   }
 
@@ -62,13 +62,13 @@ function AllFroms() {
   const calculateProgress = (entries, views) => (entries === 0 ? 0.00 : ((entries / (views === '0' ? 1 : views)) * 100).toFixed(2))
 
   const [cols, setCols] = useState([
-    { width: 70, minWidth: 60, Header: __('Status', 'bitform'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
-    { width: 250, minWidth: 80, Header: __('Form Name', 'bitform'), accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
-    { width: 220, minWidth: 200, Header: __('Short Code', 'bitform'), accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} className="cpyTxt" /> },
-    { width: 80, minWidth: 60, Header: __('Views', 'bitform'), accessor: 'views' },
-    { width: 170, minWidth: 130, Header: __('Completion Rate', 'bitform'), accessor: 'conversion', Cell: val => <Progressbar value={calculateProgress(val.row.values.entries, val.row.values.views)} /> },
-    { width: 100, minWidth: 60, Header: __('Responses', 'bitform'), accessor: 'entries', Cell: value => <Link to={`form/responses/edit/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
-    { width: 160, minWidth: 60, Header: __('Created', 'bitform'), accessor: 'created_at', Cell: row => showDateTime(row.row.original.created_at) },
+    { width: 70, minWidth: 60, Header: __('Status'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
+    { width: 250, minWidth: 80, Header: __('Form Name'), accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
+    { width: 220, minWidth: 200, Header: __('Short Code'), accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} className="cpyTxt" /> },
+    { width: 80, minWidth: 60, Header: __('Views'), accessor: 'views' },
+    { width: 170, minWidth: 130, Header: __('Completion Rate'), accessor: 'conversion', Cell: val => <Progressbar value={calculateProgress(val.row.values.entries, val.row.values.views)} /> },
+    { width: 100, minWidth: 60, Header: __('Responses'), accessor: 'entries', Cell: value => <Link to={`form/responses/edit/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
+    { width: 160, minWidth: 60, Header: __('Created'), accessor: 'created_at', Cell: row => showDateTime(row.row.original.created_at) },
   ])
 
   useEffect(() => {
@@ -178,7 +178,7 @@ function AllFroms() {
     bitsFetch({ id: formID }, 'bitforms_delete_aform').then(response => {
       if (response.success) {
         setAllForms(allforms => formsReducer(allforms, { type: 'remove', data: index }))
-        setSnackbar({ show: true, msg: __('Form Deleted Successfully', 'bitform') })
+        setSnackbar({ show: true, msg: __('Form Deleted Successfully') })
       }
     })
   }
@@ -188,7 +188,7 @@ function AllFroms() {
       if (response.success) {
         const { data } = response
         setAllForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
-        setSnackbar({ show: true, msg: __('Form Duplicated Successfully.', 'bitform') })
+        setSnackbar({ show: true, msg: __('Form Duplicated Successfully.') })
       }
     })
   }
@@ -226,30 +226,30 @@ function AllFroms() {
 
   const showDelModal = (formID, index) => {
     confMdl.action = () => { handleDelete(formID, index); closeConfMdl() }
-    confMdl.btnTxt = __('Delete', 'bitform')
+    confMdl.btnTxt = __('Delete')
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
-    confMdl.body = __('Are you sure to delete this form?', 'bitform')
+    confMdl.body = __('Are you sure to delete this form?')
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
 
   const showDupMdl = (formID) => {
     confMdl.action = () => { handleDuplicate(formID); closeConfMdl() }
-    confMdl.btnTxt = __('Duplicate', 'bitform')
+    confMdl.btnTxt = __('Duplicate')
     confMdl.btn2Txt = null
     confMdl.btnClass = 'blue'
-    confMdl.body = __('Are you sure to duplicate this form ?', 'bitform')
+    confMdl.body = __('Are you sure to duplicate this form ?')
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
 
   const showExportMdl = (formID) => {
     confMdl.action = () => { handleExport(formID); closeConfMdl() }
-    confMdl.btnTxt = __('Export', 'bitform')
+    confMdl.btnTxt = __('Export')
     confMdl.btn2Txt = null
     confMdl.btnClass = 'blue'
-    confMdl.body = __('Are you sure to export this form ?', 'bitform')
+    confMdl.body = __('Are you sure to export this form ?')
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
@@ -270,7 +270,7 @@ function AllFroms() {
       <Modal
         show={modal}
         setModal={setModal}
-        title={__('Create Form', 'bitform')}
+        title={__('Create Form')}
         subTitle=""
       >
         <FormTemplates setTempModal={setModal} newFormId={newFormId} setSnackbar={setSnackbar} />
@@ -278,8 +278,8 @@ function AllFroms() {
       {allForms.length ? (
         <>
           <div className={css(app.af_header)}>
-            <h2>{__('Forms', 'bitform')}</h2>
-            <button onClick={() => setModal(true)} type="button" data-testid="create-form-btn" className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}>{__('Create Form', 'bitform')}</button>
+            <h2>{__('Forms')}</h2>
+            <button onClick={() => setModal(true)} type="button" data-testid="create-form-btn" className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}>{__('Create Form')}</button>
           </div>
           <div>
             <Table

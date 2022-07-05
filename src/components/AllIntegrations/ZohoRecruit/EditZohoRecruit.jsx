@@ -19,7 +19,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
 
   const saveConfig = () => {
     if (!checkMappedFields(recruitConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, recruitConf, history, id, 1)
@@ -29,8 +29,8 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, tab, recruitConf, setRecruitConf)} name="name" value={recruitConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, tab, recruitConf, setRecruitConf)} name="name" value={recruitConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
       <br />
       <br />

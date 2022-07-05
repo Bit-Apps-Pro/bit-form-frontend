@@ -21,8 +21,8 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
     const newConf = { ...enchargeConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
-        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bitform') : '',
+        name: !newConf.name ? __('Integration name cann\'t be empty') : '',
+        api_key: !newConf.api_key ? __('API Key cann\'t be empty') : '',
       })
       return
     }
@@ -62,17 +62,17 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         youTubeLink={tutorialLinks.encharge.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
-        <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('API key', 'bitform')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('API Key:')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('API key')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         <small className="d-blk mt-5">
-          {__('To get API , Please Visit', 'bitform')}
+          {__('To get API , Please Visit')}
           {' '}
-          <a className="btcd-link" href="https://app.encharge.io/account/info" target="_blank" rel="noreferrer">{__('Encharge API Console', 'bitform')}</a>
+          <a className="btcd-link" href="https://app.encharge.io/account/info" target="_blank" rel="noreferrer">{__('Encharge API Console')}</a>
         </small>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -92,12 +92,12 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         {!isInfo && (
           <>
             <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-              {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
+              {isAuthorized ? __('Authorized ✔') : __('Authorize')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
             <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-              {__('Next', 'bitform')}
+              {__('Next')}
               <BackIcn className="ml-1 rev-icn" />
             </button>
           </>

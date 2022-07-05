@@ -61,7 +61,7 @@ export default function StyleLayers() {
           />
           <NavBtn
             route="label-containers"
-            label="Label Containers"
+            label="Label Container(s)"
             offset="3"
             highlightSelector="[data-dev-lbl-wrp]"
           />
@@ -70,24 +70,24 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('lbl')}
             offset="6"
-            title="Labels"
+            title="Label(s)"
             highlightSelector="[data-dev-lbl]"
           >
             <NavBtn
               route="lbl-pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-lbl-pre-i]"
             />
             <NavBtn
               route="lbl-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-lbl-suf-i]"
             />
             <NavBtn
               route="req-smbl"
-              label="Asterisk Icon"
+              label="Asterisk Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-req-smbl]"
             />
@@ -97,18 +97,18 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('sub-titl')}
             offset="6"
-            title="Sub Titles"
+            title="Sub Title(s)"
             highlightSelector="[data-dev-sub-titl]"
           >
             <NavBtn
               route="sub-titl-pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-sub-titl-pre-i]"
             />
             <NavBtn
               route="sub-titl-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-sub-titl-suf-i]"
             />
@@ -118,18 +118,18 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('pre-i')}
             offset="6"
-            title="Inputs"
+            title="Input(s)"
             highlightSelector="[data-dev-fld]"
           >
             <NavBtn
               route="pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-pre-i]"
             />
             <NavBtn
               route="suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-suf-i]"
             />
@@ -139,18 +139,18 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('hlp-txt')}
             offset="6"
-            title="Helper Texts"
+            title="Helper Text(s)"
             highlightSelector="[data-dev-hlp-txt]"
           >
             <NavBtn
               route="hlp-txt-pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-hlp-txt-pre-i]"
             />
             <NavBtn
               route="hlp-txt-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-hlp-txt-suf-i]"
             />
@@ -161,18 +161,18 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('err-msg')}
             offset="6"
-            title="Error Messages"
+            title="Error Message(s)"
             highlightSelector="[data-dev-err-msg]"
           >
             <NavBtn
               route="err-txt-pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-err-txt-pre-i]"
             />
             <NavBtn
               route="err-txt-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-err-txt-suf-i]"
             />
@@ -183,18 +183,18 @@ export default function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('btn')}
             offset="6"
-            title="Buttons"
+            title="Button(s)"
             highlightSelector="[data-dev-btn]"
           >
             <NavBtn
               route="btn-pre-i"
-              label="Prefix Icons"
+              label="Leading Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-btn-pre-i]"
             />
             <NavBtn
               route="btn-suf-i"
-              label="Suffix Icons"
+              label="Trailing Icon(s)"
               offset="3.5"
               highlightSelector="[data-dev-btn-suf-i]"
             />
@@ -293,6 +293,17 @@ export default function StyleLayers() {
                   offset="2.5"
                   highlightSelector={`[data-dev-ck="${fldKey}"]`}
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'ck')}
+                />
+              )}
+
+              {fldData.typ.match(/(check|radio)/gi) && (
+                <NavBtn
+                  subRoute={fldKey}
+                  route="other-inp"
+                  label="Other Option Input"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-other-inp="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'other-inp')}
                 />
               )}
 
@@ -427,7 +438,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="opt-suffix"
-                    label="Currency Option Suffix"
+                    label="Currency Option Trailing"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-suffix="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-suffix')}
@@ -536,7 +547,7 @@ export default function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="opt-prefix"
-                    label="Phone Option Suffix"
+                    label="Phone Option Leading"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-prefix="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-prefix')}

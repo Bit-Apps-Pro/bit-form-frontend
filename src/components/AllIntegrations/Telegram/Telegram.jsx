@@ -73,7 +73,7 @@ export default function Telegram({ formFields, setIntegration, integrations, all
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>

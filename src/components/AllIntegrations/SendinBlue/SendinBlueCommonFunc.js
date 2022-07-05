@@ -20,12 +20,12 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
         if (result.data.sblueList) {
           newConf.default.sblueList = result.data.sblueList
         }
-        setSnackbar({ show: true, msg: __('List refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('List refreshed') })
         setSendinBlueConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('List refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('List refresh failed Cause: %s. please try again'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('List failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('List failed. please try again') })
       }
       setIsLoading(false)
     })
@@ -45,12 +45,12 @@ export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) 
         if (result.data.sblueTemplates) {
           newConf.default.sblueTemplates = result.data.sblueTemplates
         }
-        setSnackbar({ show: true, msg: __('Templates refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Templates refreshed') })
         setSendinBlueConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Templates failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Templates failed. please try again') })
       }
       // setIsLoading(false)
     })
@@ -67,14 +67,14 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setis
           newConf.default.fields = result.data.sendinBlueField
           const { fields } = newConf.default
           newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
-          setSnackbar({ show: true, msg: __('Sendinblue fields refreshed', 'bitform') })
+          setSnackbar({ show: true, msg: __('Sendinblue fields refreshed') })
         } else {
-          setSnackbar({ show: true, msg: __('No Sendinblue fields found. Try changing the header row number or try again', 'bitform') })
+          setSnackbar({ show: true, msg: __('No Sendinblue fields found. Try changing the header row number or try again') })
         }
 
         setSendinBlueConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Sendinblue fields refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Sendinblue fields refresh failed. please try again') })
       }
       setisLoading(false)
     })

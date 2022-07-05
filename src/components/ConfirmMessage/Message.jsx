@@ -117,9 +117,9 @@ function Message({ id, msgItem }) {
     setUpdateBtn({ unsaved: true })
   }
 
-  let values = msgItem?.styles?.padding?.trim().split(' ')
+  let values = msgItem?.config?.styles?.padding?.trim().split(' ')
   const handleValues = ({ value: val, unit, id: index }) => {
-    values = msgItem?.styles?.trim().split(' ')
+    values = msgItem?.config?.styles?.padding?.trim().split(' ')
     const preUnit = getStrFromStr(values[index] || 'px')
     const convertvalue = unitConverter(unit, val, preUnit)
 
@@ -187,6 +187,7 @@ function Message({ id, msgItem }) {
     },
     msgContent: {
       bd: msgItem.config?.styles?.background,
+      cr: msgItem.config?.styles?.color,
       p: msgItem.config?.styles?.padding,
       b: `${msgItem.config?.styles?.borderWidth} ${msgItem.config?.styles?.borderType} ${msgItem.config?.styles?.borderColor}`,
       brs: msgItem.config?.styles?.borderRadius,
@@ -331,7 +332,7 @@ function Message({ id, msgItem }) {
         <div className={css({ flx: 1, fd: 'column', rg: 5 })}>
           <div>
             <div className={css({ flx: 'align-center', cg: 5 })}>
-              <span className={css({ w: 130 })}>{__('Message Styles', 'bitform')}</span>
+              <span className={css({ w: 130 })}>{__('Message Styles')}</span>
               <select
                 className={css(styles.selectInput)}
                 name="animation"
@@ -346,7 +347,7 @@ function Message({ id, msgItem }) {
             </div>
           </div>
           <div>
-            <span className={css({ w: 130 })}>{__('Message Type', 'bitform')}</span>
+            <span className={css({ w: 130 })}>{__('Message Type')}</span>
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
           </div>
@@ -404,14 +405,14 @@ function Message({ id, msgItem }) {
       >
         <div className="confirmation-style">
           <div className={`style-preview ${css({ h: '250px', p: '40px 20px', ow: 'auto', bd: '#E8E8E8' })}`}>
-            <div className={`msg-container-${id} ${css(styles.msgContainer)}`}>
-              <div className={`msg-background-${id} ${css(styles.msgBackground)}`}>
-                <div className={`msg-content-${id} ${css(styles.msgContent)}`}>
+            <div className={`${css(styles.msgContainer)}`}>
+              <div className={`${css(styles.msgBackground)}`}>
+                <div className={`${css(styles.msgContent)}`}>
                   <button
-                    className={`close-${id} ${css(styles.close)}`}
+                    className={`${css(styles.close)}`}
                     type="button"
                   >
-                    <svg className={`close-icn-${id} ${css(styles.closeIcon)}`} viewBox="0 0 30 30">
+                    <svg className={`${css(styles.closeIcon)}`} viewBox="0 0 30 30">
                       <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="4" y1="3.88" x2="26" y2="26.12" />
                       <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
                     </svg>
@@ -446,6 +447,11 @@ function Message({ id, msgItem }) {
                     <span className={css(styles.label, styles.backgrounLabel)}>Message Background Color</span>
                     <input type="color" name="background" className={css({ ml: 88 }, styles.input, styles.colorInput)} value={msgItem.config?.styles?.background} onChange={handleConfirmationStyle} />
                     <input type="text" name="background" className={css({ w: 165 }, styles.input)} value={msgItem.config?.styles?.background} onChange={handleConfirmationStyle} />
+                  </div>
+                  <div className={css({ flx: 'align-center', cg: 5 })}>
+                    <span className={css(styles.label, styles.backgrounLabel)}>Message Text Color</span>
+                    <input type="color" name="color" className={css({ ml: 88 }, styles.input, styles.colorInput)} value={msgItem.config?.styles?.color} onChange={handleConfirmationStyle} />
+                    <input type="text" name="color" className={css({ w: 165 }, styles.input)} value={msgItem.config?.styles?.color} onChange={handleConfirmationStyle} />
                   </div>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
                     <span className={css(styles.label, styles.backgrounLabel)}>Close Button Background Color</span>

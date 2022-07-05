@@ -40,7 +40,7 @@ export default function FieldHideSettings({ cls }) {
       <SingleToggle
         id="fld-hid-stng"
         tip="By disabling this option, the field will be hidden"
-        title={__('Hidden Field', 'bitform')}
+        title={__('Hidden Field')}
         action={setHidden}
         isChecked={isHidden}
       />

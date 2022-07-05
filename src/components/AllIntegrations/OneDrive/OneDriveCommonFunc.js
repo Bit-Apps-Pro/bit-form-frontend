@@ -65,8 +65,8 @@ export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf, set
     .catch(() => setIsLoading(false))
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
-    loading: __('Loading OneDrive Folders List...', 'bitform'),
+    error: __('Error Occurred'),
+    loading: __('Loading OneDrive Folders List...'),
   })
 }
 
@@ -96,9 +96,9 @@ export const getSingleOneDriveFolders = (formID, oneDriveConf, setOneDriveConf, 
 
           newConf.default.folders[folder] = sortArrOfObj(result.data.folders, 'folderName')
           if (!newConf.folderMap.includes(folder)) newConf.folderMap.push(folder)
-          setSnackbar({ show: true, msg: __('Sub Folders refreshed', 'bitform') })
+          setSnackbar({ show: true, msg: __('Sub Folders refreshed') })
         } else {
-          setSnackbar({ show: true, msg: __('No Sub Folder Found', 'bitform') })
+          setSnackbar({ show: true, msg: __('No Sub Folder Found') })
         }
 
         if (result.data.tokenDetails) {
@@ -106,7 +106,7 @@ export const getSingleOneDriveFolders = (formID, oneDriveConf, setOneDriveConf, 
         }
         setOneDriveConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Sub Folders refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Sub Folders refresh failed. please try again') })
       }
       setIsLoading(false)
     })
@@ -116,8 +116,8 @@ export const getSingleOneDriveFolders = (formID, oneDriveConf, setOneDriveConf, 
 export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading, setError) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __('Client Id can\'t be empty', 'bitform') : '',
-      clientSecret: !confTmp.clientSecret ? __('Client Secret can\'t be empty', 'bitform') : '',
+      clientId: !confTmp.clientId ? __('Client Id can\'t be empty') : '',
+      clientSecret: !confTmp.clientSecret ? __('Client Secret can\'t be empty') : '',
     })
     return
   }
@@ -139,7 +139,7 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isAuthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        toast.error(`${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}`)
+        toast.error(`${__('Authorization failed')} ${errorCause}. ${__('please try again')}`)
         setIsLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -163,11 +163,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
-        toast.success(__('Authorized Successfully', 'bitform'))
+        toast.success(__('Authorized Successfully'))
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        toast.error(`${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}`)
+        toast.error(`${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}`)
       } else {
-        toast.error(__('Authorization failed. please try again', 'bitform'))
+        toast.error(__('Authorization failed. please try again'))
       }
       setIsLoading(false)
     })

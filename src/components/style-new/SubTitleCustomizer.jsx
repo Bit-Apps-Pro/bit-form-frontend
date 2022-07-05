@@ -24,7 +24,7 @@ export default function SubTitleCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Subtitle Background Color Control"
+        subtitle="Subtitle Background Color"
         value={stBg}
         stateObjName="themeColors"
         propertyPath="--sub-titl-bg"
@@ -40,7 +40,7 @@ export default function SubTitleCustomizer() {
             id="sub-titl-bdr"
           />
           <BorderControl
-            subtitle="Subtitle Border Control"
+            subtitle="Subtitle Border"
             objectPaths={borderPathsObj}
             id="sub-titl-bdr"
           />
@@ -67,7 +67,7 @@ export default function SubTitleCustomizer() {
             id="sub-titl-sh"
           />
           <ShadowControl
-            subtitle="Subtitle Shadow Control"
+            subtitle="Subtitle Shadow"
             value={stSh}
             objectPaths={subTitlShObj}
             id="sub-titl-sh"
@@ -76,10 +76,10 @@ export default function SubTitleCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Subtitle Spacing Control"
+          subtitle="Subtitle Spacing"
           objectPaths={stSpacingObj}
           id="subtitl-spacing-ctrl"
         />
@@ -87,7 +87,7 @@ export default function SubTitleCustomizer() {
 
       <SimpleColorPicker
         title="Text Color"
-        subtitle="Subtitle Text Color Control"
+        subtitle="Subtitle Text Color"
         value={stC}
         stateObjName="themeColors"
         propertyPath="--sub-titl-c"
@@ -110,12 +110,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
+      'border-style': '--sub-titl-bdr',
       'border-width': '--sub-titl-bdr-width',
       'border-radius': '--sub-titl-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--sub-titl-bdr' },
+    paths: { 'border-color': '--sub-titl-bdr-clr' },
   },
 ]

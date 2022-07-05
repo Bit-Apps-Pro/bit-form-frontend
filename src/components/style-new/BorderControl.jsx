@@ -11,7 +11,7 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
-import { getValueByObjPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
+import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state, hslaPaths }) {
   const { css } = useFela()
@@ -36,48 +36,31 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
     const propArr = Object.keys(objectPaths[0].paths)
     borderPropsFirst = objectPaths[0].paths[propArr[0]]
 
-    const bdrVar = objectPaths[1].paths.border
+    const bdrStylVar = objectPaths[0].paths[propArr[0]]
+    const bdrClrVar = objectPaths[1].paths['border-color']
     const bdrWdthVar = objectPaths[0].paths['border-width']
     const bdrRdsVar = objectPaths[0].paths['border-radius']
 
-    bdrVal = themeColors[bdrVar]
-    const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll(/(!important)/gi, ''))
-    bdrClr = bdrColor
+    bdrVal = themeVars[bdrStylVar]
+    // const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll(/(!important)/gi, ''))
+    bdrClr = themeColors[bdrClrVar]
     bdrWdthVal = themeVars[bdrWdthVar]
     bdrRdsVal = themeVars[bdrRdsVar]
   } else {
     const propArr = Object.keys(objectPaths.paths)
     borderPropsFirst = objectPaths.paths[propArr[0]]
 
-    const checkVarValue = (varStr, varState, stateName = '') => {
-      if (varStr?.match(/(var)/gi)?.[0] === 'var') {
-        const str = varStr.replaceAll(/\(|var|,.*|\)|(!important)/gi, '')
-        varStr = varState[str]
-      }
+    bdrVal = getValueFromStateVar(themeVars, getValueByObjPath(styles, objectPaths.paths[propArr[0]]))
+    bdrClr = getValueFromStateVar(themeColors, getValueByObjPath(styles, objectPaths.paths['border-color']))
 
-      if (varStr?.match(/(!important)/gi)) {
-        varStr = varStr?.replaceAll(/(!important)/gi, '')
-      }
-
-      if (stateName === 'themeColors') {
-        return splitValueBySpaces(varStr)
-      }
-      return varStr
-    }
-
-    bdrVal = getValueByObjPath(styles, objectPaths.paths.border)
-
-    const [bdrStyle, bdrHslaColor] = checkVarValue(bdrVal?.replaceAll(/(!important)/gi, ''), themeColors, 'themeColors')
-    bdrClr = bdrHslaColor
-    if (bdrStyle || bdrHslaColor) bdrVal = `${bdrStyle} ${bdrHslaColor}`
-
-    bdrWdthVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-width']), themeVars)
-    bdrRdsVal = checkVarValue(getValueByObjPath(styles, objectPaths.paths['border-radius']), themeVars)
+    bdrWdthVal = getValueFromStateVar(themeVars, getValueByObjPath(styles, objectPaths.paths['border-width']))
+    bdrRdsVal = getValueFromStateVar(themeVars, getValueByObjPath(styles, objectPaths.paths['border-radius']))
   }
 
   if (bdrVal) valStr += `Border: ${bdrVal}; `
-  if (bdrWdthVal) valStr += `Border Width: ${bdrWdthVal}; `
-  if (bdrRdsVal) valStr += `Border Radius: ${bdrRdsVal};`
+  if (bdrClr) valStr += `Color: ${bdrClr}; `
+  if (bdrWdthVal) valStr += `Width: ${bdrWdthVal}; `
+  if (bdrRdsVal) valStr += `Radius: ${bdrRdsVal};`
 
   const assignValues = (paths, obj, val = '') => {
     const propArray = Object.keys(paths)

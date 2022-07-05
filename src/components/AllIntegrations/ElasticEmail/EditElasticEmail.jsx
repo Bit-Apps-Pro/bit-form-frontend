@@ -21,7 +21,7 @@ function EditElasticEmail({ formFields, setIntegration, integrations, allIntegUR
 
   const saveConfig = () => {
     if (!checkMappedFields(elasticEmailConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, elasticEmailConf, history, id, 1)
@@ -32,8 +32,8 @@ function EditElasticEmail({ formFields, setIntegration, integrations, allIntegUR
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-200 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, elasticEmailConf, setElasticEmailConf)} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, elasticEmailConf, setElasticEmailConf)} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
       <br />
 

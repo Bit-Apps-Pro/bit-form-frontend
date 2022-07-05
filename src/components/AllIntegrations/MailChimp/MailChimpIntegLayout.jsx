@@ -29,9 +29,9 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
   return (
     <>
       <br />
-      <b className="wdt-150 d-in-b">{__('Audience List:', 'bitform')}</b>
+      <b className="wdt-150 d-in-b">{__('Audience List:')}</b>
       <select onChange={handleInput} name="listId" value={sheetConf.listId} className="btcd-paper-inp w-6">
-        <option value="">{__('Select Audience List', 'bitform')}</option>
+        <option value="">{__('Select Audience List')}</option>
         {
           sheetConf?.default?.audiencelist && Object.keys(sheetConf.default.audiencelist).map(audiencelistName => (
             <option key={audiencelistName} value={sheetConf.default.audiencelist[audiencelistName].listId}>
@@ -44,14 +44,14 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
       <br />
       <br />
       <div className="d-flx">
-        <b style={{ marginTop: '15px' }} className="wdt-150 d-in-b">{__('Tags: ', 'bitform')}</b>
+        <b style={{ marginTop: '15px' }} className="wdt-150 d-in-b">{__('Tags: ')}</b>
         <MultiSelect
           defaultValue={sheetConf?.tags}
           className="btcd-paper-drpdwn w-6"
           options={sheetConf?.default?.audienceTags && Object.keys(sheetConf.default.audienceTags).map(tag => ({ label: sheetConf.default.audienceTags[tag].tagName, value: sheetConf.default.audienceTags[tag].tagName }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -67,12 +67,12 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+              <b className="wdt-100">{__('Map Fields')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Mail Chimp Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Mail Chimp Fields')}</b></div>
             </div>
 
             {sheetConf.field_map.map((itm, i) => (
@@ -91,12 +91,12 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
             {sheetConf.actions?.address && (
               <>
                 <div className="mt-4">
-                  <b className="wdt-100">{__('Address Field Map', 'bitform')}</b>
+                  <b className="wdt-100">{__('Address Field Map')}</b>
                 </div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>{__('Form Address Fields', 'bitform')}</b></div>
-                  <div className="txt-dp"><b>{__('Mail Chimp Address Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Form Address Fields')}</b></div>
+                  <div className="txt-dp"><b>{__('Mail Chimp Address Fields')}</b></div>
                 </div>
                 {sheetConf?.address_field?.map((itm, i) => (
                   <AddressFieldMap
@@ -119,7 +119,7 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
 
       {sheetConf.listId && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
           <div className="btcd-hr mt-1" />
           <MailChimpActions
             sheetConf={sheetConf}

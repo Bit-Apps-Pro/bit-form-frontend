@@ -76,9 +76,9 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           {' '}
-&nbsp;
+          &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

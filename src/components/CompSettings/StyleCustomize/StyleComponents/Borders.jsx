@@ -55,7 +55,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Border', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Border')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -75,7 +75,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">{__('Type', 'bitform')}</span>
+        <span className="f-5">{__('Type')}</span>
         <BtnGrp
           value={bdrStyle}
           onChange={setBdrStyle}
@@ -91,14 +91,14 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
 
       {bdrClr && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">{__('Border Color', 'bitform')}</span>
+          <span className="f-5">{__('Border Color')}</span>
           <ColorPicker alwGradient={false} value={bdrClr} onChange={clr => setBdr('border-color', clr.style)} />
         </div>
       )}
 
       {styleConfig.width && bdrW && (
         <div className="mt-2">
-          <span className="f-5">{__('Border Width', 'bitform')}</span>
+          <span className="f-5">{__('Border Width')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
@@ -117,7 +117,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
       )}
       {styleConfig.radius && bdrRad && (
         <div className="mt-2">
-          <span className="f-5">{__('Border Radius', 'bitform')}</span>
+          <span className="f-5">{__('Border Radius')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },

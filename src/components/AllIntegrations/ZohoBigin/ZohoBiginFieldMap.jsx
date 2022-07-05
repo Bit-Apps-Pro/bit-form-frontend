@@ -19,7 +19,7 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
               uploadFields ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>) : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
@@ -27,7 +27,7 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
           </optgroup>
           {!uploadFields && (
             <>
-              <option value="custom">{__('Custom...', 'bitform')}</option>
+              <option value="custom">{__('Custom...')}</option>
 
               <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
                 {isPro && SmartTagField?.map(f => (
@@ -41,10 +41,10 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
 
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, biginConf, setBiginConf, tab)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, biginConf, setBiginConf, tab)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
         <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           {
             biginConf.default.moduleData?.[module]?.fields && Object.values(biginConf.default.moduleData[module].fields).map(fieldApiName => (
               isNotRequired

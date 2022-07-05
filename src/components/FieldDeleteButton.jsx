@@ -24,7 +24,7 @@ const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutI
         unselectable="on"
         draggable="false"
         style={{ cursor: 'pointer' }}
-        title={__('Remove', 'bitform')}
+        title={__('Remove')}
         data-testid={`${fieldId}-remove`}
       >
         <TrashIcn size="19" />

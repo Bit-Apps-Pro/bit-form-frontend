@@ -23,15 +23,15 @@ export default function MailSendTest({ settab }) {
         setisTestLoading(false)
         if (res !== undefined && res.success) {
           if (res.data) {
-            return __('Email sent successfully.', 'bitform')
+            return __('Email sent successfully.')
           }
-          return __(`${res?.data?.errors?.[0]}`, 'bitform')
+          return __(`${res?.data?.errors?.[0]}`)
         }
-        return __(`${res?.data?.errors?.[0]}`, 'bitform')
+        return __(`${res?.data?.errors?.[0]}`)
       })
     toast.promise(prom, {
       success: data => data,
-      loading: __('Sending...', 'bitform'),
+      loading: __('Sending...'),
       error: data => data,
     })
   }
@@ -39,7 +39,7 @@ export default function MailSendTest({ settab }) {
   return (
     <div>
       <h2>
-        {__('Email Test', 'bitform')}
+        {__('Email Test')}
       </h2>
       <div>
         <form
@@ -54,24 +54,24 @@ export default function MailSendTest({ settab }) {
         >
           <div className="mt-2 flx">
             <label htmlFor="form_email_address" className="mr-2 wdt-150">
-              <b>{__('To:', 'bitform')}</b>
+              <b>{__('To:')}</b>
             </label>
             <input id="form_email_address" name="to" className="btcd-paper-inp" placeholder="Email" type="email" required />
           </div>
           <div className="mt-2 flx">
             <label htmlFor="subject" className="mr-2 wdt-150">
-              <b>{__('Subject:', 'bitform')}</b>
+              <b>{__('Subject:')}</b>
             </label>
             <input id="subject" name="subject" className="btcd-paper-inp" placeholder="Subject" type="text" required />
           </div>
           <div className="mt-2 flx">
             <label htmlFor="message" className="mr-2 wdt-150">
-              <b>{__('Message:', 'bitform')}</b>
+              <b>{__('Message:')}</b>
             </label>
             <input id="message" name="message" className="btcd-paper-inp" placeholder="Message" type="text" required />
           </div>
           <button type="submit" className={`${css(app.btn)} f-left btcd-btn-lg blue sh-sm flx`} disabled={isTestLoading}>
-            {__('Send Test Mail', 'bitform')}
+            {__('Send Test Mail')}
             {isTestLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
           </button>
         </form>

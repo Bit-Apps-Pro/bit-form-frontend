@@ -39,14 +39,14 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('List: ', 'bitform')}</b>
+        <b className="wdt-200 d-in-b">{__('List: ')}</b>
         <MultiSelect
           defaultValue={sendinBlueConf?.lists}
           className="btcd-paper-drpdwn w-6"
           options={listOptions()}
           onChange={val => lists(val)}
         />
-        <button onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
       <br />
@@ -64,12 +64,12 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+              <b className="wdt-100">{__('Map Fields')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Sendinblue Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Sendinblue Fields')}</b></div>
             </div>
 
             {sendinBlueConf.field_map.map((itm, i) => (
@@ -88,10 +88,10 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
             {sendinBlueConf.actions?.double_optin && (
               <>
                 <div className="flx">
-                  <b className="wdt-150 d-in-b">{__('Template: ', 'bitform')}</b>
+                  <b className="wdt-150 d-in-b">{__('Template: ')}</b>
                   <div className="w-5">
                     <select onChange={handleInput} name="templateId" value={sendinBlueConf?.templateId} className="btcd-paper-inp">
-                      <option value="">{__('Select Template', 'bitform')}</option>
+                      <option value="">{__('Select Template')}</option>
                       {sendinBlueConf?.default?.sblueTemplates && Object.values(sendinBlueConf.default.sblueTemplates).map((template) => (
                         <option key={`sendinblue-${template.id + 2}`} value={template.id || sendinBlueConf.templateId}>
                           {template.name}
@@ -100,12 +100,12 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
                     </select>
                     <div style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}>{error.templateId}</div>
                   </div>
-                  <button onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Templates', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Templates')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
                 <br />
                 <br />
                 <div className="flx">
-                  <b className="wdt-150 d-in-b">{__('RedirectionUrl:', 'bitform')}</b>
+                  <b className="wdt-150 d-in-b">{__('RedirectionUrl:')}</b>
                   <div className="w-5">
                     <input type="url" className="btcd-paper-inp" placeholder="Redirection URL" onChange={handleInput} value={sendinBlueConf?.redirectionUrl || ''} name="redirectionUrl" />
                     <div style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}>{error.redirectionUrl}</div>
@@ -115,7 +115,7 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
             <div className="btcd-hr mt-1" />
             <SendinBlueActions
               sendinBlueConf={sendinBlueConf}

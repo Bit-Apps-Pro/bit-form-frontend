@@ -20,7 +20,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const saveConfig = () => {
     if (!checkMappedFields(crmConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history, id, 1)
@@ -31,8 +31,8 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, tab, crmConf, setCrmConf)} name="name" value={crmConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, tab, crmConf, setCrmConf)} name="name" value={crmConf.name} type="text" placeholder={__('Integration Name...')} />
       </div>
 
       <ZohoCRMIntegLayout

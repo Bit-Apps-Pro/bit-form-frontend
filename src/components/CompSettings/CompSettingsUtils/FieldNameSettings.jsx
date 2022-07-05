@@ -46,7 +46,7 @@ export default function FieldNameSettings() {
   return (
     <SimpleAccordion
       id="nam-stng"
-      title={__('Name', 'bitform')}
+      title={__('Name')}
       className={css(FieldStyle.fieldSection)}
     >
       <div className={css(FieldStyle.placeholder)}>

@@ -25,7 +25,7 @@ export default function AutonamiActions({ autonamiConf,
         onChange={(e) => actionHandler(e, 'exists')}
         className="wdt-200 mt-4 mr-2"
         value="skip_if_exists"
-        title={__('Skip exist Contact', 'bitform')}
+        title={__('Skip exist Contact')}
         subTitle={__(
           'Skip if contact already exist in Autonami',
           'bitform',

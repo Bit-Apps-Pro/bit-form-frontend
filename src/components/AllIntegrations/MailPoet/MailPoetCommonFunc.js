@@ -13,12 +13,12 @@ export const refreshNewsLetter = (formID, mailPoetConf, setMailPoetConf, setisLo
         if (result.data.newsletterList) {
           newConf.default.newsletterList = result.data.newsletterList
         }
-        setSnackbar({ show: true, msg: __('Newsletter list refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Newsletter list refreshed') })
         setMailPoetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Newsletter list refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Newsletter list refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Newsletter list refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Newsletter list refresh failed. please try again') })
       }
       setisLoading(false)
     })
@@ -34,9 +34,9 @@ export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setisLoadin
           newConf.default.fields = result.data.mailPoetFields
           const { fields } = newConf.default
           newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', mailPoetField: f.id, required: true }))
-          setSnackbar({ show: true, msg: __('Mailpoet fields refreshed', 'bitform') })
+          setSnackbar({ show: true, msg: __('Mailpoet fields refreshed') })
         } else {
-          setSnackbar({ show: true, msg: __('No Mailpoet fields found. Try changing the header row number or try again', 'bitform') })
+          setSnackbar({ show: true, msg: __('No Mailpoet fields found. Try changing the header row number or try again') })
         }
 
         if (result.data.tokenDetails) {
@@ -44,7 +44,7 @@ export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setisLoadin
         }
         setMailPoetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Mailpoet fields refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Mailpoet fields refresh failed. please try again') })
       }
       setisLoading(false)
     })

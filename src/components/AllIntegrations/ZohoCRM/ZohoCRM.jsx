@@ -44,7 +44,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const nextPage = (pageNo) => {
     if (!checkMappedFields(crmConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
 
@@ -90,7 +90,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>

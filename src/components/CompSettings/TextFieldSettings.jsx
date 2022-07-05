@@ -434,7 +434,7 @@ function TextFieldSettings() {
 
         <SimpleAccordion
           id="inp-icn-stng"
-          title={__('Input Icons', 'bitform')}
+          title={__('Input Icons')}
           className={css(FieldStyle.fieldSection)}
           toggleAction={hideAdminLabel}
           toggleChecked
@@ -443,7 +443,7 @@ function TextFieldSettings() {
         >
           <div className={css(ut.mt2)}>
             <FieldIconSettings
-              label="Prefix Icon"
+              label="Leading Icon"
               iconSrc={fieldData?.prefixIcn}
               styleRoute="pre-i"
               setIcon={() => setIconModel('prefixIcn')}
@@ -451,7 +451,7 @@ function TextFieldSettings() {
             />
 
             <FieldIconSettings
-              label="Suffix Icon"
+              label="Trailing Icon"
               iconSrc={fieldData?.suffixIcn}
               styleRoute="suf-i"
               setIcon={() => setIconModel('suffixIcn')}
@@ -472,7 +472,7 @@ function TextFieldSettings() {
           <>
             <SimpleAccordion
               id="dflt-val-stng"
-              title={__('Default value', 'bitform')}
+              title={__('Default value')}
               className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
               switching
               tip="By disabling this option, the field default will be hidden"
@@ -510,7 +510,7 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 id="sgsn-stng"
-                title={__('Suggestion', 'bitform')}
+                title={__('Suggestion')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
                 tip="By disabling this option, the field suggestion will be hidden"
@@ -523,7 +523,7 @@ function TextFieldSettings() {
                 <div className={css(FieldStyle.placeholder)}>
                   <button data-testid="sgsn-stng-btn" onClick={openOptionModal} className={css(app.btn)} type="button">
                     &nbsp;
-                    {__('Edit suggestions', 'bitform')}
+                    {__('Edit suggestions')}
                   </button>
                 </div>
               </SimpleAccordion>
@@ -532,7 +532,7 @@ function TextFieldSettings() {
 
               <SimpleAccordion
                 id="ato-cmplt"
-                title={__('Auto Complete', 'bitform')}
+                title={__('Auto Complete')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
                 tip="By disabling this option, the field auto complete will be hidden"
@@ -571,7 +571,7 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 id="inp-mod-stng"
-                title={__('Input mode', 'bitform')}
+                title={__('Input mode')}
                 className={css(FieldStyle.fieldSection)}
               >
                 <div className={css(FieldStyle.placeholder)}>
@@ -597,17 +597,17 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 id="ptrn-stng"
-                title={__('Pattern', 'bitform')}
+                title={__('Pattern')}
                 className={css(FieldStyle.fieldSection)}
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3, ut.pl1)}>
                     <div className={css(ut.flxcb, ut.ml1)}>
                       <h4 className={css(ut.m0, FieldStyle.title)}>
-                        {__('Expression', 'bitform')}
+                        {__('Expression')}
                         :
                       </h4>
-                      {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
+                      {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro')}</span>}
                       <Downmenu instance={patternTippy}>
                         <button
                           data-testid="ptrn-stng-exprsn-btn"
@@ -617,7 +617,7 @@ function TextFieldSettings() {
                           unselectable="on"
                           draggable="false"
                           style={{ cursor: 'pointer' }}
-                          title={__('Fields', 'bitform')}
+                          title={__('Fields')}
                         >
                           <BdrDottedIcn size="19" />
                         </button>
@@ -658,7 +658,7 @@ function TextFieldSettings() {
                     <SingleInput
                       id="ptrn-stng-flg"
                       inpType="text"
-                      title={__('Flags:', 'bitform')}
+                      title={__('Flags:')}
                       value={flags}
                       action={setFlags}
                       placeholder="e.g. g"
@@ -704,7 +704,7 @@ function TextFieldSettings() {
                 <SingleToggle
                   id="ato-fil-stng"
                   tip="By disabling this option, the field auto fill will be hidden"
-                  title={__('Auto Fill', 'bitform')}
+                  title={__('Auto Fill')}
                   action={setAutoComplete}
                   isChecked={isAutoComplete}
                 />
@@ -736,7 +736,7 @@ function TextFieldSettings() {
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css({ mx: 5 })}>
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-                    <span>{__('Min:', 'bitform')}</span>
+                    <span>{__('Min:')}</span>
                     <input
                       data-testid="nmbr-stng-min-inp"
                       title="Minimum number for this field"
@@ -749,7 +749,7 @@ function TextFieldSettings() {
                       onChange={setMin}
                     />
                   </div>
-                  {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
+                  {/* <SingleInput inpType="number" title={__('Min:')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mn && (
                     <ErrorMessageSettings
                       id="nmbr-stng-min"
@@ -759,7 +759,7 @@ function TextFieldSettings() {
                     />
                   )}
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-                    <span>{__('Max:', 'bitform')}</span>
+                    <span>{__('Max:')}</span>
                     <input
                       data-testid="nmbr-stng-max-inp"
                       title="Maximum number for this field"
@@ -771,7 +771,7 @@ function TextFieldSettings() {
                       onChange={setMax}
                     />
                   </div>
-                  {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
+                  {/* <SingleInput inpType="number" title={__('Max:')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
                   {fieldData.mx && (
                     <ErrorMessageSettings
                       id="nmbr-stng-max"
@@ -800,14 +800,14 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 id="pass-vldsn-stng"
-                title={__('Validations', 'bitform')}
+                title={__('Validations')}
                 className={css(FieldStyle.fieldSection)}
                 isPro
               >
                 <div className={css(ut.mt1, ut.flxClm)}>
-                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
                   <TableCheckBox
                     id="pass-vldsn-stng-spcl"
                     className={css(ut.w10, ut.mt2)}
@@ -815,7 +815,7 @@ function TextFieldSettings() {
                     name="special"
                     checked={fieldData.valid?.validations?.special || false}
                     value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])"
-                    title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')}
+                    title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)')}
                     onChange={setPasswordValidation}
                     disabled={!bits.isPro}
                   />
@@ -826,14 +826,14 @@ function TextFieldSettings() {
                     name="limit"
                     checked={fieldData.valid?.validations?.limit || false}
                     value=".{8,32}"
-                    title={__('Limit Password Length', 'bitform')}
+                    title={__('Limit Password Length')}
                     onChange={setPasswordValidation}
                     disabled={!bits.isPro}
                   />
                   {fieldData.valid?.validations?.limit && (
                     <div>
                       <div className={css(FieldStyle.fieldNumber)}>
-                        <span>{__('Min:', 'bitform')}</span>
+                        <span>{__('Min:')}</span>
                         <input
                           data-testid="pass-vldsn-stng-lmt-min-inp"
                           name="mn"
@@ -846,7 +846,7 @@ function TextFieldSettings() {
                         />
                       </div>
                       <div className={css(FieldStyle.fieldNumber)}>
-                        <span>{__('Max:', 'bitform')}</span>
+                        <span>{__('Max:')}</span>
                         <input
                           data-testid="pass-vldsn-stng-lmt-max-inp"
                           name="mx"
@@ -858,8 +858,8 @@ function TextFieldSettings() {
                           onChange={setPasswordLimit}
                         />
                       </div>
-                      {/* <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
-                      {/* <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
+                      {/* <SingleInput inpType="number" name="mn" title={__('Min:')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
+                      {/* <SingleInput inpType="number" name="mx" title={__('Max:')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
                     </div>
                   )}
                 </div>
@@ -892,17 +892,17 @@ function TextFieldSettings() {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Suggestion', 'bitform')}
+        title={__('Suggestion')}
       >
         <div className="pos-rel">
           {/* {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On', 'bitform')}
+                {__('Available On')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium', 'bitform')}
+                    {__('Premium')}
                   </span>
                 </a>
               </div>
@@ -926,7 +926,7 @@ function TextFieldSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons', 'bitform')}
+        title={__('Icons')}
       >
         <div className="pos-rel" />
 

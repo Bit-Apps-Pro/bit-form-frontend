@@ -40,7 +40,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-bdr"
           />
           <BorderControl
-            subtitle="Error Message Border Control"
+            subtitle="Error Message Border"
             objectPaths={borderPathsObj}
             id="err-msg-bdr"
           />
@@ -67,7 +67,7 @@ export default function ErrorMessagesCustomizer() {
             id="err-msg-sh"
           />
           <ShadowControl
-            subtitle="Error Messages Shadow Control"
+            subtitle="Error Messages Shadow"
             value={errSh}
             objectPaths={errShObj}
             id="err-msg-sh"
@@ -76,10 +76,10 @@ export default function ErrorMessagesCustomizer() {
       </ThemeStylePropertyBlock>
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Error Messages Spacing Control"
+          subtitle="Error Messages Spacing"
           objectPaths={errMsgSpacingObj}
           id="err-msg-spacing-ctrl"
         />
@@ -111,12 +111,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
+      'border-style': '--err-bdr',
       'border-width': '--err-bdr-width',
       'border-radius': '--err-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--err-bdr' },
+    paths: { 'border-color': '--err-bdr-clr' },
   },
 ]

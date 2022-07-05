@@ -78,7 +78,7 @@ export default function IndividualShadowControl({ title,
             <TrashIcn size="14" />
           </button>
         )}
-        <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__(title)}</span>
       </div>
 
       <div className={css(ut.flxc)}>

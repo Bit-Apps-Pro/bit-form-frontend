@@ -51,7 +51,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       searchPlaceholder,
       noCountryFoundText,
       options,
-      assetsURL: bits.assetsURL,
+      assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').document,
       widnow: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {

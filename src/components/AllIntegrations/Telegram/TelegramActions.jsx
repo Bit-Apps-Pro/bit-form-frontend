@@ -19,7 +19,7 @@ export default function TelegramActions({ formFields, telegramConf, setTelegramC
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in telegramConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments', 'bitform')} subTitle={__('Add attachments from BitForm to send Telegram.', 'bitform')} />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in telegramConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments')} subTitle={__('Add attachments from BitForm to send Telegram.')} />
       </div>
 
       <ConfirmModal
@@ -30,12 +30,12 @@ export default function TelegramActions({ formFields, telegramConf, setTelegramC
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title={__('Select Attachment', 'bitform')}
+        title={__('Select Attachment')}
       >
         <div className="btcd-hr mt-2" />
-        <div className="mt-2">{__('Please select file upload fields', 'bitform')}</div>
+        <div className="mt-2">{__('Please select file upload fields')}</div>
         <select onChange={(e) => actionHandler(e)} name="attachments" value={telegramConf.actions?.attachments} className="btcd-paper-inp w-10 mt-2">
-          <option value="">{__('Select file upload field', 'bitform')}</option>
+          <option value="">{__('Select file upload field')}</option>
           {
             formFields.filter(itm => (itm.type === 'file-up')).map(itm => (
               <option key={itm.key + 1} value={itm.key}>

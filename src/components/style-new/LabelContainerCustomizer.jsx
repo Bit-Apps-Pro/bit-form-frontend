@@ -28,7 +28,7 @@ export default function LabelContainerCustomizer() {
       />
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
           subtitle="Label & Subtitle Container Spacing control"
@@ -83,12 +83,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
+      'border-style': '--lbl-wrp-bdr',
       'border-width': '--lbl-wrp-bdr-width',
       'border-radius': '--lbl-wrp-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--lbl-wrp-bdr' },
+    paths: { 'border-color': '--lbl-wrp-bdr-clr' },
   },
 ]
