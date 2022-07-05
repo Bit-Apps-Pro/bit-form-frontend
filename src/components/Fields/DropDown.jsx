@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-plusplus */
+import BitDropdownField from 'bit-dropdown-field'
 import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
@@ -7,7 +8,6 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-import DropdownField from '../../resource/js/dropdown-filed-script'
 
 function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder }) {
   const dropdownWrapElmRef = useRef(null)
@@ -56,7 +56,8 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
         'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
       },
     }
-    dropdownFieldRef.current = new DropdownField(fldElm, configOptions)
+    // dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
+    dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
   }, [fieldData])
   return (
     <>

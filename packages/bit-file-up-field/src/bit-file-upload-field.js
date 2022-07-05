@@ -84,7 +84,15 @@ export default class FileUploadField {
     this.#fileUploadInput = this.#select(`.${this.fieldKey}-file-upload-input`)
     this.#filesList = this.#select(`.${this.fieldKey}-files-list`)
     this.#errorWrap = this.#select(`.${this.fieldKey}-err-wrp`)
-    const { multiple, allowedFileType, accept, required, showMaxSize, maxSize, sizeUnit, showSelectStatus, fileSelectStatus } = this.#config
+    const { multiple,
+      allowedFileType,
+      accept,
+      required,
+      showMaxSize,
+      maxSize,
+      sizeUnit,
+      showSelectStatus,
+      fileSelectStatus } = this.#config
 
     this.#fileUploadInput.multiple = multiple
     // this.#fileUploadInput.onchange = onchange
