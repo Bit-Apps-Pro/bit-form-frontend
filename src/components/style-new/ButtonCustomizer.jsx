@@ -50,7 +50,7 @@ export default function ButtonCustomizer() {
         <div className={css(ut.flxc)}>
           {/* <ResetStyle propertyPath={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateObjName="themeVars" /> */}
           <ResetStyle
-            propertyPath={['--btn-brw', '--btn-brs']}
+            propertyPath={['--btn-bdr-width', '--btn-bdr-rad']}
             stateObjName="themeVars"
             id="btn-bdr"
           />
@@ -126,12 +126,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
-      'border-width': '--btn-brw',
-      'border-radius': '--btn-brs',
+      'border-style': '--btn-bdr',
+      'border-width': '--btn-bdr-width',
+      'border-radius': '--btn-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--btn-br' },
+    paths: { 'border-color': '--btn-bdr-clr' },
   },
 ]

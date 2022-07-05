@@ -104,12 +104,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
+      'border-style': '--fld-lbl-bdr',
       'border-width': '--fld-lbl-bdr-width',
       'border-radius': '--fld-lbl-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--fld-lbl-bdr' },
+    paths: { 'border-color': '--fld-lbl-bdr-clr' },
   },
 ]

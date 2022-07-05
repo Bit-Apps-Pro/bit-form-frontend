@@ -96,6 +96,7 @@ export default function ThemeQuickTweaksCustomizer() {
 
   return (
     <>
+
       <SimpleColorPicker
         title="Accent Color"
         subtitle="Theme Quick Tweaks Accent Color"
@@ -214,12 +215,13 @@ const borderPathsObj = [
   {
     object: 'themeVars',
     paths: {
+      'border-style': '--global-fld-bdr',
       'border-width': '--g-bdr-width',
       'border-radius': '--g-bdr-rad',
     },
   },
   {
     object: 'themeColors',
-    paths: { border: '--global-fld-bdr' },
+    paths: { 'border-color': '--global-fld-bdr-clr' },
   },
 ]
