@@ -10,7 +10,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
       <br />
       <b className="wdt-150 d-in-b mr-2">Folder:</b>
       <select onChange={(e) => handleInput(e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar)} name="folder" value={oneDriveConf.folderMap[0] || oneDriveConf.folder} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Folder', 'bitform')}</option>
+        <option value="">{__('Select Folder')}</option>
         {
           oneDriveConf?.default?.rootFolders && oneDriveConf.default.rootFolders.map(teamFolderApi => (
             <option key={teamFolderApi.id} value={teamFolderApi.id}>
@@ -19,7 +19,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
           ))
         }
       </select>
-      <button onClick={() => getAllOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh All oneDrive Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => getAllOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh All oneDrive Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       {oneDriveConf.folderMap.map((folder, i) => (
         <div key={folder}>
@@ -41,7 +41,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
                 }
               </select>
               <div className="tooltip-box">
-                <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                <button onClick={() => getSingleOneDriveFolders(formID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, 
 
       {oneDriveConf.folder && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
           <div className="btcd-hr mt-1" />
           <OneDriveActions
             oneDriveConf={oneDriveConf}

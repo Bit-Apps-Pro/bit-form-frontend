@@ -28,9 +28,9 @@ export const checkMappedFields = (mailerLiteConf) => {
   }
   return true
 }
-export const mailerliteRefreshFields = (confTmp, setConf, setError,setisAuthorized, setIsLoading, type) => {
+export const mailerliteRefreshFields = (confTmp, setConf, setError, setisAuthorized, setIsLoading, type) => {
   if (!confTmp.auth_token) {
-    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty', 'bitform') : '' })
+    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty') : '' })
     return
   }
   setError({})
@@ -50,21 +50,21 @@ export const mailerliteRefreshFields = (confTmp, setConf, setError,setisAuthoriz
         if (type === 'authorization') {
           setIsLoading(false)
           setisAuthorized(true)
-          toast.success(__('Authorized successfully', 'bitform'))
+          toast.success(__('Authorized successfully'))
         } else {
           setIsLoading(false)
-          toast.success(__('Fields refresh successfully', 'bitform'))
+          toast.success(__('Fields refresh successfully'))
         }
         return
       }
       if (type === 'authorization') {
         setIsLoading(false)
         setisAuthorized(false)
-        toast.error(__(result.data, 'bitform'))
-        toast.error(__('Authorized Failed', 'bitform'))
+        toast.error(__(result.data))
+        toast.error(__('Authorized Failed'))
       } else {
         setIsLoading(false)
-        toast.error(__('Fields refresh failed', 'bitform'))
+        toast.error(__('Fields refresh failed'))
       }
     })
 }
@@ -82,11 +82,11 @@ export const getAllGroups = (confTmp, setConf, setIsLoading) => {
         }
         setConf(newConf)
         setIsLoading(false)
-        toast.success(__('Group fetch successfully', 'bitform'))
+        toast.success(__('Group fetch successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Group fetch failed', 'bitform'))
+      toast.error(__('Group fetch failed'))
     })
 
 }

@@ -1,4 +1,5 @@
 import produce from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -43,6 +44,16 @@ export default function FieldContextMenu({ isContextMenu,
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
+  const [activeSubMenus, setActiveSubMenus] = useState([])
+
+  const subMenuParent = parentName => activeSubMenus.includes(parentName)
+  const toggleSubMenu = parentName => {
+    if (subMenuParent(parentName)) {
+      setActiveSubMenus(activeSubMenus.filter(item => item !== parentName))
+    } else {
+      setActiveSubMenus([...activeSubMenus, parentName])
+    }
+  }
 
   const handleFieldHide = brkpnt => {
     // setFields(allFields => produce(allFields, draft => {
@@ -123,14 +134,14 @@ export default function FieldContextMenu({ isContextMenu,
           <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
-              <Downmenu place="right-start" arrow={false} trigger="mouseenter click">
+              <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')} >
                 <button
                   data-close
                   type="button"
-                  className="context-btn"
+                  className={`context-btn ${subMenuParent('hide') ? 'active' : ''}`}
                   unselectable="on"
                   draggable="false"
-                  title={__('More Options', 'bitform')}
+                  title={__('More Options')}
                 >
                   <EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />
                   <span>Hide</span>
@@ -149,7 +160,7 @@ export default function FieldContextMenu({ isContextMenu,
           </MenuItemWrapper>
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
-              <FieldDeleteButton placement="bottom" className="context-btn delete" label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} />
+              <FieldDeleteButton placement="bottom" className={`context-btn delete ${subMenuParent('delete') ? 'active' : ''}`} label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} toggleSubMenu={toggleSubMenu} />
             </li>
           </MenuItemWrapper>
         </ul>

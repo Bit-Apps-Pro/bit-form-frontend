@@ -7,7 +7,7 @@ import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { $fields, $bits } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
-// import CountryFieldClass from '../../resource/js/country-field-script'
+import CountryFieldClass from '../../resource/js/country-field-script'
 import RenderStyle from '../style-new/RenderStyle'
 
 const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
@@ -52,7 +52,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       searchPlaceholder,
       noCountryFoundText,
       options,
-      assetsURL: bits.assetsURL,
+      assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').document,
       widnow: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
@@ -76,7 +76,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
 
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultValue = alreadyChecked.i
-    countryFieldRef.current = new BitCountryField(fldElm, configOptions)
+    countryFieldRef.current = new CountryFieldClass(fldElm, configOptions)
   }, [fieldData])
 
   return (

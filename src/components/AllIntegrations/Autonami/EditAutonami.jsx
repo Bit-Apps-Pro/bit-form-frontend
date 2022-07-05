@@ -34,7 +34,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">
-          {__('Integration Name:', 'bitform')}
+          {__('Integration Name:')}
         </b>
         <input
           className="btcd-paper-inp w-5"
@@ -42,7 +42,7 @@ function EditAutonami({ allIntegURL, formFields, integrations, setIntegration })
           name="name"
           value={autonamiConf.name}
           type="text"
-          placeholder={__('Integration Name...', 'bitform')}
+          placeholder={__('Integration Name...')}
         />
       </div>
       <br />

@@ -163,7 +163,7 @@ export default function EditInteg({ allIntegURL }) {
         </Link>
         <div className="w-8 txt-center">
           <b className="f-lg">{integrations[id].type}</b>
-          <div>{__('Integration Settings', 'bitform')}</div>
+          <div>{__('Integration Settings')}</div>
         </div>
       </div>
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>

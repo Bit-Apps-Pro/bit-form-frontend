@@ -31,9 +31,9 @@ export default function Apikey() {
         setisLoading(false)
         if (res?.success) {
           setKey(res.data)
-          return __('API key saved successfully', 'bitform')
+          return __('API key saved successfully')
         }
-        return res?.data || __('Error Occured', 'bitform')
+        return res?.data || __('Error Occured')
       })
     toast.promise(apiSaveProm, {
       success: data => data,
@@ -57,7 +57,7 @@ export default function Apikey() {
       })
       toast.promise(loadApiKeyProm, {
         success: data => data,
-        error: __('Error Occured', 'bitform'),
+        error: __('Error Occured'),
         loading: __('Loading API key...'),
       })
     } else {
@@ -72,10 +72,10 @@ export default function Apikey() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '135%', left: -12, width: '104%', marginTop: 10 }}>
             <div className="pro">
-              {__('Available On', 'bitform')}
+              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
-                  {__('Premium', 'bitform')}
+                  {__('Premium')}
                 </span>
               </a>
             </div>
@@ -83,18 +83,18 @@ export default function Apikey() {
         )}
 
         <SnackMsg snack={snack} setSnackbar={setsnack} />
-        <h2>{__('API Integration', 'bitform')}</h2>
+        <h2>{__('API Integration')}</h2>
         <div className="btcd-hr" />
 
         <div className="mt-2">
           <label htmlFor="captcha-key">
-            {__('Domain URL', 'bitform')}
+            {__('Domain URL')}
             <CopyText value={siteURL} name="domainURL" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
           </label>
         </div>
         <div className="mt-3">
           <label htmlFor="captcha-key">
-            {__('API Key', 'bitform')}
+            {__('API Key')}
             <CopyText value={key} name="siteKey" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
             <span
               className="btcd-link"
@@ -103,12 +103,12 @@ export default function Apikey() {
               onClick={changeKey}
               onKeyPress={changeKey}
             >
-              {__('Generate new API key', 'bitform')}
+              {__('Generate new API key')}
             </span>
           </label>
         </div>
         <button type="button" onClick={(e) => handleSubmit(e)} className={`${css(app.btn)} btn-md f-right blue`} disabled={isLoading}>
-          {__('Save', 'bitform')}
+          {__('Save')}
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
       </div>

@@ -49,10 +49,10 @@ export const refreshFields = (wcConf, setWcConf, setisLoading, setSnackbar) => {
           newConf.default.fields[module] = result.data
           newConf = generateMappedFields(newConf)
           setWcConf(newConf)
-          setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
+          setSnackbar({ show: true, msg: __('Fields refreshed') })
         }
       } else {
-        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again') })
       }
       setisLoading(false)
     })

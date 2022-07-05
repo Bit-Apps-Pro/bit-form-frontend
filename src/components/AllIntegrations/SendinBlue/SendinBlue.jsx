@@ -39,8 +39,8 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
     if (val === 3) {
       if (sendinBlueConf.templateId === '' || sendinBlueConf.redirectionUrl === '') {
         setError({
-          templateId: !sendinBlueConf.templateId ? __('Template name cann\'t be empty', 'bitform') : '',
-          redirectionUrl: !sendinBlueConf.redirectionUrl ? __('Redirection url name cann\'t be empty', 'bitform') : '',
+          templateId: !sendinBlueConf.templateId ? __('Template name cann\'t be empty') : '',
+          redirectionUrl: !sendinBlueConf.redirectionUrl ? __('Redirection url name cann\'t be empty') : '',
         })
         return
       }
@@ -89,7 +89,7 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

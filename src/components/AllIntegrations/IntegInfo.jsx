@@ -139,7 +139,7 @@ export default function IntegInfo({ allIntegURL }) {
         </Link>
         <div className="w-8 txt-center">
           <b className="f-lg">{integrations[id].type}</b>
-          <div>{__('Integration Info', 'bitform')}</div>
+          <div>{__('Integration Info')}</div>
         </div>
       </div>
 

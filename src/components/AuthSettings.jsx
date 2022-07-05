@@ -143,9 +143,9 @@ export default function AdditionalSettings() {
         }
       })
     toast.promise(prom, {
-      success: __('Saved successfully.', 'bitform'),
-      loading: __('Saving...', 'bitform'),
-      error: __('Something went wrong, Try again.', 'bitform'),
+      success: __('Saved successfully.'),
+      loading: __('Saving...'),
+      error: __('Something went wrong, Try again.'),
     })
   }
 
@@ -202,14 +202,14 @@ export default function AdditionalSettings() {
   return (
     <div className="pos-rel">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <h2 className="">{__('WP Authentication', 'bitform')}</h2>
+      <h2 className="">{__('WP Authentication')}</h2>
       {!isPro && (
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
-            {__('Available On', 'bitform')}
+            {__('Available On')}
             <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
-                {__('Premium', 'bitform')}
+                {__('Premium')}
               </span>
             </a>
           </div>
@@ -230,7 +230,7 @@ export default function AdditionalSettings() {
             <div>
               <div className="mt-2">
                 <label htmlFor="status">
-                  <b>{__('', 'bitform')}</b>
+                  <b>{__('')}</b>
                   <CheckBox radio name="type" onChange={handleInput} checked={type === 'register'} title={<small className="txt-dp"><b>Registration</b></small>} value="register" />
                   <CheckBox radio name="type" onChange={handleInput} checked={type === 'login'} title={<small className="txt-dp"><b>Log In</b></small>} value="login" />
                   <CheckBox radio name="type" onChange={handleInput} checked={type === 'forgot'} title={<small className="txt-dp"><b>Forgot Password</b></small>} value="forgot" />
@@ -240,7 +240,7 @@ export default function AdditionalSettings() {
 
               <div className="mt-2 ml-1 flx">
                 <label htmlFor="status">
-                  <b>{__('Enable', 'bitform')}</b>
+                  <b>{__('Enable')}</b>
                 </label>
                 <SingleToggle2 action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
@@ -254,7 +254,7 @@ export default function AdditionalSettings() {
                 className={css(app.btn, app.blueGrd, { px: 20 })}
                 disabled={isLoading}
               >
-                {__('Save ', 'bitform')}
+                {__('Save ')}
                 {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
               </button>
               <div>

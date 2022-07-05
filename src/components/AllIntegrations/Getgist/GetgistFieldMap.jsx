@@ -53,13 +53,13 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file' && <option key={`ff-getgist-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...', 'bitform')}</option>
+          <option value="custom">{__('Custom...')}</option>
 
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
@@ -71,10 +71,10 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
 
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
         <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="getgistFormField" value={i < requiredFlds.length ? (requiredFlds[i]?.key || '') : (field.getgistFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, getgistConf, setGetgistConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           {
             i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>

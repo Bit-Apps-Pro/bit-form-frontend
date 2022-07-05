@@ -33,6 +33,7 @@ export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', 
 export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
 export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
+export const $customCodes = atom({ key: '$customCodes', default: { JavaScript: '', CSS: '' } })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })

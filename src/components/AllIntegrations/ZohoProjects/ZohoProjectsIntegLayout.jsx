@@ -38,29 +38,29 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
   return (
     <>
       <br />
-      <b className="wdt-150 d-in-b">{__('Portal:', 'bitform')}</b>
+      <b className="wdt-150 d-in-b">{__('Portal:')}</b>
       <select onChange={handleInput} name="portalId" value={projectsConf.portalId} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Portal', 'bitform')}</option>
+        <option value="">{__('Select Portal')}</option>
         {projectsConf?.default?.portals && Object.values(projectsConf.default.portals).map(organization => (
           <option key={organization.portalId} value={organization.portalId}>
             {organization.portalName}
           </option>
         ))}
       </select>
-      <button onClick={() => refreshPortals(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Projects Portals', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshPortals(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Projects Portals')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
-      <b className="wdt-150 d-in-b">{__('Event:', 'bitform')}</b>
+      <b className="wdt-150 d-in-b">{__('Event:')}</b>
       <select onChange={handleInput} name="event" value={projectsConf.event} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Event', 'bitform')}</option>
+        <option value="">{__('Select Event')}</option>
         {projectsConf?.portalId && (
           <>
-            <option value="project">{__('Create Project', 'bitform')}</option>
-            <option value="milestone">{__('Create Milestone', 'bitform')}</option>
-            <option value="tasklist">{__('Create Tasklist', 'bitform')}</option>
-            <option value="task">{__('Create Task', 'bitform')}</option>
-            <option value="subtask">{__('Create Sub Task', 'bitform')}</option>
-            <option value="issue">{__('Create Issue', 'bitform')}</option>
+            <option value="project">{__('Create Project')}</option>
+            <option value="milestone">{__('Create Milestone')}</option>
+            <option value="tasklist">{__('Create Tasklist')}</option>
+            <option value="task">{__('Create Task')}</option>
+            <option value="subtask">{__('Create Sub Task')}</option>
+            <option value="issue">{__('Create Issue')}</option>
           </>
         )}
       </select>
@@ -70,7 +70,7 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
         <>
           <b className="wdt-150 d-in-b">Project:</b>
           <select onChange={handleInput} name="projectId" value={projectsConf.projectId} className="btcd-paper-inp w-7">
-            <option value="">{__('Select Project', 'bitform')}</option>
+            <option value="">{__('Select Project')}</option>
             {projectsConf?.default?.projects?.[projectsConf.portalId] && Object.values(projectsConf.default.projects[projectsConf.portalId]).map((project, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <option key={`${project.projectId}_${i}`} value={project.projectId}>
@@ -78,10 +78,10 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
               </option>
             ))}
           </select>
-          <button onClick={() => refreshProjects(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Projects', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button onClick={() => refreshProjects(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Projects')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           <br />
           <br />
-          <span className="btcd-link cp" style={{ marginLeft: 155 }} event="project" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new project', 'bitform')}</span>
+          <span className="btcd-link cp" style={{ marginLeft: 155 }} event="project" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new project')}</span>
           <br />
           <br />
         </>
@@ -89,11 +89,11 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
 
       {(projectsConf?.projectId || projectsConf?.subEvent?.includes('project')) && !['project', 'milestone'].includes(projectsConf?.event) && (
         <>
-          <b className="wdt-150 d-in-b">{__('Milestone:', 'bitform')}</b>
+          <b className="wdt-150 d-in-b">{__('Milestone:')}</b>
           {!projectsConf.subEvent.includes('project') && (
             <>
               <select onChange={handleInput} name="milestoneId" value={projectsConf.milestoneId} className="btcd-paper-inp w-7">
-                <option value="">{__('Select Milestone', 'bitform')}</option>
+                <option value="">{__('Select Milestone')}</option>
                 {projectsConf?.default?.milestones?.[projectsConf.projectId] && Object.values(projectsConf.default.milestones[projectsConf.projectId]).map((milestone, i) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <option key={`${milestone.milestoneId}_${i}`} value={milestone.milestoneId}>
@@ -101,7 +101,7 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
                   </option>
                 ))}
               </select>
-              <button onClick={() => refreshMilestones(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Milestones', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshMilestones(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Milestones')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
               <br />
               <br />
             </>
@@ -116,7 +116,7 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
             role="button"
             tabIndex="0"
           >
-            {__('create a new milestone', 'bitform')}
+            {__('create a new milestone')}
           </span>
           <br />
           <br />
@@ -125,15 +125,15 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
 
       {(projectsConf?.projectId || projectsConf?.subEvent?.includes('project')) && ['task', 'subtask'].includes(projectsConf?.event) && (
         <>
-          <b className="wdt-150 d-in-b">{!(projectsConf.subEvent.includes('project') || projectsConf.subEvent.includes('milestone')) ? __('Tasklist Flag:', 'bitform') : __('Tasklist:', 'bitform')}</b>
+          <b className="wdt-150 d-in-b">{!(projectsConf.subEvent.includes('project') || projectsConf.subEvent.includes('milestone')) ? __('Tasklist Flag:') : __('Tasklist:')}</b>
           {!projectsConf.subEvent.includes('project') && !projectsConf.subEvent.includes('milestone') && (
             <>
               <select onChange={handleInput} name="tasklistFlag" value={projectsConf.tasklistFlag} className="btcd-paper-inp w-7">
-                <option value="">{__('Select Tasklist Flag', 'bitform')}</option>
+                <option value="">{__('Select Tasklist Flag')}</option>
                 {!projectsConf?.subEvent.includes('milestone') && (
                   <>
-                    <option value="internal">{__('Internal', 'bitform')}</option>
-                    <option value="external">{__('External', 'bitform')}</option>
+                    <option value="internal">{__('Internal')}</option>
+                    <option value="external">{__('External')}</option>
                   </>
                 )}
               </select>
@@ -142,9 +142,9 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
               {(projectsConf?.tasklistFlag && !projectsConf?.subEvent.includes('milestone'))
                 && (
                   <>
-                    <b className="wdt-150 d-in-b">{__('Tasklist:', 'bitform')}</b>
+                    <b className="wdt-150 d-in-b">{__('Tasklist:')}</b>
                     <select onChange={handleInput} name="tasklistId" value={projectsConf.tasklistId} className="btcd-paper-inp w-7">
-                      <option value="">{__('Select Tasklist', 'bitform')}</option>
+                      <option value="">{__('Select Tasklist')}</option>
                       {projectsConf?.milestoneId
                         ? projectsConf?.default?.tasklists?.[projectsConf.portalId]?.[projectsConf.milestoneId]?.[projectsConf.tasklistFlag]
                         && Object.values(projectsConf.default.tasklists[projectsConf.portalId][projectsConf.milestoneId][projectsConf.tasklistFlag]).map((tasklist, i) => tasklist.tasklistId && (
@@ -161,14 +161,14 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
                           </option>
                         ))}
                     </select>
-                    <button onClick={() => refreshTasklists(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Milestones', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                    <button onClick={() => refreshTasklists(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Milestones')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                     <br />
                     <br />
                   </>
                 )}
             </>
           )}
-          <span className="btcd-link cp" style={{ marginLeft: !(projectsConf.subEvent.includes('project') || projectsConf.subEvent.includes('milestone')) ? 155 : 5 }} event="tasklist" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new tasklist', 'bitform')}</span>
+          <span className="btcd-link cp" style={{ marginLeft: !(projectsConf.subEvent.includes('project') || projectsConf.subEvent.includes('milestone')) ? 155 : 5 }} event="tasklist" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new tasklist')}</span>
           <br />
           <br />
         </>
@@ -176,11 +176,11 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
 
       {projectsConf?.event === 'subtask' && (projectsConf?.projectId || projectsConf.subEvent.includes('project')) && (
         <>
-          <b className="wdt-150 d-in-b">{__('Task:', 'bitform')}</b>
+          <b className="wdt-150 d-in-b">{__('Task:')}</b>
           {(!projectsConf.subEvent.includes('project') && !projectsConf.subEvent.includes('milestone') && !projectsConf.subEvent.includes('tasklist')) && (
             <>
               <select onChange={handleInput} name="taskId" value={projectsConf.taskId} className="btcd-paper-inp w-7">
-                <option value="">{__('Select Task', 'bitform')}</option>
+                <option value="">{__('Select Task')}</option>
                 {projectsConf?.milestoneId
                   ? projectsConf?.tasklistId
                     ? projectsConf?.default?.tasks?.[projectsConf.portalId]?.[projectsConf.milestoneId]?.[projectsConf.tasklistId]
@@ -220,7 +220,7 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
               <br />
             </>
           )}
-          <span className="btcd-link cp" style={{ marginLeft: (!projectsConf.subEvent.includes('project') && !projectsConf.subEvent.includes('milestone') && !projectsConf.subEvent.includes('tasklist')) ? 155 : 5 }} event="task" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new task', 'bitform')}</span>
+          <span className="btcd-link cp" style={{ marginLeft: (!projectsConf.subEvent.includes('project') && !projectsConf.subEvent.includes('milestone') && !projectsConf.subEvent.includes('tasklist')) ? 155 : 5 }} event="task" onClick={handleSubEventInput} onKeyDown={handleSubEventInput} role="button" tabIndex="0">{__('create a new task')}</span>
           <br />
           <br />
         </>

@@ -53,11 +53,11 @@ export const refreshFields = (formID, acumbamailConf, setAcumbamailConf, setIsLo
 
           setAcumbamailConf({ ...newConf })
           setIsLoading(false)
-          toast.success(__('All list field fetched successfully', 'bitform'))
+          toast.success(__('All list field fetched successfully'))
           return
         }
         setIsLoading(false)
-        toast.error(__('Failed to fetch list fields', 'bitform'))
+        toast.error(__('Failed to fetch list fields'))
       }
     })
 
@@ -79,11 +79,11 @@ export const fetchAllList = (acumbamailConf, setAcumbamailConf, setIsLoading, se
         }
         setAcumbamailConf({ ...newConf })
         setIsLoading(false)
-        toast.success(__('Lists fetched successfully', 'bitform'))
+        toast.success(__('Lists fetched successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Lists fetch failed. please try again', 'bitform'))
+      toast.error(__('Lists fetch failed. please try again'))
     })
 
     .catch(() => setIsLoading(false))
@@ -91,7 +91,7 @@ export const fetchAllList = (acumbamailConf, setAcumbamailConf, setIsLoading, se
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
   if (!confTmp.auth_token) {
-    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty', 'bitform') : '' })
+    setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty') : '' })
     return
   }
   setError({})
@@ -106,11 +106,11 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         setConf(newConf)
         setisAuthorized(true)
         setIsLoading(false)
-        toast.success(__('Authorized successfully', 'bitform'))
+        toast.success(__('Authorized successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Authorized failed', 'bitform'))
+      toast.error(__('Authorized failed'))
     })
 }
 

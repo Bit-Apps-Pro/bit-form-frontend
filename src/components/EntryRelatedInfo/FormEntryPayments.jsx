@@ -48,7 +48,7 @@ export default function FormEntryPayments({ formID, rowDtl }) {
       case 'razorpay':
         return <RazorpayInfo paymentInfo={paymentInfo} payInfoFound={payInfoFound} fldKey={payFld?.key} transactionID={rowDtl?.[payFld?.key]} />
       default:
-        return <h1>{__('No Payment Info Found!', 'bitform')}</h1>
+        return <h1>{__('No Payment Info Found!')}</h1>
     }
   }
 
@@ -57,11 +57,11 @@ export default function FormEntryPayments({ formID, rowDtl }) {
       {!isPro && (
         <div className="pro-blur mt-4 flx">
           <div className="pro">
-            {__('Available On', 'bitform')}
+            {__('Available On')}
             <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
                 {' '}
-                {__('Premium', 'bitform')}
+                {__('Premium')}
               </span>
             </a>
           </div>

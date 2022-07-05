@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
+import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_styles'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
@@ -14,7 +15,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -68,6 +69,7 @@ function FormDetails() {
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const resetCustomCodes = useResetRecoilState($customCodes)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
@@ -82,7 +84,7 @@ function FormDetails() {
     // for all kind of template
     if (formType === 'new') {
       setworkFlows(defaultWorkflowValue)
-      setConfirmations(defaultConfirmationValue)
+      setConfirmations(defaultConfirmationValue(formID))
     }
     // form blank form only
     // if (formId === 'Blank') {
@@ -127,6 +129,7 @@ function FormDetails() {
     resetConfirmations()
     resetUpdateBtn()
     resetFormInfo()
+    resetCustomCodes()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -147,7 +150,7 @@ function FormDetails() {
       setConfirmations(formData.formSettings.confirmation)
       setMailTem(formData.formSettings.mailTem)
       sessionStorage.removeItem('bitformData')
-      toast.error(__('Please try again. Token was expired', 'bitform'))
+      toast.error(__('Please try again. Token was expired'))
       if (isLoading) { setisLoading(!isLoading) }
     } else {
       setNewFormProps()
@@ -282,14 +285,14 @@ function FormDetails() {
           sm
           show={proModal.show}
           setModal={() => setProModal({ show: false })}
-          title={__('Premium Feature', 'bitform')}
+          title={__('Premium Feature')}
           className="pro-modal"
         >
           <h4 className="txt-center mt-5">
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
           </div>
         </Modal>
         <ConfirmModal
@@ -361,16 +364,52 @@ function FormDetails() {
 
 export default memo(withRouter(FormDetails))
 
-const defaultConfirmationValue = {
-  type: {
-    successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
-    redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
-    webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
-  },
+const defaultConfirmationValue = (formID) => {
+  const msgType = 'snackbar'
+  const position = 'bottom-right'
+  const animation = 'fade'
+  const autoHide = true
+  const duration = 5
+  const styles = {
+    width: '300px',
+    padding: '5px 35px 5px 20px',
+    color: '#000000',
+    background: '#fafafa',
+    borderWidth: '1px',
+    borderType: 'solid',
+    borderColor: 'gray',
+    borderRadius: '10px',
+    boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    closeBackground: '#48484829',
+    closeHover: '#dfdfdf',
+    closeIconColor: '#5a5a5a',
+    closeIconHover: '#000',
+  }
+  return {
+    type: {
+      successMsg: [{
+        title: 'Untitled Message 1',
+        msg: __('<p>Successfully Submitted.</p>'),
+        config: {
+          msgType,
+          position,
+          animation,
+          autoHide,
+          duration,
+          styles,
+          stylesObj: confirmMsgCssStyles(formID, 0, msgType, position, animation, styles),
+        },
+      }],
+      redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
+      webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
+    },
+  }
 }
 const defaultWorkflowValue = [
   {
-    title: __('Show Success Message', 'bitform'),
+    title: __('Show Success Message'),
     action_type: 'onsubmit',
     action_run: 'create_edit',
     action_behaviour: 'always',

@@ -140,43 +140,43 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openUpdateModal}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in analyticsConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row', 'bitofrm')} subTitle={__('Control how the row gets updated.', 'bitform')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in analyticsConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row', 'bitofrm')} subTitle={__('Control how the row gets updated.')} />
         </TitleModal>
 
-        <TableCheckBox checked={analyticsConf?.actions?.share?.email || false} onChange={() => setActionMdl({ show: 'share' })} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Table', 'bitofrm')} subTitle={__('Share Table with users pushed to Zoho Analytics.', 'bitform')} />
+        <TableCheckBox checked={analyticsConf?.actions?.share?.email || false} onChange={() => setActionMdl({ show: 'share' })} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Table', 'bitofrm')} subTitle={__('Share Table with users pushed to Zoho Analytics.')} />
       </div>
 
       <Modal
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-        title={__('Update Row', 'bitform')}
+        title={__('Update Row')}
       >
         <div className="o-a">
           {analyticsConf?.actions?.update && (
             <>
-              <small>{__('Enter the criteria to update rows. Please use the below format.', 'bitform')}</small>
+              <small>{__('Enter the criteria to update rows. Please use the below format.')}</small>
               <br />
               <div className="mt-4">
                 <small>
-                  {__('Example', 'bitform')}
+                  {__('Example')}
                   :&nbsp;
                   {'("Table Name"."Department" = \'Finance\' and "Table Name"."Salary" < 9000 or "Table Name"."Country" = \'USA\')'}
                 </small>
                 <br />
                 <br />
-                <small>{__('Here Department, Salary and Country are Zoho Analytics table column name', 'bitform')}</small>
-                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': `'${__('Supported Arithmetic Operators: ( +, -, *, / ) and Supported Relational Operators: ( =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN )', 'bitform')}'`, '--tt-wrap': 'wrap', '--tt-width': '225px', fontSize: 15 }}>
+                <small>{__('Here Department, Salary and Country are Zoho Analytics table column name')}</small>
+                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': `'${__('Supported Arithmetic Operators: ( +, -, *, / ) and Supported Relational Operators: ( =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN )')}'`, '--tt-wrap': 'wrap', '--tt-width': '225px', fontSize: 15 }}>
                   <InfoIcn size="15" />
                 </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={analyticsConf.actions?.update?.criteria} />
               </div>
 
-              <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
+              <div className="font-w-m mt-3">{__('Update Preferance')}</div>
               <small>insert new row if the above criteria doesn&apos;t met?</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row" title={__('Yes', 'bitform')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row" title={__('No', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row" title={__('Yes')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row" title={__('No')} />
               </div>
             </>
           )}
@@ -187,10 +187,10 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
         md
         show={actionMdl.show === 'share'}
         setModal={() => setActionMdl({ show: false })}
-        title={__('Share Settings', 'bitform')}
+        title={__('Share Settings')}
       >
         <div className="o-a" style={{ height: '95%' }}>
-          <div className="mt-2 mb-1">{__('Enter Email Addresses', 'bitform')}</div>
+          <div className="mt-2 mb-1">{__('Enter Email Addresses')}</div>
           <MultiSelect
             className="btcd-paper-drpdwn w-9 mr-2"
             placeholder="Input Email Address(s)"
@@ -199,9 +199,9 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
             options={getEmailAndFields()}
             customValue
           />
-          <small>{__('you can select analytics users or select form fields value or even can input custom email address as well', 'bitform')}</small>
+          <small>{__('you can select analytics users or select form fields value or even can input custom email address as well')}</small>
           <div className="btcd-hr mt-2" />
-          <div className="mt-2 mb-1 font-w-m">{__('Permissions Settings', 'bitform')}</div>
+          <div className="mt-2 mb-1 font-w-m">{__('Permissions Settings')}</div>
           <div className="btcd-hr mt-2" />
           {Object.keys(permissions).map(permission => (
             <div key={permission}>

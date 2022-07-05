@@ -52,7 +52,7 @@ export default function ReCaptchaSettings() {
 
       <SimpleAccordion
         id="thm-stng"
-        title={__('Theme', 'bitform')}
+        title={__('Theme')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -65,8 +65,8 @@ export default function ReCaptchaSettings() {
             value={theme}
             onChange={e => setConfigValue('theme', e.target.value)}
           >
-            <option value="dark">{__('Dark', 'bitform')}</option>
-            <option value="light">{__('Light', 'bitform')}</option>
+            <option value="dark">{__('Dark')}</option>
+            <option value="light">{__('Light')}</option>
           </select>
         </div>
       </SimpleAccordion>
@@ -74,7 +74,7 @@ export default function ReCaptchaSettings() {
 
       <SimpleAccordion
         id="siz-stng"
-        title={__('Size', 'bitform')}
+        title={__('Size')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -87,8 +87,8 @@ export default function ReCaptchaSettings() {
             value={size}
             onChange={e => setConfigValue('size', e.target.value)}
           >
-            <option value="normal">{__('Normal', 'bitform')}</option>
-            <option value="compact">{__('Compact', 'bitform')}</option>
+            <option value="normal">{__('Normal')}</option>
+            <option value="compact">{__('Compact')}</option>
           </select>
         </div>
       </SimpleAccordion>

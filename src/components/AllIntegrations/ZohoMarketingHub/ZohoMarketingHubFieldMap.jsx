@@ -18,13 +18,13 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...', 'bitform')}</option>
+          <option value="custom">{__('Custom...')}</option>
 
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
@@ -35,10 +35,10 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, marketingHubConf, setMarketingHubConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, marketingHubConf, setMarketingHubConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
         <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           {
             isNotRequired
               ? marketingHubConf?.default?.fields?.[marketingHubConf.list]?.fields && marketingHubConf.default.fields[marketingHubConf.list].fields.map(contactField => contactField !== 'Contact Email'
@@ -49,7 +49,7 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
                 ))
               : (
                 <option key="contact_email" value="Contact Email">
-                  {__('Contact Email', 'bitform')}
+                  {__('Contact Email')}
                 </option>
               )
           }

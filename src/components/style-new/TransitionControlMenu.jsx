@@ -100,7 +100,7 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
         <>
           <SimpleAccordion
             className={css(c.accordionHead)}
-            title={__(`Transition ${indx + 1}`, 'bitform')}
+            title={__(`Transition ${indx + 1}`)}
             open={indx === 0}
             actionComponent={
               arrOfExtractedTransitionObj.length > 1

@@ -74,9 +74,9 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
 
     const showLogs = () => {
       if (data.content === null && data.action_type === 'update') {
-        return <p>{__('No field data change', 'bitform')}</p>
+        return <p>{__('No field data change')}</p>
       } if (data.content === null && data.action_type === 'create') {
-        return <p>{__('Form Submitted', 'bitform')}</p>
+        return <p>{__('Form Submitted')}</p>
       }
       return data.content.split('b::f').map(str => (
         <p key={str}>
@@ -93,8 +93,8 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
         {
           !!Object.keys(integInfo)?.length && (
             <>
-              {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
-              {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
+              {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs')}</small>}
+              {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs')}</small>}
               {logShow && data.integration && renderIntegLog(integInfo)}
             </>
           )
@@ -131,21 +131,21 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
       return (
         <>
           <p>
-            {__('Note', 'bitform')}
+            {__('Note')}
             {' '}
-            {data.action_type === 'create' && __('Added', 'bitform')}
-            {data.action_type === 'update' && __('Updated', 'bitform')}
-            {data.action_type === 'delete' && __('Deleted', 'bitform')}
+            {data.action_type === 'create' && __('Added')}
+            {data.action_type === 'update' && __('Updated')}
+            {data.action_type === 'delete' && __('Deleted')}
             :
           </p>
           {note.title && <h4>{note.title}</h4>}
           <div>{renderHTMR(logShow ? (note.content || '') : truncate(note.content || '', 20))}</div>
-          {(!logShow && (note.content || '').length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More', 'bitform')}</small>}
-          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less', 'bitform')}</small>}
+          {(!logShow && (note.content || '').length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More')}</small>}
+          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less')}</small>}
         </>
       )
     } if (data.content === null && data.action_type === 'update') {
-      return <p>{__('Note no change', 'bitform')}</p>
+      return <p>{__('Note no change')}</p>
     }
   }
 

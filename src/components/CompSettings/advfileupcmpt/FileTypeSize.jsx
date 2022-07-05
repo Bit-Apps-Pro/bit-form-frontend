@@ -62,7 +62,7 @@ function FileTypeSize({ action }) {
             cls={css(ut.mr2)}
             name="minFileSize"
             onChange={fileSizeChange}
-            title={__('Min File Size', 'bitform')}
+            title={__('Min File Size')}
             checked={fieldData?.config?.minFileSize || false}
           />
 
@@ -113,7 +113,7 @@ function FileTypeSize({ action }) {
             cls={css(ut.mr2)}
             name="maxFileSize"
             onChange={fileSizeChange}
-            title={__('Max File Size', 'bitform')}
+            title={__('Max File Size')}
             checked={fieldData?.config?.maxFileSize || false}
           />
           {fieldData?.config?.maxFileSize && (
@@ -164,7 +164,7 @@ function FileTypeSize({ action }) {
             cls={css(ut.mr2)}
             name="maxTotalFileSize"
             onChange={fileSizeChange}
-            title={__('Max Total File Size', 'bitform')}
+            title={__('Max Total File Size')}
             checked={fieldData?.config?.maxTotalFileSize || false}
           />
           {fieldData?.config?.maxTotalFileSize && (

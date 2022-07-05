@@ -55,7 +55,7 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
             <div className="txt-o o-h mb-1">{ucFirst(title)}</div>
             {subTitle && (
               <small>
-                {__('Key:', 'bitform')}
+                {__('Key:')}
                 {` ${subTitle}`}
               </small>
             )}

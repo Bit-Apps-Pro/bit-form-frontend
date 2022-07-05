@@ -37,7 +37,7 @@ export default function FieldReadOnlySettings({ cls }) {
       <SingleToggle
         id="rdonly-stng"
         tip="By disabling this option, the field readonly will be hidden"
-        title={__('Read only Field', 'bitform')}
+        title={__('Read only Field')}
         action={setReadOnly}
         isChecked={isReadOnly}
       />

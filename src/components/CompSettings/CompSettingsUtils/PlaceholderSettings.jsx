@@ -48,7 +48,7 @@ export default function PlaceholderSettings() {
   return (
     <SimpleAccordion
       id="plchldr-stng"
-      title={__('Placeholder', 'bitform')}
+      title={__('Placeholder')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
       tip="By disabling this option, the field placeholder will be hidden"

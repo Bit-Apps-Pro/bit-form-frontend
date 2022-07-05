@@ -88,7 +88,7 @@ export default function HelperTxtSettings() {
     <>
       <SimpleAccordion
         id="hlpr-txt-stng"
-        title={__('Helper Text', 'bitform')}
+        title={__('Helper Text')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field helper text will be hidden"
@@ -108,14 +108,14 @@ export default function HelperTxtSettings() {
           />
         </div>
         <FieldIconSettings
-          label="Prefix Icon"
+          label="Leading Icon"
           iconSrc={fieldData?.hlpPreIcn}
           styleRoute="hlp-txt-pre-i"
           setIcon={() => setIconModel('hlpPreIcn')}
           removeIcon={() => removeIcon('hlpPreIcn')}
         />
         <FieldIconSettings
-          label="Suffix Icon"
+          label="Trailing Icon"
           iconSrc={fieldData?.hlpSufIcn}
           styleRoute="hlp-txt-suf-i"
           setIcon={() => setIconModel('hlpSufIcn')}
@@ -129,7 +129,7 @@ export default function HelperTxtSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons', 'bitform')}
+        title={__('Icons')}
       >
         <div className="pos-rel" />
 

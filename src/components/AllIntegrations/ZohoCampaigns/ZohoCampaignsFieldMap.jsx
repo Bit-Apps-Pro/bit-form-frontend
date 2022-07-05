@@ -49,7 +49,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
 
-        <option value="">{__('Select Field', 'bitform')}</option>
+        <option value="">{__('Select Field')}</option>
         <optgroup label="Form Fields">
           {
             formFields.map(f => f.type !== 'file-up' && (
@@ -58,7 +58,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
           }
         </optgroup>
 
-        <option value="custom">{__('Custom...', 'bitform')}</option>
+        <option value="custom">{__('Custom...')}</option>
         <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
           {isPro && SmartTagField?.map(f => (
             <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -68,10 +68,10 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
         </optgroup>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
       <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
-        <option value="">{__('Select Field', 'bitform')}</option>
+        <option value="">{__('Select Field')}</option>
         {
           isNotRequired
             ? campaignsConf?.default?.fields?.[campaignsConf.list]?.fields && campaignsConf.default.fields[campaignsConf.list].fields.map(contactField => contactField !== 'Contact Email'
@@ -82,7 +82,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
               ))
             : (
               <option key="contact_email" value="Contact Email">
-                {__('Contact Email', 'bitform')}
+                {__('Contact Email')}
               </option>
             )
         }

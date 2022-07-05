@@ -1,11 +1,10 @@
 const labelCssProps = {
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   border: {
     border: true,
@@ -60,24 +59,22 @@ const iconCssProps = {
   'backdrop-filter': '',
   transition: '',
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   'color(filter)': { filter: '', 'icon-color': '' },
 }
 
 const fieldWrpCssProps = {
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   'background-color': '',
   border: {
@@ -192,12 +189,11 @@ const textFldCssProps = {
 
 const buttonCssProps = {
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   border: {
     border: true,
@@ -226,12 +222,11 @@ const chackProps = {
   margin: '',
   padding: '',
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   border: {
     border: true,
@@ -246,12 +241,11 @@ const chackProps = {
 }
 const formCommonCssProps = {
   background: {
-    'background-color': true,
+    background: true,
     'background-image': true,
     'background-position': true,
     'background-repeat': true,
     'background-size': true,
-    'backdrop-filter': true,
   },
   'background-color': '',
   color: '',
@@ -287,12 +281,11 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
-        'background-color': true,
+        background: true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
         'background-size': true,
-        'backdrop-filter': true,
       },
       padding: '5px',
       margin: '5px',
@@ -308,12 +301,11 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
-        'background-color': true,
+        background: true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
         'background-size': true,
-        'backdrop-filter': true,
       },
       padding: '5px',
       margin: '5px',
@@ -329,12 +321,11 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
-        'background-color': true,
+        background: true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
         'background-size': true,
-        'backdrop-filter': true,
       },
       padding: '5px',
       margin: '5px',
@@ -577,12 +568,11 @@ const editorConfig = {
     states: ['hover'],
     properties: {
       background: {
-        'background-color': true,
+        background: true,
         'background-image': true,
         'background-position': true,
         'background-repeat': true,
         'background-size': true,
-        'backdrop-filter': true,
       },
       'background-color': '',
       color: '',
@@ -665,6 +655,10 @@ const editorConfig = {
         'letter-spacing': '',
       },
     },
+    'other-inp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
 
   },
   'decision-box': {
@@ -739,7 +733,10 @@ const editorConfig = {
         'letter-spacing': '',
       },
     },
-
+    'other-inp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
   },
   title: {
     'fld-wrp': {
@@ -1150,12 +1147,11 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
-          'background-color': true,
+          background: true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
           'background-size': true,
-          'backdrop-filter': true,
         },
         width: '',
         height: '',
@@ -1173,7 +1169,13 @@ const editorConfig = {
         },
         margin: '',
         padding: '',
-        'background-color': '',
+        background: {
+          background: true,
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+        },
         stroke: '',
         width: '',
         height: '',
@@ -1384,12 +1386,11 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
-          'background-color': true,
+          background: true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
           'background-size': true,
-          'backdrop-filter': true,
         },
         width: '',
         height: '',
@@ -1407,7 +1408,13 @@ const editorConfig = {
         },
         margin: '',
         padding: '',
-        'background-color': '',
+        background: {
+          background: true,
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+        },
         stroke: '',
         width: '',
         height: '',
@@ -1731,12 +1738,11 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
-          'background-color': true,
+          background: true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
           'background-size': true,
-          'backdrop-filter': true,
         },
         width: '',
         height: '',
@@ -1754,7 +1760,13 @@ const editorConfig = {
         },
         margin: '',
         padding: '',
-        'background-color': '',
+        background: {
+          background: true,
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+        },
         stroke: '',
         width: '',
         height: '',
@@ -1947,12 +1959,11 @@ const editorConfig = {
         padding: '',
         'background-color': '',
         background: {
-          'background-color': true,
+          background: true,
           'background-image': true,
           'background-position': true,
           'background-repeat': true,
           'background-size': true,
-          'backdrop-filter': true,
         },
         width: '',
         height: '',
@@ -1970,7 +1981,13 @@ const editorConfig = {
         },
         margin: '',
         padding: '',
-        'background-color': '',
+        background: {
+          background: true,
+          'background-image': true,
+          'background-position': true,
+          'background-repeat': true,
+          'background-size': true,
+        },
         stroke: '',
         width: '',
         height: '',

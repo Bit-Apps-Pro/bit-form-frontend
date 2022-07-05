@@ -60,8 +60,8 @@ export default function AllEmailTemplates({ formID }) {
     setconfMdl({ ...confMdl })
   }
   const temDelConf = (i, templateData) => {
-    confMdl.btnTxt = __('Delete', 'bitform')
-    confMdl.body = __('Are you sure to delete this template', 'bitform')
+    confMdl.btnTxt = __('Delete')
+    confMdl.body = __('Are you sure to delete this template')
     confMdl.btnClass = ''
     confMdl.action = () => { delTem(i, templateData); closeConfMdl() }
     confMdl.show = true
@@ -69,8 +69,8 @@ export default function AllEmailTemplates({ formID }) {
   }
 
   const temDupConf = i => {
-    confMdl.btnTxt = __('Duplicate', 'bitform')
-    confMdl.body = __('Are you sure to duplicate this template?', 'bitform')
+    confMdl.btnTxt = __('Duplicate')
+    confMdl.body = __('Are you sure to duplicate this template?')
     confMdl.btnClass = 'blue'
     confMdl.action = () => { duplicateTem(i); closeConfMdl() }
     confMdl.show = true
@@ -78,7 +78,7 @@ export default function AllEmailTemplates({ formID }) {
   }
   const col = [
     {
-      Header: __('Template Name', 'bitform'),
+      Header: __('Template Name'),
       accessor: 'title',
       Cell: row => (
         <NavLink to={`${url}/${row.row.index}`}>
@@ -87,17 +87,17 @@ export default function AllEmailTemplates({ formID }) {
       ),
     },
     {
-      Header: __('Action', 'bitform'),
+      Header: __('Action'),
       accessor: 'action',
       Cell: row => (
         <>
-          <Button onClick={() => temDupConf(row.row.index)} className="icn-btn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Duplicate', 'bitform')}'` }}>
+          <Button onClick={() => temDupConf(row.row.index)} className="icn-btn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Duplicate')}'` }}>
             <CopyIcn size="22" />
           </Button>
-          <NavLink to={`${url}/${row.row.index}`} className="icn-btn mr-2 flx flx-center tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }}>
+          <NavLink to={`${url}/${row.row.index}`} className="icn-btn mr-2 flx flx-center tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit')}'` }}>
             <EditIcn size="22" />
           </NavLink>
-          <Button onClick={() => temDelConf(row.row.index, row.row)} className="icn-btn tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }}>
+          <Button onClick={() => temDelConf(row.row.index, row.row)} className="icn-btn tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete')}'` }}>
             <TrashIcn size="21" />
           </Button>
         </>
@@ -115,7 +115,7 @@ export default function AllEmailTemplates({ formID }) {
         body={confMdl.body}
         action={confMdl.action}
       />
-      <h2>{__('Email Templates', 'bitform')}</h2>
+      <h2>{__('Email Templates')}</h2>
       <h5>
         How to setup Email Templates & Send Email Notification:
         &nbsp;
@@ -127,7 +127,7 @@ export default function AllEmailTemplates({ formID }) {
         <Link to={`${url}/new`} className={`${css(app.btn)} blue`}>
           <LayoutIcn size="20" />
           &nbsp;
-          {__('Add New Template', 'bitform')}
+          {__('Add New Template')}
         </Link>
         {mailTem.length > 0 ? (
           <Table
@@ -140,7 +140,7 @@ export default function AllEmailTemplates({ formID }) {
           : (
             <div className={css(ut.btcdEmpty, ut.txCenter)}>
               <StackIcn size="50" />
-              {__('Empty', 'bitform')}
+              {__('Empty')}
             </div>
           )}
       </div>

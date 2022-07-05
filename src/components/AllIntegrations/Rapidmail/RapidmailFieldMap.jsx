@@ -26,7 +26,7 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
 
@@ -38,7 +38,7 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
             }
           </optgroup>
 
-          <option value="custom">{__('Custom...', 'bitform')}</option>
+          <option value="custom">{__('Custom...')}</option>
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -49,10 +49,10 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
 
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, rapidmailConf, setRapidmailConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, rapidmailConf, setRapidmailConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
         <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="rapidmailFormField" value={i < requiredFlds ? (requiredFlds[i].label || '') : (field.rapidmailFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
-          <option value="">{__('Select Field', 'bitform')}</option>
+          <option value="">{__('Select Field')}</option>
           {
             i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>

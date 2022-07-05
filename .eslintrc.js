@@ -72,7 +72,6 @@ module.exports = {
     'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
     'no-use-before-define': 'off',
     allowShortCircuit: 0,
-    'no-unused-expressions': ["error", { "allowShortCircuit": true }],
     'react/function-component-definition': 0,
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsForRegex: ['(d|D)raft'] }],
   },

@@ -35,7 +35,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
           <div>
             <div className="mt-2 ml-1 flx">
               <label htmlFor="status">
-                <b>{__('Custom Redirect Page Enable', 'bitform')}</b>
+                <b>{__('Custom Redirect Page Enable')}</b>
               </label>
               <SingleToggle2 action={handleCustomRedirect} checked={dataConf[type]?.custom_redirect === 1} className="ml-4 flx" />
               <Cooltip width={250} icnSize={17} className="ml-1">
@@ -50,7 +50,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                 <div className="flx integ-fld-wrp">
                   <div className="w-5 ">
                     <div className="f-m">
-                      {__('Success redirect Page:', 'bitform')}
+                      {__('Success redirect Page:')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
                           This page will show when the verification is successful.
@@ -60,7 +60,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                     </div>
 
                     <select className="btcd-paper-inp mt-1" name="succ_url" value={dataConf[type]?.succ_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -76,7 +76,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                 <div className="flx integ-fld-wrp mt-3">
                   <div className="w-5 ">
                     <div className="f-m">
-                      {__('Redirect page (already activated):', 'bitform')}
+                      {__('Redirect page (already activated):')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
                           This page will show if the account had already been activated.
@@ -86,7 +86,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       </Cooltip>
                     </div>
                     <select className="btcd-paper-inp mt-1" name="already_activated_url" value={dataConf[type]?.already_activated_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -101,7 +101,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                 <div className="flx integ-fld-wrp mt-3">
                   <div className="w-5 ">
                     <div className="f-m">
-                      {__('Invalid redirect page:', 'bitform')}
+                      {__('Invalid redirect page:')}
                       <Cooltip width={250} icnSize={17} className="ml-2">
                         <div className="txt-body">
                           This page will show if the account activation fails or if the activation URL is invalid.
@@ -112,7 +112,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       </Cooltip>
                     </div>
                     <select className="btcd-paper-inp mt-1" name="invalid_key_url" value={dataConf[type]?.invalid_key_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -127,18 +127,18 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
             )}
             {!dataConf[type]?.custom_redirect && (
               <div className="mt-3">
-                <span>{__('Custom messages', 'bitform')}</span>
+                <span>{__('Custom messages')}</span>
                 <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={dataConf[type]?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} />
+                  <div className="f-m fw-500">{__('Activation success')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={dataConf[type]?.acti_succ_msg} type="text" placeholder={__('Activation Success Message')} />
                 </div>
                 <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={dataConf[type]?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} />
+                  <div className="f-m fw-500">{__('Already activated account')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={dataConf[type]?.already_activated_msg} type="text" placeholder={__('Already account activation message')} />
                 </div>
                 <div className="w-8 mt-2">
-                  <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={dataConf[type]?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} />
+                  <div className="f-m fw-500">{__('Invalid activation key')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={dataConf[type]?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message')} />
                 </div>
               </div>
             )}
