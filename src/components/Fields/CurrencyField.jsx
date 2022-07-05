@@ -4,7 +4,7 @@ import BitCountryField from 'bit-country-field'
 import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -14,6 +14,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
   const currencyFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
+  const bits = useRecoilValue($bits)
   const { selectedFlagImage,
     selectedCurrencyClearable,
     searchClearable,
@@ -47,6 +48,9 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       searchPlaceholder,
       noCurrencyFoundText,
       options,
+      assetsURL: bits.assetsURL,
+      document: document.getElementById('bit-grid-layout').document,
+      widnow: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDavAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),

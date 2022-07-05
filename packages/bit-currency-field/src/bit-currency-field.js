@@ -29,6 +29,12 @@ export default class BitCurrencyField {
 
   #options = []
 
+  #document
+
+  #window = {}
+
+  #assetsURL = ''
+
   #config = {
     maxHeight: 370,
     searchCurrencyPlaceholder: 'Search Currency',
@@ -59,15 +65,18 @@ export default class BitCurrencyField {
 
   constructor(selector, config, window) {
     Object.assign(this.#config, config)
+
+    this.#window = config.window ? config.window : window
+    this.#document = config.document ? config.document : document
     if (typeof selector === 'string') {
-      this.#currencyNumberFieldWrapper = document.querySelector(selector)
+      this.#currencyNumberFieldWrapper = this.#document.querySelector(selector)
     } else {
       this.#currencyNumberFieldWrapper = selector
     }
 
     this.#options = [...this.#config.options]
     this.fieldKey = this.#config.fieldKey
-
+    this.#assetsURL = config.assetsURL
     this.init()
   }
 
@@ -293,7 +302,7 @@ export default class BitCurrencyField {
   }
 
   #handleKeyboardNavigation(e) {
-    const activeEl = document.activeElement
+    const activeEl = this.#document.activeElement
     let focussableEl = null
     const isMenuOpen = this.#isMenuOpen()
     if (e.target === this.#currencyInputElm) return
@@ -446,7 +455,7 @@ export default class BitCurrencyField {
   }
 
   #createElm(elm) {
-    return document.createElement(elm)
+    return this.#document.createElement(elm)
   }
 
   #setClassName(elm, cn) {
@@ -521,7 +530,7 @@ export default class BitCurrencyField {
             const optIcnCls = this.#config.classNames['opt-icn']
             if (optIcnCls) this.#setClassName(img, optIcnCls)
           }
-          img.src = `${bits.assetsURL}${opt.img}`
+          img.src = `${this.#assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
           img.loading = 'lazy'
           this.#setAttribute(img, 'aria-hidden', true)
@@ -600,7 +609,7 @@ export default class BitCurrencyField {
     }
     const selectedItem = this.#getSelectedCurrencyItem()
     if (!selectedItem) return
-    if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${bits.assetsURL}${selectedItem.img}`
+    if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${this.#assetsURL}${selectedItem.img}`
     this.setMenu({ open: false })
     this.#handleCurrencyInputBlur()
   }
@@ -659,7 +668,7 @@ export default class BitCurrencyField {
     const elementRect = this.#currencyInnerWrp.getBoundingClientRect()
 
     const spaceAbove = elementRect.top
-    const spaceBelow = window.innerHeight - elementRect.bottom
+    const spaceBelow = this.#window.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
       this.#currencyNumberFieldWrapper.style.flexDirection = 'column-reverse'
@@ -675,14 +684,14 @@ export default class BitCurrencyField {
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#currencyNumberFieldWrapper, `${this.fieldKey}-menu-open`)
-      this.#addEvent(document, 'click', e => this.#handleOutsideClick(e))
+      this.#addEvent(this.#document, 'click', e => this.#handleOutsideClick(e))
       this.#setAttribute(this.#searchInputElm, 'tabindex', 0)
       this.#setAttribute(this.#clearSearchBtnElm, 'tabindex', 0)
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-expanded', true)
       this.#reRenderVirtualOptions()
     } else {
       this.#currencyNumberFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
-      document.removeEventListener('click', this.#handleOutsideClick)
+      this.#document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#setAttribute(this.#searchInputElm, 'tabindex', -1)
       this.#setAttribute(this.#clearSearchBtnElm, 'tabindex', -1)
@@ -725,7 +734,6 @@ export default class BitCurrencyField {
     this.#detachAllEvents()
   }
 }
-
 
 // const list = new CurrencyField('.currency-fld-wrp', {
 //   searchClearable: true,
