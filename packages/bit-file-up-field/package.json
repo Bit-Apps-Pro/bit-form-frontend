@@ -1,7 +1,7 @@
 {
-  "name": "bit-file-upload-field",
+  "name": "bit-file-up-field",
   "packageManager": "yarn@3.1.0",
-  "main": "dist/bit-file-upload-field.min.js",
+  "main": "dist/bit-file-up-field.min.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

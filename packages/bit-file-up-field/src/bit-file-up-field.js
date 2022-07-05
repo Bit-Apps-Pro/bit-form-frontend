@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
+// import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
 
 /* eslint-disable class-methods-use-this */
 export default class FileUploadField {
