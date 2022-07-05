@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function htmlStyle_1_bitformDefault({ fk }) {
+export default function htmlStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'var(--fld-wrp-dis, block)',

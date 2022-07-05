@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function selectStyle_1_BitformDefault({ fk }) {
+export default function selectStyle_3_atlassian({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 

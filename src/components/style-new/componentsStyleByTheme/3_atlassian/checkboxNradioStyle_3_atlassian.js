@@ -2,7 +2,7 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function checkboxNradioStyle_1_bitformDefault({ fk, type, direction }) {
+export default function checkboxNradioStyle_3_atlassian({ fk, type, direction }) {
   return {
     ...inputWrapperClasses(fk),
 
@@ -20,8 +20,8 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       // 'flex-wrap': 'wrap',
       // 'margin-top': '8px',
       display: 'grid',
-      'grid-template-columns': '1',
-      width: '100%',
+      'grid-template-columns': 'auto',
+      width: '50%',
       'grid-row-gap': '10px',
       'column-gap': '10px',
     },
@@ -64,7 +64,6 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       background: 'var(--global-accent-color)',
       'border-color': 'var(--global-accent-color)',
     },
-    [`.${fk}-ci:checked ~ .${fk}-other-inp-wrp`]: { display: 'block !important' },
     [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
     [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
     [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
@@ -86,31 +85,6 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       'justify-content': 'center',
       'align-items': 'center',
     },
-    [`.${fk}-other-inp-wrp`]: { display: 'none' },
-    [`.${fk}-other-inp`]: {
-      display: 'inline-block !important',
-      direction: 'inherit !important',
-      // 'max-width': '100% !important',
-      'font-family': 'var(--g-font-family)',
-      margin: '0px 0px 0px 33px',
-      width: 'calc(100% - 33px) !important',
-      outline: 'none !important',
-      'background-color': 'var(--global-fld-bg-color, transparent) !important',
-      border: 'var(--global-fld-bdr) !important',
-      'border-radius': 'var(--g-bdr-rad) !important',
-      'border-width': 'var(--g-bdr-width) !important',
-      'font-size': 'var(--fld-fs) !important',
-      color: 'var(--global-font-color) !important',
-      padding: '10px 8px 10px 8px!important',
-      'line-height': '1.4 !important',
-      // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
-      height: '40px',
-    },
-    [`.${fk}-other-inp:focus`]: {
-      'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
-      'border-color': 'var(--global-accent-color) !important',
-    },
-    [`.${fk}-other-inp:hover`]: { 'border-color': 'var(--global-accent-color) !important' },
 
     ...type === 'check' && {
       [`.${fk}-ck`]: { 'border-radius': '5px' },

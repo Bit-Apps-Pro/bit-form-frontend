@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function titleStyle_1_bitformDefault({ fk }) {
+export default function titleStyle_3_atlassian({ fk }) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',

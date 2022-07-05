@@ -2,10 +2,10 @@ import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../../../../GlobalStates/GlobalStates'
 
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk }) {
+export default function buttonStyle_3_atlassian({ fk }) {
   const fields = getRecoil($fields)
   const btnFld = fields[fk]
-  const { align } = btnFld
+  const { align } = btnFld || { align: 'start' }
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',

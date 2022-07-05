@@ -2,17 +2,18 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function currencyStyle_1_BitformDefault({ fk }) {
+export default function phoneNumberStyle_3_atlassian({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 
-    [`.${fk}-currency-fld-container`]: {
+    [`.${fk}-phone-fld-container`]: {
       position: 'relative',
       height: '40px', // unused css
       width: '100%',
-      display: 'inline-block', // unused css
+      display: 'inline-block',
     },
-    [`.${fk}-currency-fld-wrp`]: {
+
+    [`.${fk}-phone-fld-wrp`]: {
       position: 'absolute',
       width: '100%',
       'background-color': 'var(--global-fld-bg-color, transparent)',
@@ -27,14 +28,14 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'flex-direction': 'column',
       transition: 'box-shadow .3s',
     },
-    [`.${fk}-currency-inner-wrp.disabled`]: {
+    [`.${fk}-phone-inner-wrp.disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.${fk}-currency-inner-wrp.readonly`]: {
+    [`.${fk}-phone-inner-wrp.readonly`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -42,26 +43,28 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
-    '.disabled .currency-amount-input': {
+    '.disabled .phone-number-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    '.readonly .currency-amount-input': {
+    '.readonly .phone-number-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.${fk}-currency-fld-wrp:hover:not(.menu-open):not(.disabled)`]: {
-      // border: 'solid hsla(0, 0%, 93%, 100%)',
+
+    [`.${fk}-phone-fld-wrp:hover:not(.menu-open):not(.disabled)`]: {
+      // border: 'solid hsla(205, 95%, 55%, 100%)',
       // 'border-width': '1px',
       'border-color': 'var(--global-accent-color) !important',
     },
-    [`.${fk}-currency-fld-wrp:focus-within:not(.menu-open):not(.disabled)`]: {
+
+    [`.${fk}-phone-fld-wrp:focus-within:not(.menu-open):not(.disabled)`]: {
       // border: 'solid hsla(205, 95%, 55%, 100%)',
       // 'border-width': '1px',
       // 'box-shadow': '0 0 0 3px hsla(209, 100%, 50%, 26%)',
@@ -69,17 +72,20 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'border-color': 'var(--global-accent-color) !important',
     },
 
-    [`.${fk}-menu-open`]: {
+    [`.${fk}-phone-fld-wrp.menu-open`]: {
       'z-index': 999,
       'box-shadow':
         '0px 1.2px 2.2px hsla(0, 0%, 0%, 32%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 22%),0px 5.4px 10px hsla(0, 0%, 0%, 21%),0px 9.6px 17.9px hsla(0, 0%, 0%, 17%),0px 18px 33.4px hsla(0, 0%, 0%, 17%),0px 43px 80px hsla(0, 0%, 0%, 10%)',
       border: 'solid hsla(0, 0%, 87%, 100%)',
       'border-width': '1px',
     },
-    [`.${fk}-currency-inner-wrp`]: {
+
+    [`.${fk}-phone-inner-wrp`]: {
       display: 'flex',
-      height: '100%',
+      height: '100%', // unused css
     },
+
+    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': ' 0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
 
     [`.${fk}-dpd-wrp`]: {
       'background-color': 'transparent',
@@ -96,32 +102,32 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'font-size': '12px',
       outline: 'none', // unused css
     },
-    [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
-    [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
 
-    [`.${fk}-selected-currency-wrp`]: {
+    [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+
+    [`.${fk}-selected-country-wrp`]: {
+      height: '100%',
       display: 'flex',
       'align-items': 'center',
-      height: '100%', // unused css
     },
 
-    [`.${fk}-selected-currency-lbl`]: {
+    [`.${fk}-selected-country-lbl`]: {
       // 'font-size': 'var(--fld-fs) !important',
       // 'font-family': 'var(--g-font-family)',
       // color: 'var(--global-font-color) !important',
     },
-    [`.${fk}-selected-currency-img`]: {
+
+    [`.${fk}-selected-country-img`]: {
       height: '17px',
       width: '25px',
-      border: 'none', // unused css
-      'border-width': '0px', // unused css
       'border-radius': '3px',
       'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
-      margin: '0px 10px 0px 0px',
+      'margin-right': '10px',
       'background-color': 'hsla(0, 0%, 0%, 5%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
     },
+
     [`.${fk}-input-clear-btn`]: {
       position: 'absolute',
       stroke: 'hsla(0, 1%, 68%, 100%)',
@@ -130,64 +136,50 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       display: 'none',
       right: '6px',
       padding: '0px',
-      margin: '0px 5px 0px 0px',
       background: 'transparent',
-      border: 'none',
-      'border-width': '0px',
-      'border-radius': '50%',
-      outline: 0,
+      border: '0px',
+      outline: '0px',
       cursor: 'pointer',
+      margin: '0px 5px 0px 0px',
       'place-content': 'center',
       width: '16px',
       height: '15px',
+      'border-radius': '50%',
       color: 'var(--global-font-color) !important',
     },
 
     [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
 
     [`.${fk}-input-clear-btn:focus-visible`]: {
-      'box-shadow': '0 0 0 1.5px blue inset',
+      'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
       outline: 'none',
     },
-
     [`.${fk}-dpd-down-btn`]: {
-      width: '15px', // unused css
-      display: 'grid', // unused css
-      'place-content': 'center', // unused css
+      width: '15px',
+      display: 'grid',
+      'place-content': 'center',
       transition: 'transform 0.2s',
     },
 
-    [`.${fk}-currency-amount-input`]: {
-      border: 0,
-      outline: 0,
+    [`.${fk}-phone-number-input`]: {
+      border: '0px',
+      outline: '0px',
       width: 'calc(100% - 50px)',
-      padding: '8px',
-      'padding-right': '26px',
+      padding: '8px 26px 8px 8px',
       'font-size': 'var(--fld-fs) !important',
       'font-family': 'var(--g-font-family)',
       color: 'var(--global-font-color) !important',
       'background-color': 'var(--global-fld-bg-color, transparent)',
     },
 
-    // /* Chrome, Safari, Edge, Opera */
-    [`.${fk}-currency-amount-input::-webkit-outer-spin-button`]: {
-      '-webkit-appearance': 'none',
-      margin: 0,
-    },
-    [`.${fk}-currency-amount-input::-webkit-inner-spin-button`]: {
-      '-webkit-appearance': 'none',
-      margin: 0,
-    },
-
-    // /* Firefox */
-    [`.${fk}-currency-amount-input[type=number]`]: { '-moz-appearance': 'textfield' },
+    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-option-wrp`]: {
-      'max-height': '0px',
+      'max-height': '0px', // unused css
       'min-height': 'auto', // unused css
       margin: 'auto', // unused css
       width: '100%', // unused css
-      overflow: 'hidden', // unused css
+      overflow: 'hidden',
       display: 'flex',
       'flex-direction': 'column',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
@@ -195,10 +187,10 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option-inner-wrp`]: {
-      'padding-top': 0, // unused css
-      'border-top': 0, // unused css
-      margin: 0, // unused css
-      overflow: 'hidden',
+      'padding-top': '0px', // unused css
+      'border-top': '0px', // unused css
+      margin: '0px', // unused css
+      overflow: 'hidden', // unused css
       display: 'flex',
       'flex-direction': 'column',
       position: 'relative',
@@ -208,14 +200,6 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       position: 'relative',
       // 'margin-bottom': '5px',
       padding: '5px',
-    },
-
-    [`.${fk}-icn`]: {
-      position: 'absolute',
-      stroke: 'hsla(0, 1%, 68%, 100%)',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: 'var(--global-font-color) !important',
     },
 
     [`.${fk}-opt-search-icn`]: {
@@ -250,25 +234,20 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     [`.${fk}-opt-search-input::-webkit-search-results-decoration`]: { display: 'none' },
 
     [`.${fk}-search-clear-btn`]: {
-      position: 'absolute',
-      stroke: 'hsla(0, 1%, 68%, 100%)',
-      top: '50%',
-      transform: 'translateY(-50%)',
       display: 'none',
       right: '6px',
+      height: '16px', // unused css
       padding: '0px',
-      margin: '0px',
+      margin: '0px', // unused css
       background: 'transparent',
-      border: '',
-      'border-width': '0px',
-      'border-radius': '50%',
-      outline: 0,
+      border: '0px',
+      outline: '0px', // unused css
       cursor: 'pointer',
       'margin-right': '5px',
       'place-content': 'center',
-      width: '16px',
-      height: '16px',
-      color: 'var(--global-font-color) !important',
+      width: '16px', // unused css
+      'border-radius': '50%',
+      color: 'var(--global-font-color)',
     },
 
     [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
@@ -279,8 +258,8 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option-list`]: {
-      padding: 0,
-      margin: 0,
+      padding: '0px',
+      margin: '0px',
       height: '100%', // unused css
       'overflow-y': 'auto',
 
@@ -297,12 +276,12 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-option`]: {
-      margin: '0 5px', // unused css
+      margin: '0px 5px',
       transition: 'background 0.2s',
       'border-radius': '6px',
-      // 'font-size': 'var(--fld-fs)',
+      // 'font-size': 'var(--fld-fs) !important',
       cursor: 'pointer',
-      'text-align': 'left', // unused css
+      'text-align': 'left',
       border: 'none', // unused css
       padding: '5px 7px',
       display: 'flex',
@@ -316,19 +295,18 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       outline: 'none',
     },
 
-    [`.${fk}-selected-opt`]: {
-      // color: 'white',
+    [`.${fk}-option.selected-opt`]: {
+      // color: ' hsla(0, 0%, 100%, 100%)',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
     },
 
-    [`.${fk}-selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+    [`.${fk}-option.selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
     [`.${fk}-opt-not-found`]: {
       'text-align': 'center',
       'list-style': 'none',
       margin: '5px',
     },
-    [`.${fk}-opt-lbl`]: {},
 
     [`.${fk}-opt-lbl-wrp`]: {
       display: 'flex',
@@ -337,17 +315,16 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
     },
 
     [`.${fk}-opt-icn`]: {
-      margin: '0px 10px',
+      'margin-right': '10px',
       height: '17px',
       width: '25px',
       'border-radius': '3px',
-      'border-width': '1px', // unused css
-      'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+      'box-shadow': ' 0 0 0 1px hsla(0, 0%, 88%, 100%)',
       '-webkit-user-select': 'none',
       'user-select': 'none',
     },
 
-    [`.${fk}-opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
+    [`.${fk}-opt-prefix`]: { 'font-size': 'calc(var(--fld-fs) - 40%)' },
 
     '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
   }

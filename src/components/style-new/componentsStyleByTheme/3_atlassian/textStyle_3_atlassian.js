@@ -1,7 +1,7 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function textStyle_1_bitformDefault({ fk, type }) {
+export default function textStyle_3_atlassian({ fk, type }) {
   return {
     ...inputWrapperClasses(fk),
 
@@ -87,8 +87,5 @@ export default function textStyle_1_bitformDefault({ fk, type }) {
       'border-width': 'var(--suf-i-bdr-width)',
       'border-radius': 'var(--suf-i-bdr-rad)',
     },
-
-    [`.${fk}-fld:focus ~ .${fk}-pre-i`]: { filter: 'var(--fld-focs-i-fltr)' },
-    [`.${fk}-fld:focus ~ .${fk}-suf-i`]: { filter: 'var(--fld-focs-i-fltr)' },
   }
 }

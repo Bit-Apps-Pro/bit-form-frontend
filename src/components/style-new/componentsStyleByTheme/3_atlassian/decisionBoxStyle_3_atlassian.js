@@ -1,7 +1,7 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function decisionBoxStyle_1_bitformDefault({ fk, direction }) {
+export default function decisionBoxStyle_3_atlassian({ fk, direction }) {
   return {
     ...inputWrapperClasses(fk),
 

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import checkboxNradioStyle_2_material from '../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material'
+import checkboxNradioStyle_2_material from '../../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material'
 
 export default function materialTheme(fk, type, direction) {
   switch (type) {

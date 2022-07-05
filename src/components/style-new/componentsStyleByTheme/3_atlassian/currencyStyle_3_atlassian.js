@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function currencyStyle_1_BitformDefault({ fk }) {
+export default function currencyStyle_3_atlassian({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 
