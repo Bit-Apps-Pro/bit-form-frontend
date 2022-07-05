@@ -33,7 +33,7 @@ export default function FileLblProperty({ placeholder, type, title, inputType = 
   return (
     <div className={css(ut.flxcb)}>
       <div className={css({ flx: 'align-center' }, ut.w4, FieldStyle.hover_tip, FieldStyle.labelTip)}>
-        <label htmlFor={type} className={css(ut.fw500)}>{__(title, 'bitform')}</label>
+        <label htmlFor={type} className={css(ut.fw500)}>{__(title)}</label>
         <Cooltip width={250} icnSize={17} className="hover-tip">
           <div className={css(ut.tipBody)}>
             {coolTip}

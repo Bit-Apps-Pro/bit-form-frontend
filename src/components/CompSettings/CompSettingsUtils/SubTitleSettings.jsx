@@ -87,7 +87,7 @@ export default function SubTitleSettings() {
     <div>
       <SimpleAccordion
         id="sub-titl-stng"
-        title={__('Sub Title', 'bitform')}
+        title={__('Sub Title')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the field sub title will be hidden"
@@ -108,7 +108,7 @@ export default function SubTitleSettings() {
         </div>
 
         <FieldIconSettings
-          label="Prefix Icon"
+          label="Leading Icon"
           iconSrc={fieldData?.subTlePreIcn}
           styleRoute="sub-titl-pre-i"
           setIcon={() => setIconModel('subTlePreIcn')}
@@ -116,7 +116,7 @@ export default function SubTitleSettings() {
         />
 
         <FieldIconSettings
-          label="Suffix Icon"
+          label="Trailing Icon"
           iconSrc={fieldData?.subTleSufIcn}
           styleRoute="sub-titl-suf-i"
           setIcon={() => setIconModel('subTleSufIcn')}
@@ -130,7 +130,7 @@ export default function SubTitleSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons', 'bitform')}
+        title={__('Icons')}
       >
         <div className="pos-rel" />
         <Icons iconType={icnType} setModal={setIcnMdl} />

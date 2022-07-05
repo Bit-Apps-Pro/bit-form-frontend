@@ -22,7 +22,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
       .then(result => {
         if (result?.success) {
           setisAuthorized(true)
-          setSnackbar({ show: true, msg: __('Connected with WooCommerce Successfully', 'bitform') })
+          setSnackbar({ show: true, msg: __('Connected with WooCommerce Successfully') })
         }
         setisLoading(false)
         setShowAuthMsg(true)
@@ -49,9 +49,9 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         }}
       >
         <div className="mt-3">
-          <b>{__('Integration Name:', 'bitform')}</b>
+          <b>{__('Integration Name:')}</b>
         </div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wcConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wcConf.name} type="text" placeholder={__('Integration Name...')} />
 
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -71,13 +71,13 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
 
         {!isAuthorized && (
           <button onClick={authorizeHandler} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button">
-            {__('Connect', 'bitform')}
+            {__('Connect')}
           </button>
         )}
 
         {isAuthorized && (
           <button onClick={() => setStep(2)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button" disabled={!isAuthorized}>
-            {__('Next', 'bitform')}
+            {__('Next')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         )}

@@ -31,10 +31,10 @@ export default function SMTP({ setsnack }) {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
             <div className="pro">
-              {__('Available On', 'bitform')}
+              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
-                  {__('Premium', 'bitform')}
+                  {__('Premium')}
                 </span>
               </a>
             </div>
@@ -45,10 +45,10 @@ export default function SMTP({ setsnack }) {
         >
           <TabList className="flx">
             <Tab className="btcd-s-tab-link">
-              <b>{__('Configuration', 'bitform')}</b>
+              <b>{__('Configuration')}</b>
             </Tab>
             <Tab className="btcd-s-tab-link">
-              <b>{__('Mail Test', 'bitform')}</b>
+              <b>{__('Mail Test')}</b>
             </Tab>
           </TabList>
           <TabPanel>

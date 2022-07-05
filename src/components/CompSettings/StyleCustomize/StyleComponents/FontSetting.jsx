@@ -24,13 +24,13 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Font', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Font')}>
       {'size' in styleConfig && (
         <div className="mt-2">
-          <span className="f-5">{__('Font Size', 'bitform')}</span>
+          <span className="f-5">{__('Font Size')}</span>
           <Range
             info={[
-              { icn: <i className="font-w-m"><b>T</b></i>, lbl: __('Font Size', 'bitform') },
+              { icn: <i className="font-w-m"><b>T</b></i>, lbl: __('Font Size') },
             ]}
             className="btc-range"
             unit="px"

@@ -130,7 +130,7 @@ export default function SingleFormSettings() {
           to use ReCaptchaV3, you must set site key and secret from
           &nbsp;
           <Link to="/app-settings/recaptcha">app settings</Link>
-        </p>, 'bitform')
+        </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -140,7 +140,7 @@ export default function SingleFormSettings() {
       if (captchaFlds) {
         msg = __(<p>
           You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
-                 </p>, 'bitform')
+        </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -150,7 +150,7 @@ export default function SingleFormSettings() {
       if (!additional.settings.recaptchav3) {
         additional.settings.recaptchav3 = {
           score: '0.6',
-          message: __('ReCaptcha validation failed.', 'bitform'),
+          message: __('ReCaptcha validation failed.'),
         }
       }
     } else {
@@ -481,7 +481,7 @@ export default function SingleFormSettings() {
 
     if (e.target.checked) {
       if (!additional.settings[type]) {
-        additional.settings[type] = { message: __(msg, 'bitform') }
+        additional.settings[type] = { message: __(msg) }
       }
       additional.enabled[type] = true
     } else {
@@ -493,7 +493,7 @@ export default function SingleFormSettings() {
 
   return (
     <div>
-      <h2>{__('Settings', 'bitform')}</h2>
+      <h2>{__('Settings')}</h2>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
@@ -501,7 +501,7 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <IpBlockIcn size="22" />
             </span>
-            <b>{__('Allow single entry for each IP address', 'bitform')}</b>
+            <b>{__('Allow single entry for each IP address')}</b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
         </div>
@@ -510,7 +510,7 @@ export default function SingleFormSettings() {
         customTitle={(
           <b>
             <span className="mr-2"><LoginIcn size={20} /></span>
-            {__('Require user to be logged in for submit form', 'bitform')}
+            {__('Require user to be logged in for submit form')}
           </b>
         )}
         toggle
@@ -532,7 +532,7 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <EmptyIcn size="20" />
             </span>
-            {__('Disallow empty form submission', 'bitform')}
+            {__('Disallow empty form submission')}
           </b>
         )}
         cls="w-6 mt-3"
@@ -555,7 +555,7 @@ export default function SingleFormSettings() {
               <FocusIcn size="20" />
             </span>
             <b>
-              {__('Validate form input on focus lost', 'bitform')}
+              {__('Validate form input on focus lost')}
             </b>
           </div>
           <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additionalSetting.enabled} className="flx" />
@@ -569,7 +569,7 @@ export default function SingleFormSettings() {
               <DBIcn size="20" />
             </span>
             <b>
-              {__('Disable entry storing in WordPress database', 'bitform')}
+              {__('Disable entry storing in WordPress database')}
             </b>
           </div>
           <SingleToggle2 disabled={!isPro} action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
@@ -581,20 +581,20 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <ReCaptchaIcn size="20" />
             </span>
-            {__('Enable ReCaptcha V3', 'bitform')}
+            {__('Enable ReCaptcha V3')}
           </b>
         )}
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 action={enableReCaptchav3} checked={'recaptchav3' in additionalSetting.enabled} className="flx" />
-          {__('Enable / Disable', 'bitform')}
+          {__('Enable / Disable')}
         </div>
         {additionalSetting.enabled.recaptchav3 && (
           <>
             <div className="flx mb-4 ml-2">
               <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha} className="flx" />
-              {__('Hide ReCaptcha Badge', 'bitform')}
+              {__('Hide ReCaptcha Badge')}
             </div>
             <span
               className="btcd-link cp mb-4 ml-2"
@@ -604,7 +604,7 @@ export default function SingleFormSettings() {
               tabIndex="0"
               style={{ outline: 'none' }}
             >
-              {__(`${!showCaptchaAdvanced ? 'Show' : 'Hide'} Advanced Settings`, 'bitform')}
+              {__(`${!showCaptchaAdvanced ? 'Show' : 'Hide'} Advanced Settings`)}
             </span>
             {showCaptchaAdvanced && (
               <>
@@ -639,7 +639,7 @@ export default function SingleFormSettings() {
             <div className="flx">
               <HoneypotIcn w="20" h="19" />
               <span className="flx ml-2">
-                <b>{__('Honeypot trap for bot', 'bitform')}</b>
+                <b>{__('Honeypot trap for bot')}</b>
                 <Cooltip width={250} icnSize={17} className="ml-2 d-non">
                   <div className="txt-body">
                     Honeypot protection provides security mechanisms to protect your
@@ -662,7 +662,7 @@ export default function SingleFormSettings() {
           <div className="">
             <b>
               <span className="mr-2"><NoneIcn size="15" /></span>
-              {__('Disable this form after limited entry', 'bitform')}
+              {__('Disable this form after limited entry')}
             </b>
           </div>
           <div className="flx">
@@ -678,31 +678,31 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <DateIcn w="15" />
             </span>
-            {__('Limit Form Submission Period', 'bitform')}
+            {__('Limit Form Submission Period')}
           </b>
         )}
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additionalSetting.enabled} />
-          {__('Enable / Disable', 'bitform')}
+          {__('Enable / Disable')}
         </div>
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday" title={__('Every Day', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Friday')} value="Friday" title={__('Friday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Saturday')} value="Saturday" title={__('Saturday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Sunday')} value="Sunday" title={__('Sunday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Monday')} value="Monday" title={__('Monday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Tuesday')} value="Tuesday" title={__('Tuesday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Wednesday')} value="Wednesday" title={__('Wednesday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Thursday')} value="Thursday" title={__('Thursday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday" title={__('Every Day')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Friday')} value="Friday" title={__('Friday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Saturday')} value="Saturday" title={__('Saturday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Sunday')} value="Sunday" title={__('Sunday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Monday')} value="Monday" title={__('Monday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Tuesday')} value="Tuesday" title={__('Tuesday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Wednesday')} value="Wednesday" title={__('Wednesday')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Thursday')} value="Thursday" title={__('Thursday')} />
         <br />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Custom')} value="Custom" title={__('Custom Date', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Custom')} value="Custom" title={__('Custom Date')} />
         {'restrict_form' in additionalSetting.settings && additionalSetting.settings.restrict_form.day.indexOf('Custom') > -1 && (
 
           <div className="flx">
             <span className="mt-2 ml-2">Date:</span>
             <div className="mr-2 ml-2">
-              <div><small>{__('From', 'bitform')}</small></div>
+              <div><small>{__('From')}</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'from')}
                 value={new Date(additionalSetting?.settings?.restrict_form?.date?.from || null)}
@@ -714,7 +714,7 @@ export default function SingleFormSettings() {
               />
             </div>
             <div>
-              <div><small>{__('To', 'bitform')}</small></div>
+              <div><small>{__('To')}</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'to')}
                 value={new Date(additionalSetting?.settings?.restrict_form?.date?.to || null)}
@@ -729,16 +729,16 @@ export default function SingleFormSettings() {
         )}
 
         <div className="flx mt-2">
-          <span className="mt-2 ml-2">{__('Time:', 'bitform')}</span>
+          <span className="mt-2 ml-2">{__('Time:')}</span>
           <div className="mr-2 ml-2">
-            <div><small>{__('From', 'bitform')}</small></div>
+            <div><small>{__('From')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'from')}
               value={additionalSetting?.settings?.restrict_form?.time?.from || new Date()}
             />
           </div>
           <div>
-            <div><small>{__('To', 'bitform')}</small></div>
+            <div><small>{__('To')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'to')}
               value={additionalSetting?.settings?.restrict_form?.time?.to || new Date()}
@@ -754,7 +754,7 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <BlockIcn size="20" />
             </span>
-            {__('Blocked IP list', 'bitform')}
+            {__('Blocked IP list')}
           </b>
         )}
         cls="w-6 mt-3"
@@ -762,7 +762,7 @@ export default function SingleFormSettings() {
         {'blocked_ip' in additionalSetting.settings && additionalSetting.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
             <SingleToggle2 cls="flx" action={toggleAllIpStatus} checked={'blocked_ip' in additionalSetting.enabled} />
-            {__('Enable / Disable', 'bitform')}
+            {__('Enable / Disable')}
           </div>
         )}
 
@@ -784,24 +784,24 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <LockIcn size="18" />
             </span>
-            {__('Allowed IP', 'bitform')}
+            {__('Allowed IP')}
           </b>
         )}
         cls="w-6 mt-3"
       >
         <div>
           <b>
-            {__('Note', 'bitform')}
+            {__('Note')}
             :
           </b>
           {' '}
-          {__('By enabling this option only listed IP can submit this form.', 'bitform')}
+          {__('By enabling this option only listed IP can submit this form.')}
         </div>
 
         {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.length > 0 && (
           <div className="flx mb-2 mt-3">
             <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled} />
-            {__('Enable / Disable', 'bitform')}
+            {__('Enable / Disable')}
           </div>
         )}
 
@@ -821,7 +821,7 @@ export default function SingleFormSettings() {
         <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
           <div className="flx">
             <GoogleAdIcn size={18} />
-            <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
+            <b className="ml-2">{__('Capture Google Ads (Click ID)')}</b>
           </div>
           <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additionalSetting.enabled} className="flx" />
         </div>
@@ -832,14 +832,14 @@ export default function SingleFormSettings() {
           sm
           show={proModal.show}
           setModal={() => setProModal({ show: false })}
-          title={__('Premium Feature', 'bitform')}
+          title={__('Premium Feature')}
           className="pro-modal"
         >
           <h4 className="txt-center mt-5">
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
           </div>
 
         </Modal>

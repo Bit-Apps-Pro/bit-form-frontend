@@ -10,7 +10,7 @@ export default function SingleToggle({ id, className, tip, title, isChecked, nam
         {title}
         {tip && (
           <Cooltip width="200" icnSize="17" className="hover-tip">
-            <div className="txt-body">{__(tip, 'bitform')}</div>
+            <div className="txt-body">{__(tip)}</div>
           </Cooltip>
         )}
       </span>

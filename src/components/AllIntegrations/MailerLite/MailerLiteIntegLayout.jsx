@@ -4,8 +4,9 @@ import { addFieldMap } from './IntegrationHelpers'
 import MailerLiteFieldMap from './MailerLiteFieldMap'
 import MailerLiteActions from './MailerLiteActions'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
-import { useState
- } from 'react'
+import {
+  useState
+} from 'react'
 export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setMailerLiteConf, isLoading, setIsLoading, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
@@ -13,7 +14,7 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
     <>
       <br />
 
-      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}
+      <div className="mt-5"><b className="wdt-100">{__('Field Map')}
         <button onClick={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'refreshFields')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       </b></div>
       <br />
@@ -30,8 +31,8 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
 
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-        <div className="txt-dp"><b>{__('MailerLite Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+        <div className="txt-dp"><b>{__('MailerLite Fields')}</b></div>
       </div>
 
       {mailerLiteConf?.field_map.map((itm, i) => (
@@ -50,7 +51,7 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
       <br />
 
       <>
-        <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+        <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
         <div className="btcd-hr mt-1" />
         <MailerLiteActions
           mailerLiteConf={mailerLiteConf}

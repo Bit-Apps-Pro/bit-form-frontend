@@ -45,7 +45,7 @@ export default function DecisionBoxSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${ 5 }`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${5}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
@@ -109,7 +109,7 @@ export default function DecisionBoxSettings() {
               className="hover-tip"
             >
               <div className="txt-body">
-                {__('Edit your decision box label by clicking on edit icon', 'bitform')}
+                {__('Edit your decision box label by clicking on edit icon')}
               </div>
             </Cooltip>
           </div>
@@ -150,7 +150,7 @@ export default function DecisionBoxSettings() {
         <SingleToggle
           id="fld-dsbl-stng"
           tip="By disabling this option, the field disable will be hidden"
-          title={__('Disabled Field', 'bitform')}
+          title={__('Disabled Field')}
           action={setDiasabled}
           isChecked={isDiasabled}
         />
@@ -163,7 +163,7 @@ export default function DecisionBoxSettings() {
         <SingleToggle
           id="rdonly-stng"
           tip="By disabling this option, the field readonly will be hidden"
-          title={__('Read Only', 'bitform')}
+          title={__('Read Only')}
           action={setReadOnly}
           isChecked={fieldData.valid.readonly}
         />
@@ -174,7 +174,7 @@ export default function DecisionBoxSettings() {
 
       <SimpleAccordion
         id="chek-val-stng"
-        title={__('Checked Value', 'bitform')}
+        title={__('Checked Value')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -194,7 +194,7 @@ export default function DecisionBoxSettings() {
 
       <SimpleAccordion
         id="unchek-val-stng"
-        title={__('Unchecked Value', 'bitform')}
+        title={__('Unchecked Value')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -215,7 +215,7 @@ export default function DecisionBoxSettings() {
         <SingleToggle
           id="chek-by-dflt"
           tip="By disabling this option, the field checked by default will be hidden"
-          title={__('Checked by Default', 'bitform')}
+          title={__('Checked by Default')}
           action={setChecked}
           isChecked={fieldData.valid.checked}
         />

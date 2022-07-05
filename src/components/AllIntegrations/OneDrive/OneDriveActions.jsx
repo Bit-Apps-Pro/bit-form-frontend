@@ -75,7 +75,7 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
     <div className="pos-rel d-flx w-5">
       <div className="pos-rel d-flx flx-col w-8">
         <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in oneDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files', 'bit-integration-pro')} subTitle={__('Add attachments from Bit-integration-pro to OneDrive folder.', 'bit-integration-pro')} />
-        { !oneDriveConf.actions.attachments && <small style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}>{__('This action is required.', 'bitform')}</small>}
+        {!oneDriveConf.actions.attachments && <small style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}>{__('This action is required.')}</small>}
       </div>
 
       <ConfirmModal
@@ -86,10 +86,10 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title={__('Select Attachment', 'bitform')}
+        title={__('Select Attachment')}
       >
         <div style={{ height: '95%' }}>
-          <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
+          <div className="mt-2">{__('Select file upload fields')}</div>
           <MultiSelect
             defaultValue={oneDriveConf.actions.attachments}
             className="mt-2 w-10 mb-25"
@@ -107,7 +107,7 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
           onChange={(e) => actionDeleteHandler(e, 'deleteFile')}
           className="mt-4 mr-2"
           value="delete_from_wp"
-          title={__('Delete File From Wordpress', 'bitform')}
+          title={__('Delete File From Wordpress')}
           subTitle={__(
             'Delete file from Wordpress after upload in OneDrive',
             'bitform',

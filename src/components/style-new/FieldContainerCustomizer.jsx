@@ -33,7 +33,7 @@ export default function FieldContainerCustomizer() {
         modalId="fld-cnr-bg-cuser"
       />
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           value={{ margin: wrpMagin, padding: wrpPadding }}
           action={{ type: 'spacing-control' }}

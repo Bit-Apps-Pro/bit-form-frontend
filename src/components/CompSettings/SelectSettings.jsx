@@ -287,7 +287,7 @@ export default function SelectSettings() {
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
       </div>
       <div className="flx">
-        <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
+        <span className="font-w-m mr-1">{__('Field Key : ')}</span>
         <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
       </div> */}
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
@@ -297,7 +297,7 @@ export default function SelectSettings() {
       <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
-        title={__('Admin Label', 'bitform')}
+        title={__('Admin Label')}
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={hideAdminLabel}
@@ -318,7 +318,7 @@ export default function SelectSettings() {
 
       <SimpleAccordion
         id="nam-stng"
-        title={__('Name', 'bitform')}
+        title={__('Name')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -335,12 +335,12 @@ export default function SelectSettings() {
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
 
-      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
+      {/* <SingleInput inpType="text" title={__('Admin Label:')} value={adminLabel} action={setAdminLabel} /> */}
 
-      {/* {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />} */}
+      {/* {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:')} value={placeholder} action={setPlaceholder} />} */}
       {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && (
         <SimpleAccordion
-          title={__('Placeholder', 'bitform')}
+          title={__('Placeholder')}
           className={css(FieldStyle.fieldSection)}
           open
         >
@@ -353,7 +353,7 @@ export default function SelectSettings() {
       <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
-        title={__('Required', 'bitform')}
+        title={__('Required')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={setRequired}
         toggleChecked={isRequired}
@@ -372,7 +372,7 @@ export default function SelectSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
+      {/* <SingleToggle title={__('Required:')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {fieldData?.valid?.req && (
         <ErrorMessageSettings
           type="req"
@@ -384,11 +384,11 @@ export default function SelectSettings() {
         {!bits.isPro && (
           <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
             <div className="pro">
-              {__('Available On', 'bitform')}
+              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
-                  {__('Premium', 'bitform')}
+                  {__('Premium')}
                 </span>
               </a>
             </div>
@@ -413,15 +413,15 @@ export default function SelectSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      {/* <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" /> */}
+      {/* <SingleToggle title={__('Allow Other Option:')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" /> */}
       <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
-        <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} />
+        <SingleToggle title={__('Allow Other Option:')} action={setAllowCustomOption} isChecked={allowCustomOpt} />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
-        title={__('Multiple Select:', 'bitform')}
+        title={__('Multiple Select:')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={setMultiple}
         toggleChecked={isMultiple}
@@ -436,11 +436,11 @@ export default function SelectSettings() {
             <>
               <div>
                 <div className={`${css(FieldStyle.flxCenter)} ${css(ut.mt2)} ${css(ut.mb2)}`}>
-                  <h4 className={css(ut.m0)}>{__('Minimum:', 'bitform')}</h4>
+                  <h4 className={css(ut.m0)}>{__('Minimum:')}</h4>
                   <Cooltip width={250} icnSize={17} className={`${css(ut.ml2)} hovertip`}>
-                    <div className={css(ut.tipBody)}>{__('Set minimum number to be selected for dropdown option', 'bitform')}</div>
+                    <div className={css(ut.tipBody)}>{__('Set minimum number to be selected for dropdown option')}</div>
                   </Cooltip>
-                  {!isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
+                  {!isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>}
                 </div>
                 <input aria-label="Minimum number" className={css(FieldStyle.input)} type="number" value={min} onChange={setMin} disabled={!isPro} />
               </div>
@@ -455,11 +455,11 @@ export default function SelectSettings() {
 
               <div>
                 <div className={`${css(FieldStyle.flxCenter)} ${css(ut.mt2)} ${css(ut.mb2)}`}>
-                  <h4 className={css(ut.m0)}>{__('Maximum:', 'bitform')}</h4>
+                  <h4 className={css(ut.m0)}>{__('Maximum:')}</h4>
                   <Cooltip width={250} icnSize={17} className={`${css(ut.ml2)} hovertip`}>
-                    <div className={css(ut.tipBody)}>{__('Set maximum number to be selected for dropdown option', 'bitform')}</div>
+                    <div className={css(ut.tipBody)}>{__('Set maximum number to be selected for dropdown option')}</div>
                   </Cooltip>
-                  {!bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
+                  {!bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>}
                 </div>
                 <input aria-label="Maximum numebr" className={css(FieldStyle.input)} type="number" value={max} onChange={setMax} disabled={!isPro} />
               </div>
@@ -470,7 +470,7 @@ export default function SelectSettings() {
                     title="Max Error Message"
                     tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
                   />
-                  {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
+                  {/* <SingleToggle title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
                 </>
               )}
             </>
@@ -480,17 +480,17 @@ export default function SelectSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      {/* <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
+      {/* <SingleToggle title={__('Multiple Select:')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       {
         fieldData.mul && (
           <>
             <div>
               <div className="flx mt-2 mb-2">
-                <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                <h4 className="m-0">{__('Minimum:')}</h4>
                 <Cooltip width={250} icnSize={17} className="ml-2">
-                  <div className="txt-body">{__('Set minimum number to be selected for dropdown option', 'bitform')}</div>
+                  <div className="txt-body">{__('Set minimum number to be selected for dropdown option')}</div>
                 </Cooltip>
-                {!isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                {!isPro && <span className="pro-badge ml-2">{__('Pro')}</span>}
               </div>
               <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
             </div>
@@ -505,11 +505,11 @@ export default function SelectSettings() {
 
             <div>
               <div className="flx mt-2 mb-2">
-                <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
+                <h4 className="m-0">{__('Maximum:')}</h4>
                 <Cooltip width={250} icnSize={17} className="ml-2">
-                  <div className="txt-body">{__('Set maximum number to be selected for dropdown option', 'bitform')}</div>
+                  <div className="txt-body">{__('Set maximum number to be selected for dropdown option')}</div>
                 </Cooltip>
-                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro')}</span>}
               </div>
               <input className="btcd-paper-inp" type="number" value={max} onChange={setMax} disabled={!isPro} />
             </div>
@@ -521,7 +521,7 @@ export default function SelectSettings() {
                   tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
                   defaultMsg="The value is already taken. Try another."
                 />
-                <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+                <SingleToggle title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
               </>
             )}
           </>
@@ -532,21 +532,21 @@ export default function SelectSettings() {
       {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
-        {__('Import Options', 'bitform')}
+        {__('Import Options')}
       </button>
       <br /> */}
       <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn)} type="button">
         &nbsp;
-        {__('Edit Options', 'bitform')}
+        {__('Edit Options')}
       </button>
 
       {/* <div className="opt">
-        <span className="font-w-m">{__('Options:', 'bitform')}</span>
+        <span className="font-w-m">{__('Options:')}</span>
         {fieldData.opt.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default')}'` }}>
                 <input aria-label="chek" onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
@@ -554,7 +554,7 @@ export default function SelectSettings() {
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
+        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +')}</button>
       </div> */}
       {/* <Modal
         md
@@ -562,17 +562,17 @@ export default function SelectSettings() {
         show={importOpts.show}
         setModal={closeImportModal}
         className="o-v"
-        title={__('Import Options', 'bitform')}
+        title={__('Import Options')}
       >
         <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On', 'bitform')}
+                {__('Available On')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium', 'bitform')}
+                    {__('Premium')}
                   </span>
                 </a>
               </div>
@@ -593,17 +593,17 @@ export default function SelectSettings() {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options', 'bitform')}
+        title={__('Options')}
       >
         <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
-                {__('Available On', 'bitform')}
+                {__('Available On')}
                 <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
-                    {__('Premium', 'bitform')}
+                    {__('Premium')}
                   </span>
                 </a>
               </div>

@@ -38,7 +38,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
   const nextPage = val => {
     if (val === 3) {
       if (!checkMappedFields(marketingHubConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+        setSnackbar({ show: true, msg: __('Please map mandatory fields') })
         return
       }
 
@@ -89,7 +89,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

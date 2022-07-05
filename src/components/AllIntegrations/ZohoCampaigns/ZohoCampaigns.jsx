@@ -40,7 +40,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (!checkMappedFields(campaignsConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
 
@@ -85,7 +85,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

@@ -45,7 +45,7 @@ export const getAllList = (elasticEmailConf, setElasticEmailConf, setIsLoading) 
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Lists...'),
   })
 }

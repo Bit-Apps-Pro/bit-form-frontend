@@ -24,10 +24,10 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
         setIsLoading(false)
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
-        setSnackbar({ show: true, msg: `${msg}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${msg}. ${__('please try again')}` })
         setIsLoading(false)
       } else {
-        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again') })
         setIsLoading(false)
       }
     })
@@ -86,25 +86,25 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
     <div style={{ ...{ width: isInfo && 900 } }}>
       <div className="flx ">
         <div className="w-7 mr-2 mb-4 mt-2">
-          <div className="f-m">{__('Integration name', 'bitform')}</div>
+          <div className="f-m">{__('Integration name')}</div>
           <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
         </div>
       </div>
       <div className="flx flx-start">
         <div className="w-7">
-          <div className="f-m">{__('Link:', 'bitform')}</div>
+          <div className="f-m">{__('Link:')}</div>
           <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
           {webHooks?.apiConsole && (
             <small className="d-blk mt-2">
-              {__('To got Webhook , Please Visit', 'bitform')}
+              {__('To got Webhook , Please Visit')}
               {' '}
-              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
+              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`)}</a>
             </small>
           )}
         </div>
 
         <div className="w-3 px-1">
-          <div className="f-m">{__('Method:', 'bitform')}</div>
+          <div className="f-m">{__('Method:')}</div>
           <select name="method" onChange={e => handleInput(e, webHooks, setWebHooks)} defaultValue={webHooks.method} className="btcd-paper-inp mt-1" disabled={isInfo}>
             {method.map((itm, indx) => (<option key={`method-${indx * 2}`} value={itm}>{itm}</option>))}
           </select>
@@ -112,12 +112,12 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
       </div>
       <br />
       <br />
-      <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
+      <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
       <div className="btcd-param-t-wrp mt-1">
         <div className="btcd-param-t">
           <div className="tr">
-            <div className="td">{__('Key', 'bitform')}</div>
-            <div className="td">{__('Value', 'bitform')}</div>
+            <div className="td">{__('Key')}</div>
+            <div className="td">{__('Value')}</div>
           </div>
           {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url)?.map((itm, childindx) => (
             <div className="tr" key={`fu-1${childindx * 3}`}>
@@ -148,15 +148,15 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
       </div>
       {!isInfo && (
         <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={css(app.btn, app.btn_blue_otln)}>
-          {__('Test Webhook', 'bitform')}
+          {__('Test Webhook')}
           {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
           <ExternalLinkIcn size={18} className="ml-1" />
         </Button>
       )}
-      { (!isInfo && create) && <br /> }
+      {(!isInfo && create) && <br />}
       {create && (
         <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
       )}

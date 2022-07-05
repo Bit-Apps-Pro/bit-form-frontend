@@ -38,27 +38,27 @@ function FormSettings({ setProModal }) {
         <br />
         <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
           <span className="mr-1"><Settings2 size={21} /></span>
-          {__('Form Settings', 'bitform')}
+          {__('Form Settings')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/confirmations`} activeClassName="btcd-f-a">
           <span><InfoIcn size="20" stroke="3" /></span>
-          {__('Confirmations', 'bitform')}
+          {__('Confirmations')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
           <span><ConditionalIcn size="20" /></span>
-          {__('Conditional Logics', 'bitform')}
+          {__('Conditional Logics')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><MailOpenIcn size="21" /></span>
-          {__('Email Templates', 'bitform')}
+          {__('Email Templates')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><CodeSnippetIcn size="19" /></span>
-          {__('Integrations', 'bitform')}
+          {__('Integrations')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/auth-settings`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><UserIcn size="18" /></span>
-          {__('WP Auth', 'bitform')}
+          {__('WP Auth')}
         </NavLink>
       </aside>
 

@@ -4,7 +4,9 @@ import { useRecoilValue } from 'recoil'
 import { $fields, $fieldsArr, $bits } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
+import { makeFieldsArrByLabel } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import conditionalLogicsList from '../../Utils/StaticData/ConditionalLogicsList'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 import Button from './Button'
 import MtInput from './MtInput'
@@ -12,8 +14,7 @@ import MtSelect from './MtSelect'
 
 function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField, actionType = null }) {
   const fields = useRecoilValue($fields)
-  const formFields = useRecoilValue($fieldsArr)
-
+  const formFields = makeFieldsArrByLabel(fields, [], [])
   const bits = useRecoilValue($bits)
   const { isPro } = bits
 
@@ -47,6 +48,37 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
   }
   const customSmartTags = ['_bf_custom_date_format()', '_bf_user_meta_key()', '_bf_query_param()']
 
+  const findFldTypeFromLogicsArr = (fldType, logicsArr) => {
+    const foundFieldType = logicsArr.find(itm => {
+      if (itm === fldType) return true
+      if (!itm.includes('.')) return false
+      const firstDot = itm.indexOf('.')
+      const fieldType = itm.substring(0, firstDot)
+      if (fldType !== fieldType) return false
+      const dataProps = itm.substring(firstDot + 1)
+      if (!dataProps) return false
+      const [propsPath, propValue] = dataProps.split(':')
+      const nestedProps = propsPath.split('.')
+      const nestedPropsValue = nestedProps.reduce((acc, itm) => acc[itm], fields[fieldKey])
+      if (nestedPropsValue === propValue) return true
+      return false
+    })
+    return foundFieldType
+  }
+
+  const getLogicsBasedOnFieldType = fldType => {
+    if (!fldType) return []
+    const logicsArr = Object.entries(conditionalLogicsList)
+    return logicsArr.reduce((acc, [key, data]) => {
+      if (data.notFields && findFldTypeFromLogicsArr(fldType, data.notFields)) return acc
+      if (data.fields) {
+        if (findFldTypeFromLogicsArr(fldType, data.fields)) return [...acc, { key, lbl: data.label }]
+        return acc
+      }
+      return [...acc, { key, lbl: data.label }]
+    }, [])
+  }
+
   return (
     <div className="flx pos-rel btcd-logic-blk">
       <span className="btcd-logic-chip mr-2">IF</span>
@@ -56,7 +88,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
         style={{ width: 720 }}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
-        <option value="">{__('Select Form Field', 'bitform')}</option>
+        <option value="">{__('Select Form Fieldss')}</option>
         {/* {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)} */}
         <optgroup label="Form Fields">
           {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
@@ -83,20 +115,12 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-5"
       >
-        <option value="">{__('Select One', 'bitform')}</option>
-        <option value="equal">{__('Equal', 'bitform')}</option>
-        <option value="not_equal">{__('Not Equal', 'bitform')}</option>
-        <option value="null">{__('Is Null', 'bitform')}</option>
-        <option value="not_null">{__('Is Not Null', 'bitform')}</option>
-        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">{__('Contain', 'bitform')}</option>}
-        {((fldType === 'select' && fields?.[fieldKey]?.mul) || fldType === 'check') && <option value="contain_all">{__('Contain All', 'bitform')}</option>}
-        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">{__('Not Contain', 'bitform')}</option>}
-        {type === 'number' && <option value="greater">{__('Greater Than', 'bitform')}</option>}
-        {type === 'number' && <option value="less">{__('Less Than', 'bitform')}</option>}
-        {type === 'number' && <option value="greater_or_equal">{__('Greater Than or Equal', 'bitform')}</option>}
-        {type === 'number' && <option value="less_or_equal">{__('Less Than or Equal', 'bitform')}</option>}
-        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="start_with">{__('Start With', 'bitform')}</option>}
-        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="end_with">{__('End With', 'bitform')}</option>}
+        <option value="">{__('Select One')}</option>
+        {getLogicsBasedOnFieldType(fldType).map(({ key, lbl }) => (
+          <option key={key} value={key}>
+            {lbl}
+          </option>
+        ))}
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">

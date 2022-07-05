@@ -56,7 +56,7 @@ export const getAllPipelines = (hubspotConf, setHubspotConf, setIsLoading) => {
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Pipelines...'),
   })
 }
@@ -78,7 +78,7 @@ export const getAllOwners = (hubspotConf, setHubspotConf, setIsLoading) => {
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Owners...'),
   })
 }
@@ -100,7 +100,7 @@ export const getAllContacts = (hubspotConf, setHubspotConf, setIsLoading) => {
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Contacts...'),
   })
 }
@@ -122,7 +122,7 @@ export const getAllCompany = (hubspotConf, setHubspotConf, setIsLoading) => {
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred', 'bitform'),
+    error: __('Error Occurred'),
     loading: __('Loading Company...'),
   })
 }

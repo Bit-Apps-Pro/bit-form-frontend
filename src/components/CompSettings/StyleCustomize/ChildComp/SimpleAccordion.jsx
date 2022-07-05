@@ -93,11 +93,11 @@ export default function SimpleAccordion({ className,
             {title}
             {tip && (
               <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
-                <div className="txt-body">{__(tip, 'bitform')}</div>
+                <div className="txt-body">{__(tip)}</div>
               </Cooltip>
             )}
 
-            {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
+            {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">

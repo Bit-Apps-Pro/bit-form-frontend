@@ -88,7 +88,11 @@ function BackgroundControlMenu({ stateObjName,
         break
       case 'styles':
         setStyles(preStyle => produce(preStyle, drftStyle => {
-          assignNestedObj(drftStyle, pathName, val)
+          let tempValue = val
+          const value = getValueByObjPath(drftStyle, pathName)
+          const checkExistImportant = value?.match(/(!important)/gi)?.[0]
+          if (checkExistImportant) tempValue = `${val} !important`
+          assignNestedObj(drftStyle, pathName, tempValue)
         }))
         break
       default:
@@ -185,14 +189,15 @@ function BackgroundControlMenu({ stateObjName,
           const value = getValueByObjPath(drftStyles, propertyPathArr)
           const checkExistImportant = value?.match(/(!important)/gi)?.[0]
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
-          const clr = str || hslaColor
+          const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
           if (Array.isArray(paths)) {
             paths.forEach(path => {
               assignNestedObj(drftStyles, path, clr)
             })
           } else {
-            assignNestedObj(drftStyles, paths['background-image'], '')
-            assignNestedObj(drftStyles, paths['background-color'], clr)
+            if (checkExistImportant) assignNestedObj(drftStyles, paths['background-image'], ' !important')
+            else assignNestedObj(drftStyles, paths['background-image'], '')
+            assignNestedObj(drftStyles, paths.background, clr)
           }
         }))
         break
@@ -212,7 +217,7 @@ function BackgroundControlMenu({ stateObjName,
   useEffect(() => {
     const tempBgImg = getValueByObjPath(stateObj, paths['background-image'])
     setBgImage(tempBgImg)
-    setColor(str2Color(getValueByObjPath(stateObj, paths['background-color'])))
+    setColor(str2Color(getValueByObjPath(stateObj, paths.background)))
     // setUnsplashImgUrl(tempBgImg)
   }, [])
 
@@ -387,7 +392,7 @@ function BackgroundControlMenu({ stateObjName,
                   <div className={css(c.container, style.container, style.preview_wrp)}>
                     <div className={css(c.subContainer)}>
                       <SingleToggle
-                        title={__('Transparant', 'bitform')}
+                        title={__('Transparant')}
                         action={transparantColor}
                         isChecked={checkTransparant()}
                         id="color-transparant"
@@ -406,7 +411,7 @@ function BackgroundControlMenu({ stateObjName,
               <div className={css(c.container)}>
                 <div className={css(c.subContainer)}>
                   <SingleToggle
-                    title={__('Transparant', 'bitform')}
+                    title={__('Transparant')}
                     action={transparantColor}
                     isChecked={checkTransparant()}
                     id="color-transparant"
@@ -590,7 +595,7 @@ function BackgroundControlMenu({ stateObjName,
         show={unsplashMdl}
         setModal={setUnsplashMdl}
         className="o-v"
-        title={__('Unsplash Images', 'bitform')}
+        title={__('Unsplash Images')}
       >
         <div className="pos-rel" />
         <UnsplashImageViewer setModal={setUnsplashMdl} />

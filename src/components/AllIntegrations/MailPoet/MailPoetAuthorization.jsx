@@ -44,8 +44,8 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
         youTubeLink={tutorialLinks.mailPoet.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input aria-label="Integration Name" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+        <input aria-label="Integration Name" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
         {isLoading === 'auth' && (
           <div className="flx mt-5">
             <LoaderSm size={25} clr="#022217" className="mr-2" />
@@ -62,12 +62,12 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
           </div>
         )}
         <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-          {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
+          {isAuthorized ? __('Authorized ✔') : __('Authorize')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />
         <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-          {__('Next', 'bitform')}
+          {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>

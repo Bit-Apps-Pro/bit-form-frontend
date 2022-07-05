@@ -34,16 +34,16 @@ export default function RazorpayFieldSettings() {
   const setStyles = useSetRecoilState($styles)
 
   const pos = [
-    { name: __('Left', 'bitform'), value: 'left' },
-    { name: __('Center', 'bitform'), value: 'center' },
-    { name: __('Right', 'bitform'), value: 'right' },
+    { name: __('Left'), value: 'left' },
+    { name: __('Center'), value: 'center' },
+    { name: __('Right'), value: 'right' },
   ]
 
   const btnTheme = [
-    { name: __('Razorpay Dark', 'bitform'), value: 'dark' },
-    { name: __('Razorpay Light', 'bitform'), value: 'light' },
-    { name: __('Razorpay Outline', 'bitform'), value: 'outline' },
-    { name: __('Brand Color', 'bitform'), value: 'brand' },
+    { name: __('Razorpay Dark'), value: 'dark' },
+    { name: __('Razorpay Light'), value: 'light' },
+    { name: __('Razorpay Outline'), value: 'outline' },
+    { name: __('Brand Color'), value: 'brand' },
   ]
 
   const setPayIntegId = e => {
@@ -193,7 +193,7 @@ export default function RazorpayFieldSettings() {
       />
 
       <div className={css(ut.ml2, ut.mr2, ut.mt2, ut.p1)}>
-        <b>{__('Select Config', 'bitform')}</b>
+        <b>{__('Select Config')}</b>
         <br />
         <select
           data-testid="slct-cnfg-slct"
@@ -209,8 +209,8 @@ export default function RazorpayFieldSettings() {
       </div>
 
       {/* <div className="mt-2">
-        <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
-        {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={fieldData.planId || ''} action={e => handleInput('planId', e.target.value)} />}
+        <SingleToggle title={__('Subscription:')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
+        {isSubscription && <SingleInput inpType="text" title={__('Plan Id')} value={fieldData.planId || ''} action={e => handleInput('planId', e.target.value)} />}
       </div> */}
 
       {fieldData?.payIntegID && (
@@ -219,17 +219,17 @@ export default function RazorpayFieldSettings() {
             <>
               <div>
                 <div className={css(ut.ml2, ut.p1)}>
-                  <b>{__('Amount Type', 'bitform')}</b>
+                  <b>{__('Amount Type')}</b>
                   <br />
-                  <CheckBox id="amnt-typ-fxd" onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
-                  <CheckBox id="amnt-typ-dynmc" onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
+                  <CheckBox id="amnt-typ-fxd" onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed')} />
+                  <CheckBox id="amnt-typ-dynmc" onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic')} value="dynamic" />
                 </div>
                 {!isDynamicAmount && (
                   <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                     <SingleInput
                       id="amnt"
                       inpType="number"
-                      title={__('Amount', 'bitform')}
+                      title={__('Amount')}
                       value={fieldData.options.amount || ''}
                       action={e => handleInput('amount', e.target.value)}
                       cls={css(FieldStyle.input)}
@@ -238,7 +238,7 @@ export default function RazorpayFieldSettings() {
                 )}
                 {isDynamicAmount && (
                   <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                    <b>{__('Select Amount Field', 'bitform')}</b>
+                    <b>{__('Select Amount Field')}</b>
                     <select
                       data-testid="slct-amnt-fld-slct"
                       onChange={e => handleInput(e.target.name, e.target.value)}
@@ -246,7 +246,7 @@ export default function RazorpayFieldSettings() {
                       className={css(FieldStyle.input)}
                       value={fieldData.options.amountFld}
                     >
-                      <option value="">{__('Select Field', 'bitform')}</option>
+                      <option value="">{__('Select Field')}</option>
                       {getSpecifiedFields('amount')}
                     </select>
                   </div>
@@ -254,7 +254,7 @@ export default function RazorpayFieldSettings() {
               </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <label htmlFor="recap-thm">
-                  <b>{__('Currency', 'bitform')}</b>
+                  <b>{__('Currency')}</b>
                   <select
                     data-testid="crncy-slct"
                     onChange={e => handleInput(e.target.name, e.target.value)}
@@ -271,7 +271,7 @@ export default function RazorpayFieldSettings() {
                 </label>
               </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Account Name', 'bitform')}</b>
+                <b>{__('Account Name')}</b>
                 <br />
                 <input
                   data-testid="acnt-nam-inp"
@@ -285,7 +285,7 @@ export default function RazorpayFieldSettings() {
                 />
               </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Description', 'bitform')}</b>
+                <b>{__('Description')}</b>
                 <br />
                 <textarea
                   data-testid="dscrptn-txt-ara"
@@ -313,7 +313,7 @@ export default function RazorpayFieldSettings() {
               <SingleInput
                 id="btn-txt"
                 inpType="text"
-                title={__('Button Text', 'bitform')}
+                title={__('Button Text')}
                 value={fieldData.btnTxt || ''}
                 name="btnTxt"
                 action={handleBtnStyle}
@@ -323,7 +323,7 @@ export default function RazorpayFieldSettings() {
               <SelectBox2
                 id="btn-algn"
                 className={css({ pr: 1 })}
-                title={__('Button Align:', 'bitform')}
+                title={__('Button Align:')}
                 options={pos}
                 value={fieldData.align}
                 action={handleBtnStyle}
@@ -332,20 +332,20 @@ export default function RazorpayFieldSettings() {
               />
               <SingleToggle
                 id="btn-txt"
-                title={__('Full Width Button:', 'bitform')}
+                title={__('Full Width Button:')}
                 action={setFulW}
                 isChecked={fieldData.fulW}
                 className="mt-5"
               />
               <SingleToggle
                 id="sub-titl"
-                title={__('Sub Title:', 'bitform')}
+                title={__('Sub Title:')}
                 action={setSubTitl}
                 isChecked={fieldData?.subTitl}
                 className="mt-5"
               />
               {/* <SingleToggle
-                title={__('Small Button:', 'bitform')}
+                title={__('Small Button:')}
                 action={setBtnSiz}
                 isChecked={fieldData.btnSiz === 'sm'}
                 className="mt-5"
@@ -355,7 +355,7 @@ export default function RazorpayFieldSettings() {
 
             <SimpleAccordion id="thm-stng" title="Theme" className={css(FieldStyle.fieldSection)}>
               <div className={css(ut.flxcb, ut.mt2)}>
-                <b>{__('Theme Color:', 'bitform')}</b>
+                <b>{__('Theme Color:')}</b>
                 <input
                   data-testid="thm-clr-inp"
                   aria-label="Theme color"
@@ -366,7 +366,7 @@ export default function RazorpayFieldSettings() {
                 />
               </div>
               <div className={css(ut.flxcb, ut.mt2)}>
-                <b>{__('Background Color:', 'bitform')}</b>
+                <b>{__('Background Color:')}</b>
                 <input
                   data-testid="bg-clr-inp"
                   aria-label="Background color"
@@ -383,7 +383,7 @@ export default function RazorpayFieldSettings() {
               <SingleToggle
                 id="cnfrm-cls"
                 className={css(ut.mt2)}
-                title={__('Confirm on Close:', 'bitform')}
+                title={__('Confirm on Close:')}
                 action={e => handleInput('confirm_close', e.target.checked, 'modal')}
                 isChecked={fieldData.options.modal.confirm_close}
               />
@@ -393,7 +393,7 @@ export default function RazorpayFieldSettings() {
             <SimpleAccordion id="prfil-stng" title="Prefill" className={css(FieldStyle.fieldSection)}>
               <div>
                 <div className={css(ut.mt2, { px: 1 })}>
-                  <b>{__('Name :', 'bitform')}</b>
+                  <b>{__('Name :')}</b>
                   <select
                     data-testid="prfil-nam-slct"
                     onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
@@ -401,12 +401,12 @@ export default function RazorpayFieldSettings() {
                     className={css(FieldStyle.input)}
                     value={fieldData.options.prefill.prefillNameFld}
                   >
-                    <option value="">{__('Select Field', 'bitform')}</option>
+                    <option value="">{__('Select Field')}</option>
                     {getSpecifiedFields('desc')}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
-                  <b>{__('Email :', 'bitform')}</b>
+                  <b>{__('Email :')}</b>
                   <select
                     data-testid="prfil-eml-slct"
                     onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
@@ -414,12 +414,12 @@ export default function RazorpayFieldSettings() {
                     className={css(FieldStyle.input)}
                     value={fieldData.options.prefill.prefillEmailFld}
                   >
-                    <option value="">{__('Select Field', 'bitform')}</option>
+                    <option value="">{__('Select Field')}</option>
                     {getSpecifiedFields('email')}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
-                  <b>{__('Contact :', 'bitform')}</b>
+                  <b>{__('Contact :')}</b>
                   <select
                     data-testid="prfil-cntct-slct"
                     onChange={e => handleInput(e.target.name, e.target.value, 'prefill')}
@@ -427,7 +427,7 @@ export default function RazorpayFieldSettings() {
                     className={css(FieldStyle.input)}
                     value={fieldData.options.prefill.prefillContactFld}
                   >
-                    <option value="">{__('Select Field', 'bitform')}</option>
+                    <option value="">{__('Select Field')}</option>
                     {getSpecifiedFields('number')}
                   </select>
                 </div>
@@ -441,8 +441,8 @@ export default function RazorpayFieldSettings() {
               className={css(FieldStyle.fieldSection)}
             >
               <div className="flx">
-                <div className="w-10"><b>{__('Key :', 'bitform')}</b></div>
-                <div className="w-10"><b>{__('Value :', 'bitform')}</b></div>
+                <div className="w-10"><b>{__('Key :')}</b></div>
+                <div className="w-10"><b>{__('Value :')}</b></div>
               </div>
               {payNotes.map((notes, indx) => (
                 <div className="flx" key={`rp${indx * 2}`}>
@@ -492,10 +492,10 @@ export default function RazorpayFieldSettings() {
             {/* <div className="btcd-hr" /> */}
             {/* invoice */}
             {/* <SimpleAccordion title="Invoice" className={css(FieldStyle.fieldSection)}>
-              <SingleToggle title={__('Generate Invoice', 'bitform')} action={e => handleInput('generate', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.generate} />
-              <SingleInput inpType="text" title={__('Item Name', 'bitform')} value={fieldData.options?.invoice?.itemName || ''} name="btnTxt" action={e => handleInput('itemName', e.target.value, 'invoice')} className="mt-3" />
-              <SingleToggle title={__('Send SMS to customer', 'bitform')} action={e => handleInput('sendSMS', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendSMS} className="mt-3" />
-              <SingleToggle title={__('Send Email to customer', 'bitform')} action={e => handleInput('sendEmail', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendEmail} className="mt-3" />
+              <SingleToggle title={__('Generate Invoice')} action={e => handleInput('generate', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.generate} />
+              <SingleInput inpType="text" title={__('Item Name')} value={fieldData.options?.invoice?.itemName || ''} name="btnTxt" action={e => handleInput('itemName', e.target.value, 'invoice')} className="mt-3" />
+              <SingleToggle title={__('Send SMS to customer')} action={e => handleInput('sendSMS', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendSMS} className="mt-3" />
+              <SingleToggle title={__('Send Email to customer')} action={e => handleInput('sendEmail', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendEmail} className="mt-3" />
             </SimpleAccordion>
             <div className="btcd-hr" /> */}
           </SimpleAccordion>

@@ -14,8 +14,8 @@ export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, 
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Tags:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="tags" value={enchargeConf.tags || ''} type="text" placeholder={__('tag-1, tag-2', 'bitform')} />
+        <b className="wdt-200 d-in-b">{__('Tags:')}</b>
+        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="tags" value={enchargeConf.tags || ''} type="text" placeholder={__('tag-1, tag-2')} />
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Tags separate with comma
@@ -26,12 +26,12 @@ export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, 
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+              <b className="wdt-100">{__('Map Fields')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Encharge Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Encharge Fields')}</b></div>
             </div>
 
             {enchargeConf.field_map.map((itm, i) => (

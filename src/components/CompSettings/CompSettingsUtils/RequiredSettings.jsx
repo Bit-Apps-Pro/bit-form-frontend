@@ -99,7 +99,7 @@ export default function RequiredSettings() {
   return (
     <SimpleAccordion
       id="rqrd-stng"
-      title={__('Required', 'bitform')}
+      title={__('Required')}
       // eslint-disable-next-line react/jsx-no-bind
       toggleAction={setRequired}
       toggleChecked={isRequired}
@@ -121,7 +121,7 @@ export default function RequiredSettings() {
         className={`${css(ut.mr2, ut.mt2, { ml: 7 })} ${css(ut.fw500)} `}
         name="reqShow"
         checked={fieldData?.valid?.reqShow || false}
-        title={__('Show Asterisk Symbol', 'bitform')}
+        title={__('Show Asterisk Symbol')}
         onChange={setReqShow}
       />
       {fieldData?.valid?.reqShow && (

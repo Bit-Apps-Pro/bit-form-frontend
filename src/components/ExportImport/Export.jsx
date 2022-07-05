@@ -66,7 +66,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
           /* generate an XLSX file */
           XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
         } else {
-          setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
+          setSnackbar({ ...{ show: true, msg: __('no response found') } })
         }
       }
       setIsLoading(false)
@@ -88,7 +88,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
       <Modal md show={showExportMdl} setModal={close} title="Export Data" style={{ overflow: 'auto' }}>
         <div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('How many rows to export', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('How many rows to export')}</b>
             <select className="btcd-paper-inp ml-2" name="custom" style={{ width: 250 }} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               <option selected disabled>Choose option</option>
               <option value="all">All</option>
@@ -100,13 +100,13 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             <div
               className="mt-3 flx"
             >
-              <b style={{ width: 200 }}>{__('Enter row number', 'bitform')}</b>
+              <b style={{ width: 200 }}>{__('Enter row number')}</b>
               <input aria-label="Export Row Number" type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Export Row Number" />
             </div>
           )}
 
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('Sort Order', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('Sort Order')}</b>
             <select className="btcd-paper-inp ml-2" name="sort" style={{ width: 250 }} defaultValue={data?.sort} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               {/* <option selected disabled>Choose your sort type</option> */}
               <option value="ASC">Ascending</option>
@@ -114,7 +114,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             </select>
           </div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('Sort by', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('Sort by')}</b>
             <select className="btcd-paper-inp ml-2" name="sortField" defaultValue={data?.sortField} onChange={(e) => handleInput(e.target.name, e.target.value)} style={{ width: 250 }}>
               <option value="bitforms_form_entry_id">ID</option>
               {colHeading.map((col) => (
@@ -123,7 +123,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             </select>
           </div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('Export File Format', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('Export File Format')}</b>
             <select className="btcd-paper-inp ml-2" name="fileFormate" defaultValue={data?.fileFormate} style={{ width: 250 }} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               {/* <option selected disabled>Choose Type</option> */}
               <option value="csv">CSV</option>
@@ -139,7 +139,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
           </div>
           <div>
             <button type="button" onClick={e => getEntry(e)} className={`${css(app.btn)} btn-md blue btcd-mdl-btn`} disabled={isLoading}>
-              {__('Export', 'bitform')}
+              {__('Export')}
               {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>
           </div>

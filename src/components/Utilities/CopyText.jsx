@@ -20,8 +20,8 @@ export default function CopyText({ value, className, readOnly }) {
 
   const copyText = () => {
     copyToClipboard()
-      .then(() => toast.success(__('Copied on clipboard.', 'bitform')))
-      .catch(() => toast.error(__('Failed to Copy, Try Again.', 'bitform')))
+      .then(() => toast.success(__('Copied on clipboard.')))
+      .catch(() => toast.error(__('Failed to Copy, Try Again.')))
   }
 
   return (

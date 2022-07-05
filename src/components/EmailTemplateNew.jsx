@@ -57,9 +57,9 @@ function EmailTemplateNew() {
       <Modal
         show={showTemplateModal}
         setModal={setTemplateModal}
-        title={__('Browse Template', 'bitform')}
+        title={__('Browse Template')}
       >
-        <h4 className="txt-dp">{__('Email Templates Coming soon', 'bitform')}</h4>
+        <h4 className="txt-dp">{__('Email Templates Coming soon')}</h4>
       </Modal>
 
       <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className={`${css(app.btn)} btcd-btn-o-gray`}>
@@ -67,11 +67,11 @@ function EmailTemplateNew() {
         {__('Back', 'bitfrom')}
       </NavLink>
 
-      <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Save Template', 'bitform')}</button>
+      <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Save Template')}</button>
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>
-          {__('Template Name:', 'bitform')}
+          {__('Template Name:')}
           {' '}
         </b>
         <input onChange={handleInput} name="title" type="text" className="btcd-paper-inp w-9" placeholder="Name" value={tem.title} />
@@ -80,7 +80,7 @@ function EmailTemplateNew() {
         <b style={{ width: 100 }}>Subject:</b>
         <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
-          <option value="">{__('Add field', 'bitform')}</option>
+          <option value="">{__('Add field')}</option>
           <optgroup label="Form Fields">
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
           </optgroup>
@@ -95,9 +95,9 @@ function EmailTemplateNew() {
       </div>
 
       <div className="mt-3">
-        <b>{__('Body:', 'bitform')}</b>
+        <b>{__('Body:')}</b>
         {/* <div className="flx flx-between">
-          <button className="btn" onClick={() => setTemplateModal(true)} type="button">{__('Choose Template', 'bitform')}</button>
+          <button className="btn" onClick={() => setTemplateModal(true)} type="button">{__('Choose Template')}</button>
         </div> */}
         <label htmlFor={`mail-tem-${formID}`} className="mt-2 w-10">
           <TinyMCE

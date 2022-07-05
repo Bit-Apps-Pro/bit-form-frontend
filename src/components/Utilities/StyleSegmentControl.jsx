@@ -162,7 +162,7 @@ export default function StyleSegmentControl({ defaultActive,
               {checkToShow(item, 'icn') && (
                 <span className={`icn ${css(style.icn)} ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
               )}
-              {checkToShow(item, 'label') && __(item.label, 'bitform')}
+              {checkToShow(item, 'label') && __(item.label)}
             </button>
           )
           if (item.tip) {

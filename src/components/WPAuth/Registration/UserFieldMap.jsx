@@ -53,13 +53,13 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <div>
           <div>
             <div className="mt-3 mb-1">
-              <b>{__('Field Mappping', 'bitform')}</b>
+              <b>{__('Field Mappping')}</b>
             </div>
             <div className="btcd-hr" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
               <div className="txt-dp">
-                <b>{__('User Fields', 'bitform')}</b>
+                <b>{__('User Fields')}</b>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
         <div className="flx">
           <div className="w-5 mt-5 flx">
-            <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type]?.user_notify} value={false} />
+            <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification')} checked={!!userConf[type]?.user_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
                 When this option is enabled, a welcome email will be sent from WordPress after registration.
@@ -97,7 +97,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </Cooltip>
           </div>
           <div className="w-5 mt-5 flx">
-            <TableCheckBox name="admin_notify" onChange={handleCheckd} title={__('Admin Email Notification', 'bitform')} checked={!!userConf[type]?.admin_notify} value={false} />
+            <TableCheckBox name="admin_notify" onChange={handleCheckd} title={__('Admin Email Notification')} checked={!!userConf[type]?.admin_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
                 If this option is enabled, e-mail will be sent from WordPress to admin.
@@ -110,9 +110,9 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <br />
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
-            <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
+            <div className="f-m">{__('Redirect Page:')}</div>
             <select className="btcd-paper-inp mt-1" value={userConf[type]?.redirect_url} onChange={handlePage}>
-              <option value="">{__('Custom Link', 'bitform')}</option>
+              <option value="">{__('Custom Link')}</option>
               {pages && pages.map((urlDetail, ind) => (
                 <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
               ))}
@@ -128,7 +128,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
-            <div className="f-m fw-500">{__('WP User Role', 'bitform')}</div>
+            <div className="f-m fw-500">{__('WP User Role')}</div>
             <select name="user_role" onChange={handleInput} value={userConf[type]?.user_role} className="btcd-paper-inp mt-1">
               <option disabled selected>Select User Role</option>
               {roles.map((role, index) => (
@@ -138,18 +138,18 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
           </div>
           <div className="w-5 ml-2">
             <div className="f-m fw-500">
-              {__('Success Messages', 'bitform')}
+              {__('Success Messages')}
             </div>
 
-            <input className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e)} name="succ_msg" value={userConf[type]?.succ_msg} type="text" placeholder={__('Success Message', 'bitform')} />
+            <input className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e)} name="succ_msg" value={userConf[type]?.succ_msg} type="text" placeholder={__('Success Message')} />
           </div>
         </div>
         <br />
         <div className="flx integ-fld-wrp">
           <div className="w-5">
-            <div className="f-m fw-500">{__('User Approval  Method:', 'bitform')}</div>
+            <div className="f-m fw-500">{__('User Approval  Method:')}</div>
             <select className="btcd-paper-inp mt-1" name="activation" value={userConf[type]?.activation} onChange={handleInput}>
-              <option disabled selected value="">{__('select approval method', 'bitform')}</option>
+              <option disabled selected value="">{__('select approval method')}</option>
               <option value="auto_approve">Auto Approve</option>
               <option value="admin_review">Require Admin Review</option>
               <option value="email_verify">Require Email Activation</option>
@@ -158,7 +158,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
           {userConf[type]?.activation === 'auto_approve' && (
             <div className="w-5 ml-2 flx">
-              <TableCheckBox name="auto_login" onChange={handleCheckd} title={__('Auto Login After Registration', 'bitform')} checked={!!userConf[type]?.auto_login} value={false} />
+              <TableCheckBox name="auto_login" onChange={handleCheckd} title={__('Auto Login After Registration')} checked={!!userConf[type]?.auto_login} value={false} />
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
                   if checked Auto Login, the user login automatically after registration.
@@ -188,7 +188,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Customize  Activation Email template', 'bitform')}</div>
+              <div className="f-m ml-1">{__('Customize  Activation Email template')}</div>
             </div>
 
             <div className="flx w-5 ml-2 mt-4">
@@ -201,7 +201,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Redirect after verification', 'bitform')}</div>
+              <div className="f-m ml-1">{__('Redirect after verification')}</div>
               <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} />
 
             </div>

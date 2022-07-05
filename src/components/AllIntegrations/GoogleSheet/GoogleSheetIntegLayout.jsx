@@ -9,9 +9,9 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
   return (
     <>
       <br />
-      <b className="wdt-150 d-in-b">{__('Spreadsheets:', 'bitform')}</b>
+      <b className="wdt-150 d-in-b">{__('Spreadsheets:')}</b>
       <select onChange={handleInput} name="spreadsheetId" value={sheetConf.spreadsheetId} className="btcd-paper-inp w-6">
-        <option value="">{__('Select Spreadsheet', 'bitform')}</option>
+        <option value="">{__('Select Spreadsheet')}</option>
         {
           sheetConf?.default?.spreadsheets && Object.keys(sheetConf.default.spreadsheets).map(spreadSheetApiName => (
             <option key={spreadSheetApiName} value={sheetConf.default.spreadsheets[spreadSheetApiName].spreadsheetId}>
@@ -25,7 +25,7 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
       <br />
       <b className="wdt-150 d-in-b">Worksheet:</b>
       <select onChange={handleInput} name="worksheetName" value={sheetConf.worksheetName} className="btcd-paper-inp w-6">
-        <option value="">{__('Select Worksheet', 'bitform')}</option>
+        <option value="">{__('Select Worksheet')}</option>
         {
           sheetConf?.default?.worksheets?.[sheetConf.spreadsheetId] && sheetConf.default.worksheets[sheetConf.spreadsheetId].map(worksheet => (
             <option key={worksheet.properties.sheetId} value={worksheet.properties.title}>
@@ -39,16 +39,16 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
       <br />
       <b className="wdt-150 d-in-b">Header:</b>
       <select onChange={handleInput} name="header" value={sheetConf.header} className="btcd-paper-inp w-7">
-        <option value={__('ROWS', 'bitform')}>{__('Row', 'bitform')}</option>
-        <option value={__('COLUMNS', 'bitform')}>{__('Column', 'bitform')}</option>
+        <option value={__('ROWS')}>{__('Row')}</option>
+        <option value={__('COLUMNS')}>{__('Column')}</option>
       </select> */}
       <br />
       <br />
-      <b className="wdt-150 d-in-b">{__('Header Row:', 'bitform')}</b>
+      <b className="wdt-150 d-in-b">{__('Header Row:')}</b>
       <input type="text" min="1" className="btcd-paper-inp w-6" placeholder="Header Row" onChange={handleInput} value={sheetConf.headerRow} name="headerRow" />
       <button onClick={() => refreshWorksheetHeaders(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Worksheet Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
-      <small className="mt-3 d-blk" style={{ marginLeft: 155, lineHeight: 1.8 }}>{__('By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.', 'bitform')}</small>
+      <small className="mt-3 d-blk" style={{ marginLeft: 155, lineHeight: 1.8 }}>{__('By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.')}</small>
       <br />
 
       {isLoading && (
@@ -65,12 +65,12 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+              <b className="wdt-100">{__('Map Fields')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Google Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Google Fields')}</b></div>
             </div>
 
             {sheetConf.field_map.map((itm, i) => (

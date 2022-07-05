@@ -32,9 +32,9 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
     <>
       <br />
       <div className="flx">
-        <b className="wdt-150 d-in-b">{__('Chat List: ', 'bitform')}</b>
+        <b className="wdt-150 d-in-b">{__('Chat List: ')}</b>
         <select onChange={handleInput} name="chat_id" value={telegramConf.chat_id} className="btcd-paper-inp w-5">
-          <option value="">{__('Select Chat List', 'bitform')}</option>
+          <option value="">{__('Select Chat List')}</option>
           {
             telegramConf?.default?.telegramChatLists && Object.keys(telegramConf.default.telegramChatLists).map(chatListname => (
               <option key={chatListname} value={telegramConf.default.telegramChatLists[chatListname].id}>
@@ -43,7 +43,7 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
             ))
           }
         </select>
-        <button onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Telegram List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Telegram List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -59,12 +59,12 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
         && (
           <>
             <div className="flx mt-4">
-              <b className="wdt-150 d-in-b">{__('Parse Mode: ', 'bitform')}</b>
-              <CheckBox radio onChange={e => changeActionRun(e)} name="HTML" title={<small className="txt-dp">{__('HTML', 'bitform')}</small>} checked={telegramConf.parse_mode === 'HTML'} value="HTML" />
-              <CheckBox radio onChange={e => changeActionRun(e)} name="MarkdownV2" title={<small className="txt-dp">{__('Markdown v2', 'bitform')}</small>} checked={telegramConf.parse_mode === 'MarkdownV2'} value="MarkdownV2" />
+              <b className="wdt-150 d-in-b">{__('Parse Mode: ')}</b>
+              <CheckBox radio onChange={e => changeActionRun(e)} name="HTML" title={<small className="txt-dp">{__('HTML')}</small>} checked={telegramConf.parse_mode === 'HTML'} value="HTML" />
+              <CheckBox radio onChange={e => changeActionRun(e)} name="MarkdownV2" title={<small className="txt-dp">{__('Markdown v2')}</small>} checked={telegramConf.parse_mode === 'MarkdownV2'} value="MarkdownV2" />
             </div>
             <div className="flx mt-4">
-              <b className="wdt-150 d-in-b">{__('Messages: ', 'bitform')}</b>
+              <b className="wdt-150 d-in-b">{__('Messages: ')}</b>
               {telegramConf?.parse_mode === 'HTML' ? (
                 <TinyMCE
                   formFields={formFields}
@@ -85,7 +85,7 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
                 </>
               )}
             </div>
-            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
             <div className="btcd-hr mt-1" />
             <TelegramActions
               telegramConf={telegramConf}

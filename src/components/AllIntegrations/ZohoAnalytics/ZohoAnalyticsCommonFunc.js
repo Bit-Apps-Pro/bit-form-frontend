@@ -22,14 +22,14 @@ export const setGrantTokenResponse = () => {
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
+      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty') : '',
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty') : '',
     })
     return
   }
   if (!checkValidEmail(confTmp.ownerEmail)) {
-    setError({ ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid', 'bitform') : '' })
+    setError({ ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid') : '' })
     return
   }
   setisLoading(true)
@@ -49,7 +49,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
         setisLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -74,11 +74,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
       }
       setisLoading(false)
     })
@@ -159,12 +159,12 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setis
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Workspaces refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Workspaces refreshed') })
         setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Workspaces refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Workspaces refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Workspaces refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Workspaces refresh failed. please try again') })
       }
       setisLoading(false)
     })
@@ -195,12 +195,12 @@ export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setisLoadi
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Users refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Users refreshed') })
         setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Users refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        setSnackbar({ show: true, msg: `${__('Users refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Users refresh failed. please try again') })
       }
       setisLoading(false)
     })
@@ -237,10 +237,10 @@ export const refreshTables = (formID, analyticsConf, setAnalyticsConf, setisLoad
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Tables refreshed', 'bitform') })
+        setSnackbar({ show: true, msg: __('Tables refreshed') })
         setAnalyticsConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Tables refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Tables refresh failed. please try again') })
       }
       setisLoading(false)
     })
@@ -273,9 +273,9 @@ export const refreshTableHeaders = (formID, analyticsConf, setAnalyticsConf, set
             newConf.default.tables.headers = {}
           }
           newConf.default.tables.headers[table] = result.data.table_headers
-          setSnackbar({ show: true, msg: __('Table Headers refreshed', 'bitform') })
+          setSnackbar({ show: true, msg: __('Table Headers refreshed') })
         } else {
-          setSnackbar({ show: true, msg: __("Zoho didn't provide column names for this table", 'bitform') })
+          setSnackbar({ show: true, msg: __("Zoho didn't provide column names for this table") })
         }
 
         if (result.data.tokenDetails) {
@@ -283,7 +283,7 @@ export const refreshTableHeaders = (formID, analyticsConf, setAnalyticsConf, set
         }
         setAnalyticsConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Table Headers refresh failed. please try again', 'bitform') })
+        setSnackbar({ show: true, msg: __('Table Headers refresh failed. please try again') })
       }
       setisLoading(false)
     })

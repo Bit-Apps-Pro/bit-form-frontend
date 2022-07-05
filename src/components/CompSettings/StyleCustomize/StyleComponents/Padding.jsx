@@ -15,16 +15,16 @@ export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Padding', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Padding')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
         info={[
-          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Padding Top', 'bitform') },
-          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Padding Right', 'bitform') },
-          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Padding Bottom', 'bitform') },
-          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Padding Left', 'bitform') },
-          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side', 'bitform') },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Padding Top') },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Padding Right') },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Padding Bottom') },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Padding Left') },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side') },
         ]}
         className="btc-range"
         unit="px"

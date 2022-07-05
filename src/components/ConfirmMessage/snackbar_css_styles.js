@@ -3,10 +3,10 @@ import snackbarFade from './Animations/snackbar-fade'
 import snackbarScale from './Animations/snackbar-scale'
 import snackbarSlide from './Animations/snackbar-slide'
 
-export default function snackbarCssStyles(formID, position, animation, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
-  const boxShadowString = objectArrayToStyleStringGenarator(boxShadow)
+export default function snackbarCssStyles(formID, msgId, position, animation, padding, width, background, color, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
+  const boxShadowString = objectArrayToStyleStringGenarator(boxShadow || [])
   return {
-    [`.msg-container-${formID}`]: {
+    [`.msg-container-${msgId}`]: {
       display: 'flex',
       'justify-content': 'center',
       'align-items': 'center',
@@ -26,7 +26,7 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       ...animation === 'slide-right' && snackbarSlide(position, 'right').msgContainer,
     },
 
-    [`.msg-container-${formID}.active`]: {
+    [`.msg-container-${msgId}.active`]: {
       opacity: 1,
       visibility: 'visible',
       ...animation === 'fade' && snackbarFade(position).activeMsgContainer,
@@ -37,7 +37,7 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       ...animation === 'slide-right' && snackbarSlide(position, 'right').activeMsgContainer,
     },
 
-    [`.msg-container-${formID}.deactive`]: {
+    [`.msg-container-${msgId}.deactive`]: {
       opacity: 0,
       visibility: 'hidden',
       ...animation === 'fade' && snackbarFade(position).deactiveMsgContainer,
@@ -48,7 +48,7 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       ...animation === 'slide-right' && snackbarSlide(position, 'right').deactiveMsgContainer,
     },
 
-    [`.msg-background-${formID}`]: {
+    [`.msg-background-${msgId}`]: {
       width: '100%',
       height: '100%',
       display: 'flex',
@@ -57,9 +57,10 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       background: 'rgba(0, 0, 0, 0.0)',
     },
 
-    [`.msg-content-${formID}`]: {
+    [`.msg-content-${msgId}`]: {
       background,
-      padding: '5px 35px 5px 20px',
+      color,
+      padding,
       'border-width': borderWidth,
       'border-style': borderType,
       'border-color': borderColor,
@@ -71,7 +72,7 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       'box-shadow': boxShadowString,
     },
 
-    [`.close-${formID}`]: {
+    [`.close-${msgId}`]: {
       color: closeIconColor,
       background: closeBackground,
       position: 'absolute',
@@ -88,11 +89,11 @@ export default function snackbarCssStyles(formID, position, animation, width, ba
       cursor: 'pointer',
     },
 
-    [`.close-${formID}:hover`]: { color: closeIconHover, bd: closeHover },
+    [`.close-${msgId}:hover`]: { color: closeIconHover, bd: closeHover },
 
-    [`.close-${formID}:focus`]: { color: closeIconHover },
+    [`.close-${msgId}:focus`]: { color: closeIconHover },
 
-    [`.close-icn-${formID}`]: {
+    [`.close-icn-${msgId}`]: {
       width: '15px',
       height: '15px',
       'stroke-width': 2,

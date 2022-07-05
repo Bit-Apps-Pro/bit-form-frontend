@@ -29,7 +29,7 @@ export default function PaypalInfo({ paymentInfo, payInfoFound }) {
       {payInfoFound.current === 1
         ? (
           <>
-            <h1>{__('PayPal', 'bitform')}</h1>
+            <h1>{__('PayPal')}</h1>
             <div key={paypalResp.id}>
               <small>
                 {dateTimeFormatter(paypalResp.create_time, dateTimeFormat)}
@@ -37,28 +37,28 @@ export default function PaypalInfo({ paymentInfo, payInfoFound }) {
               <br />
               <br />
               <small>
-                {`${__('Type', 'bitform')}: ${isSubscription ? __('Subscription', 'biform') : __('Order', 'bitform')}`}
+                {`${__('Type')}: ${isSubscription ? __('Subscription', 'biform') : __('Order')}`}
               </small>
               <br />
               <br />
               <small>
-                <b>{`${__('Transaction ID', 'bitform')}: ${paypalResp.id}`}</b>
+                <b>{`${__('Transaction ID')}: ${paypalResp.id}`}</b>
               </small>
               <h3>{`${userInfo.name.given_name} ${userInfo.name.surname}`}</h3>
               <small>{userInfo.email_address}</small>
               {isSubscription && (
-                <h4>{`${__('Plan ID', 'bitform')}: ${paypalResp.plan_id}`}</h4>
+                <h4>{`${__('Plan ID')}: ${paypalResp.plan_id}`}</h4>
               )}
               {isSubscription && (
                 <small>
-                  {__('Next Billing Time', 'bitform')}
+                  {__('Next Billing Time')}
                   :
                   {' '}
                   {dateTimeFormatter(paypalResp.billing_info.next_billing_time, dateTimeFormat)}
                 </small>
               )}
               <p>
-                {__('Total Paid', 'bitform')}
+                {__('Total Paid')}
                 :
                 {' '}
                 {amountInfo.value}
@@ -68,7 +68,7 @@ export default function PaypalInfo({ paymentInfo, payInfoFound }) {
             </div>
           </>
         )
-        : <img src={noData} alt={__('no data found', 'bitform')} style={{ height: 150, width: '100%' }} />}
+        : <img src={noData} alt={__('no data found')} style={{ height: 150, width: '100%' }} />}
     </div>
   )
 }

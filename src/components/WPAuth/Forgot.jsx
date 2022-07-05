@@ -50,8 +50,8 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
           <div className="mt-3 mb-1"><b>Forget Password Fields Mapping</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-            <div className="txt-dp"><b>{__('Forgot Password Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Forgot Password Fields')}</b></div>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
           <div className="f-m fw-500">
-            {__('Redirect Page:', 'bitform')}
+            {__('Redirect Page:')}
             <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
               <div className="txt-body">
                 This redirect page will be redirected to the reset form when the email is verified.
@@ -82,7 +82,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
           </div>
 
           <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={e => handlePage(e)}>
-            <option value="">{__('Custom Link', 'bitform')}</option>
+            <option value="">{__('Custom Link')}</option>
             {pages && pages.map((urlDetail, ind) => (
               <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
             ))}
@@ -108,7 +108,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
         >
           <EditIcn size={21} />
         </span>
-        <div className="f-m ml-1">{__('Password reset email template', 'bitform')}</div>
+        <div className="f-m ml-1">{__('Password reset email template')}</div>
       </div>
       <EmailNotification
         dataConf={dataConf}
@@ -122,8 +122,8 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
       <br />
 
       <div className="w-5">
-        <div className="f-m fw-500">{__('Success Message:', 'bitform')}</div>
-        <input className="btcd-paper-inp mt-1" onChange={(e) => inputHandler(e)} name="succ_msg" value={dataConf[type]?.succ_msg} type="text" placeholder={__('Success Message', 'bitform')} />
+        <div className="f-m fw-500">{__('Success Message:')}</div>
+        <input className="btcd-paper-inp mt-1" onChange={(e) => inputHandler(e)} name="succ_msg" value={dataConf[type]?.succ_msg} type="text" placeholder={__('Success Message')} />
       </div>
 
     </div>

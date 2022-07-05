@@ -178,7 +178,7 @@ function TitleSettings() {
         <FieldSettingsDivider />
         <SimpleAccordion
           id="titl-stng"
-          title={__('Title', 'bitform')}
+          title={__('Title')}
           className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
           tip="By disabling this option, the field title will be hidden"
@@ -200,7 +200,7 @@ function TitleSettings() {
                   unselectable="on"
                   draggable="false"
                   style={{ cursor: 'pointer' }}
-                  title={__('More Options', 'bitform')}
+                  title={__('More Options')}
                 >
                   <BdrDottedIcn size="16" />
                 </button>
@@ -226,14 +226,14 @@ function TitleSettings() {
             </div>
           </div>
           <FieldIconSettings
-            label="Prefix Icon"
+            label="Leading Icon"
             iconSrc={fieldData?.titlePreIcn}
             styleRoute="title-pre-i"
             setIcon={() => setIconModel('titlePreIcn')}
             removeIcon={() => removeIcon('titlePreIcn')}
           />
           <FieldIconSettings
-            label="Suffix Icon"
+            label="Trailing Icon"
             iconSrc={fieldData?.titleSufIcn}
             styleRoute="title-suf-i"
             setIcon={() => setIconModel('titleSufIcn')}
@@ -245,7 +245,7 @@ function TitleSettings() {
 
         <SimpleAccordion
           id="sub-titl-stng"
-          title={__('Sub Title', 'bitform')}
+          title={__('Sub Title')}
           className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
           tip="By disabling this option, the field sub title will be hidden"
@@ -267,7 +267,7 @@ function TitleSettings() {
                   unselectable="on"
                   draggable="false"
                   style={{ cursor: 'pointer' }}
-                  title={__('Fields', 'bitform')}
+                  title={__('Fields')}
                 >
                   <BdrDottedIcn size="16" />
                 </button>
@@ -299,14 +299,14 @@ function TitleSettings() {
             </div>
           </div>
           <FieldIconSettings
-            label="Prefix Icon"
+            label="Leading Icon"
             iconSrc={fieldData?.subTitlPreIcn}
             styleRoute="sub-titl-pre-i"
             setIcon={() => setIconModel('subTitlPreIcn')}
             removeIcon={() => removeIcon('subTitlPreIcn')}
           />
           <FieldIconSettings
-            label="Suffix Icon"
+            label="Trailing Icon"
             iconSrc={fieldData?.subTitlSufIcn}
             styleRoute="sub-titl-suf-i"
             setIcon={() => setIconModel('subTitlSufIcn')}

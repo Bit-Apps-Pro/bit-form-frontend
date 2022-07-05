@@ -17,8 +17,8 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
       <div className={css(style.section, style.flxColumn, style.fixed, scrollTo && style.shw)}>
         <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
         <div>
-          <div className={css(style.mainTitle)}>{__(title, 'bitform')}</div>
-          <span className={css(style.subtitle, ut.fontBody)}>{__(ucFirst(subtitle), 'bitform')}</span>
+          <div className={css(style.mainTitle)}>{__(title)}</div>
+          <span className={css(style.subtitle, ut.fontBody)}>{__(ucFirst(subtitle))}</span>
         </div>
       </div>
 

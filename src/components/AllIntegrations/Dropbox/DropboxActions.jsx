@@ -23,7 +23,7 @@ export default function DropboxActions({ dropboxConf, setDropboxConf }) {
         onChange={(e) => actionHandler(e, 'deleteFile')}
         className="mt-4 mr-2"
         value="delete_from_wp"
-        title={__('Delete File From Wordpress', 'bitform')}
+        title={__('Delete File From Wordpress')}
         subTitle={__(
           'Delete file from Wordpress after upload in Dropbox',
           'bitform',
