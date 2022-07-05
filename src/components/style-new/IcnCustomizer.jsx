@@ -69,13 +69,14 @@ export default function IcnCustomizer({ elementKey }) {
     {
       object: 'themeVars',
       paths: {
+        'border-style': `--${elementKey}-bdr`,
         'border-width': `--${elementKey}-bdr-width`,
         'border-radius': `--${elementKey}-bdr-rad`,
       },
     },
     {
       object: 'themeColors',
-      paths: { border: `--${elementKey}-bdr` },
+      paths: { 'border-color': `--${elementKey}-bdr-clr` },
     },
   ]
 
