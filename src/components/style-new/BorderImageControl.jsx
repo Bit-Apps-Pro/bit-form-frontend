@@ -71,7 +71,7 @@ export default function BorderImageControl({ title,
             <TrashIcn size="14" />
           </button>
         )}
-        <span className={css(ut.fw500)}>{__(title)}</span>
+        <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
         <ResetStyle id={modalId} stateObjName={stateObjName} propertyPath={propertyPath} />

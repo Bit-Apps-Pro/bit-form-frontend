@@ -60,12 +60,12 @@ export const refreshAudience = (formID, sheetConf, setSheetConf, setisLoading, s
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Audience list refreshed') })
+        setSnackbar({ show: true, msg: __('Audience list refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Audience list refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Audience list refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Audience list failed. please try again') })
+        setSnackbar({ show: true, msg: __('Audience list failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -88,12 +88,12 @@ export const refreshTags = (formID, sheetConf, setSheetConf, setisLoading, setSn
         if (result.data.audienceTags) {
           newConf.default.audienceTags = result.data.audienceTags
         }
-        setSnackbar({ show: true, msg: __('Audience tags refreshed') })
+        setSnackbar({ show: true, msg: __('Audience tags refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Audience tags refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Audience tags refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Audience tags failed. please try again') })
+        setSnackbar({ show: true, msg: __('Audience tags failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -127,10 +127,10 @@ export const refreshFields = (formID, sheetConf, setSheetConf, setisLoading, set
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: __('Fields refreshed') })
+        setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -158,8 +158,8 @@ export const setGrantTokenResponse = (integ) => {
 export const handleMailChimpAuthorize = (integ, ajaxInteg, confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty') : '',
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -184,7 +184,7 @@ export const handleMailChimpAuthorize = (integ, ajaxInteg, confTmp, setConf, set
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
         setisLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -209,11 +209,11 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

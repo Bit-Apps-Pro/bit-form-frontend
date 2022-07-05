@@ -179,34 +179,34 @@ export default function PaypalStyleEditor() {
         <h4 className="w-9 m-a flx txt-dp">
           <button className="icn-btn" type="button" aria-label="back btn"><BackIcn /></button>
           <div className="flx w-10">
-            <span>{__('Back')}</span>
-            <div className="txt-center w-10 f-5">{__('Paypal Style')}</div>
+            <span>{__('Back', 'bitform')}</span>
+            <div className="txt-center w-10 f-5">{__('Paypal Style', 'bitform')}</div>
           </div>
         </h4>
       </Link>
       <div className="w-9 m-a">
         {fields === null || !checkPaypalExist(fields)
           ? (
-            <div className="mt-2">{__('There is no paypal field in your form.')}</div>
+            <div className="mt-2">{__('There is no paypal field in your form.', 'bitform')}</div>
           )
           : fldKey === null && checkPaypalExist(fields) > 1
             ? (
               <div className="mt-2" style={{ fontSize: 16, lineHeight: 1.5 }}>
-                {__('There is more than one paypal field in your form. please select the style icon')}
+                {__('There is more than one paypal field in your form. please select the style icon', 'bitform')}
                 <BrushIcn style={{ height: 15, width: 20 }} />
                 &nbsp;
-                {__('in paypal field to customize the style.')}
+                {__('in paypal field to customize the style.', 'bitform')}
               </div>
             )
             : (
               <>
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
-                    <b>{__('Layout')}</b>
+                    <b>{__('Layout', 'bitform')}</b>
                     <select onChange={e => handleInput(e.target.name, e.target.value)} name="layout" value={fieldData?.style?.layout} className="btcd-paper-inp mt-1">
-                      <option value="vertical">{__('Vertical')}</option>
-                      <option value="horizontal">{__('Horizontal')}</option>
-                      <option value="standalone">{__('Standalone')}</option>
+                      <option value="vertical">{__('Vertical', 'bitform')}</option>
+                      <option value="horizontal">{__('Horizontal', 'bitform')}</option>
+                      <option value="standalone">{__('Standalone', 'bitform')}</option>
                     </select>
                   </label>
                 </div>
@@ -214,11 +214,11 @@ export default function PaypalStyleEditor() {
                   fieldData?.style?.layout === 'standalone' && (
                     <div className="mt-2">
                       <label htmlFor="recap-thm">
-                        <b>{__('Pay Button')}</b>
+                        <b>{__('Pay Button', 'bitform')}</b>
                         <select onChange={e => handleInput(e.target.name, e.target.value)} name="payBtn" value={fieldData.payBtn} className="btcd-paper-inp mt-1">
-                          <option value="PAYPAL">{__('PAYPAL')}</option>
-                          <option value="PAYLATER">{__('PAYLATER')}</option>
-                          <option value="CARD">{__('CARD')}</option>
+                          <option value="PAYPAL">{__('PAYPAL', 'bitform')}</option>
+                          <option value="PAYLATER">{__('PAYLATER', 'bitform')}</option>
+                          <option value="CARD">{__('CARD', 'bitform')}</option>
                         </select>
                       </label>
                     </div>
@@ -226,49 +226,49 @@ export default function PaypalStyleEditor() {
                 }
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
-                    <b>{__('Color')}</b>
+                    <b>{__('Color', 'bitform')}</b>
                     <select onChange={e => handleInput(e.target.name, e.target.value)} name="color" value={fieldData?.style?.color} className="btcd-paper-inp mt-1">
                       {fieldData?.style?.payBtn !== 'CARD' && (
                         <>
-                          <option value="gold">{__('Gold')}</option>
-                          <option value="blue">{__('Blue')}</option>
+                          <option value="gold">{__('Gold', 'bitform')}</option>
+                          <option value="blue">{__('Blue', 'bitform')}</option>
                           <option value="silver">
-                            {__('Silver')}
+                            {__('Silver', 'bitform')}
                             {' '}
                           </option>
                         </>
                       )}
-                      <option value="white">{__('White')}</option>
-                      <option value="black">{__('Black')}</option>
+                      <option value="white">{__('White', 'bitform')}</option>
+                      <option value="black">{__('Black', 'bitform')}</option>
                     </select>
                   </label>
                 </div>
 
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
-                    <b>{__('Shape')}</b>
+                    <b>{__('Shape', 'bitform')}</b>
                     <select onChange={e => handleInput(e.target.name, e.target.value)} name="shape" value={fieldData?.style?.shape} className="btcd-paper-inp mt-1">
-                      <option value="rect">{__('Rectangle')}</option>
-                      <option value="pill">{__('Pill')}</option>
+                      <option value="rect">{__('Rectangle', 'bitform')}</option>
+                      <option value="pill">{__('Pill', 'bitform')}</option>
                     </select>
                   </label>
                 </div>
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
-                    <b>{__('Paypal Button Text')}</b>
+                    <b>{__('Paypal Button Text', 'bitform')}</b>
                     <select onChange={e => handleInput(e.target.name, e.target.value)} name="label" value={fieldData?.style?.label} className="btcd-paper-inp mt-1">
-                      <option value="paypal">{__('Paypal')}</option>
-                      <option value="checkout">{__('Paypal Checkout')}</option>
-                      <option value="buynow">{__('Paypal Buy Now')}</option>
-                      <option value="pay">{__('Pay with Paypal')}</option>
+                      <option value="paypal">{__('Paypal', 'bitform')}</option>
+                      <option value="checkout">{__('Paypal Checkout', 'bitform')}</option>
+                      <option value="buynow">{__('Paypal Buy Now', 'bitform')}</option>
+                      <option value="pay">{__('Pay with Paypal', 'bitform')}</option>
                     </select>
                   </label>
                 </div>
                 <div className="mt-2">
                   <div className="flx flx-between mt-1 inp-grp">
-                    <b className="icn br-50 mr-1">{__('Height')}</b>
+                    <b className="icn br-50 mr-1">{__('Height', 'bitform')}</b>
                     <input
-                      title={__('Height')}
+                      title={__('Height', 'bitform')}
                       className="btc-range mr-1"
                       type="range"
                       min="25"
@@ -290,9 +290,9 @@ export default function PaypalStyleEditor() {
                 </div>
                 {/* <div className="mt-2">
                 <div className="flx flx-between mt-1 inp-grp">
-                  <b className="icn br-50 mr-1">{__('Width')}</b>
+                  <b className="icn br-50 mr-1">{__('Width', 'bitform')}</b>
                   <input
-                   title={__('Width')}
+                   title={__('Width', 'bitform')}
                     className="btc-range mr-1"
                     type="range"
                     min="150"

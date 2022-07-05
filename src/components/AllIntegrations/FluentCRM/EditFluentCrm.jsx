@@ -27,8 +27,8 @@ function EditFluentCrm({ formFields, setIntegration, integrations, allIntegURL }
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, fluentCrmConf, setFluentCrmConf)} name="name" value={fluentCrmConf.name} type="text" placeholder={__('Integration Name...')} />
+        <b className="wdt-200 d-in-b">{__('Integration Name:', 'bitform')}</b>
+        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, fluentCrmConf, setFluentCrmConf)} name="name" value={fluentCrmConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
       </div>
       <br />
       <br />

@@ -15,12 +15,12 @@ export const refreshGetUpdates = (telegramConf, setTelegramConf, setIsLoading, s
         if (result.data.telegramChatLists) {
           newConf.default.telegramChatLists = result.data.telegramChatLists
         }
-        setSnackbar({ show: true, msg: __('Chat list refreshed') })
+        setSnackbar({ show: true, msg: __('Chat list refreshed', 'bitform') })
         setTelegramConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Chat list refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Chat list refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Chat list refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Chat list refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })

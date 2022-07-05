@@ -5,15 +5,13 @@ import htmr from 'htmr'
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-    document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
-    document.getElementById('wpadminbar').style.display = 'none'
-    document.getElementById('adminmenumain').style.display = 'none'
-    document.getElementById('adminmenuback').style.display = 'none'
-    document.getElementById('adminmenuwrap').style.display = 'none'
-    document.getElementById('wpfooter').style.display = 'none'
-    document.getElementById('wpcontent').style.marginLeft = 0
-  }
+  document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
+  document.getElementById('wpadminbar').style.display = 'none'
+  document.getElementById('adminmenumain').style.display = 'none'
+  document.getElementById('adminmenuback').style.display = 'none'
+  document.getElementById('adminmenuwrap').style.display = 'none'
+  document.getElementById('wpfooter').style.display = 'none'
+  document.getElementById('wpcontent').style.marginLeft = 0
 }
 
 export const isObjectEmpty = (obj) => obj
@@ -22,15 +20,13 @@ export const isObjectEmpty = (obj) => obj
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
-    document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
-    document.getElementById('wpadminbar').style.display = 'block'
-    document.getElementById('adminmenumain').style.display = 'block'
-    document.getElementById('adminmenuback').style.display = 'block'
-    document.getElementById('adminmenuwrap').style.display = 'block'
-    document.getElementById('wpcontent').style.marginLeft = null
-    document.getElementById('wpfooter').style.display = 'block'
-  }
+  document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
+  document.getElementById('wpadminbar').style.display = 'block'
+  document.getElementById('adminmenumain').style.display = 'block'
+  document.getElementById('adminmenuback').style.display = 'block'
+  document.getElementById('adminmenuwrap').style.display = 'block'
+  document.getElementById('wpcontent').style.marginLeft = null
+  document.getElementById('wpfooter').style.display = 'block'
 }
 
 export const getNewId = flds => {
@@ -230,8 +226,8 @@ export const checkValidEmail = email => {
   }
   return false
 }
-export const makeFieldsArrByLabel = (fields, labels = [], fldsToFilter = ['button']) => {
-  const fldArrByLabel = Object.entries(fields).filter(fld => !fldsToFilter.includes(fld[1].typ)).map(([fldKey, fld]) => {
+export const makeFieldsArrByLabel = (fields, labels) => {
+  const fldArrByLabel = Object.entries(fields).filter(fld => fld[1].typ !== 'button').map(([fldKey, fld]) => {
     const fldByLabel = labels.find(lbl => lbl.key === fldKey)
     return {
       ...fld,
@@ -269,8 +265,7 @@ export const isType = (type, val) => !!(val?.constructor && val.constructor.name
 
 export const getFormsFromPhpVariable = () => {
   let allForms = []
-  if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
-    && typeof bits !== 'undefined'
+  if (typeof bits !== 'undefined'
     //  eslint-disable-next-line no-undef
     && bits.allForms !== null) {
     //  eslint-disable-next-line no-undef
@@ -302,9 +297,10 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
 export const renderHTMR = str => {
   try {
     return (
-      <>
-        {htmr(str)}
-      </>
+      ''
+      // <>
+      //   {htmr(str)}
+      // </>
     )
   } catch (_) {
     return str

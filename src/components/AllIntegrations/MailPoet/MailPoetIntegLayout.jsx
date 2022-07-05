@@ -20,14 +20,14 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('List: ')}</b>
+        <b className="wdt-200 d-in-b">{__('List: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={mailPoetConf?.lists}
           className="btcd-paper-drpdwn w-6"
           options={mailPoetConf?.default?.newsletterList && Object.keys(mailPoetConf.default.newsletterList).map(newsletter => ({ label: mailPoetConf.default.newsletterList[newsletter].newsletterName, value: mailPoetConf.default.newsletterList[newsletter].newsletterId }))}
           onChange={val => lists(val)}
         />
-        <button onClick={() => lists(formID, mailPoetConf, setMailPoetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => lists(formID, mailPoetConf, setMailPoetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -43,12 +43,12 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields')}</b>
+              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-              <div className="txt-dp"><b>{__('MailPoet Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('MailPoet Fields', 'bitform')}</b></div>
             </div>
 
             {mailPoetConf.field_map.map((itm, i) => (

@@ -76,11 +76,11 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!checkMappedPostFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     if (!checkMappedAcfFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, data, history, id, 'edit')
@@ -89,11 +89,11 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
       <div className="mt-3 flx">
-        <b>{__('Post Type')}</b>
+        <b>{__('Post Type', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select one of the defined WordPress post types Or custom post types for the post.
@@ -108,11 +108,11 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
             <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        {/* <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Type List')}'` }} type="button" >&#x21BB;</button> */}
+        {/* <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Type List', 'bitform')}'` }} type="button" >&#x21BB;</button> */}
       </div>
 
       <div className="mt-3">
-        <b>{__('Post Status')}</b>
+        <b>{__('Post Status', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select the status for the post. If published status is selected and the post date is in the future, it will automatically be changed to scheduled
@@ -129,7 +129,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3 flx">
-        <b>{__('Author')}</b>
+        <b>{__('Author', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select the user to be assigned to the post.
@@ -139,14 +139,14 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
       <div>
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_author} className="btcd-paper-inp w-5 mt-2">
-          <option disabled selected>{__('Select Author')}</option>
+          <option disabled selected>{__('Select Author', 'bitform')}</option>
           {users.map((user, key) => (
             <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
           ))}
         </select>
       </div>
 
-      <div className="mt-3"><b>{__('Comment Status')}</b></div>
+      <div className="mt-3"><b>{__('Comment Status', 'bitform')}</b></div>
       <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.comment_status} className="btcd-paper-inp w-5 mt-1">
         <option value="open">Open</option>
         <option value="closed">Closed</option>
@@ -154,11 +154,11 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
 
       <br />
       <div>
-        <div className="mt-3 mb-1"><b>{__('Field Mapping')}</b></div>
+        <div className="mt-3 mb-1"><b>{__('Field Mapping', 'bitform')}</b></div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
-          <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-          <div className="txt-dp"><b>{__('Post Fields')}</b></div>
+          <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+          <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
         </div>
       </div>
       {data?.post_map?.map((itm, i) => (
@@ -185,14 +185,14 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       <div>
         <div>
           <div className="mt-3 mb-1">
-            <b>{__('ACF fields Mapping')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <b>{__('ACF fields Mapping', 'bitform')}</b>
+            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
-              <b>{__('ACF Fields')}</b>
+              <b>{__('ACF Fields', 'bitform')}</b>
             </div>
           </div>
         </div>
@@ -218,14 +218,14 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       <div>
         <div>
           <div className="mt-3 mb-1">
-            <b>{__('ACF File Upload Fields Map')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <b>{__('ACF File Upload Fields Map', 'bitform')}</b>
+            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
-              <b>{__('ACF Fields')}</b>
+              <b>{__('ACF Fields', 'bitform')}</b>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         type="button"
         onClick={() => saveConfig()}
       >
-        {__('Save')}
+        {__('Save', 'bitform')}
         {' '}
       </button>
 

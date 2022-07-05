@@ -25,7 +25,7 @@ export const refreshMetaboxFields = (metaboxeConf, setMetaboxFields, setMetaboxF
   })
   toast.promise(loadMetaboxFields, {
     success: data => data,
-    error: __('Error Occured'),
+    error: __('Error Occured', 'bitform'),
     loading: __('Loading MetaBox Fields...'),
   })
 }
@@ -78,7 +78,7 @@ export const refreshPostTypes = (postTypes, setPostTypes) => {
 
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occured'),
+    error: __('Error Occured', 'bitform'),
     loading: __('Loading Post Types...'),
   })
 }

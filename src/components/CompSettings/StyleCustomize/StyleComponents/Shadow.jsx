@@ -58,7 +58,7 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Shadow')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Shadow', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -70,32 +70,32 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
               value={pseudo}
               onChange={setPseudo}
               btns={[
-                { lbl: __('Default'), icn: 'Default' },
-                ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over'), icn: 'Hover' }] : []),
-                ...('focus' in styleConfig ? [{ lbl: __('On Focus'), icn: 'Focus' }] : []),
+                { lbl: __('Default', 'bitform'), icn: 'Default' },
+                ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over', 'bitform'), icn: 'Hover' }] : []),
+                ...('focus' in styleConfig ? [{ lbl: __('On Focus', 'bitform'), icn: 'Focus' }] : []),
               ]}
             />
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">{__('Type')}</span>
+        <span className="f-5">{__('Type', 'bitform')}</span>
         <BtnGrp
           value={shadwTyp}
           onChange={setShadwType}
           btns={[
-            { lbl: __('Inside'), icn: <InsideIcn /> },
-            { lbl: __('Outside'), icn: <SpreadIcn /> },
-            { lbl: __('None'), icn: <NoneIcn /> },
+            { lbl: __('Inside', 'bitform'), icn: <InsideIcn /> },
+            { lbl: __('Outside', 'bitform'), icn: <SpreadIcn /> },
+            { lbl: __('None', 'bitform'), icn: <NoneIcn /> },
           ]}
         />
       </div>
       {shadwTyp !== 'None' && (
         <>
           <div className="flx flx-between mb-2 mt-2">
-            <span className="f-5">{__('Shadow Color')}</span>
+            <span className="f-5">{__('Shadow Color', 'bitform')}</span>
             <ColorPicker alwGradient={false} value={shadwClr} onChange={clr => setShadow(`${shadw} ${clr.style} ${shadwInset}`)} />
           </div>
-          <span className="f-5">{__('Shadow Style')}</span>
+          <span className="f-5">{__('Shadow Style', 'bitform')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderWidth="1px 4px 1px 4px" />, lbl: 'X-axis' },

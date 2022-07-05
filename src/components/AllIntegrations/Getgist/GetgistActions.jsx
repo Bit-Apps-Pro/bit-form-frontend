@@ -41,17 +41,17 @@ export default function GetgistActions({ getgistConf, setGetgistConf, formFields
   return (
 
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={getgistConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tags')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Tags')} subTitle={__('Add tags to contact')} />
+      <TableCheckBox checked={getgistConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tags')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Tags', 'bitform')} subTitle={__('Add tags to contact', 'bitform')} />
 
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt={__('Ok')}
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags')}
+        title={__('Tags', 'bitform')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         {isLoading
@@ -72,9 +72,9 @@ export default function GetgistActions({ getgistConf, setGetgistConf, formFields
                 defaultValue={getgistConf?.tags}
                 options={getgistConf.default?.tags?.map(list => ({ label: list.tagName, value: list.tagName.toString() }))}
                 onChange={val => setChanges(val, 'tags')}
-              // singleSelect
+                // singleSelect
               />
-              <button onClick={() => getAllTags(getgistConf, setGetgistConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => getAllTags(getgistConf, setGetgistConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
 

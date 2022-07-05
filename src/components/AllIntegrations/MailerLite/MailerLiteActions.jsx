@@ -98,20 +98,20 @@ export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, f
     return (
         <>
             <div className="pos-rel d-flx w-8">
-                <TableCheckBox checked={mailerLiteConf?.group_ids.length || false} onChange={(e) => actionHandler(e, 'group')} className="wdt-200 mt-4 mr-2" value="group" title={__('Groups')} subTitle={__('Add Groups')} />
-                <TableCheckBox checked={mailerLiteConf?.mailer_lite_type || false} onChange={(e) => actionHandler(e, 'mailer_lite_type')} className="wdt-200 mt-4 mr-2" value="type" title={__('Type')} subTitle={__('Add Type')} />
-                <TableCheckBox checked={mailerLiteConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'double_opt_in')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in')} subTitle={__('Add Double Opt-in')} />
-                <TableCheckBox checked={mailerLiteConf.actions?.update || false} isInfo={mailerLiteConf?.group_ids.length} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Subscriber')} subTitle={__('Update Responses with MailerLite exist Subscriber?')} />
+                <TableCheckBox checked={mailerLiteConf?.group_ids.length || false} onChange={(e) => actionHandler(e, 'group')} className="wdt-200 mt-4 mr-2" value="group" title={__('Groups', 'bitform')} subTitle={__('Add Groups', 'bitform')} />
+                <TableCheckBox checked={mailerLiteConf?.mailer_lite_type || false} onChange={(e) => actionHandler(e, 'mailer_lite_type')} className="wdt-200 mt-4 mr-2" value="type" title={__('Type', 'bitform')} subTitle={__('Add Type', 'bitform')} />
+                <TableCheckBox checked={mailerLiteConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'double_opt_in')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in', 'bitform')} subTitle={__('Add Double Opt-in', 'bitform')} />
+                <TableCheckBox checked={mailerLiteConf.actions?.update || false} isInfo={mailerLiteConf?.group_ids.length} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Subscriber', 'bitform')} subTitle={__('Update Responses with MailerLite exist Subscriber?', 'bitform')} />
             </div>
             <ConfirmModal
                 className="custom-conf-mdl"
                 mainMdlCls="o-v"
                 btnClass="blue"
-                btnTxt={__('Ok')}
+                btnTxt={__('Ok', 'bitform')}
                 show={actionMdl.show === 'group'}
                 close={clsActionMdl}
                 action={clsActionMdl}
-                title={__('Groups')}
+                title={__('Groups', 'bitform')}
             >
                 <div className="btcd-hr mt-2 mb-2" />
 
@@ -135,7 +135,7 @@ export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, f
                                 onChange={val => setChanges(val, 'group_ids')}
                                 customValue
                             />
-                            <button onClick={() => getAllGroups(mailerLiteConf, setMailerLiteConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Groups')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                            <button onClick={() => getAllGroups(mailerLiteConf, setMailerLiteConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Groups', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                         </div>
                     )}
 
@@ -144,11 +144,11 @@ export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, f
                 className="custom-conf-mdl"
                 mainMdlCls="o-v"
                 btnClass="blue"
-                btnTxt={__('Ok')}
+                btnTxt={__('Ok', 'bitform')}
                 show={actionMdl.show === 'mailer_lite_type'}
                 close={clsActionMdl}
                 action={clsActionMdl}
-                title={__('Type')}
+                title={__('Type', 'bitform')}
             >
                 <div className="btcd-hr mt-2 mb-2" />
 

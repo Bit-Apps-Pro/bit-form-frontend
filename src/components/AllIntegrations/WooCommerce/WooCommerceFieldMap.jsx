@@ -59,7 +59,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           <optgroup label="Form Fields">
             {
               uploadFields
@@ -67,7 +67,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
                 : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          {!uploadFields && <option value="custom">{__('Custom...')}</option>}
+          {!uploadFields && <option value="custom">{__('Custom...', 'bitform')}</option>}
           {!uploadFields && (
             <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
               {' '}
@@ -76,10 +76,10 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
           )}
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
         <select className="btcd-paper-inp" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             Object.values(wcConf.default.fields[wcConf.module][uploadFields ? 'uploadFields' : 'fields']).map(fld => {
               if (isRequired) {

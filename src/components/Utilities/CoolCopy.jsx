@@ -23,8 +23,8 @@ export default function CoolCopy({ id, className, cls, value, readOnly = true })
 
   const copyText = () => {
     copyToClipboard()
-      .then(() => toast.success(__('Copied on clipboard.')))
-      .catch(() => toast.error(__('Failed to Copy, Try Again.')))
+      .then(() => toast.success(__('Copied on clipboard.', 'bitform')))
+      .catch(() => toast.error(__('Failed to Copy, Try Again.', 'bitform')))
   }
   return (
     <div className={`${css(style.wrapper)} ${className}`}>

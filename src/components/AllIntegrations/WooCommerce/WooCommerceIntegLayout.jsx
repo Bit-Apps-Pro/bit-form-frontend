@@ -8,9 +8,9 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">{__('Module:')}</b>
+      <b className="wdt-100 d-in-b">{__('Module:', 'bitform')}</b>
       <select onChange={handleInput} name="module" value={wcConf.module} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Module')}</option>
+        <option value="">{__('Select Module', 'bitform')}</option>
         <option value="customer">Customer</option>
         <option value="product">Product</option>
       </select>
@@ -30,13 +30,13 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields')}</b>
-              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-              <div className="txt-dp"><b>{__('WooCommerce Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('WooCommerce Fields', 'bitform')}</b></div>
             </div>
 
             {wcConf.field_map.map((itm, i) => (
@@ -59,13 +59,13 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
         && (
           <>
             <div className="mt-4">
-              <b className="wdt-100">{__('Map File Upload Fields')}</b>
-              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <b className="wdt-100">{__('Map File Upload Fields', 'bitform')}</b>
+              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-              <div className="txt-dp"><b>{__('WooCommerce Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('WooCommerce Fields', 'bitform')}</b></div>
             </div>
 
             {wcConf.upload_field_map.map((itm, i) => (
@@ -85,7 +85,7 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
           </>
         )}
       {/*
-      <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
 
       <WooCommerceProductActions

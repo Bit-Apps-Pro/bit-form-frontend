@@ -13,17 +13,11 @@ import 'ace-builds/src-min-noconflict/theme-twilight'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/ext-beautify'
 import 'ace-builds/webpack-resolver'
-import { useEffect, useRef, useState } from 'react'
+import { createRef, useRef, useState } from 'react'
 import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
-import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $customCodes, $newFormId } from '../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
-import bitsFetch from '../../Utils/bitsFetch'
-import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import { cssPredefinedCodeList, jsPredefinedCodeList } from '../../Utils/StaticData/predefinedCodeList'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
@@ -35,15 +29,12 @@ import Grow from './StyleCustomize/ChildComp/Grow'
 
 function CustomCodeEditor() {
   const { css } = useFela()
-  const { formType, formID } = useParams()
   const [editorTab, setEditorTab] = useState('JavaScript')
   const [tab, setTab] = useState('Custom Code')
-  const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const newFormId = useRecoilValue($newFormId)
   const [theme, setTheme] = useState(localStorage.getItem('bf-editor-theme') || 'tomorrow')
   const [enableEditor, setEnableEditor] = useState(localStorage.getItem('bf-enable-editor') || 'on')
   const codeEditorRef = useRef({})
-  const [customCodes, setCustomCodes] = useRecoilState($customCodes)
+  const [customCodes, setCustomCodes] = useState({})
   const [editorOptions, setEditorOptions] = useState(options)
   const editorTabList = ['JavaScript', 'CSS']
   const themesList = [
@@ -64,7 +55,7 @@ function CustomCodeEditor() {
   const handlePredefinedCode = val => {
     const editorRef = codeEditorRef.current[editorTab]
     // put the jsCode into the editor where the cursor is & store it in the state
-    const { editor } = editorRef
+    const editor = editorRef.editor
     editor.session.insert(editor.getCursorPosition(), val)
     const newCode = editor.getValue()
     setCustomCodes(oldCodes => ({ ...oldCodes, [editorTab]: newCode }))
@@ -92,33 +83,21 @@ function CustomCodeEditor() {
   }
 
   const saveCode = e => {
-    if (formType === 'new') {
-      select('#update-btn').click()
-      return
-    }
-    const formData = {
-      form_id: formID,
-      customCodes,
-    }
-    const fetchProm = bitsFetch(formData, 'bitforms_add_custom_code')
-      .then(response => response)
-
-    toast.promise(fetchProm, {
-      loading: __('Updating...', 'biform'),
-      success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.'),
-    })
     e.preventDefault()
+
   }
+
+
 
   const getPredefinedCodeList = () => {
     if (editorTab === 'JavaScript') return jsPredefinedCodeList
-    if (editorTab === 'CSS') return cssPredefinedCodeList
+    else if (editorTab === 'CSS') return cssPredefinedCodeList
   }
+
 
   const editorProps = {
     mode: editorTab.toLowerCase(),
-    theme,
+    theme: theme,
     name: editorTab,
     value: customCodes[editorTab] || '',
     onChange: (newValue) => { handleEditorValue(newValue) },
@@ -126,28 +105,8 @@ function CustomCodeEditor() {
     width: '99%',
     placeholder: 'Write your code here...',
     setOptions: editorOptions,
-    ref: addToRefs,
+    ref: addToRefs
   }
-
-  useEffect(() => {
-    if (formType === 'edit' && !(customCodes.JavaScript || customCodes.CSS)) {
-      const formData = { form_id: formID }
-      bitsFetch(formData, 'bitforms_get_custom_code')
-        .then(response => {
-          if (response?.data?.JavaScript || response?.data?.CSS) {
-            setCustomCodes({ JavaScript: response?.data?.JavaScript, CSS: response?.data?.CSS })
-          }
-          return response
-        })
-    } else if (formType === 'new') {
-      const formData = {
-        form_id: formID,
-        customCodes,
-      }
-      bitsFetch(formData, 'bitforms_add_custom_code')
-        .then(response => response)
-    }
-  }, [])
 
   return (
     <div>
@@ -173,7 +132,7 @@ function CustomCodeEditor() {
             />
             <div className={css(ut.flxc)}>
               {/* <span>add snippets</span> */}
-              <Downmenu place="bottom-end">
+              <Downmenu place='bottom-end'>
                 <button
                   data-testid="titl-mor-opt-btn"
                   data-close
@@ -182,7 +141,7 @@ function CustomCodeEditor() {
                   unselectable="on"
                   draggable="false"
                   style={{ cursor: 'pointer' }}
-                  title={__('Snippets')}
+                  title={__('Snippets', 'bitform')}
                 >
                   <BdrDottedIcn size="16" />
                 </button>
@@ -246,7 +205,9 @@ function CustomCodeEditor() {
 }
 
 const style = {
-  editor: { w: '99%' },
+  editor: {
+    w: '99%',
+  },
   btn: {
     b: 0,
     brs: 5,

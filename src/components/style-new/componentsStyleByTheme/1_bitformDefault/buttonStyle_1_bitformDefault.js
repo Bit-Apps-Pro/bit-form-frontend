@@ -3,9 +3,6 @@ import { $fields } from '../../../../GlobalStates/GlobalStates'
 
 /* eslint-disable camelcase */
 export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
-  const fields = getRecoil($fields)
-  const btnFld = fields[fk]
-  const { align } = btnFld
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'flex',
@@ -20,7 +17,7 @@ export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
       'border-color': 'var(--fld-wrp-bdr-clr, none)',
       'border-width': 'var(--fld-wrp-bdr-width, 0)',
       'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
-      'align-items': align || 'start',
+      'align-items': 'start',
     },
 
     [`.${fk}-fld-wrp.fld-hide::after`]: {

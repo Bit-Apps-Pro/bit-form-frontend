@@ -122,7 +122,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
           {!!importOpts?.data?.length && (
             <div>
               <div className="w-5 flx">
-                <CheckBox data-testid="imprt-optns-txnmy-chek" onChange={handleTaxonomyField} title={__('Use Post Taxonomy Fields')} checked={importOpts?.fieldObject?.isTaxonomy === true} value={false} />
+                <CheckBox data-testid="imprt-optns-txnmy-chek" onChange={handleTaxonomyField} title={__('Use Post Taxonomy Fields', 'bitform')} checked={importOpts?.fieldObject?.isTaxonomy === true} value={false} />
                 <Cooltip width={250} icnSize={17} className="ml-1">
                   <div className="txt-body">
                     if selected then its work also post taxanomy field.

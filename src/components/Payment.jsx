@@ -64,11 +64,11 @@ export default function Payment({ allIntegURL }) {
       {!isPro && (
         <div className="pro-blur flx" style={{ top: -5, left: -10, height: '140%', width: '102%' }}>
           <div className="pro">
-            {__('Available On')}
+            {__('Available On', 'bitform')}
             <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
                 {' '}
-                {__('Premium')}
+                {__('Premium', 'bitform')}
               </span>
             </a>
           </div>
@@ -90,7 +90,7 @@ export default function Payment({ allIntegURL }) {
         }[type]
       }
       <button type="button" onClick={handleSubmit} className={`${css(app.btn)} btn-md f-right blue`} disabled={isLoading}>
-        {__('Save')}
+        {__('Save', 'bitform')}
         {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
     </div>

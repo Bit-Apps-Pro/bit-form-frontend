@@ -19,13 +19,13 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...')}</option>
+          <option value="custom">{__('Custom...', 'bitform')}</option>
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -35,10 +35,10 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, acumbamailConf, setAcumbamailConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, acumbamailConf, setAcumbamailConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
         <select className="btcd-paper-inp" name="acumbamailFormField" disabled={i < 1} value={field.acumbamailFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             isRequiredFld && requiredFlds && requiredFlds.map((listField, indx) => (
               (

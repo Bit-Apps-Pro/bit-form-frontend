@@ -89,10 +89,10 @@ export default function AsteriskCustomizer() {
       />
 
       <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Label Spacing"
+          subtitle="Label Spacing Control"
           objectPaths={flSpacingObj}
           id="lbl-spacing-control"
         />

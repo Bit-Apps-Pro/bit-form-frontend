@@ -40,7 +40,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           <optgroup label="Form Fields">
 
             {type === 'post' ? (
@@ -48,7 +48,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
 
                 {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
 
-                <option value="custom">{__('Custom...')}</option>
+                <option value="custom">{__('Custom...', 'bitform')}</option>
               </>
             ) : (
               <>
@@ -57,7 +57,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
                     ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
                     : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
                 }
-                {fieldType !== 'file' && <option value="custom">{__('Custom...')}</option>}
+                {fieldType !== 'file' && <option value="custom">{__('Custom...', 'bitform')}</option>}
               </>
             )}
           </optgroup>
@@ -73,9 +73,9 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
             )}
 
         </select>
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
         <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             customFields?.map(header => (
               <option key={`${useId()}-1`} value={header.key}>

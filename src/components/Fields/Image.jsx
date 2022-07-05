@@ -14,6 +14,8 @@ function Image({ fieldKey, attr: fieldData, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
+  styleClassesForRender[`.${fieldKey}-img`].width = width
+  styleClassesForRender[`.${fieldKey}-img`].height = height
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />

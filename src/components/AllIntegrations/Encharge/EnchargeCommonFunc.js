@@ -21,14 +21,14 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
           newConf.default.fields = result.data.enChargeFields
           const { fields } = newConf.default
           newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', enChargeFields: f.fieldId, required: true }))
-          setSnackbar({ show: true, msg: __('Encharge fields refreshed') })
+          setSnackbar({ show: true, msg: __('Encharge fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No Encharge fields found. Try changing the header row number or try again') })
+          setSnackbar({ show: true, msg: __('No Encharge fields found. Try changing the header row number or try again', 'bitform') })
         }
 
         setEnchargeConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Encharge fields refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Encharge fields refresh failed. please try again', 'bitform') })
       }
       setIsLoading(false)
     })

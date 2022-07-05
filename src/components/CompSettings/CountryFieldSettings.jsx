@@ -132,7 +132,7 @@ const CountryFieldSettings = () => {
 
       <SimpleAccordion
         id="srch-plchldr-stng"
-        title={__('Search Placeholder')}
+        title={__('Search Placeholder', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the search placeholder text will be remove"
@@ -159,7 +159,7 @@ const CountryFieldSettings = () => {
 
       <SimpleAccordion
         id="cntry-nt-fund-stng"
-        title={__('Country Not Found Text')}
+        title={__('Country Not Found Text', 'bitform')}
         className={css(FieldStyle.fieldSection)}
       // switching
       // toggleAction={hideAdminLabel}
@@ -185,7 +185,7 @@ const CountryFieldSettings = () => {
         id="shw-slctd-img-stng"
         tip="By disabling this option, the show selected flag image will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Show Selected Flag Image')}
+        title={__('Show Selected Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage')}
         isChecked={selectedFlagImage}
       />
@@ -196,7 +196,7 @@ const CountryFieldSettings = () => {
         id="slctd-clrbl-stng"
         tip="By disabling this option, the selected country clearable button will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Selected Country Clearable')}
+        title={__('Selected Country Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedCountryClearable')}
         isChecked={selectedCountryClearable}
       />
@@ -207,7 +207,7 @@ const CountryFieldSettings = () => {
         id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the selected country search clearable button will be hidden"
-        title={__('Search Clearable')}
+        title={__('Search Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable')}
         isChecked={searchClearable}
       />
@@ -218,7 +218,7 @@ const CountryFieldSettings = () => {
         id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the option flags image will be hidden"
-        title={__('Option Flag Image')}
+        title={__('Option Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage')}
         isChecked={optionFlagImage}
       />
@@ -229,7 +229,7 @@ const CountryFieldSettings = () => {
         id="dtct-cntry-by-ip-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by ip"
-        title={__('Detect Country By IP')}
+        title={__('Detect Country By IP', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp')}
         isChecked={detectCountryByIp}
       />
@@ -240,7 +240,7 @@ const CountryFieldSettings = () => {
         id="dtct-cntry-by-geo-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, are not detect county by Geo location"
-        title={__('Detect Country By Geo')}
+        title={__('Detect Country By Geo', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo')}
         isChecked={detectCountryByGeo}
       />
@@ -254,7 +254,7 @@ const CountryFieldSettings = () => {
       <div className={css(FieldStyle.fieldSection)}>
         <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
-          {__('Edit Options')}
+          {__('Edit Options', 'bitform')}
         </button>
       </div>
 
@@ -266,7 +266,7 @@ const CountryFieldSettings = () => {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options')}
+        title={__('Options', 'bitform')}
       >
         <div className="pos-rel">
           <EditOptions

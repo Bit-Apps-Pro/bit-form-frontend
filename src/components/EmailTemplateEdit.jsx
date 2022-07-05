@@ -60,22 +60,22 @@ function EmailTemplateEdit() {
       <div style={{ width: 900 }}>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className={`${css(app.btn)} btcd-btn-o-gray`}>
           <BackIcn className="mr-1" />
-          {__('Back')}
+          {__('Back', 'bitform')}
         </NavLink>
 
-        <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Update Template')}</button>
+        <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Update Template', 'bitform')}</button>
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>
-            {__('Template Name:')}
+            {__('Template Name:', 'bitform')}
           </b>
           <input onChange={handleTitle} type="text" className="btcd-paper-inp w-9" placeholder="Name" value={mailTemp[id].title} />
         </div>
         <div className="mt-3 flx">
-          <b style={{ width: 100 }}>{__('Subject:')}</b>
-          <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder={__('Email Subject Here')} value={mailTemp[id].sub} />
+          <b style={{ width: 100 }}>{__('Subject:', 'bitform')}</b>
+          <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder={__('Email Subject Here', 'bitform')} value={mailTemp[id].sub} />
           <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
-            <option value="">{__('Add field')}</option>
+            <option value="">{__('Add field', 'bitform')}</option>
             <optgroup label="Form Fields">
               {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
             </optgroup>
@@ -90,7 +90,7 @@ function EmailTemplateEdit() {
         </div>
 
         <div className="mt-3">
-          <div><b>{__('Body:')}</b></div>
+          <div><b>{__('Body:', 'bitform')}</b></div>
 
           <label htmlFor={`t-m-e-${id}-${formID}`} className="mt-2 w-10">
             <TinyMCE

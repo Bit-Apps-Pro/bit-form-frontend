@@ -35,9 +35,9 @@ export default function MailChimpActions({ sheetConf, setSheetConf, formFields, 
   return (
 
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={sheetConf.actions?.address || false} onChange={(e) => actionHandler(e, 'address')} className="wdt-200 mt-4 mr-2" value="address" title={__('Add Address Field')} subTitle={__('Add Address Field')} />
-      <TableCheckBox checked={sheetConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'double_opt_in')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in')} subTitle={__('Add Double Opt-in')} />
-      <TableCheckBox checked={sheetConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Mail Chimp')} subTitle={__('Update Responses with MailChimp exist Aduience?')} />
+      <TableCheckBox checked={sheetConf.actions?.address || false} onChange={(e) => actionHandler(e, 'address')} className="wdt-200 mt-4 mr-2" value="address" title={__('Add Address Field', 'bitform')} subTitle={__('Add Address Field', 'bitform')} />
+      <TableCheckBox checked={sheetConf.actions?.double_opt_in || false} onChange={(e) => actionHandler(e, 'double_opt_in')} className="wdt-200 mt-4 mr-2" value="double_opt_in" title={__('Double Opt-in', 'bitform')} subTitle={__('Add Double Opt-in', 'bitform')} />
+      <TableCheckBox checked={sheetConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Mail Chimp', 'bitform')} subTitle={__('Update Responses with MailChimp exist Aduience?', 'bitform')} />
     </div>
   )
 }

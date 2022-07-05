@@ -44,8 +44,8 @@ export default function HtmlFieldSettings() {
       {/* <div className={css(style.section, style.flxColumn)}>
         <Back2FldBtn size="20" className={css(style.btn)} />
         <div>
-          <div className={css(style.mainTitle)}>{__('Field Settings')}</div>
-          <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1))}</span>
+          <div className={css(style.mainTitle)}>{__('Field Settings', 'bitform')}</div>
+          <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
         </div>
       </div> */}
       <FieldSettingTitle
@@ -65,7 +65,7 @@ export default function HtmlFieldSettings() {
           <div className={css(ut.flxc)}>
             <b>Content: </b>
             <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
-              <div className={css(ut.tipBody)}>{__('Edit the HTML field content by clicking on edit icon')}</div>
+              <div className={css(ut.tipBody)}>{__('Edit the HTML field content by clicking on edit icon', 'bitform')}</div>
             </Cooltip>
           </div>
           <span

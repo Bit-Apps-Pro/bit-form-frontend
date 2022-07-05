@@ -56,7 +56,7 @@ a:hover {
 #btcd-app {
   color: var(--dp-blue);
   direction: ltr !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Outfit", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -143,7 +143,7 @@ button.check {
 
 .media-modal {
   & * {
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Outfit", sans-serif !important;
   }
 
   & a {
@@ -626,7 +626,7 @@ input[type="checkbox"].disabled:checked:before {
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  min-height: 20px;
+  min-height: 25px;
   padding: 8px;
   width: auto;
   border-radius: 8px;
@@ -2380,7 +2380,7 @@ nav.top-nav {
     position: absolute;
     top: 110%;
     left: var(--tt-left);
-    font-family: "Montserrat", sans-serif;
+    font-family: "Outfit", sans-serif;
     line-height: 1;
     white-space: pre-wrap;
     font-size: 13px;

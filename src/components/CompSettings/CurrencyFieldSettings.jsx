@@ -134,7 +134,7 @@ const CurrencyFieldSettings = () => {
 
       <SimpleAccordion
         id="inp-frmt-opt-stng"
-        title={__('Input Format Options')}
+        title={__('Input Format Options', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         // switching
         // toggleAction={hideAdminLabel}
@@ -145,7 +145,7 @@ const CurrencyFieldSettings = () => {
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(ut.ml1, ut.mt1)}>
             <h4 className={css(ut.m0, FieldStyle.title)}>
-              {__('Formatter')}
+              {__('Formatter', 'bitform')}
               :
             </h4>
             <select
@@ -155,9 +155,9 @@ const CurrencyFieldSettings = () => {
               value={fieldData?.inputFormatOptions?.formatter}
               onChange={e => handleConfigChange(e.target.value, 'formatter', 'inputFormatOptions')}
             >
-              <option value="none">{__('None')}</option>
-              <option value="browser">{__('Browser')}</option>
-              <option value="custom">{__('Custom')}</option>
+              <option value="none">{__('None', 'bitform')}</option>
+              <option value="browser">{__('Browser', 'bitform')}</option>
+              <option value="custom">{__('Custom', 'bitform')}</option>
             </select>
           </div>
 
@@ -165,7 +165,7 @@ const CurrencyFieldSettings = () => {
             <SingleToggle
               id="crncy-symbl"
               tip="By disabling this option, the currency symbol will be show"
-              title={__('Currency Symbol:')}
+              title={__('Currency Symbol:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'inputFormatOptions')}
               isChecked={showCurrencySymbol}
             />
@@ -175,7 +175,7 @@ const CurrencyFieldSettings = () => {
             <SingleToggle
               id="rnd-to-clsst-int"
               tip="By disabling this option, the currency symbol will be show"
-              title={__('Round to Closest Integer:')}
+              title={__('Round to Closest Integer:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'inputFormatOptions')}
               isChecked={roundToClosestInteger}
             />
@@ -185,7 +185,7 @@ const CurrencyFieldSettings = () => {
             <SingleToggle
               id="rnd-to-clsst-frc-dgt"
               tip="By Enabling this option, the Fraction Will Rounded"
-              title={__('Round to Closest Fraction Digits:')}
+              title={__('Round to Closest Fraction Digits:', 'bitform')}
               action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
               isChecked={roundToClosestFractionDigits}
             />
@@ -197,7 +197,7 @@ const CurrencyFieldSettings = () => {
 
       <SimpleAccordion
         id="srch-plchldr-stng"
-        title={__('Search Placeholder')}
+        title={__('Search Placeholder', 'bitform')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By disabling this option, the search placeholder text will be remove"
@@ -224,7 +224,7 @@ const CurrencyFieldSettings = () => {
 
       <SimpleAccordion
         id="cntry-nt-fund-stng"
-        title={__('Currency Not Found Text')}
+        title={__('Currency Not Found Text', 'bitform')}
         className={css(FieldStyle.fieldSection)}
       // switching
       // toggleAction={hideAdminLabel}
@@ -250,7 +250,7 @@ const CurrencyFieldSettings = () => {
         id="shw-slctd-img-stng"
         tip="By disabling this option, the show selected flag image will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Show Selected Flag Image')}
+        title={__('Show Selected Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
       />
@@ -261,7 +261,7 @@ const CurrencyFieldSettings = () => {
         id="slctd-clrbl-stng"
         tip="By disabling this option, the selected currency clearable button will be hidden"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Selected Currency Clearable')}
+        title={__('Selected Currency Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'selectedCurrencyClearable', 'config')}
         isChecked={selectedCurrencyClearable}
       />
@@ -272,7 +272,7 @@ const CurrencyFieldSettings = () => {
         id="srch-clrbl-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the selected currency search clearable button will be hidden"
-        title={__('Search Clearable')}
+        title={__('Search Clearable', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'searchClearable', 'config')}
         isChecked={searchClearable}
       />
@@ -283,7 +283,7 @@ const CurrencyFieldSettings = () => {
         id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         tip="By disabling this option, the option flags image will be hidden"
-        title={__('Option Flag Image')}
+        title={__('Option Flag Image', 'bitform')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
       />
@@ -293,7 +293,7 @@ const CurrencyFieldSettings = () => {
       <div className={css(FieldStyle.fieldSection)}>
         <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
           &nbsp;
-          {__('Edit Options')}
+          {__('Edit Options', 'bitform')}
         </button>
       </div>
 
@@ -305,7 +305,7 @@ const CurrencyFieldSettings = () => {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options')}
+        title={__('Options', 'bitform')}
       >
         <div className="pos-rel">
           <EditOptions

@@ -7,9 +7,9 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">{__('Team:')}</b>
+      <b className="wdt-100 d-in-b">{__('Team:', 'bitform')}</b>
       <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar)} name="team" value={workDriveConf.team} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Team')}</option>
+        <option value="">{__('Select Team', 'bitform')}</option>
         {
           workDriveConf?.default?.teams && Object.values(workDriveConf.default.teams).map(teamApi => (
             <option key={teamApi.teamId} value={teamApi.teamId}>
@@ -18,12 +18,12 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           ))
         }
       </select>
-      <button onClick={() => refreshTeams(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Teams')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshTeams(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Teams', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
       <b className="wdt-100 d-in-b">Folder:</b>
       <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, 0)} name="folder" value={workDriveConf.folderMap[0] || workDriveConf.folder} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Folder')}</option>
+        <option value="">{__('Select Folder', 'bitform')}</option>
         {
           workDriveConf?.default?.teamFolders?.[workDriveConf.team] && Object.values(workDriveConf.default.teamFolders[workDriveConf.team]).map(teamFolderApi => (
             <option key={teamFolderApi.teamFolderId} value={teamFolderApi.teamFolderId}>
@@ -32,7 +32,7 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           ))
         }
       </select>
-      <button onClick={() => refreshTeamFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Team Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshTeamFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Team Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       {workDriveConf.folderMap.map((folder, i) => (
         <div key={folder}>
@@ -53,7 +53,7 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
                   ))
                 }
               </select>
-              <button onClick={() => refreshSubFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshSubFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
       )}
       {workDriveConf.folder && (
         <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
           <div className="btcd-hr mt-1" />
           <ZohoWorkDriveActions
             workDriveConf={workDriveConf}

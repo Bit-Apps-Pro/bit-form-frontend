@@ -162,7 +162,7 @@ export default function NewInteg({ allIntegURL }) {
         </Link>
         <div className="w-8 txt-center">
           <div className="mb-1"><b className="f-lg">{integUrlName}</b></div>
-          <div>{__('Integration Settings')}</div>
+          <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
 

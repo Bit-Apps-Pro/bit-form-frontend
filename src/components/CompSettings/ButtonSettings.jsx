@@ -39,9 +39,9 @@ export default function ButtonSettings() {
   const selectedFieldId = useRecoilValue($selectedFieldId)
 
   const pos = [
-    { name: __('Left'), value: 'start' },
-    { name: __('Center'), value: 'center' },
-    { name: __('Right'), value: 'end' },
+    { name: __('Left', 'bitform'), value: 'start' },
+    { name: __('Center', 'bitform'), value: 'center' },
+    { name: __('Right', 'bitform'), value: 'end' },
   ]
   const type = [
     { name: 'Reset', value: 'reset', disabled: false },
@@ -128,7 +128,7 @@ export default function ButtonSettings() {
 
         <SimpleAccordion
           id="btn-txt-stng"
-          title={__('Button Text')}
+          title={__('Button Text', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
@@ -142,14 +142,14 @@ export default function ButtonSettings() {
             />
           </div>
           <FieldIconSettings
-            label="Leading Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.btnPreIcn}
             styleRoute="btn-pre-i"
             setIcon={() => setIconModel('btnPreIcn')}
             removeIcon={() => removeIcon('btnPreIcn')}
           />
           <FieldIconSettings
-            label="Trailing Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.btnSufIcn}
             styleRoute="btn-suf-i"
             setIcon={() => setIconModel('btnSufIcn')}
@@ -168,7 +168,7 @@ export default function ButtonSettings() {
         <FieldSettingsDivider />
         <SimpleAccordion
           id="btn-algn"
-          title={__('Button Align')}
+          title={__('Button Align', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
@@ -183,7 +183,7 @@ export default function ButtonSettings() {
 
         <SimpleAccordion
           id="btn-typ"
-          title={__('Button Type')}
+          title={__('Button Type', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           open
         >
@@ -201,7 +201,7 @@ export default function ButtonSettings() {
           <SingleToggle
             id="ful-wid-btn"
             tip="By disabling this option, the button full width will be remove"
-            title={__('Full Width Button')}
+            title={__('Full Width Button', 'bitform')}
             action={setFulW}
             isChecked={fulW}
           />
@@ -217,7 +217,7 @@ export default function ButtonSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons')}
+        title={__('Icons', 'bitform')}
       >
         <div className="pos-rel" />
 

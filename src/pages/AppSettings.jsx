@@ -21,27 +21,27 @@ function AppSettingsPage() {
       <aside className="btcd-app-setting-sidebar mr-4">
         <NavLink to="/app-settings/recaptcha" activeClassName="btcd-app-s-a">
           <ReCaptchaIcn size="21" className="mr-1" />
-          {__('reCAPTCHA')}
+          {__('reCAPTCHA', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
           <span className="mr-1"><GoogleAdIcn size={19} /></span>
-          {__('Google Ads')}
+          {__('Google Ads', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/smtp" activeClassName="btcd-app-s-a">
           <span className="mr-1"><MailOpenIcn size="21" /></span>
-          {__('SMTP')}
+          {__('SMTP', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/cpt" activeClassName="btcd-app-s-a">
           <span className="mr-1"><CPTIcn size={21} /></span>
-          {__('CPT')}
+          {__('CPT', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/api" activeClassName="btcd-app-s-a">
           <span className="mr-1"><APIIcon size={21} /></span>
-          {__('API')}
+          {__('API', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/payments" activeClassName="btcd-app-s-a">
           <PaymentsIcn size="16" className="mr-2" />
-          <span className="ml-2">{__('Payments')}</span>
+          <span className="ml-2">{__('Payments', 'bitform')}</span>
         </NavLink>
       </aside>
 

@@ -89,10 +89,10 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Action:')}</b>
+        <b className="wdt-200 d-in-b">{__('Action:', 'bitform')}</b>
 
         <select onChange={handleInputP} name="actionName" value={hubspotConf?.actionName} className="btcd-paper-inp w-5">
-          <option value="">{__('Select Action')}</option>
+          <option value="">{__('Select Action', 'bitform')}</option>
           {
             action.map(({ label, value }) => (
               <option key={label} value={value}>
@@ -107,10 +107,10 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       {hubspotConf?.actionName !== 'contact-create' && (
         <>
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Pipeline:')}</b>
+            <b className="wdt-200 d-in-b">{__('Pipeline:', 'bitform')}</b>
 
             <select onChange={handleInputP} name="pipeline" value={hubspotConf?.pipeline} className="btcd-paper-inp w-5">
-              <option value="">{__('Select Pipeline')}</option>
+              <option value="">{__('Select Pipeline', 'bitform')}</option>
               {hubspotConf?.default?.pipelines.map(({ pipelineId, pipelineName }) => (
                 <option key={pipelineId} value={pipelineId}>
                   {pipelineName}
@@ -121,10 +121,10 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
           <br />
           <br />
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Stage:')}</b>
+            <b className="wdt-200 d-in-b">{__('Stage:', 'bitform')}</b>
 
             <select onChange={handleInput} name="stage" value={hubspotConf?.stage} className="btcd-paper-inp w-5">
-              <option value="">{__('Select Stage')}</option>
+              <option value="">{__('Select Stage', 'bitform')}</option>
               {hubspotConf?.stageTmp?.[0]?.map(({ stageId, stageName }) => (
                 <option key={stageId} value={stageId}>
                   {stageName}
@@ -137,16 +137,16 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       )}
       <br />
       {((hubspotConf?.actionName === 'contact-create') || (hubspotConf?.pipeline && hubspotConf?.stage))
-        && (
-          <>
-            <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
-            <div className="btcd-hr mt-1" />
-            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-              <div className="txt-dp"><b>{__('Hubspot Fields')}</b></div>
-            </div>
-          </>
-        )}
+      && (
+        <>
+          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Hubspot Fields', 'bitform')}</b></div>
+          </div>
+        </>
+      )}
       {((hubspotConf?.actionName === 'contact-create') || (hubspotConf?.pipeline && hubspotConf?.stage)) && hubspotConf?.field_map.map((itm, i) => (
         <HubspotFieldMap
           key={`rp-m-${i + 9}`}
@@ -163,7 +163,7 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(hubspotConf.field_map.length, hubspotConf, setHubspotConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
       <br />
       <br />
-      <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <HubspotActions
         hubspotConf={hubspotConf}

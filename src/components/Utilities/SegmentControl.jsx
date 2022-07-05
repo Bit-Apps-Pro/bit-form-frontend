@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+/* eslint-disable react/jsx-props-no-spreading */
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 
@@ -117,24 +118,30 @@ function SegmentControl({ defaultActive,
     // },
   }
   const selectorRef = useRef(null)
-  const [tabsRef, setTabsRef] = useState(null)
+  const selectorTransition = useRef(null)
+  const tabsRef = useRef(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
+  const As = component
 
   useEffect(() => {
     if (active !== defaultActive) setactive(defaultActive)
   }, [defaultActive])
 
-  const setSelectorPos = (activeElement) => {
-    const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
-    // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
-    selectorRef.current.style.width = `${toActiveElmWidth}px`
-    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 4}px, -50%)`
-  }
-
-  const toActiveElement = tabsRef?.querySelector(`[data-label="${active}"]`)
-  if (toActiveElement) {
-    setSelectorPos(toActiveElement)
-  }
+  useLayoutEffect(() => {
+    const toActiveElement = tabsRef?.current?.querySelector(`[data-label="${active}"]`)
+    if (toActiveElement) {
+      const { width: toActiveElmWidth } = toActiveElement.getBoundingClientRect() || { width: 0 }
+      if (!selectorRef.current) return
+      if (selectorRef.current.style.width === '') {
+        selectorTransition.transition = selectorRef.current.style.transition
+        selectorRef.current.style.transition = 'all 0s'
+      } else {
+        selectorRef.current.style.transition = selectorTransition.transition
+      }
+      selectorRef.current.style.width = `${toActiveElmWidth}px`
+      selectorRef.current.style.transform = `translate(${toActiveElement.offsetLeft - 5}px, -50%)`
+    }
+  })
 
   const eventHandler = (e, i) => {
     e.preventDefault()
@@ -145,11 +152,10 @@ function SegmentControl({ defaultActive,
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    const currentActiveElm = tabsRef.querySelector(`.tabs ${component}.active`)
+    const currentActiveElm = tabsRef?.current?.querySelector(`.tabs ${component}.active`)
     if (elm === currentActiveElm) return
 
     currentActiveElm?.classList.remove('active')
-    setSelectorPos(elm)
     setactive(options[i].label)
     onChange(options[i].label)
   }
@@ -165,42 +171,29 @@ function SegmentControl({ defaultActive,
 
   return (
     <div className={css(style.wrapper)}>
-      <div ref={setTabsRef} className={`${css(style.tabs)} tabs`}>
+      <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
-        {component === 'a' && options?.map((item, i) => (
-          <a
+        {options?.map((item, i) => (
+          <As
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
             onClick={e => eventHandler(e, i)}
             onKeyPress={e => eventHandler(e, i)}
+            data-label={item.label}
+            data-testid={`${item.label}-tab`}
+            {...(component === 'button' && { type: 'button' })}
+            {...(component === 'a' && { href: `#${item.label}` })}
             href={`#${item.label}`}
-            data-label={item.label}
-            data-testid={`${item.label}-tab`}
-          >
-            {checkToShow(item, 'icn') && (
-              <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
-            )}
-            {checkToShow(item, 'label') && __(item.label)}
-          </a>
-        ))}
-        {component === 'button' && options?.map((item, i) => (
-          <button
-            key={`segment-option-${i * 10}`}
             type="button"
-            className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-            onClick={e => eventHandler(e, i)}
-            onKeyPress={e => eventHandler(e, i)}
-            data-label={item.label}
-            data-testid={`${item.label}-tab`}
           >
             {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
             {checkToShow(item, 'label') && __(item.label)}
-          </button>
+          </As>
         ))}
       </div>
-    </div>
+    </div >
   )
 }
 

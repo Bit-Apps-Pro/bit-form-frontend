@@ -180,16 +180,16 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
       )}
       {(importOpts.dataSrc === 'presets' || importOpts.dataSrc === 'fileupload') && (
         <div className="mt-1">
-          <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options')} value="replace" checked={importOpts.type !== 'merge'} />
+          <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options', 'bitform')} value="replace" checked={importOpts.type !== 'merge'} />
           <br />
-          <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options')} value="merge" checked={importOpts.type === 'merge'} />
+          <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options', 'bitform')} value="merge" checked={importOpts.type === 'merge'} />
         </div>
 
       )}
       <button data-testid="imprt-edt-optns-btn" onClick={handleImport} className={`${css(app.btn)} blue`} type="button" disabled={!newOptions.length || false}>
         <BackIcn size="15" />
         &nbsp;
-        {__('Import & Edit')}
+        {__('Import & Edit', 'bitform')}
       </button>
     </div>
   )

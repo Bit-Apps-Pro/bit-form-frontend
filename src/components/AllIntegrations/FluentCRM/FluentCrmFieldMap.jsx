@@ -45,13 +45,13 @@ export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf,
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...')}</option>
+          <option value="custom">{__('Custom...', 'bitform')}</option>
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -61,10 +61,10 @@ export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf,
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
         <select className="btcd-paper-inp" name="fluentCRMField" value={field.fluentCRMField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             isRequired ? fluentCrmConf?.default?.fields && Object.values(fluentCrmConf.default.fields).map(fld => (
               <option key={`${fld.key}-1`} value={fld.key}>

@@ -17,13 +17,13 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
     >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           <optgroup label="Form Fields">
             {
               formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
           </optgroup>
-          <option value="custom">{__('Custom...')}</option>
+          <option value="custom">{__('Custom...', 'bitform')}</option>
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -33,10 +33,10 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i, deskConf, setDeskConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i, deskConf, setDeskConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
         <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
-          <option value="">{__('Select Field')}</option>
+          <option value="">{__('Select Field', 'bitform')}</option>
           {
             deskConf.default?.fields?.[orgId]?.fields && Object.values(deskConf.default.fields[orgId].fields).map(ticketField => (
               isNotRequired

@@ -68,7 +68,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
   }
 
   return (
-    <SimpleAccordion className="style-acc w-9" title={__('Color')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Color', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -84,40 +84,40 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
                   value={pseudo}
                   onChange={setPseudo}
                   btns={[
-                    { lbl: __('Default'), icn: 'Default' },
-                    ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over'), icn: 'Hover' }] : []),
-                    ...('focus' in styleConfig ? [{ lbl: __('On Focus'), icn: 'Focus' }] : []),
+                    { lbl: __('Default', 'bitform'), icn: 'Default' },
+                    ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over', 'bitform'), icn: 'Hover' }] : []),
+                    ...('focus' in styleConfig ? [{ lbl: __('On Focus', 'bitform'), icn: 'Focus' }] : []),
                   ]}
                 />
               )}
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">{__('Text Color')}</span>
+        <span className="f-5">{__('Text Color', 'bitform')}</span>
         <BtnGrp
           value={clrTyp}
           onChange={setClrTyp}
           btns={[
-            { lbl: __('Color'), icn: <ColorIcn /> },
-            { lbl: __('None'), icn: <NoneIcn /> },
+            { lbl: __('Color', 'bitform'), icn: <ColorIcn /> },
+            { lbl: __('None', 'bitform'), icn: <NoneIcn /> },
           ]}
         />
       </div>
       {clrTyp !== 'None' && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">{__('Color')}</span>
+          <span className="f-5">{__('Color', 'bitform')}</span>
           <ColorPicker alwGradient={false} value={clr} onChange={setClr} />
         </div>
       )}
       {'placeholder' in styleConfig && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">{__('Placeholder Color')}</span>
+          <span className="f-5">{__('Placeholder Color', 'bitform')}</span>
           <BtnGrp
             value={placeholderClrTyp}
             onChange={setPlaceholderClrTyp}
             btns={[
-              { lbl: __('Color'), icn: <ColorIcn /> },
-              { lbl: __('None'), icn: <NoneIcn /> },
+              { lbl: __('Color', 'bitform'), icn: <ColorIcn /> },
+              { lbl: __('None', 'bitform'), icn: <NoneIcn /> },
             ]}
           />
         </div>
@@ -125,7 +125,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
 
       {'placeholder' in styleConfig && placeholderClrTyp !== 'None' && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">{__('Placeholder Color')}</span>
+          <span className="f-5">{__('Placeholder Color', 'bitform')}</span>
           <ColorPicker alwGradient={false} value={placeholderClr} onChange={setPlcholderClr} />
         </div>
       )}

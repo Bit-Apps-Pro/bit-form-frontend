@@ -20,12 +20,12 @@ export default function RapidmailAuthorization({ rapidmailConf,
 
   const nextPage = () => {
     !rapidmailConf?.default
-      && getAllRecipient(
-        rapidmailConf,
-        setRapidmailConf,
-        setIsLoading,
-        setSnackbar,
-      )
+            && getAllRecipient(
+              rapidmailConf,
+              setRapidmailConf,
+              setIsLoading,
+              setSnackbar,
+            )
     setstep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
@@ -47,7 +47,7 @@ export default function RapidmailAuthorization({ rapidmailConf,
       }}
     >
       <div className="mt-3">
-        <b>{__('Integration Name:')}</b>
+        <b>{__('Integration Name:', 'bitform')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -55,12 +55,12 @@ export default function RapidmailAuthorization({ rapidmailConf,
         name="name"
         value={rapidmailConf?.name}
         type="text"
-        placeholder={__('Integration Name...')}
+        placeholder={__('Integration Name...', 'bitform')}
         disabled={isInfo}
       />
 
       <small className="d-blk mt-5">
-        {__('To get Username and Password , Please Visit')}
+        {__('To get Username and Password , Please Visit', 'bitform')}
         {' '}
         <a
           className="btcd-link"
@@ -68,12 +68,12 @@ export default function RapidmailAuthorization({ rapidmailConf,
           target="_blank"
           rel="noreferrer"
         >
-          {__('Create API User')}
+          {__('Create API User', 'bitform')}
         </a>
       </small>
 
       <div className="mt-3">
-        <b>{__('User Name:')}</b>
+        <b>{__('User Name:', 'bitform')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -81,13 +81,13 @@ export default function RapidmailAuthorization({ rapidmailConf,
         name="username"
         value={rapidmailConf?.username}
         type="text"
-        placeholder={__('User name...')}
+        placeholder={__('User name...', 'bitform')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.username}</div>
 
       <div className="mt-3">
-        <b>{__('Password:')}</b>
+        <b>{__('Password:', 'bitform')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -95,7 +95,7 @@ export default function RapidmailAuthorization({ rapidmailConf,
         name="password"
         value={rapidmailConf?.password}
         type="text"
-        placeholder={__('Password...')}
+        placeholder={__('Password...', 'bitform')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.password}</div>
@@ -116,8 +116,8 @@ export default function RapidmailAuthorization({ rapidmailConf,
             disabled={isAuthorized || isLoading}
           >
             {isAuthorized
-              ? __('Authorized ✔')
-              : __('Authorize')}
+              ? __('Authorized ✔', 'bitform')
+              : __('Authorize', 'bitform')}
             {isLoading && (
               <LoaderSm
                 size="20"
@@ -133,7 +133,7 @@ export default function RapidmailAuthorization({ rapidmailConf,
             type="button"
             disabled={!isAuthorized}
           >
-            {__('Next')}
+            {__('Next', 'bitform')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </div>

@@ -14,7 +14,7 @@ function FileStyle({ action, value }) {
             htmlFor="panel"
             className={css(ut.fw500, ut.mr1)}
           >
-            {__('Panel Layout')}
+            {__('Panel Layout', 'bitform')}
           </label>
           <Cooltip width={250} icnSize={17} className={css(ut.mt0)}>
             <div className={css(ut.tipBody)}>
@@ -41,7 +41,7 @@ function FileStyle({ action, value }) {
             htmlFor="remove_btn"
             className={css(ut.fw500, ut.mr1)}
           >
-            {__('Remove Button')}
+            {__('Remove Button', 'bitform')}
           </label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
@@ -69,7 +69,7 @@ function FileStyle({ action, value }) {
             htmlFor="process_btn"
             className={css(ut.fw500, ut.mr1)}
           >
-            {__('Process Button')}
+            {__('Process Button', 'bitform')}
 
           </label>
           <Cooltip width={250} icnSize={17}>
@@ -98,7 +98,7 @@ function FileStyle({ action, value }) {
             htmlFor="load_indicator"
             className={css(ut.fw500, ut.mr1)}
           >
-            {__('Load Indicator')}
+            {__('Load Indicator', 'bitform')}
 
           </label>
           <Cooltip width={250} icnSize={17}>
@@ -127,7 +127,7 @@ function FileStyle({ action, value }) {
             htmlFor="process_indicator"
             className={css(ut.fw500, ut.mr2)}
           >
-            {__('Progress Indicator')}
+            {__('Progress Indicator', 'bitform')}
 
           </label>
           <Cooltip width={250} icnSize={17}>

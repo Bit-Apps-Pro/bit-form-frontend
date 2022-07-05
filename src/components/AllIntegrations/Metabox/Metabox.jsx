@@ -78,19 +78,19 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!data.post_type) {
-      setSnackbar({ show: true, msg: __('Post Type cann\'t be empty') })
+      setSnackbar({ show: true, msg: __('Post Type cann\'t be empty', 'bitform') })
       return
     }
     if (!data.post_status) {
-      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty') })
+      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty', 'bitform') })
       return
     }
     if (!checkMappedPostFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     if (!checkMappedAcfFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)
@@ -103,11 +103,11 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         title={tutorialLinks.metaBox.title}
         youTubeLink={tutorialLinks.metaBox.link}
       /> */}
-      <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
       <div className="mt-3 flx">
-        <b>{__('Post Type')}</b>
+        <b>{__('Post Type', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select one of the defined WordPress post types Or custom post types for the post.
@@ -122,11 +122,11 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
             <option key={`pt-${i * 7}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types')}'` }} type="button">&#x21BB;</button>
+        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bitform')}'` }} type="button">&#x21BB;</button>
       </div>
 
       <div className="mt-3">
-        <b>{__('Post Status')}</b>
+        <b>{__('Post Status', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select the status for the post. If published status is selected and the post date is in the future, it will automatically be changed to scheduled
@@ -135,7 +135,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="auto-draft">Auto-Draft</option>
@@ -144,7 +144,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3 flx">
-        <b>{__('Author')}</b>
+        <b>{__('Author', 'bitform')}</b>
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Select the user to be assigned to the post.
@@ -154,7 +154,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
       <div>
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
-          <option disabled selected>{__('Select Author')}</option>
+          <option disabled selected>{__('Select Author', 'bitform')}</option>
           {users.map((user, i) => (
             <option key={`pauth-${i + 4}`} value={user.ID}>{user.display_name}</option>
           ))}
@@ -162,21 +162,21 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
 
       <div className="mt-3">
-        <b>{__('Comment Status')}</b>
+        <b>{__('Comment Status', 'bitform')}</b>
 
       </div>
       <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled selected>{__('Select Status', 'bitform')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
 
       <div>
-        <div className="mt-3 mb-1"><b>{__('Field Mapping')}</b></div>
+        <div className="mt-3 mb-1"><b>{__('Field Mapping', 'bitform')}</b></div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
-          <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-          <div className="txt-dp"><b>{__('Post Fields')}</b></div>
+          <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+          <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
         </div>
       </div>
       {data.post_map.map((itm, i) => (
@@ -203,14 +203,14 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       <div>
         <div>
           <div className="mt-3 mb-1">
-            <b>{__('Metabox Fields Mapping')}</b>
-            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }} type="button">&#x21BB;</button>
+            <b>{__('Metabox Fields Mapping', 'bitform')}</b>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
-              <b>{__('Metaxbox Fields')}</b>
+              <b>{__('Metaxbox Fields', 'bitform')}</b>
             </div>
           </div>
         </div>
@@ -236,14 +236,14 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       <div>
         <div>
           <div className="mt-3 mb-1">
-            <b>{__('Metabox File Upload Fields Map')}</b>
-            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }} type="button">&#x21BB;</button>
+            <b>{__('Metabox File Upload Fields Map', 'bitform')}</b>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
-              <b>{__('Metaxbox Fields')}</b>
+              <b>{__('Metaxbox Fields', 'bitform')}</b>
             </div>
           </div>
         </div>
@@ -271,7 +271,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         type="button"
         onClick={() => saveConfig()}
       >
-        {__('Save')}
+        {__('Save', 'bitform')}
         {' '}
       </button>
 

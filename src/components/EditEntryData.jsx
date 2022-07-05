@@ -123,7 +123,7 @@ export default function EditEntryData(props) {
       lg
       show={showEdit}
       setModal={props.close}
-      title={__('Edit')}
+      title={__('Edit', 'bitform')}
     >
       {formStyle && (
         <>

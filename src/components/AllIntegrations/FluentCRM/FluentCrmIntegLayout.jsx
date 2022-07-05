@@ -26,9 +26,9 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Fluent CRM List:')}</b>
+        <b className="wdt-200 d-in-b">{__('Fluent CRM List:', 'bitform')}</b>
         <select onChange={(e) => inputHendler(e)} name="list_id" value={fluentCrmConf.list_id} className="btcd-paper-inp w-5">
-          <option value="">{__('Select Fluent CRM list')}</option>
+          <option value="">{__('Select Fluent CRM list', 'bitform')}</option>
           {
             fluentCrmConf?.default?.fluentCrmList && Object.keys(fluentCrmConf.default.fluentCrmList).map(fluentCrmListName => (
               <option key={fluentCrmListName} value={fluentCrmConf.default.fluentCrmList[fluentCrmListName].id}>
@@ -37,10 +37,10 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
             ))
           }
         </select>
-        <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fluent CRM List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fluent CRM List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <div className="flx mt-5">
-        <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ')}</b>
+        <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={fluentCrmConf?.tags}
           className="btcd-paper-drpdwn w-5"
@@ -59,12 +59,12 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         />
       )}
       <div className="mt-4">
-        <b className="wdt-100">{__('Map Fields')}</b>
+        <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-1">
-        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-        <div className="txt-dp"><b>{__('Fluent CRM Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+        <div className="txt-dp"><b>{__('Fluent CRM Fields', 'bitform')}</b></div>
       </div>
 
       {fluentCrmConf.field_map.map((itm, i) => (
@@ -82,12 +82,12 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
       {/* {fluentCrmConf.actions?.customField && (
               <>
                 <div className="mt-4">
-                  <b className="wdt-100">{__('Map Fields')}</b>
+                  <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
                 </div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-                  <div className="txt-dp"><b>{__('Fluent CRM Custom Fields')}</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Fluent CRM Custom Fields', 'bitform')}</b></div>
                 </div>
 
                 {fluentCrmConf.field_map.map((itm, i) => (
@@ -106,7 +106,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
               </>
             )} */}
       <br />
-      <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <FluentCrmActions
         fluentCrmConf={fluentCrmConf}

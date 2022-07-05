@@ -21,8 +21,8 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
     const newConf = { ...sendinBlueConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty') : '',
-        api_key: !newConf.api_key ? __('API Key cann\'t be empty') : '',
+        name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
+        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bitform') : '',
       })
       return
     }
@@ -62,16 +62,16 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
         youTubeLink={tutorialLinks.sendinblue.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendinBlueConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendinBlueConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
-        <div className="mt-3"><b>{__('API Key:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={sendinBlueConf.api_key} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={sendinBlueConf.api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         <small className="d-blk mt-5">
-          {__('To get API , Please Visit')}
+          {__('To get API , Please Visit', 'bitform')}
           {' '}
-          <a className="btcd-link" href="https://account.sendinblue.com/advanced/api" target="_blank" rel="noreferrer">{__('Sendinblue API Console')}</a>
+          <a className="btcd-link" href="https://account.sendinblue.com/advanced/api" target="_blank" rel="noreferrer">{__('Sendinblue API Console', 'bitform')}</a>
         </small>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -91,12 +91,12 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
         {!isInfo && (
           <>
             <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-              {isAuthorized ? __('Authorized ✔') : __('Authorize')}
+              {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
             <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-              {__('Next')}
+              {__('Next', 'bitform')}
               <BackIcn className="ml-1 rev-icn" />
             </button>
           </>

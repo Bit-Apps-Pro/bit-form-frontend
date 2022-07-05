@@ -80,7 +80,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
     closeConfMdl()
     bitsFetch({ noteID: confMdl.noteID, formID, entryID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
-        toast.success(__('Note Deleted Successfully'))
+        toast.success(__('Note Deleted Successfully', 'bitform'))
         setFetchData(true)
       }
       setIsLoading(false)
@@ -110,20 +110,20 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
           {note.updated_at
             ? (
               <small>
-                {__('updated on:')}
+                {__('updated on:', 'bitform')}
                 {` ${dateTimeFormatter(note.updated_at, dateTimeFormat)}`}
               </small>
             )
             : (
               <small>
-                {__('created at:')}
+                {__('created at:', 'bitform')}
                 {` ${dateTimeFormatter(note.created_at, dateTimeFormat)}`}
               </small>
             )}
-          <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit')}'`, fontSize: 16 }} onClick={() => setEditMode(note.id)}>
+          <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'`, fontSize: 16 }} onClick={() => setEditMode(note.id)}>
             <DocIcn size="15" />
           </button>
-          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? css(app.btn) : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'`, fontSize: 16 }} disabled={isDeleting}>
+          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? css(app.btn) : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
             <TrashIcn size="15" />
             {isDeleting && <LoaderSm size={20} clr="#000" className="ml-2" />}
           </button>
@@ -145,11 +145,11 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
         {!isPro && (
           <div className="pro-blur mt-4 flx">
             <div className="pro">
-              {__('Available On')}
+              {__('Available On', 'bitform')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
-                  {__('Premium')}
+                  {__('Premium', 'bitform')}
                 </span>
               </a>
             </div>
@@ -161,7 +161,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
               {...{ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }}
             />
           )
-          : <button type="button" className={css(app.btn)} onClick={() => setShowForm(true)}>{__('create new note')}</button>}
+          : <button type="button" className={css(app.btn)} onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}
         {isLoading === 'allNotes'
           ? (
             <Loader style={{
@@ -185,10 +185,10 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
         show={confMdl.show}
         close={closeConfMdl}
         action={deleteNote}
-        title={__('Confirmation')}
+        title={__('Confirmation', 'bitform')}
       >
         <div className="txt-center mt-5 mb-4">
-          {__('Are you sure to delete this note')}
+          {__('Are you sure to delete this note', 'bitform')}
         </div>
         {isLoading && (
           <Loader style={{

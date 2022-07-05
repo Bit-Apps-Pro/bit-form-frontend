@@ -150,7 +150,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="upld-btn-txt-stng"
-        title={__('Upload Button Text:')}
+        title={__('Upload Button Text:', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -167,7 +167,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="btn-icn-stng"
-        title={__('Button Icons')}
+        title={__('Button Icons', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         toggleAction={hideAdminLabel}
         toggleChecked
@@ -176,7 +176,7 @@ export default function FileUploadSettings() {
       >
         <div className={css(ut.mt1)}>
           <FieldIconSettings
-            label="Leading Icon"
+            label="Prefix Icon"
             iconSrc={fieldData?.prefixIcn}
             styleRoute="pre-i"
             setIcon={() => setIconModel('prefixIcn')}
@@ -184,7 +184,7 @@ export default function FileUploadSettings() {
           />
 
           <FieldIconSettings
-            label="Trailing Icon"
+            label="Suffix Icon"
             iconSrc={fieldData?.suffixIcn}
             styleRoute="suf-i"
             setIcon={() => setIconModel('suffixIcn')}
@@ -219,7 +219,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="alw-mltpl-stng"
-        title={__('Allow Multiple:')}
+        title={__('Allow Multiple:', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('multiple', e.target.checked)}
         toggleChecked={multiple}
@@ -259,7 +259,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="fil-slct-stts-stng"
-        title={__('File Select Status')}
+        title={__('File Select Status', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('showSelectStatus', e.target.checked)}
         toggleChecked={showSelectStatus}
@@ -284,7 +284,7 @@ export default function FileUploadSettings() {
       <SingleToggle
         id="shw-mxmm-siz-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
-        title={__('Show Maximum Size')}
+        title={__('Show Maximum Size', 'bitform')}
         action={e => setConfigValue('showMaxSize', e.target.checked)}
         isChecked={showMaxSize}
         tip="By disabling this option, the field show maximum size will be hidden"
@@ -294,7 +294,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="mxmm-upld-siz-stng"
-        title={__('Maximum Upload Size')}
+        title={__('Maximum Upload Size', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
       >
@@ -316,7 +316,7 @@ export default function FileUploadSettings() {
               id="ttl-mxmm-siz"
               className={`${css(ut.mr2)} ${css(ut.fw500)} `}
               checked={isItTotalMax}
-              title={__('Total Maximum Size')}
+              title={__('Total Maximum Size', 'bitform')}
               onChange={e => setConfigValue('isItTotalMax', e.target.checked)}
             />
           )}
@@ -327,7 +327,7 @@ export default function FileUploadSettings() {
 
       <SimpleAccordion
         id="shw-fil-lst-stng"
-        title={__('Show File List')}
+        title={__('Show File List', 'bitform')}
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={e => setConfigValue('showFileList', e.target.checked)}
         toggleChecked={showFileList}
@@ -343,14 +343,14 @@ export default function FileUploadSettings() {
             id="shw-fil-prvw"
             className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
             checked={showFilePreview}
-            title={__('Show File Preview')}
+            title={__('Show File Preview', 'bitform')}
             onChange={e => setConfigValue('showFilePreview', e.target.checked)}
           />
           <CheckBoxMini
             id="shw-fil-siz"
             className={`${css(ut.mr2, ut.mt2)} ${css(ut.fw500)} `}
             checked={showFileSize}
-            title={__('Show File Size')}
+            title={__('Show File Size', 'bitform')}
             onChange={e => setConfigValue('showFileSize', e.target.checked)}
           />
         </div>
@@ -362,11 +362,11 @@ export default function FileUploadSettings() {
         <DropDown
           className="w-10"
           titleClassName="title"
-          title={__('Allowed File Type:')}
+          title={__('Allowed File Type:', 'bitform')}
           isMultiple
           addable
           options={options}
-          placeholder={__('Select File Type')}
+          placeholder={__('Select File Type', 'bitform')}
           jsonValue
           action={setAllowedFileType}
           value={existType}
@@ -381,7 +381,7 @@ export default function FileUploadSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons')}
+        title={__('Icons', 'bitform')}
       >
         <div className="pos-rel" />
         <Icons addPaddingOnSelect={false} iconType={icnType} setModal={setIcnMdl} />

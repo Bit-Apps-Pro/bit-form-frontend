@@ -56,8 +56,8 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
           <div className="mt-3 mb-1"><b>Login Fields Mapping</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-            <div className="txt-dp"><b>{__('Login Fields')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp"><b>{__('Login Fields', 'bitform')}</b></div>
           </div>
         </div>
       </div>
@@ -76,9 +76,9 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
-          <div className="f-m">{__('Redirect Page:')}</div>
+          <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
           <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={handlePage}>
-            <option value="">{__('Custom Link')}</option>
+            <option value="">{__('Custom Link', 'bitform')}</option>
             {pages && pages.map((urlDetail, ind) => (
               <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
             ))}

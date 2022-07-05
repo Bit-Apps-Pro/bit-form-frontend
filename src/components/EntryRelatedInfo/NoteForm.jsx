@@ -34,7 +34,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
       bitsFetch({}, 'bitforms_form_entry_update_note', 'multipart/form-data', queryParam)
         .then(response => {
           if (response !== undefined && response.success) {
-            toast.success(__('Note Updated Successfully'))
+            toast.success(__('Note Updated Successfully', 'bitform'))
             cancelEditMode()
             setFetchData(true)
           }
@@ -46,7 +46,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
       bitsFetch({}, 'bitforms_form_entry_create_note', 'multipart/form-data', queryParam)
         .then(response => {
           if (response !== undefined && response.success) {
-            toast.success(__('Note Added Successfully'))
+            toast.success(__('Note Added Successfully', 'bitform'))
             cancelEditMode()
             setFetchData(true)
           }
@@ -63,7 +63,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
   return (
     <div className="mt-2 w-7">
       <b>
-        {editMode ? __('Edit Note ') : __('Create New Note ')}
+        {editMode ? __('Edit Note ', 'bitform') : __('Create New Note ', 'bitform')}
         <button type="button" className={css(app.btn)} onClick={() => (editMode ? cancelEditMode() : setShowForm(false))} style={{ fontSize: 16 }}>x</button>
       </b>
       <br />
@@ -85,13 +85,13 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
         />
         {editMode && (
           <button type="button" className={`${css(app.btn)} btn-md mr-2`} onClick={cancelEditMode}>
-            {__('Cancel')}
+            {__('Cancel', 'bitform')}
           </button>
         )}
         <button type="submit" className={`${css(app.btn)} btn-md blue`} disabled={isLoading}>
-          {editMode ? __('Edit') : __('Add')}
+          {editMode ? __('Edit', 'bitform') : __('Add', 'bitform')}
           {' '}
-          {__('Note')}
+          {__('Note', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
       </form>

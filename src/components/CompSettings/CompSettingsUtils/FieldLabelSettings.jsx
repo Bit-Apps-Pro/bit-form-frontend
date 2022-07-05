@@ -83,7 +83,7 @@ export default function FieldLabelSettings() {
     <>
       <SimpleAccordion
         id="fld-lbl-stng"
-        title={__('Field Label:')}
+        title={__('Field Label:', 'bitform')}
         className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
         switching
         tip="By disabling this option, the field label will be hidden"
@@ -105,7 +105,7 @@ export default function FieldLabelSettings() {
 
           <div className={css(ut.mt1)}>
             <FieldIconSettings
-              label="Leading Icon"
+              label="Prefix Icon"
               iconSrc={fieldData?.lblPreIcn}
               styleRoute="lbl-pre-i"
               setIcon={() => setIconModel('lblPreIcn')}
@@ -113,7 +113,7 @@ export default function FieldLabelSettings() {
             />
 
             <FieldIconSettings
-              label="Trailing Icon"
+              label="Suffix Icon"
               iconSrc={fieldData?.lblSufIcn}
               styleRoute="lbl-suf-i"
               setIcon={() => setIconModel('lblSufIcn')}
@@ -128,7 +128,7 @@ export default function FieldLabelSettings() {
         show={icnMdl}
         setModal={setIcnMdl}
         className="o-v"
-        title={__('Icons')}
+        title={__('Icons', 'bitform')}
       >
         <div className="pos-rel" />
         <Icons iconType={icnType} setModal={setIcnMdl} />

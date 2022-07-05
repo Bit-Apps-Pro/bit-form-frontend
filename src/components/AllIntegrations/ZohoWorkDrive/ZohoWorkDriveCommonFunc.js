@@ -67,12 +67,12 @@ export const refreshTeams = (formID, workDriveConf, setWorkDriveConf, setisLoadi
           newConf.default = { ...newConf.default, teams: result.data.teams }
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: __('Teams refreshed') })
+        setSnackbar({ show: true, msg: __('Teams refreshed', 'bitform') })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Teams refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Teams refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Teams refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Teams refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -101,12 +101,12 @@ export const refreshTeamFolders = (formID, workDriveConf, setWorkDriveConf, seti
           newConf.default.teamFolders[newConf.team] = result.data.teamFolders
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: __('Folders refreshed') })
+        setSnackbar({ show: true, msg: __('Folders refreshed', 'bitform') })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Folders refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Folders refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Folders refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Folders refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -138,9 +138,9 @@ export const refreshSubFolders = (formID, workDriveConf, setWorkDriveConf, setis
 
           newConf.default.folders[folder] = sortArrOfObj(result.data.folders, 'folderName')
           if (!newConf.folderMap.includes(folder)) newConf.folderMap.push(folder)
-          setSnackbar({ show: true, msg: __('Sub Folders refreshed') })
+          setSnackbar({ show: true, msg: __('Sub Folders refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: __('No Sub Folder Found') })
+          setSnackbar({ show: true, msg: __('No Sub Folder Found', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -148,7 +148,7 @@ export const refreshSubFolders = (formID, workDriveConf, setWorkDriveConf, setis
         }
         setWorkDriveConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Sub Folders refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Sub Folders refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -177,12 +177,12 @@ export const refreshUsers = (formID, workDriveConf, setWorkDriveConf, setisLoadi
           newConf.default.users[workDriveConf.team] = result.data.users
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: __('Users refreshed') })
+        setSnackbar({ show: true, msg: __('Users refreshed', 'bitform') })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Users refresh failed Cause: %s. please try again'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('Users refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('Users refresh failed. please try again') })
+        setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -192,9 +192,9 @@ export const refreshUsers = (formID, workDriveConf, setWorkDriveConf, setisLoadi
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty') : '',
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty') : '',
+      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
     })
     return
   }
@@ -216,7 +216,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
         setisLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -241,11 +241,11 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Authorized Successfully') })
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}` })
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again') })
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

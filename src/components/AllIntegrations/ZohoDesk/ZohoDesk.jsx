@@ -40,12 +40,12 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
   const nextPage = val => {
     if (val === 3) {
       if (!checkMappedFields(deskConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields') })
+        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
         return
       }
 
       if (!deskConf.actions?.ticket_owner) {
-        setSnackbar({ show: true, msg: __('Please select a ticket owner') })
+        setSnackbar({ show: true, msg: __('Please select a ticket owner', 'bitform') })
         return
       }
 
@@ -96,7 +96,7 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next')}
+          {__('Next', 'bitform')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

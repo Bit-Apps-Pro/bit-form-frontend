@@ -79,7 +79,7 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
-          {__('Next')}
+          {__('Next', 'bitform')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

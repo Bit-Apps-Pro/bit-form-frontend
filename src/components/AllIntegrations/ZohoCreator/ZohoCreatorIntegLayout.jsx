@@ -9,9 +9,9 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">{__('Application:')}</b>
+      <b className="wdt-100 d-in-b">{__('Application:', 'bitform')}</b>
       <select onChange={handleInput} name="applicationId" value={creatorConf.applicationId} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Application')}</option>
+        <option value="">{__('Select Application', 'bitform')}</option>
         {
           creatorConf?.default?.applications && Object.values(creatorConf.default.applications).map(application => (
             <option key={application.applicationId} value={application.applicationId}>
@@ -23,9 +23,9 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
       <button onClick={() => refreshApplications(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Creator Portals"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
-      <b className="wdt-100 d-in-b">{__('Form:')}</b>
+      <b className="wdt-100 d-in-b">{__('Form:', 'bitform')}</b>
       <select onChange={handleInput} name="formId" value={creatorConf.formId} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Form')}</option>
+        <option value="">{__('Select Form', 'bitform')}</option>
         {
           creatorConf?.default?.forms?.[creatorConf.applicationId] && Object.values(creatorConf.default.forms[creatorConf.applicationId]).map(form => (
             <option key={form.formId} value={form.formId}>
@@ -51,16 +51,16 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
       {creatorConf.formId && (
         <>
           <div className="mt-4">
-            <b className="wdt-100">{__('Map Fields')}</b>
-            <button onClick={() => refreshFields(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Creator Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+            <button onClick={() => refreshFields(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Creator Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           <div className="btcd-hr mt-1" />
           {creatorConf.default?.fields?.[creatorConf?.applicationId]?.[creatorConf?.formId]
             && (
               <>
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-                  <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {creatorConf.field_map.map((itm, i) => (
@@ -78,11 +78,11 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
                 <br />
                 {Object.keys(creatorConf.default.fields[creatorConf.applicationId][creatorConf.formId]?.fileUploadFields).length !== 0 && (
                   <>
-                    <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields')}</b></div>
+                    <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields', 'bitform')}</b></div>
                     <div className="btcd-hr mt-1" />
                     <div className="flx flx-around mt-2 mb-1">
-                      <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-                      <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
+                      <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                      <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                     </div>
 
                     {creatorConf?.upload_field_map?.map((itm, i) => (
@@ -101,7 +101,7 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
                     <br />
                   </>
                 )}
-                <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
 
                 <ZohoCreatorActions

@@ -31,9 +31,9 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
       )}
       <br />
       <br />
-      <b className="wdt-100 d-in-b">{__('Layout:')}</b>
+      <b className="wdt-100 d-in-b">{__('Layout:', 'bitform')}</b>
       <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
-        <option value="">{__('Select Layout')}</option>
+        <option value="">{__('Select Layout', 'bitform')}</option>
         {
           crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
             <option key={layoutApiName} value={layoutApiName}>
@@ -42,18 +42,18 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
           ))
         }
       </select>
-      <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Layouts')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Layouts', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
 
       {crmConf.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">{__('Field Map')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-              <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
             </div>
 
             {crmConf.field_map.map((itm, i) => (
@@ -80,17 +80,17 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                       <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                         <span className="txt-pro">
                           {' '}
-                          {__('Premium')}
+                          {__('Premium', 'bitform')}
                         </span>
                       </a>
                     </div>
                   </div>
                 )}
-                <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields')}</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-                  <div className="txt-dp"><b>{__('Zoho Fields')}</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {crmConf.upload_field_map.map((itm, i) => (
@@ -111,7 +111,7 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                 <br />
               </div>
             )}
-            <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoCRMActions

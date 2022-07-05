@@ -107,7 +107,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             className={`${css(ut.mr2)} ${css(ut.fw500)} `}
             name={type}
             checked={fieldData?.err?.[type]?.show || false}
-            title={__('Show Error Message')}
+            title={__('Show Error Message', 'bitform')}
             onChange={setShowErrMsg}
           />
           <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
@@ -129,7 +129,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
                 className={`${css(ut.mr2)} ${css(ut.fw500)} `}
                 name={type}
                 checked={fieldData?.err?.[type]?.custom || false}
-                title={__('Custom Error Message')}
+                title={__('Custom Error Message', 'bitform')}
                 onChange={setCustomErrMsg}
               />
               <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
@@ -162,7 +162,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
 
           <div className={css(ut.mt1)}>
             <FieldIconSettings
-              label="Leading Icon"
+              label="Prefix Icon"
               iconSrc={fieldData?.errPreIcn}
               styleRoute="err-txt-pre-i"
               setIcon={() => setIconModel('errPreIcn')}
@@ -170,7 +170,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             />
 
             <FieldIconSettings
-              label="Trailing Icon"
+              label="Suffix Icon"
               iconSrc={fieldData?.errSufIcn}
               styleRoute="err-txt-suf-i"
               setIcon={() => setIconModel('errSufIcn')}
@@ -190,10 +190,10 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             show={icnMdl}
             setModal={setIcnMdl}
             className="o-v"
-            title={__('Icons')}
+            title={__('Icons', 'bitform')}
           >
             <div className="pos-rel" />
-            <Icons iconType={icnType} setModal={setIcnMdl} addPaddingOnSelect={false} />
+            <Icons iconType={icnType} setModal={setIcnMdl} />
           </Modal>
         </>
       )}

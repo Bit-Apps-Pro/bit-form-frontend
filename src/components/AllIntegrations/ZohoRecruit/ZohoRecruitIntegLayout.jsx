@@ -35,7 +35,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
       <br />
       <b className="wdt-100 d-in-b">Module:</b>
       <select onChange={handleInput} name="module" value={recruitConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
-        <option value="">{__('Select Module')}</option>
+        <option value="">{__('Select Module', 'bitform')}</option>
         {
           recruitConf.default && recruitConf.default.modules && Object.keys(recruitConf.default.modules).map(moduleApiName => (
             <option key={moduleApiName} value={moduleApiName}>
@@ -51,12 +51,12 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
       >
         <TabList className="flx mt-2 mb-0">
           <Tab className="btcd-s-tab-link">
-            {__('New Record')}
+            {__('New Record', 'bitform')}
           </Tab>
           {recruitConf?.relatedlists && recruitConf.relatedlists.map((_, indx) => (
             <>
               <Tab key={`rel-${indx + 64}`} className="btcd-s-tab-link">
-                {__('Related List #')}
+                {__('Related List #', 'bitform')}
                 {indx + 1}
               </Tab>
               <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>

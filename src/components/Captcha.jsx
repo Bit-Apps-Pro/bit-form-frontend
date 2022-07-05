@@ -32,7 +32,7 @@ export default function Captcha() {
               setreCaptchaV3({ ...reCaptchaV3, id: res.data.id })
             }
           }
-          setsnack({ ...{ show: true, msg: __('Captcha Settings Updated') } })
+          setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
         }
         setLoading(false)
       })
@@ -60,46 +60,46 @@ export default function Captcha() {
         <TabList className="flx m-0 mt-2">
           {['v3', 'v2'].map(ver => (
             <Tab key={`cp-${ver}`} className="btcd-s-tab-link">
-              <b>{__(`reCaptcha ${ver}`)}</b>
+              <b>{__(`reCaptcha ${ver}`, 'bitform')}</b>
             </Tab>
           ))}
         </TabList>
         <div className="btcd-hr" />
         {['v3', 'v2'].map(ver => (
           <TabPanel key={ver}>
-            <h2>{__(`Google reCAPTCHA ${ver}`)}</h2>
+            <h2>{__(`Google reCAPTCHA ${ver}`, 'bitform')}</h2>
             <small>
-              {__('reCAPTCHA is a free service that protects your website from spam and abuse.')}
+              {__('reCAPTCHA is a free service that protects your website from spam and abuse.', 'bitform')}
               <a className="btcd-link" href={`https://developers.google.com/recaptcha/docs/${ver === 'v3' ? 'v3' : 'display'}`} target="_blank" rel="noopener noreferrer">
                 &nbsp;
-                {__('Learn More')}
+                {__('Learn More', 'bitform')}
               </a>
             </small>
             <br />
 
-            <div className="mt-3">{__('Domain URL:')}</div>
+            <div className="mt-3">{__('Domain URL:', 'bitform')}</div>
             <CopyText value={bits.siteURL} className="field-key-cpy ml-0" />
             <div className="mt-2">
               <label htmlFor="captcha-key">
-                {__('Site Key')}
+                {__('Site Key', 'bitform')}
                 <input id="captcha-key" onChange={e => onInput(e, ver)} name="siteKey" className="btcd-paper-inp mt-1" value={(ver === 'v3' ? reCaptchaV3 : reCaptchaV2).siteKey} placeholder="Site Key" type="text" />
               </label>
             </div>
             <div className="mt-2">
               <label htmlFor="captcha-secret">
-                {__('Secret Key')}
+                {__('Secret Key', 'bitform')}
                 <input id="captcha-secret" onChange={e => onInput(e, ver)} name="secretKey" className="btcd-paper-inp mt-1" value={(ver === 'v3' ? reCaptchaV3 : reCaptchaV2).secretKey} placeholder="Secret Key" type="text" />
               </label>
             </div>
             <div className="mt-2">
               <p>
-                {__('To get Site Key and SECRET , Please Visit')}
+                {__('To get Site Key and SECRET , Please Visit', 'bitform')}
                 &nbsp;
-                <a className="btcd-link" href="https://www.google.com/recaptcha/admin/" target="_blank" rel="noreferrer">{__('Google reCAPTCHA Admin')}</a>
+                <a className="btcd-link" href="https://www.google.com/recaptcha/admin/" target="_blank" rel="noreferrer">{__('Google reCAPTCHA Admin', 'bitform')}</a>
               </p>
             </div>
             <button onClick={() => saveCaptcha(ver)} type="button" className={`${css(app.btn)} btn-md f-right blue`} disabled={loading}>
-              {__('Save')}
+              {__('Save', 'bitform')}
               {loading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>
           </TabPanel>

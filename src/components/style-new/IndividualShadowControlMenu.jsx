@@ -105,7 +105,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
           <SimpleAccordion
             key={`shadow-accordion-${indx + 12 * 23}`}
             className={css(c.accordionHead)}
-            title={__(`Shadow ${indx + 1}`)}
+            title={__(`Shadow ${indx + 1}`, 'bitform')}
             open={indx === 0}
             actionComponent={
               arrOfExtractedShadowObj.length > 1

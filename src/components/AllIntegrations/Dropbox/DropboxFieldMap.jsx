@@ -14,7 +14,7 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
           <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-            <option value="">{__('Select Field')}</option>
+            <option value="">{__('Select Field', 'bitform')}</option>
             {
               formFields?.filter(fld => fld.type === 'file-up').map(f => (
                 <option key={`ff-rm-${f.key}`} value={f.key}>
@@ -25,7 +25,7 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
           </select>
 
           <select className="btcd-paper-inp" name="dropboxFormField" value={field.dropboxFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
-            <option value="">{__('Select Folder')}</option>
+            <option value="">{__('Select Folder', 'bitform')}</option>
             {
               sortByField(dropboxConf.foldersList, 'lower_path', 'ASC').map(({ name, lower_path }) => (
                 <option key={lower_path} value={lower_path}>

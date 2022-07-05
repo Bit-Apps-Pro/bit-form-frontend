@@ -35,7 +35,7 @@ export const getAllTags = (getgistConf, setGetgistConf, setIsLoading) => {
     })
   toast.promise(loadPostTypes, {
     success: data => data,
-    error: __('Error Occurred'),
+    error: __('Error Occurred', 'bitform'),
     loading: __('Loading Tags...'),
   })
 }
