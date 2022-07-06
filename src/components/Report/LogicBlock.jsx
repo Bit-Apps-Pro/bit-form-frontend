@@ -1,7 +1,7 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
-import { $bits, $fields, $fieldsArr } from '../../GlobalStates'
+import { $bits, $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
@@ -89,7 +89,7 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
         options={getLogicOptionByFieldType(type, fields, fieldKey)}
       />
 
-      { !disabledLogics.includes(logicValue) && (
+      {!disabledLogics.includes(logicValue) && (
         <svg height="35" width="100">
           <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
         </svg>

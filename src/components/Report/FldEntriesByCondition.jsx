@@ -11,7 +11,7 @@ import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
 
 import Scrollbars from 'react-custom-scrollbars-2'
-import { $fieldsArr, $reportId, $reports, $bits, $reportSelector } from '../../GlobalStates'
+import { $fieldsArr, $reportId, $reports, $bits, $reportSelector } from '../../GlobalStates/GlobalStates'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
 import OutlineDeleteIcn from '../../Icons/OutlineDeleteIcn'
 import OutlineEditIcn from '../../Icons/OutlineEditIcn'
@@ -55,11 +55,11 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   }, [reports])
 
   useEffect(() => {
-    
+
     if (reports[reportIndex] && reports[reportIndex]?.details) {
       if (!reports[reportIndex]?.details?.conditions) {
         const tmpConf = deepCopy([...reports])
-        if(tmpConf[reportIndex]){
+        if (tmpConf[reportIndex]) {
           tmpConf[reportIndex].details.conditions = [
             { field: '', logic: '', val: '' },
             'or',
@@ -235,7 +235,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
         <div className="flx btcd-custom-report-dpdw mr-2">
           <div className="w-9">
             {currentReport?.details?.report_name?.length > 11 ? (
-              `${currentReport.details.report_name?.slice(0, 11) }...`
+              `${currentReport.details.report_name?.slice(0, 11)}...`
             ) : (
               currentReport?.details?.report_name
             )}
@@ -283,7 +283,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                         <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
 
                           {report?.label?.length > 14 ? (
-                            `${report?.label?.slice(0, 14) }...`
+                            `${report?.label?.slice(0, 14)}...`
                           ) : (
                             report?.label
                           )}

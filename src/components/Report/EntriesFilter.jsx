@@ -8,7 +8,7 @@ import Calender from '../../Icons/Calender'
 import CloseIcn from '../../Icons/CloseIcn'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { $reportSelector } from '../../GlobalStates'
+import { $reportSelector } from '../../GlobalStates/GlobalStates'
 
 export default function EntriesFilter({ fetchData }) {
   const currentReport = useRecoilValue($reportSelector)
