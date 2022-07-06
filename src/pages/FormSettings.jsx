@@ -1,15 +1,16 @@
-import { lazy, memo, Suspense, useEffect } from 'react'
-import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import { withQuicklink } from 'quicklink/dist/react/hoc'
-import { __ } from '../Utils/i18nwrap'
+import { lazy, memo, Suspense, useEffect } from 'react'
+import { NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
+import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
+import ConditionalIcn from '../Icons/ConditionalIcn'
+import EmailInbox from '../Icons/EmailInbox'
+import InfoIcn from '../Icons/InfoIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import Settings2 from '../Icons/Settings2'
 import UserIcn from '../Icons/UserIcn'
-import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
-import InfoIcn from '../Icons/InfoIcn'
-import ConditionalIcn from '../Icons/ConditionalIcn'
+import { __ } from '../Utils/i18nwrap'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
@@ -17,6 +18,7 @@ const Integrations = lazy(() => import('../components/Integrations'))
 const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
+const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
 
 function FormSettings({ setProModal }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
@@ -52,6 +54,10 @@ function FormSettings({ setProModal }) {
           <span className="mr-1"><MailOpenIcn size="21" /></span>
           {__('Email Templates')}
         </NavLink>
+        <NavLink to={`/form/settings/${formType}/${formID}/double-optin`} activeClassName="btcd-f-a em-tem">
+          <span className="mr-1"><EmailInbox size="21" /></span>
+          {__('Double Opt-In', 'bitform')}
+        </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><CodeSnippetIcn size="19" /></span>
           {__('Integrations')}
@@ -74,6 +80,9 @@ function FormSettings({ setProModal }) {
             </Route>
             <Route path={`${path}email-templates`}>
               <EmailTemplate formID={formID} />
+            </Route>
+            <Route path={`${path}double-optin`}>
+              <DoubleOptin formID={formID} />
             </Route>
             <Route path={`${path}workflow`}>
               <Workflow setProModal={setProModal} formID={formID} />

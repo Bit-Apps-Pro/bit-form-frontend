@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useRecoilValue } from 'recoil'
@@ -10,7 +11,7 @@ import LoaderSm from './Loaders/LoaderSm'
 import Modal from './Utilities/Modal'
 
 export default function EditEntryData(props) {
-  const { formID, entryID, allResp, setAllResp, setSnackbar } = props
+  const { formID, entryID, setAllResp, setSnackbar } = props
   const bits = useRecoilValue($bits)
   const [showEdit, setshowEdit] = useState(false)
   const [isLoading, setisLoading] = useState(false)
@@ -89,14 +90,10 @@ export default function EditEntryData(props) {
             }
           }
           setSnackbar({ show: true, msg: response.data.message })
-          const tmp = [...allResp]
-          for (let i = 0; i < tmp.length; i += 1) {
-            if (tmp[i].entry_id === props.entryID) {
-              tmp[i] = response.data.updatedData
-              break
-            }
-          }
-          setAllResp(tmp)
+          setAllResp(oldResp => produce(oldResp, draft => {
+            const entryIndex = draft.findIndex(e => e.entry_id === props.entryID)
+            draft[entryIndex] = { ...draft[entryIndex], ...response.data.updatedData }
+          }))
           props.close(false)
         } else if (response.data) {
           setError(response.data)

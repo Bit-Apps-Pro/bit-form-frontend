@@ -12,7 +12,7 @@
 /**
  * @param {string} input
  */
-module.exports = function css2json(input) {
+export default function css2json(input) {
   let css = input
   /**
    * @type {number}

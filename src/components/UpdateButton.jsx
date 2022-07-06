@@ -5,6 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { $reportId, $reportSelector } from '../GlobalStates'
 import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -15,7 +16,7 @@ import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItem
 import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import { formsReducer, reportsReducer } from '../Utils/Reducers'
+import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
 import { updateGoogleFontUrl } from './style-new/styleHelpers'
 
@@ -38,6 +39,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
+  const currentReport = useRecoilValue($reportSelector)
+  const [reportId, setReportId] = useRecoilState($reportId)
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [updateBtn, setUpdateBtn] = useRecoilState($updateBtn)
   const [workFlows, setworkFlows] = useRecoilState($workflows)
@@ -207,11 +210,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const formData = {
       ...(savedFormId && { id: savedFormId }),
       ...(!savedFormId && { form_id: newFormId }),
-      ...(savedFormId && { reports }),
+      ...(savedFormId && { currentReport }),
       layout: layouts,
       fields,
       // saveStyle && style obj
       form_name: formName,
+      report_id: reportId.id,
       additional: additionalSettings,
       workFlows,
       formStyle,
@@ -234,7 +238,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (savedFormId && deletedFldKey.length !== 0) {
       formData.deletedFldKey = deletedFldKey
     }
-
     const fetchProm = bitsFetch(formData, action)
       .then(response => {
         if (response?.success && componentMounted) {
@@ -253,7 +256,17 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
-          data?.reports && setReports(reprts => reportsReducer(reprts, { type: 'set', reports: data?.reports || [] }))
+          data?.reports && setReports(data?.reports || [])
+          if (!reportId?.id && data?.form_content?.report_id) {
+            setReportId(
+              {
+                id: data?.form_content?.report_id,
+                isDefault: data?.form_content?.is_default || 0,
+              },
+
+            )
+          }
+
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
             data: {

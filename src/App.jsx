@@ -131,10 +131,3 @@ function removeUnwantedCSS() {
     }
   }
 }
-
-const checkProVersionForUpdates = (bits) => {
-  const { proInfo } = bits
-  if (proInfo && compareBetweenVersions(proInfo.latestVersion, proInfo.installedVersion)) {
-    toast.error('Please update to the latest version of Bit Form Pro.', { duration: Infinity })
-  }
-}

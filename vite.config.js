@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite'
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import react from '@vitejs/plugin-react'
-import path from 'path'
 import reactRefresh from '@vitejs/plugin-react-refresh'
+import path from 'path'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
 
@@ -9,6 +10,14 @@ export default defineConfig({
     react(),
     reactRefresh(),
   ],
+
+  optimizeDeps: {
+    esbuildOptions: {
+      plugins: [
+        esbuildCommonjs(['react-calendar', 'react-date-picker', 'react-clock', 'react-time-picker']),
+      ],
+    },
+  },
 
   // config
   root: 'src',
@@ -26,10 +35,11 @@ export default defineConfig({
 
     // our main entry
     rollupOptions: { input: path.resolve(__dirname, 'src/index.jsx') },
+    commonjsOptions: { transformMixedEsModules: true },
   },
 
   server: {
-    origin:'http://localhost:3000',
+    origin: 'http://localhost:3000',
     // required to load scripts from custom host
     cors: true,
 
@@ -37,5 +47,6 @@ export default defineConfig({
     strictPort: true,
     port: 3000,
     hmr: { host: 'localhost' },
+    commonjsOptions: { transformMixedEsModules: true },
   },
 })

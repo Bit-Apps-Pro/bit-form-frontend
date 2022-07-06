@@ -18,6 +18,7 @@ import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
@@ -71,6 +72,8 @@ function FormDetails() {
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetReportId = useResetRecoilState($reportId)
+  const setReportId = useSetRecoilState($reportId)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -137,6 +140,7 @@ function FormDetails() {
     resetUpdateBtn()
     resetFormInfo()
     resetCustomCodes()
+    resetReportId()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -211,6 +215,7 @@ function FormDetails() {
               setLay(responseData.form_content.layout)
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
+            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
             // experimental start
             // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
             //   const l = responseData.form_content.layout
@@ -234,6 +239,11 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+
+            setReportId({
+              id: responseData?.form_content?.report_id || defaultReport?.id,
+              isDefault: responseData?.form_content?.report_id === null,
+            })
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
             setReports(responseData.reports || [])
