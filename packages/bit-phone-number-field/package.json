@@ -2,6 +2,7 @@
   "name": "bit-phone-number-field",
   "packageManager": "yarn@3.1.0",
   "main": "dist/bit-phone-number-field.min.js",
+  "module": "src/bit-phone-number-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

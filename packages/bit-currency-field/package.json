@@ -2,6 +2,7 @@
   "name": "bit-currency-field",
   "packageManager": "yarn@3.1.0",
   "main": "dist/bit-currency-field.min.js",
+  "module": "src/bit-currency-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
