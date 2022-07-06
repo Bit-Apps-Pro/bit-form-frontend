@@ -26,7 +26,7 @@ export default function Cpt() {
     <div className="p-2 w-6">
       <div className="pos-rel">
         {!isPro && (
-          <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', marginTop: 15 }}>
+          <div className="pro-blur flx" style={{ height: '100%', left: -15, width: '104%', marginTop: 15 }}>
             <div className="pro">
               {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">

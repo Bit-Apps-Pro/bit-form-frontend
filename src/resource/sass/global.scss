@@ -250,9 +250,9 @@
 }
 .app-link-active {
   background: var(--white) !important;
-  // color      : #0e112f !important;
   color: var(--b-54-12) !important;
   font-weight: bold !important;
+  text-shadow: none !important;
 }
 
 //table checkbox start
