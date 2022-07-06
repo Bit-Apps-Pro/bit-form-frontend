@@ -65,6 +65,8 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
               {...getCustomAttributs(fieldKey, 'lbl')}
             >
+              {console.log({ noLabel, fieldData })}
+
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
                 <span
                   data-testid={`${fieldKey}-req-smbl`}
@@ -85,6 +87,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   {...getCustomAttributs(fieldKey, 'lbl-pre-i')}
                 />
               )}
+              <RenderHtml html={fieldData.lbl.replaceAll('$_bf_$', '\\')} />
               {fieldData.lblSufIcn && (
                 <img
                   data-testid={`${fieldKey}-lbl-suf-i`}
