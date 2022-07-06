@@ -813,6 +813,7 @@ const editorConfig = {
       properties: {
         border: {
           'border-bottom': true,
+          'border-color': true,
           'border-width': true,
           'border-radius': true,
         },
