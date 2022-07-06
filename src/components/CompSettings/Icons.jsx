@@ -287,14 +287,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
               data-testid="icns-mdl-srch-inp"
               title="Search Icons"
               aria-label="Search Icons"
-              placeholder="Search Icons by keywords one at a time. e.g., user or login or etc..."
+              placeholder="Search in 10,000+ icons by keywords one at a time. e.g., user or login or etc..."
               id="search-icon"
               type="search"
               name="searchIcn"
               value={searchTerm}
               onChange={onSearchChange}
               className={css(s.search_field)}
-
             />
             <span title="search" className={css(s.search_icn)}>
               <SearchIcon size="20" />
@@ -509,7 +508,7 @@ const s = {
     oe: 'none',
     b: '1px solid var(--white-0-75) !important',
     brs: '20px !important',
-    pl: '30px !important',
+    pl: '35px !important',
     pr: '5px !important',
     pb: '5px !important',
     pt: '5px !important',
