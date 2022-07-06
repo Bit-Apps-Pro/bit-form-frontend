@@ -38,6 +38,8 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
     if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
   }
 
+  const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
+
   return (
     <div
       data-testid={`${fieldKey}-fld-wrp`}

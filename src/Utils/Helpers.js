@@ -434,6 +434,19 @@ const divide = (dividend, divisor) => {
   }
 }
 
+/**
+ * It converts an IP address from a number to a string
+ * @returns A string of the IP address.
+ */
+export const number2Ipv4 = ipNumber => {
+  let ipAddr = ipNumber % 256
+  for (let i = 3; i > 0; i -= 1) {
+    ipNumber = Math.floor(ipNumber / 256)
+    ipAddr = `${ipNumber % 256}.${ipAddr}`
+  }
+  return ipAddr
+}
+
 export const number2Ipv6 = ipNumber => {
   const base = 16
   const blocks = []
@@ -448,6 +461,12 @@ export const number2Ipv6 = ipNumber => {
   }
 
   return blocks.join(':')
+}
+
+export const formatIpNumbers = ipNumber => {
+  const ipNumStr = ipNumber.toString()
+  if (ipNumber.length <= 11) return number2Ipv4(ipNumStr)
+  return number2Ipv6(ipNumStr)
 }
 
 export const compareBetweenVersions = (ver1, ver2) => {

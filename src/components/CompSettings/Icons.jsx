@@ -222,7 +222,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     }
     setFilter(tmp)
     const searchValue = searchTerm !== '' ? `&t=1_tag_${searchTerm}` : ''
-    if (filter !== []) {
+    if (filter.length) {
       fetch(`https://icons.bitapps.pro/search?c=0&${existFilter()}${searchValue}`)
         .then(response => response.json())
         .then(data => {

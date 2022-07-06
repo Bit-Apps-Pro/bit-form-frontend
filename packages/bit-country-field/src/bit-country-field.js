@@ -68,9 +68,10 @@ export default class BitCountryField {
     this.#onChange = config.onChange
     this.#initialOptions = config.options
     this.#listOptions = [...this.#initialOptions]
+    // rubel vaiya! can we use tarnary operator here?
     if (config.document) this.#document = config.document
     else this.#document = document
-
+    // rubel vaiya! can we use tarnary operator here?
     if (config.window) this.#window = config.window
     else this.#window = window
   }
@@ -173,7 +174,7 @@ export default class BitCountryField {
         } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
-          console.log('nextElm', nextElm);
+          console.log('nextElm', nextElm)
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#listOptions.length) {

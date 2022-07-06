@@ -9,12 +9,13 @@ import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_st
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
-import bitformDefaultTheme from '../components/style-new/themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from '../components/style-new/themes/atlassianTheme/3_atlassianTheme'
+import bitformDefaultTheme from '../components/style-new/themes/bitformDefault/1_bitformDefault'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
+import { $reportId } from '../GlobalStates/GlobalStates'
 import { $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -71,6 +72,8 @@ function FormDetails() {
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetReportId = useResetRecoilState($reportId)
+  const setReportId = useSetRecoilState($reportId)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -137,6 +140,7 @@ function FormDetails() {
     resetUpdateBtn()
     resetFormInfo()
     resetCustomCodes()
+    resetReportId()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -211,6 +215,7 @@ function FormDetails() {
               setLay(responseData.form_content.layout)
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
+            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
             // experimental start
             // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
             //   const l = responseData.form_content.layout
@@ -234,6 +239,11 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+
+            setReportId({
+              id: responseData?.form_content?.report_id || defaultReport?.id,
+              isDefault: responseData?.form_content?.report_id === null,
+            })
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
             setReports(responseData.reports || [])
