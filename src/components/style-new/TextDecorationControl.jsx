@@ -136,4 +136,3 @@ const c = {
   },
   active: { focusShadow: 1 },
 }
-

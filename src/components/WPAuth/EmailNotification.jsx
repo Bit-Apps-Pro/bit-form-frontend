@@ -63,6 +63,6 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
           <button type="button" className="btn blue" onClick={() => setshowMdl(false)}>Save</button>
         </div>
       </>
-    </Modal >
+    </Modal>
   )
 }

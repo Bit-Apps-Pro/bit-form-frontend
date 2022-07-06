@@ -55,7 +55,6 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   }, [reports])
 
   useEffect(() => {
-
     if (reports[reportIndex] && reports[reportIndex]?.details) {
       if (!reports[reportIndex]?.details?.conditions) {
         const tmpConf = deepCopy([...reports])
@@ -272,9 +271,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
 
                 </div>
                 {availableReports.length === 0 && (
-                  <>
-                    <div style={{ color: '#000' }}>No matching report found</div>
-                  </>
+                  <div style={{ color: '#000' }}>No matching report found</div>
                 )}
                 <Scrollbars style={{ height: '70%' }} autoHide>
                   <div>

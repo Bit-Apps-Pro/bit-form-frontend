@@ -134,7 +134,7 @@ export default function FieldContextMenu({ isContextMenu,
           <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
-              <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')} >
+              <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')}>
                 <button
                   data-close
                   type="button"

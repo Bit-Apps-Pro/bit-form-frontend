@@ -954,9 +954,8 @@ function Workflow({ formID }) {
                             options={fileInFormField()}
                           />
                         </>
-                      )
-                      }
-                    </div >
+                      )}
+                    </div>
 
                     <div className="mt-2 ml-2">
                       {checkKeyInArr('dblOptin', lgcGrpInd) && (
@@ -1033,8 +1032,7 @@ function Workflow({ formID }) {
 
                     {lgcGrp.action_run !== 'delete' && <div className="mt-2 ml-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
                   </>
-                )
-                }
+                )}
 
                 {
                   (lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
@@ -1086,8 +1084,8 @@ function Workflow({ formID }) {
                     </div>
                   )
                 }
-              </div >
-            </Accordions >
+              </div>
+            </Accordions>
             {isPro && (
               <div className="mt-2">
                 <Button
@@ -1100,7 +1098,7 @@ function Workflow({ formID }) {
                 </Button>
               </div>
             )}
-          </div >
+          </div>
           {!isPro && (
             <div className="txt-center bg-pro p-5 mt-2">
               {__('For')}
@@ -1112,14 +1110,14 @@ function Workflow({ formID }) {
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><b className="txt-pro">{__('Buy Premium')}</b></a>
             </div>
           )}
-        </Fragment >
+        </Fragment>
       )) : (
         <div className={css(ut.btcdEmpty, ut.txCenter)}>
           <StackIcn size="50" />
           {__('Empty')}
         </div>
       )}
-    </div >
+    </div>
   )
 }
 
