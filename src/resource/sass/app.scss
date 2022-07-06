@@ -187,9 +187,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .wp-core-ui .attachment.details,
 .attachment:focus {
-  <<<<<<< HEAD box-shadow: 0 0 0 2px var(--b-50) !important;
-  =======box-shadow: 0 0 0 2px $blue  !important;
-  >>>>>>>master
+  box-shadow: 0 0 0 2px var(--b-50) !important;
 }
 
 /* .setting input,
@@ -508,6 +506,21 @@ input[type="checkbox"].disabled:checked:before {
   background: var(--white-0-50);
   width: 150px;
   height: 200px;
+}
+
+.layout-wrapper {
+  margin: auto;
+  margin-top: 3px;
+  height: calc(100% - 40px);
+}
+
+.isDragging {
+  box-shadow: inset 0 0 4px 1px #2c9eff;
+}
+
+.layout {
+  overflow: hidden;
+  min-height: 100px !important;
 }
 
 /* ._frm-bg {
@@ -924,8 +937,8 @@ input[type="checkbox"].disabled:checked:before {
   border-radius: 12px;
   box-sizing: border-box;
   cursor: pointer;
-  height: 13px;
   width: 13px;
+  height: 13px;
   // box-shadow   : 2px 2px 4px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2), 0 0 2px rgba(13, 13, 13, 0.2);
   box-shadow: 2px 2px 4px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2), 0 0 2px var(--white-0-5-2);
 }
@@ -1369,22 +1382,9 @@ input[type="checkbox"].disabled:checked:before {
   height: 100%;
 }
 
-
 .settings {
   font-size: 14px;
   height: calc(100% - 85px);
-
-  &>h4 {
-    margin: 0 0 0 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #c7c7c7;
-  }
-
-  &>.settings {
-    font-size: 14px;
-    height: calc(100% - 85px);
-  }
 }
 
 .elm-settings-title {
@@ -3018,11 +3018,6 @@ nav.top-nav {
   transition: flex-grow 500ms;
 }
 
-.app-link-active {
-  background: $light-bg  !important;
-  color: #0e112f !important;
-  font-weight: bold !important;
-}
 
 .btcd-f-settings {
   background-color: var(--white);
@@ -3399,121 +3394,6 @@ select.btcd-paper-inp {
   }
 }
 
-//table checkbox start
-.btcd-label-cbx {
-  display: inline-block;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  cursor: pointer;
-  margin-bottom: 0;
-
-  input {
-    &:checked {
-      + {
-        .btcd-t-cbx {
-          border-color: $blue;
-
-          svg {
-            path {
-              fill: $blue;
-            }
-
-            polyline {
-              stroke-dashoffset: 0;
-            }
-          }
-        }
-      }
-    }
-
-    &:indeterminate {
-      + {
-        .btcd-t-cbx {
-          border-color: $blue;
-
-          svg {
-            path {
-              stroke-dashoffset: 0;
-            }
-
-            line {
-              stroke-width: 2;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &:hover {
-    .btcd-t-cbx {
-      svg {
-        path {
-          stroke-dashoffset: 0;
-        }
-      }
-    }
-  }
-
-  .btcd-t-cbx {
-    position: relative;
-    float: left;
-    margin-right: 8px;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #c8ccd4;
-    border-radius: 3px;
-
-    svg {
-      position: absolute;
-      top: -2px;
-      left: -2px;
-
-      path {
-        fill: none;
-        stroke: $blue;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 70px;
-        stroke-dashoffset: 71px;
-        transition: all 0.6s ease;
-      }
-
-      polyline {
-        fill: none;
-        stroke: #fff;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 18px;
-        stroke-dashoffset: 18px;
-        transition: all 0.3s ease;
-      }
-
-      line {
-        stroke: $blue;
-        stroke-width: 0;
-        stroke-linecap: round;
-      }
-    }
-  }
-
-  >span {
-    line-height: 1;
-    vertical-align: middle;
-  }
-}
-
-.btcd-cbx-invisible {
-  position: absolute;
-  z-index: -1;
-  width: 0;
-  height: 0;
-  opacity: 0;
-}
-
-// table checkbox end
 .btcd-t-resizer {
   display: inline-block;
   background: transparent;
@@ -4471,66 +4351,6 @@ select.btcd-ud-inp {
   }
 }
 
-.btcd-neu-btn {
-  display: inline-block;
-  background: $light-bg;
-  color: $dp-bg;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4),
-    -6px -6px 10px rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 10px;
-  border: none;
-  outline: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    background-color: darken($light-bg, 5);
-  }
-
-  &:active {
-    box-shadow: 3px 3px 6px rgba(120, 136, 194, 0.4),
-      -6px -6px 10px rgba(255, 255, 255, 0.9);
-    transform: scale(0.9);
-  }
-}
-
-.btcd-neu-btn.icn {
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  padding: 6px 9px;
-}
-
-.btcd-neu-btn.neu-sh-sm {
-  box-shadow: 3px 3px 6px rgba(120, 136, 194, 0.4),
-    -3px -3px 6px rgba(255, 255, 255, 0.9);
-}
-
-.btcd-neu-inp {
-  display: inline-block;
-  background-color: $light-bg;
-  border-radius: 10px;
-
-  & input,
-  textarea {
-    background: lighten($light-bg, 5);
-    width: 100%;
-    border: 3px solid $light-bg;
-    outline: none;
-    margin: 0;
-    transition: box-shadow 0.2s, border 0.2s;
-
-    &:focus {
-      background: white;
-      box-shadow: 1px 1px 2px rgba(120, 136, 194, 0.4) inset,
-        -1px -1px 2px rgba(255, 255, 255, 0.9) inset;
-      border: 3px solid darken($light-bg, 7);
-    }
-  }
-}
-
 .btcd-stp {
   // background         : rgb(236, 236, 236);
   background: var(--white-0-93);
@@ -5192,16 +5012,7 @@ _:-ms-fullscreen,
   background: var(--dp-blue-bg) !important;
 }
 
-.input- .popper-icn {
-  color: $dp-bg;
-  opacity: 0.3;
-}
-
-.popper-icn:hover {
-  opacity: 1;
-  cursor: help;
-}
-
+// use fela
 .txt-body {
   line-height: 1.1;
   font-size: 12.5px;
@@ -5354,7 +5165,7 @@ _:-ms-fullscreen,
 /*css for reponse report*/
 .btcd-date-range {
   display: inline-block;
-  color: $dp-bg  !important;
+  color: #13233c !important;
   width: 100%;
   border-color: #e2e2e2 !important;
   background: white;
@@ -5363,7 +5174,7 @@ _:-ms-fullscreen,
 }
 
 .btcd-custom-report-dpdw {
-  border: 1px solid $gray;
+  border: 1px solid #e2e2e2;
   min-width: 180px;
 
   border-radius: 6px;
