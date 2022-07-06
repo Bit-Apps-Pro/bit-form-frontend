@@ -96,7 +96,7 @@ function FormDetails() {
       btnFld[btnFieldKey] = btnData
       setFields(btnFld)
       const btnLay = { lg: [], md: [], sm: [] }
-      const subBtnLay = { h: 40, i: btnFieldKey, minH: 40, w: 60, x: 0, y: 0 }
+      const subBtnLay = { h: 40, i: btnFieldKey, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)
@@ -396,8 +396,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',
