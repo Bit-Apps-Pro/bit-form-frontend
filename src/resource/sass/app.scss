@@ -2164,10 +2164,12 @@ nav.top-nav {
 // }
 .f-search span {
   position: absolute !important;
-  top: 7px;
+  top: 50%;
+  left: 7px;
+  display: flex;
   /* padding: 0px 0px 0px 25px; */
-  color: hsla(0, 0%, 50%, 100%);
-  left: 4px;
+  color: hsl(0deg, 0%, 50%);
+  transform: translateY(-50%);
 }
 
 .f-search {
@@ -2212,12 +2214,11 @@ nav.top-nav {
     border-radius: 0;
     border: 0;
     width: 100px;
-    // border-bottom: 1px solid gray;
-    border-bottom: 1px solid var(--white-0-50);
     margin-left: 7px;
     padding: 4px;
     outline: none;
     transition: width 0.5s;
+    font-family: inherit;
   }
 
   & input:focus {
