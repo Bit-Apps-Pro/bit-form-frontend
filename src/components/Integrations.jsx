@@ -126,8 +126,6 @@ function Integrations() {
     { type: 'Twilio', logo: twilio, pro, proVer: '1.5.1' },
   ]
 
-
-
   const [availableIntegs, setAvailableIntegs] = useState(sortArrOfObj(integs, 'type'))
 
   const removeInteg = i => {

@@ -14,7 +14,9 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const titleGenerator = (tag, text, cls, preIcn, sufIcn) => (
     <RenderHtml html={`<${tag} data-dev-${cls}=${fieldKey} className="${fieldKey}-${cls} ${getCustomClsName(fieldKey, cls)}">
   ${preIcn}${text}${sufIcn}
-</${tag}>`} />)
+</${tag}>`}
+    />
+  )
 
   const attFunction = (element) => {
     const obj = fieldData.customAttributes[element]

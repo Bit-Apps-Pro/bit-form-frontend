@@ -193,7 +193,7 @@ function SegmentControl({ defaultActive,
           </As>
         ))}
       </div>
-    </div >
+    </div>
   )
 }
 

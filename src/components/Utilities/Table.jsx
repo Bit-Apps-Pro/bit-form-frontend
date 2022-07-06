@@ -84,20 +84,18 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
-    <>
-      <Menu icn={<EyeOffIcon size="21" />}>
-        <Scrollbars autoHide style={{ width: 200 }}>
-          <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
-            {tableCol.map((column, i) => (
-              <div key={tableAllCols[i + 1].id} className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
-                <TableCheckBox cls="scl-7" id={tableAllCols[i + 1].id} title={column.Header} rest={tableAllCols[i + 1].getToggleHiddenProps()} />
-                <span className="btcd-pane-drg">&#8759;</span>
-              </div>
-            ))}
-          </ReactSortable>
-        </Scrollbars>
-      </Menu>
-    </>
+    <Menu icn={<EyeOffIcon size="21" />}>
+      <Scrollbars autoHide style={{ width: 200 }}>
+        <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
+          {tableCol.map((column, i) => (
+            <div key={tableAllCols[i + 1].id} className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
+              <TableCheckBox cls="scl-7" id={tableAllCols[i + 1].id} title={column.Header} rest={tableAllCols[i + 1].getToggleHiddenProps()} />
+              <span className="btcd-pane-drg">&#8759;</span>
+            </div>
+          ))}
+        </ReactSortable>
+      </Scrollbars>
+    </Menu>
   )
 }
 
@@ -129,7 +127,8 @@ function Table(props) {
     allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns, conditions },
-    setColumnOrder } = useTable({
+    setColumnOrder } = useTable(
+    {
       debug: true,
       fetchData,
       columns,
@@ -152,30 +151,31 @@ function Table(props) {
       autoResetFilters: false,
       autoResetGlobalFilter: false,
     },
-      useFilters,
-      useGlobalFilter,
-      useSortBy,
-      usePagination,
-      useSticky,
-      useColumnOrder,
-      // useBlockLayout,
-      useFlexLayout,
-      props.resizable ? useResizeColumns : '', // resize
-      props.rowSeletable ? useRowSelect : '', // row select
-      props.rowSeletable ? (hooks => {
-        hooks.allColumns.push(cols => [
-          {
-            id: 'selection',
-            width: 50,
-            maxWidth: 50,
-            minWidth: 67,
-            sticky: 'left',
-            Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-            Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
-          },
-          ...cols,
-        ])
-      }) : '')
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination,
+    useSticky,
+    useColumnOrder,
+    // useBlockLayout,
+    useFlexLayout,
+    props.resizable ? useResizeColumns : '', // resize
+    props.rowSeletable ? useRowSelect : '', // row select
+    props.rowSeletable ? (hooks => {
+      hooks.allColumns.push(cols => [
+        {
+          id: 'selection',
+          width: 50,
+          maxWidth: 50,
+          minWidth: 67,
+          sticky: 'left',
+          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+        },
+        ...cols,
+      ])
+    }) : '',
+  )
   const [stateSavable, setstateSavable] = useState(false)
 
   const [search, setSearch] = useState(globalFilter)
