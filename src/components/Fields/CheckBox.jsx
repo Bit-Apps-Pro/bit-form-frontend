@@ -5,9 +5,10 @@ import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { deepCopy, renderHTMR } from '../../Utils/Helpers'
+import { deepCopy } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   const fields = useRecoilValue($fields)
@@ -177,7 +178,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {...getCustomAttributs(fieldKey, 'ct')}
                 >
-                  {renderHTMR(itm.lbl)}
+                  <RenderHtml html={itm.lbl} />
                 </span>
               </label>
             </div>

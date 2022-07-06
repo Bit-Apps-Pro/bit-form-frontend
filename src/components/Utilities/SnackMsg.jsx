@@ -1,5 +1,5 @@
 import { CSSTransition } from 'react-transition-group'
-import { renderHTMR } from '../../Utils/Helpers'
+import RenderHtml from './RenderHtml'
 
 function SnackMsg({ snack, setSnackbar }) {
   const { show, msg } = snack
@@ -13,7 +13,7 @@ function SnackMsg({ snack, setSnackbar }) {
       unmountOnExit
     >
       <div>
-        <span>{renderHTMR(msg)}</span>
+        <span><RenderHtml html={msg} /></span>
         <button onClick={() => setSnackbar({ show: false, msg })} className="btcd-snack-cls" type="button">&times;</button>
       </div>
     </CSSTransition>

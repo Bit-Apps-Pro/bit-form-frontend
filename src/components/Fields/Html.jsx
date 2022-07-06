@@ -4,8 +4,8 @@
 import { useRecoilValue } from 'recoil'
 import { $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 export default function HtmlField({ fieldKey, attr, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
@@ -17,7 +17,7 @@ export default function HtmlField({ fieldKey, attr, styleClasses }) {
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
         {...getCustomAttributs(fieldKey, 'fld-wrp')}
       >
-        {renderHTMR(attr.content || attr?.info?.content)}
+        <RenderHtml html={attr.content || attr?.info?.content} />
       </div>
     </>
   )

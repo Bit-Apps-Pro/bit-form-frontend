@@ -5,7 +5,8 @@ import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributs, getCustomClsName } from '../Utils/globalHelpers'
-import { renderHTMR } from '../Utils/Helpers'
+import RenderHtml from './Utilities/RenderHtml'
+
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const { rightBar, element, fieldKey: urlFldKey } = useParams()
@@ -56,7 +57,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           {...getCustomAttributs(fieldKey, 'lbl-wrp')}
         >
           {(!fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
-            <label
+            < label
               data-testid={`${fieldKey}-lbl`}
               data-dev-lbl={fieldKey}
               title={fieldData.lbl}
@@ -64,6 +65,8 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               htmlFor={fieldKey}
               {...getCustomAttributs(fieldKey, 'lbl')}
             >
+              {console.log({ noLabel, fieldData })}
+
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
                 <span
                   data-testid={`${fieldKey}-req-smbl`}
@@ -84,7 +87,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   {...getCustomAttributs(fieldKey, 'lbl-pre-i')}
                 />
               )}
-              {renderHTMR(fieldData.lbl.replaceAll('$_bf_$', '\\'))}
+              <RenderHtml html={fieldData.lbl.replaceAll('$_bf_$', '\\')} />
               {fieldData.lblSufIcn && (
                 <img
                   data-testid={`${fieldKey}-lbl-suf-i`}
@@ -126,7 +129,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                     {...getCustomAttributs(fieldKey, 'sub-titl-pre-i')}
                   />
                 )}
-                {renderHTMR(fieldData.subtitle || '')}
+                <RenderHtml html={fieldData.subtitle || ''} />
                 {fieldData.subTleSufIcn && (
                   <img
                     data-testid={`${fieldKey}-sub-titl-suf-i`}
@@ -141,7 +144,8 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             )
           }
         </div>
-      )}
+      )
+      }
 
       <div
         data-testid={`${fieldKey}-inp-wrp`}
@@ -171,7 +175,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   {...getCustomAttributs(fieldKey, 'hlp-txt-pre-i')}
                 />
               )}
-              {renderHTMR(fieldData.helperTxt || '')}
+              <RenderHtml html={fieldData.helperTxt || ''} />
               {fieldData.hlpSufIcn && (
                 <img
                   data-testid={`${fieldKey}-hlp-txt-suf-i`}
@@ -195,36 +199,38 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         </div>
       )} */}
       {/* field error message */}
-      {(showAllErrorMsg || showOnlyThisFldErrMsg) && (
-        <div
-          data-testid={`${fieldKey}-err-msg`}
-          data-dev-err-msg={fieldKey}
-          className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}
-          {...getCustomAttributs(fieldKey, 'err-msg')}
-        >
-          {fieldData.errPreIcn && (
-            <img
-              data-testid={`${fieldKey}-err-txt-pre-i`}
-              data-dev-err-txt-pre-i={fieldKey}
-              className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`}
-              src={fieldData.errPreIcn}
-              alt=""
-              {...getCustomAttributs(fieldKey, 'err-txt-pre-i')}
-            />
-          )}
-          {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
-          {fieldData.errSufIcn && (
-            <img
-              data-testid={`${fieldKey}-err-txt-suf-i`}
-              data-dev-err-txt-suf-i={fieldKey}
-              className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`}
-              src={fieldData.errSufIcn}
-              alt=""
-              {...getCustomAttributs(fieldKey, 'err-txt-suf-i')}
-            />
-          )}
-        </div>
-      )}
-    </div>
+      {
+        (showAllErrorMsg || showOnlyThisFldErrMsg) && (
+          <div
+            data-testid={`${fieldKey}-err-msg`}
+            data-dev-err-msg={fieldKey}
+            className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}
+            {...getCustomAttributs(fieldKey, 'err-msg')}
+          >
+            {fieldData.errPreIcn && (
+              <img
+                data-testid={`${fieldKey}-err-txt-pre-i`}
+                data-dev-err-txt-pre-i={fieldKey}
+                className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`}
+                src={fieldData.errPreIcn}
+                alt=""
+                {...getCustomAttributs(fieldKey, 'err-txt-pre-i')}
+              />
+            )}
+            {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
+            {fieldData.errSufIcn && (
+              <img
+                data-testid={`${fieldKey}-err-txt-suf-i`}
+                data-dev-err-txt-suf-i={fieldKey}
+                className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`}
+                src={fieldData.errSufIcn}
+                alt=""
+                {...getCustomAttributs(fieldKey, 'err-txt-suf-i')}
+              />
+            )}
+          </div>
+        )
+      }
+    </div >
   )
 }

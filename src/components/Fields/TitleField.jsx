@@ -2,8 +2,8 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const { logo, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = fieldData
@@ -11,11 +11,11 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
 
-  const titleGenerator = (tag, text, cls, preIcn, sufIcn) => renderHTMR(
-    `<${tag} data-dev-${cls}=${fieldKey} className="${fieldKey}-${cls} ${getCustomClsName(fieldKey, cls)}">
-      ${preIcn}${text}${sufIcn}
-    </${tag}>`,
-  )
+  const titleGenerator = (tag, text, cls, preIcn, sufIcn) => (
+    <RenderHtml html={`<${tag} data-dev-${cls}=${fieldKey} className="${fieldKey}-${cls} ${getCustomClsName(fieldKey, cls)}">
+  ${preIcn}${text}${sufIcn}
+</${tag}>`} />)
+
   const attFunction = (element) => {
     const obj = fieldData.customAttributes[element]
     if (obj === '') return

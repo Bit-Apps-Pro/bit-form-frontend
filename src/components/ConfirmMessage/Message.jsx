@@ -10,12 +10,12 @@ import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
-import { renderHTMR } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { getNumFromStr, getStrFromStr, objectArrayToStyleStringGenarator, unitConverter } from '../style-new/styleHelpers'
 import CheckBox from '../Utilities/CheckBox'
+import RenderHtml from '../Utilities/RenderHtml'
 import SingleToggle from '../Utilities/SingleToggle'
 import SliderModal from '../Utilities/SliderModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -417,7 +417,7 @@ function Message({ id, msgItem }) {
                       <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
                     </svg>
                   </button>
-                  <div>{renderHTMR(msgItem?.msg)}</div>
+                  <div><RenderHtml html={msgItem?.msg} /></div>
                 </div>
               </div>
             </div>

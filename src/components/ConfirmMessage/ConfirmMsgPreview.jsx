@@ -5,8 +5,8 @@ import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { $confirmations } from '../../GlobalStates/GlobalStates'
-import { renderHTMR } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 import confirmMsgCssStyles from './confirm_msg_css_styles'
 
 export default function ConfirmMsgPreview({ index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
@@ -64,7 +64,7 @@ export default function ConfirmMsgPreview({ index, msgId, active, setActive, pos
                 <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
               </svg>
             </button>
-            <div>{renderHTMR(message)}</div>
+            <div><RenderHtml html={message} /></div>
           </div>
         </div>
       </div>

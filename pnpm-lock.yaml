@@ -11,6 +11,8 @@ specifiers:
   '@babel/plugin-transform-runtime': ^7.18.0
   '@babel/preset-env': 7.18.0
   '@babel/preset-react': ^7.17.12
+  '@babel/runtime': ^7.18.6
+  '@originjs/vite-plugin-commonjs': ^1.0.3
   '@paypal/react-paypal-js': ^7.8.0
   '@pmmmwh/react-refresh-webpack-plugin': 0.5.7
   '@popperjs/core': 2.11.5
@@ -38,7 +40,12 @@ specifiers:
   babel-jest: ^28.1.0
   babel-loader: 8.2.5
   bit-country-field: file:./packages/bit-country-field
+  bit-currency-field: file:./packages/bit-currency-field
+  bit-dropdown-field: file:./packages/bit-dropdown-field
   bit-file-pond: file:./packages/bit-file-pond
+  bit-file-up-field: file:./packages/bit-file-up-field
+  bit-paypal-field: file:./packages/bit-paypal-field
+  bit-phone-number-field: file:./packages/bit-phone-number-field
   bit-virtualized-list: file:./packages/bit-virtualized-list
   clean-webpack-plugin: ^4.0.0
   compression-webpack-plugin: 10.0.0
@@ -48,12 +55,14 @@ specifiers:
   cross-env: ^7.0.3
   css-loader: 6.7.1
   cypress: ^10.0.2
+  date-fns: ^2.28.0
   deepmerge-alt: ^0.3.0
   eslint: ^8.16.0
   eslint-config-airbnb: ^19.0.4
   eslint-config-react: ^1.1.7
   eslint-config-react-app: ^7.0.1
   eslint-plugin-babel: ^5.3.1
+  eslint-plugin-es: https://github.com/mysticatea/eslint-plugin-es
   eslint-plugin-flowtype: ^8.0.3
   eslint-plugin-import: ^2.26.0
   eslint-plugin-jsx-a11y: ^6.5.1
@@ -151,10 +160,16 @@ dependencies:
   ace-builds: 1.7.1
   array-move: 4.0.0
   bit-country-field: file:packages/bit-country-field
+  bit-currency-field: file:packages/bit-currency-field
+  bit-dropdown-field: file:packages/bit-dropdown-field
   bit-file-pond: file:packages/bit-file-pond
+  bit-file-up-field: file:packages/bit-file-up-field
+  bit-paypal-field: file:packages/bit-paypal-field
+  bit-phone-number-field: file:packages/bit-phone-number-field
   bit-virtualized-list: file:packages/bit-virtualized-list
   core-js: 3.22.7
   create-file-list: 1.1.0
+  date-fns: 2.28.0
   deepmerge-alt: 0.3.0
   fela: 11.7.0
   fela-plugin-custom-property: 11.7.0_fela@11.7.0
@@ -211,6 +226,8 @@ devDependencies:
   '@babel/plugin-transform-runtime': 7.18.6_@babel+core@7.18.6
   '@babel/preset-env': 7.18.0_@babel+core@7.18.6
   '@babel/preset-react': 7.18.6_@babel+core@7.18.6
+  '@babel/runtime': 7.18.6
+  '@originjs/vite-plugin-commonjs': 1.0.3
   '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_dht25cu4po3ounlhlctzwihdn4
   '@storybook/addon-a11y': 6.5.5_biqbaboplfbrettd7655fr4n2y
   '@storybook/addon-actions': 6.5.5_biqbaboplfbrettd7655fr4n2y
@@ -243,6 +260,7 @@ devDependencies:
   eslint-config-react: 1.1.7
   eslint-config-react-app: 7.0.1_f347s6eklzvjmlzqmn2ih25xgq
   eslint-plugin-babel: 5.3.1_eslint@8.19.0
+  eslint-plugin-es: github.com/mysticatea/eslint-plugin-es/00d73851793541dc7b0d07292deb0ca2bc8a25e1_eslint@8.19.0
   eslint-plugin-flowtype: 8.0.3_rvwzfzbtmlfiiy3mtz2f5w6pia
   eslint-plugin-import: 2.26.0_eslint@8.19.0
   eslint-plugin-jsx-a11y: 6.6.0_eslint@8.19.0
@@ -2814,6 +2832,12 @@ packages:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    dev: true
+
+  /@originjs/vite-plugin-commonjs/1.0.3:
+    resolution: {integrity: sha512-KuEXeGPptM2lyxdIEJ4R11+5ztipHoE7hy8ClZt3PYaOVQ/pyngd2alaSrPnwyFeOW1UagRBaQ752aA1dTMdOQ==}
+    dependencies:
+      esbuild: 0.14.48
     dev: true
 
   /@paypal/paypal-js/5.1.0:
@@ -8597,6 +8621,11 @@ packages:
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
     dev: true
+
+  /date-fns/2.28.0:
+    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /dayjs/1.11.3:
     resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
@@ -21070,9 +21099,39 @@ packages:
       bit-virtualized-list: file:packages/bit-virtualized-list
     dev: false
 
+  file:packages/bit-currency-field:
+    resolution: {directory: packages/bit-currency-field, type: directory}
+    name: bit-currency-field
+    version: 1.0.0
+    dev: false
+
+  file:packages/bit-dropdown-field:
+    resolution: {directory: packages/bit-dropdown-field, type: directory}
+    name: bit-dropdown-field
+    version: 1.0.0
+    dev: false
+
   file:packages/bit-file-pond:
     resolution: {directory: packages/bit-file-pond, type: directory}
     name: bit-file-pond
+    version: 1.0.0
+    dev: false
+
+  file:packages/bit-file-up-field:
+    resolution: {directory: packages/bit-file-up-field, type: directory}
+    name: bit-file-up-field
+    version: 1.0.0
+    dev: false
+
+  file:packages/bit-paypal-field:
+    resolution: {directory: packages/bit-paypal-field, type: directory}
+    name: bit-paypal-field
+    version: 1.0.0
+    dev: false
+
+  file:packages/bit-phone-number-field:
+    resolution: {directory: packages/bit-phone-number-field, type: directory}
+    name: bit-phone-number-field
     version: 1.0.0
     dev: false
 
@@ -21094,3 +21153,17 @@ packages:
     dependencies:
       filepond: 4.30.4
     dev: false
+
+  github.com/mysticatea/eslint-plugin-es/00d73851793541dc7b0d07292deb0ca2bc8a25e1_eslint@8.19.0:
+    resolution: {tarball: https://codeload.github.com/mysticatea/eslint-plugin-es/tar.gz/00d73851793541dc7b0d07292deb0ca2bc8a25e1}
+    id: github.com/mysticatea/eslint-plugin-es/00d73851793541dc7b0d07292deb0ca2bc8a25e1
+    name: eslint-plugin-es
+    version: 4.1.0
+    engines: {node: '>=8.10.0'}
+    peerDependencies:
+      eslint: '>=4.19.1'
+    dependencies:
+      eslint: 8.19.0
+      eslint-utils: 2.1.0
+      regexpp: 3.2.0
+    dev: true
