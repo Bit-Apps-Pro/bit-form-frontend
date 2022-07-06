@@ -1,8 +1,5 @@
-/* eslint-disable no-restricted-syntax */
-// import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
-
 /* eslint-disable class-methods-use-this */
-export default class FileUploadField {
+export default class BitFileUpField {
   #fileUploadWrap = null
 
   #fieldLabel = null
@@ -158,7 +155,8 @@ export default class FileUploadField {
         error.push('File Allready Exist')
       }
     }
-    selectAllInGrid(`.${this.fieldKey}-cross-btn`).forEach(element => {
+    this.#window.document.querySelectorALL()
+    this.#window.document.querySelectorALL(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
@@ -193,7 +191,7 @@ export default class FileUploadField {
 
   #removeAction = e => {
     const id = e.target.getAttribute('data-file-id')
-    selectInGrid(`#file-wrp-${id}`)?.remove()
+    this.#document.querySelector(`#file-wrp-${id}`)?.remove()
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length

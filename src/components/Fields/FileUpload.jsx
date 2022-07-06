@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import BitFileUpField from 'bit-file-up-field'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-import FileUploadField from '../../resource/js/file-upload-script'
 
 export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
@@ -45,11 +45,11 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       minFile,
       maxFile,
       assetsURL: bits.assetsURL,
-      document: document.getElementById('bit-grid-layout').document,
-      widnow: document.getElementById('bit-grid-layout').contentWindow,
+      document: document.getElementById('bit-grid-layout')?.contentWindow?.document,
+      widnow: document.getElementById('bit-grid-layout')?.contentWindow,
     }
 
-    fileUploadFieldRef.current = new FileUploadField(fldElm, configOptions)
+    fileUploadFieldRef.current = new BitFileUpField(fldElm, configOptions)
   }, [fieldData])
 
   return (
