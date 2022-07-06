@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useLayoutEffect } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import { lowerCaseAllAndReplaceSpaceToHipen } from '../style-new/styleHelpers'
@@ -28,10 +28,10 @@ export default function StyleSegmentControl({ defaultActive,
       // mx: 'auto',
     },
     tabs: {
-      fs: 14,
+      fs: 13,
       // bd: 'blue',
       bd: 'var(--white-0-95)',
-      py: 3,
+      py: 1.5,
       flx: 'center',
       px: 3,
       ls: 'none',
@@ -93,27 +93,29 @@ export default function StyleSegmentControl({ defaultActive,
   }
 
   const selectorRef = useRef(null)
-  const [tabsRef, setTabsRef] = useState(null)
+  const selectorTransition = useRef(null)
+  const tabsRef = useRef(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
 
   useEffect(() => {
     if (active !== defaultActive) setactive(defaultActive)
   }, [defaultActive])
 
-  const setSelectorPos = (activeElement) => {
-    setTimeout(() => {
-      const { width: toActiveElmWidth } = activeElement.getBoundingClientRect() || { width: 0 }
-      // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+  useLayoutEffect(() => {
+    const toActiveElement = tabsRef?.current?.querySelector(`[data-label="${active}"]`)
+    if (toActiveElement) {
+      const { width: toActiveElmWidth } = toActiveElement.getBoundingClientRect() || { width: 0 }
       if (!selectorRef.current) return
+      if (selectorRef.current.style.width === '') {
+        selectorTransition.transition = selectorRef.current.style.transition
+        selectorRef.current.style.transition = 'all 0s'
+      } else {
+        selectorRef.current.style.transition = selectorTransition.transition
+      }
       selectorRef.current.style.width = `${toActiveElmWidth}px`
-      selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
-    }, 100)
-  }
-
-  const toActiveElement = tabsRef?.querySelector(`[data-label="${active}"]`)
-  if (toActiveElement) {
-    setSelectorPos(toActiveElement)
-  }
+      selectorRef.current.style.transform = `translate(${toActiveElement.offsetLeft - 5}px, -50%)`
+    }
+  })
 
   const eventHandler = (e, i) => {
     e.preventDefault()
@@ -124,7 +126,7 @@ export default function StyleSegmentControl({ defaultActive,
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    const currentActiveElm = tabsRef.querySelector('.tabs button.active')
+    const currentActiveElm = tabsRef.current.querySelector('.tabs button.active')
     if (elm !== currentActiveElm) {
       currentActiveElm?.classList.remove('active')
       setactive(options[i].label)
@@ -144,7 +146,7 @@ export default function StyleSegmentControl({ defaultActive,
 
   return (
     <div className={`${css(style.wrapper)} ${className}`}>
-      <div ref={setTabsRef} className={`${css(style.tabs)} tabs`}>
+      <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} style={{ width: defaultItmWidth }} />
         {options?.map((item, i) => {
           const btn = (

@@ -71,7 +71,7 @@ const setTitle = (component) => {
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
     case 'space-control': return 'Margin & Padding'
-    case 'size-control': return 'Width,Height'
+    case 'size-control': return 'Width & Height'
     case 'shadow-control': return 'Shadow'
     case 'transition-control': return 'Transition'
     case 'transform-control': return 'Transform'
@@ -112,7 +112,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handle`}>
           <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
             <span className={css(draggableModalStyle.title)}>{mainTitle || setTitle(component)}</span>
-            <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
+            <span className={css(draggableModalStyle.subTitle, ut.fontBody)}>{subtitle}</span>
           </div>
           <button
             data-testid="draggable-modal-close-btn"
