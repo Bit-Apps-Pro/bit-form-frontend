@@ -24,6 +24,8 @@ export default class FileUploadField {
 
   #allEventListeners = []
 
+  #assetsURL = ''
+
   // default config
   #config = {
     id: 'upload',
@@ -62,6 +64,8 @@ export default class FileUploadField {
       this.#fileUploadWrap = selector
     }
     this.fieldKey = this.#config.fieldKey
+
+    this.#assetsURL = config.assetsURL
 
     this.init()
   }
@@ -214,13 +218,13 @@ export default class FileUploadField {
       case '.gz':
       case 'z':
       case 'zip':
-        return `${bits.assetsURL}/../static/file-upload/zip-compressed.svg`
+        return `${this.#assetsURL}/../static/file-upload/zip-compressed.svg`
       case 'key':
       case 'odp':
       case 'pps':
       case 'ppt':
       case 'pptx':
-        return `${bits.assetsURL}/../static/file-upload/presentation.svg`
+        return `${this.#assetsURL}/../static/file-upload/presentation.svg`
       case '_RF_':
       case 'doc':
       case 'docx':
@@ -232,7 +236,7 @@ export default class FileUploadField {
       case 'wks':
       case 'wps':
       case 'wpd':
-        return `${bits.assetsURL}/../static/file-upload/document.svg`
+        return `${this.#assetsURL}/../static/file-upload/document.svg`
       case 'csv':
       case 'dat':
       case 'db':
@@ -244,7 +248,7 @@ export default class FileUploadField {
       case 'tar':
       case 'sqlite':
       case 'xml':
-        return `${bits.assetsURL}/../static/file-upload/database.svg`
+        return `${this.#assetsURL}/../static/file-upload/database.svg`
       case 'opus':
       case 'flac':
       case 'webm':
@@ -261,7 +265,7 @@ export default class FileUploadField {
       case 'au':
       case 'acc':
       case 'wpl':
-        return `${bits.assetsURL}/../static/file-upload/file-audio.svg`
+        return `${this.#assetsURL}/../static/file-upload/file-audio.svg`
       case 'ogm':
       case 'wmv':
       case 'mpg':
@@ -276,9 +280,9 @@ export default class FileUploadField {
       case 'flv':
       case 'mkv':
       case 'swf':
-        return `${bits.assetsURL}/../static/file-upload/file-audio.svg`
+        return `${this.#assetsURL}/../static/file-upload/file-audio.svg`
       default:
-        return `${bits.assetsURL}/../static/file-upload/paperclip.svg`
+        return `${this.#assetsURL}/../static/file-upload/paperclip.svg`
     }
   }
 

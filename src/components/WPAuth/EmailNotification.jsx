@@ -5,22 +5,28 @@ import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
 
 export default function EmailNotification({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
-  const temBody = dataConf[type]?.body ? dataConf[type]?.body : tamplate
+  const data = type ? dataConf[type] : dataConf
+  const temBody = data?.body ? data?.body : tamplate
+
   const handleBody = value => {
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
-      draft[type].body = value
+      const tmp = type ? draft[type] : draft
+      tmp.body = value
     }))
   }
-
   const cancelModal = () => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
-      // eslint-disable-next-line no-param-reassign
-      draft[type].body = tamplate
-      // eslint-disable-next-line no-param-reassign
-      draft[type].sub = 'Email Subject'
-    }))
-    setshowMdl(false)
+    setTimeout(() => {
+      setDataConf(tmpConf => produce(tmpConf, draft => {
+        // eslint-disable-next-line no-param-reassign
+        const tmp = type ? draft[type] : draft
+        // tmp[name] = value
+        tmp.body = tamplate
+        // eslint-disable-next-line no-param-reassign
+        tmp.sub = 'Email Subject'
+      }))
+      setshowMdl(false)
+    })
   }
 
   console.log('dataConf', dataConf, showMdl)
@@ -28,8 +34,9 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
   const handleInput = e => {
     setDataConf(tmpConf => produce(tmpConf, draft => {
       const { name, value } = e.target
+      const tmp = type ? draft[type] : draft
       // eslint-disable-next-line no-param-reassign
-      draft[type][name] = value
+      tmp[name] = value
     }))
   }
 
@@ -38,13 +45,13 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
       <>
         <div className="mt-3 flx">
           <b style={{ width: 100 }}>Subject:</b>
-          <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-9" placeholder="Email Subject Here" value={dataConf[type]?.sub} />
+          <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-9" placeholder="Email Subject Here" value={data?.sub} />
         </div>
         <div className="mt-3">
-          <b>{__('Body:')}</b>
-          <label htmlFor={`mail-tem-${dataConf[type]?.formID}`} className="mt-2 w-10">
+          <b>{__('Body:', 'bitform')}</b>
+          <label htmlFor={`mail-tem-${data?.formID}`} className="mt-2 w-10">
             <TinyMCE
-              id={`mail-tem-${dataConf[type]?.formID}`}
+              id={`mail-tem-${data?.formID}`}
               value={temBody}
               onChangeHandler={handleBody}
               width="100%"
@@ -56,6 +63,6 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
           <button type="button" className="btn blue" onClick={() => setshowMdl(false)}>Save</button>
         </div>
       </>
-    </Modal>
+    </Modal >
   )
 }

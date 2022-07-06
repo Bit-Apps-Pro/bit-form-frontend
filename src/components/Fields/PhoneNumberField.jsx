@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
+import BitPhoneNumberField from 'bit-phone-number-field'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import PhoneNumberFieldClass from '../../resource/js/phone-number-field-script'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -50,6 +50,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       options,
       inputFormat,
       valueFormat,
+      document: document.getElementById('bit-grid-layout').document,
+      widnow: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDavAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -68,7 +70,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
 
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i
-    phoneNumberFieldRef.current = new PhoneNumberFieldClass(fldElm, configOptions)
+    phoneNumberFieldRef.current = new BitPhoneNumberField(fldElm, configOptions)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldData])
 

@@ -4,17 +4,20 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
+import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
+import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
+import { $reportId, $reports } from '../GlobalStates/GlobalStates'
 import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy, number2Ipv6 } from '../Utils/Helpers'
+import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
@@ -34,23 +37,25 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
+  const [tableColumns, setTableColumns] = useState([])
   const [entryLabels, setEntryLabels] = useState([])
   const setForms = useSetRecoilState($forms)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
   const bits = useRecoilValue($bits)
-  const reportData = useRecoilValue($reportSelector(0))
+  const currentReportData = useRecoilValue($reportSelector)
+  const reportId = useRecoilValue($reportId)
+  const reports = useRecoilValue($reports)
+  const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
 
   useEffect(() => {
-    if (reportData) {
+    if (currentReportData) {
       const allLabelObj = {}
-
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      console.log('reportData', reportData, allLabels)
-      reportData.details?.order?.forEach((field) => {
+      currentReportData.details?.order?.forEach((field) => {
         if (
           field
           && field !== 'sl'
@@ -66,8 +71,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     } else if (allLabels.length) {
       tableHeaderHandler(allLabels)
     }
-    // console.log(`reportData`, reportData)
-    // tableHeaderHandler(reportData?.details?.order || allLabels)
+    // tableHeaderHandler(currentReportData?.details?.order || allLabels)
   }, [allLabels])
 
   const closeConfMdl = useCallback(() => {
@@ -221,11 +225,13 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             if (val.key === '__user_id') {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
+            if (val.key === '__entry_status') {
+              const status = Number(row.cell.value)
+              return getEntryStatus(status)
+            }
 
-            if (val.key === '__user_ip' && isFinite(Number(row.cell.value)) && row.cell.value.length <= 11) {
-              return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
-            } if (val.key === '__user_ip' && row.cell.value > 10) {
-              return number2Ipv6(row.cell.value)
+            if (val.key === '__user_ip' && isFinite(Number(row.cell.value))) {
+              return formatIpNumbers(row.cell.value)
             }
             return row.cell.value
           }
@@ -283,7 +289,16 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         />
       ),
     })
+    const filteredEntryLabels = filteredEntryLabelsForTable(cols)
+    setTableColumns(filteredEntryLabels)
     setEntryLabels(cols)
+  }
+
+  const getEntryStatus = status => {
+    if (status === 0) { return 'Read' }
+    if (status === 1) { return 'Unread' }
+    if (status === 2) { return 'Unconfirmed' }
+    if (status === 3) { return 'Confirmed' }
   }
 
   const editData = useCallback((row) => {
@@ -308,7 +323,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     setshowRelatedInfoMdl(true)
   }
 
-  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
+  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter, conditions, entriesFilterByDate }) => {
     // eslint-disable-next-line no-plusplus
     if (refreshResp) {
       setRefreshResp(0)
@@ -331,6 +346,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           sortBy,
           filters,
           globalFilter,
+          conditions,
+          entriesFilterByDate,
         },
         'bitforms_get_form_entries',
       ).then((res) => {
@@ -360,16 +377,31 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         } else {
           newRowDtl.data = row
           newRowDtl.idx = idx
-          newRowDtl.fetchData = rowFetchData
           newRowDtl.show = true
         }
         setRowDtl({ ...newRowDtl })
+
+        const findStatusCol = row.find(col => col.column.id === '__entry_status')
+        if (findStatusCol && findStatusCol.value === '1') {
+          const entry = allResp[idx]
+          const entryId = entry.entry_id
+          bitsFetch({ formId: formID, entryId }, 'bitforms_entry_status_update')
+            .then(resp => {
+              if (resp.success) {
+                const newAllResp = [...allResp]
+                // eslint-disable-next-line dot-notation
+                newAllResp[idx]['__entry_status'] = '0'
+                newAllResp[idx]['__updated_at'] = resp?.data?.update_at_time
+                setAllResp(newAllResp)
+              }
+            })
+        }
       }
     },
     [rowDtl],
   )
 
-  const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
+  const filterEntryLabels = () => entryLabels.filter(el => el.accessor !== 'sl' && el.accessor !== 'table_ac')
 
   const getUploadedFilesArr = files => {
     try {
@@ -428,43 +460,34 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
-      return [allResp[rowDtl.idx]?.[entry.accessor] >>> 24 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 16 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 8 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] & 0xFF].join('.')
+      return formatIpNumbers(allResp[rowDtl.idx]?.[entry.accessor])
+    }
+    if (entry.accessor === '__entry_status') {
+      const status = Number(allResp[rowDtl.idx]?.[entry.accessor])
+      return getEntryStatus(status)
     }
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
-  // const formatRespData = (respData = []) => {
-  //   const passwordFields = allLabels.filter(label => label.type === 'password').map(lbl => lbl.key)
-  //   if (passwordFields.length) {
-  //     const newResp = [...respData]
-  //     newResp.forEach((resp, i) => {
-  //       passwordFields.forEach(passField => {
-  //         if (resp[passField]) {
-  //           newResp[i][passField] = '**** (encrypted)'
-  //         }
-  //       })
-  //     })
+  const loadRightHeaderComponent = () => (
+    <>
+      {/* <EntriesFilter fetchData={fetchData} /> */}
+      <ExportImportMenu data={allResp} cols={entryLabels} formID={formID} report={reports} />
+    </>
+  )
+  const loadLeftHeaderComponent = () => (
+    <>
+      <FldEntriesByCondition fetchData={fetchData} setRefreshResp={setRefreshResp} />
+    </>
+  )
 
-  //     return newResp
-  //   }
-
-  //   return respData
-  // }
+  const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
+    const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
+    return !ignoreLbls.includes(lbl.accessor)
+  })
 
   return (
     <div id="form-res">
-      <div className="af-header flx">
-        <h2>{__('Form Responses')}</h2>
-        <button
-          className="icn-btn ml-2 mr-2 tooltip"
-          onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
-          type="button"
-          disabled={isloading}
-        >
-          &#x21BB;
-        </button>
-      </div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <ConfirmModal
@@ -476,7 +499,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         action={confMdl.action}
       />
 
-      {showEditMdl
+      {
+        showEditMdl
         && (
           <EditEntryData
             close={setShowEditMdl}
@@ -486,9 +510,11 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             setAllResp={setAllResp}
             setSnackbar={setSnackbar}
           />
-        )}
+        )
+      }
 
-      {showRelatedInfoMdl
+      {
+        showRelatedInfoMdl
         && (
           <EntryRelatedInfo
             close={setshowRelatedInfoMdl}
@@ -498,10 +524,11 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             rowDtl={allResp[rowDtl.idx]}
             integrations={integrations}
           />
-        )}
+        )
+      }
 
       <Drawer
-        title={__('Response Details')}
+        title={__(`Response Details #${rowDtl.idx + pageCount + 1}`, 'bitform')}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
@@ -528,8 +555,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       <div className="forms">
         <Table
           className="f-table btcd-entries-f"
-          height="60vh"
-          columns={entryLabels}
+          height="76vh"
+          columns={tableColumns}
           data={allResp}
           loading={isloading}
           countEntries={countEntries}
@@ -538,16 +565,19 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           columnHidable
           hasAction
           rowClickable
-          exportImportMenu
+          rightHeader={loadRightHeaderComponent()}
+          leftHeader={loadLeftHeaderComponent()}
+          reportActiveMenu
           formID={formID}
-          setTableCols={setEntryLabels}
+          setTableCols={setTableColumns}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           duplicateData={bulkDuplicateData}
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
-          report={0} // index - 0 setted as default report
+          refreshResp={refreshResp}
+          report={rprtIndx || 0}// index - 0 setted as default report
         />
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
@@ -556,7 +586,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           </div>
         )}
       </div>
-    </div>
+    </div >
   )
 }
 

@@ -96,7 +96,6 @@ export default function ThemeQuickTweaksCustomizer() {
 
   return (
     <>
-
       <SimpleColorPicker
         title="Accent Color"
         subtitle="Theme Quick Tweaks Accent Color"

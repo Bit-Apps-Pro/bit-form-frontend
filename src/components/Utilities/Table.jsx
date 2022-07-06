@@ -1,26 +1,26 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-
-import { memo, useEffect, useState, useRef, forwardRef } from 'react'
+import { forwardRef, memo, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
+import { useFela } from 'react-fela'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { useFela } from 'react-fela'
+import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
+import CopyIcn from '../../Icons/CopyIcn'
+import EyeOffIcon from '../../Icons/EyeOffIcon'
+import SearchIcn from '../../Icons/SearchIcn'
+import SearchIcon from '../../Icons/SearchIcon'
+import SortIcn from '../../Icons/SortIcn'
+import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
+import ExportImportMenu from '../ExportImport/ExportImportMenu'
+import TableLoader2 from '../Loaders/TableLoader2'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
-import TableLoader2 from '../Loaders/TableLoader2'
-import ExportImportMenu from '../ExportImport/ExportImportMenu'
-import { $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
-import SearchIcon from '../../Icons/SearchIcon'
-import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
-import CopyIcn from '../../Icons/CopyIcn'
-import TrashIcn from '../../Icons/TrashIcn'
-import SortIcn from '../../Icons/SortIcn'
-import EyeOffIcon from '../../Icons/EyeOffIcon'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -33,9 +33,8 @@ const IndeterminateCheckbox = forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols, formID }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp }) {
   const [delay, setDelay] = useState(null)
-  const reports = useRecoilValue($reports)
   const handleSearch = e => {
     delay && clearTimeout(delay)
     const { value } = e.target
@@ -48,43 +47,67 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
   }
 
   return (
-    <div className="f-search">
-      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}><SearchIcon size="15" /></button>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label>
-        <input
-          value={globalFilter || ''}
-          onChange={handleSearch}
-          placeholder={__('Search')}
-        />
-      </label>
-      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} report={reports} />}
+    <div className="table-right-menu">
+
+      <div className="flx">
+        {/* <div className="f-search">
+          <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}>
+            <span className="btcd-icn icn-search" />
+          </button>
+
+           <label>
+            <input
+              value={globalFilter || ''}
+              onChange={handleSearch}
+              placeholder={__('Search', 'bitform')}
+            />
+          </label>
+
+        </div> */}
+        <div className="f-search mr-2">
+          <span><SearchIcn size="16" /></span>
+          <input
+            value={globalFilter || ''}
+            onChange={handleSearch}
+            placeholder={__('Search', 'bitform')}
+            className="search-input-box"
+          />
+
+        </div>
+        {leftHeaderComp}
+
+      </div>
+
     </div>
   )
 }
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
-    <Menu icn={<EyeOffIcon size="21" />}>
-      <Scrollbars autoHide style={{ width: 200 }}>
-        <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
-          {tableCol.map((column, i) => (
-            <div key={tableAllCols[i + 1].id} className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
-              <TableCheckBox cls="scl-7" id={tableAllCols[i + 1].id} title={column.Header} rest={tableAllCols[i + 1].getToggleHiddenProps()} />
-              <span className="btcd-pane-drg">&#8759;</span>
-            </div>
-          ))}
-        </ReactSortable>
-      </Scrollbars>
-    </Menu>
+    <>
+      <Menu icn={<EyeOffIcon size="21" />}>
+        <Scrollbars autoHide style={{ width: 200 }}>
+          <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
+            {tableCol.map((column, i) => (
+              <div key={tableAllCols[i + 1].id} className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
+                <TableCheckBox cls="scl-7" id={tableAllCols[i + 1].id} title={column.Header} rest={tableAllCols[i + 1].getToggleHiddenProps()} />
+                <span className="btcd-pane-drg">&#8759;</span>
+              </div>
+            ))}
+          </ReactSortable>
+        </Scrollbars>
+      </Menu>
+    </>
   )
 }
 
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const { columns, data, fetchData, report } = props
-  const [reportData, updateReportData] = useRecoilState($reportSelector(report))
+  const { columns, data, fetchData, refreshResp, report } = props
+  const [currentReportData, updateReportData] = useRecoilState($reportSelector)
+  const reportId = useRecoilValue($reportId)
+
   const { getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -98,35 +121,37 @@ function Table(props) {
     nextPage,
     previousPage,
     setPageSize,
+    setSortBy,
+    setHiddenColumns,
     state,
     preGlobalFilteredRows,
     selectedFlatRows, // row select
     allColumns, // col hide
     setGlobalFilter,
-    state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
-    setColumnOrder } = useTable(
-      {
-        debug: true,
-        fetchData,
-        columns,
-        data,
-        manualPagination: typeof props.pageCount !== 'undefined',
-        pageCount: props.pageCount,
-        initialState: {
-          pageIndex: 0,
-          hiddenColumns: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'hiddenColumns' in reportData.details) ? reportData.details.hiddenColumns : [],
-          pageSize: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'pageSize' in reportData.details) ? reportData.details.pageSize : 10,
-          sortBy: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'sortBy' in reportData.details) ? reportData.details.sortBy : [],
-          filters: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'filters' in reportData.details) ? reportData.details.filters : [],
-          globalFilter: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'globalFilter' in reportData.details) ? reportData.details.globalFilter : '',
-          columnOrder: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'order' in reportData.details) ? reportData.details.order : [],
-        },
-        autoResetPage: false,
-        autoResetHiddenColumns: false,
-        autoResetSortBy: false,
-        autoResetFilters: false,
-        autoResetGlobalFilter: false,
+    state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns, conditions },
+    setColumnOrder } = useTable({
+      debug: true,
+      fetchData,
+      columns,
+      data,
+      manualPagination: typeof props.pageCount !== 'undefined',
+      pageCount: props.pageCount,
+      initialState: {
+        pageIndex: 0,
+        hiddenColumns: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'hiddenColumns' in currentReportData.details) ? currentReportData.details.hiddenColumns : [],
+        pageSize: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'pageSize' in currentReportData.details) ? currentReportData.details.pageSize : 10,
+        sortBy: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'sortBy' in currentReportData.details) ? currentReportData.details.sortBy : [],
+        filters: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'filters' in currentReportData.details) ? currentReportData.details.filters : [],
+        globalFilter: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'globalFilter' in currentReportData.details) ? currentReportData.details.globalFilter : '',
+        columnOrder: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'order' in currentReportData.details) ? currentReportData.details.order : [],
+        conditions: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'conditions' in currentReportData.details) ? currentReportData.details.conditions : [],
       },
+      autoResetPage: false,
+      autoResetHiddenColumns: false,
+      autoResetSortBy: false,
+      autoResetFilters: false,
+      autoResetGlobalFilter: false,
+    },
       useFilters,
       useGlobalFilter,
       useSortBy,
@@ -150,16 +175,16 @@ function Table(props) {
           },
           ...cols,
         ])
-      }) : '',
-    )
+      }) : '')
   const [stateSavable, setstateSavable] = useState(false)
+
   const [search, setSearch] = useState(globalFilter)
   const { css } = useFela()
   useEffect(() => {
     if (fetchData) {
-      fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search })
+      fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search, conditions: currentReportData?.details?.conditions })
     }
-  }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
+  }, [refreshResp, pageIndex, pageSize, sortBy, filters, search])
 
   useEffect(() => {
     if (pageIndex > pageCount) {
@@ -170,12 +195,13 @@ function Table(props) {
   useEffect(() => {
     if (!isNaN(report)) {
       let details
-      if (reportData && reportData.details && typeof reportData.details === 'object') {
-        details = { ...reportData.details, hiddenColumns, pageSize, sortBy, filters, globalFilter }
+
+      if (currentReportData && currentReportData.details && typeof currentReportData.details === 'object') {
+        details = { ...currentReportData.details, hiddenColumns, pageSize, sortBy, filters, globalFilter }
       } else {
         details = { hiddenColumns, pageSize, sortBy, filters, globalFilter }
       }
-      updateReportData({ ...reportData, details, type: 'table' })
+      updateReportData({ ...currentReportData, details, type: 'table' })
       setstateSavable(false)
     } else if (stateSavable) {
       setstateSavable(false)
@@ -184,18 +210,38 @@ function Table(props) {
   }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
 
   useEffect(() => {
+    if (currentReportData && currentReportData.details && typeof currentReportData.details === 'object' && report !== undefined) {
+      setHiddenColumns(currentReportData?.details?.hiddenColumns || [])
+      setPageSize(currentReportData?.details?.pageSize || 10)
+      setSortBy(currentReportData?.details?.sortBy || [])
+      setGlobalFilter(currentReportData?.details?.globalFilter || '')
+
+      //  setFilters(currentReportData.details.filters)
+      // setColumnOrder(currentReportData.details.order)
+      return
+    }
+
+    setHiddenColumns([])
+    setPageSize(10)
+    setSortBy([])
+    setGlobalFilter('')
+    // setFilters([])
+    // setColumnOrder([])
+  }, [reportId])
+
+  useEffect(() => {
     if (columns.length && allColumns.length >= columns.length) {
-      if (reportData && 'details' in reportData) {
-        if (stateSavable && reportData.details) {
-          const details = { ...reportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
-          if (state.columnOrder.length === 0 && typeof reportData.details === 'object' && 'order' in reportData.details) {
-            setColumnOrder(reportData.details.order)
+      if (currentReportData && 'details' in currentReportData) {
+        if (stateSavable && currentReportData.details) {
+          const details = { ...currentReportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+          if (state.columnOrder.length === 0 && typeof currentReportData.details === 'object' && 'order' in currentReportData.details) {
+            setColumnOrder(currentReportData.details.order)
           } else {
             setColumnOrder(details.order)
-            updateReportData({ ...reportData, details })
+            updateReportData({ ...currentReportData, details })
           }
-        } else if (!stateSavable && typeof reportData.details === 'object' && reportData.details && 'order' in reportData.details) {
-          setColumnOrder(reportData.details.order)
+        } else if (!stateSavable && typeof currentReportData.details === 'object' && currentReportData.details && 'order' in currentReportData.details) {
+          setColumnOrder(currentReportData.details.order)
           setstateSavable(true)
         } else if (!stateSavable) {
           setstateSavable(true)
@@ -259,7 +305,7 @@ function Table(props) {
         <div className="flx">
 
           {props.columnHidable && <ColumnHide cols={props.columns} setCols={props.setTableCols} tableCol={columns} tableAllCols={allColumns} />}
-
+          {props.leftHeader}
           {props.rowSeletable && selectedFlatRows.length > 0
             && (
               <>
@@ -293,11 +339,12 @@ function Table(props) {
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
           setSearch={setSearch}
-          exportImportMenu={props.exportImportMenu}
+          leftHeaderComp={props.rightHeader}
           data={props.data}
           cols={props.columns}
           formID={props.formID}
           report={report}
+          fetchData={fetchData}
 
         />
         <div className="mt-2">

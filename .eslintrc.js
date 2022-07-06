@@ -38,9 +38,9 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'airbnb',
     // 'react-app',
+    'plugin:es/no-new-in-esnext',
   ],
-  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node'],
-  settings: { react: { version: 'detect' } },
+  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node', 'es'],
   rules: {
     semi: ['error', 'never'],
     indent: ['error', 2, { SwitchCase: 1 }],
@@ -75,5 +75,6 @@ module.exports = {
     'no-unused-expressions': ["error", { "allowShortCircuit": true }],
     'react/function-component-definition': 0,
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsForRegex: ['(d|D)raft'] }],
+    'es/no-string-prototype-replaceall': ['error', { aggressive: true }],
   },
 }

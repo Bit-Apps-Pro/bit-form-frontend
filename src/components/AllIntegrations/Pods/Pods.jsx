@@ -22,7 +22,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   const [data, setData] = useState({
     name: 'Pods',
     type: 'Pods',
-    post_map: [{}],
+    post_map: [{ post_author: 'logged_in_user' }],
     pod_map: [{}],
   })
   const [snack, setSnackbar] = useState({ show: false })
@@ -134,7 +134,8 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
 
       <div className="mt-3"><b>{__('Author')}</b></div>
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
-        <option disabled selected>Logged In User</option>
+        <option disabled selected>{__('Select Author', 'bitform')}</option>
+        <option value="logged_in_user">Logged In User</option>
         {users.map((user, key) => (
           <option key={`pod-${key * 2}`} value={user.ID}>{user.display_name}</option>
         ))}

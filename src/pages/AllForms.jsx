@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { lazy, memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import FormTemplates from '../components/FormTemplates'
@@ -184,12 +185,18 @@ function AllFroms() {
   }
 
   const handleDuplicate = (formID) => {
-    bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
+    const loadDuplicate = bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
         setAllForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
-        setSnackbar({ show: true, msg: __('Form Duplicated Successfully.') })
+        return 'Form Duplicated Successfully.'
       }
+    })
+
+    toast.promise(loadDuplicate, {
+      success: msg => msg,
+      error: __('Error Occured', 'bit-form'),
+      loading: __('duplicate...'),
     })
   }
 
@@ -198,6 +205,7 @@ function AllFroms() {
     uri.searchParams.append('action', 'bitforms_export_aform')
     uri.searchParams.append('_ajax_nonce', bits.nonce)
     uri.searchParams.append('id', formID)
+    toast.loading('loading...')
     fetch(uri)
       .then(response => {
         if (response.ok) {
