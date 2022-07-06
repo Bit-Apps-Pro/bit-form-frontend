@@ -18,9 +18,6 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-
-
-
   const [mailerLiteConf, setMailerLiteConf] = useState({
     name: 'MailerLite',
     type: 'MailerLite',

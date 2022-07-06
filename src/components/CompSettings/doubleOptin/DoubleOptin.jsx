@@ -89,8 +89,10 @@ export default function DoubleOptin() {
       draft.status = status
     })
 
-    const prom = bitsFetch(tmpConf,
-      'bitforms_save_double_opt_in')
+    const prom = bitsFetch(
+      tmpConf,
+      'bitforms_save_double_opt_in',
+    )
       .then((res) => {
         if (res?.success && !res?.data?.errors) {
           setIsLoading(false)

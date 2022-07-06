@@ -133,7 +133,7 @@ export const handleAuthorize = (
         setSnackbar({
           show: true,
           msg: `${__('Authorization failed Cause:')}${result.data.data || result.data
-            }. ${__('please try again')}`,
+          }. ${__('please try again')}`,
         })
       } else {
         setSnackbar({

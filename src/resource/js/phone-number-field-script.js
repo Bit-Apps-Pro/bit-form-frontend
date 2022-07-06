@@ -450,7 +450,7 @@ class PhoneNumberField {
         }
         this.#setClassName(li, `${this.fieldKey}-option`)
         if ('option' in this.#config.classNames) {
-          const optCls = this.#config.classNames['option']
+          const optCls = this.#config.classNames.option
           if (optCls) this.#setClassName(li, optCls)
         }
         const lblimgbox = this.#createElm('span')

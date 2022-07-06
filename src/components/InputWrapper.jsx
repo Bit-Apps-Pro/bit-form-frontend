@@ -7,7 +7,6 @@ import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributs, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
-
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const { rightBar, element, fieldKey: urlFldKey } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
@@ -57,7 +56,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           {...getCustomAttributs(fieldKey, 'lbl-wrp')}
         >
           {(!fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
-            < label
+            <label
               data-testid={`${fieldKey}-lbl`}
               data-dev-lbl={fieldKey}
               title={fieldData.lbl}
@@ -144,8 +143,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             )
           }
         </div>
-      )
-      }
+      )}
 
       <div
         data-testid={`${fieldKey}-inp-wrp`}
@@ -231,6 +229,6 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           </div>
         )
       }
-    </div >
+    </div>
   )
 }

@@ -119,7 +119,7 @@ const isElementInViewport = elm => {
   )
 }
 
-const requiredFldValidation = fldData => fldData?.valid?.req ? 'required' : ''
+const requiredFldValidation = fldData => (fldData?.valid?.req ? 'required' : '')
 
 const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
 

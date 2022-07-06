@@ -99,18 +99,15 @@ function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value
         (!disabledLogics.includes(logicValue) && (
           fldType.match(/select|check|radio|user|boolean/g)
             ? (
-              <>
-                <MultiSelect
-                  className="msl-wrp-options btcd-paper-drpdwn w-10"
-                  defaultValue={value.toString() || ''}
-                  onChange={e => changeValue(e, lgcInd, fldType)}
-                  options={getOptions()}
-                  customValue
-                  singleSelect={fldType === 'select' ? !fields?.[fieldKey]?.mul : fldType === 'check' ? false : fldType.match(/radio|boolean/g) && true}
-                  fldType={fldType}
-
-                />
-              </>
+              <MultiSelect
+                className="msl-wrp-options btcd-paper-drpdwn w-10"
+                defaultValue={value.toString() || ''}
+                onChange={e => changeValue(e, lgcInd, fldType)}
+                options={getOptions()}
+                customValue
+                singleSelect={fldType === 'select' ? !fields?.[fieldKey]?.mul : fldType === 'check' ? false : fldType.match(/radio|boolean/g) && true}
+                fldType={fldType}
+              />
             ) : (
 
               <MtInput

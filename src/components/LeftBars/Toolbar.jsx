@@ -565,12 +565,12 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           size: 'normal',
         },
       },
-    },
+    }, 
     {
       name: 'Button',
       keywords: 'Button',
       icn: <BtnIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
+      pos: { h: 30, w: 60, i: 'shadow_block', minH: 5, maxH: 80 },
       elm: {
         typ: 'button',
         btnTyp: 'button',

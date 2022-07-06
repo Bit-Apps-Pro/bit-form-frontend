@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-expressions */
+import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
-import { useState } from 'react'
 
 export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)

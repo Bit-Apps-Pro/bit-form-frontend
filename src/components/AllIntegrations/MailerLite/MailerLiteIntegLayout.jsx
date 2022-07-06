@@ -1,12 +1,11 @@
+import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import MailerLiteFieldMap from './MailerLiteFieldMap'
 import MailerLiteActions from './MailerLiteActions'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
-import {
-  useState
-} from 'react'
+
 export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setMailerLiteConf, isLoading, setIsLoading, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
@@ -14,9 +13,12 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
     <>
       <br />
 
-      <div className="mt-5"><b className="wdt-100">{__('Field Map')}
-        <button onClick={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'refreshFields')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-      </b></div>
+      <div className="mt-5">
+        <b className="wdt-100">
+          {__('Field Map')}
+          <button onClick={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'refreshFields')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        </b>
+      </div>
       <br />
       {isLoading && (
         <Loader style={{

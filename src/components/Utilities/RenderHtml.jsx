@@ -1,4 +1,4 @@
-import htmr from "htmr"
+import htmr from 'htmr'
 
 export default function RenderHtml({ html }) {
   try {
