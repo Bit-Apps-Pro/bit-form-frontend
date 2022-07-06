@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from 'react'
 import { resetCaptcha } from '../components/Fields/Recaptcha'
 import MapComponents from '../components/MapComponents'
 import { loadScript } from '../Utils/globalHelpers'
-import { deepCopy, renderHTMR } from '../Utils/Helpers'
+import { deepCopy } from '../Utils/Helpers'
 import { checkLogic, replaceWithField } from './checkLogic'
 import validateForm from './validation'
 
@@ -602,7 +602,7 @@ function Toast(props) {
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (
-            <div>{renderHTMR(props.msg)}</div>
+            <div><RenderHtml html={props.msg} /></div>
           )
           : props.msg
       }

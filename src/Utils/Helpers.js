@@ -1,7 +1,4 @@
 /* eslint-disable no-nested-ternary */
-
-import htmr from 'htmr'
-
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
@@ -293,19 +290,6 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
   }
   return ((y < x) ? -1 : ((y > x) ? 1 : 0))
 })
-
-export const renderHTMR = str => {
-  try {
-    return (
-      ''
-      // <>
-      //   {htmr(str)}
-      // </>
-    )
-  } catch (_) {
-    return str
-  }
-}
 
 export const getIconsGlobalFilterVariable = (iconType) => {
   let variableName = ''

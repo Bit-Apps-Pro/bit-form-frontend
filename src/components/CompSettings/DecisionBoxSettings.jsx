@@ -12,9 +12,10 @@ import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy, renderHTMR } from '../../Utils/Helpers'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
+import RenderHtml from '../Utilities/RenderHtml'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
@@ -127,7 +128,7 @@ export default function DecisionBoxSettings() {
         <div
           className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
         >
-          {renderHTMR(fieldData.lbl || fieldData?.info?.lbl)}
+          <RenderHtml html={fieldData.lbl || fieldData?.info?.lbl} />
         </div>
       </div>
 

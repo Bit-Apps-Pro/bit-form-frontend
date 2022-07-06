@@ -4,9 +4,9 @@ import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   const [value, setvalue] = useState(attr.val || '')
@@ -133,7 +133,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {...getCustomAttributs(fieldKey, 'ct')}
                 >
-                  {renderHTMR(itm.lbl)}
+                  <RenderHtml html={itm.lbl} />
                 </span>
               </label>
             </div>

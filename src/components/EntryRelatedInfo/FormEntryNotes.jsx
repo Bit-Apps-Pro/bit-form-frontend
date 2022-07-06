@@ -8,11 +8,12 @@ import TrashIcn from '../../Icons/TrashIcn'
 import noData from '../../resource/img/nodata.svg'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { dateTimeFormatter, renderHTMR } from '../../Utils/Helpers'
+import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import LoaderSm from '../Loaders/LoaderSm'
 import ConfirmModal from '../Utilities/ConfirmModal'
+import RenderHtml from '../Utilities/RenderHtml'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
@@ -130,7 +131,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
         </div>
         <div>
           {noteDetails.title && <h3>{noteDetails.title}</h3>}
-          <div>{renderHTMR(replaceFieldWithValue(noteDetails.content))}</div>
+          <div><RenderHtml html={replaceFieldWithValue(noteDetails.content)} /></div>
         </div>
         <hr className="btcd-hr" />
       </div>

@@ -11,12 +11,13 @@ import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
-import { deepCopy, renderHTMR } from '../../../Utils/Helpers'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
+import RenderHtml from '../../Utilities/RenderHtml'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
@@ -157,7 +158,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             onClick={openErrorModal}
             onKeyPress={openErrorModal}
           >
-            {renderHTMR(errMsg)}
+            <RenderHtml html={errMsg} />
           </div>
 
           <div className={css(ut.mt1)}>

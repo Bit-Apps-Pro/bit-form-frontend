@@ -8,9 +8,10 @@ import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { deepCopy, renderHTMR } from '../../Utils/Helpers'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
+import RenderHtml from '../Utilities/RenderHtml'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
@@ -87,7 +88,7 @@ export default function HtmlFieldSettings() {
           onClick={() => setLabelModal(true)}
           onKeyPress={() => setLabelModal(true)}
         >
-          {renderHTMR(fieldData.content)}
+          <RenderHtml html={fieldData.content} />
         </div>
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />
