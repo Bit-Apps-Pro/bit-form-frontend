@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import OutlineDownloadIcn from '../../Icons/OutlineDownloadIcn'
+import { __ } from '../../Utils/i18nwrap'
 import Export from './Export'
 
 export default function ExportImportMenu({ formID, cols, report }) {
