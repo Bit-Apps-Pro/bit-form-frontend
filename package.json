@@ -20,6 +20,7 @@
     "bit-file-up-field": "file:./packages/bit-file-up-field",
     "bit-paypal-field": "file:./packages/bit-paypal-field",
     "bit-phone-number-field": "file:./packages/bit-phone-number-field",
+    "bit-razorpay-field": "file:./packages/bit-razorpay-field",
     "bit-virtualized-list": "file:./packages/bit-virtualized-list",
     "core-js": "3.22.7",
     "create-file-list": "^1.1.0",

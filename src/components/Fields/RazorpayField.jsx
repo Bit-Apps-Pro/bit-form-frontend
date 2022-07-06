@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import BitRazorpayField from 'bit-razorpay-field'
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-import Razorpay from '../../resource/js/razorpay-field-script'
 
 export default function RazorpayField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
   const fields = useRecoilValue($fields)
@@ -55,7 +55,8 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
       onPaymentFailed: () => { console.log('failed') },
     }
 
-    razorpayFldWrpRef.current = new Razorpay(fldElemnt, config)
+    // razorpayFldWrpRef.current = new Razorpay(fldElemnt, config)
+    razorpayFldWrpRef.current = new BitRazorpayField(fldElemnt, config)
   }, [loaded, fieldData])
 
   return (
