@@ -14,7 +14,7 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
       plugins: [
-        esbuildCommonjs(['react-calendar', 'react-date-picker', 'react-clock', 'react-time-picker']),
+        esbuildCommonjs(['react-calendar', 'react-date-picker', 'react-clock', 'react-time-picker', 'fela']),
       ],
     },
   },
