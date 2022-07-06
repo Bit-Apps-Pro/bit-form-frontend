@@ -16,16 +16,6 @@ function EditGroundhogg({ formFields, setIntegration, integrations, allIntegURL 
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const isUpdateAble = () => {
-    if (groundhoggConf.mainAction === '1' && !checkMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
-      return
-    }
-    if (groundhoggConf.showMeta && !checkMetaMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
-    }
-  }
-
   const isDisabled = !((groundhoggConf.mainAction === '2' && groundhoggConf.addTagToUser !== ''))
 
   return (

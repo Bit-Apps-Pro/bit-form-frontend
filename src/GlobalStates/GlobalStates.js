@@ -34,17 +34,27 @@ export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
 export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 export const $customCodes = atom({ key: '$customCodes', default: { JavaScript: '', CSS: '' } })
+export const $reportId = atom({ key: '$reportId', default: {} })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
 
-export const $reportSelector = selectorFamily({
+// export const $reportSelector = selector({
+//   key: '$reportSelector',
+//   get: ({ get }) => get($reports)[get($reportId)],
+//   set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+//     const id = get($reportId)
+//     draft[id] = newReport
+//   })),
+// })
+export const $reportSelector = selector({
   key: '$reportSelector',
-  get: (reportID) => ({ get }) => get($reports)[reportID],
-  set: (reportID) => ({ set }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
-    // eslint-disable-next-line no-param-reassign
-    draft[reportID] = newReport
+  get: ({ get }) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
+  set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+    const reprtId = get($reportId)?.id?.toString()
+    const rportIndx = oldReports.findIndex(r => r?.id && r.id.toString() === reprtId)
+    draft[rportIndx] = newReport
   })),
 })

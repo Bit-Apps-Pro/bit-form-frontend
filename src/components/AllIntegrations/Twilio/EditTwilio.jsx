@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'

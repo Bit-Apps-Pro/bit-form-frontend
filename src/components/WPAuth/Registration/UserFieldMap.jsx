@@ -177,8 +177,8 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
           />
         </div>
         {userConf[type]?.activation === 'email_verify' && (
-          <div className="flx integ-fld-wrp">
-            <div className="flx w-5  mt-4">
+          <div className="flx  integ-fld-wrp">
+            {/* <div className="flx w-5  mt-4">
               <span
                 role="button"
                 tabIndex="-1"
@@ -201,9 +201,26 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Redirect after verification')}</div>
-              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} />
+              <div className="f-m ml-1">{__('Redirect after verification', 'bitform')}</div>
+              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} title="Redirect after verification" />
 
+            </div> */}
+
+            <div className="w-5 mt-4">
+              <button type="button" className="btn" onClick={() => setshowMdl(true)}>
+                <EditIcn size={18} />
+                &nbsp;
+                {__('Customize Email template')}
+              </button>
+
+            </div>
+            <div className="ml-2 mt-4">
+              <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
+                <EditIcn size={18} />
+                &nbsp;
+                {__('Edit verification messages', 'bitform')}
+              </button>
+              <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} title="Edit verification messages" />
             </div>
           </div>
         )}
