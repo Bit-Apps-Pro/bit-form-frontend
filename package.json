@@ -18,6 +18,7 @@
     "bit-dropdown-field": "file:./packages/bit-dropdown-field",
     "bit-file-pond": "file:./packages/bit-file-pond",
     "bit-file-up-field": "file:./packages/bit-file-up-field",
+    "bit-phone-number-field": "file:./packages/bit-phone-number-field",
     "bit-virtualized-list": "file:./packages/bit-virtualized-list",
     "core-js": "3.22.7",
     "create-file-list": "^1.1.0",
