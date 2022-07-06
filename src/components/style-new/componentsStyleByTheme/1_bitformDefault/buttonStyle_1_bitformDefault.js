@@ -2,7 +2,7 @@ import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../../../../GlobalStates/GlobalStates'
 
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk, type, direction }) {
+export default function buttonStyle_1_bitformDefault({ fk }) {
   const fields = getRecoil($fields)
   const btnFld = fields[fk]
   const { align } = btnFld

@@ -40,7 +40,7 @@ export default function ThemeQuickTweaksCustomizer() {
     const tmpThemeVar = deepCopy(themeVars)
 
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fieldSizes = value
+      drft.fieldsSize = value
       const flds = prvStyle.fields
       const fldKeyArr = Object.keys(flds)
       const fldKeyArrLen = fldKeyArr.length
@@ -158,14 +158,14 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select
-          value={styles.fieldSizes}
+          value={styles.fieldsSize}
           onChange={setSizes}
           className={css(sc.select)}
           data-testid="field-sizes-select"
         >
           {Object.keys(sizes).map((key, index) => (
             <option
-              selected={!!(key === styles.fieldSizes)}
+              selected={!!(key === styles.fieldsSize)}
               key={`size-${index * 5}`}
               value={key}
               data-testid={`globl-size-${key}`}

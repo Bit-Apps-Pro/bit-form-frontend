@@ -1,5 +1,6 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 export default function currencyStyle_1_BitformDefault({ fk }) {
   return {
@@ -42,14 +43,14 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
-    [`.disabled .currency-amount-input`]: {
+    '.disabled .currency-amount-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.readonly .currency-amount-input`]: {
+    '.readonly .currency-amount-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -224,7 +225,7 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
       top: '50%',
       transform: 'translateY(-50%)',
       color: 'var(--global-font-color) !important',
-      left: '13px'
+      left: '13px',
     },
 
     [`.${fk}-opt-search-input`]: {
@@ -349,6 +350,6 @@ export default function currencyStyle_1_BitformDefault({ fk }) {
 
     [`.${fk}-opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
 
-    [`.menu-open .dpd-down-btn`]: { transform: 'rotate(180deg)' },
+    '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
   }
 }

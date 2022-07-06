@@ -1,4 +1,5 @@
-import inputWrapperClasses from './inputWrapperClasses'
+/* eslint-disable object-curly-newline */
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function checkboxNradioStyle_1_bitformDefault({ fk, type, direction }) {

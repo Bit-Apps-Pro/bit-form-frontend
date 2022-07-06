@@ -1,7 +1,7 @@
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function textStyle_1_bitformDefault({ fk, type, direction }) {
+export default function textStyle_1_bitformDefault({ fk, type }) {
   return {
     ...inputWrapperClasses(fk),
 

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }) {
+export default function fileUploadStyle_1_BitformDefault({ fk }) {
   return {
     ...inputWrapperClasses(fk),
 
@@ -31,7 +31,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, type, direction }
 
     [`.${fk}-inp-btn`]: {
       'align-items': 'center',
-      'background-color': 'hsla(208, 100%, 48%, 100%)',
+      'background-color': 'var(--btn-bg)',
       border: 'none',
       'border-radius': '8px',
       'box-shadow': 'none',

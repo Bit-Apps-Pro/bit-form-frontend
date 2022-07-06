@@ -1,5 +1,6 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 export default function phoneNumberStyle_1_bitformDefault({ fk }) {
   return {
@@ -43,14 +44,14 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
 
-    [`.disabled .phone-number-input`]: {
+    '.disabled .phone-number-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
       color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
       'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
     },
-    [`.readonly .phone-number-input`]: {
+    '.readonly .phone-number-input': {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -208,7 +209,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
       top: '50%',
       transform: 'translateY(-50%)',
       color: 'var(--global-font-color) !important',
-      left: '13px'
+      left: '13px',
     },
 
     [`.${fk}-opt-search-input`]: {
@@ -326,6 +327,6 @@ export default function phoneNumberStyle_1_bitformDefault({ fk }) {
 
     [`.${fk}-opt-prefix`]: { 'font-size': 'calc(var(--fld-fs) - 40%)' },
 
-    [`.menu-open .dpd-down-btn`]: { transform: 'rotate(180deg)' },
+    '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
   }
 }

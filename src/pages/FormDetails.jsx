@@ -9,8 +9,8 @@ import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_st
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
-import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault'
-import materialTheme from '../components/style-new/themes/2_material'
+import bitformDefaultTheme from '../components/style-new/themes/bitformDefault/1_bitformDefault'
+import atlassianTheme from '../components/style-new/themes/atlassianTheme/3_atlassianTheme'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
@@ -106,11 +106,18 @@ function FormDetails() {
       setStyles(styles => produce(styles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
-          const fieldStyle = bitformDefaultTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+          const fieldStyle = bitformDefaultTheme({ fieldKey: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] })
           draftStyle.fields[btnFieldKey] = fieldStyle
         }
-        if (globalTheme === 'material') {
-          const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+
+        // if (globalTheme === 'material') {
+        //   const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+        //   draftStyle.fields[btnFieldKey] = fieldStyle
+        // }
+
+        if (globalTheme === 'atlassian') {
+          const obj = { fk: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] }
+          const fieldStyle = atlassianTheme(obj)
           draftStyle.fields[btnFieldKey] = fieldStyle
         }
       }))
