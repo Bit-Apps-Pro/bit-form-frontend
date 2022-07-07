@@ -4,7 +4,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
@@ -13,30 +13,47 @@ import Tip from '../Utilities/Tip'
 import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
 import themes from './themes/themeList'
+import individual from './themes/individual/individual'
+import { useEffect } from 'react'
 
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const selectedFieldId = useRecoilValue($selectedFieldId)
+  const fields = useRecoilValue($fields)
+  const fieldType = fields[fldKey].typ
+  const allowFldInIndividualTheme = ['check', 'radio']
+  let newThemes = themes
+  const isExistTheme = newThemes.filter(theme => theme.slug === 'individual')
+  useEffect(() => {
+    if (allowFldInIndividualTheme.includes(fieldType)) {
+      const customThemeObj = { name: 'Checkbox Theme', slug: 'individual', img: 'defaultTheme.svg' }
+      isExistTheme.length === 0 && newThemes.push(customThemeObj)
+    } else {
+      const deleteIndex = newThemes.findIndex(fn => fn.slug === 'individual')
+      if (deleteIndex > 0) {
+        newThemes.splice(deleteIndex, 1)
+      }
+    }
+  }, [fldKey])
+
+  const getStyle = (slug, fk, type) => {
+    const obj = {
+      'bitformDefault': bitformDefaultTheme({ fieldKey: fk, type }),
+      'atlassian': atlassianTheme({ fk, type }),
+      'individual': individual({ fk, type }),
+      // 'material': materialTheme({ fk, type })
+    }
+    return obj[slug]
+  }
 
   const handleThemeApply = (themeSlug) => {
     const fk = fldKey || selectedFieldId
-    if (themeSlug === 'bitformDefault') {
-      setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[fk] = bitformDefaultTheme({ fieldKey: fk, type: prvStyle.fields[fk].fieldType })
-      }))
-    }
-    // if (themeSlug === 'material') {
-    //   setStyles(prvStyle => produce(prvStyle, drftStyle => {
-    //     drftStyle.fields[fk] = materialTheme(fk, prvStyle.fields[fk].fieldType)
-    //   }))
-    // }
-    if (themeSlug === 'atlassian') {
-      setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        const type = prvStyle.fields[fk].fieldType
-        drftStyle.fields[fk] = atlassianTheme({ fk, type })
-      }))
-    }
+
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      const type = prvStyle.fields[fk].fieldType
+      drftStyle.fields[fk] = getStyle(themeSlug, fk, type)
+    }))
   }
 
   const checkActiveTheme = (themeSlug) => {
@@ -46,7 +63,7 @@ export default function CustomThemeGallary({ fldKey }) {
 
   return (
     <div className={css(themeGalStyle.thm_container)}>
-      {themes.map(theme => (
+      {newThemes.map(theme => (
         <CustomThemeGallary.Card
           key={theme.name}
           name={theme.name}
