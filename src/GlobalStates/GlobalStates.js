@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { atom, selector, selectorFamily } from 'recoil'
+import { atom, selector } from 'recoil'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
