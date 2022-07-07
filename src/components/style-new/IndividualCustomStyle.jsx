@@ -53,6 +53,28 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
+    // don't remove this
+    // const fldWrp = {
+    //   'hover': `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`,
+    //   'focus': `focus-within:not(.${fldKey}-menu-open,.${fldKey}-disabled)`,
+    // }
+    // const pseudoPahtObj = {
+    //   'currency-fld-wrp': { ...fldWrp },
+    //   'phone-fld-wrp': { ...fldWrp },
+    //   'search-clear-btn': { 'focus': `focus-visible` },
+    //   'option': {
+    //     'hover': `hover:not(.selected-opt)`,
+    //     'focus': `focus-visible`,
+    //   },
+    //   'input-clear-btn': {
+    //     'hover': 'hover',
+    //     'focus': 'focus-visible',
+    //   },
+    //   'razorpay-btn': {
+    //     'before': ':before',
+    //   }
+    // }
+    // console.log('pseudoPahtObj', pseudoPahtObj?.[elementKey]?.[state] || '')
     switch (elementKey) {
       case 'currency-fld-wrp':
       case 'phone-fld-wrp':
@@ -92,6 +114,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       default:
         return state
     }
+    console.log('state', state)
     return state
   }
   const fldStyleObj = styles?.fields?.[fldKey]
@@ -113,35 +136,30 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}${selector}->${cssProperty}`
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
-
-  const getTitle = () => {
-    switch (elementKey) {
-      case 'fld-wrp': return 'Field Container'
-      case 'lbl-wrp': return 'Label & Subtitle Container'
-      case 'lbl': return 'Label Container'
-      case 'lbl-pre-i': return 'Label Leading Icon'
-      case 'lbl-suf-i': return 'Label Trailing Icon'
-      case 'sub-titl': return 'Subtitle Container'
-      case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
-      case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
-      case 'fld': return 'Field Container'
-      case 'pre-i': return 'Field Leading Icon'
-      case 'suf-i': return 'Field Trailing Icon'
-      case 'hlp-txt': return 'Helper Text Container'
-      case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
-      case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
-      case 'err-msg': return 'Error Messages Container'
-      case 'currency-fld-wrp': return 'Currency Field Wrapper'
-      case 'btn': return 'Button'
-      case 'btn-pre-i': return 'Button Leading Icon'
-      case 'btn-suf-i': return 'Button Trailing Icon'
-      case 'other-inp': return 'Other Option Input'
-      default:
-        return ''
-    }
+  const getTitle = {
+    'fld-wrp': 'Field Container',
+    'lbl-wrp': 'Label & Subtitle Container',
+    'lbl': 'Label Container',
+    'lbl-pre-i': 'Label Leading Icon',
+    'lbl-suf-i': 'Label Trailing Icon',
+    'sub-titl': 'Subtitle Container',
+    'sub-titl-pre-i': 'Subtitle Leading Icon',
+    'sub-titl-suf-i': 'Subtitle Trailing Icon',
+    'fld': 'Field Container',
+    'pre-i': 'Field Leading Icon',
+    'suf-i': 'Field Trailing Icon',
+    'hlp-txt': 'Helper Text Container',
+    'hlp-txt-pre-i': 'Helper Text Leading Icon',
+    'hlp-txt-suf-i': 'Helper Text Trailing Icon',
+    'err-msg': 'Error Messages Container',
+    'currency-fld-wrp': 'Currency Field Wrapper',
+    'btn': 'Button',
+    'btn-pre-i': 'Button Leading Icon',
+    'btn-suf-i': 'Button Trailing Icon',
+    'other-inp': 'Other Option Input',
   }
 
-  const fldTitle = getTitle()
+  const fldTitle = getTitle[elementKey]
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromStateVar(themeVars, getVlu?.replace('!important', ''))
@@ -1140,7 +1158,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                   modalId={`${elementKey}-${state}-pre-i`}
                 />
               )}
-              { elementKey === 'fld' && (state === 'hover' || state === 'focus') && fieldObj.suffixIcn && (
+              {elementKey === 'fld' && (state === 'hover' || state === 'focus') && fieldObj.suffixIcn && (
                 <FilterColorPicker
                   title="Trailing Icon Color"
                   subtitle="Icon Fill Color(Filter)"
