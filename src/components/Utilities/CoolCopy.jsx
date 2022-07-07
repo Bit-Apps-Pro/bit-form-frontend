@@ -53,7 +53,6 @@ const style = {
     ':focus-visible': { bs: '0 0 0 2px var(--b-50) !important' },
   },
   btn: {
-    flx: 'center',
     pn: 'absolute !important',
     b: 'none',
     oe: 'none',

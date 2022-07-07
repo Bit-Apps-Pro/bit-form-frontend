@@ -15,8 +15,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $reportId } from '../GlobalStates/GlobalStates'
-import { $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $reportId, $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -97,7 +96,7 @@ function FormDetails() {
       btnFld[btnFieldKey] = btnData
       setFields(btnFld)
       const btnLay = { lg: [], md: [], sm: [] }
-      const subBtnLay = { h: 40, i: btnFieldKey, minH: 40, w: 60, x: 0, y: 0 }
+      const subBtnLay = { h: 40, i: btnFieldKey, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)

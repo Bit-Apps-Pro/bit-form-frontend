@@ -72,7 +72,7 @@ const app = {
     dy: 'inline-flex',
     cr: 'inherit',
     b: 'none',
-    px: 10,
+    px: 15,
     py: 7,
     brs: 8,
     jc: 'center',

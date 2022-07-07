@@ -131,7 +131,7 @@ export default function GCLID() {
     <div className="btcd-captcha w-5">
       <div className="pos-rel">
         {!isPro && (
-          <div className="pro-blur flx" style={{ height: '99%', left: -15, width: '104%' }}>
+          <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', top: -3 }}>
             <div className="pro">
               {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">

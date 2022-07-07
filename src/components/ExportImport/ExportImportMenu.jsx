@@ -37,8 +37,8 @@ export default function ExportImportMenu({ formID, cols, report }) {
           <OutlineDownloadIcn size="16" />
           {' '}
         </button>
-      </div >
-    </div >
+      </div>
+    </div>
 
   )
 }

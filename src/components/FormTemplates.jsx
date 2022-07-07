@@ -11,7 +11,6 @@ import { __ } from '../Utils/i18nwrap'
 import FormImporter from './FormImporter'
 import Modal from './Utilities/Modal'
 
-
 export default function FormTemplates({ setTempModal, setSnackbar }) {
   const newFormId = useRecoilValue($newFormId)
   const setFormInfo = useSetRecoilState($formInfo)

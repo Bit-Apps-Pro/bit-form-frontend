@@ -14,8 +14,6 @@ export const handleInput = (e, mailerLiteConf, setMailerLiteConf) => {
   setMailerLiteConf({ ...newConf })
 }
 
-
-
 export const generateMappedField = (mailerLiteConf) => {
   const requiredFlds = mailerLiteConf?.mailerLiteFields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', mailerLiteFormField: field.key })) : [{ formField: '', mailerLiteFormField: '' }]
@@ -88,5 +86,4 @@ export const getAllGroups = (confTmp, setConf, setIsLoading) => {
       setIsLoading(false)
       toast.error(__('Group fetch failed'))
     })
-
 }

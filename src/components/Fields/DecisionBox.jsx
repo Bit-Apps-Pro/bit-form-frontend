@@ -2,9 +2,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { renderHTMR } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   let { checked } = attr.valid
@@ -119,7 +119,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
                 className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                 {...getCustomAttributs(fieldKey, 'ct')}
               >
-                {renderHTMR(attr.lbl || attr?.info?.lbl)}
+                <RenderHtml html={attr.lbl || attr?.info?.lbl} />
               </span>
             </label>
           </div>

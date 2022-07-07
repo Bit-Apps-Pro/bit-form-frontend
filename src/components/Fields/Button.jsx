@@ -1,8 +1,9 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
-import { deepCopy, renderHTMR } from '../../Utils/Helpers'
+import { deepCopy } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderHtml from '../Utilities/RenderHtml'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function Button({ fieldKey, attr: fieldData, styleClasses, buttonDisabled, handleReset, formID, data }) {
@@ -39,7 +40,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               {...getCustomAttributs(fieldKey, 'btn-pre-i')}
             />
           )}
-          {renderHTMR(fieldData.txt || '')}
+          <RenderHtml html={fieldData.txt || ''} />
           {fieldData.btnSufIcn && (
             <img
               data-testid={`${fieldKey}-btn-suf-i`}
@@ -71,7 +72,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
                 />
               )}
               {/* Helper text */}
-              {renderHTMR(fieldData.helperTxt || '')}
+              <RenderHtml html={fieldData.helperTxt || ''} />
               {/* suffix icon */}
               {fieldData.hlpSufIcn && (
                 <img

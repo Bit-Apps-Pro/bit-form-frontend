@@ -40,9 +40,7 @@ const Toolbars = {
       '& ~ span svg': { cr: 'var(--b-50)' },
     },
     '::placeholder': { fs: 12 },
-    '::-webkit-search-cancel-button': {
-      appearance: 'none',
-    },
+    '::-webkit-search-cancel-button': { appearance: 'none' },
   },
   search_icn: {
     pn: 'absolute',

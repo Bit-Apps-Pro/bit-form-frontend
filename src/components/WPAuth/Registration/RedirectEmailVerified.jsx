@@ -1,11 +1,11 @@
 import produce from 'immer'
 import { useEffect } from 'react'
+import Scrollbars from 'react-custom-scrollbars-2'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
-import Scrollbars from 'react-custom-scrollbars-2'
 
 export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '' }) {
   const data = type ? dataConf[type] : dataConf

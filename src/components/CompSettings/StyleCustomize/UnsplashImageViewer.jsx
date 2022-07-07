@@ -130,7 +130,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
     }
     setCollections(tmp)
 
-    if (collections !== [] && !status) {
+    if (collections.length && !status) {
       fetch(`https://api.unsplash.com/collections/${id}/photos?client_id=${clientId}&per_page=30`)
         .then(response => response.json())
         .then(data => {

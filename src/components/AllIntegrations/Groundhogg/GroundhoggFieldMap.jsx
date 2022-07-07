@@ -7,7 +7,6 @@ import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './GroundhoggCommonFunc'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 
-
 export default function GroundhoggFieldMap({ i, formFields, field, groundhoggConf, setGroundhoggConf }) {
   useEffect(() => {
     if (groundhoggConf?.field_map?.length === 1 && field.GroundhoggMapField === '') {

@@ -1,10 +1,10 @@
-import { useFela } from "react-fela"
-import SearchIcon from "../../Icons/SearchIcon"
-import Toolbars from "../../styles/Toolbars.style"
-import LayerAccordion from "../CompSettings/StyleCustomize/ChildComp/LayerAccordion"
+import { useFela } from 'react-fela'
 import Scrollbars from 'react-custom-scrollbars-2'
-import { useEffect, useRef, useState } from "react"
-import { deepCopy } from "../../Utils/Helpers"
+import { useEffect, useRef, useState } from 'react'
+import SearchIcon from '../../Icons/SearchIcon'
+import Toolbars from '../../styles/Toolbars.style'
+import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
+import { deepCopy } from '../../Utils/Helpers'
 
 const groupAllOptions = options => {
   // split all groups into separate arrays and if the options are not in a group then add them to a new group until the next group
@@ -74,9 +74,8 @@ export default function ListGroup({ options, action, className }) {
           onChange={searchHandler}
           className={css(style.search_field)}
         />
-        {searchInput?.current?.value &&
-          <span title="clear" className={css(style.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch}>&nbsp;</span>
-        }
+        {searchInput?.current?.value
+          && <span title="clear" className={css(style.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch}>&nbsp;</span>}
 
         <span title="search" className={css(style.search_icn)}>
           <SearchIcon size="20" />
@@ -128,7 +127,7 @@ export default function ListGroup({ options, action, className }) {
           ))}
         </div>
       </Scrollbars>
-    </div >
+    </div>
   )
 }
 
@@ -137,7 +136,7 @@ const style = {
     h: 300,
     w: 200,
     py: 5,
-    ow: 'hidden'
+    ow: 'hidden',
   },
   title: {
     mt: 10,
@@ -165,9 +164,7 @@ const style = {
       '& ~ span svg': { cr: 'var(--b-50)' },
     },
     '::placeholder': { fs: 12 },
-    '::-webkit-search-cancel-button': {
-      appearance: 'none',
-    },
+    '::-webkit-search-cancel-button': { appearance: 'none' },
   },
   search_icn: {
     pn: 'absolute',
@@ -195,9 +192,7 @@ const style = {
     // eslint-disable-next-line quotes
     bi: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='Black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E")`,
   },
-  groupList: {
-    mt: 10,
-  },
+  groupList: { mt: 10 },
   ul: { mt: 0, mb: 10 },
   li: {
     mb: 0,

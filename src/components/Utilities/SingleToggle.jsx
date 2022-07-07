@@ -17,7 +17,7 @@ export default function SingleToggle({ id, className, tip, title, isChecked, nam
       <label data-testid={`${id}-sngl-tgl`} className={css(c.toggle_control)} htmlFor={`s-ck-${title || name}-${isChecked}`}>
         <input
           id={`s-ck-${title || name}-${isChecked}`}
-          onChange={action}
+          onChange={action || (() => { })}
           className={css(c.input)}
           type="checkbox"
           name={name || 'check'}

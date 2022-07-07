@@ -5,8 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $reportId, $reportSelector } from '../GlobalStates/GlobalStates'
-import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $reportId, $reportSelector, $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -205,7 +204,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const layouts = prepareLayout(lay)
 
     let formStyle = sessionStorage.getItem('btcd-fs')
-    formStyle &&= bitDecipher(formStyle)
+    formStyle = formStyle && (bitDecipher(formStyle))
     // console.log(formStyle.toString())
     const formData = {
       ...(savedFormId && { id: savedFormId }),

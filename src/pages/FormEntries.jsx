@@ -12,8 +12,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $reportId, $reports } from '../GlobalStates/GlobalStates'
-import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates/GlobalStates'
+import { $reportId, $reports, $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -391,7 +390,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
                 const newAllResp = [...allResp]
                 // eslint-disable-next-line dot-notation
                 newAllResp[idx]['__entry_status'] = '0'
-                newAllResp[idx]['__updated_at'] = resp?.data?.update_at_time
+                newAllResp[idx].__updated_at = resp?.data?.update_at_time
                 setAllResp(newAllResp)
               }
             })
@@ -476,9 +475,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     </>
   )
   const loadLeftHeaderComponent = () => (
-    <>
-      <FldEntriesByCondition fetchData={fetchData} setRefreshResp={setRefreshResp} />
-    </>
+    <FldEntriesByCondition fetchData={fetchData} setRefreshResp={setRefreshResp} />
   )
 
   const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
@@ -586,7 +583,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           </div>
         )}
       </div>
-    </div >
+    </div>
   )
 }
 

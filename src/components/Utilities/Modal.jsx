@@ -54,9 +54,9 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
             <small className="btcd-mdl-subtitle">{subTitle}</small>
             {!sm && <div className="btcd-mdl-div" />}
             {children}
-          </div >
-        </div >
-      </div >
-    </CSSTransition >
+          </div>
+        </div>
+      </div>
+    </CSSTransition>
   )
 }

@@ -25,7 +25,6 @@ const s = {
     pn: 'fixed',
     tp: '50%',
     lt: '50%',
-    tm: 'transform(-50%, -50%)',
     ml: '-250px',
     mt: '-100px',
     brs: 14,

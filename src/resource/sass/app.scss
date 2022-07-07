@@ -43,16 +43,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  transition: none !important;
-}
-
-a:active,
-a:hover {
-  color: var(--b-50);
-  box-shadow: none;
-}
-
 #btcd-app {
   color: var(--dp-blue);
   direction: ltr !important;
@@ -67,6 +57,15 @@ a:hover {
 
   & a {
     text-decoration: none;
+  }
+  & a {
+    transition: none !important;
+  }
+  
+  & a:active,
+  & a:focus,
+  & a:hover {
+    box-shadow: none;
   }
 }
 
@@ -1808,13 +1807,13 @@ nav.top-nav {
   }
 
   & img {
-    width: 20px;
+    width: 18px;
   }
 
   & span {
     color: hsl(355deg 100% 64%);
     white-space: nowrap;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 600;
   }
 }
@@ -1843,6 +1842,7 @@ nav.top-nav {
   display: inline-flex;
   background: transparent;
   color: var(--white);
+  text-shadow: 0 1px 1px #0004;
   align-items: center;
   justify-content: center;
   height: 40px;
@@ -1855,12 +1855,17 @@ nav.top-nav {
   margin-left: 5px;
   text-align: center;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: none;
 
   &:hover {
+    color: var(--white)!important;
     -webkit-filter: brightness(1.2);
     filter: brightness(1.2);
+  }
+  &:focus-visible{
+    outline: 2px solid var(--b-50);
+    outline-offset: 2px;
   }
 }
 
@@ -2640,6 +2645,7 @@ nav.top-nav {
   display: inline-table;
   background: var(--white);
   border-radius: 13px;
+  border: 1px solid var(--white-0-77);
   overflow: hidden;
   width: 700px;
   border: 1px solid var(--white-0-80);
@@ -2699,8 +2705,8 @@ nav.top-nav {
 }
 
 .btcd-mdl-close {
-  // background: #fafafa;
   background: var(--white-0-97);
+  color:var(--white-0-31);
   position: absolute;
   top: 0;
   right: 0;
@@ -2709,8 +2715,7 @@ nav.top-nav {
 }
 
 .btcd-mdl-div {
-  // border    : 0.5px solid #b0cae4;
-  border: 0.5px solid var(--b-49-79);
+  border: 0.5px solid var(--white-0-95);
   margin-top: 7px;
 }
 
