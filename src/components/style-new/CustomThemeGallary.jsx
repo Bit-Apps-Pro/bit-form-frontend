@@ -15,6 +15,7 @@ import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
 import themes from './themes/themeList'
 import individual from './themes/individual/individual'
 import { useEffect } from 'react'
+import materialTheme from './themes/material/2_material'
 
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
@@ -42,7 +43,7 @@ export default function CustomThemeGallary({ fldKey }) {
       'bitformDefault': bitformDefaultTheme({ fieldKey: fk, type }),
       'atlassian': atlassianTheme({ fk, type }),
       'individual': individual({ fk, type }),
-      // 'material': materialTheme({ fk, type })
+      'material': materialTheme({ fk, type })
     }
     return obj[slug]
   }
