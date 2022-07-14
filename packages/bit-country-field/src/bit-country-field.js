@@ -1,6 +1,3 @@
-/* eslint-disable class-methods-use-this */
-import { observeElement } from './helper'
-
 export default class BitCountryField {
   #countryFieldWrapper
   #countryHiddenInputElm
