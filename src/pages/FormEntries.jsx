@@ -46,6 +46,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const reportId = useRecoilValue($reportId)
   const reports = useRecoilValue($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
+  const rowSl = useRef(0)
 
   useEffect(() => {
     if (currentReportData) {
@@ -369,6 +370,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
 
   const onRowClick = useCallback(
     (e, row, idx, rowFetchData) => {
+      const slNumber = e.target.parentElement.children[1].textContent
+      rowSl.current = slNumber
       if (!e.target.classList.contains('prevent-drawer')) {
         const newRowDtl = { ...rowDtl }
         if (newRowDtl.show && rowDtl.idx === idx) {
@@ -524,7 +527,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         )}
 
       <Drawer
-        title={__(`Response Details #${rowDtl.idx + 1}`, 'bitform')}
+        title={__(`Response Details #${rowSl.current}`, 'bitform')}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
