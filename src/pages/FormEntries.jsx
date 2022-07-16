@@ -566,7 +566,6 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           rowClickable
           rightHeader={loadRightHeaderComponent()}
           leftHeader={loadLeftHeaderComponent()}
-          reportActiveMenu
           formID={formID}
           setTableCols={setTableColumns}
           fetchData={fetchData}
