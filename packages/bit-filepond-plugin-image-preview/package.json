@@ -1,8 +1,8 @@
 {
-  "name": "bit-file-pond",
+  "name": "bit-filepond-plugin-image-preview",
   "packageManager": "yarn@3.1.0",
-  "main": "dist/bit-file-pond.min.js",
-  "module": "src/bit-file-pond.js",
+  "main": "dist/bit-filepond-plugin-image-preview.min.js",
+  "module": "src/bit-filepond-plugin-image-preview.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
@@ -14,7 +14,7 @@
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "cross-env": "^7.0.3",
-    "filepond": "^4.30.3",
+    "filepond-plugin-image-preview": "^4.6.11",
     "rollup": "^2.75.6",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.0",
