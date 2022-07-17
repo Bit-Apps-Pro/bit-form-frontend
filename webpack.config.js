@@ -287,8 +287,12 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-razorpay-field.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-razorpay-field/dist/bit-razorpay-field.min.js'),
-              to: path.resolve(__dirname, '../assets/js/bit-razorpay-field.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-advance-file-upload-field.min.js'),
             },
           ],
         }),

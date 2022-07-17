@@ -13,6 +13,7 @@
     "@tippyjs/react": "^4.2.6",
     "ace-builds": "^1.5.1",
     "array-move": "^4.0.0",
+    "bit-advance-file-upload-field": "file:./packages/bit-advance-file-upload-field",
     "bit-country-field": "file:./packages/bit-country-field",
     "bit-currency-field": "file:./packages/bit-currency-field",
     "bit-dropdown-field": "file:./packages/bit-dropdown-field",

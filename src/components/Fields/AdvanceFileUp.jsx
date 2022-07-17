@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-// import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
 import { create, destroy, registerPlugin, setOptions } from 'filepond'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 
@@ -19,14 +18,10 @@ import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import AdvanceFileUpload from '../../resource/js/advance-file-upload'
+import bitAdvanceFileUploadField from 'bit-advance-file-upload-field'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-
-// const { create, destroy, registerPlugin, setOptions, FilePondPluginImagePreview,
-//   FilePondPluginFileValidateSize, FilePondPluginFileValidateType, FilePondPluginImageCrop, FilePondPluginImageResize, FilePondPluginImageTransform,
-//   FilePondPluginImageValidateSize, FilePondPluginMediaPreview } = bitFilePond
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
@@ -95,8 +90,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
 
     // TODO set the filepond packages to window global
-
-    container.current = new AdvanceFileUpload(fldElm, configuration)
+    container.current = new bitAdvanceFileUploadField(fldElm, configuration)
   }, [fieldData?.config])
 
   return (
