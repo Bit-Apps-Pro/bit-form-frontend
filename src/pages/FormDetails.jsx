@@ -194,7 +194,7 @@ function FormDetails() {
           if (res?.success && componentMounted) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
-            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
+            const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
             //
             setFields(responseData.form_content.fields)
             setFormName(responseData.form_content.form_name)
