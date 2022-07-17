@@ -8,7 +8,7 @@ import { memo, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $unsplashImgUrl, $unsplashMdl, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $unsplashImgUrl, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -55,8 +55,6 @@ function BackgroundControlMenu({ stateObjName,
   const [styles, setStyles] = useRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
   const resetUnsplashImgUrl = useResetRecoilState($unsplashImgUrl)
   const [unsplashImgUrl, setUnsplashImgUrl] = useRecoilState($unsplashImgUrl)
@@ -104,24 +102,6 @@ function BackgroundControlMenu({ stateObjName,
   const gradientChangeHandler = (e) => {
     onValueChange(paths['background-image'], e.style)
     setBgImage(e.style)
-  }
-
-  const setSolidColor = (colorObj) => {
-    if (typeof colorObj === 'object') {
-      setColor(colorObj)
-      handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
-    } else {
-      const str = `var(${colorObj})`
-      const getColor = themeColors[colorObj]
-      if (getColor) {
-        const [_h, _s, _v, _a] = getColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
-        const [h, s, v, a] = hsla2hsva(_h, _s, _v, _a)
-        setColor({ h, s, v, a })
-        handleColor(h, s, v, a, str)
-      } else {
-        handleColor('', '', '', '', str)
-      }
-    }
   }
 
   const setColorState = (colorObj) => {
@@ -173,7 +153,7 @@ function BackgroundControlMenu({ stateObjName,
         })
         setThemeColors(newThemeColors)
         historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        addToBuilderHistory(historyData)
         break
 
       case 'themeVars':

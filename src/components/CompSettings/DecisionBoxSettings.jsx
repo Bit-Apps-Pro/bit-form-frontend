@@ -4,8 +4,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
@@ -32,8 +32,6 @@ export default function DecisionBoxSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)
   const { css } = useFela()
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   function setChecked(e) {
     const { checked } = e.target
@@ -46,14 +44,14 @@ export default function DecisionBoxSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${5}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${5}`, state: { fields: allFields, fldKey } })
   }
 
   const setMsg = (val, typ) => {
     fieldData.msg[typ] = val
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Message added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Message added', state: { fields: allFields, fldKey } })
   }
 
   const setDiasabled = e => {
@@ -68,7 +66,7 @@ export default function DecisionBoxSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const req = checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Disabled field ${req}`, type: `disabled_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Disabled field ${req}`, type: `disabled_field_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setReadOnly = e => {
@@ -85,7 +83,7 @@ export default function DecisionBoxSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const req = checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Readonly field ${req}`, type: `readobly_field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Readonly field ${req}`, type: `readobly_field_${req}`, state: { fields: allFields, fldKey } })
   }
 
   if (isDev) {

@@ -3,7 +3,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../../Icons/TxtAlignRightIcn'
@@ -22,8 +22,6 @@ export default function RequiredSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const setStyles = useSetRecoilState($styles)
   const { css } = useFela()
   const isRequired = fieldData.valid.req || false
@@ -48,7 +46,7 @@ export default function RequiredSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const req = e.target.checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setReqShow = e => {
@@ -63,14 +61,14 @@ export default function RequiredSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const req = checked ? 'on' : 'off'
-    addToBuilderHistory(setBuilderHistory, { event: `Asterisk Show ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_show_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Asterisk Show ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_show_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setAsteriskPos = (posValue) => {
     fieldData.valid.reqPos = posValue
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Asterisk Position ${posValue}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_position_${posValue}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Asterisk Position ${posValue}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_position_${posValue}`, state: { fields: allFields, fldKey } })
 
     if (posValue === 'left') {
       setStyles(prvState => produce(prvState, drftStyles => {

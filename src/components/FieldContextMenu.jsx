@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $fields, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AllDeviceIcn from '../Icons/AllDeviceIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'
@@ -40,9 +40,7 @@ export default function FieldContextMenu({ isContextMenu,
   removeLayoutItem }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
   const [activeSubMenus, setActiveSubMenus] = useState([])
 
@@ -92,7 +90,7 @@ export default function FieldContextMenu({ isContextMenu,
     else activeBrkpnt = 'small'
 
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field Hidden ${activeBrkpnt} ${fields[fldKey].hidden ? 'off' : 'on'}  `, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field Hidden ${activeBrkpnt} ${fields[fldKey].hidden ? 'off' : 'on'}  `, state: { fields: allFields, fldKey } })
   }
 
   const checkIfHidden = brkpnt => {

@@ -2,8 +2,8 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $breakpoint, $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
@@ -13,9 +13,7 @@ export default function FieldHideSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const isHidden = fields[fldKey].valid.hidden?.includes(breakpoint) || false
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
   const setHidden = e => {
     const { checked } = e.target
@@ -32,7 +30,7 @@ export default function FieldHideSettings({ cls }) {
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hidden Field ${req}`, type: `hide_Field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Hidden Field ${req}`, type: `hide_Field_${req}`, state: { fields: allFields, fldKey } })
   }
 
   return (

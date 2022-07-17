@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHistory, $builderHookStates, $layouts, $updateBtn } from '../../../../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHookStates, $layouts } from '../../../../GlobalStates/GlobalStates'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../../Utils/FormBuilderHelper'
@@ -14,8 +14,6 @@ function SizeAndPosition({ fldKey }) {
   const breakpoint = useRecoilValue($breakpoint)
   const fieldSize = layouts[breakpoint].find(fl => (fl.i === fldKey))
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
 
@@ -37,7 +35,7 @@ function SizeAndPosition({ fldKey }) {
 
     setLayouts(layout)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position X', state: { layouts: layout, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Update Size and Position X', state: { layouts: layout, fldKey } })
   }
   const wHandler = (e) => {
     const val = e.target.valueAsNumber
@@ -51,7 +49,7 @@ function SizeAndPosition({ fldKey }) {
 
     setLayouts(layout)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position W', state: { layouts: layout, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Update Size and Position W', state: { layouts: layout, fldKey } })
   }
   const yHandler = (e) => {
     const val = e.target.valueAsNumber
@@ -65,7 +63,7 @@ function SizeAndPosition({ fldKey }) {
 
     setLayouts(layout)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position Y', state: { layouts: layout, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Update Size and Position Y', state: { layouts: layout, fldKey } })
   }
   const hHandler = (e) => {
     const val = e.target.valueAsNumber
@@ -79,7 +77,7 @@ function SizeAndPosition({ fldKey }) {
 
     setLayouts(layout)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position H', state: { layouts: layout, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Update Size and Position H', state: { layouts: layout, fldKey } })
   }
   return (
     <SimpleAccordion

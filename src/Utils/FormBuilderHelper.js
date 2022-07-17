@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $builderHookStates } from '../GlobalStates/GlobalStates'
+import { $builderHistory, $builderHookStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import { selectInGrid } from './globalHelpers'
 import { deepCopy } from './Helpers'
 
@@ -315,8 +315,9 @@ export function layoutOrderSortedByLg(lay, cols) {
   return newLay
 }
 
-export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn) => {
-  setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+export const addToBuilderHistory = (historyData, unsaved = true) => {
+  const builderHistoryState = getRecoil($builderHistory)
+  const changedHistory = produce(builderHistoryState, draft => {
     const lastHistory = draft.histories[draft.histories.length - 1]
     if ((lastHistory.type === historyData.type) && (lastHistory.state.fldKey === historyData.state.fldKey)) {
       draft.histories.pop()
@@ -324,10 +325,11 @@ export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn
     }
     draft.histories.splice(draft.active + 1)
     draft.active = draft.histories.push(historyData) - 1
-  }))
+  })
+  setRecoil($builderHistory, changedHistory)
 
-  if (setUpdateBtn) {
-    setUpdateBtn({ unsaved: true })
+  if (unsaved) {
+    setRecoil($updateBtn, { unsaved })
   }
 }
 

@@ -12,7 +12,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
@@ -27,8 +27,8 @@ import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
-import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
+import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
@@ -58,8 +58,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const [rowHeight, setRowHeight] = useState(2)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
@@ -198,7 +196,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const event = `${generateFieldLblForHistory(fldData)} removed`
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+    addToBuilderHistory({ event, type, state })
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -251,7 +249,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const event = `${generateFieldLblForHistory(fieldData)} added`
     const type = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+    addToBuilderHistory({ event, type, state })
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -331,7 +329,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const event = `${generateFieldLblForHistory(fldData)} cloned`
     const type = 'clone_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+    addToBuilderHistory({ event, type, state })
 
     resetContextMenu()
   }

@@ -5,8 +5,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -38,8 +38,6 @@ export default function FileUploadSettings() {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const styles = useRecoilValue($styles)
   const { css } = useFela()
@@ -84,7 +82,7 @@ export default function FileUploadSettings() {
     const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }
 
   function setConfigValue(propName, value) {

@@ -4,8 +4,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
@@ -29,8 +29,6 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
   const { css } = useFela()
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const styles = useRecoilValue($styles)
   const [icnType, setIcnType] = useState('')
   const [icnMdl, setIcnMdl] = useState(false)
@@ -51,7 +49,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field required custom error message ${req}`, type: `custom_error_message_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field required custom error message ${req}`, type: `custom_error_message_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setShowErrMsg = e => {
@@ -68,7 +66,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } })
   }
 
   const openErrorModal = () => {

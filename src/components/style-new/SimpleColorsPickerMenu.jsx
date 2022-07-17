@@ -5,10 +5,9 @@ import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
-import { useTransition, memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, useTransition } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -49,8 +48,6 @@ function SimpleColorsPickerMenu({ stateObjName,
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -125,7 +122,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         })
         setThemeColors(newThemeColors)
         historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        addToBuilderHistory(historyData)
         break
 
       case 'themeVars':
