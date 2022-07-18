@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 export default function checkboxNradioStyle_2_material({ fk, type, direction }) {
-  console.log('type', type)
   return {
     // checkbox symbol
     [`.${fk}-cks`]: {

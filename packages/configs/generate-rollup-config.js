@@ -35,6 +35,7 @@ export default function generateRollupConfig() {
         'window',
         'document',
         'bit_virtualized_list',
+        'bit_filepond_plugin_file_validate_size'
       ],
 
       output: [

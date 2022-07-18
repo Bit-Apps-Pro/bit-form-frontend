@@ -81,7 +81,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         if (theme === 'bitformDefault' || theme === 'atlassian') {
           const bitFormDefaultTheme = bitformDefaultTheme({ fieldKey, type: fieldType })
           const atlassianThm = atlassianTheme({ fk: fieldKey, type: fieldType })
-          const { classes: getElementStyleClasses } = theme === 'bitformDefault' ? bitFormDefaultTheme : atlassianThm(fieldKey, fieldType)
+          const { classes: getElementStyleClasses } = theme === 'bitformDefault' ? bitFormDefaultTheme : atlassianThm
 
           switch (elmnt) {
             case 'currency-fld-wrp':

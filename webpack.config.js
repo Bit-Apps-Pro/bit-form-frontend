@@ -219,8 +219,80 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
             },
             {
+              from: path.resolve(__dirname, 'packages/bit-helpers/dist/observer.min.js'),
+              to: path.resolve(__dirname, '../assets/js/observer.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-helpers/dist/select.min.js'),
+              to: path.resolve(__dirname, '../assets/js/select.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-file-validate-size/dist/bit-filepond-plugin-file-validate-size.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-file-validate-size.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-file-validate-type/dist/bit-filepond-plugin-file-validate-type.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-file-validate-type.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-image-crop/dist/bit-filepond-plugin-image-crop.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-image-crop.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-image-preview/dist/bit-filepond-plugin-image-preview.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-image-preview.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-image-resize/dist/bit-filepond-plugin-image-resize.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-image-resize.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-image-transform/dist/bit-filepond-plugin-image-transform.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-image-transform.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-image-validate-size/dist/bit-filepond-plugin-image-validate-size.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-image-validate-size.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-filepond-plugin-media-preview/dist/bit-filepond-plugin-media-preview.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-plugin-media-preview.min.js'),
+            },
+            {
               from: path.resolve(__dirname, 'packages/bit-virtualized-list/dist/bit-virtualized-list.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-virtualized-list.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-currency-field/dist/bit-currency-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-currency-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-dropdown-field/dist/bit-dropdown-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-dropdown-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-up-field/dist/bit-file-up-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-file-up-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-paypal-field/dist/bit-paypal-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-paypal-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-phone-number-field/dist/bit-phone-number-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-phone-number-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-razorpay-field/dist/bit-razorpay-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-razorpay-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-advance-file-upload-field.min.js'),
             },
           ],
         }),
