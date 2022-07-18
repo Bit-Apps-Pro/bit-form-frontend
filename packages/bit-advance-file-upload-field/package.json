@@ -1,0 +1,35 @@
+{
+  "name": "bit-advance-file-upload-field",
+  "packageManager": "yarn@3.1.0",
+  "main": "dist/bit-advance-file-upload-field.min.js",
+  "module": "src/bit-advance-file-upload-field.js",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev rollup -c -w",
+    "build": "rollup -c",
+    "build-w": "webpack --mode=production"
+  },
+  "dependencies": {
+    "bit-file-pond": "file:../bit-file-pond/",
+    "bit-filepond-plugin-file-validate-size": "file:../bit-filepond-plugin-file-validate-size",
+    "bit-filepond-plugin-file-validate-type": "file:../bit-filepond-plugin-file-validate-type",
+    "bit-filepond-plugin-image-crop": "file:../bit-filepond-plugin-image-crop",
+    "bit-filepond-plugin-image-preview": "file:../bit-filepond-plugin-image-preview",
+    "bit-filepond-plugin-image-resize": "file:../bit-filepond-plugin-image-resize",
+    "bit-filepond-plugin-image-transform": "file:../bit-filepond-plugin-image-transform",
+    "bit-filepond-plugin-image-validate-size": "file:../bit-filepond-plugin-image-validate-size",
+    "bit-filepond-plugin-media-preview": "file:../bit-filepond-plugin-media-preview"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.75.6",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "terser-webpack-plugin": "^5.3.3",
+    "webpack": "^5.73.0"
+  }
+}

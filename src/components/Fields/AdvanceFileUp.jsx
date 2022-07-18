@@ -3,29 +3,25 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-// import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
 import { create, destroy, registerPlugin, setOptions } from 'filepond'
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginImageResize from 'filepond-plugin-image-resize'
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
-import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size'
-import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
+
+import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size'
+import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type'
+import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop'
+import bitFilepondPluginImagePreviewMin from 'bit-filepond-plugin-image-preview'
+import bitFilepondPluginImageResizeMin from 'bit-filepond-plugin-image-resize'
+import bitFilepondPluginImageTransformMin from 'bit-filepond-plugin-image-transform'
+import bitFilepondPluginImageValidateSizeMin from 'bit-filepond-plugin-image-validate-size'
+import bitFilepondPluginMediaPreviewMin from 'bit-filepond-plugin-media-preview'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import AdvanceFileUpload from '../../resource/js/advance-file-upload'
+import bitAdvanceFileUploadField from 'bit-advance-file-upload-field'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-
-// const { create, destroy, registerPlugin, setOptions, FilePondPluginImagePreview,
-//   FilePondPluginFileValidateSize, FilePondPluginFileValidateType, FilePondPluginImageCrop, FilePondPluginImageResize, FilePondPluginImageTransform,
-//   FilePondPluginImageValidateSize, FilePondPluginMediaPreview } = bitFilePond
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
@@ -41,28 +37,28 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     if (!window.setOptions) window.setOptions = setOptions
 
     if (!window.FilePondPluginImagePreview) {
-      window.FilePondPluginImagePreview = FilePondPluginImagePreview
+      window.FilePondPluginImagePreview = bitFilepondPluginImagePreviewMin
     }
     if (!window.FilePondPluginFileValidateSize) {
-      window.FilePondPluginFileValidateSize = FilePondPluginFileValidateSize
+      window.FilePondPluginFileValidateSize = bitFilepondPluginFileValidateSize
     }
     if (!window.FilePondPluginFileValidateType) {
-      window.FilePondPluginFileValidateType = FilePondPluginFileValidateType
+      window.FilePondPluginFileValidateType = bitFilepondPluginFileValidateTypeMin
     }
     if (!window.FilePondPluginImageCrop) {
-      window.FilePondPluginImageCrop = FilePondPluginImageCrop
+      window.FilePondPluginImageCrop = bitFilepondPluginImageCropMin
     }
     if (!window.FilePondPluginImageResize) {
-      window.FilePondPluginImageResize = FilePondPluginImageResize
+      window.FilePondPluginImageResize = bitFilepondPluginImageResizeMin
     }
     if (!window.FilePondPluginImageTransform) {
-      window.FilePondPluginImageTransform = FilePondPluginImageTransform
+      window.FilePondPluginImageTransform = bitFilepondPluginImageTransformMin
     }
     if (!window.FilePondPluginImageValidateSize) {
-      window.FilePondPluginImageValidateSize = FilePondPluginImageValidateSize
+      window.FilePondPluginImageValidateSize = bitFilepondPluginImageValidateSizeMin
     }
     if (!window.FilePondPluginMediaPreview) {
-      window.FilePondPluginMediaPreview = FilePondPluginMediaPreview
+      window.FilePondPluginMediaPreview = bitFilepondPluginMediaPreviewMin
     }
 
     const configuration = {
@@ -94,8 +90,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
 
     // TODO set the filepond packages to window global
-
-    container.current = new AdvanceFileUpload(fldElm, configuration)
+    container.current = new bitAdvanceFileUploadField(fldElm, configuration)
   }, [fieldData?.config])
 
   return (

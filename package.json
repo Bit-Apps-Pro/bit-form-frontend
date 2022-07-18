@@ -13,11 +13,20 @@
     "@tippyjs/react": "^4.2.6",
     "ace-builds": "^1.5.1",
     "array-move": "^4.0.0",
+    "bit-advance-file-upload-field": "file:./packages/bit-advance-file-upload-field",
     "bit-country-field": "file:./packages/bit-country-field",
     "bit-currency-field": "file:./packages/bit-currency-field",
     "bit-dropdown-field": "file:./packages/bit-dropdown-field",
     "bit-file-pond": "file:./packages/bit-file-pond",
     "bit-file-up-field": "file:./packages/bit-file-up-field",
+    "bit-filepond-plugin-file-validate-size": "file:./packages/bit-filepond-plugin-file-validate-size",
+    "bit-filepond-plugin-file-validate-type": "file:./packages/bit-filepond-plugin-file-validate-type",
+    "bit-filepond-plugin-image-crop": "file:./packages/bit-filepond-plugin-image-crop",
+    "bit-filepond-plugin-image-preview": "file:./packages/bit-filepond-plugin-image-preview",
+    "bit-filepond-plugin-image-resize": "file:./packages/bit-filepond-plugin-image-resize",
+    "bit-filepond-plugin-image-transform": "file:./packages/bit-filepond-plugin-image-transform",
+    "bit-filepond-plugin-image-validate-size": "file:./packages/bit-filepond-plugin-image-validate-size",
+    "bit-filepond-plugin-media-preview": "file:./packages/bit-filepond-plugin-media-preview",
     "bit-helpers": "file:./packages/bit-helpers",
     "bit-paypal-field": "file:./packages/bit-paypal-field",
     "bit-phone-number-field": "file:./packages/bit-phone-number-field",
@@ -92,11 +101,11 @@
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
-    "clean": "rimraf node_modules yarn.lock package-lock.json",
-    "clean-install-run": "yarn run clean && yarn install && yarn run hot",
+    "clean": "rimraf node_modules pnpm.lock package-lock.json",
+    "clean-install-run": "pnpm run clean && pnpm install && pnpm run hot",
     "sb": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build-packages-pda": "cd packages/bit-country-field && yarn build && cd ../ && cd bit-file-pond && yarn build && cd ../ && cd filepond-plugin-file-validate-size && cd ../ && cd filepond-plugin-file-validate-type && yarn build && cd ../ && cd filepond-plugin-image-crop && yarn build && cd ../ && cd filepond-plugin-image-preview && yarn build && cd ../ && cd filepond-plugin-image-resize && yarn build && cd ../ && cd filepond-plugin-image-transform && yarn build && cd ../ && cd filepond-plugin-image-validate-size && yarn build && cd ../ && cd filepond-plugin-media-preview && yarn build && cd ../ && cd bit-virtualized-list && yarn build && cd ../ && cd bit-helpers && yarn build && cd ../../ && yarn pda",
+    "build-packages-pda": "cd packages/bit-country-field && pnpm build && cd ../ && cd bit-currency-field && pnpm build && cd ../ && cd bit-dropdown-field && pnpm build && cd ../ && cd bit-file-pond && pnpm build && cd ../ && cd bit-file-up-field && pnpm build && cd ../ && cd bit-helpers && pnpm build && cd ../ && cd bit-paypal-field && pnpm build && cd ../ && cd bit-advance-file-upload-field && pnpm build && cd ../ && cd bit-phone-number-field && pnpm build && cd ../ && cd bit-razorpay-field && pnpm build && cd ../ && cd bit-filepond-plugin-file-validate-size && cd ../ && cd bit-filepond-plugin-file-validate-type && pnpm build && cd ../ && cd bit-filepond-plugin-image-crop && pnpm build && cd ../ && cd bit-filepond-plugin-image-preview && pnpm build && cd ../ && cd bit-filepond-plugin-image-resize && pnpm build && cd ../ && cd bit-filepond-plugin-image-transform && pnpm build && cd ../ && cd bit-filepond-plugin-image-validate-size && pnpm build && cd ../ && cd bit-filepond-plugin-media-preview && pnpm build && cd ../ && cd bit-virtualized-list && pnpm build && cd ../../ && pnpm pda",
     "hot": "cross-env APP_ENV=development vite"
   },
   "husky": {
@@ -163,11 +172,13 @@
     "eslint-plugin-standard": "^5.0.0",
     "extract-loader": "^5.1.0",
     "file-loader": "^6.2.0",
+    "gettext-parser": "^5.1.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "jest": "^28.1.0",
     "jest-cli": "^28.1.0",
     "lint-staged": "^12.4.2",
+    "lodash": "^4.17.21",
     "mini-css-extract-plugin": "2.6.0",
     "mini-svg-data-uri": "^1.4.4",
     "module-to-cdn": "^3.1.5",
@@ -208,5 +219,5 @@
       }
     ]
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "pnpm@3.2.1"
 }
