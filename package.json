@@ -101,11 +101,11 @@
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
-    "clean": "rimraf node_modules yarn.lock package-lock.json",
-    "clean-install-run": "yarn run clean && yarn install && yarn run hot",
+    "clean": "rimraf node_modules pnpm.lock package-lock.json",
+    "clean-install-run": "pnpm run clean && pnpm install && pnpm run hot",
     "sb": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "build-packages-pda": "cd packages/bit-country-field && yarn build && cd ../ && cd bit-currency-field && yarn build && cd ../ && cd bit-dropdown-field && yarn build && cd ../ && cd bit-file-pond && yarn build && cd ../ && cd bit-file-up-field && yarn build && cd ../ && cd bit-helpers && yarn build && cd ../ && cd bit-paypal-field && yarn build && cd ../ && cd bit-phone-number-field && yarn build && cd ../ && cd bit-razorpay-field && yarn build && cd ../ && cd bit-filepond-plugin-file-validate-size && cd ../ && cd bit-filepond-plugin-file-validate-type && yarn build && cd ../ && cd bit-filepond-plugin-image-crop && yarn build && cd ../ && cd bit-filepond-plugin-image-preview && yarn build && cd ../ && cd bit-filepond-plugin-image-resize && yarn build && cd ../ && cd bit-filepond-plugin-image-transform && yarn build && cd ../ && cd bit-filepond-plugin-image-validate-size && yarn build && cd ../ && cd bit-filepond-plugin-media-preview && yarn build && cd ../ && cd bit-virtualized-list && yarn build && cd ../../ && yarn pda",
+    "build-packages-pda": "cd packages/bit-country-field && pnpm build && cd ../ && cd bit-currency-field && pnpm build && cd ../ && cd bit-dropdown-field && pnpm build && cd ../ && cd bit-file-pond && pnpm build && cd ../ && cd bit-file-up-field && pnpm build && cd ../ && cd bit-helpers && pnpm build && cd ../ && cd bit-paypal-field && pnpm build && cd ../ && cd bit-advance-file-upload-field && pnpm build && cd ../ && cd bit-phone-number-field && pnpm build && cd ../ && cd bit-razorpay-field && pnpm build && cd ../ && cd bit-filepond-plugin-file-validate-size && cd ../ && cd bit-filepond-plugin-file-validate-type && pnpm build && cd ../ && cd bit-filepond-plugin-image-crop && pnpm build && cd ../ && cd bit-filepond-plugin-image-preview && pnpm build && cd ../ && cd bit-filepond-plugin-image-resize && pnpm build && cd ../ && cd bit-filepond-plugin-image-transform && pnpm build && cd ../ && cd bit-filepond-plugin-image-validate-size && pnpm build && cd ../ && cd bit-filepond-plugin-media-preview && pnpm build && cd ../ && cd bit-virtualized-list && pnpm build && cd ../../ && pnpm pda",
     "hot": "cross-env APP_ENV=development vite"
   },
   "husky": {
@@ -172,11 +172,13 @@
     "eslint-plugin-standard": "^5.0.0",
     "extract-loader": "^5.1.0",
     "file-loader": "^6.2.0",
+    "gettext-parser": "^5.1.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "jest": "^28.1.0",
     "jest-cli": "^28.1.0",
     "lint-staged": "^12.4.2",
+    "lodash": "^4.17.21",
     "mini-css-extract-plugin": "2.6.0",
     "mini-svg-data-uri": "^1.4.4",
     "module-to-cdn": "^3.1.5",
@@ -217,5 +219,5 @@
       }
     ]
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "pnpm@3.2.1"
 }
