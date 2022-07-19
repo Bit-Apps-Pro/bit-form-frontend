@@ -122,11 +122,11 @@ export default function DoubleOptin() {
       <h5>
         How to setup Double Opt-In & Send Email Notification:
         &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="yt-txt">
+        <a href="#" target="_blank" rel="noreferrer" className="yt-txt">
           YouTube
         </a>
         &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="doc-txt">
+        <a href="#" target="_blank" rel="noreferrer" className="doc-txt">
           Documentation
         </a>
       </h5>

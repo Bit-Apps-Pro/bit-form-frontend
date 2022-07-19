@@ -214,7 +214,7 @@ function FormDetails() {
               setLay(responseData.form_content.layout)
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
-            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
+            const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
             // experimental start
             // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
             //   const l = responseData.form_content.layout

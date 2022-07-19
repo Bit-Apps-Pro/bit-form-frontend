@@ -131,6 +131,10 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   }
 
   const editCurrentReport = (val) => {
+    if (!isPro) {
+      setProModal({ show: true, msg: 'Edit option available in the pro version!' })
+      return
+    }
     setReportUpdate(true)
     const rprtIndex = availableReports.findIndex(r => r.value === val)
     setTimeout(() => {
