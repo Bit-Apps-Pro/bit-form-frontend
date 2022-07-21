@@ -44,7 +44,7 @@ export default function SubTitleSettings() {
     setFields(allFields)
     // recalculate builder field height
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setSubTitle = ({ target: { value } }) => {
@@ -58,7 +58,7 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Sub Title updated: ${adminLabel || fieldData.subtitle || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {

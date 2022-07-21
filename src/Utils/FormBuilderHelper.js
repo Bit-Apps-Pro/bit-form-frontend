@@ -3,6 +3,9 @@
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $builderHistory, $builderHookStates, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $styles } from '../GlobalStates/StylesState'
+import { $themeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { selectInGrid } from './globalHelpers'
 import { deepCopy } from './Helpers'
 
@@ -501,4 +504,87 @@ export const reCalculateFieldHeights = (fieldKey) => {
     })
     setRecoil($builderHookStates, newBuilderHookState)
   }
+}
+
+export const generateHistoryData = (element, fieldKey, path, changedValue, state) => {
+  const propertyName = generePropertyName(path)
+  let event = ''
+  if (fieldKey) {
+    state.fldKey = fieldKey
+    event = `${propertyName} ${changedValue ? `changed to ${changedValue}` : ''}: ${elementLabel(element)}`
+  } else {
+    state.fldKey = elementLabel(element)
+    event = `${propertyName} ${changedValue ? `changed to ${changedValue}` : ''}`
+  }
+  return {
+    event,
+    type: `${propertyName}_changed`,
+    state,
+  }
+}
+
+export const getLatestState = (stateName) => {
+  if (stateName === 'styles') return getRecoil($styles)
+  if (stateName === 'themeVars') return getRecoil($themeVars)
+  if (stateName === 'themeColors') return getRecoil($themeColors)
+}
+
+const elementLabel = (element) => {
+  switch (element) {
+    case 'quick-tweaks': return 'Theme Quick Tweaks'
+    case '_frm-bg': return 'Form Wrapper'
+    case '_frm': return 'Form Container'
+    case 'field-containers': return 'Field Container'
+    case 'label-containers': return 'Label & Subtitle Container'
+    case 'lbl-wrp': return 'Label Container'
+    case 'lbl': return 'Label'
+    case 'lbl-pre-i': return 'Label Leading Icon'
+    case 'lbl-suf-i': return 'Label Trailing Icon'
+    case 'sub-titl': return 'Sub Title'
+    case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
+    case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
+    case 'pre-i': return 'Input Leading Icon'
+    case 'suf-i': return 'Input Trailing Icons'
+    case 'hlp-txt': return 'Helper Text'
+    case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
+    case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
+    case 'err-msg': return 'Error Message'
+    case 'err-txt-pre-i': return 'Error Text Leading Icon'
+    case 'err-txt-suf-i': return 'Error Text Trailing Icon'
+    case 'btn': return 'Button'
+    case 'btn-pre-i': return 'Button Leading Icon'
+    case 'btn-suf-i': return 'Button Trailing Icon'
+    case 'req-smbl': return 'Asterisk Symbol'
+    case 'fld': return 'Input Field'
+    default: return element
+  }
+}
+
+const generePropertyName = (propertyName) => {
+  let newPropertyName = propertyName.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+  newPropertyName = newPropertyName.replaceAll('--', '')
+    .replaceAll('-', ' ')
+    .replaceAll(/\b(fld)\b/g, 'Field')
+    .replaceAll(/\b(pre)\b/g, 'Leading')
+    .replaceAll(/\b(suf)\b/g, 'Suffix')
+    .replaceAll(/\b(i)\b/g, 'Icon')
+    .replaceAll(/\b(lbl)\b/g, 'Label')
+    .replaceAll(/\b(clr)\b/g, 'Color')
+    .replaceAll(/\b(c)\b/g, 'Color')
+    .replaceAll(/\b(bdr)\b/g, 'Border')
+    .replaceAll(/\b(fltr)\b/g, 'Filter')
+    .replaceAll(/\b(sh)\b/g, 'Shadow')
+    .replaceAll(/\b(bg)\b/g, 'Background')
+    .replaceAll(/\b(hlp)\b/g, 'Helper')
+    .replaceAll(/\b(err)\b/g, 'Error')
+    .replaceAll(/\b(titl)\b/g, 'Title')
+    .replaceAll(/\b(smbl)\b/g, 'Symbor')
+    .replaceAll(/\b(fs)\b/g, 'Font Size')
+    .replaceAll(/\b(m)\b/g, 'Margin')
+    .replaceAll(/\b(p)\b/g, 'Padding')
+    .replaceAll(/\b(w)\b/g, 'Width')
+    .replaceAll(/\b(h)\b/g, 'Height')
+    .replaceAll(/\b(wrp)\b/g, 'Container')
+    .replaceAll(/\b\w/g, c => c.toUpperCase())
+  return newPropertyName
 }

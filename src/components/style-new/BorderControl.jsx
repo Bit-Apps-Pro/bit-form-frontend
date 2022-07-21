@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -8,13 +9,14 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
 import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state, hslaPaths }) {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
@@ -82,11 +84,13 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
           }))
         }
       })
+      addToBuilderHistory(generateHistoryData(element, fieldKey, 'Border Clear', '', { styles: getLatestState('styles') }))
     } else {
       const { paths } = objectPaths
       setStyles(prvState => produce(prvState, drft => {
         assignValues(paths, drft)
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, 'Border Clear', '', { styles: getLatestState('styles') }))
     }
   }
 

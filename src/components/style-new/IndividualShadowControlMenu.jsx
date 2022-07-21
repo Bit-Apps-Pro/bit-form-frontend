@@ -5,6 +5,7 @@
 import produce from 'immer'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -12,7 +13,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -24,6 +25,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, un
 // TODO check all use cases  empty/null/undefined values
 function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let importantAlreadyExist = ''
@@ -72,6 +74,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
     setStyles(prvStyles => produce(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, shadowArrToStr)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, shadowArrToStr, { styles: getLatestState('styles') }))
   }
 
   const unitHandler = (name, unit, value, oldVal, indx) => {
@@ -82,20 +85,22 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
     }
   }
   const addShadowHandler = () => {
+    const getOldShadow = getShadowStyleVal()
+    const newShadow = getOldShadow === undefined || getOldShadow === '' ? defaultValue : `${getOldShadow},${defaultValue}${importantAlreadyExist}`
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldShadow = getShadowStyleVal()
-      const newShadow = getOldShadow === undefined || getOldShadow === '' ? defaultValue : `${getOldShadow},${defaultValue}${importantAlreadyExist}`
       assignNestedObj(drftStyles, propertyPath, newShadow)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, newShadow, { styles: getLatestState('styles') }))
   }
   const deleteShadow = (indx) => {
+    const getOldShadow = getShadowStyleVal()
+    const shadowArr = splitMultipleShadows(getOldShadow)
+    if (shadowArr.length === 1) return
+    shadowArr.splice(indx, 1)
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldShadow = getShadowStyleVal()
-      const shadowArr = splitMultipleShadows(getOldShadow)
-      if (shadowArr.length === 1) return
-      shadowArr.splice(indx, 1)
       assignNestedObj(drftStyles, propertyPath, shadowArr.toString())
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, shadowArr.toString(), { styles: getLatestState('styles') }))
   }
 
   return (

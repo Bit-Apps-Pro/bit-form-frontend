@@ -4,7 +4,7 @@ import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
@@ -46,7 +46,7 @@ function RadioCheckSettings() {
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
 
   let fieldObject = null
   let disabled = false
@@ -61,7 +61,7 @@ function RadioCheckSettings() {
   function setRound({ target: { checked } }) {
     const fldClsSelector = fieldData.typ === 'radio' ? 'rdo' : 'ck'
     const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    const newStyles = produce(styles, drft => {
       let bdr = '5px'
       if (checked) {
         fieldData.round = true
@@ -71,10 +71,11 @@ function RadioCheckSettings() {
         delete fieldData.round
         assignNestedObj(drft, path, bdr)
       }
-    }))
+    })
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } })
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
   const setRadioRequired = e => {
@@ -158,7 +159,9 @@ function RadioCheckSettings() {
   }
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].opt = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Options List Moddified: ${fieldData.lbl || adminLabel || fldKey}`, type: 'option_list_modify', state: { fields: allFields, fldKey } })
     reCalculateFieldHeights(fldKey)
   }
 
@@ -168,13 +171,12 @@ function RadioCheckSettings() {
     } else {
       fieldData.optionCol = value
     }
-    const req = value ? 'Add' : 'Remove'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     let colStr = ''
     for (let colindx = 0; colindx < value; colindx += 1) {
       colStr += '1fr '
     }
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    const newStyles = produce(styles, drft => {
       const gridStyle = {
         display: 'grid',
         'grid-template-columns': colStr,
@@ -190,9 +192,10 @@ function RadioCheckSettings() {
       }
 
       drft.fields[fldKey].classes[`.${fldKey}-cc`] = value === '' ? flxStyle : gridStyle
-    }))
+    })
     setFields(allFields)
-    addToBuilderHistory({ event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } })
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Column Update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'columns_update', state: { fields: allFields, styles: newStyles, fldKey } })
     reCalculateFieldHeights(fldKey)
   }
   if (isDev) {

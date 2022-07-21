@@ -56,13 +56,17 @@ export default function DropdownFieldSettings() {
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
 
   const handleMultiSelect = (val, name) => {
     fieldData.config[name] = val
     fieldData.config.closeOnSelect = !val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
 
   const toggleSearchPlaceholder = (e) => {
@@ -87,10 +91,14 @@ export default function DropdownFieldSettings() {
   }
   const handleOptionList = ({ target }, index) => {
     fieldData.config.activeList = index
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Change Active List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_active_list', state: { fields: allFields, fldKey } })
   }
   const handleEditOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].optionsList[currentOptList][Object.keys(fieldData.optionsList[currentOptList])[0]] = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].optionsList[currentOptList][Object.keys(fieldData.optionsList[currentOptList])[0]] = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Option List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'modify_options_list', state: { fields: allFields, fldKey } })
   }
 
   const handleAddNewOptionList = () => {
@@ -105,7 +113,9 @@ export default function DropdownFieldSettings() {
         ],
       },
     ]
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Add New List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'add_new_list', state: { fields: allFields, fldKey } })
   }
 
   const isListNameExist = (listName) => {
@@ -120,14 +130,18 @@ export default function DropdownFieldSettings() {
 
   const handleRemoveList = (index) => {
     fieldData.optionsList.splice(index, 1)
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Remove List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'remove_list', state: { fields: allFields, fldKey } })
   }
 
   const handleListNameChange = (e, index) => {
     const { target } = e
     if (!isListNameExist(target.value)) {
       fieldData.optionsList[index] = { [target.value]: fieldData.optionsList[index][target.defaultValue] }
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+      addToBuilderHistory({ event: `List Name Change: ${fieldData.lbl || adminLabel || fldKey}`, type: 'list_name_change', state: { fields: allFields, fldKey } })
       setDuplicateListName(false)
     } else {
       e.preventDefault()
@@ -407,4 +421,14 @@ const c = {
     bd: 'none',
     ':hover': { bd: '#7ea8ff', cr: '#460000' },
   },
+}
+
+const propNameLabel = {
+  selectedOptImage: 'Selected Option Image',
+  selectedOptClearable: 'Selected Option Clearable',
+  searchClearable: 'Search Clearable',
+  optionIcon: 'Option Icon',
+  allowCustomOption: 'Allow Custom Option',
+  multipleSelect: 'Multiple Select',
+  closeOnSelect: 'Close On Select',
 }

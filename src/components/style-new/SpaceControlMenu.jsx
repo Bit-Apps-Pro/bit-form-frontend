@@ -1,14 +1,16 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 import { getValueByObjPath } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const { element, fieldKey } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyles.themeVars
@@ -19,11 +21,10 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[propertyPath] = `${val}`
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { themeVars: getLatestState('themeVars') }))
     }
     if (object === 'styles') {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        console.log('paths', paths, propertyPath)
-
         const value = getValueByObjPath(drft, propertyPath)
         const isAlreadyImportant = value?.match(/!important/gi)?.[0]
         if (isAlreadyImportant) {
@@ -31,6 +32,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
         }
         assignNestedObj(drft, propertyPath, val)
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { styles: getLatestState('styles') }))
     }
   }
 
@@ -40,6 +42,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[v] = tempThemeVars[v] || '0px'
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, v, '0px', { themeVars: getLatestState('themeVars') }))
     }
   }
 

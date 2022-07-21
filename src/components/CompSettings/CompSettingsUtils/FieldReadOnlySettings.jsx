@@ -27,7 +27,7 @@ export default function FieldReadOnlySettings({ cls }) {
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)
-    addToBuilderHistory({ event: `Read only field ${req}`, type: `read_only_field_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Read only field ${req}`, type: 'read_only_field_on_off', state: { fields: allFields, fldKey } })
   }
 
   return (

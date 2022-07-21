@@ -13,6 +13,7 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import { iconElementLabel } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -65,7 +66,7 @@ const PhoneNumberFieldSettings = () => {
     const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: 'toggle_search_placeholder', state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
@@ -84,12 +85,16 @@ const PhoneNumberFieldSettings = () => {
   }
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].options = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].options = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Options List: ${fieldData.lbl || fldKey}`, type: 'options_modify', state: { fields: allFields, fldKey } })
   }
 
   const handleConfigChange = (val, name, config) => {
     fieldData[config][name] = val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {
@@ -102,6 +107,7 @@ const PhoneNumberFieldSettings = () => {
       delete fieldData[fieldName]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      addToBuilderHistory({ event: `${iconElementLabel[fieldName]} Icon Deleted`, type: `delete_${fieldName}`, state: { fldKey, fields: allFields } })
     }
   }
 
@@ -384,6 +390,18 @@ const PhoneNumberFieldSettings = () => {
 
     </>
   )
+}
+
+const propNameLabel = {
+  inputFormat: 'Input Formate Changed to',
+  valueFormat: 'Value Formate Changed to',
+  noCountryFoundText: 'Country Not Found Text',
+  selectedFlagImage: 'Selected Flag Image',
+  selectedCountryClearable: 'Selected Country Clearable',
+  searchClearable: 'Search Clearable',
+  optionFlagImage: 'Option Flag Image',
+  detectCountryByIp: 'Detect Country By IP',
+  detectCountryByGeo: 'Detect Country By Geo',
 }
 
 export default PhoneNumberFieldSettings

@@ -70,9 +70,10 @@ function FormDetails() {
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetBuilderHistory = useResetRecoilState($builderHistory)
   const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -140,6 +141,7 @@ function FormDetails() {
     resetFormInfo()
     resetCustomCodes()
     resetReportId()
+    resetBuilderHistory()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -396,8 +398,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',

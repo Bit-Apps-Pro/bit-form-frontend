@@ -49,7 +49,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Field required custom error message ${req}`, type: `custom_error_message_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Custom error message ${req}`, type: `custom_error_message_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setShowErrMsg = e => {
@@ -66,7 +66,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: 'Custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } })
   }
 
   const openErrorModal = () => {

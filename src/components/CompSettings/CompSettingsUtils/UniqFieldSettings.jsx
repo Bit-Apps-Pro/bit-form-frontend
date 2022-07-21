@@ -27,7 +27,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `${title} ${checked ? 'On' : 'Off'}`, type: title, state: { fields: allFields, fldKey } })
   }
 
   return (

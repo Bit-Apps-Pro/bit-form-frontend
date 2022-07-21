@@ -40,7 +40,7 @@ export default function PlaceholderSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Placeholder updated "${fieldData.ph}": ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }
 
   return (

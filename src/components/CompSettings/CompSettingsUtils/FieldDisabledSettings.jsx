@@ -27,7 +27,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)
-    addToBuilderHistory({ event: `Disabled field ${req}`, type: `disabled_field_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Disabled field ${req}`, type: 'disabled_field_on_off', state: { fields: allFields, fldKey } })
   }
 
   return (

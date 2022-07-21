@@ -24,7 +24,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { addDefaultStyleClasses, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -87,10 +87,9 @@ function TextFieldSettings() {
     } else {
       delete fieldData.ac
     }
-    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: `autocomplete_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
   }
 
   const hideAdminLabel = (e) => {
@@ -127,7 +126,7 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Default value updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Default value updated: ${ value || fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
   }
 
   function setMin(e) {
@@ -352,7 +351,7 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Field Input mode update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } })
   }
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
@@ -366,12 +365,13 @@ function TextFieldSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      setStyles(prvStyle => produce(prvStyle, draft => {
-        const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
-        console.log('removeIcon', padding, paddingGenerator(padding, 'left', false))
+      const newStyles = produce(styles, draft => {
+        const { padding } = styles.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
         if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', false)
         if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', false)
-      }))
+      })
+      setStyles(newStyles)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields, styles: newStyles } })
     }
   }
 
@@ -380,6 +380,7 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
+    addToBuilderHistory({ event: `Suggestion Update: ${fieldData.lbl || adminLabel || fldKey}`, type: 'suggestion_update', state: { fields: allFields, fldKey } })
   }
 
   const hideSuggestionVal = ({ target: { checked } }) => {

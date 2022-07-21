@@ -10,6 +10,7 @@ import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -32,14 +33,18 @@ export default function ReCaptchaSettings() {
   function setConfigValue(propName, value) {
     fieldData.config[propName] = value
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propName[0].toUpperCase() + propName.slice(1)} changed to ${value} : ${fieldData.adminLbl || fldKey}`, type: `${propName}_change`, state: { fields: allFields, fldKey } })
   }
 
   const flexDirectionHandle = (val, type) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    const newStyles = produce(styles, drftStyle => {
       drftStyle.fields[fldKey].classes[wrpCLass].display = 'flex'
       drftStyle.fields[fldKey].classes[wrpCLass][type] = val
-    }))
+    })
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Position alignment to "${val}" : ${fieldData.adminLbl || fldKey}`, type: 'position_alignment_change', state: { styles: newStyles, fldKey } })
   }
 
   return (

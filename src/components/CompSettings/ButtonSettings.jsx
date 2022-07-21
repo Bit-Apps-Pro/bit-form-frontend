@@ -11,7 +11,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -72,7 +72,7 @@ export default function ButtonSettings() {
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Button Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } })
   }
 
   function setButtonAlign(e) {
@@ -82,7 +82,7 @@ export default function ButtonSettings() {
     fieldData.align = e.target.value
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
     setBtnAlign(e.target.value)
-    addToBuilderHistory({ event: `Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
+    addToBuilderHistory({ event: `Button Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
   }
 
   const checkSubmitBtn = () => {
@@ -101,7 +101,7 @@ export default function ButtonSettings() {
     fieldData.fulW = e.target.checked
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Button Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {
@@ -116,6 +116,7 @@ export default function ButtonSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
   }
 

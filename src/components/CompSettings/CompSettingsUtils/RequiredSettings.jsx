@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
@@ -22,7 +22,7 @@ export default function RequiredSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
   const isRequired = fieldData.valid.req || false
   const adminLabel = fieldData.adminLbl || ''
@@ -68,30 +68,31 @@ export default function RequiredSettings() {
     fieldData.valid.reqPos = posValue
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Asterisk Position ${posValue}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_position_${posValue}`, state: { fields: allFields, fldKey } })
-
+    let newStyles = styles
     if (posValue === 'left') {
-      setStyles(prvState => produce(prvState, drftStyles => {
+      newStyles = produce(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'relative')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'absolute')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'right'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), '0px')
-      }))
+      })
     } else if (posValue === 'right') {
-      setStyles(prvState => produce(prvState, drftStyles => {
+      newStyles = produce(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'relative')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'absolute')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'right'), '0px')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), 'unset')
-      }))
+      })
     } else {
-      setStyles(prvState => produce(prvState, drftStyles => {
+      newStyles = produce(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'right'), 'unset')
-      }))
+      })
     }
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Asterisk Position ${posValue}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'asterisk_position_change', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
   return (

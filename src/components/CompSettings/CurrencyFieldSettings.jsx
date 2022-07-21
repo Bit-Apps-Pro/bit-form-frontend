@@ -57,12 +57,16 @@ const CurrencyFieldSettings = () => {
   }
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].options = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].options = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Options List: ${fieldData.lbl || fldKey}`, type: 'options_modify', state: { fields: allFields, fldKey } })
   }
 
   const handleConfigChange = (val, name, config) => {
     fieldData[config][name] = val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
 
   const toggleSearchPlaceholder = (e) => {
@@ -76,7 +80,7 @@ const CurrencyFieldSettings = () => {
     const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: 'toggle_search_placeholder', state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
@@ -319,6 +323,18 @@ const CurrencyFieldSettings = () => {
 
     </>
   )
+}
+
+const propNameLabel = {
+  formatter: 'Formatter Changed to',
+  showCurrencySymbol: 'Show Currency Symbol',
+  roundToClosestInteger: 'Round to closest integer',
+  roundToClosestFractionDigits: 'Round to closest Fraction Digit',
+  noCurrencyFoundText: 'Currency Not Found Text',
+  selectedFlagImage: 'Selected Flag Image',
+  selectedCurrencyClearable: 'Selected Country Clearable',
+  searchClearable: 'Search Clearable',
+  optionFlagImage: 'Option Flag Image',
 }
 
 export default CurrencyFieldSettings

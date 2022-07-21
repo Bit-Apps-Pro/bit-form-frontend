@@ -12,7 +12,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -67,6 +67,7 @@ export default function FieldLabelSettings() {
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       reCalculateFieldHeights(fldKey)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
   }
 

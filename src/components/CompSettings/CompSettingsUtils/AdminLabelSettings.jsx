@@ -25,7 +25,7 @@ export default function AdminLabelSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Admin label updated: ${adminLabel || fieldData.adminLbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } })
   }
 
   const hideAdminLabel = (e) => {
@@ -39,7 +39,7 @@ export default function AdminLabelSettings() {
     const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.adminLbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }
 
   return (

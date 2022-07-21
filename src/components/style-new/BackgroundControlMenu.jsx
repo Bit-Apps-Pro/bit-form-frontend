@@ -7,6 +7,7 @@ import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $unsplashImgUrl, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -15,7 +16,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import bgImgControlStyle from '../../styles/backgroundControl.style'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import ImageUploadInput from '../CompSettings/StyleCustomize/ChildComp/ImageUploadInput'
@@ -36,6 +37,7 @@ function BackgroundControlMenu({ stateObjName,
   canSetVariable = true }) {
   const [controller, setController] = useState({ parent: 'Solid', child: 'Solid', color: 'Custom' })
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const { object, paths } = objectPaths
   const [color, setColor] = useState()
   const [bgImage, setBgImage] = useState()
@@ -78,11 +80,13 @@ function BackgroundControlMenu({ stateObjName,
         setThemeColors(prvStyle => produce(prvStyle, drft => {
           drft[`${propertyPath}`] = val
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { themeColors: getLatestState('themeColors') }))
         break
       case 'themeVars':
         setThemeVars(prvStyle => produce(prvStyle, drft => {
           drft[`${propertyPath}`] = val
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
         setStyles(preStyle => produce(preStyle, drftStyle => {
@@ -92,6 +96,7 @@ function BackgroundControlMenu({ stateObjName,
           if (checkExistImportant) tempValue = `${val} !important`
           assignNestedObj(drftStyle, pathName, tempValue)
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, pathName, val, { styles: getLatestState('styles') }))
         break
       default:
         break
@@ -141,25 +146,20 @@ function BackgroundControlMenu({ stateObjName,
   const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
-    const event = 'color changed'
-    const type = propertyPath
-    const state = { fldKey: stateObjName }
-    const historyData = { event, type, state }
     switch (stateObjName) {
       case 'themeColors':
         // eslint-disable-next-line no-case-declarations
-        const newThemeColors = produce(themeColors, drftThmClr => {
+        setThemeColors(prevState => produce(prevState, drftThmClr => {
           drftThmClr[propertyPath] = hslaStr
-        })
-        setThemeColors(newThemeColors)
-        historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(historyData)
+        }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
         setThemeVars(prvState => produce(prvState, drftThmVar => {
           drftThmVar[propertyPath] = hslaStr
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
@@ -180,6 +180,7 @@ function BackgroundControlMenu({ stateObjName,
             assignNestedObj(drftStyles, paths.background, clr)
           }
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, str || hslaStr, { styles: getLatestState('styles') }))
         break
 
       default:

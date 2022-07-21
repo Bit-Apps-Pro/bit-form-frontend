@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
@@ -25,16 +26,20 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setContent = val => {
-    setFields(prevState => produce(prevState, draft => {
+    const allFields = produce(fields, draft => {
       draft[fldKey].content = val
-    }))
+    })
+    setFields(allFields)
+    addToBuilderHistory({ event: 'Modify HTML Content Label', type: 'html_content_label', state: { fields: allFields, fldKey } })
   }
 
   const cancelModal = () => {
     fieldData.content = value
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
     setLabelModal(false)
+    addToBuilderHistory({ event: 'Cancel HTML Content Label ', type: 'cancel_html_content_label', state: { fields: allFields, fldKey } })
   }
 
   return (

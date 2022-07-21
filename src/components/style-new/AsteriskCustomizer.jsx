@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -8,6 +9,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -21,6 +23,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function AsteriskCustomizer() {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const themeColors = useRecoilValue($themeColors)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [fields, setFields] = useRecoilState($fields)
@@ -32,6 +35,7 @@ export default function AsteriskCustomizer() {
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))
   }
 
   const unitHandler = (unit, value, name) => {
@@ -70,11 +74,12 @@ export default function AsteriskCustomizer() {
       }))
 
       setFields(prevFields => produce(prevFields, draftFields => {
-        Object.keys(fields).map(fieldKey => {
-          draftFields[fieldKey].valid.reqPos = posValue
+        Object.keys(fields).map(fldKey => {
+          draftFields[fldKey].valid.reqPos = posValue
         })
       }))
     }
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Asterisk Position', posValue, { fields: getLatestState('fields'), themeVars: getLatestState('themeVars') }))
   }
 
   return (

@@ -330,13 +330,13 @@ export const getValueByObjPath = (obj, path) => {
   return value
 }
 
-export const setStyleStateObj = (obj, path, value, setStates) => {
+export const setStyleStateObj = (objName, path, value, setStates) => {
   let setStateFunc = null
-  if (obj === 'themeVars') {
+  if (objName === 'themeVars') {
     setStateFunc = setStates.setThemeVars
-  } else if (obj === 'styles') {
+  } else if (objName === 'styles') {
     setStateFunc = setStates.setStyles
-  } else if (obj === 'themeColors') {
+  } else if (objName === 'themeColors') {
     setStateFunc = setStates.setThemeColors
   }
   setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
@@ -420,6 +420,28 @@ export const styleClasses = {
   err: ['err-msg'],
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
+}
+
+export const iconElementLabel = {
+  titlePreIcn: 'Title Leading',
+  titleSufIcn: 'Title Trailing',
+  lblPreIcn: 'Label Leading',
+  lblSufIcn: 'Label Trailing',
+  subTlePreIcn: 'Sub Title Leading',
+  subTleSufIcn: 'Sub Title Trailing',
+  subTitlPreIcn: 'sub Title Leading',
+  subTitlSufIcn: 'sub Title Trailing',
+  hlpPreIcn: 'Helper Text Leading',
+  hlpSufIcn: 'Helper Text Trailing',
+  prefixIcn: 'Leading',
+  suffixIcn: 'Trailing',
+  btnPreIcn: 'Button Leading',
+  btnSufIcn: 'Button Trailing',
+  errPreIcn: 'Error Text Leading',
+  errSufIcn: 'Error Text Trailing',
+  placeholderImage: 'Placeholder Image',
+  logo: 'Logo',
+  bg_img: 'Background Image',
 }
 
 const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
