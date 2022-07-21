@@ -118,6 +118,7 @@ const themeVars = {
   '--fld-p': '', // field padding
   '--fld-m': '', // field margin
   '--fld-fs': '1rem', // field font size
+  '--global-fld-bdr': 'solid', // global field Border
 
   '--fld-wrp-dis': 'block', // field wrapper display
   '--fld-wrp-fdir': '', // field wrapper flex direction
@@ -275,7 +276,7 @@ const themeColors = {
   '--gbg-s': '0%', // global background color saturation
   '--gbg-l': '100%', // global background color lightness
   '--gbg-a': 100, // global background color opacity
-  '--global-fld-bdr': 'solid hsla(0, 80%, 80%, 25)', // field Border
+  '--global-fld-bdr-clr': 'hsla(0, 80%, 80%, 25)', // global field Border color
   '--gfbc-h': 0, // global field border color hue
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness
