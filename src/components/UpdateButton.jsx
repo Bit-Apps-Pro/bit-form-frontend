@@ -17,7 +17,7 @@ import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-import { updateGoogleFontUrl } from './style-new/styleHelpers'
+import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
@@ -124,6 +124,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (style.font.fontType === 'Google') updateGoogleFontUrl()
+      removeUnuseStyles()
       saveForm()
     } else {
       select('#update-btn').click()
