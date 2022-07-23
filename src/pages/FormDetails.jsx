@@ -142,6 +142,8 @@ function FormDetails() {
     resetCustomCodes()
     resetReportId()
     resetBuilderHistory()
+
+    // TODO: reset all states of style, themeVars & themeColors
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -398,8 +400,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',

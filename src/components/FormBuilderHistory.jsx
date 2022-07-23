@@ -100,9 +100,21 @@ export default function FormBuilderHistory() {
     console.log('histories', histories)
     setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
+
+    if (state.colorScheme) {
+      setColorScheme(state.colorScheme)
+    } else {
+      checkForPreviousState(indx, setColorScheme, 'colorScheme')
+    }
+
+    if (state.breakpoint) {
+      setBreakpoint(state.breakpoint)
+    } else {
+      checkForPreviousState(indx, setBreakpoint, 'breakpoint')
+    }
+
     if (state.layouts) {
       setLayouts(state.layouts)
-      // setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
     } else {
       checkForPreviousState(indx, setLayouts, 'layouts')
     }
