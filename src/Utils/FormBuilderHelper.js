@@ -556,7 +556,7 @@ const elementLabel = (element) => {
     case 'btn-suf-i': return 'Button Trailing Icon'
     case 'req-smbl': return 'Asterisk Symbol'
     case 'fld': return 'Input Field'
-    default: return element
+    default: return element || ''
   }
 }
 
@@ -578,13 +578,14 @@ const generePropertyName = (propertyName) => {
     .replaceAll(/\b(hlp)\b/g, 'Helper')
     .replaceAll(/\b(err)\b/g, 'Error')
     .replaceAll(/\b(titl)\b/g, 'Title')
-    .replaceAll(/\b(smbl)\b/g, 'Symbor')
+    .replaceAll(/\b(smbl)\b/g, 'Symbol')
     .replaceAll(/\b(fs)\b/g, 'Font Size')
     .replaceAll(/\b(m)\b/g, 'Margin')
     .replaceAll(/\b(p)\b/g, 'Padding')
     .replaceAll(/\b(w)\b/g, 'Width')
     .replaceAll(/\b(h)\b/g, 'Height')
     .replaceAll(/\b(wrp)\b/g, 'Container')
+    .replaceAll(/\b(req)\b/g, 'Required')
     .replaceAll(/\b\w/g, c => c.toUpperCase())
   return newPropertyName
 }

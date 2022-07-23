@@ -22,7 +22,7 @@ import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './sty
 
 export default function FontPickerMenu({ id }) {
   const { css } = useFela()
-  const { fieldKey, element } = useParams
+  const { fieldKey, element } = useParams()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(false)
