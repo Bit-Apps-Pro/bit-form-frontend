@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
+import { addToBuilderHistory, getLatestState } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
@@ -28,12 +29,13 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
     setFields(prevState => produce(prevState, draft => {
       draft[fldKey].lbl = val
     }))
+    addToBuilderHistory({ event: 'Modify Decision Box Label', type: 'change_decision_label', state: { fields: getLatestState('fields'), fldKey } })
   }
 
   const cancelModal = () => {
     fieldData.lbl = value
-    // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    addToBuilderHistory({ event: 'Cancel Decision Box Label Editing', type: 'cancel_decision_label_edit', state: { fields: getLatestState('fields'), fldKey } })
     setLabelModal(false)
   }
 

@@ -7,8 +7,8 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
@@ -19,7 +19,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -38,8 +38,6 @@ function TitleSettings() {
   const fieldData = deepCopy(fields[fieldKey])
   const [styles, setStyles] = useRecoilState($styles)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
@@ -49,7 +47,9 @@ function TitleSettings() {
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
-    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    const allFields = produce(allFields, draft => { draft[fieldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${name} Modified to ${value}`, type: `${name}_changes`, state: { fldKey: fieldKey, fields: allFields } })
   }
 
   // useEffect(() => {
@@ -71,10 +71,12 @@ function TitleSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      setStyles(prvStyle => produce(prvStyle, draft => {
+      const newStyles = produce(styles, draft => {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
-      }))
+      })
+      setStyles(newStyles)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey: fieldKey, fields: allFields, styles: newStyles } })
     }
   }
 
@@ -84,6 +86,7 @@ function TitleSettings() {
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
       reCalculateFieldHeights(fieldKey)
+      addToBuilderHistory({ event: `${iconElementLabel[name]} Icon Deleted`, type: `delete_${name}`, state: { fldKey: fieldKey, fields: allFields } })
     }
   }
 
@@ -101,7 +104,7 @@ function TitleSettings() {
     setFields(allFields)
     // recalculate builder field height
     reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `title_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: 'title_toggle', state: { fields: allFields, fldKey: fieldKey } })
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
@@ -118,7 +121,7 @@ function TitleSettings() {
     setFields(allFields)
     // recalculate builder field height
     reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: 'subtitle_toggle', state: { fields: allFields, fldKey: fieldKey } })
   }
 
   const inputHandler = (val, type) => {
@@ -130,25 +133,28 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`, type: `subtitle_${val}`, state: { fields: allFields, fieldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`, type: 'subtitle_change', state: { fields: allFields, fldKey: fieldKey } })
   }
 
   const flexDirectionHandle = (val, type) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    const newStyles = produce(styles, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
-    }))
+    })
+    setStyles(newStyles)
     reCalculateFieldHeights(fieldKey)
+    addToBuilderHistory({ event: `Direction Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'direction_changes', state: { styles: newStyles, fldKey: fieldKey } })
   }
 
   const positionHandle = (val, type) => {
     let justifyContent = 'left'
     if (val === 'center') justifyContent = 'center'
     else if (val === 'flex-end') justifyContent = 'right'
-
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    const newStyles = produce(styles, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
-    }))
+    })
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Position Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'position_changes', state: { styles: newStyles, fldKey: fieldKey } })
   }
 
   useEffect(() => {

@@ -4,15 +4,15 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -26,8 +26,6 @@ export default function FieldLabelSettings() {
   const styles = useRecoilValue($styles)
   const label = fieldData.lbl || ''
   const { css } = useFela()
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
@@ -43,7 +41,7 @@ export default function FieldLabelSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } })
   }
 
   const hideFieldLabel = e => {
@@ -60,7 +58,7 @@ export default function FieldLabelSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const removeIcon = (iconType) => {
@@ -69,6 +67,7 @@ export default function FieldLabelSettings() {
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       reCalculateFieldHeights(fldKey)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
   }
 

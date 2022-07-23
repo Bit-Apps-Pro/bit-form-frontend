@@ -4,14 +4,15 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import produce, { current } from 'immer'
+import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { hsva2hsla } from './colorHelpers'
 import { getValueByObjPath } from './styleHelpers'
 
@@ -30,6 +31,7 @@ import { getValueByObjPath } from './styleHelpers'
 function FilterColorsPickerMenu({ stateObjName,
   objectPaths, id, propertyPath }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
@@ -74,32 +76,20 @@ function FilterColorsPickerMenu({ stateObjName,
   const handleColor = (path, _h, _s, _v, _a) => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
-    const event = 'color changed'
-    const type = path
-    const state = { fldKey: stateObjName }
-    const historyData = { event, type, state }
-
     // TODO history should be added
     switch (stateObjName) {
       case 'themeColors':
-        // const newThemeColors = produce(themeColors, drftThmClr => {
-        //   drftThmClr[path] = hslaStr
-        // })
         setThemeColors(prvState => produce(prvState, drftThmClr => {
           drftThmClr[path] = hslaStr
         }))
-        // historyData.state.themeColors = newThemeColors
-        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
-        // setThemeColors(newThemeColors)
-        // console.log('newThemeColors', newThemeColors)
-        // historyData.state.themeColors = newThemeColors
-        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
         setThemeVars(prvState => produce(prvState, drftThmVar => {
           drftThmVar[path] = hslaStr
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
@@ -111,6 +101,7 @@ function FilterColorsPickerMenu({ stateObjName,
 
           assignNestedObj(drftStyles, path, hslaColor)
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { styles: getLatestState('styles') }))
         break
 
       default:
@@ -119,32 +110,19 @@ function FilterColorsPickerMenu({ stateObjName,
   }
   // TODO history should be added
   const handleValue = (path, value) => {
-    const event = 'value changed'
-    const type = path
-    const state = { fldKey: stateObjName }
-    const historyData = { event, type, state }
-
     switch (stateObjName) {
       case 'themeColors':
         setThemeColors(prvState => produce(prvState, drftThmClr => {
           drftThmClr[path] = value
-
-          const newThemeColors = current(drftThmClr)
-          historyData.state.themeColors = newThemeColors
-          // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
         }))
-        // const newThemeColors = produce(themeColors, drftThmClr => {
-        //   drftThmClr[path] = value
-        // })
-        // setThemeColors(newThemeColors)
-        // historyData.state.themeColors = newThemeColors
-        // addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, value, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
         setThemeVars(prvState => produce(prvState, drftThmVar => {
           drftThmVar[path] = value
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, value, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
@@ -153,9 +131,9 @@ function FilterColorsPickerMenu({ stateObjName,
           const tempValue = getValueByObjPath(drftStyles, path)
           const checkExistImportant = tempValue?.match(/!important/gi)?.[0]
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
-
           assignNestedObj(drftStyles, path, hslaColor)
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, value, { styles: getLatestState('styles') }))
         break
 
       default:

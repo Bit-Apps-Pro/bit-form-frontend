@@ -3,8 +3,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
@@ -24,11 +24,9 @@ export default function HelperTxtSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { css } = useFela()
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const adminLabel = fieldData.adminLbl || ''
   const helperTxt = fieldData.helperTxt || ''
@@ -48,7 +46,7 @@ export default function HelperTxtSettings() {
     setFields(allFields)
     // recalculate builder field height
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setHelperTxt = ({ target: { value } }) => {
@@ -61,7 +59,7 @@ export default function HelperTxtSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {

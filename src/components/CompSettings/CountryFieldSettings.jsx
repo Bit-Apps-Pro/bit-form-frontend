@@ -2,8 +2,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
@@ -29,8 +29,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 const CountryFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
   const [optionMdl, setOptionMdl] = useState(false)
@@ -57,12 +55,16 @@ const CountryFieldSettings = () => {
   }
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].options = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].options = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Options List: ${fieldData.lbl || fldKey}`, type: 'options_modify', state: { fields: allFields, fldKey } })
   }
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
 
   const toggleSearchPlaceholder = (e) => {
@@ -76,14 +78,14 @@ const CountryFieldSettings = () => {
     const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: 'toggle_search_placeholder', state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
     fieldData.config.searchPlaceholder = e.target.value
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }
 
   if (isDev) {
@@ -282,6 +284,16 @@ const CountryFieldSettings = () => {
 
     </>
   )
+}
+
+const propNameLabel = {
+  noCountryFoundText: 'Country Not Found Text',
+  selectedFlagImage: 'Selected Flag Image',
+  selectedCountryClearable: 'Selected Country Clearable',
+  searchClearable: 'Search Clearable',
+  optionFlagImage: 'Allow Option Flag Image',
+  detectCountryByIp: 'Detect Country By Ip',
+  detectCountryByGeo: 'Detect Country By Geo',
 }
 
 export default CountryFieldSettings

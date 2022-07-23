@@ -1,17 +1,20 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
+import ResetStyle from './ResetStyle'
 import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function SpacingControl({ mainTitle, subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -43,6 +46,7 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
             assignNestedObj(drft, paths[prop], '')
           })
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, `${paths?.margin || paths?.padding} Clear`, '', { styles: getLatestState('styles') }))
         break
       case 'themeVars':
         setThemeVars(preVars => produce(preVars, drft => {
@@ -50,6 +54,7 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
             assignNestedObj(drft, paths[prop], '')
           })
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, `${paths?.margin || paths?.padding} Clear`, '', { themeVars: getLatestState('themeVars') }))
         break
       default:
         break
@@ -58,6 +63,7 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
+      <ResetStyle id={id} propertyPath={Object.values(paths)} stateObjName={object} />
       {allowImportant && getValue() && (
         <Important
           propertyPath={paths?.margin || paths?.padding}

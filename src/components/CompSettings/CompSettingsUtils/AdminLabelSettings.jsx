@@ -1,21 +1,19 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import produce from 'immer'
-import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
-import { deepCopy } from '../../../Utils/Helpers'
-import { __ } from '../../../Utils/i18nwrap'
-import AutoResizeInput from './AutoResizeInput'
-import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
+import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
+import AutoResizeInput from './AutoResizeInput'
 
 export default function AdminLabelSettings() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const fieldData = deepCopy(fields[fldKey])
   const adminLabel = fieldData.adminLbl || ''
 
@@ -27,7 +25,7 @@ export default function AdminLabelSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Admin label updated: ${adminLabel || fieldData.adminLbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } })
   }
 
   const hideAdminLabel = (e) => {
@@ -41,7 +39,7 @@ export default function AdminLabelSettings() {
     const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.adminLbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }
 
   return (

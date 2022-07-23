@@ -1,17 +1,19 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
 import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function FilterController({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
@@ -36,12 +38,14 @@ export default function FilterController({ subtitle, action, value, objectPaths,
         setStyles(prvStyle => produce(prvStyle, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { styles: getLatestState('styles') }))
         break
 
       case 'themeColors':
         setThemeColors(prvThemeClr => produce(prvThemeClr, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { themeColors: getLatestState('themeColors') }))
         break
 
       default:

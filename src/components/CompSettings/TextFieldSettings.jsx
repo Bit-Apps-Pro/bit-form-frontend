@@ -13,7 +13,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
@@ -24,7 +24,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { addDefaultStyleClasses, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -56,7 +56,6 @@ function TextFieldSettings() {
   const { fieldKey: fldKey } = useParams()
 
   if (!fldKey) return <>No field exist with this field key</>
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
@@ -88,10 +87,9 @@ function TextFieldSettings() {
     } else {
       delete fieldData.ac
     }
-    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: `autocomplete_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
   }
 
   const hideAdminLabel = (e) => {
@@ -105,7 +103,7 @@ function TextFieldSettings() {
     const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const hideDefalutValue = (e) => {
@@ -119,11 +117,7 @@ function TextFieldSettings() {
     const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(
-      setBuilderHistory,
-      { event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
-      setUpdateBtn,
-    )
+    addToBuilderHistory({ event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } })
   }
 
   const setDefaultValue = ({ target: { value } }) => {
@@ -132,7 +126,7 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Default value updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Default value updated: ${ value || fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
   }
 
   function setMin(e) {
@@ -147,7 +141,7 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
   }
 
   function setMax(e) {
@@ -162,7 +156,7 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } })
   }
 
   const setRegexr = e => {
@@ -185,7 +179,7 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } })
   }
 
   const setRegexrValue = value => {
@@ -208,7 +202,7 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } })
   }
 
   const setFlags = e => {
@@ -220,7 +214,7 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Regex Pattern Flag updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_flags', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Regex Pattern Flag updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_flags', state: { fields: allFields, fldKey } })
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -270,9 +264,8 @@ function TextFieldSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Password validation updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_password_validation_${validations}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Password validation updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_password_validation_${validations}`, state: { fields: allFields, fldKey } })
   }
-
   const setPasswordLimit = e => {
     if (!bits.isPro) return
     const { name, value } = e.target
@@ -289,9 +282,8 @@ function TextFieldSettings() {
     const limit = name === 'mx' ? 'max' : 'min'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Password ${limit} limit updated to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_password_${limit}_limit`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Password ${limit} limit updated to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_password_${limit}_limit`, state: { fields: allFields, fldKey } })
   }
-
   const openOptionModal = () => {
     setOptionMdl(true)
   }
@@ -306,8 +298,7 @@ function TextFieldSettings() {
 
   //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
   //   setFields(allFields)
-  //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  // }
+  //   addToBuilderHistory({ event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }
   const seAutoComplete = (value) => {
     const splitted = value.split(',')
     let val = ''
@@ -335,9 +326,8 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } })
   }
-
   const hideAutoComplete = ({ target: { checked } }) => {
     if (checked) fieldData.acHide = true
     else delete fieldData.acHide
@@ -345,9 +335,8 @@ function TextFieldSettings() {
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } })
   }
-
   const handleFieldName = ({ target: { value } }) => {
     if (value !== '') fieldData.fieldName = value
     // else fieldData.fieldName = fldKey
@@ -355,17 +344,15 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } })
   }
-
   const handleInputmode = ({ target: { value } }) => {
     if (value !== '') fieldData.inputMode = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field Input mode update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } })
   }
-
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey)
@@ -378,12 +365,13 @@ function TextFieldSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      setStyles(prvStyle => produce(prvStyle, draft => {
-        const { padding } = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
-        console.log('removeIcon', padding, paddingGenerator(padding, 'left', false))
+      const newStyles = produce(styles, draft => {
+        const { padding } = styles.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
         if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', false)
         if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', false)
-      }))
+      })
+      setStyles(newStyles)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields, styles: newStyles } })
     }
   }
 
@@ -392,6 +380,7 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
+    addToBuilderHistory({ event: `Suggestion Update: ${fieldData.lbl || adminLabel || fldKey}`, type: 'suggestion_update', state: { fields: allFields, fldKey } })
   }
 
   const hideSuggestionVal = ({ target: { checked } }) => {
@@ -404,11 +393,7 @@ function TextFieldSettings() {
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(
-      setBuilderHistory,
-      { event: `Suggestion ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } },
-      setUpdateBtn,
-    )
+    addToBuilderHistory({ event: `Suggestion ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } })
   }
 
   return (

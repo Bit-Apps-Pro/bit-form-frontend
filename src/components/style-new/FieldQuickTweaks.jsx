@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -10,7 +11,7 @@ import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -22,6 +23,7 @@ import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
+  const { element } = useParams()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
@@ -63,6 +65,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         }
       }
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
   }
 
   const setMuptipleProperty = (propertyPaths, values) => {
@@ -71,6 +74,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         assignNestedObj(drftStyle, path, values[index])
       })
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPaths[0], values[0], { styles: getLatestState('styles') }))
   }
 
   const setBtnSize = (elementKey, value) => {
@@ -180,6 +184,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
       }
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
   }
   const getPropValue = (prop = 'border-radius') => {
     const fldType = styles.fields[fieldKey].fieldType
@@ -245,12 +250,14 @@ export default function FieldQuickTweaks({ fieldKey }) {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Alignment', val, { styles: getLatestState('styles') }))
   }
 
   const flexDirectionHandle = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'flex-direction', val, { styles: getLatestState('styles') }))
   }
 
   const fldTypWiseAccentColorObjName = () => {
@@ -328,6 +335,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         clss[`.${fieldKey}-search-clear-btn`].right = '6px'
       }
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', rtlCurrencyFldCheck(), { styles: getLatestState('styles') }))
   }
 
   const razorpayBtnThemeHandler = (e) => {
@@ -377,6 +385,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       assignNestedObj(drft, propertyPath('razorpay-btn-text', 'color'), color)
       assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Razorpay Theme', themeValue, { fields: getLatestState('fields'), styles: getLatestState('styles') }))
   }
   return (
     <>

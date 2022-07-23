@@ -70,9 +70,10 @@ function FormDetails() {
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetBuilderHistory = useResetRecoilState($builderHistory)
   const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -140,6 +141,9 @@ function FormDetails() {
     resetFormInfo()
     resetCustomCodes()
     resetReportId()
+    resetBuilderHistory()
+
+    // TODO: reset all states of style, themeVars & themeColors
   }
   const onMount = () => {
     window.scrollTo(0, 0)

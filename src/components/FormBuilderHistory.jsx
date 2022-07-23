@@ -3,7 +3,9 @@ import { useFela } from 'react-fela'
 import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import HistoryIcn from '../Icons/HistoryIcn'
 import RedoIcon from '../Icons/RedoIcon'
@@ -34,7 +36,9 @@ export default function FormBuilderHistory() {
   const [showHistory, setShowHistory] = useState(null)
   const [fields, setFields] = useRecoilState($fields)
   const [layouts, setLayouts] = useRecoilState($layouts)
+  const setStyles = useSetRecoilState($styles)
   const setThemeColors = useSetRecoilState($themeColors)
+  const setThemeVars = useSetRecoilState($themeVars)
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
@@ -96,9 +100,21 @@ export default function FormBuilderHistory() {
     console.log('histories', histories)
     setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
+
+    if (state.colorScheme) {
+      setColorScheme(state.colorScheme)
+    } else {
+      checkForPreviousState(indx, setColorScheme, 'colorScheme')
+    }
+
+    if (state.breakpoint) {
+      setBreakpoint(state.breakpoint)
+    } else {
+      checkForPreviousState(indx, setBreakpoint, 'breakpoint')
+    }
+
     if (state.layouts) {
       setLayouts(state.layouts)
-      // setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
     } else {
       checkForPreviousState(indx, setLayouts, 'layouts')
     }
@@ -109,11 +125,23 @@ export default function FormBuilderHistory() {
       checkForPreviousState(indx, setFields, 'fields')
     }
 
+    if (state.styles) {
+      setStyles(state.styles)
+    } else {
+      checkForPreviousState(indx, setStyles, 'styles')
+    }
+
     if (state.themeColors) {
       console.log('state.themeColors', state.themeColors)
       setThemeColors(state.themeColors)
     } else {
       checkForPreviousState(indx, setThemeColors, 'themeColors')
+    }
+
+    if (state.themeVars) {
+      setThemeVars(state.themeVars)
+    } else {
+      checkForPreviousState(indx, setThemeVars, 'themeVars')
     }
 
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))

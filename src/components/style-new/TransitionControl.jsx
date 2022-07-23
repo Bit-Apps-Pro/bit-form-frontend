@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -9,7 +10,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
@@ -28,6 +29,7 @@ export default function TransitionControl({ title,
   allowImportant,
   fldKey }) {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
   const setThemeColors = useSetRecoilState($themeColors)
@@ -39,16 +41,19 @@ export default function TransitionControl({ title,
         setThemeColors(prvStyle => produce(prvStyle, drft => {
           drft[`${propertyPath}`] = ''
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, '', { themeColors: getLatestState('themeColors') }))
         break
       case 'themeVars':
         setThemeVars(prvStyle => produce(prvStyle, drft => {
           drft[`${propertyPath}`] = ''
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, '', { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
           assignNestedObj(drftStyles, propertyPath, '')
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, '', { styles: getLatestState('styles') }))
         break
       default:
         break
