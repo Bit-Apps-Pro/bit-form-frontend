@@ -5,6 +5,7 @@ import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'r
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { getRecoil } from 'recoil-nexus'
 import useSWRImmutable from 'swr/immutable'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
@@ -24,7 +25,7 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
@@ -55,6 +56,7 @@ const styleReducer = (style, action) => {
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const newFormId = useRecoilValue($newFormId)
   const isNewForm = formType === 'new'
+  const { element, fieldKey } = useParams()
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
@@ -283,6 +285,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', view, { breakpoint: getRecoil($breakpoint) }))
     conRef.current.applyResizer(resizer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conRef])
