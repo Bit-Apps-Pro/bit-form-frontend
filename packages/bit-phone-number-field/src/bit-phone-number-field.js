@@ -95,7 +95,7 @@ export default class BitPhoneNumberField {
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
-    observeElement(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
 
