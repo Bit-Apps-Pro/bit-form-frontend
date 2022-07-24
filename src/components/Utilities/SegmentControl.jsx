@@ -91,11 +91,13 @@ function SegmentControl({ defaultActive,
       tdy: '0.3s',
       tdn: '0.6s',
       cr: clr.tabClr,
+      'transition-property': 'color',
       ':hover:not(.active)': {
         cr: 'var(--white-0-100-90)', // '#333',
         tdy: '0s',
         tdn: '300ms',
       },
+      ':focus-visible': { oe: '2px solid var(--b-50)' },
       '& .icn': {
         mr: show?.includes('label') ? floor(20) : 0,
         lh: '75%',
