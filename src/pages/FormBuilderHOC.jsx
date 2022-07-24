@@ -5,7 +5,6 @@ import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'r
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
 import useSWRImmutable from 'swr/immutable'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
@@ -25,7 +24,7 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, generateHistoryData, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
@@ -86,7 +85,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
-  const { forceBuilderWidthToLG } = builderHookStates
+  const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
 
   // useEffect(() => {
   // if (formType === 'new') {
@@ -160,6 +159,34 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [brkPoint, style])
 
   useEffect(() => { setResponsiveView('lg') }, [forceBuilderWidthToLG])
+
+  useEffect(() => {
+    const resizer = conRef.current.getResizer()
+    const leftBarWidth = toolbarOff ? 50 : 180
+    const rightBarWidth = 307
+    const mobileSize = 400
+    const tabletSize = 590
+    if (brkPoint === 'lg') {
+      setbrkPoint('lg')
+      resizer.resizeSection(0, { toSize: leftBarWidth })
+      resizer.resizeSection(2, { toSize: rightBarWidth })
+    } else if (brkPoint === 'md') {
+      setbrkPoint('md')
+      const dividedWidth = (window.innerWidth - tabletSize) / 2
+      const s0 = dividedWidth - leftBarWidth
+      const s2 = dividedWidth - rightBarWidth
+      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
+      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
+    } else if (brkPoint === 'sm') {
+      setbrkPoint('sm')
+      const dividedWidth = (window.innerWidth - mobileSize) / 2
+      const s0 = dividedWidth - leftBarWidth
+      const s2 = dividedWidth - rightBarWidth
+      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
+      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
+    }
+    conRef.current.applyResizer(resizer)
+  }, [forceBuilderWidthToBrkPnt])
 
   const styleProvider = () => {
     if (!isNewThemeStyleLoaded) {
@@ -285,7 +312,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', view, { breakpoint: getRecoil($breakpoint) }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', view, { breakpoint: getLatestState('breakpoint'), styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
     conRef.current.applyResizer(resizer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conRef])

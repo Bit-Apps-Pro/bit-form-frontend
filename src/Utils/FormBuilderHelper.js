@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $builderHistory, $builderHookStates, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -527,6 +527,8 @@ export const getLatestState = (stateName) => {
   if (stateName === 'styles') return getRecoil($styles)
   if (stateName === 'themeVars') return getRecoil($themeVars)
   if (stateName === 'themeColors') return getRecoil($themeColors)
+  if (stateName === 'breakpoint') return getRecoil($breakpoint)
+  if (stateName === 'colorScheme') return getRecoil($colorScheme)
 }
 
 const elementLabel = (element) => {
@@ -561,7 +563,8 @@ const elementLabel = (element) => {
 }
 
 const generePropertyName = (propertyName) => {
-  let newPropertyName = propertyName.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+  let newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+  // eslint-disable-next-line es/no-string-prototype-replaceall
   newPropertyName = newPropertyName.replaceAll('--', '')
     .replaceAll('-', ' ')
     .replaceAll(/\b(fld)\b/g, 'Field')
