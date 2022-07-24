@@ -107,7 +107,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         themeVars: parseStyle.themeVars,
         lightThemeColors: parseStyle.themeColors?.lightThemeColors,
         darkThemeColors: parseStyle.themeColors?.darkThemeColors,
-        styles: parseStyle.styles,
+        styles: parseStyle.style,
       }
       setTempStyles(allStyleStates)
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {

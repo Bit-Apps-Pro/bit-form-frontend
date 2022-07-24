@@ -100,6 +100,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
         <Important
           id={id}
           className={css({ mr: 3 })}
+          paths={objectPaths.paths}
           propertyPath={borderPropsFirst}
         />
       )}
