@@ -21,7 +21,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const colorScheme = useRecoilValue($colorScheme)
-  const formWrpStylesObj = styles.form[colorScheme][element]
+  const formWrpStylesObj = styles.form[element]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
 
   const addableCssProps = Object

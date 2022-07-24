@@ -2,22 +2,26 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $breakpoint, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $breakpoint, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
+import DarkIcn from '../Icons/DarkIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import LayerIcon from '../Icons/LayerIcon'
+import LightIcn from '../Icons/LightIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
+import BuilderSettings from './BuilderSettings'
 import CustomCodeEditor from './CompSettings/CustomCodeEditor'
+import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
 import FormBuilderHistory from './FormBuilderHistory'
 import { removeUnuseStyles } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
@@ -32,9 +36,12 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const { formType, formID, rightBar } = useParams()
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
+  const colorScheme = useRecoilValue($colorScheme)
+  const setColorScheme = useSetRecoilState($colorScheme)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   const [modal, setModal] = useState(false)
   const selectedFldId = useRecoilValue($selectedFieldId)
+  const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
 
   const styleModeHandler = ({ target: { checked } }) => {
     setFlags(prv => ({ ...prv, styleMode: checked }))
@@ -105,6 +112,10 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     }
   }
 
+  const handleColorSchemeSwitch = () => {
+    setColorScheme(prv => (prv === 'light' ? 'dark' : 'light'))
+  }
+
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
@@ -128,7 +139,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           )}
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
-          <Tip msg="Small Screen View">
+          {/* <Tip msg="Small Screen View">
             <button
               data-testid="bp-sm"
               onClick={() => setResponsiveView('sm')}
@@ -157,9 +168,36 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               type="button"
             >
               <LaptopIcn size={29} stroke={1.6} />
-
             </button>
-          </Tip>
+          </Tip> */}
+
+          <StyleSegmentControl
+            width={130}
+            wideTab
+            show={['icn']}
+            tipPlace="bottom"
+            defaultActive={breakpoint}
+            onChange={setResponsiveView}
+            className={css(ut.mr2)}
+            options={[
+              {
+                icn: <span className={css(OptionToolBarStyle.respIcnWrp)}><MobileIcon size={23} /></span>,
+                label: 'sm',
+                tip: 'Small Screen View',
+              },
+              {
+                icn: <span className={css(OptionToolBarStyle.respIcnWrp)}><TabletIcon size={22} /></span>,
+                label: 'md',
+                tip: 'Medium Screen View',
+              },
+              {
+                icn: <span className={css(OptionToolBarStyle.respIcnWrp)}><LaptopIcn size={29} stroke={1.6} /></span>,
+                label: 'lg',
+                tip: 'Large Screen View',
+              },
+            ]}
+          />
+
           <Downmenu
             place="bottom-end"
             onShow={() => setResponsiveMenu(true)}
@@ -183,22 +221,10 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               <SettingsIcn size={22} />
             </button>
           </Tip>
-          <Modal
-            md
-            autoHeight
-            show={modal}
-            setModal={setModal}
-            className="o-v"
-            title=""
-            closeOnOutsideClick={false}
-          >
-            <div className="pos-rel" />
-            <CustomCodeEditor />
-          </Modal>
 
           <div className={css(OptionToolBarStyle.border_right)} />
 
-          <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
+          <div className={css([ut.flxc])}>
             {/* <Tip msg="Fields Settings">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
@@ -227,6 +253,19 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               </NavLink>
             </Tip>
             <StyleSegmentControl
+              width={90}
+              wideTab
+              show={['icn']}
+              tipPlace="bottom"
+              defaultActive={colorScheme}
+              onChange={handleColorSchemeSwitch}
+              className={css(ut.mr2)}
+              options={[
+                { icn: <LightIcn size="19" />, label: 'light', tip: 'Light Mode' },
+                { icn: <DarkIcn size="19" />, label: 'dark', tip: 'Dark Mode' },
+              ]}
+            />
+            <StyleSegmentControl
               borderRadius={10}
               width={180}
               show={['icn']}
@@ -238,20 +277,46 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               ]}
               onChange={handleRightPanel}
               wideTab
-              className={css(ut.mr4)}
+            // className={css(ut.mr1)}
             />
 
-            <Tip msg="Style render">
+            {/* <Tip msg="Style render">
               <SingleToggle
                 name="styleMood"
                 isChecked={flags.styleMode}
                 action={styleModeHandler}
                 id="style-mode"
               />
-            </Tip>
+            </Tip> */}
           </div>
         </div>
       </div>
+      <Modal
+        md
+        autoHeight
+        show={modal}
+        setModal={setModal}
+        className="o-v"
+        title={(
+          <div className={css(OptionToolBarStyle.modalTitleBar)}>
+            <StyleSegmentControl
+              width={300}
+              wideTab
+              tipPlace="bottom"
+              defaultActive={settingsModalTab}
+              onChange={setSettingsModalTab}
+              options={[
+                { label: 'Builder Settings' },
+                { label: 'Custom Code' },
+              ]}
+            />
+          </div>
+        )}
+        closeOnOutsideClick={false}
+      >
+        <Grow open={settingsModalTab === 'Builder Settings'}><BuilderSettings /></Grow>
+        <Grow open={settingsModalTab === 'Custom Code'}><CustomCodeEditor /></Grow>
+      </Modal>
       <div className="theme-section" />
     </div>
   )
