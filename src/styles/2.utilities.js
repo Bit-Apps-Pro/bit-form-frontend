@@ -162,6 +162,9 @@ const ut = {
     bb: '0.5px soild var(--white-0-83)',
     w: '100%',
   },
+  cooltipLearnMoreLink: {
+    color: 'var(--b-79-96)',
+  }
 
 }
 export default ut
