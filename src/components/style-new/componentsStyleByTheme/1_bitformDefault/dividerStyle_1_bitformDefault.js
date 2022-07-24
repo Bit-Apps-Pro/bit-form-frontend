@@ -9,15 +9,6 @@ export default function dividerStyle_1_bitformDefault({ fk }) {
       // padding: '10px 0px', // unused css
       'align-items': 'center',
     },
-    [`.${fk}-fld-wrp.fld-hide::after`]: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      content: '""',
-      width: '100%',
-      height: '100%',
-      'background-color': 'hsla(0, 0%, 0%, 20%)',
-    },
     [`.${fk}-divider`]: {
       margin: '0px 10px 0px 10px',
       width: '100%',
