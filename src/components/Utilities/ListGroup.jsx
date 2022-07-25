@@ -2,7 +2,6 @@ import { useFela } from 'react-fela'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useEffect, useRef, useState } from 'react'
 import SearchIcon from '../../Icons/SearchIcon'
-import Toolbars from '../../styles/Toolbars.style'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { deepCopy } from '../../Utils/Helpers'
 
@@ -75,13 +74,24 @@ export default function ListGroup({ options, action, className }) {
           className={css(style.search_field)}
         />
         {searchInput?.current?.value
-          && <span title="clear" className={css(style.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch}>&nbsp;</span>}
+          && (
+            <span
+              title="clear"
+              className={css(style.clear_icn)}
+              role="button"
+              tabIndex="-1"
+              onClick={clearSearch}
+              onKeyPress={clearSearch}
+            >
+              &nbsp;
+            </span>
+          )}
 
         <span title="search" className={css(style.search_icn)}>
           <SearchIcon size="20" />
         </span>
       </div>
-      <Scrollbars style={{ height: '85%' }} autoHide>
+      <Scrollbars style={{ height: '92%' }} autoHide>
         <div className={css(style.groupList)}>
           {searchData.map(group => (
             <>
@@ -105,7 +115,7 @@ export default function ListGroup({ options, action, className }) {
               )}
               {group.type === 'group-opts' && (
                 <ul className={css(style.ul)}>
-                  {group.type.match(/group-opts|group-title/) && (<h4 style={{ margin: 0 }}>{group.name}</h4>)}
+                  {group.type.match(/group-opts|group-title/) && (<h4 className={css(style.title)}>{group.name}</h4>)}
                   {'childs' in group && group.childs.map(option => (
                     <li className={css(style.li)}>
                       <button
@@ -135,20 +145,25 @@ const style = {
   main: {
     h: 300,
     w: 200,
-    py: 5,
+    py: 3,
     ow: 'hidden',
   },
   title: {
-    mt: 10,
-    mb: 5,
+    m: 0,
+    pt: 7,
+    pb: 5,
+    pn: 'sticky',
+    tp: 0,
+    bd: '#fff',
+    zx: 9,
   },
   fields_search: {
     pn: 'relative',
-    mr: 10,
     tn: 'width .2s',
   },
   search_field: {
-    w: '100%',
+    mx: 2,
+    w: '98%',
     oe: 'none',
     b: 'none !important',
     brs: '9px !important',
@@ -201,6 +216,7 @@ const style = {
   },
   button: {
     fw: 'normal',
+    brs: 5,
     dy: 'block',
     w: '100%',
     ta: 'left',
@@ -212,7 +228,6 @@ const style = {
     {
       bd: 'var(--white-0-95)',
       cr: 'var(--black-0)',
-      brs: 8,
     },
     fs: 11,
   },

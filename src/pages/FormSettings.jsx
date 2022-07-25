@@ -56,7 +56,7 @@ function FormSettings({ setProModal }) {
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/double-optin`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><EmailInbox size="21" /></span>
-          {__('Double Opt-In', 'bitform')}
+          {__('Double Opt-In')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
           <span className="mr-1"><CodeSnippetIcn size="19" /></span>

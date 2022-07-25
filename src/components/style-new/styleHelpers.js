@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $styles } from '../../GlobalStates/StylesState'
+import { $styles, $stylesLgLight } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -133,51 +134,52 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
 
 export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === unit) return value
+  const valueInNum = Number(value)
 
-  if (prvUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))
-  if (prvUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
-  if (prvUnit === 'px' && unit === '%') return Number(value * 6.25)
-  if (prvUnit === 'px' && unit === '') return Number(value)
-  if (prvUnit === 'px' && unit === 'cm') return Number(value * 0.026)
-  if (prvUnit === 'px' && unit === 'mm') return Number(value * 0.26)
+  if (prvUnit === 'px' && unit === 'em') return valueInNum * 0.062.toFixed(3)
+  if (prvUnit === 'px' && unit === 'rem') return valueInNum * 0.0625.toFixed(3)
+  if (prvUnit === 'px' && unit === '%') return valueInNum * 6.25
+  if (prvUnit === 'px' && unit === '') return valueInNum
+  if (prvUnit === 'px' && unit === 'cm') return valueInNum * 0.026
+  if (prvUnit === 'px' && unit === 'mm') return valueInNum * 0.26
 
-  if (prvUnit === 'em' && unit === 'px') return Number(value * 16)
-  if (prvUnit === 'em' && unit === '') return Number(value * 16)
-  if (prvUnit === 'em' && unit === 'rem') return Number(value)
-  if (prvUnit === 'em' && unit === '%') return Number(value * 100)
-  if (prvUnit === 'em' && unit === 'cm') return Number(value * 0.423)
-  if (prvUnit === 'em' && unit === 'cm') return Number(value * 4.233)
+  if (prvUnit === 'em' && unit === 'px') return valueInNum * 16
+  if (prvUnit === 'em' && unit === '') return valueInNum * 16
+  if (prvUnit === 'em' && unit === 'rem') return valueInNum
+  if (prvUnit === 'em' && unit === '%') return valueInNum * 100
+  if (prvUnit === 'em' && unit === 'cm') return valueInNum * 0.423
+  if (prvUnit === 'em' && unit === 'cm') return valueInNum * 4.233
 
-  if (prvUnit === 'rem' && unit === 'em') return Number(value)
-  if (prvUnit === 'rem' && unit === 'px') return Number(value * 16)
-  if (prvUnit === 'rem' && unit === '') return Number(value * 16)
-  if (prvUnit === 'rem' && unit === '%') return Number(value * 100)
-  if (prvUnit === 'rem' && unit === 'cm') return Number(value * 0.423)
-  if (prvUnit === 'rem' && unit === 'mm') return Number(value * 4.233)
+  if (prvUnit === 'rem' && unit === 'em') return valueInNum
+  if (prvUnit === 'rem' && unit === 'px') return valueInNum * 16
+  if (prvUnit === 'rem' && unit === '') return valueInNum * 16
+  if (prvUnit === 'rem' && unit === '%') return valueInNum * 100
+  if (prvUnit === 'rem' && unit === 'cm') return valueInNum * 0.423
+  if (prvUnit === 'rem' && unit === 'mm') return valueInNum * 4.233
 
-  if (prvUnit === 'cm' && unit === 'rem') return Number(value * 2.362)
-  if (prvUnit === 'cm' && unit === 'px') return Number(value * 37.80)
+  if (prvUnit === 'cm' && unit === 'rem') return valueInNum * 2.362
+  if (prvUnit === 'cm' && unit === 'px') return valueInNum * 37.80
 
-  if (prvUnit === '%' && unit === 'px') return Number(value * 0.16)
-  if (prvUnit === '%' && unit === '') return Number(value * 0.01)
-  if (prvUnit === '%' && unit === 'rem') return Number(value * 0.01)
-  if (prvUnit === '%' && unit === 'em') return Number(value * 0.01)
+  if (prvUnit === '%' && unit === 'px') return valueInNum * 0.16
+  if (prvUnit === '%' && unit === '') return valueInNum * 0.01
+  if (prvUnit === '%' && unit === 'rem') return valueInNum * 0.01
+  if (prvUnit === '%' && unit === 'em') return valueInNum * 0.01
 
-  if (prvUnit === '' && unit === 'em') return Number((value * 0.0625).toFixed(3))
-  if (prvUnit === '' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
-  if (prvUnit === '' && unit === '%') return Number(value * 100)
-  if (prvUnit === '' && unit === 'px') return Number(value)
+  if (prvUnit === '' && unit === 'em') return (valueInNum * 0.0625).toFixed(3)
+  if (prvUnit === '' && unit === 'rem') return (valueInNum * 0.0625).toFixed(3)
+  if (prvUnit === '' && unit === '%') return valueInNum * 100
+  if (prvUnit === '' && unit === 'px') return valueInNum
 
-  if (prvUnit === 'deg' && unit === 'rad') return Number(value * 0.0174533)
-  if (prvUnit === 'deg' && unit === 'turn') return Number(value * 0.00277778)
+  if (prvUnit === 'deg' && unit === 'rad') return valueInNum * 0.0174533
+  if (prvUnit === 'deg' && unit === 'turn') return valueInNum * 0.00277778
 
-  if (prvUnit === 'turn' && unit === 'rad') return Number(value * 6.28319)
-  if (prvUnit === 'turn' && unit === 'deg') return Number(value * 360)
+  if (prvUnit === 'turn' && unit === 'rad') return valueInNum * 6.28319
+  if (prvUnit === 'turn' && unit === 'deg') return valueInNum * 360
 
   // formula (1)rad / 2π = turn
-  if (prvUnit === 'rad' && unit === 'turn') return Number(value * 0.159155)
+  if (prvUnit === 'rad' && unit === 'turn') return valueInNum * 0.159155
   // formula (1)rad * 180/π = deg°
-  if (prvUnit === 'rad' && unit === 'deg') return Number(value * 57.2958)
+  if (prvUnit === 'rad' && unit === 'deg') return valueInNum * 57.2958
 
   // convert mm to (px, rem, em)
   if (prvUnit === 'mm' && unit === 'px') return Number(value * 3.78)
@@ -424,7 +426,7 @@ export const removeUnuseStyles = () => {
 
 export const getUpdatedStyles = () => {
   const fields = getRecoil($fields)
-  const styles = getRecoil($styles)
+  const styles = getRecoil($stylesLgLight)
   const fieldsArray = Object.keys(fields)
   const newStyles = produce(styles, deftStyles => {
     fieldsArray.forEach(fldkey => {
@@ -596,7 +598,7 @@ export const addDefaultStyleClasses = (fk, element) => {
 }
 
 export const generateFontUrl = (font, string) => {
-  const fontFamily = font.replaceAll(/\s/gi, '+')
+  const fontFamily = font.replace(/\s/gi, '+')
   const newParmrs = string !== '' ? `:ital,${string}` : ''
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
@@ -647,7 +649,7 @@ export const updateGoogleFontUrl = () => {
       }
       fontWeightparam.push(`0,${fontWeightVariant[indx]};`)
     }
-    const str = fontWeightparam.sort().toString().replaceAll(/;,/gi, ';')
+    const str = fontWeightparam.sort().toString().replace(/;,/gi, ';')
     string = str.substring(0, str.length - 1)
     string = `wght@${string}`
   }
@@ -659,7 +661,13 @@ export const updateGoogleFontUrl = () => {
   setRecoil($styles, newStyles)
 }
 
-export const arrayToObject = (arr) => Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
+export const arrayToObject = (arr) => {
+  if (!arr) {
+    console.warn('arrayToObject: arr is undefined', arr)
+    return
+  }
+  Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
+}
 
 export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
 
@@ -672,7 +680,7 @@ export const isValidURL = (string) => {
 
 export const getValueFromStateVar = (stateObj, val) => {
   if (val && val.match(/(var)/g)?.[0] === 'var') {
-    const getVarProperty = val.replaceAll(/\(|var|,.*|\)|(!important|\s)/gi, '')
+    const getVarProperty = val.replace(/\(|var|,.*|\)|(!important|\s)/gi, '')
     return stateObj[getVarProperty] || ''
   }
   return val
@@ -740,10 +748,10 @@ export const paddingGenerator = (padding, pos, add) => {
   let values
   if (padding === '') values = '10px'
   if (padding.match(/(!important)/gi)) {
-    values = (padding.replaceAll(/(!important)/gi, '')).trim().split(' ')
+    values = (padding.replace(/(!important)/gi, '')).trim().split(' ')
     checkImportant = true
   } else {
-    values = (padding.replaceAll(/(!important)/gi, '')).trim().split(' ')
+    values = (padding.replace(/(!important)/gi, '')).trim().split(' ')
   }
   const valuesLan = values.length
   const val = add ? '40px' : values[0]
@@ -802,9 +810,10 @@ export const lowerCaseAllAndReplaceSpaceToHipen = (str) => str.toLowerCase().rep
 
 export const styleToGradientObj = (styleStr) => {
   // get linera or radial type from style string
-  const type = styleStr?.match(/^(linear|radial)/g) || false
+  const type = styleStr?.match(/^(linear|radial)/g)?.[0]
 
   // get numbers/values from style string
+  // eslint-disable-next-line no-useless-escape
   const values = styleStr?.match(/-?[\d\.]+/g) || []
 
   const len = values.length
@@ -833,7 +842,7 @@ export const styleToGradientObj = (styleStr) => {
   }
   points = []
 
-  if (type[0] === 'linear') {
+  if (type === 'linear') {
     [degree] = len > 5 ? values : [0]
     for (let i = 1; i < len; i += 5) {
       points.push({
@@ -844,7 +853,7 @@ export const styleToGradientObj = (styleStr) => {
         left: values[i + 4],
       })
     }
-  } else if (type[0] === 'radial') {
+  } else if (type === 'radial') {
     for (let i = 0; i < len; i += 5) {
       points.push({
         red: values[i],
@@ -858,7 +867,7 @@ export const styleToGradientObj = (styleStr) => {
 
   const gardient = {
     degree,
-    type: type[0],
+    type,
     points,
   }
   return gardient

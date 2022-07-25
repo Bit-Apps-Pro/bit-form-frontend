@@ -790,14 +790,14 @@ function Workflow({ formID }) {
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
                     <div className="mb-2">
-                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                      {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-5 mt-2" title={__('Redirect URL', 'bitform')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-5 mt-2" title={__('Web Hook', 'bitform')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-5 mt-2" title={__('Integration', 'bitform')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                      {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-5 mt-2" title={__('Redirect URL')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-5 mt-2" title={__('Web Hook')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                      {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-5 mt-2" title={__('Integration')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
                     </div>
                     <div className="mb-3">
-                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification', 'bitform')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'dblOptin', lgcGrpInd)} className="ml-4 mt-2" title={__('Double Opt-In', 'bitform')} checked={checkKeyInArr('dblOptin', lgcGrpInd)} />
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                      <TableCheckBox onChange={e => enableAction(e.target.checked, 'dblOptin', lgcGrpInd)} className="ml-4 mt-2" title={__('Double Opt-In')} checked={checkKeyInArr('dblOptin', lgcGrpInd)} />
                     </div>
                   </>
                 )}
@@ -961,18 +961,18 @@ function Workflow({ formID }) {
                       {checkKeyInArr('dblOptin', lgcGrpInd) && (
                         <>
                           <label className="f-m ">
-                            {__('Double optin tamplate:', 'bitform')}
+                            {__('Double optin tamplate:')}
                             <br />
                             <select className="btcd-paper-inp w-7 mt-1" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('dblOptin', 'id', lgcGrpInd)}>
-                              <option value="">{__('Select Email Template', 'bitform')}</option>
+                              <option value="">{__('Select Email Template')}</option>
                               {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                           <DropDown
                             action={val => setEmailSetting('to', val, lgcGrpInd)}
                             value={getValueFromArr('dblOptin', 'to', lgcGrpInd)}
-                            placeholder={__('Add Email Receiver', 'bitform')}
-                            title={<span className="f-m">{__('To', 'bitform')}</span>}
+                            placeholder={__('Add Email Receiver')}
+                            title={<span className="f-m">{__('To')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -980,9 +980,9 @@ function Workflow({ formID }) {
                           />
                           <DropDown
                             action={val => setEmailSetting('from', val, lgcGrpInd)}
-                            placeholder={__('Add mail from address', 'bitform')}
+                            placeholder={__('Add mail from address')}
                             value={getValueFromArr('dblOptin', 'from', lgcGrpInd)}
-                            title={<span className="f-m">{__('From', 'bitform')}</span>}
+                            title={<span className="f-m">{__('From')}</span>}
                             titleClassName="w-7 mt-2"
                             addable
                             options={mailOptions(getValueFromArr('dblOptin', 'from', lgcGrpInd))}
@@ -990,8 +990,8 @@ function Workflow({ formID }) {
                           <DropDown
                             action={val => setEmailSetting('cc', val, lgcGrpInd)}
                             value={getValueFromArr('dblOptin', 'cc', lgcGrpInd)}
-                            placeholder={__('Add Email CC', 'bitform')}
-                            title={<span className="f-m">{__('CC', 'bitform')}</span>}
+                            placeholder={__('Add Email CC')}
+                            title={<span className="f-m">{__('CC')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -999,9 +999,9 @@ function Workflow({ formID }) {
                           />
                           <DropDown
                             action={val => setEmailSetting('bcc', val, lgcGrpInd)}
-                            placeholder={__('Add Email BCC', 'bitform')}
+                            placeholder={__('Add Email BCC')}
                             value={getValueFromArr('dblOptin', 'bcc', lgcGrpInd)}
-                            title={<span className="f-m">{__('BCC', 'bitform')}</span>}
+                            title={<span className="f-m">{__('BCC')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -1009,9 +1009,9 @@ function Workflow({ formID }) {
                           />
                           <DropDown
                             action={val => setEmailSetting('replyto', val, lgcGrpInd)}
-                            placeholder={__('Reply To', 'bitform')}
+                            placeholder={__('Reply To')}
                             value={getValueFromArr('dblOptin', 'replyto', lgcGrpInd)}
-                            title={<span className="f-m">{__('Reply To', 'bitform')}</span>}
+                            title={<span className="f-m">{__('Reply To')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -1019,9 +1019,9 @@ function Workflow({ formID }) {
                           />
                           <DropDown
                             action={val => setEmailSetting('attachment', val, lgcGrpInd)}
-                            placeholder={__('Attachment', 'bitform')}
+                            placeholder={__('Attachment')}
                             value={getValueFromArr('dblOptin', 'attachment', lgcGrpInd)}
-                            title={<span className="f-m">{__('Attachment', 'bitform')}</span>}
+                            title={<span className="f-m">{__('Attachment')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             options={fileInFormField()}
@@ -1030,7 +1030,7 @@ function Workflow({ formID }) {
                       )}
                     </div>
 
-                    {lgcGrp.action_run !== 'delete' && <div className="mt-2 ml-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
+                    {lgcGrp.action_run !== 'delete' && <div className="mt-2 ml-2"><b className="txt-dp">{__('Set another field value')}</b></div>}
                   </>
                 )}
 

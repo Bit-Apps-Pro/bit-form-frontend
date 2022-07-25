@@ -10,11 +10,11 @@ const OptionToolBarStyle = {
   form_section: {
     flx: 'center-between',
     w: '100%',
-    pr: 25,
+    pr: 15,
   },
   field_btn: {
     flx: 'align-center',
-    ml: 15,
+    ml: 10,
     my: 4,
     px: 10,
     py: 4,
@@ -69,7 +69,14 @@ const OptionToolBarStyle = {
     bd: 'var(--b-20-93)',
   },
   option_right: { flx: 'center' },
-  rightSideBarBtn: { ml: 15 },
+  modalTitleBar: {
+    w: '100%',
+    flx: 'center',
+  },
+  respIcnWrp: {
+    se: 33,
+    flx: 'center',
+  },
 }
 
 export default OptionToolBarStyle

@@ -201,7 +201,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Redirect after verification', 'bitform')}</div>
+              <div className="f-m ml-1">{__('Redirect after verification')}</div>
               <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} title="Redirect after verification" />
 
             </div> */}
@@ -218,7 +218,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
                 <EditIcn size={18} />
                 &nbsp;
-                {__('Edit verification messages', 'bitform')}
+                {__('Edit verification messages')}
               </button>
               <RedirectEmailVerified dataConf={userConf} setDataConf={setUserConf} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={pages} type={type} title="Edit verification messages" />
             </div>
