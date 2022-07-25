@@ -352,38 +352,6 @@ export function arrDiff(arr1, arr2) {
 }
 export const addableCssPropsObj = (fieldType, elementKey = 'fld-wrp') => editorConfig[fieldType][elementKey].properties
 export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => Object.keys(editorConfig[fieldType][elementKey].properties)
-// return Object.keys(editorConfig.texfieldStyle.properties)
-// switch (fieldType) {
-//   case 'text':
-//   case 'date':
-//   case 'number':
-//   case 'username':
-//   case 'textarea':
-//   case 'email':
-//   case 'title':
-//   case 'divider':
-//   case 'image':
-//   case 'button':
-//   case 'check':
-//   case 'file-up':
-//   case 'advanced-file-up':
-//   case 'radio':
-//   case 'decision-box':
-//   case 'html':
-//   case 'recaptcha':
-//   case 'currency':
-//   case 'country':
-//   case 'html-select':
-//   case 'select':
-//   case 'dropdown':
-//   case 'phone-number':
-//   case 'razorpay':
-// Object.keys(editorConfig[fieldType][elementKey].properties)
-// case 'dropdown':
-// return Object.keys(editorConfig.texfieldStyle.properties)
-// eslint-disable-next-line no-fallthrough
-//   default:
-//     break
 
 export const styleClasses = {
   logo: ['logo'],
@@ -421,6 +389,7 @@ export const styleClasses = {
   err: ['err-msg'],
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
+  reqSmbl: ['req-smbl'],
 }
 
 export const iconElementLabel = {
@@ -449,6 +418,11 @@ const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.field
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
 export const removeUnuseStyles = () => {
+  const newStyles = getUpdatedStyles()
+  setRecoil($styles, newStyles)
+}
+
+export const getUpdatedStyles = () => {
   const fields = getRecoil($fields)
   const styles = getRecoil($styles)
   const fieldsArray = Object.keys(fields)
@@ -467,8 +441,13 @@ export const removeUnuseStyles = () => {
       if (!fld.err) deleteStyles(deftStyles, styleClasses.err, fldkey)
       if (!fld.errPreIcn) deleteStyles(deftStyles, styleClasses.errPreIcn, fldkey)
       if (!fld.errSufIcn) deleteStyles(deftStyles, styleClasses.errSufIcn, fldkey)
+      if (!fld.valid.reqShow) deleteStyles(deftStyles, styleClasses.reqSmbl, fldkey)
 
       switch (fld.typ) {
+        case 'button':
+          if (!fld.btnPreIcn) deleteStyles(deftStyles, styleClasses.btnPreIcn, fldkey)
+          if (!fld.btnSufIcn) deleteStyles(deftStyles, styleClasses.btnSufIcn, fldkey)
+          break
         case 'text':
         case 'number':
         case 'password':
@@ -485,25 +464,20 @@ export const removeUnuseStyles = () => {
           if (!fld.prefixIcn) deleteStyles(deftStyles, styleClasses.prefixIcn, fldkey)
           if (!fld.suffixIcn) deleteStyles(deftStyles, styleClasses.suffixIcn, fldkey)
           break
-        case 'radio':
 
-          break
         case 'title':
           if (!fld.subTitlPreIcn) deleteStyles(deftStyles, styleClasses.subTitlPreIcn, fldkey)
           if (!fld.subTitlSufIcn) deleteStyles(deftStyles, styleClasses.subTitlSufIcn, fldkey)
           if (!fld.titlePreIcn) deleteStyles(deftStyles, styleClasses.titlePreIcn, fldkey)
           if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
           break
-        case 'check':
 
-          break
         default:
           break
       }
     })
   })
-
-  setRecoil($styles, newStyles)
+  return newStyles
 }
 
 export const addDefaultStyleClasses = (fk, element) => {

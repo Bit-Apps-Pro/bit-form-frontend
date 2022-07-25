@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
+import { observeElm } from 'bit-helpers'
 import BitPhoneNumberField from 'bit-phone-number-field'
 import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { observeElement } from 'bit-helpers'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -75,8 +75,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     if (!window.bit_virtualized_list) {
       window.bit_virtualized_list = bit_virtualized_list
     }
-    if (!window.observeElement) {
-      window.observeElement = observeElement
+    if (!window.observeElm) {
+      window.observeElm = observeElm
     }
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i

@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 // import 'bit-virtualized-list'
 import BitCountryField from 'bit-country-field'
+import { observeElm } from 'bit-helpers'
 import { default as bit_virtualized_list } from 'bit-virtualized-list'
-import { observeElement } from 'bit-helpers'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -73,8 +73,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
     if (!window.bit_virtualized_list) {
       window.bit_virtualized_list = bit_virtualized_list
     }
-    if (!window.observeElement) {
-      window.observeElement = observeElement
+    if (!window.observeElm) {
+      window.observeElm = observeElm
     }
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultValue = alreadyChecked.i

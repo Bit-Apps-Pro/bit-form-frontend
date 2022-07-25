@@ -155,7 +155,7 @@ export default class BitFileUpField {
         error.push('File Allready Exist')
       }
     }
-    this.#window.document.querySelectorALL()
+    // this.#window.document.querySelectorALL()
     this.#window.document.querySelectorALL(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })

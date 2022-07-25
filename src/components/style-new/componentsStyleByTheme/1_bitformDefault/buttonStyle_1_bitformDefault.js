@@ -23,15 +23,16 @@ export default function buttonStyle_1_bitformDefault({ fk }) {
       'align-items': align || 'start',
     },
 
-    [`.${fk}-fld-wrp.fld-hide::after`]: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      content: '""',
-      width: '100%',
-      height: '100%',
-      'background-color': 'hsla(0, 0%, 0%, 20%)',
-    },
+    // [`.${fk}-fld-wrp.fld-hide::after`]: {
+    //   position: 'absolute',
+    //   top: 0,
+    //   left: 0,
+    //   content: '""',
+    //   width: '100%',
+    //   height: '100%',
+    //   'background-color': 'hsla(0, 0%, 0%, 20%)',
+    // },
+
     [`.${fk}-btn`]: {
       'font-size': 'var(--btn-fs)',
       padding: 'var(--btn-p)',

@@ -3,27 +3,27 @@ import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
-const terserOptions = {
-  compress: {
-    passes: 10,
-    drop_console: true,
-  },
-  // mangle: {
-  //   properties: true,
-  //   reserved: [
-  //     'bit_country_field',
-  //   ]
-  // }
-}
-
 export default function generateRollupConfig() {
-  const fileNames = ['observer', 'select']
+  const fileNames = ['observeElm', 'select']
 
   const external = [
     'window',
     'document',
     ...fileNames,
   ]
+
+  const terserOptions = {
+    compress: {
+      passes: 10,
+      drop_console: true,
+    },
+    // mangle: {
+    //   properties: true,
+    //   reserved: [
+    //     'observeElement',
+    //   ]
+    // }
+  }
 
   const srcFolder = 'src'
   const distFolder = 'dist'
