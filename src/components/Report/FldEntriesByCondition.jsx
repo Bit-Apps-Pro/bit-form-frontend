@@ -90,7 +90,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       id = 0
     }
     if (reports[reportIndex]?.details?.report_name === '') {
-      setSnackbar({ show: true, msg: __('report name cann\'t be empty', 'bitform') })
+      setSnackbar({ show: true, msg: __('report name cann\'t be empty') })
       return
     }
     setisLoading(true)
@@ -115,7 +115,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     toast.promise(reportSaveProm, {
       loading: __('Saving...', 'biform'),
       success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.', 'bitform'),
+      error: __('Error occurred, Please try again.'),
     })
   }
 
@@ -194,8 +194,8 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   }
 
   const deleteReportAlert = (val) => {
-    confMdl.btnTxt = __('Delete', 'bitform')
-    confMdl.body = __('Are you sure to delete this report', 'bitform')
+    confMdl.btnTxt = __('Delete')
+    confMdl.body = __('Are you sure to delete this report')
     confMdl.btnClass = ''
     confMdl.action = () => { delItem(val); closeConfMdl() }
     confMdl.show = true
@@ -348,14 +348,14 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             sm
             show={proModal.show}
             setModal={() => setProModal({ show: false })}
-            title={__('Premium Feature', 'bitform')}
+            title={__('Premium Feature')}
             className="pro-modal"
           >
             <h4 className="txt-center mt-5">
               {proModal.msg}
             </h4>
             <div className="txt-center">
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
             </div>
 
           </Modal>

@@ -48,7 +48,7 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
           <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-9" placeholder="Email Subject Here" value={data?.sub} />
         </div>
         <div className="mt-3">
-          <b>{__('Body:', 'bitform')}</b>
+          <b>{__('Body:')}</b>
           <label htmlFor={`mail-tem-${data?.formID}`} className="mt-2 w-10">
             <TinyMCE
               id={`mail-tem-${data?.formID}`}
