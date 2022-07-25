@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil'
-import { $breakpoint, $colorScheme } from './GlobalStates'
 import { mergeNestedObj } from '../Utils/globalHelpers'
+import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $tempStyles = atom({
   key: '$tempStyles',
@@ -24,11 +24,17 @@ export const $stylesLgLight = atom({
       fontStyle: [],
     },
     form: {
-      // _frm: { 'background-color': 'var(--global-bg-color)' },
-      '_frm-bg': {
-        padding: '10px',
-        border: 'solid hsla(215, 20%, 93%, 100%)',
-        'border-width': '1px',
+      light: {
+        _frm: { 'background-color': 'var(--global-bg-color)' },
+        '_frm-bg': {
+          padding: '10px',
+          border: 'solid hsla(215, 20%, 93%, 100%)',
+          'border-width': '1px',
+        },
+      },
+      dark: {
+        // _frm: { 'background-color': 'var(--global-bg-color)' },
+        // '_frm-bg': { padding: '10px' },
       },
     },
     fields: {},
