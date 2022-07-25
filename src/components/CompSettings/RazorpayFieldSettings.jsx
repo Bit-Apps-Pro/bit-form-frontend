@@ -3,13 +3,14 @@ import produce from 'immer'
 import { useContext, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
@@ -24,6 +25,7 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 export default function RazorpayFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
+  const [styles, setStyles] = useRecoilState($styles)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
   const { payments } = useContext(AppSettings)
@@ -31,7 +33,6 @@ export default function RazorpayFieldSettings() {
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicAmount = fieldData.options.amountType === 'dynamic'
-  const setStyles = useSetRecoilState($styles)
 
   const pos = [
     { name: __('Left'), value: 'left' },
@@ -50,7 +51,9 @@ export default function RazorpayFieldSettings() {
     fieldData.payIntegID = e.target.value
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Cofiguration changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_configuration', state: { fields: allFields, fldKey } })
   }
 
   const handleInput = (name, value, type) => {
@@ -72,7 +75,9 @@ export default function RazorpayFieldSettings() {
     }
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
 
   const setAmountType = e => {
@@ -82,24 +87,30 @@ export default function RazorpayFieldSettings() {
     delete fieldData.options.amountFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Amount Type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_amount_type', state: { fields: allFields, fldKey } })
   }
 
   const handleBtnStyle = ({ target: { name, value } }) => {
     fieldData[name] = value
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    let newStyles = styles
     if (name === 'align') {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      newStyles = produce(styles, drft => {
         drft.fields[fldKey].classes[`.${fldKey}-razorpay-wrp`]['justify-content'] = value
-      }))
+      })
+      setStyles(newStyles)
     }
+    addToBuilderHistory({ event: `Button Style changed to "${value}": ${fieldData.lbl || fldKey}`, type: 'set_button_style', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
   const setFulW = (e) => {
     fieldData.fulW = e.target.checked
     // eslint-disable-next-line no-param-reassign
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    const newStyles = produce(styles, drft => {
       if (e.target.checked) {
         drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].width = '100%'
         delete drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`]['min-width']
@@ -107,13 +118,18 @@ export default function RazorpayFieldSettings() {
         drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`]['min-width'] = '160px'
         delete drft.fields[fldKey].classes[`.${fldKey}-razorpay-btn`].width
       }
-    }))
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    })
+    setStyles(newStyles)
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Full Width "${e.target.checked ? 'On' : 'Off'}": ${fieldData.lbl || fldKey}`, type: 'set_button_width', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
   const setSubTitl = (e) => {
     fieldData.subTitl = e.target.checked
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Subtitle "${e.target.checked ? 'On' : 'Off'}": ${fieldData.lbl || fldKey}`, type: 'set_sub_title', state: { fields: allFields, fldKey } })
   }
 
   const setBtnSiz = e => {
@@ -159,7 +175,9 @@ export default function RazorpayFieldSettings() {
 
     fieldData.options.notes = noteObj
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Notes Changes: ${fieldData.lbl || fldKey}`, type: 'set_notes', state: { fields: allFields, fldKey } })
   }
 
   const getSpecifiedFields = type => {
@@ -505,4 +523,18 @@ export default function RazorpayFieldSettings() {
 
     </div>
   )
+}
+
+const propNameLabel = {
+  amount: 'Amount changed',
+  amountFld: 'Amount Field Selected',
+  currency: 'Currency Selected',
+  name: 'Account Name Modifyed',
+  description: 'Description Changed',
+  color: 'Color changed',
+  backdrop_color: 'Backdrop Color changed',
+  confirm_close: 'Confirm on close',
+  prefillNameFld: 'Profile Name Selected',
+  prefillEmailFld: 'Profile Email Selected',
+  prefillContactFld: 'Profile Contact Field',
 }

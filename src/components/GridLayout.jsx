@@ -12,7 +12,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
@@ -27,8 +27,8 @@ import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
-import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
+import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
@@ -40,8 +40,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
-  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
-  const [layouts, setLayouts] = useState(rootLayouts)
+  const [layouts, setLayouts] = useRecoilState($layouts)
+  const [rootLayouts, setRootLayouts] = useState(layouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const draggingField = useRecoilValue($draggingField)
@@ -58,8 +58,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const [rowHeight, setRowHeight] = useState(2)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
@@ -67,7 +65,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
 
-  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
@@ -198,7 +196,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const event = `${generateFieldLblForHistory(fldData)} removed`
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+    addToBuilderHistory({ event, type, state })
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -227,6 +225,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     if (fldData.typ === 'button') return fldData.txt
     if (fldData.typ === 'decision-box') return 'Decision Box'
     if (fldData.typ === 'title') return 'Title Field'
+    if (fldData.typ === 'html') return 'HTML Field'
+    if (fldData.typ === 'recaptcha') return 'Recaptcha Field'
+    if (!fldData.lbl) return fldData.typ.charAt(0).toUpperCase() + fldData.typ.slice(1)
     return fldData.lbl
   }
 
@@ -250,36 +251,42 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     // add to history
     const event = `${generateFieldLblForHistory(fieldData)} added`
     const type = 'add_fld'
-    const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add style
-    setStyles(preStyles => produce(preStyles, draftStyle => {
-      const globalTheme = draftStyle.theme
-      if (globalTheme === 'bitformDefault') {
-        const fieldStyle = bitformDefaultTheme({ type: processedFieldData.typ, fieldKey: newBlk, direction: themeVars['--dir'] })
-        draftStyle.fields[newBlk] = fieldStyle
-      }
-
-      // if (globalTheme === 'material') {
-      //   const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
-      //   draftStyle.fields[newBlk] = fieldStyle
-      // }
-
-      if (globalTheme === 'atlassian') {
-        const obj = {
-          type: processedFieldData.typ,
-          fk: newBlk,
-          direction: themeVars['--dir'],
+    let newStyles = styles
+    setStyles(preStyles => {
+      newStyles = produce(preStyles, draftStyle => {
+        const globalTheme = draftStyle.theme
+        if (globalTheme === 'bitformDefault') {
+          const fieldStyle = bitformDefaultTheme({ type: processedFieldData.typ, fieldKey: newBlk, direction: themeVars['--dir'] })
+          draftStyle.fields[newBlk] = fieldStyle
         }
-        const fieldStyle = atlassianTheme(obj)
-        draftStyle.fields[newBlk] = fieldStyle
-      }
-    }))
+
+        // if (globalTheme === 'material') {
+        //   const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
+        //   draftStyle.fields[newBlk] = fieldStyle
+        // }
+
+        if (globalTheme === 'atlassian') {
+          const obj = {
+            type: processedFieldData.typ,
+            fk: newBlk,
+            direction: themeVars['--dir'],
+          }
+          const fieldStyle = atlassianTheme(obj)
+          draftStyle.fields[newBlk] = fieldStyle
+        }
+        // newStyles = draftStyle
+      })
+      return newStyles
+    })
+    const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
+    addToBuilderHistory({ event, type, state })
 
     return { newBlk }
   }
@@ -331,7 +338,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const event = `${generateFieldLblForHistory(fldData)} cloned`
     const type = 'clone_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
-    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
+    addToBuilderHistory({ event, type, state })
 
     resetContextMenu()
   }

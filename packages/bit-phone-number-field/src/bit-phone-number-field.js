@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-expressions */
-import { observeElement } from './helper'
-
 export default class BitPhoneNumberField {
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
 
@@ -51,6 +48,8 @@ export default class BitPhoneNumberField {
     classNames: {},
   }
 
+  #assetsURL = ''
+
   #debounceTimeout = null
 
   #dropdownSearchTerm = ''
@@ -63,6 +62,7 @@ export default class BitPhoneNumberField {
     Object.assign(this.#config, config)
     this.#document = config.document || document
     this.#window = config.window || window
+    this.#assetsURL = config.assetsURL || ''
     if (typeof selector === 'string') {
       this.#phoneNumberFieldWrapper = this.#document.querySelector(selector)
     } else {
@@ -95,7 +95,7 @@ export default class BitPhoneNumberField {
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
-    observeElement(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
 
@@ -433,7 +433,7 @@ export default class BitPhoneNumberField {
 
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
-    this.virtualOptionList = new VirtualizedList(this.#optionListElm, {
+    this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
       height: this.#config.maxHeight,
       rowCount: this.#options.length,
       rowHeight: 31,
@@ -480,7 +480,7 @@ export default class BitPhoneNumberField {
           const optIcn = this.#config.attributes['opt-icn']
           this.#setCustomAttr(img, optIcn)
         }
-        img.src = `${bits.assetsURL}/${opt.img}`
+        img.src = `${this.#assetsURL}/${opt.img}`
         img.alt = `${opt.lbl} flag image`
         img.loading = 'lazy'
         this.#setAttribute(img, 'aria-hidden', true)
@@ -574,7 +574,7 @@ export default class BitPhoneNumberField {
     const selectedItem = this.#getSelectedCountryItem()
     if (!selectedItem) return
     // this.#selectedCountryImgElm.src = selectedItem.img
-    this.#selectedCountryImgElm.src = `${bits.assetsURL}/${selectedItem.img}`
+    this.#selectedCountryImgElm.src = `${this.#assetsURL}/${selectedItem.img}`
     this.#setNewCountryCodeWithInputValue(selectedItem.code)
     this.setMenu({ open: false })
     this.#phoneInputElm.focus()

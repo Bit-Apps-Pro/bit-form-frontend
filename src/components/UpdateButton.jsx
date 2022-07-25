@@ -35,12 +35,12 @@ import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-// TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
-import { updateGoogleFontUrl } from './style-new/styleHelpers'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import { select } from '../Utils/globalHelpers'
-import { $darkThemeColors, $lightThemeColors, $themeColors } from '../GlobalStates/ThemeColorsState'
+import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+// TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
+import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
@@ -146,6 +146,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (style.font.fontType === 'Google') updateGoogleFontUrl()
+      removeUnuseStyles()
       saveForm()
     } else {
       select('#update-btn').click()

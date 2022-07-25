@@ -1,15 +1,18 @@
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
 import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths, id }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
   const { object, paths } = objectPaths
@@ -38,6 +41,7 @@ export default function ShadowControlMenu({ objectPaths, id }) {
     }).join(' ')
 
     setStyleStateObj(object, paths.shadow, newshadowStyleStr, { setThemeColors, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, paths.shadow, newshadowStyleStr, { [object]: getLatestState(object) }))
   }
 
   const unitHandler = (name, unit, value, oldVal) => {

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // import './currency-field-style.css'
-import BitCountryField from 'bit-country-field'
+import BitCurrencyField from 'bit-currency-field'
+import { observeElm } from 'bit-helpers'
 import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
@@ -48,9 +49,9 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       searchPlaceholder,
       noCurrencyFoundText,
       options,
-      assetsURL: bits.assetsURL,
+      assetsURL: `${bits.assetsURL}/../static/currencies/`,
       document: document.getElementById('bit-grid-layout').document,
-      widnow: document.getElementById('bit-grid-layout').contentWindow,
+      window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDavAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -71,10 +72,13 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     if (!window.bit_virtualized_list) {
       window.bit_virtualized_list = bit_virtualized_list
     }
+    if (!window.observeElm) {
+      window.observeElm = observeElm
+    }
     console.log(configOptions, fldElm)
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCurrencyKey = alreadyChecked.i
-    currencyFieldRef.current = new BitCountryField(fldElm, configOptions)
+    currencyFieldRef.current = new BitCurrencyField(fldElm, configOptions)
   }, [fieldData])
 
   return (

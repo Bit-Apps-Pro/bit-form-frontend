@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
@@ -14,7 +15,7 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -23,6 +24,7 @@ import { getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 
 export default function LabelControlMenu() {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [openVarPos, setOpenVarPos] = useState(false)
 
@@ -90,12 +92,14 @@ export default function LabelControlMenu() {
       default:
         break
     }
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Label Position', name, { themeVars: getLatestState('themeVars') }))
   }
 
   const updateState = (varName, value = '') => {
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))
   }
 
   const setLabelVerticalPos = (position) => updateState('--lbl-wrp-sa', position === 'top' ? '' : position)

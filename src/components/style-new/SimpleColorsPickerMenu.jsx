@@ -5,16 +5,16 @@ import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
-import { useTransition, memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, useTransition } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useParams } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
-import { addToBuilderHistory, assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -44,13 +44,12 @@ function SimpleColorsPickerMenu({ stateObjName,
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
+  const { element, fieldKey } = useParams()
   const [, startColorTransition] = useTransition()
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -101,14 +100,9 @@ function SimpleColorsPickerMenu({ stateObjName,
   const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
-    const event = 'color changed'
-    const type = propertyPath
-    const state = { fldKey: stateObjName }
-    const historyData = { event, type, state }
-
     switch (stateObjName) {
       case 'themeColors':
-        const newThemeColors = produce(themeColors, drftThmClr => {
+        setThemeColors(prevState => produce(prevState, drftThmClr => {
           drftThmClr[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmClr[hslaPaths.h] = h }
@@ -122,14 +116,12 @@ function SimpleColorsPickerMenu({ stateObjName,
             const setFilterValue = hexToCSSFilter(hexValue)
             drftThmClr['--fld-focs-i-fltr'] = setFilterValue.filter
           }
-        })
-        setThemeColors(newThemeColors)
-        historyData.state.themeColors = newThemeColors
-        addToBuilderHistory(setBuilderHistory, historyData, setUpdateBtn)
+        }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
-        setThemeVars(prvState => produce(prvState, drftThmVar => {
+        setThemeVars(prevState => produce(prevState, drftThmVar => {
           drftThmVar[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmVar[hslaPaths.h] = h }
@@ -138,20 +130,22 @@ function SimpleColorsPickerMenu({ stateObjName,
             if ('a' in hslaPaths) { drftThmVar[hslaPaths.a] = `${a}%` }
           }
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'field-accent-color':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prevStyles => produce(prevStyles, drftStyles => {
           const v = `${hslaStr}!important`
           const sc = `0px 0px 0px 3px hsla(${h}, ${s}%, ${l}%, 0.30)!important`
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = v
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = v
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { styles: getLatestState('styles') }))
         break
 
       case 'styles':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prevStyles => produce(prevStyles, drftStyles => {
           let hslaColor = hslaStr
           const propertyPathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
           const value = getValueByObjPath(drftStyles, propertyPathArr)
@@ -174,6 +168,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             assignNestedObj(drftStyles, propertyPath, clr)
           }
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { styles: getLatestState('styles') }))
         break
 
       default:

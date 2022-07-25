@@ -2,8 +2,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
@@ -34,8 +34,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
   const [optionMdl, setOptionMdl] = useState(false)
@@ -58,13 +56,17 @@ export default function DropdownFieldSettings() {
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
 
   const handleMultiSelect = (val, name) => {
     fieldData.config[name] = val
     fieldData.config.closeOnSelect = !val
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
 
   const toggleSearchPlaceholder = (e) => {
@@ -78,21 +80,25 @@ export default function DropdownFieldSettings() {
     const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
     fieldData.config.searchPlaceholder = e.target.value
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }
   const handleOptionList = ({ target }, index) => {
     fieldData.config.activeList = index
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Change Active List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_active_list', state: { fields: allFields, fldKey } })
   }
   const handleEditOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].optionsList[currentOptList][Object.keys(fieldData.optionsList[currentOptList])[0]] = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].optionsList[currentOptList][Object.keys(fieldData.optionsList[currentOptList])[0]] = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Option List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'modify_options_list', state: { fields: allFields, fldKey } })
   }
 
   const handleAddNewOptionList = () => {
@@ -107,7 +113,9 @@ export default function DropdownFieldSettings() {
         ],
       },
     ]
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Add New List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'add_new_list', state: { fields: allFields, fldKey } })
   }
 
   const isListNameExist = (listName) => {
@@ -122,14 +130,18 @@ export default function DropdownFieldSettings() {
 
   const handleRemoveList = (index) => {
     fieldData.optionsList.splice(index, 1)
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Remove List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'remove_list', state: { fields: allFields, fldKey } })
   }
 
   const handleListNameChange = (e, index) => {
     const { target } = e
     if (!isListNameExist(target.value)) {
       fieldData.optionsList[index] = { [target.value]: fieldData.optionsList[index][target.defaultValue] }
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+      addToBuilderHistory({ event: `List Name Change: ${fieldData.lbl || adminLabel || fldKey}`, type: 'list_name_change', state: { fields: allFields, fldKey } })
       setDuplicateListName(false)
     } else {
       e.preventDefault()
@@ -409,4 +421,14 @@ const c = {
     bd: 'none',
     ':hover': { bd: '#7ea8ff', cr: '#460000' },
   },
+}
+
+const propNameLabel = {
+  selectedOptImage: 'Selected Option Image',
+  selectedOptClearable: 'Selected Option Clearable',
+  searchClearable: 'Search Clearable',
+  optionIcon: 'Option Icon',
+  allowCustomOption: 'Allow Custom Option',
+  multipleSelect: 'Multiple Select',
+  closeOnSelect: 'Close On Select',
 }

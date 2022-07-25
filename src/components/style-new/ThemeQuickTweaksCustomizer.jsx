@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -9,7 +10,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -24,6 +25,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const themeColors = useRecoilValue($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
@@ -87,11 +89,13 @@ export default function ThemeQuickTweaksCustomizer() {
 
     setThemeVars(tmpThemeVar)
     reCalculateFieldHeights()
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
     setStyles(prv => changeFormDir(prv, dir))
     setThemeVars(prv => produce(prv, drft => { drft['--dir'] = dir }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', dir, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
   return (

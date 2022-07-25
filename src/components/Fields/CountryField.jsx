@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 // import 'bit-virtualized-list'
 import BitCountryField from 'bit-country-field'
+import { observeElm } from 'bit-helpers'
 import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
@@ -53,7 +54,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       options,
       assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').document,
-      widnow: document.getElementById('bit-grid-layout').contentWindow,
+      window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDavAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -72,7 +73,9 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
     if (!window.bit_virtualized_list) {
       window.bit_virtualized_list = bit_virtualized_list
     }
-
+    if (!window.observeElm) {
+      window.observeElm = observeElm
+    }
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultValue = alreadyChecked.i
     countryFieldRef.current = new BitCountryField(fldElm, configOptions)

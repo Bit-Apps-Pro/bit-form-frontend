@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-plusplus */
 import BitDropdownField from 'bit-dropdown-field'
+import { observeElm } from 'bit-helpers'
 import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
@@ -55,6 +56,10 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
         'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
         'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
       },
+    }
+
+    if (!window.observeElm) {
+      window.observeElm = observeElm
     }
     // dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
     dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)

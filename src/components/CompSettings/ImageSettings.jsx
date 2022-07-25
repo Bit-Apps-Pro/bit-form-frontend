@@ -5,6 +5,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import Modal from '../Utilities/Modal'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
@@ -24,6 +25,7 @@ function ImageSettings() {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      addToBuilderHistory({ event: `Background Image Deleted: ${fieldData.lbl || fldKey}`, type: `delete_${name}`, state: { fldKey, fields: allFields } })
     }
   }
 

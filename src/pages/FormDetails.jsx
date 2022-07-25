@@ -70,9 +70,10 @@ function FormDetails() {
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetBuilderHistory = useResetRecoilState($builderHistory)
   const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -140,6 +141,9 @@ function FormDetails() {
     resetFormInfo()
     resetCustomCodes()
     resetReportId()
+    resetBuilderHistory()
+
+    // TODO: reset all states of style, themeVars & themeColors
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -214,7 +218,7 @@ function FormDetails() {
               setLay(responseData.form_content.layout)
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
-            const defaultReport = responseData.reports.find(report => report.isDefault.toString() === '1')
+            const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
 
             setFields(responseData.form_content.fields)
             setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))

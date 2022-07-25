@@ -96,6 +96,7 @@ const themeVars = {
   '--gas': 10,
   '--gal': 20,
   '--gaa': 100,
+  '--global-fld-bdr': 'solid',
   '--global-font-color': 'hsla(0, 10%, 20%, 100)',
   '--gfh': 0,
   '--gfs': 10,
@@ -276,7 +277,7 @@ const themeColors = {
   '--gbg-s': '0%', // global background color saturation
   '--gbg-l': '100%', // global background color lightness
   '--gbg-a': 100, // global background color opacity
-  '--global-fld-bdr': 'solid hsla(0, 0%, 67%, 100)', // field Border
+  '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)', // field Border color
   '--gfbc-h': 0, // global field border color hue
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness

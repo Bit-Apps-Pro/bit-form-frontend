@@ -10,6 +10,7 @@ import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
@@ -115,6 +116,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
         draft[a] = v[3]
       }))
     }
+    addToBuilderHistory(generateHistoryData(element, fieldKey, pathName, newVal, { [stateObjName]: getLatestState(stateObjName) }))
   }
 
   const options = [

@@ -7,7 +7,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -17,10 +17,10 @@ import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
-import { paddingGenerator } from '../style-new/styleHelpers'
+import { iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
@@ -40,7 +40,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const [scrollLoading, setScrollLoading] = useState(false)
   const uploadLabel = uploadLbl || 'Upload Icon'
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()
@@ -157,16 +157,23 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       .then(res => {
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
-          setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+          let newFields = fields
+          let newStyles = styles
+          setFields(allFields => {
+            newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+            return newFields
+          })
           if (addPaddingOnSelect) {
-            setStyles(prvStyle => produce(prvStyle, draft => {
-              const padding = prvStyle.fields[selectedFieldId]?.classes[`.${selectedFieldId}-fld`]?.padding || ''
+            newStyles = produce(styles, draft => {
+              const padding = styles.fields[selectedFieldId]?.classes[`.${selectedFieldId}-fld`]?.padding || ''
 
               if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
               if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
-            }))
+            })
+            setStyles(newStyles)
           }
           reCalculateFieldHeights(fldKey)
+          addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Added`, type: `add_${iconType}`, state: { fldKey, fields: newFields, styles: newStyles } })
         }
         setDnLoading(false)
         setModal(false)
@@ -240,14 +247,20 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
   const selectedSaveIcon = () => {
     fieldData[iconType] = prefix
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-    setStyles(prvStyle => produce(prvStyle, draft => {
-      const padding = prvStyle.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]?.padding || ''
+    const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(newFields)
+    let newStyles = styles
+    if (addPaddingOnSelect) {
+      newStyles = produce(styles, draft => {
+        const padding = styles.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]?.padding || ''
 
-      if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
-      if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
-    }))
+        if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
+        if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
+      })
+      setStyles(newStyles)
+    }
     setModal(false)
+    addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Added`, type: `add_${iconType}`, state: { fldKey, fields: newFields, styles: newStyles } })
     reCalculateFieldHeights(fldKey)
   }
 

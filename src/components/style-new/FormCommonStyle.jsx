@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $colorScheme } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -19,6 +20,7 @@ import TransitionControl from './TransitionControl'
 
 export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
+  const { fieldKey } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const colorScheme = useRecoilValue($colorScheme)
   const formWrpStylesObj = styles.form[element]
@@ -38,12 +40,14 @@ export default function FormCommonStyle({ element, componentTitle }) {
         deleteNestedObj(drft, getPropertyPath(property))
       }
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, `Delete ${property}`, '', { styles: getLatestState('styles') }))
   }
 
   const setNewCssProp = (prop) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
       assignNestedObj(drft, getPropertyPath(prop), editorConfig.defaultProps[prop])
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, editorConfig.defaultProps[prop], { styles: getLatestState('styles') }))
   }
 
   const clearHandler = (property) => {
@@ -54,6 +58,11 @@ export default function FormCommonStyle({ element, componentTitle }) {
         assignNestedObj(drft, getPropertyPath(property), '')
       }
     }))
+    if (Array.isArray(property)) {
+      addToBuilderHistory(generateHistoryData(element, fieldKey, `${property[0]} Clear`, '', { styles: getLatestState('styles') }))
+    } else {
+      addToBuilderHistory(generateHistoryData(element, fieldKey, `${property} Clear`, '', { styles: getLatestState('styles') }))
+    }
   }
 
   const getCssProps = (prop) => {

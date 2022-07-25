@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
+import { observeElm } from 'bit-helpers'
 import BitPhoneNumberField from 'bit-phone-number-field'
+import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -13,6 +15,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
   const phoneNumberFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
+  const bits = useRecoilValue($bits)
   const { selectedFlagImage,
     selectedCountryClearable,
     searchClearable,
@@ -50,8 +53,9 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       options,
       inputFormat,
       valueFormat,
+      assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').document,
-      widnow: document.getElementById('bit-grid-layout').contentWindow,
+      window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDavAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -67,7 +71,13 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
       },
     }
-
+    // add bit_virtualized_list to global
+    if (!window.bit_virtualized_list) {
+      window.bit_virtualized_list = bit_virtualized_list
+    }
+    if (!window.observeElm) {
+      window.observeElm = observeElm
+    }
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i
     phoneNumberFieldRef.current = new BitPhoneNumberField(fldElm, configOptions)

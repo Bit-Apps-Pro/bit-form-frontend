@@ -1,5 +1,3 @@
-import { observeElement } from './helper'
-
 export default class BitCurrencyField {
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
 
@@ -101,7 +99,7 @@ export default class BitCurrencyField {
     this.#addEvent(this.#currencyInputElm, 'blur', e => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
 
-    observeElement(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
 
     if (this.#config.selectedCurrencyClearable) this.#addEvent(this.#clearCurrencyInputElm, 'click', e => { this.#handleClearCurrencyInput(e) })
 
