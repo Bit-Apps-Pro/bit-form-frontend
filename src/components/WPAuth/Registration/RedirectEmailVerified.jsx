@@ -44,11 +44,8 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
         <Scrollbars autoHide>
           <div className="mr-2">
             <div className="mt-2">
-              <label htmlFor="status">
-                <b>{__('', 'bitform')}</b>
-                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
-                <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
-              </label>
+              <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
+              <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
             </div>
             {data?.custom_redirect?.toString() === '1' && (
               <div className="mt-3 ml-2">
@@ -65,7 +62,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                     </div>
 
                     <select className="btcd-paper-inp mt-1" name="succ_url" value={data?.succ_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -91,7 +88,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       </Cooltip>
                     </div>
                     <select className="btcd-paper-inp mt-1" name="already_activated_url" value={data?.already_activated_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -117,7 +114,7 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                       </Cooltip>
                     </div>
                     <select className="btcd-paper-inp mt-1" name="invalid_key_url" value={data?.invalid_key_url} onChange={handleInput}>
-                      <option value="">{__('Custom Link', 'bitform')}</option>
+                      <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                       ))}
@@ -133,9 +130,9 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
             {data?.custom_redirect?.toString() === '0' && (
               <div className="ml-2">
                 <div className="mt-4">
-                  {/* <div className="f-m fw-500">{__('Activation success', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message', 'bitform')} /> */}
-                  <b>{__('Activation success', 'bitform')}</b>
+                  {/* <div className="f-m fw-500">{__('Activation success')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="acti_succ_msg" value={data?.acti_succ_msg} type="text" placeholder={__('Activation Success Message')} /> */}
+                  <b>{__('Activation success')}</b>
                   <label htmlFor="mail-tem-acti_succ_msg" className="mt-2">
                     <TinyMCE
                       id="acti_succ_msg"
@@ -148,9 +145,9 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </label>
                 </div>
                 <div className="mt-4">
-                  {/* <div className="f-m fw-500">{__('Already activated account', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message', 'bitform')} /> */}
-                  <b>{__('Already activated account', 'bitform')}</b>
+                  {/* <div className="f-m fw-500">{__('Already activated account')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="already_activated_msg" value={data?.already_activated_msg} type="text" placeholder={__('Already account activation message')} /> */}
+                  <b>{__('Already activated account')}</b>
                   <label htmlFor="already_activated_msg" className="mt-2">
                     <TinyMCE
                       id="already_activated_msg"
@@ -164,9 +161,9 @@ export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, 
                   </label>
                 </div>
                 <div className="mt-4">
-                  {/* <div className="f-m fw-500">{__('Invalid activation key', 'bitform')}</div>
-                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message', 'bitform')} /> */}
-                  <b>{__('Invalid activation key', 'bitform')}</b>
+                  {/* <div className="f-m fw-500">{__('Invalid activation key')}</div>
+                  <input className="btcd-paper-inp mt-1" onChange={handleInput} name="invalid_key_msg" value={data?.invalid_key_msg} type="text" placeholder={__('Invalid url or fail activation message')} /> */}
+                  <b>{__('Invalid activation key')}</b>
                   <label htmlFor="invalid_key_msg" className="mt-2">
                     <TinyMCE
                       id="invalid_key_msg"

@@ -565,7 +565,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           size: 'normal',
         },
       },
-    }, 
+    },
     {
       name: 'Button',
       keywords: 'Button',

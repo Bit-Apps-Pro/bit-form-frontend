@@ -13,7 +13,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
+import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
@@ -48,7 +48,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const [flags, setFlags] = useRecoilState($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($stylesLgLight)
   const themeVars = useRecoilValue($themeVars)
   const colorScheme = useRecoilValue($colorScheme)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
@@ -281,7 +281,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
           const fieldStyle = atlassianTheme(obj)
           draftStyle.fields[newBlk] = fieldStyle
         }
-      // newStyles = draftStyle
+        // newStyles = draftStyle
       })
       return newStyles
     })
@@ -531,9 +531,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
   const getBuilderWidth = () => {
     let width = builderWidth - 10
-    const builderPadding = styles.form?.[colorScheme]?.['_frm-bg']?.padding || ''
-    const builderBorderWidth = styles.form?.[colorScheme]?.['_frm-bg']?.['border-width'] || ''
-    const builderMargin = styles.form?.[colorScheme]?.['_frm-bg']?.margin || ''
+    const builderPadding = styles.form?.['_frm-bg']?.padding || ''
+    const builderBorderWidth = styles.form?.['_frm-bg']?.['border-width'] || ''
+    const builderMargin = styles.form?.['_frm-bg']?.margin || ''
     if (builderPadding && builderPadding !== '10px') {
       width -= (parseInt(builderPadding.replace('px', ''), 10) * 2) - 3
     }

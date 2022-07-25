@@ -5,18 +5,39 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $reportId, $reportSelector, $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formInfo, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { $reportId,
+  $reportSelector,
+  $additionalSettings,
+  $breakpointSize,
+  $builderHelperStates,
+  $builderHookStates,
+  $confirmations,
+  $customCodes,
+  $deletedFldKey,
+  $fieldLabels,
+  $fields,
+  $formInfo,
+  $forms,
+  $integrations,
+  $layouts,
+  $mailTemplates,
+  $newFormId,
+  $reports,
+  $updateBtn,
+  $workflows } from '../GlobalStates/GlobalStates'
+import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
-import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
+import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
+import { select } from '../Utils/globalHelpers'
+import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+// TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
 import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
@@ -47,20 +68,29 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
   // const style = useRecoilValue($styles)
-  const [style, setStyles] = useRecoilState($styles)
-  const breakpointSize = useRecoilValue($breakpointSize)
-  const themeVars = useRecoilValue($themeVars)
+  const [style] = useRecoilState($styles)
+  const setLightThemeColors = useSetRecoilState($lightThemeColors)
+  const setDarkThemeColors = useSetRecoilState($darkThemeColors)
+  const setLgLightThemeVars = useSetRecoilState($themeVarsLgLight)
+  const setLgDarkThemeVars = useSetRecoilState($themeVarsLgDark)
+  const setMdLightThemeVars = useSetRecoilState($themeVarsMdLight)
+  const setMdDarkThemeVars = useSetRecoilState($themeVarsMdDark)
+  const setSmLightThemeVars = useSetRecoilState($themeVarsSmLight)
+  const setSmDarkThemeVars = useSetRecoilState($themeVarsSmDark)
+  const setLgLightStyles = useSetRecoilState($stylesLgLight)
+  const setLgDarkStyles = useSetRecoilState($stylesLgDark)
+  const setMdLightStyles = useSetRecoilState($stylesMdLight)
+  const setMdDarkStyles = useSetRecoilState($stylesMdDark)
+  const setSmLightStyles = useSetRecoilState($stylesSmLight)
+  const setSmDarkStyles = useSetRecoilState($stylesSmDark)
 
-  const lightThemeColors = useRecoilValue($lightThemeColors)
-  const darkThemeColors = useRecoilValue($darkThemeColors)
-  const themeColors = { lightThemeColors, darkThemeColors }
+  const breakpointSize = useRecoilValue($breakpointSize)
+
   const customCodes = useRecoilValue($customCodes)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
-      const newIntegrations = produce(integrations, draft => {
-        draft.pop()
-      })
+      const newIntegrations = produce(integrations, draft => { draft.pop() })
       setIntegration(newIntegrations)
       saveForm('integrations', newIntegrations)
     }
@@ -78,17 +108,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mailTem])
 
-  // useEffect(() => {
-  //   if (additional?.updateForm) {
-  //     const newData = produce(additional, draft => {
-  //       // eslint-disable-next-line no-param-reassign
-  //       delete draft.updateForm
-  //     })
-  //     saveForm('additional', newData)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [additional.updateForm])
-
   const updateBtnEvent = e => {
     if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
       e.preventDefault()
@@ -102,6 +121,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const closeTabOrBrowserEvent = e => {
     if (updateBtn.unsaved) {
       e.preventDefault()
+      // TODO remove this depricated feature
       e.returnValue = ''
     }
   }
@@ -190,7 +210,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       setModal(mdl)
       return
     }
-    if (lay.md.length === 0 || typeof lay === 'undefined') {
+    if (!lay.md.length || typeof lay === 'undefined') {
       const mdl = { ...modal }
       mdl.show = true
       mdl.title = __('Sorry')
@@ -200,9 +220,27 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       return
     }
 
-    setUpdateBtn({ disabled: true, loading: true })
+    // setUpdateBtn({ disabled: true, loading: true })
 
     const layouts = prepareLayout(lay)
+    const { atomicCssText,
+      atomicClassMap,
+      lightThemeColor,
+      darkThemeColor,
+      lgLightThemeVars,
+      lgDarkThemeVars,
+      mdLightThemeVars,
+      mdDarkThemeVars,
+      smLightThemeVars,
+      smDarkThemeVars,
+      lgLightStyles,
+      lgDarkStyles,
+      mdLightStyles,
+      mdDarkStyles,
+      smLightStyles,
+      smDarkStyles } = atomicStyleGenarate(layouts)
+
+    // TODO : send here another request to create atomic css file
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle = formStyle && (bitDecipher(formStyle))
@@ -219,10 +257,28 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       additional: additionalSettings,
       workFlows,
       formStyle,
-      style,
-      themeColors,
+      themeColors: {
+        lightThemeColor,
+        darkThemeColor,
+      },
+      themeVars: {
+        lgLightThemeVars,
+        lgDarkThemeVars,
+        mdLightThemeVars,
+        mdDarkThemeVars,
+        smLightThemeVars,
+        smDarkThemeVars,
+      },
+      style: {
+        lgLightStyles,
+        lgDarkStyles,
+        mdLightStyles,
+        mdDarkStyles,
+        smLightStyles,
+        smDarkStyles,
+      },
+      atomicClassMap,
       breakpointSize,
-      themeVars,
       customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
@@ -266,6 +322,21 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
             )
           }
+
+          setLightThemeColors(lightThemeColor)
+          setDarkThemeColors(darkThemeColor)
+          setLgLightThemeVars(lgLightThemeVars)
+          setLgDarkThemeVars(lgDarkThemeVars)
+          setMdLightThemeVars(mdLightThemeVars)
+          setMdDarkThemeVars(mdDarkThemeVars)
+          setSmLightThemeVars(smLightThemeVars)
+          setSmDarkThemeVars(smDarkThemeVars)
+          setLgLightStyles(lgLightStyles)
+          setLgDarkStyles(lgDarkStyles)
+          setMdLightStyles(mdLightStyles)
+          setMdDarkStyles(mdDarkStyles)
+          setSmLightStyles(smLightStyles)
+          setSmDarkStyles(smDarkStyles)
 
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',

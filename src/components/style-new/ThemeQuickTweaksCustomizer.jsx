@@ -58,7 +58,7 @@ export default function ThemeQuickTweaksCustomizer() {
         for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
           const comnStylClass = commonStylClasses[indx]
 
-          if (fldClassesObj.hasOwnProperty(comnStylClass)) {
+          if (Object.prototype.hasOwnProperty.call(fldClassesObj, comnStylClass)) {
             const mainStlPropertiesObj = fldClassesObj[comnStylClass]
             const comStlPropertiesObj = commonStyles[comnStylClass]
             const comnStlProperties = Object.keys(comStlPropertiesObj)
@@ -67,7 +67,7 @@ export default function ThemeQuickTweaksCustomizer() {
             for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
               const comnStlProperty = comnStlProperties[popIndx]
 
-              if (mainStlPropertiesObj.hasOwnProperty(comnStlProperty)) {
+              if (Object.prototype.hasOwnProperty.call(mainStlPropertiesObj, comnStlProperty)) {
                 const mainStlVal = mainStlPropertiesObj[comnStlProperty]
                 const comStlVal = comStlPropertiesObj[comnStlProperty]
                 if (mainStlVal !== comStlVal) {

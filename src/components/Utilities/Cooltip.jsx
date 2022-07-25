@@ -22,7 +22,7 @@ export default function Cooltip({ className, children, width = 'auto', icnSize =
       interactive
       maxWidth={width}
       // arrow
-      content={children}
+      content={<div className={css(c.tipBody)}>{children}</div>}
     >
       <div
         role="button"
@@ -48,4 +48,5 @@ const c = {
       cur: 'help',
     },
   },
+  tipBody: { fw: 300, p: 2 },
 }

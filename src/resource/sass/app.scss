@@ -2625,8 +2625,7 @@ nav.top-nav {
 
 .btcd-modal-wrp {
   display: flex;
-  // background             : rgba(18, 21, 60, 0.53);
-  background: var(--b-95-31-18);
+  background: var(--white-0-0-32);
   position: fixed;
   top: 0;
   left: 0;
@@ -2637,8 +2636,6 @@ nav.top-nav {
   justify-content: center;
   overflow: auto;
   padding: 30px;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
 }
 
 .btcd-modal {
@@ -2656,9 +2653,6 @@ nav.top-nav {
   box-shadow: 0 0 44px -20px var(--white-0-0-64);
 }
 
-// .d-blk .btc-mdl-trn-enter-done{
-//   block
-// }
 .btc-mdl-trn-enter-done .auto-height {
   height: auto !important;
 }
@@ -2685,7 +2679,7 @@ nav.top-nav {
 
 .btcd-modal-content {
   position: relative;
-  padding: 15px;
+  padding: 10px 15px;
   height: 100%;
 }
 
@@ -2700,7 +2694,6 @@ nav.top-nav {
 }
 
 .btcd-mdl-subtitle {
-  // color: #737f94;
   color: var(--b-13-52);
 }
 
@@ -2711,7 +2704,7 @@ nav.top-nav {
   top: 0;
   right: 0;
   float: right;
-  margin: 10px;
+  margin: 11px 15px;
 }
 
 .btcd-mdl-div {
@@ -3202,7 +3195,7 @@ nav.top-nav {
   &:focus {
     border-color: var(--b-50) !important;
     // box-shadow  : 0 0 0 0px var(--b-50), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
-    box-shadow: 0 0 0 1px var(--b-50), 0 0 0 4px var(--b-100-48-1) !important;
+    box-shadow: 0 0 0 2px var(--b-50) !important;
   }
 
   &:disabled {

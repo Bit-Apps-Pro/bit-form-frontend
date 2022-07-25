@@ -1,5 +1,8 @@
 import { getRecoil } from 'recoil-nexus'
+import merge from 'deepmerge-alt'
+import { diff } from 'deep-object-diff'
 import { $fields } from '../GlobalStates/GlobalStates'
+import { deepCopy } from './Helpers'
 
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
@@ -115,6 +118,7 @@ export const getCustomClsName = (fk, element) => {
   return fields[fk]?.customClasses?.[element] ?? ''
 }
 
+// TODO fix function name typo
 export const getCustomAttributs = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
@@ -132,6 +136,8 @@ export const getCustomAttributs = (fk, element) => {
   }
   return obj
 }
+
+// TODO function name fix typo
 export const getDataDavAttrArr = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
@@ -148,4 +154,111 @@ export const getDataDavAttrArr = (fk, element) => {
     }
   }
   return dataDevObj
+}
+/*
+  find diff between 2 arr by given targeted arr
+  used native for loop for perf
+*/
+export function targetArrDiff(arr1, arr2) {
+  const diff = []
+  const arr2len = arr2.length
+  for (let i = 0; i < arr2len; i += 1) {
+    if (arr1.indexOf(arr2[i]) === -1) {
+      diff.push(arr2[i])
+    }
+  }
+  return diff
+}
+
+/*
+  find difference between obejct of depth 1 level
+*/
+export function getOneLvlObjDiff(currentObj, targetObj) {
+  const diffObj = {}
+  const currentObjKeys = Object.keys(currentObj)
+  const targetObjKeys = Object.keys(targetObj)
+  const currentObjKeysLength = currentObjKeys.length
+
+  for (let i = 0; i < currentObjKeysLength; i += 1) {
+    const currObjKey = currentObjKeys[i]
+    if (Object.prototype.hasOwnProperty.call(targetObj, currObjKey)) {
+      if (currentObj[currObjKey] !== targetObj[currObjKey]) {
+        diffObj[currObjKey] = targetObj[currObjKey]
+      }
+    }
+  }
+
+  const diffKeys = targetArrDiff(currentObjKeys, targetObjKeys)
+  for (let i = 0; i < diffKeys.length; i += 1) {
+    diffObj[diffKeys[i]] = targetObj[diffKeys[i]]
+  }
+  return diffObj
+}
+
+/*
+  merge multiple nested object
+*/
+export function mergeNestedObj(...args) {
+  if (
+    args.length === 2
+    && typeof args[0] === 'object'
+    && typeof args[1] === 'object'
+  ) {
+    return merge(...args)
+  }
+  let mergedObj = {}
+  for (let i = 0; i < args.length - 1; i += 1) {
+    if (typeof args[i] === 'object') {
+      mergedObj = merge(mergedObj, merge(args[i], args[i + 1]))
+    }
+  }
+  return mergedObj
+}
+
+/*
+  remove all keys of value undefined from object
+*/
+export function cleanObj(object) {
+  const clonedObj = deepCopy(object)
+
+  const cleanse = (obj) => {
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key]
+      const type = typeof value
+      if (type === 'object') {
+        cleanse(value)
+        // remove if now "empty" object
+        if (!Object.keys(value).length) {
+          delete obj[key] // eslint-disable-line no-param-reassign
+        }
+      } else if (type === 'undefined' || type === 'null') {
+        delete obj[key] // eslint-disable-line no-param-reassign
+      }
+    })
+    return obj
+  }
+
+  return cleanse(clonedObj)
+}
+
+// export function getObjectDiff(originalObj, updatedObj, { ignoreUndefined = true } = {}) {
+//   const diffObj = diff(originalObj, updatedObj)
+//   // remove undefined keys form nested object
+//   if (ignoreUndefined) {
+//     return cleanObj(diffObj)
+//   }
+//   return diffObj
+// }
+
+export function getObjectDiff(...args) {
+  if (args.length === 2) {
+    return cleanObj(diff(args[0], args[1]))
+  }
+  let diffObj = {}
+  for (let i = 0; i < args.length - 1; i += 1) {
+    if (typeof args[i] === 'object') {
+      diffObj = cleanObj(diff(diffObj, cleanObj(diff(args[i], args[i + 1]))))
+    }
+  }
+  return diffObj
 }

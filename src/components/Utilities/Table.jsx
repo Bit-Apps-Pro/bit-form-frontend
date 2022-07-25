@@ -59,7 +59,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp
             <input
               value={globalFilter || ''}
               onChange={handleSearch}
-              placeholder={__('Search', 'bitform')}
+              placeholder={__('Search')}
             />
           </label>
 
@@ -69,7 +69,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp
           <input
             value={globalFilter || ''}
             onChange={handleSearch}
-            placeholder={__('Search', 'bitform')}
+            placeholder={__('Search')}
             className="search-input-box"
           />
 

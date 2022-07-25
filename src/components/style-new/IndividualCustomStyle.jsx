@@ -129,8 +129,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }
   })
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
-  const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
-  const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
+  const fontweightVariants = styles.font?.fontWeightVariants.length !== 0 ? arrayToObject(styles.font?.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.font?.fontStyle.length !== 0 ? arrayToObject(styles.font?.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}${selector}->${cssProperty}`
@@ -169,7 +169,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const updateHandler = (value, unit, styleUnit, property) => {
-    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit?.replaceAll(/(undefined)/gi, '')
+    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit?.replace(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
     const propertyPath = getPropertyPath(property)
 
@@ -328,7 +328,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <BackgroundControl
             title="Background"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-image']?.replace(' !important', '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
+            value={existCssPropsObj?.['background-image']?.replace(/\s?!important/g, '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
             propertyPath={objPaths.paths?.background}
@@ -911,7 +911,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit, state)}
-                // preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
+                preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
                 definedValueHandler={value => preDefinedValueHandler(value, 'font-size', state)}
                 value={fldFSValue || 12}
                 unit={fldFSUnit || 'px'}
@@ -940,7 +940,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 w={130}
                 h={30}
                 id="fld-font-weight"
-                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
+                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font?.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
               />
             </div>
           </StylePropertyBlock>
@@ -966,7 +966,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 w={130}
                 h={30}
                 id="fld-font-style"
-                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
+                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font?.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
               />
             </div>
           </StylePropertyBlock>

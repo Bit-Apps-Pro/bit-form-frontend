@@ -528,7 +528,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       }
 
       <Drawer
-        title={__(`Response Details #${rowSl.current}`, 'bitform')}
+        title={__(`Response Details #${rowSl.current}`)}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
@@ -538,8 +538,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         <table className="btcd-row-detail-tbl">
           <tbody>
             <tr className="txt-dp">
-              <th>{__('Title', '')}</th>
-              <th>{__('Value', '')}</th>
+              <th>{__('Title')}</th>
+              <th>{__('Value')}</th>
             </tr>
             {rowDtl.show
               && filterEntryLabels().map((label, i) => (
