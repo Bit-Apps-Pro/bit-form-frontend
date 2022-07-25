@@ -54,7 +54,7 @@ export const $savedThemeVars = selector({
 })
 
 export const $savedStyles = selector({
-  key: '$savedStylesAndVars',
+  key: '$savedStyles',
   get: ({ get }) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)

@@ -26,7 +26,7 @@ import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
+import { bitCipher, deepCopy, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
@@ -116,7 +116,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(oldStyles)) setIsNewThemeStyleLoaded(true)
-
       setLightThemeColors(oldStyles.themeColors.lightThemeColors)
       setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
       setLgLightThemeVars(oldStyles.themeVars.lgLightThemeVars)
@@ -125,18 +124,19 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setMdDarkThemeVars(oldStyles.themeVars.mdDarkThemeVars)
       setSmLightThemeVars(oldStyles.themeVars.smLightThemeVars)
       setSmDarkThemeVars(oldStyles.themeVars.smDarkThemeVars)
-      setLgLightStyles(oldStyles.styles.lgLightStyles)
-      setLgDarkStyles(oldStyles.styles.lgDarkStyles)
-      setMdLightStyles(oldStyles.styles.mdLightStyles)
-      setMdDarkStyles(oldStyles.styles.mdDarkStyles)
-      setSmLightStyles(oldStyles.styles.smLightStyles)
-      setSmDarkStyles(oldStyles.styles.smDarkStyles)
+      setLgLightStyles(oldStyles.style.lgLightStyles)
+      setLgDarkStyles(oldStyles.style.lgDarkStyles)
+      setMdLightStyles(oldStyles.style.mdLightStyles)
+      setMdDarkStyles(oldStyles.style.mdDarkStyles)
+      setSmLightStyles(oldStyles.style.smLightStyles)
+      setSmDarkStyles(oldStyles.style.smDarkStyles)
 
-      setSavedStylesAndVars({
+      const savedStyles = deepCopy({
         themeColors: oldStyles.themeColors,
         themeVars: oldStyles.themeVars,
-        styles: oldStyles.styles,
+        styles: oldStyles.style,
       })
+      setSavedStylesAndVars(prev => ({ ...prev, ...savedStyles }))
 
       setBreakpointSize(oldStyles.breakpointSize)
 
@@ -148,7 +148,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       //   themeVars: oldStyles.themeVars,
       //   lightThemeColors: oldStyles.themeColors?.lightThemeColors,
       //   darkThemeColors: oldStyles.themeColors?.darkThemeColors,
-      //   styles: oldStyles.styles,
+      //   styles: oldStyles.style,
       // }
       // setTempStyles(allStyleStates)
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {
