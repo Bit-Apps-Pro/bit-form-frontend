@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { default as BitVirtualizedList } from 'bit-virtualized-list'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -16,6 +16,18 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { reCalculateFieldHeights } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
+
+const generateItemSize = length => {
+  const arr = []
+  for (let i = 0; i < length; i += 1) {
+    if (i === 0) {
+      arr.push(25)
+    } else {
+      arr.push(40)
+    }
+  }
+  return arr
+}
 
 export function handleUndoRedoShortcut(e) {
   if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
@@ -36,13 +48,79 @@ export default function FormBuilderHistory() {
   const [showHistory, setShowHistory] = useState(null)
   const [fields, setFields] = useRecoilState($fields)
   const [layouts, setLayouts] = useRecoilState($layouts)
+  const setColorScheme = useSetRecoilState($colorScheme)
+  const setBreakpoint = useSetRecoilState($breakpoint)
   const setStyles = useSetRecoilState($styles)
   const setThemeColors = useSetRecoilState($themeColors)
   const setThemeVars = useSetRecoilState($themeVars)
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const [historyListWrpElm, setHistoryListWrpElm] = useState(null)
   const { active, histories } = builderHistory
   // const [scrolIndex, setScrolIndex] = useState(0)
+  const virtualizeListRef = useRef(null)
+
+  useEffect(() => {
+    if (historyListWrpElm) {
+      const rowHeights = generateItemSize(histories.length)
+      historyListWrpElm.innerHTML = ''
+      virtualizeListRef.current = new BitVirtualizedList(historyListWrpElm, {
+        height: 300,
+        rowCount: histories.length,
+        rowHeight: rowHeights,
+        initialIndex: 0,
+        renderRow: (index, style) => {
+          const div = document.createElement('div')
+          div.style = style
+          div.key = index
+          div.setAttribute('id', 'user')
+          div.className = css(builderHistoryStyle.item)
+
+          const btn = document.createElement('button')
+          btn.className = `${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`
+          btn.onclick = () => handleHistory(index)
+          btn.title = histories[index].event
+
+          const span1 = document.createElement('span')
+          span1.className = css(builderHistoryStyle.subtitle)
+          span1.innerText = histories[index].event
+          btn.appendChild(span1)
+
+          if (index > 0) {
+            const span2 = document.createElement('span')
+            span2.className = css(builderHistoryStyle.fldkey)
+            span2.innerText = `Field Key: ${histories[index].state.fldKey}`
+            btn.appendChild(span2)
+          }
+          div.appendChild(btn)
+          return div
+
+          // <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)}>
+          //   <button
+          //     type="button"
+          //     className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
+          //     onClick={() => handleHistory(index)}
+          //     title={histories[index].event}
+          //   >
+          //     <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
+          //     {index > 0 && (
+          //       <span className={css(builderHistoryStyle.fldkey)}>
+          //         {`Field Key: ${histories[index].state.fldKey}`}
+          //       </span>
+          //     )}
+          //   </button>
+          // </div>
+        },
+      })
+    }
+
+    // histories.length > 2 && virtualizeList?.setRowCount(histories.length)
+  }, [historyListWrpElm, builderHistory])
+
+  useEffect(() => {
+    if (virtualizeListRef.current) virtualizeListRef.current.setRowCount(histories.length)
+  }, [histories.length])
 
   useEffect(() => {
     document.addEventListener('keypress', handleUndoRedoShortcut)
@@ -51,53 +129,10 @@ export default function FormBuilderHistory() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, disabled])
 
-  // const actionsBasedOnType = {
-  //   add_fld: 'remove_fld',
-  //   remove_fld: 'add_fld',
-  // }
-
-  // const handleHistory = indx => {
-  //   if (indx < 0 || disabled) return
-  //   const actionType = active >= indx ? 'undo' : 'redo'
-  //   let changableHistories = []
-  //   if (actionType === 'undo') {
-  //     changableHistories = histories.slice(indx + 1).reverse()
-  //   } else if (actionType === 'redo') {
-  //     changableHistories = histories.slice(active + 1, indx + 1)
-  //   }
-
-  //   if (!changableHistories.length) return
-
-  //   setDisabled(true)
-
-  //   let draftLayouts = { ...layouts }
-  //   const draftFields = { ...fields }
-  //   changableHistories.forEach(({ action, state }) => {
-  //     const historyAction = actionType === 'undo' ? actionsBasedOnType[action] : action
-  //     if (historyAction === 'add_fld') {
-  //       const { fldKey, breakpoint, layout, fldData } = state
-  //       draftLayouts = compactNewLayoutItem(breakpoint, layout, draftLayouts)
-  //       draftFields[fldKey] = fldData
-  //     } else if (historyAction === 'remove_fld') {
-  //       const { fldKey } = state
-  //       draftLayouts = filterLayoutItem(fldKey, draftLayouts)
-  //       delete draftFields[fldKey]
-  //       setSelectedFieldId(null)
-  //     }
-  //   })
-
-  //   sessionStorage.setItem('btcd-lc', '-')
-  //   setLayouts(draftLayouts)
-  //   setFields(draftFields)
-  //   setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
-  //   setDisabled(false)
-  // }
-
   const handleHistory = indx => {
     if (indx < 0 || disabled) return
 
     const { state } = histories[indx]
-    console.log('histories', histories)
     setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
 
@@ -112,6 +147,7 @@ export default function FormBuilderHistory() {
     } else {
       checkForPreviousState(indx, setBreakpoint, 'breakpoint')
     }
+    setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1 }))
 
     if (state.layouts) {
       setLayouts(state.layouts)
@@ -132,7 +168,6 @@ export default function FormBuilderHistory() {
     }
 
     if (state.themeColors) {
-      console.log('state.themeColors', state.themeColors)
       setThemeColors(state.themeColors)
     } else {
       checkForPreviousState(indx, setThemeColors, 'themeColors')
@@ -147,6 +182,7 @@ export default function FormBuilderHistory() {
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
     reCalculateFieldHeights()
     setDisabled(false)
+    // virtualizeListRef.current.setRowCount(histories.length)
   }
 
   const checkForPreviousState = (indx, setState, stateName) => {
@@ -157,16 +193,16 @@ export default function FormBuilderHistory() {
       }
     }
   }
-  const generateItemSize = () => {
-    const arr = []
-    for (let i = 0; i < histories.length; i += 1) {
-      if (i === 0) {
-        arr.push(25)
-      } else {
-        arr.push(40)
-      }
-    }
-    return arr
+
+  const onShow = () => {
+    console.log('acitve', active)
+    if (virtualizeListRef.current) virtualizeListRef.current.scrollToIndex(active, 'start')
+    setShowHistory(true)
+  }
+
+  const onHide = () => {
+    setShowHistory(false)
+    if (virtualizeListRef.current) virtualizeListRef.current.scrollToIndex(active, 'start')
   }
 
   return (
@@ -198,8 +234,8 @@ export default function FormBuilderHistory() {
         </Tip>
         <Downmenu
           place="bottom-end"
-          onShow={() => setShowHistory(true)}
-          onHide={() => setShowHistory(false)}
+          onShow={onShow}
+          onHide={onHide}
         >
           <button
             data-testid="history-list"
@@ -222,8 +258,9 @@ export default function FormBuilderHistory() {
             )}
             {
               histories.length > 1 && (
-                <div className={css(builderHistoryStyle.list)}>
-                  <VirtualList
+                <div ref={setHistoryListWrpElm} className={css(builderHistoryStyle.list)}>
+
+                  {/* <VirtualList
                     width="100%"
                     height={200}
                     itemCount={histories.length || 1}
@@ -247,7 +284,7 @@ export default function FormBuilderHistory() {
                       </div>
                     )}
 
-                  />
+                  /> */}
                   {/* {histories.map((history, indx) => (
                     <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
                       <button
