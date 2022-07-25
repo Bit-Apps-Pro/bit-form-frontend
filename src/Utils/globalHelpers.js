@@ -195,7 +195,6 @@ export function getOneLvlObjDiff(currentObj, targetObj) {
   return diffObj
 }
 
-
 /*
   merge multiple nested object
 */

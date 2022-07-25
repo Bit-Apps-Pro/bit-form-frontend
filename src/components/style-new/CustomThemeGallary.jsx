@@ -4,6 +4,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useEffect } from 'react'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
@@ -14,7 +15,6 @@ import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
 import themes from './themes/themeList'
 import individual from './themes/individual/individual'
-import { useEffect } from 'react'
 import materialTheme from './themes/material/2_material'
 
 export default function CustomThemeGallary({ fldKey }) {
@@ -24,7 +24,7 @@ export default function CustomThemeGallary({ fldKey }) {
   const fields = useRecoilValue($fields)
   const fieldType = fields[fldKey].typ
   const allowFldInIndividualTheme = ['check', 'radio']
-  let newThemes = themes
+  const newThemes = themes
   const isExistTheme = newThemes.filter(theme => theme.slug === 'individual')
   useEffect(() => {
     if (allowFldInIndividualTheme.includes(fieldType)) {
@@ -40,10 +40,10 @@ export default function CustomThemeGallary({ fldKey }) {
 
   const getStyle = (slug, fk, type) => {
     const obj = {
-      'bitformDefault': bitformDefaultTheme({ fieldKey: fk, type }),
-      'atlassian': atlassianTheme({ fk, type }),
-      'individual': individual({ fk, type }),
-      'material': materialTheme({ fk, type })
+      bitformDefault: bitformDefaultTheme({ fieldKey: fk, type }),
+      atlassian: atlassianTheme({ fk, type }),
+      individual: individual({ fk, type }),
+      material: materialTheme({ fk, type }),
     }
     return obj[slug]
   }

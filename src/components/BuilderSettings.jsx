@@ -68,7 +68,9 @@ export default function BuilderSettings() {
           onBlur={() => handleClassPrefix(atomicClassPrefix.trim())}
         />
         <Cooltip>
-          Add prefix to atomic classes. <a className={css(ut.cooltipLearnMoreLink)} href="doclink for class prefix">Learn More</a>
+          Add prefix to atomic classes.
+          {' '}
+          <a className={css(ut.cooltipLearnMoreLink)} href="doclink for class prefix">Learn More</a>
         </Cooltip>
       </SettingsBlock>
 

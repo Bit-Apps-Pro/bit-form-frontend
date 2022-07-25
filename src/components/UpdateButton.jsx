@@ -5,8 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  $reportId,
+import { $reportId,
   $reportSelector,
   $additionalSettings,
   $breakpointSize,
@@ -25,8 +24,7 @@ import {
   $newFormId,
   $reports,
   $updateBtn,
-  $workflows
-} from '../GlobalStates/GlobalStates'
+  $workflows } from '../GlobalStates/GlobalStates'
 import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
