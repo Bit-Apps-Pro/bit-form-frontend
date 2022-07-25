@@ -58,7 +58,7 @@ export default class BitPayPalField {
   }
 
   #select(selector, elm) {
-    return document.querySelector(elm).querySelector(selector)
+    return document.querySelector(elm)?.querySelector(selector)
   }
 
   #getDynamicValue(fldName) {
