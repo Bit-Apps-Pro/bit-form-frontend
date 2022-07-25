@@ -5,7 +5,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $reportId,
+import {
+  $reportId,
   $reportSelector,
   $additionalSettings,
   $breakpointSize,
@@ -24,7 +25,8 @@ import { $reportId,
   $newFormId,
   $reports,
   $updateBtn,
-  $workflows } from '../GlobalStates/GlobalStates'
+  $workflows
+} from '../GlobalStates/GlobalStates'
 import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
@@ -225,8 +227,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const layouts = prepareLayout(lay)
     const { atomicCssText,
       atomicClassMap,
-      lightThemeColor,
-      darkThemeColor,
+      lightThemeColors,
+      darkThemeColors,
       lgLightThemeVars,
       lgDarkThemeVars,
       mdLightThemeVars,
@@ -239,6 +241,24 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdDarkStyles,
       smLightStyles,
       smDarkStyles } = atomicStyleGenarate(layouts)
+
+    console.log('update styles', {
+      atomicClassMap,
+      lightThemeColors,
+      darkThemeColors,
+      lgLightThemeVars,
+      lgDarkThemeVars,
+      mdLightThemeVars,
+      mdDarkThemeVars,
+      smLightThemeVars,
+      smDarkThemeVars,
+      lgLightStyles,
+      lgDarkStyles,
+      mdLightStyles,
+      mdDarkStyles,
+      smLightStyles,
+      smDarkStyles
+    })
 
     // TODO : send here another request to create atomic css file
 
@@ -258,8 +278,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       workFlows,
       formStyle,
       themeColors: {
-        lightThemeColor,
-        darkThemeColor,
+        lightThemeColors,
+        darkThemeColors,
       },
       themeVars: {
         lgLightThemeVars,
@@ -323,8 +343,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             )
           }
 
-          setLightThemeColors(lightThemeColor)
-          setDarkThemeColors(darkThemeColor)
+          setLightThemeColors(lightThemeColors)
+          setDarkThemeColors(darkThemeColors)
           setLgLightThemeVars(lgLightThemeVars)
           setLgDarkThemeVars(lgDarkThemeVars)
           setMdLightThemeVars(mdLightThemeVars)

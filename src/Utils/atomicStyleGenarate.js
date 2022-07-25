@@ -53,8 +53,8 @@ export default function atomicStyleGenarate(sortedLayout) {
   const { md: mdBreakpointSize, sm: smBreakpointSize } = getRecoil($breakpointSize)
 
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
-  const lightThemeColor = themeColorsLight
-  const darkThemeColor = getOneLvlObjDiff(lightThemeColor, themeColorsDark)
+  const lightThemeColors = themeColorsLight
+  const darkThemeColors = getOneLvlObjDiff(lightThemeColors, themeColorsDark)
 
   const lgLightThemeVars = themeVarsLgLight
   const lgDarkThemeVars = getOneLvlObjDiff(lgLightThemeVars, themeVarsLgDark)
@@ -71,42 +71,42 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smDarkStyles = getObjectDiff(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles), stylesSmDark)
 
   // generate lg light styles merged
-  const allLgLightVars = { ...lgLightThemeVars, ...lightThemeColor }
+  const allLgLightVars = { ...lgLightThemeVars, ...lightThemeColors }
   const allLgLightStyles = flatenStyleObj(lgLightStyles)
   const normalizedAllLgLightVars = expressAndCleanCssVars(allLgLightVars)
   const normalizedAllLgLightStyles = optimizeAndDefineCssClassProps(allLgLightStyles, normalizedAllLgLightVars)
   const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap } = atomizeCss(normalizedAllLgLightStyles, atomizeCssConfig)
 
   // generate lg dark styles merged
-  const allLgDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...lightThemeColor, ...darkThemeColor }
+  const allLgDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allLgDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles))
   const normalizedAllLgDarkVars = expressAndCleanCssVars(allLgDarkVars)
   const normalizedAllLgDarkStyles = optimizeAndDefineCssClassProps(allLgDarkStyles, normalizedAllLgDarkVars)
   const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap } = atomizeCss(normalizedAllLgDarkStyles, atomizeCssConfig)
 
   // generate md light styles merged
-  const allMdLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...lightThemeColor }
+  const allMdLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...lightThemeColors }
   const allMdLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles))
   const normalizedAllMdLightVars = expressAndCleanCssVars(allMdLightVars)
   const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars)
   const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap } = atomizeCss(normalizedAllMdLightStyles, atomizeCssConfig)
 
   // generate md dark styles merged
-  const allMdDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...lightThemeColor, ...darkThemeColor }
+  const allMdDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allMdDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles))
   const normalizedAllMdDarkVars = expressAndCleanCssVars(allMdDarkVars)
   const normalizedAllMdDarkStyles = optimizeAndDefineCssClassProps(allMdDarkStyles, normalizedAllMdDarkVars)
   const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap } = atomizeCss(normalizedAllMdDarkStyles, atomizeCssConfig)
 
   // generate sm light styles merged
-  const allSmLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...smLightThemeVars, ...lightThemeColor }
+  const allSmLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...smLightThemeVars, ...lightThemeColors }
   const allSmLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles, smLightStyles))
   const normalizedAllSmLightVars = expressAndCleanCssVars(allSmLightVars)
   const normalizedAllSmLightStyles = optimizeAndDefineCssClassProps(allSmLightStyles, normalizedAllSmLightVars)
   const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap } = atomizeCss(normalizedAllSmLightStyles, atomizeCssConfig)
 
   // generate sm dark styles merged
-  const allSmDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...smDarkThemeVars, ...lightThemeColor, ...darkThemeColor }
+  const allSmDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...smDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allSmDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles, smDarkStyles))
   const normalizedAllSmDarkVars = expressAndCleanCssVars(allSmDarkVars)
   const normalizedAllSmDarkStyles = optimizeAndDefineCssClassProps(allSmDarkStyles, normalizedAllSmDarkVars)
@@ -256,8 +256,8 @@ export default function atomicStyleGenarate(sortedLayout) {
   return {
     atomicCssText: cssText,
     atomicClassMap: allMergedClassMaps,
-    lightThemeColor,
-    darkThemeColor,
+    lightThemeColors,
+    darkThemeColors,
     lgLightThemeVars,
     lgDarkThemeVars,
     mdLightThemeVars,
