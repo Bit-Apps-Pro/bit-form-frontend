@@ -35,6 +35,7 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
         data-testid="mdl-wrp"
         role="button"
         tabIndex={0}
+        inert={!show}
         onKeyDown={handleClickOutside}
         onMouseDown={handleClickOutside}
         className="btcd-modal-wrp"

@@ -242,24 +242,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles } = atomicStyleGenarate(layouts)
 
-    console.log('update styles', {
-      atomicClassMap,
-      lightThemeColors,
-      darkThemeColors,
-      lgLightThemeVars,
-      lgDarkThemeVars,
-      mdLightThemeVars,
-      mdDarkThemeVars,
-      smLightThemeVars,
-      smDarkThemeVars,
-      lgLightStyles,
-      lgDarkStyles,
-      mdLightStyles,
-      mdDarkStyles,
-      smLightStyles,
-      smDarkStyles
-    })
-
     // TODO : send here another request to create atomic css file
 
     let formStyle = sessionStorage.getItem('btcd-fs')
