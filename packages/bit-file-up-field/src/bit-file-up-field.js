@@ -68,7 +68,7 @@ export default class BitFileUpField {
     }
     this.fieldKey = this.#config.fieldKey
 
-    this.#assetsURL = config.assetsURL ? config.assetsURL : ''
+    this.#assetsURL = config.assetsURL || ''
 
     this.init()
   }
@@ -155,8 +155,8 @@ export default class BitFileUpField {
         error.push('File Allready Exist')
       }
     }
-    // this.#window.document.querySelectorALL()
-    this.#window.document.querySelectorALL(`.${this.fieldKey}-cross-btn`).forEach(element => {
+
+    this.#document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
@@ -230,13 +230,13 @@ export default class BitFileUpField {
       case '.gz':
       case 'z':
       case 'zip':
-        return `${this.#assetsURL}/../static/file-upload/zip-compressed.svg`
+        return `${this.#assetsURL}/zip-compressed.svg`
       case 'key':
       case 'odp':
       case 'pps':
       case 'ppt':
       case 'pptx':
-        return `${this.#assetsURL}/../static/file-upload/presentation.svg`
+        return `${this.#assetsURL}/presentation.svg`
       case '_RF_':
       case 'doc':
       case 'docx':
@@ -248,7 +248,7 @@ export default class BitFileUpField {
       case 'wks':
       case 'wps':
       case 'wpd':
-        return `${this.#assetsURL}/../static/file-upload/document.svg`
+        return `${this.#assetsURL}/document.svg`
       case 'csv':
       case 'dat':
       case 'db':
@@ -260,7 +260,7 @@ export default class BitFileUpField {
       case 'tar':
       case 'sqlite':
       case 'xml':
-        return `${this.#assetsURL}/../static/file-upload/database.svg`
+        return `${this.#assetsURL}/database.svg`
       case 'opus':
       case 'flac':
       case 'webm':
@@ -277,7 +277,7 @@ export default class BitFileUpField {
       case 'au':
       case 'acc':
       case 'wpl':
-        return `${this.#assetsURL}/../static/file-upload/file-audio.svg`
+        return `${this.#assetsURL}/file-audio.svg`
       case 'ogm':
       case 'wmv':
       case 'mpg':
@@ -292,9 +292,9 @@ export default class BitFileUpField {
       case 'flv':
       case 'mkv':
       case 'swf':
-        return `${this.#assetsURL}/../static/file-upload/file-audio.svg`
+        return `${this.#assetsURL}/file-audio.svg`
       default:
-        return `${this.#assetsURL}/../static/file-upload/paperclip.svg`
+        return `${this.#assetsURL}/paperclip.svg`
     }
   }
 
