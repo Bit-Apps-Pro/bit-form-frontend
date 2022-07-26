@@ -2,17 +2,19 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 
 export default function SizeControlMenu({ objectPaths }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
@@ -41,6 +43,7 @@ export default function SizeControlMenu({ objectPaths }) {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[propertyPath] = `${value}`
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, value, { themeVars: getLatestState('themeVars') }))
     } else if (object === 'styles') {
       setStyles(prvStyle => produce(prvStyle, drft => {
         const prevValue = getValueByObjPath(drft, propertyPath)
@@ -50,6 +53,7 @@ export default function SizeControlMenu({ objectPaths }) {
         }
         assignNestedObj(drft, propertyPath, `${value}`)
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, value, { styles: getLatestState('styles') }))
     }
   }
 
@@ -80,6 +84,7 @@ export default function SizeControlMenu({ objectPaths }) {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[v] = tempThemeVars[v] || '0px'
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, v, '0px', { themeVars: getLatestState('themeVars') }))
     }
   }
 

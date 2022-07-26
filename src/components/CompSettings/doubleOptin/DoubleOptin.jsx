@@ -99,9 +99,9 @@ export default function DoubleOptin() {
         }
       })
     toast.promise(prom, {
-      success: __('Saved successfully.', 'bitform'),
-      loading: __('Saving...', 'bitform'),
-      error: __('Something went wrong, Try again.', 'bitform'),
+      success: __('Saved successfully.'),
+      loading: __('Saving...'),
+      error: __('Something went wrong, Try again.'),
     })
   }
 
@@ -118,25 +118,25 @@ export default function DoubleOptin() {
 
   return (
     <div className="pos-rel">
-      <h2>{__('Double Opt-In', 'bitform')}</h2>
+      <h2>{__('Double Opt-In')}</h2>
       <h5>
         How to setup Double Opt-In & Send Email Notification:
         &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="yt-txt">
+        <a href="#" target="_blank" rel="noreferrer" className="yt-txt">
           YouTube
         </a>
         &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" className="doc-txt">
+        <a href="#" target="_blank" rel="noreferrer" className="doc-txt">
           Documentation
         </a>
       </h5>
       {!isPro && (
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
-            {__('Available On', 'bitform')}
+            {__('Available On')}
             <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
-                {__('Premium', 'bitform')}
+                {__('Premium')}
               </span>
             </a>
           </div>
@@ -158,7 +158,7 @@ export default function DoubleOptin() {
               <SnackMsg snack={snack} setSnackbar={setSnackbar} />
               <div className="mt-6 flx">
                 <label htmlFor="status">
-                  <b>{__('Enable', 'bitform')}</b>
+                  <b>{__('Enable')}</b>
                 </label>
                 <SingleToggle2 name="status" action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
@@ -168,7 +168,7 @@ export default function DoubleOptin() {
                 {/* <div className="mt-1 ml-0 flx">
                   <SingleToggle2 action={(e) => toggleHandle(e, 'add_param')} checked={'add_param' in tem} className="ml-4 flx" />
                   <label htmlFor="status">
-                    {__('Add the verifed e-mail address to the confirmation link as parameter to handle it afterwards.', 'bitform')}
+                    {__('Add the verifed e-mail address to the confirmation link as parameter to handle it afterwards.')}
                   </label>
                 </div> */}
 
@@ -176,7 +176,7 @@ export default function DoubleOptin() {
                   <SingleToggle2 name="auto_unconfirmed_deleted" action={(e) => toggleHandle(e, 'auto_unconfirmed_deleted')} checked={'auto_unconfirmed_deleted' in tem} className="flx" />
 
                   <label htmlFor="auto_unconfirmed_deleted">
-                    {__('Delete the unconfirmed entries from responses after days: ', 'bitform')}
+                    {__('Delete the unconfirmed entries from responses after days: ')}
                   </label>
                   &nbsp;
                   <input onChange={handleInput} name="day" value={tem?.day || 1} disabled={!tem.auto_unconfirmed_deleted} className="btcd-paper-inp mr-2 wdt-100" placeholder="1" type="number" min="1" />
@@ -186,14 +186,14 @@ export default function DoubleOptin() {
                 <div className="mt-2 flx">
                   <SingleToggle2 name="disable_loggin_user" action={(e) => toggleHandle(e, 'disable_loggin_user')} checked={'disable_loggin_user' in tem} className="flx" />
                   <label htmlFor="disable_loggin_user">
-                    {__('Disable double opt-in confirmation for logged in users.', 'bitform')}
+                    {__('Disable double opt-in confirmation for logged in users.')}
                   </label>
                 </div>
 
                 {/* <div className="flx w-8">
 
                   <div className="w-4 mt-3">
-                    <TableCheckBox name="dflt_temp" onChange={(e) => toggleHandle(e, 'dflt_temp')} title={__('Enable default template', 'bitform')} checked={!!tem?.dflt_temp} value={false} />
+                    <TableCheckBox name="dflt_temp" onChange={(e) => toggleHandle(e, 'dflt_temp')} title={__('Enable default template')} checked={!!tem?.dflt_temp} value={false} />
                   </div>
                 </div> */}
                 <div className="mt-4 flx">
@@ -211,7 +211,7 @@ export default function DoubleOptin() {
                       <b>Email</b>
                       <br />
                       <select className="btcd-paper-inp mt-1 w-9" name="fldkey" value={tem?.fldkey} onChange={handleInput}>
-                        <option selected disabled>{__('Select Email Field', 'bitform')}</option>
+                        <option selected disabled>{__('Select Email Field')}</option>
                         {
                           formFields?.filter(fld => (fld.type === 'email')).map(header => (
                             <option key={`${header.key}-1`} value={header.key}>
@@ -242,7 +242,7 @@ export default function DoubleOptin() {
                           <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
                             <EditIcn size={18} />
                             &nbsp;
-                            {__('Edit verification messages', 'bitform')}
+                            {__('Edit verification messages')}
                           </button>
                           <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Edit verification messages" />
                         </div>
@@ -265,7 +265,7 @@ export default function DoubleOptin() {
                       <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
                         <EditIcn size={18} />
                         &nbsp;
-                        {__('Edit verification messages', 'bitform')}
+                        {__('Edit verification messages')}
                       </button>
                       <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
                     </div>
@@ -285,7 +285,7 @@ export default function DoubleOptin() {
                 className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
               >
-                {__('Save ', 'bitform')}
+                {__('Save ')}
               </button>
             </div>
           )

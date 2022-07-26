@@ -1,10 +1,12 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import BorderControl from './BorderControl'
@@ -18,6 +20,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function IcnCustomizer({ elementKey }) {
   const { css } = useFela()
+  const { element, fieldKey } = useParams()
   const themeColors = useRecoilValue($themeColors)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const weightVar = `--${elementKey}-w`
@@ -36,6 +39,7 @@ export default function IcnCustomizer({ elementKey }) {
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))
   }
   const unitHandler = (unit, value, name) => {
     const preUnit = getStrFromStr(themeVars[name])

@@ -1,0 +1,9 @@
+.app{
+  height: 100%;
+}
+.pane1{
+  padding: 20px;
+}
+.pane2{
+  margin-top: 20px;
+}

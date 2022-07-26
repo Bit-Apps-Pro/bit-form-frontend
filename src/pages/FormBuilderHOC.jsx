@@ -18,14 +18,15 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
-import { $styles, $tempStyles } from '../GlobalStates/StylesState'
+import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
+import { bitCipher, deepCopy, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
@@ -82,6 +83,19 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
 
+  const setLgLightThemeVars = useSetRecoilState($themeVarsLgLight)
+  const setLgDarkThemeVars = useSetRecoilState($themeVarsLgDark)
+  const setMdLightThemeVars = useSetRecoilState($themeVarsMdLight)
+  const setMdDarkThemeVars = useSetRecoilState($themeVarsMdDark)
+  const setSmLightThemeVars = useSetRecoilState($themeVarsSmLight)
+  const setSmDarkThemeVars = useSetRecoilState($themeVarsSmDark)
+  const setLgLightStyles = useSetRecoilState($stylesLgLight)
+  const setLgDarkStyles = useSetRecoilState($stylesLgDark)
+  const setMdLightStyles = useSetRecoilState($stylesMdLight)
+  const setMdDarkStyles = useSetRecoilState($stylesMdDark)
+  const setSmLightStyles = useSetRecoilState($stylesSmLight)
+  const setSmDarkStyles = useSetRecoilState($stylesSmDark)
+  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
   const { forceBuilderWidthToLG } = builderHookStates
@@ -99,29 +113,51 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   useEffect(() => {
     if (fetchedBuilderHelperStates) {
-      const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
-      setStyle(parseStyle.style)
-      setBreakpointSize(parseStyle.breakpointSize)
-      const allStyleStates = {
-        themeVars: parseStyle.themeVars,
-        lightThemeColors: parseStyle.themeColors?.lightThemeColors,
-        darkThemeColors: parseStyle.themeColors?.darkThemeColors,
-        styles: parseStyle.styles,
-      }
-      setTempStyles(allStyleStates)
+      const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
+      // declare new theme exist , no need old theme functions
+      if (!isObjectEmpty(oldStyles)) setIsNewThemeStyleLoaded(true)
+      setLightThemeColors(oldStyles.themeColors.lightThemeColors)
+      setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
+      setLgLightThemeVars(oldStyles.themeVars.lgLightThemeVars)
+      setLgDarkThemeVars(oldStyles.themeVars.lgDarkThemeVars)
+      setMdLightThemeVars(oldStyles.themeVars.mdLightThemeVars)
+      setMdDarkThemeVars(oldStyles.themeVars.mdDarkThemeVars)
+      setSmLightThemeVars(oldStyles.themeVars.smLightThemeVars)
+      setSmDarkThemeVars(oldStyles.themeVars.smDarkThemeVars)
+      setLgLightStyles(oldStyles.style.lgLightStyles)
+      setLgDarkStyles(oldStyles.style.lgDarkStyles)
+      setMdLightStyles(oldStyles.style.mdLightStyles)
+      setMdDarkStyles(oldStyles.style.mdDarkStyles)
+      setSmLightStyles(oldStyles.style.smLightStyles)
+      setSmDarkStyles(oldStyles.style.smDarkStyles)
+
+      const savedStyles = deepCopy({
+        themeColors: oldStyles.themeColors,
+        themeVars: oldStyles.themeVars,
+        styles: oldStyles.style,
+      })
+      setSavedStylesAndVars(prev => ({ ...prev, ...savedStyles }))
+
+      setBreakpointSize(oldStyles.breakpointSize)
+
+      // setStyle(oldStyles.style)
+      // setThemeVars(oldStyles.themeVars)
+      // if (oldStyles.themeColors?.lightThemeColors) setLightThemeColors(oldStyles.themeColors.lightThemeColors)
+      // if (oldStyles.themeColors?.darkThemeColors) setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
+      // const allStyleStates = {
+      //   themeVars: oldStyles.themeVars,
+      //   lightThemeColors: oldStyles.themeColors?.lightThemeColors,
+      //   darkThemeColors: oldStyles.themeColors?.darkThemeColors,
+      //   styles: oldStyles.style,
+      // }
+      // setTempStyles(allStyleStates)
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {
         const { state } = drft.histories[0]
         drft.histories[0].state = {
           ...state,
-          ...allStyleStates,
+          // ...allStyleStates, // TODO fix this with lot of state
         }
       }))
-      setThemeVars(parseStyle.themeVars)
-      if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
-      if (parseStyle.themeColors?.darkThemeColors) setDarkThemeColors(parseStyle.themeColors.darkThemeColors)
-
-      // declare new theme exist , no need old theme functions
-      if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
     } else {
       setOldExistingStyle()
       const allStyleStates = {
@@ -140,7 +176,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         }
       }))
     }
-    // setGridWidth(863)
   }, [fetchedBuilderHelperStates])
 
   useEffect(() => {
@@ -214,7 +249,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         replaceId = oldStyleText.match(/._frm-bg-\d+/g)?.[0].replace(/._frm-bg-/g, '')
       }
       if (replaceId !== undefined) {
-        oldStyleText = oldStyleText.replaceAll(new RegExp(`-${replaceId}`, 'g'), `-${formID}`)
+        oldStyleText = oldStyleText.replace(new RegExp(`-${replaceId}`, 'g'), `-${formID}`)
       }
     }
     const modifiedStyle = css2json(oldStyleText)

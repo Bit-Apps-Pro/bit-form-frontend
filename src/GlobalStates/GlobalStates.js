@@ -35,7 +35,7 @@ export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 export const $customCodes = atom({ key: '$customCodes', default: { JavaScript: '', CSS: '' } })
 export const $reportId = atom({ key: '$reportId', default: {} })
-
+export const $builderSettings = atom({ key: '$builderSettings', default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } } })
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })

@@ -1,4 +1,3 @@
-import merge from 'deepmerge-alt'
 import { atom, selector } from 'recoil'
 import { $colorScheme } from './GlobalStates'
 
@@ -133,7 +132,7 @@ export const $themeColors = selector({
   get: ({ get }) => {
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
-    if (colorScheme === 'dark') return merge(get($lightThemeColors), get($darkThemeColors))
+    if (colorScheme === 'dark') return { ...get($lightThemeColors), ...get($darkThemeColors) }
   },
   set: ({ set, get }, newColors) => {
     const colorScheme = get($colorScheme)

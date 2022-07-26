@@ -18,8 +18,8 @@ import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $customCodes, $newFormId } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $customCodes } from '../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -29,17 +29,14 @@ import { cssPredefinedCodeList, jsPredefinedCodeList } from '../../Utils/StaticD
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import Downmenu from '../Utilities/Downmenu'
 import ListGroup from '../Utilities/ListGroup'
-import SimpleDropdown from '../Utilities/SimpleDropdown'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
+import Select from '../Utilities/Select'
 
 function CustomCodeEditor() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const [editorTab, setEditorTab] = useState('JavaScript')
-  const [tab, setTab] = useState('Custom Code')
-  const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const newFormId = useRecoilValue($newFormId)
   const [theme, setTheme] = useState(localStorage.getItem('bf-editor-theme') || 'tomorrow')
   const [enableEditor, setEnableEditor] = useState(localStorage.getItem('bf-enable-editor') || 'on')
   const codeEditorRef = useRef({})
@@ -151,90 +148,89 @@ function CustomCodeEditor() {
 
   return (
     <div>
-      <StyleSegmentControl
-        options={[{ label: 'Custom Code' }, { label: 'Other' }]}
-        onChange={lbl => setTab(lbl)}
-        defaultActive="Custom Code"
-        actionValue={tab}
-        wideTab
-      />
-      <br />
 
-      <Grow open={tab === 'Custom Code'}>
-        <>
-          <div className={css({ flx: 'between' })}>
-            <StyleSegmentControl
-              className={css(ut.w5, ut.mb2)}
-              options={editorTabList.map(el => ({ label: el }))}
-              onChange={lbl => setEditorTab(lbl)}
-              defaultActive="JavaScript"
-              actionValue={editorTab}
-              wideTab
+      <div className={css({ flx: 'between' })}>
+        <div className={css(ut.w10, { flx: 'center', my: 2, ml: 27 })}>
+          <StyleSegmentControl
+            width={300}
+            options={editorTabList.map(el => ({ label: el }))}
+            onChange={lbl => setEditorTab(lbl)}
+            defaultActive="JavaScript"
+            actionValue={editorTab}
+            wideTab
+          />
+        </div>
+        <div className={css(ut.flxc)}>
+          {/* <span>add snippets</span> */}
+          <Downmenu place="bottom-end">
+            <button
+              data-testid="titl-mor-opt-btn"
+              data-close
+              type="button"
+              className={css(style.btn)}
+              unselectable="on"
+              draggable="false"
+              style={{ cursor: 'pointer' }}
+              title={__('Snippets')}
+            >
+              <BdrDottedIcn size="16" />
+            </button>
+            <ListGroup
+              options={getPredefinedCodeList()}
+              action={handlePredefinedCode}
             />
-            <div className={css(ut.flxc)}>
-              {/* <span>add snippets</span> */}
-              <Downmenu place="bottom-end">
-                <button
-                  data-testid="titl-mor-opt-btn"
-                  data-close
-                  type="button"
-                  className={css(style.btn)}
-                  unselectable="on"
-                  draggable="false"
-                  style={{ cursor: 'pointer' }}
-                  title={__('Snippets')}
-                >
-                  <BdrDottedIcn size="16" />
-                </button>
-                <ListGroup options={getPredefinedCodeList()} action={handlePredefinedCode} />
-              </Downmenu>
-            </div>
+          </Downmenu>
+        </div>
+      </div>
+
+      <Grow open={editorTab === 'JavaScript'}>
+        {enableEditor === 'on' ? (
+          <AceEditor
+            {...editorProps}
+            onLoad={(editor) => {
+              editor.session.$worker.send('changeOptions', [{ asi: true }])
+            }}
+          />
+        ) : (
+          <div>
+            <textarea
+              className={css(style.editor, { h: 330 })}
+              onChange={(e) => handleEditorValue(e.target.value)}
+              value={customCodes[editorTab] || ''}
+              rows="18"
+            />
           </div>
+        )}
+      </Grow>
 
-          <Grow open={editorTab === 'JavaScript'}>
-            {enableEditor === 'on' ? (
-              <AceEditor
-                {...editorProps}
-                onLoad={(editor) => {
-                  editor.session.$worker.send('changeOptions', [{ asi: true }])
-                }}
-              />
-            ) : (
-              <div>
-                <textarea
-                  className={css(style.editor, { h: 330 })}
-                  onChange={(e) => handleEditorValue(e.target.value)}
-                  value={customCodes[editorTab] || ''}
-                  rows="18"
-                />
-              </div>
-            )}
-          </Grow>
-
-          <Grow open={editorTab === 'CSS'}>
-            {enableEditor === 'on' ? (
-              <AceEditor
-                {...editorProps}
-              />
-            ) : (
-              <div>
-                <textarea
-                  className={css(style.editor, { h: 330 })}
-                  onChange={(e) => handleEditorValue(e.target.value)}
-                  value={customCodes[editorTab] || ''}
-                  rows="18"
-                />
-              </div>
-            )}
-          </Grow>
-        </>
+      <Grow open={editorTab === 'CSS'}>
+        {enableEditor === 'on' ? (
+          <AceEditor
+            {...editorProps}
+          />
+        ) : (
+          <div>
+            <textarea
+              className={css(style.editor, { h: 330 })}
+              onChange={(e) => handleEditorValue(e.target.value)}
+              value={customCodes[editorTab] || ''}
+              rows="18"
+            />
+          </div>
+        )}
       </Grow>
       <div className={css(ut.flxb, ut.mt1, { jc: 'between' })}>
         <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
           <CheckBoxMini title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
           {enableEditor === 'on' && (
             <>
-              <SimpleDropdown options={themesList} placeholder="Theme" onChange={themeSetLocalStorage} value={theme} cls={css(ut.ml2)} w={130} />
+              <Select
+                onChange={themeSetLocalStorage}
+                value={theme}
+                options={themesList}
+                size="sm"
+                inputClass={css(style.selectInput)}
+              />
               <CheckBoxMini className={css(ut.ml4)} title="Word Wrap" checked={editorOptions.wrap} onChange={() => setEditorOptions(oldOptions => ({ ...oldOptions, wrap: !oldOptions.wrap }))} />
             </>
           )}
@@ -254,26 +250,6 @@ const style = {
     flx: 'center-between',
   },
   theme: { dy: 'flex', jc: 'flex-end' },
-  select: {
-    fs: 14,
-    fw: 500,
-    w: '96%  !important',
-    bd: 'var(--b-79-96) !important',
-
-    oe: 'none !important',
-    ae: 'auto !important',
-    mx: 'auto',
-    dy: 'block',
-    lh: '2 !important',
-    px: 8,
-    p: '0 !important',
-    mb: 3,
-    bs: 'none !important',
-    b: 'none !important',
-    brs: '8px !important',
-    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
-    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
-  },
   editorBtn: {
     fs: 12,
     pr: 5,

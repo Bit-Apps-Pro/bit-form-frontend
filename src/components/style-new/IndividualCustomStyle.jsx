@@ -15,7 +15,7 @@ import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sizeControlStyle from '../../styles/sizeControl.style'
-import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
 import { staticFontStyleVariants, staticFontweightVariants, staticWhiteSpaceVariants, staticWordWrapVariants } from '../../Utils/StaticData/fontvariant'
 import CustomInputControl from '../CompSettings/StyleCustomize/ChildComp/CustomInputControl'
@@ -129,8 +129,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }
   })
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
-  const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
-  const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
+  const fontweightVariants = styles.font?.fontWeightVariants.length !== 0 ? arrayToObject(styles.font?.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.font?.fontStyle.length !== 0 ? arrayToObject(styles.font?.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}${selector}->${cssProperty}`
@@ -139,13 +139,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const getTitle = {
     'fld-wrp': 'Field Container',
     'lbl-wrp': 'Label & Subtitle Container',
-    'lbl': 'Label Container',
+    lbl: 'Label Container',
     'lbl-pre-i': 'Label Leading Icon',
     'lbl-suf-i': 'Label Trailing Icon',
     'sub-titl': 'Subtitle Container',
     'sub-titl-pre-i': 'Subtitle Leading Icon',
     'sub-titl-suf-i': 'Subtitle Trailing Icon',
-    'fld': 'Field Container',
+    fld: 'Field Container',
     'pre-i': 'Field Leading Icon',
     'suf-i': 'Field Trailing Icon',
     'hlp-txt': 'Helper Text Container',
@@ -153,7 +153,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     'hlp-txt-suf-i': 'Helper Text Trailing Icon',
     'err-msg': 'Error Messages Container',
     'currency-fld-wrp': 'Currency Field Wrapper',
-    'btn': 'Button',
+    btn: 'Button',
     'btn-pre-i': 'Button Leading Icon',
     'btn-suf-i': 'Button Trailing Icon',
     'other-inp': 'Other Option Input',
@@ -169,7 +169,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   }
 
   const updateHandler = (value, unit, styleUnit, property) => {
-    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit?.replaceAll(/(undefined)/gi, '')
+    if (styleUnit?.match(/(undefined)/gi)?.[0]) styleUnit = styleUnit?.replace(/(undefined)/gi, '')
     const convertvalue = unitConverter(unit, value, styleUnit)
     const propertyPath = getPropertyPath(property)
 
@@ -206,12 +206,14 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           }))
         }
       })
+      addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Properties Added`, '', { styles: getLatestState('styles') }))
     } else {
       const propPath = getPropertyPath(property, state)
       const defaultPropPath = getPropertyPath(property)
       setStyles(prvStyle => produce(prvStyle, drft => {
         assignNestedObj(drft, propPath, getValueByObjPath(styles, defaultPropPath))
       }))
+      addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Property Added`, '', { styles: getLatestState('styles') }))
     }
   }
 
@@ -239,6 +241,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         deleteNestedObj(drft, getPropertyPath(propName, state))
       }))
     })
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const delMultiPropertyHandler = (propertyPaths, state = '') => {
     state = getPseudoPath(state)
@@ -247,12 +250,14 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         deleteNestedObj(drft, propertyPath, state)
       })
     }))
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${propertyPaths[0]} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const clearHandler = (property, state = '') => {
     state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, deleteNestedObj(property, state), '')
     }))
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Clear`, '', { styles: getLatestState('styles') }))
   }
 
   const [fldLineHeightVal, fldLineHeightUnit] = getStyleValueAndUnit('line-height')
@@ -323,7 +328,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <BackgroundControl
             title="Background"
             subtitle={`${fldTitle}`}
-            value={existCssPropsObj?.['background-image'].replace(' !important', '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
+            value={existCssPropsObj?.['background-image']?.replace(/\s?!important/g, '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
             propertyPath={objPaths.paths?.background}
@@ -906,7 +911,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit, state)}
-                // preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
+                preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
                 definedValueHandler={value => preDefinedValueHandler(value, 'font-size', state)}
                 value={fldFSValue || 12}
                 unit={fldFSUnit || 'px'}
@@ -935,7 +940,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 w={130}
                 h={30}
                 id="fld-font-weight"
-                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
+                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font?.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
               />
             </div>
           </StylePropertyBlock>
@@ -961,7 +966,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
                 w={130}
                 h={30}
                 id="fld-font-style"
-                cls={css((styles.font.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
+                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font?.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
               />
             </div>
           </StylePropertyBlock>

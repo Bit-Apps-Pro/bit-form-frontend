@@ -1,11 +1,12 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
-import { assignNestedObj } from '../../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, unitConverter } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
@@ -13,7 +14,7 @@ import SizeControl from './SizeControl'
 
 export default function TextDecorationControlMenu({ objectPaths, id }) {
   const { css } = useFela()
-
+  const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
 
@@ -36,6 +37,7 @@ export default function TextDecorationControlMenu({ objectPaths, id }) {
 
   const onValueChange = (pathName, val) => {
     setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, pathName, val, { [object]: getLatestState(object) }))
   }
 
   const styleOptions = [

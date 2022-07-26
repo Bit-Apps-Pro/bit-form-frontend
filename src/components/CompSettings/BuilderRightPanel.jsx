@@ -35,7 +35,7 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
 
   useEffect(() => {
-    const settingsScroll = select('.settings').firstChild.firstChild
+    const settingsScroll = select('.settings')?.firstChild?.firstChild
     if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
   }, [fieldKey, rightBar, element])
 
