@@ -76,7 +76,7 @@ function FilterColorsPickerMenu({ stateObjName,
   const handleColor = (path, _h, _s, _v, _a) => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
 
-    // TODO history should be added
+  
     switch (stateObjName) {
       case 'themeColors':
         setThemeColors(prvState => produce(prvState, drftThmClr => {
@@ -108,7 +108,7 @@ function FilterColorsPickerMenu({ stateObjName,
         break
     }
   }
-  // TODO history should be added
+
   const handleValue = (path, value) => {
     switch (stateObjName) {
       case 'themeColors':
