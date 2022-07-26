@@ -5,14 +5,10 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  $reportId,
-  $reportSelector,
-  $additionalSettings,
+import { $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
-  $builderHookStates,
-  $confirmations,
+  $builderHookStates, $confirmations,
   $customCodes,
   $deletedFldKey,
   $fieldLabels,
@@ -22,23 +18,20 @@ import {
   $integrations,
   $layouts,
   $mailTemplates,
-  $newFormId,
-  $reports,
-  $updateBtn,
-  $workflows
-} from '../GlobalStates/GlobalStates'
+  $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
+  $workflows } from '../GlobalStates/GlobalStates'
 import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
+import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
+import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
+import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
-import { select } from '../Utils/globalHelpers'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 // TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
 import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
@@ -242,25 +235,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles } = atomicStyleGenarate(layouts)
 
-    console.log('update styles', {
-      atomicClassMap,
-      lightThemeColors,
-      darkThemeColors,
-      lgLightThemeVars,
-      lgDarkThemeVars,
-      mdLightThemeVars,
-      mdDarkThemeVars,
-      smLightThemeVars,
-      smDarkThemeVars,
-      lgLightStyles,
-      lgDarkStyles,
-      mdLightStyles,
-      mdDarkStyles,
-      smLightStyles,
-      smDarkStyles
-    })
-
     // TODO : send here another request to create atomic css file
+    const atomicData = {
+      form_id: savedFormId || newFormId,
+      atomicCssText,
+    }
+    bitsFetch(atomicData, 'bitforms_save_css').then(res => {
+      console.log('save css response=', res)
+    })
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle = formStyle && (bitDecipher(formStyle))
