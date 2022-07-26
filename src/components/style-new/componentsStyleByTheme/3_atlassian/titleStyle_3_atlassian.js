@@ -7,13 +7,6 @@ export default function titleStyle_3_atlassian({ fk }) {
       'flex-direction': 'row',
       'align-items': 'center',
     },
-    [`.${fk}-fld-wrp.fld-hide::after`]: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      content: '""',
-      'background-color': 'hsla(0, 0%, 0%, 20%)',
-    },
     [`.${fk}-titl-wrp`]: { padding: '0px 5px' },
     [`.${fk}-title`]: {
       margin: '5px',

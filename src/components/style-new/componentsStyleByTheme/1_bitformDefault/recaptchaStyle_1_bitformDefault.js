@@ -16,14 +16,5 @@ export default function recaptchaStyle_1_bitformDefault({ fk }) {
       'border-width': 'var(--fld-wrp-bdr-width, 0)',
       'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
     },
-    [`.${fk}-fld-wrp.fld-hide::after`]: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      content: '""',
-      width: '100%',
-      height: '100%',
-      'background-color': 'hsla(0, 0%, 0%, 20%)',
-    },
   }
 }
