@@ -30,7 +30,7 @@ export default function ButtonSettings() {
   const [error, setError] = useState({})
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const { txt, align, fulW, btnTyp } = fieldData
+  const { txt, align, txtAlign, fulW, btnTyp } = fieldData
   const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
@@ -83,6 +83,15 @@ export default function ButtonSettings() {
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
     setBtnAlign(e.target.value)
     addToBuilderHistory({ event: `Button Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
+  }
+
+  function setButtonTextAlign(e) {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['justify-content'] = e.target.value
+    }))
+    fieldData.txtAlign = e.target.value
+    setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
+    addToBuilderHistory({ event: `Button Text Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_text_align', state: { fields, fldKey } })
   }
 
   const checkSubmitBtn = () => {
@@ -173,6 +182,20 @@ export default function ButtonSettings() {
         >
           <div className={css(FieldStyle.placeholder)}>
             <select data-testid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
+              {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+            </select>
+          </div>
+        </SimpleAccordion>
+
+        <FieldSettingsDivider />
+        <SimpleAccordion
+          id="txt-algn"
+          title={__('Text Align')}
+          className={css(FieldStyle.fieldSection)}
+          open
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <select data-testid="txt-algn-slct" className={css(FieldStyle.input)} name="" id="" value={txtAlign || 'center'} onChange={setButtonTextAlign}>
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>

@@ -6,12 +6,11 @@ import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
-  $reportId,
-  $reportSelector,
   $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
   $builderHookStates,
+  $builderSettings,
   $confirmations,
   $customCodes,
   $deletedFldKey,
@@ -22,23 +21,21 @@ import {
   $integrations,
   $layouts,
   $mailTemplates,
-  $newFormId,
-  $reports,
-  $updateBtn,
+  $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
   $workflows
 } from '../GlobalStates/GlobalStates'
 import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
+import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
+import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
+import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
-import { select } from '../Utils/globalHelpers'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 // TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
 import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
@@ -85,6 +82,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setMdDarkStyles = useSetRecoilState($stylesMdDark)
   const setSmLightStyles = useSetRecoilState($stylesSmLight)
   const setSmDarkStyles = useSetRecoilState($stylesSmDark)
+  const builderSettings = useRecoilValue($builderSettings)
 
   const breakpointSize = useRecoilValue($breakpointSize)
 
@@ -243,6 +241,13 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smDarkStyles } = atomicStyleGenarate(layouts)
 
     // TODO : send here another request to create atomic css file
+    const atomicData = {
+      form_id: savedFormId || newFormId,
+      atomicCssText,
+    }
+    bitsFetch(atomicData, 'bitforms_save_css').then(res => {
+      console.log('save css response=', res)
+    })
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle = formStyle && (bitDecipher(formStyle))
@@ -291,6 +296,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         mailTem: mailTemplates,
         integrations: allIntegrations,
       },
+      builderSettings,
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
     if (savedFormId && deletedFldKey.length !== 0) {

@@ -78,61 +78,26 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const setBtnSize = (elementKey, value) => {
-    switch (value) {
-      case 'small-2':
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding'),
-          ],
-          ['12px', '7px 10px'],
-        )
-        break
-      case 'small-1':
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding')],
-          ['14px', '9px 15px'],
-        )
-        break
-      case 'medium':
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding'),
-          ],
-          ['16px', '11px 20px'],
-        )
-        break
-      case 'large-1':
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding'),
-          ],
-          ['18px', '12px 22px'],
-        )
-        break
-      case 'large-2':
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding'),
-          ],
-          ['21px', '14px 24px'],
-        )
-        break
-      default:
-        setMuptipleProperty(
-          [
-            propertyPath(elementKey, 'font-size'),
-            propertyPath(elementKey, 'padding'),
-          ],
-          ['16px', '11px 20px'],
-        )
-        break
+    const btnSizeValues = {
+      'small-2': ['12px', '7px 10px'],
+      'small-1': ['14px', '9px 15px'],
+      medium: ['16px', '11px 20px'],
+      'large-1': ['18px', '12px 22px'],
+      'large-2': ['21px', '14px 24px'],
     }
+
+    const propertyPaths = [
+      propertyPath(elementKey, 'font-size'),
+      propertyPath(elementKey, 'padding'),
+    ]
+    const values = btnSizeValues[value]
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle.fields[fieldKey].fieldSize = value
+      propertyPaths.map((path, index) => {
+        assignNestedObj(drftStyle, path, values[index])
+      })
+    }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Button Size', value, { styles: getLatestState('styles') }))
   }
 
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
@@ -427,6 +392,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
             <span className={css(ut.fw500)}>Size</span>
             <select
               data-testid="btn-size-ctrl"
+              value={fieldSize}
               onChange={e => setBtnSize('btn', e.target.value)}
               className={css(sc.select)}
             >

@@ -52,6 +52,7 @@ export default function ThemeQuickTweaksCustomizer() {
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
+        drft.fields[fldKey].fieldSize = value
         // const fldClasses = Object.keys(fldClassesObj)
 
         const commonStylClassesLen = commonStylClasses.length

@@ -182,9 +182,10 @@ export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === 'rad' && unit === 'deg') return valueInNum * 57.2958
 
   // convert mm to (px, rem, em)
-  if (prvUnit === 'mm' && unit === 'px') return valueInNum * 3.78
-  if (prvUnit === 'mm' && unit === 'rem') return valueInNum * 0.24
-  if (prvUnit === 'mm' && unit === 'em') return valueInNum * 0.24
+  if (prvUnit === 'mm' && unit === 'px') return Number(value * 3.78)
+  if (prvUnit === 'mm' && unit === 'rem') return Number(value * 0.24)
+  if (prvUnit === 'mm' && unit === 'em') return Number(value * 0.24)
+  return value
 }
 
 export const getNumFromStr = (str = '') => {

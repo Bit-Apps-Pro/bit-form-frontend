@@ -13,12 +13,12 @@ import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
-import { $stylesLgLight } from '../GlobalStates/StylesState'
+import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -53,6 +53,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const colorScheme = useRecoilValue($colorScheme)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth)
+  const setTempStyles = useSetRecoilState($tempStyles)
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(2)
@@ -285,6 +286,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       })
       return newStyles
     })
+    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
+      draftStyle.styles = newStyles
+    }))
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
 
@@ -326,7 +330,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
         draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
       })
     }))
-
+    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
+      draftStyle.styles = getLatestState('styles')
+    }))
     sessionStorage.setItem('btcd-lc', '-')
 
     setTimeout(() => {
@@ -337,7 +343,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     // add to history
     const event = `${generateFieldLblForHistory(fldData)} cloned`
     const type = 'clone_fld'
-    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
+    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles') }
     addToBuilderHistory({ event, type, state })
 
     resetContextMenu()

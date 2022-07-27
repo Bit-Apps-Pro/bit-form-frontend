@@ -267,12 +267,13 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
     state = getPseudoPath(state)
     const convertvalue = unitConverter(unit, value, prvUnit)
+    let v = `${convertvalue}${unit}`
+    const checkExistImportant = existImportant(getPropertyPath(prop, state))
+    if (checkExistImportant) v += ' !important'
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      let v = `${convertvalue}${unit}`
-      const checkExistImportant = existImportant(getPropertyPath(prop, state))
-      if (checkExistImportant) v += ' !important'
       assignNestedObj(drftStyle, getPropertyPath(prop, state), v)
     }))
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, prop, v, { styles: getLatestState('styles') }))
   }
   const preDefinedValueHandler = (value, property, state = '') => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
@@ -280,6 +281,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       if (checkExistImportant) value += ' !important'
       assignNestedObj(drftStyle, getPropertyPath(property, state), value)
     }))
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, property, value, { styles: getLatestState('styles') }))
   }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
     state = getPseudoPath(state)
@@ -289,6 +291,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       if (checkExistImportant) v += ' !important'
       assignNestedObj(drft, getPropertyPath(property, state), v)
     }))
+    addToBuilderHistory(generateHistoryData(elementKey, fldKey, property, val, { styles: getLatestState('styles') }))
   }
 
   const options = [

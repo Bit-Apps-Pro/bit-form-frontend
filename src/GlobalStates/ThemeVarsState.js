@@ -162,7 +162,7 @@ export const $themeVarsLgLight = atom({
     '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
     '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius
 
-    '--btn-fs': '16px', // button txt font size
+    '--btn-fs': 'var(--fld-fs)', // button txt font size
     '--btn-p': '11px 20px', // button padding
     '--btn-m': '0px 0px', // button marging
     '--btn-fw': 700, // button font weight

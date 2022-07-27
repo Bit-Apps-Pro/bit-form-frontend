@@ -9,12 +9,14 @@ import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { getRecoil } from 'recoil-nexus'
 import { $builderRightPanelScroll, $colorScheme, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
+import { addToBuilderHistory, generateHistoryData } from '../../Utils/FormBuilderHelper'
 import AsteriskCustomizer from './AsteriskCustomizer'
 import ButtonCustomizer from './ButtonCustomizer'
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
@@ -30,7 +32,7 @@ import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
-  const { formType, formID, element } = useParams()
+  const { formType, formID, element, fieldKey } = useParams()
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
@@ -70,7 +72,10 @@ export default function ThemeCustomize() {
     }
   }
 
-  const handlecolorScheme = (colorSchemeName) => setColorScheme(colorSchemeName)
+  const handlecolorScheme = (colorSchemeName) => {
+    setColorScheme(colorSchemeName)
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Color Scheme', colorSchemeName, { colorScheme: getRecoil($colorScheme) }))
+  }
 
   return (
     <div className={css(cls.mainWrapper)}>

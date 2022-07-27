@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $builderHistory, $builderHookStates, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -527,6 +527,8 @@ export const getLatestState = (stateName) => {
   if (stateName === 'styles') return getRecoil($styles)
   if (stateName === 'themeVars') return getRecoil($themeVars)
   if (stateName === 'themeColors') return getRecoil($themeColors)
+  if (stateName === 'breakpoint') return getRecoil($breakpoint)
+  if (stateName === 'colorScheme') return getRecoil($colorScheme)
 }
 
 const elementLabel = (element) => {
@@ -556,12 +558,13 @@ const elementLabel = (element) => {
     case 'btn-suf-i': return 'Button Trailing Icon'
     case 'req-smbl': return 'Asterisk Symbol'
     case 'fld': return 'Input Field'
-    default: return element
+    default: return element || ''
   }
 }
 
 const generePropertyName = (propertyName) => {
-  let newPropertyName = propertyName.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+  let newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+  // eslint-disable-next-line es/no-string-prototype-replaceall
   newPropertyName = newPropertyName.replaceAll('--', '')
     .replaceAll('-', ' ')
     .replaceAll(/\b(fld)\b/g, 'Field')
@@ -578,13 +581,14 @@ const generePropertyName = (propertyName) => {
     .replaceAll(/\b(hlp)\b/g, 'Helper')
     .replaceAll(/\b(err)\b/g, 'Error')
     .replaceAll(/\b(titl)\b/g, 'Title')
-    .replaceAll(/\b(smbl)\b/g, 'Symbor')
+    .replaceAll(/\b(smbl)\b/g, 'Symbol')
     .replaceAll(/\b(fs)\b/g, 'Font Size')
     .replaceAll(/\b(m)\b/g, 'Margin')
     .replaceAll(/\b(p)\b/g, 'Padding')
     .replaceAll(/\b(w)\b/g, 'Width')
     .replaceAll(/\b(h)\b/g, 'Height')
     .replaceAll(/\b(wrp)\b/g, 'Container')
+    .replaceAll(/\b(req)\b/g, 'Required')
     .replaceAll(/\b\w/g, c => c.toUpperCase())
   return newPropertyName
 }
