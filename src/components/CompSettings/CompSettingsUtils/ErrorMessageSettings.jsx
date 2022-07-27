@@ -22,7 +22,7 @@ import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ id, type, title, tipTitle, defaultMsg }) {
+export default function ErrorMessageSettings({ className, id, type, title, tipTitle, defaultMsg, allowIcons = true }) {
   const [errorModal, setErrorModal] = useState(false)
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
@@ -97,7 +97,7 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
   }
 
   return (
-    <div className={`${css(ErrorMessages.wrapper)} err-msg-wrapper`}>
+    <div className={`${css(ErrorMessages.wrapper)} err-msg-wrapper ${className}`}>
       <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
         {/* flx flx-between mt-1 mb-1 mr-2 */}
         <div className={`${css(ErrorMessages.flx)}`}>
@@ -159,23 +159,25 @@ export default function ErrorMessageSettings({ id, type, title, tipTitle, defaul
             <RenderHtml html={errMsg} />
           </div>
 
-          <div className={css(ut.mt1)}>
-            <FieldIconSettings
-              label="Leading Icon"
-              iconSrc={fieldData?.errPreIcn}
-              styleRoute="err-txt-pre-i"
-              setIcon={() => setIconModel('errPreIcn')}
-              removeIcon={() => removeIcon('errPreIcn')}
-            />
+          {allowIcons && (
+            <div className={css(ut.mt1)}>
+              <FieldIconSettings
+                label="Leading Icon"
+                iconSrc={fieldData?.errPreIcn}
+                styleRoute="err-txt-pre-i"
+                setIcon={() => setIconModel('errPreIcn')}
+                removeIcon={() => removeIcon('errPreIcn')}
+              />
 
-            <FieldIconSettings
-              label="Trailing Icon"
-              iconSrc={fieldData?.errSufIcn}
-              styleRoute="err-txt-suf-i"
-              setIcon={() => setIconModel('errSufIcn')}
-              removeIcon={() => removeIcon('errSufIcn')}
-            />
-          </div>
+              <FieldIconSettings
+                label="Trailing Icon"
+                iconSrc={fieldData?.errSufIcn}
+                styleRoute="err-txt-suf-i"
+                setIcon={() => setIconModel('errSufIcn')}
+                removeIcon={() => removeIcon('errSufIcn')}
+              />
+            </div>
+          )}
 
           <CustomErrorMessageModal
             errorModal={errorModal}

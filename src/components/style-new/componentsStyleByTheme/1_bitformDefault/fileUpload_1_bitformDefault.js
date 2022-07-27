@@ -89,8 +89,8 @@ export default function fileUploadStyle_1_BitformDefault({ fk }) {
     },
     [`.${fk}-file-preview`]: {
       'border-radius': '10px',
-      height: '35px',
-      width: '35px',
+      height: '25px',
+      width: '25px',
     },
     [`.${fk}-file-details`]: {
       display: 'flex',
@@ -143,7 +143,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk }) {
       'margin-left': '10px',
       'margin-top': '10px',
       padding: '2px 20px',
-      width: '90%',
+      width: '98%',
     },
     [`.${fk}-err-wrp.active`]: {
       display: 'flex',

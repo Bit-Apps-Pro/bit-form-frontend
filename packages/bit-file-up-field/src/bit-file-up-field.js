@@ -95,7 +95,7 @@ export default class BitFileUpField {
     // this.#fileUploadInput.onchange = onchange
     this.#fileUploadInput.accept = allowedFileType ? `${allowedFileType}, ${accept}` : accept
 
-    if (showSelectStatus) this.#fileSelectStatus.innerText = fileSelectStatus
+    if (showSelectStatus) this.#fileSelectStatus.innerHTML = fileSelectStatus
     else this.#fileSelectStatus?.remove()
 
     if (!this.#config.showFileList) this.#filesList?.remove()
@@ -106,7 +106,22 @@ export default class BitFileUpField {
   #fileUploadAction(e) {
     const { files } = this.#fileUploadInput
 
-    const { sizeUnit, allowMaxSize, maxSize, maxSizeErrMsg, isItTotalMax, multiple, showFileList, showFilePreview, showFileSize, showSelectStatus, fileSelectStatus, minFile, minFileErrMsg, maxFile, maxFileErrMsg } = this.#config
+    const { sizeUnit,
+      allowMaxSize,
+      maxSize,
+      maxSizeErrMsg,
+      isItTotalMax,
+      multiple,
+      showFileList,
+      fileExistMsg,
+      showFilePreview,
+      showFileSize,
+      showSelectStatus,
+      fileSelectStatus,
+      minFile,
+      minFileErrMsg,
+      maxFile,
+      maxFileErrMsg } = this.#config
 
     const maxFileSize = this.#maxFileSize(sizeUnit, maxSize)
 
@@ -142,7 +157,7 @@ export default class BitFileUpField {
             }
             if (isItTotalMax) totalFileSize += file.size
           } else {
-            this.#errorWrap.innerText = maxFileErrMsg
+            this.#errorWrap.innerHTML = maxFileErrMsg
             this.#addClass(this.#errorWrap, 'active')
             setTimeout(() => {
               this.#removeClass(this.#errorWrap, 'active')
@@ -152,7 +167,7 @@ export default class BitFileUpField {
           error.push(maxSizeErrMsg)
         }
       } else {
-        error.push('File Allready Exist')
+        error.push(fileExistMsg)
       }
     }
     // this.#window.document.querySelectorAll()
@@ -165,11 +180,11 @@ export default class BitFileUpField {
     if (fileLength && showSelectStatus) {
       this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
     } else if (showSelectStatus) {
-      this.#fileSelectStatus.innerText = fileSelectStatus
+      this.#fileSelectStatus.innerHTML = fileSelectStatus
     }
 
     if (minFile > 0 && fileLength < minFile) {
-      this.#errorWrap.innerText = minFileErrMsg
+      this.#errorWrap.innerHTML = minFileErrMsg
       this.#addClass(this.#errorWrap, 'active')
     }
     error.map((err, errId) => {
@@ -195,7 +210,7 @@ export default class BitFileUpField {
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length
-    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerText = this.#config.fileSelectStatus }
+    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerHTML = this.#config.fileSelectStatus }
   }
 
   #select(selector) { return this.#fileUploadWrap.querySelector(selector) }
