@@ -3,9 +3,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $colorScheme } from '../../GlobalStates/GlobalStates'
-import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
-import { $darkThemeColors, $lightThemeColors } from '../../GlobalStates/ThemeColorsState'
+import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -13,16 +13,15 @@ import Tip from '../Utilities/Tip'
 import { getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ stateObjName, propertyPath, id }) {
-  const { lightThemeColors: tmpLightThemeColors,
-    darkThemeColors: tmpDarkThemeColors,
-    themeVars: tmpThemeVars,
-    styles: tmpStyles } = useRecoilValue($tempStyles)
+  // const { lightThemeColors: tmpLightThemeColors,
+  //   darkThemeColors: tmpDarkThemeColors } = useRecoilValue($tempStyles)
+  const tmpThemeColors = useRecoilValue($savedThemeColors)
+  const tmpThemeVars = useRecoilValue($savedThemeVars)
+  const tmpStyles = useRecoilValue($savedStyles)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-  const colorScheme = useRecoilValue($colorScheme)
-  const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
-  const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
 
   let show = false
   switch (stateObjName) {
@@ -53,26 +52,14 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
       break
 
     case 'themeColors':
-      if (colorScheme === 'light') {
-        if (Array.isArray(propertyPath)) {
-          propertyPath.forEach(property => {
-            if (tmpLightThemeColors?.[property] && tmpLightThemeColors?.[property] !== lightThemeColors?.[property]) {
-              show = true
-            }
-          })
-        } else if (tmpLightThemeColors?.[propertyPath] && tmpLightThemeColors?.[propertyPath] !== lightThemeColors?.[propertyPath]) {
-          show = true
-        }
-      } else if (colorScheme === 'dark') {
-        if (Array.isArray(propertyPath)) {
-          propertyPath.forEach(property => {
-            if (tmpDarkThemeColors?.[property] && tmpDarkThemeColors?.[property] !== darkThemeColors?.[property]) {
-              show = true
-            }
-          })
-        } else if (tmpDarkThemeColors?.[propertyPath] && tmpDarkThemeColors?.[propertyPath] !== darkThemeColors?.[propertyPath]) {
-          show = true
-        }
+      if (Array.isArray(propertyPath)) {
+        propertyPath.forEach(property => {
+          if (tmpThemeColors?.[property] && tmpThemeColors?.[property] !== themeColors?.[property]) {
+            show = true
+          }
+        })
+      } else if (tmpThemeColors?.[propertyPath] && tmpThemeColors?.[propertyPath] !== themeColors?.[propertyPath]) {
+        show = true
       }
       break
 
@@ -87,17 +74,10 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
         setThemeVar(prvStyle => produce(prvStyle, drft => { drft[path] = tmpThemeVars[path] }))
         break
       case 'themeColors':
-        if (colorScheme === 'light') {
-          if (!tmpLightThemeColors[path]) return
-          setLightThemeColors(prvStyle => produce(prvStyle, drft => {
-            drft[path] = tmpLightThemeColors[path]
-          }))
-        } else {
-          if (!tmpDarkThemeColors[path]) return
-          setDarkThemeColors(prvStyle => produce(prvStyle, drft => {
-            drft[path] = tmpDarkThemeColors[path]
-          }))
-        }
+        if (!tmpThemeColors[path]) return
+        setThemeColors(prvStyle => produce(prvStyle, drft => {
+          drft[path] = tmpThemeColors[path]
+        }))
         break
       case 'styles':
         const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, path)

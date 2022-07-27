@@ -19,8 +19,8 @@ import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAn
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
-import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight, $tempStyles } from '../GlobalStates/StylesState'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
+import { $darkThemeColors, $lightThemeColors, $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
@@ -77,7 +77,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const setTempStyles = useSetRecoilState($tempStyles)
+  const themeColors = useRecoilValue($themeColors)
   const [styles, setStyle] = useRecoilState($styles)
   const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
@@ -166,10 +166,11 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         themeVars: { ...themeVars },
         lightThemeColors: { ...lightThemeColors },
         darkThemeColors: { ...darkThemeColors },
-        themeColors: merge(lightThemeColors, darkThemeColors),
+        themeColors: { ...themeColors },
         styles: { ...styles },
       }
-      setTempStyles(allStyleStates)
+      // setTempStyles(allStyleStates)
+      setSavedStylesAndVars(prev => ({ ...prev, themeColors, themeVars, styles }))
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {
         const { state } = drft.histories[0]
         drft.histories[0].state = {
