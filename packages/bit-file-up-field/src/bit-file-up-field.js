@@ -106,7 +106,7 @@ export default class BitFileUpField {
   #fileUploadAction(e) {
     const { files } = this.#fileUploadInput
 
-    const { sizeUnit, maxSize, isItTotalMax, multiple, showFileList, showFilePreview, showFileSize, showSelectStatus, fileSelectStatus, minFile, maxFile } = this.#config
+    const { sizeUnit, allowMaxSize, maxSize, maxSizeErrMsg, isItTotalMax, multiple, showFileList, showFilePreview, showFileSize, showSelectStatus, fileSelectStatus, minFile, minFileErrMsg, maxFile, maxFileErrMsg } = this.#config
 
     const maxFileSize = this.#maxFileSize(sizeUnit, maxSize)
 
@@ -127,7 +127,7 @@ export default class BitFileUpField {
     for (const file of files) {
       const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
-        if (!maxSize || (file.size + totalFileSize) <= maxFileSize) {
+        if (!allowMaxSize || (!maxSize || (file.size + totalFileSize) <= maxFileSize)) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
             this.#files[fileName] = file
             if (showFileList) {
@@ -142,21 +142,21 @@ export default class BitFileUpField {
             }
             if (isItTotalMax) totalFileSize += file.size
           } else {
-            this.#errorWrap.innerText = 'Maximum File Limit Exceeded'
+            this.#errorWrap.innerText = maxFileErrMsg
             this.#addClass(this.#errorWrap, 'active')
             setTimeout(() => {
               this.#removeClass(this.#errorWrap, 'active')
             }, 3000)
           }
         } else {
-          error.push('Max Upload Size Exceeded')
+          error.push(maxSizeErrMsg)
         }
       } else {
         error.push('File Allready Exist')
       }
     }
-
-    this.#document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
+    // this.#window.document.querySelectorAll()
+    this.#window.document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
@@ -169,7 +169,7 @@ export default class BitFileUpField {
     }
 
     if (minFile > 0 && fileLength < minFile) {
-      this.#errorWrap.innerText = `You should add minmum ${minFile} File`
+      this.#errorWrap.innerText = minFileErrMsg
       this.#addClass(this.#errorWrap, 'active')
     }
     error.map((err, errId) => {
