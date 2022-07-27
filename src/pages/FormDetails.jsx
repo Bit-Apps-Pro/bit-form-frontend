@@ -15,7 +15,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $breakpoint, $builderHistory, $colorScheme, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderSettings, $colorScheme, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -76,6 +76,7 @@ function FormDetails() {
   const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setBuilderSettings = useSetRecoilState($builderSettings)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -230,6 +231,7 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+            setBuilderSettings(responseData.builderSettings)
 
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,

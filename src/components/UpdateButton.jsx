@@ -5,10 +5,13 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
-  $builderHookStates, $confirmations,
+  $builderHookStates,
+  $builderSettings,
+  $confirmations,
   $customCodes,
   $deletedFldKey,
   $fieldLabels,
@@ -19,7 +22,8 @@ import { $additionalSettings,
   $layouts,
   $mailTemplates,
   $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
-  $workflows } from '../GlobalStates/GlobalStates'
+  $workflows
+} from '../GlobalStates/GlobalStates'
 import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
@@ -78,6 +82,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setMdDarkStyles = useSetRecoilState($stylesMdDark)
   const setSmLightStyles = useSetRecoilState($stylesSmLight)
   const setSmDarkStyles = useSetRecoilState($stylesSmDark)
+  const builderSettings = useRecoilValue($builderSettings)
 
   const breakpointSize = useRecoilValue($breakpointSize)
 
@@ -291,6 +296,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         mailTem: mailTemplates,
         integrations: allIntegrations,
       },
+      builderSettings,
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
     if (savedFormId && deletedFldKey.length !== 0) {
