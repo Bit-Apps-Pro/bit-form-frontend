@@ -61,7 +61,7 @@ export default class BitCurrencyField {
 
   #allEventListeners = []
 
-  constructor(selector, config, window) {
+  constructor(selector, config) {
     Object.assign(this.#config, config)
 
     this.#window = config.window ? config.window : window

@@ -3,9 +3,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { create, destroy, registerPlugin, setOptions } from 'filepond'
+import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-
 import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size'
 import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type'
 import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop'

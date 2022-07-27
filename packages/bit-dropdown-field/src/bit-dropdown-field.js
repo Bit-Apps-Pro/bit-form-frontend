@@ -671,10 +671,9 @@ export default class BitDropdownField {
     this.#searchInputElm.value = val
   }
 
-  #handleOutsideClick(event) {
-    if (event.target.contains(this.#dropdownFieldWrapper)) {
-      this.setMenu({ open: false })
-    }
+  #handleOutsideClick(e) {
+    if (this.#dropdownFieldWrapper.contains(e.target)) return
+    this.setMenu({ open: false })
   }
 
   #isMenuOpen() {

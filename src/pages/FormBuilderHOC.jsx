@@ -132,6 +132,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setSmLightStyles(oldStyles.style.smLightStyles)
       setSmDarkStyles(oldStyles.style.smDarkStyles)
 
+      // TODO : ignore deep copy
       const savedStyles = deepCopy({
         themeColors: oldStyles.themeColors,
         themeVars: oldStyles.themeVars,
