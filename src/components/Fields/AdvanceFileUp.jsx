@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
+import bitAdvanceFileUploadField from 'bit-advance-file-upload-field'
 import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size'
 import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type'
 import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop'
@@ -13,12 +13,12 @@ import bitFilepondPluginImageResizeMin from 'bit-filepond-plugin-image-resize'
 import bitFilepondPluginImageTransformMin from 'bit-filepond-plugin-image-transform'
 import bitFilepondPluginImageValidateSizeMin from 'bit-filepond-plugin-image-validate-size'
 import bitFilepondPluginMediaPreviewMin from 'bit-filepond-plugin-media-preview'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
-import { memo, useEffect, useRef } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import bitAdvanceFileUploadField from 'bit-advance-file-upload-field'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { selectInGrid } from '../../Utils/globalHelpers'
+import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -26,12 +26,14 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const [fields] = useRecoilState($fields)
   const fieldData = fields[fieldKey]
   const { config } = fieldData
+  const [fileChange, setFileChange] = useState(0)
 
   const advanceFileFieldRef = useRef(null)
   const container = useRef(null)
 
   useEffect(() => {
     if (!window.create) window.create = create
+    if (!window.destroy) window.destroy = destroy
     if (!window.registerPlugin) window.registerPlugin = registerPlugin
     if (!window.setOptions) window.setOptions = setOptions
 
@@ -67,6 +69,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       ajaxURL: typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL,
       nonce: typeof bits === 'undefined' ? '' : bits.nonce,
       uploadFileToServer: true,
+      onFileUpdate: () => setFileChange(pre => pre + 1),
     }
 
     if (!container?.current) {
@@ -74,23 +77,38 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     }
     const fldConstructor = advanceFileFieldRef.current
     const fldElm = container.current
-    if (fldConstructor?.element) {
-      destroy(fldConstructor.element)
-      if (container.firstChild) container.removeChild(container.firstChild)
+    if (fldConstructor) {
+      destroy(container.current)
+      if (fldElm.firstChild) fldElm.removeChild(fldElm.firstChild)
     }
 
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--root`)?.setAttribute('data-dev-pond-root', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--drop-label`)?.setAttribute('data-dev-pond-drop-lbl', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--label-action`)?.setAttribute('data-dev-pond-lbl-action', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--panel-root`)?.setAttribute('data-dev-pond-panel-root', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--item-panel`)?.setAttribute('data-dev-pond-item-panel', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--file-action-button`)?.setAttribute('data-dev-pond-action-btn', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--drip-blob`)?.setAttribute('data-dev-pond-drip-blob', fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .filepond--file`)?.setAttribute('data-dev-pond-file', fieldKey)
-
     // TODO set the filepond packages to window global
-    container.current = new bitAdvanceFileUploadField(fldElm, configuration)
+    advanceFileFieldRef.current = new bitAdvanceFileUploadField(fldElm, configuration)
+    setFileChange(prv => prv + 1)
   }, [fieldData?.config])
+
+  const addAttrAndClass = (selector, isMultiple = false) => {
+    selectInGrid(`.${fieldKey}-fld-wrp .${selector}`)?.setAttribute(`data-dev-${selector}`, fieldKey)
+    selectInGrid(`.${fieldKey}-fld-wrp .${selector}`)?.classList.add(`${fieldKey}-${selector}`)
+    if (isMultiple) {
+      const btnList = selectAllInGrid(`.${fieldKey}-fld-wrp .${selector}`)
+      btnList.length > 0 && [...btnList].map(btn => {
+        btn.setAttribute(`data-dev-${selector}`, fieldKey)
+        btn.classList.add(`${fieldKey}-${selector}`)
+      })
+    }
+  }
+
+  useEffect(() => {
+    addAttrAndClass('filepond--root')
+    addAttrAndClass('filepond--drop-label')
+    addAttrAndClass('filepond--label-action')
+    addAttrAndClass('filepond--panel-root')
+    addAttrAndClass('filepond--item-panel', true)
+    addAttrAndClass('filepond--file-action-button', true)
+    addAttrAndClass('filepond--drip-blob')
+    addAttrAndClass('filepond--file')
+  }, [fileChange])
 
   return (
     <>
@@ -109,7 +127,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
           {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
           {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
         />
-        <div useRef={container} id={`filepond-${fieldKey}-container`} className={`filepond-${fieldKey}-container ${fieldData.disabled ? 'disabled' : ''} ${fieldData.readonly ? 'readonly' : ''}`} />
+        <div ref={container} id={`filepond-${fieldKey}-container`} className={`filepond-${fieldKey}-container ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`} />
       </InputWrapper>
     </>
   )

@@ -920,35 +920,35 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
-    'fld-wrp .filepond--root': {
+    'filepond--root': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'fld-wrp .filepond--drop-label': {
+    'filepond--drop-label': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'fld-wrp .filepond--label-action': {
+    'filepond--label-action': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'fld-wrp .filepond--panel-root': {
+    'filepond--panel-root': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'fld-wrp .filepond--item-panel': {
+    'filepond--item-panel': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'fld-wrp .filepond--file-action-button': {
+    'filepond--file-action-button': {
       states: ['hover'],
       properties: { ...buttonCssProps },
     },
-    'fld-wrp .filepond--drip-blob': {
+    'filepond--drip-blob': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'fld-wrp .filepond--file': {
+    'filepond--file': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
