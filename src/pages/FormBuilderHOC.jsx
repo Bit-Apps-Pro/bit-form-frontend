@@ -131,28 +131,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setMdDarkStyles(oldStyles.style.mdDarkStyles)
       setSmLightStyles(oldStyles.style.smLightStyles)
       setSmDarkStyles(oldStyles.style.smDarkStyles)
-
-      // TODO : ignore deep copy
-      const savedStyles = deepCopy({
+      setSavedStylesAndVars({
         themeColors: oldStyles.themeColors,
         themeVars: oldStyles.themeVars,
         styles: oldStyles.style,
       })
-      setSavedStylesAndVars(prev => ({ ...prev, ...savedStyles }))
-
       setBreakpointSize(oldStyles.breakpointSize)
 
-      // setStyle(oldStyles.style)
-      // setThemeVars(oldStyles.themeVars)
-      // if (oldStyles.themeColors?.lightThemeColors) setLightThemeColors(oldStyles.themeColors.lightThemeColors)
-      // if (oldStyles.themeColors?.darkThemeColors) setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
-      // const allStyleStates = {
-      //   themeVars: oldStyles.themeVars,
-      //   lightThemeColors: oldStyles.themeColors?.lightThemeColors,
-      //   darkThemeColors: oldStyles.themeColors?.darkThemeColors,
-      //   styles: oldStyles.style,
-      // }
-      // setTempStyles(allStyleStates)
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {
         const { state } = drft.histories[0]
         drft.histories[0].state = {
