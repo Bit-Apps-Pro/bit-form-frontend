@@ -2,9 +2,7 @@ import Tagify from '@yaireo/tagify'
 import '@yaireo/tagify/dist/tagify.css'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-// import { $fieldsArr } from '../../../GlobalStates'
-import {  $fieldsArr } from '../../GlobalStates/GlobalStates'
-
+import { $fieldsArr } from '../../GlobalStates/GlobalStates'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function TagifyComp({ children, selector, actionId, onChange, value, fFields = true, ph = null, ptrn = null }) {
@@ -13,10 +11,10 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
   const tagifyRef = useRef(null)
   const smartTags = []
   if (fFields) {
-    formFields.map(item => item.lbl !== undefined && fields.push({ name: item.key, value: item.lbl }))
+    formFields.map(item => item.lbl !== undefined && fields.push({ text: item.key, value: item.lbl }))
   }
   SmartTagField.map((item) => {
-    smartTags.push({ name: item.name, value: item.label })
+    smartTags.push({ text: item.name, value: item.label })
   })
 
   const modifyTagifyData = val => {
@@ -32,14 +30,17 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
   }
 
   const onInput = (e, tagifyIns) => {
-    const { prefix } = e.detail
-    if (prefix) {
-      tagifyIns.dropdown.show.call(tagifyIns, e.detail.value)
-      if (prefix === '@' && fFields) { tagifyIns.whitelist = fields }
-
-      if (prefix === '#') { tagifyIns.whitelist = smartTags }
-
-      if (e.detail.value.length > 1) { tagifyIns.dropdown.show.call(tagifyIns, e.detail.value) }
+    const { prefix, textContent } = e.detail
+    const lastChar = textContent.slice(-1)
+    const isLastCharPrefix = (lastChar === '@' || lastChar === '#')
+    const pref = isLastCharPrefix ? lastChar : prefix
+    if (pref) {
+      if (pref === '@' && fFields) {
+        tagifyIns.whitelist = fields
+      } else if (pref === '#') {
+        tagifyIns.whitelist = smartTags
+      }
+      tagifyIns.dropdown.show()
     }
     modifyTagifyData(tagifyIns.DOM.originalInput.value)
   }
@@ -64,17 +65,14 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
     enforceWhitelist: true,
     trim: true,
     editTags: false,
-
-    whitelist: fields.concat(smartTags).map((item) => (typeof item == 'string' ? { value: item } : item)),
-
     dropdown: {
-      enabled: 1,
+      enabled: 0,
       position: 'text',
       mapValueTo: 'value',
-      // highlightFirst: true,
+      highlightFirst: true,
       maxItems: smartTags.length,
       searchKeys: ['name', 'value'],
-      closeOnSelect: false 
+      closeOnSelect: true,
     },
     callbacks: {
       add: () => {
@@ -92,7 +90,6 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
       tagifyRef.current.DOM.originalInput.value = value
       tagifyRef.current.destroy()
     }
-    console.log('actionID', actionId)
     tagifyRef.current = new Tagify(input, tagifySettings)
 
     tagifyRef.current.DOM.originalInput.value = value
@@ -103,7 +100,7 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
 
   return (
     <div>
-      { children }
+      {children}
     </div>
   )
 }
