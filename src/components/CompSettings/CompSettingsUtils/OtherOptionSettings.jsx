@@ -1,8 +1,8 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
@@ -18,8 +18,6 @@ export default function OtherOptionSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const adminLabel = fieldData.adminLbl || ''
 
@@ -38,7 +36,7 @@ export default function OtherOptionSettings() {
     const evnt = e.target.checked ? 'Add' : 'Remove'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${evnt} Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${evnt} Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } })
     reCalculateFieldHeights(fldKey)
   }
 
@@ -56,7 +54,7 @@ export default function OtherOptionSettings() {
     const evnt = e.target.checked ? 'Requred' : 'Optional'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${evnt} Required Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${evnt} Required Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } })
   }
 
   const toggleOtherInpPh = (e) => {
@@ -70,7 +68,7 @@ export default function OtherOptionSettings() {
     const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
   }
 
   function setOtherInpPlaceholder(e) {
@@ -81,7 +79,7 @@ export default function OtherOptionSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Other Input Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Other Input Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }
 
   return (

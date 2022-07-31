@@ -3,8 +3,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
@@ -22,10 +22,8 @@ export default function SubTitleSettings() {
   const { fieldKey: fldKey } = useParams()
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   const fieldData = deepCopy(fields[fldKey])
 
@@ -46,7 +44,7 @@ export default function SubTitleSettings() {
     setFields(allFields)
     // recalculate builder field height
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } })
   }
 
   const setSubTitle = ({ target: { value } }) => {
@@ -60,7 +58,7 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFieldHeights(fldKey)
-    addToBuilderHistory(setBuilderHistory, { event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Sub Title updated: ${adminLabel || fieldData.subtitle || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {

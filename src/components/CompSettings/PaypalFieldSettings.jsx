@@ -8,6 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
@@ -43,7 +44,9 @@ export default function PaypalFieldSettings() {
       fieldData.locale = localeArr[localeArr.length - 1]
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
 
   const setSubscription = e => {
@@ -60,7 +63,9 @@ export default function PaypalFieldSettings() {
     delete fieldData.amountFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Subscription "${e.target.checked ? 'On' : 'Off'}": ${fieldData.lbl || fldKey}`, type: 'toggle_subscription', state: { fields: allFields, fldKey } })
   }
 
   const setAmountType = e => {
@@ -70,7 +75,9 @@ export default function PaypalFieldSettings() {
     delete fieldData.amountFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Ammount Type Changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_amount', state: { fields: allFields, fldKey } })
   }
 
   const setShippingType = e => {
@@ -80,7 +87,9 @@ export default function PaypalFieldSettings() {
     delete fieldData.shippingFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Shipping Type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_shipping_type', state: { fields: allFields, fldKey } })
   }
 
   const setTaxType = e => {
@@ -90,7 +99,9 @@ export default function PaypalFieldSettings() {
     delete fieldData.taxFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Tax type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_tax_type', state: { fields: allFields, fldKey } })
   }
 
   const setDescType = e => {
@@ -100,7 +111,9 @@ export default function PaypalFieldSettings() {
     delete fieldData.descFld
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Description type to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_description_type', state: { fields: allFields, fldKey } })
   }
 
   const getAmountFields = () => {
@@ -407,4 +420,21 @@ export default function PaypalFieldSettings() {
 
     </div>
   )
+}
+
+const propNameLabel = {
+  payIntegID: 'Payment Configuration Changed',
+  planId: 'Plan Id Changed',
+  locale: 'Language Selected',
+  disableFunding: 'Disabled Card',
+  amount: 'Amount',
+  amountFld: 'Amount Field Selected',
+  shipping: 'Shipping Cost',
+  shippingFld: 'Shipping Amount Field Selected',
+  tax: 'Tax changed',
+  taxFld: 'Tax Amount Field Selected',
+  currency: 'Currency Selected',
+  description: 'Other Description',
+  descFld: 'Description Field Selected',
+
 }

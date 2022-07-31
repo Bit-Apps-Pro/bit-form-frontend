@@ -1,4 +1,4 @@
-export default function observer(element, property, callback, delay = 0) {
+export default function observeElm(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
   if (Object.prototype.hasOwnProperty.call(elementPrototype, property)) {
     const descriptor = Object.getOwnPropertyDescriptor(

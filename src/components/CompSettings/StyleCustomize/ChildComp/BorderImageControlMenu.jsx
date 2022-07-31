@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ut from '../../../../styles/2.utilities'
 import bgImgControlStyle from '../../../../styles/backgroundControl.style'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import SimpleGradientColorPicker from '../../../style-new/SimpleGradientColorPicker'
 import { getObjByKey, getValueByObjPath, setStyleStateObj } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
@@ -19,18 +21,17 @@ export default function BorderImageControlMenu({ stateObjName,
   const [controller, setController] = useState({ parent: 'Image', child: 'Upload' })
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const { object, bgObjName, paths } = objectPaths
-  const [bgfilters, setBgFilters] = useState('blur(20%) brightness(120%)')
   const [borderImage, setBorderImage] = useState('')
   const [repeat, setRepeat] = useState('initial')
   const [styles, setStyles] = useRecoilState($styles)
-  console.log('paths', paths)
-  console.log('border-image-path', paths['border-image'])
 
   const stateObj = getObjByKey(object, { styles })
 
   const onValueChange = (pathName, val) => {
     setStyleStateObj(object, pathName, val, { setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, pathName, val, { [object]: getLatestState(object) }))
   }
   const gradientChangeHandler = (e) => {
     onValueChange(paths['border-image'], e.style)
@@ -90,6 +91,7 @@ export default function BorderImageControlMenu({ stateObjName,
   }
   const onSizeChange = (pathName, val) => {
     setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, pathName, val, { [object]: getLatestState(object) }))
   }
 
   const getVal = (propertyPath) => {

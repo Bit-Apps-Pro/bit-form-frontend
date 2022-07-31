@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { memo, useEffect, useId, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -40,16 +40,13 @@ function RadioCheckSettings() {
   const adminLabel = fieldData.adminLbl || ''
   const fieldName = fieldData.fieldName || fldKey
   const isRound = fieldData.round || false
-  const isRadioRequired = fieldData.valid.req || false
   const optionCol = fieldData?.optionCol === undefined ? '' : fieldData?.optionCol
 
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
 
   let fieldObject = null
   let disabled = false
@@ -61,21 +58,10 @@ function RadioCheckSettings() {
   const [optionMdl, setOptionMdl] = useState(false)
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
 
-  function setAdminLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.adminLbl
-    } else {
-      fieldData.adminLbl = e.target.value
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
   function setRound({ target: { checked } }) {
     const fldClsSelector = fieldData.typ === 'radio' ? 'rdo' : 'ck'
     const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    const newStyles = produce(styles, drft => {
       let bdr = '5px'
       if (checked) {
         fieldData.round = true
@@ -85,65 +71,11 @@ function RadioCheckSettings() {
         delete fieldData.round
         assignNestedObj(drft, path, bdr)
       }
-    }))
+    })
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function rmvOpt(ind) {
-    options.splice(ind, 1)
-    fieldData.opt = options
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option removed: ${fieldData.opt[ind].lbl}`, type: `rmv_option_${useId() * 2 * 5 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function addOpt() {
-    options.push({ lbl: `Option ${options.length + 1}` })
-    fieldData.opt = options
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option added: ${fieldData.opt}`, type: `add_option_${useId() * 8 * 4 + 2}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function setCheck(e, i) {
-    if (fieldData.typ === 'radio') {
-      for (let ind = 0; ind < options.length; ind += 1) {
-        delete options[ind].check
-      }
-    }
-
-    if (e.target.checked) {
-      const tmp = { ...options[i] }
-      tmp.check = true
-      options[i] = tmp
-    } else {
-      delete options[i].check
-    }
-    fieldData.opt = options
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : {option_label}`, type: `set_check_${useId() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function setReq(e, i) {
-    if (e.target.checked) {
-      const tmp = { ...options[i] }
-      tmp.req = true
-      options[i] = tmp
-    } else {
-      delete options[i].req
-    }
-    fieldData.opt = options
-    const reqOpts = options.filter(opt => opt.req).map(op => op.lbl).join(', ')
-    if (!fieldData.err) fieldData.err = {}
-    if (!fieldData.err.req) fieldData.err.req = {}
-    fieldData.err.req.dflt = reqOpts ? `<p>${reqOpts} is required</p>` : '<p>This field is required</p>'
-    fieldData.err.req.show = true
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `Field required ${req} : ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
   const setRadioRequired = e => {
@@ -159,22 +91,7 @@ function RadioCheckSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  function setOptLbl(e, i) {
-    const tmp = { ...options[i] }
-    tmp.lbl = e.target.value
-    options[i] = tmp
-    fieldData.opt = options
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option label updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_opt_label_${useId() * 4 * 2 + 5}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const openImportModal = () => {
-    importOpts.show = true
-    setImportOpts({ ...importOpts })
+    addToBuilderHistory({ event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } })
   }
 
   const openOptionModal = () => {
@@ -183,11 +100,6 @@ function RadioCheckSettings() {
 
   const closeOptionModal = () => {
     setOptionMdl(false)
-  }
-
-  const closeImportModal = () => {
-    delete importOpts.show
-    setImportOpts({ ...importOpts })
   }
 
   function setMin(e) {
@@ -206,7 +118,7 @@ function RadioCheckSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
   }
 
   function setMax(e) {
@@ -222,7 +134,7 @@ function RadioCheckSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } })
   }
 
   const setDisabledOnMax = e => {
@@ -234,19 +146,7 @@ function RadioCheckSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
-  const hideAdminLabel = (e) => {
-    if (e.target.checked) {
-      fieldData.adminLbl = fieldData.lbl || fldKey
-    } else {
-      delete fieldData.adminLbl
-    }
-    const req = e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Admin label: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req}_adminlabel`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } })
   }
 
   const handleFieldName = ({ target: { value } }) => {
@@ -255,11 +155,13 @@ function RadioCheckSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } })
   }
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
+    const allFields = produce(fields, draft => { draft[fldKey].opt = newOpts })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Options List Moddified: ${fieldData.lbl || adminLabel || fldKey}`, type: 'option_list_modify', state: { fields: allFields, fldKey } })
     reCalculateFieldHeights(fldKey)
   }
 
@@ -269,13 +171,12 @@ function RadioCheckSettings() {
     } else {
       fieldData.optionCol = value
     }
-    const req = value ? 'Add' : 'Remove'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     let colStr = ''
     for (let colindx = 0; colindx < value; colindx += 1) {
       colStr += '1fr '
     }
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    const newStyles = produce(styles, drft => {
       const gridStyle = {
         display: 'grid',
         'grid-template-columns': colStr,
@@ -291,9 +192,10 @@ function RadioCheckSettings() {
       }
 
       drft.fields[fldKey].classes[`.${fldKey}-cc`] = value === '' ? flxStyle : gridStyle
-    }))
+    })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Column: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_column`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Column Update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'columns_update', state: { fields: allFields, styles: newStyles, fldKey } })
     reCalculateFieldHeights(fldKey)
   }
   if (isDev) {

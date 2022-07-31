@@ -113,7 +113,7 @@ export default class BitCountryField {
 
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
 
-    observeElement(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
+    observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
 
   #setCountryNameFromURL() {

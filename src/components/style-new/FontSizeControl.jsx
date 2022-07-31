@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import ResetStyle from './ResetStyle'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
@@ -13,6 +14,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from '
 export default function FontSizeControl({ stateObjName, propertyPath, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyle] = useRecoilState($styles)
+  const { fieldKey, element } = useParams()
   const { css } = useFela()
 
   const getFontValAndUnit = () => {
@@ -36,11 +38,13 @@ export default function FontSizeControl({ stateObjName, propertyPath, id }) {
         setThemeVars(prvStyle => produce(prvStyle, drft => {
           drft[propertyPath] = v
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, v, { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
         setStyle(prvStyle => produce(prvStyle, drft => {
           assignNestedObj(drft, propertyPath, v)
         }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, v, { styles: getLatestState('styles') }))
         break
       default:
         break

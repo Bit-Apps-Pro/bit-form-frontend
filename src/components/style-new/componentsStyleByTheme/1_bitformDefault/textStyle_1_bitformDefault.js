@@ -47,16 +47,6 @@ export default function textStyle_1_bitformDefault({ fk, type }) {
     },
     [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
 
-    // title icon
-    [`.${fk}-title-pre-i`]: {
-      width: '20px',
-      height: '20px',
-    },
-    [`.${fk}-title-suf-i`]: {
-      width: '20px',
-      height: '20px',
-    },
-
     // field icon
     [`.${fk}-pre-i`]: {
       position: 'absolute',

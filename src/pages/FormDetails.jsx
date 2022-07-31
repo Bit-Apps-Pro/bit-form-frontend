@@ -15,7 +15,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $reportId, $additionalSettings, $builderHistory, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderSettings, $colorScheme, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
@@ -44,6 +44,8 @@ function FormDetails() {
   const newFormId = useRecoilValue($newFormId)
   const setFormId = useSetRecoilState($formId)
   const setFields = useSetRecoilState($fields)
+  const breakpoint = useRecoilValue($breakpoint)
+  const colorScheme = useRecoilValue($colorScheme)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const [fulScn, setFulScn] = useState(true)
   const [allResponse, setAllResponse] = useState([])
@@ -70,9 +72,11 @@ function FormDetails() {
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const resetCustomCodes = useResetRecoilState($customCodes)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const resetBuilderHistory = useResetRecoilState($builderHistory)
   const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setBuilderSettings = useSetRecoilState($builderSettings)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -102,7 +106,7 @@ function FormDetails() {
       btnLay.sm.push(subBtnLay)
       setLay(btnLay)
       setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-        draft.histories[0].state = { fields: btnFld, layouts: btnLay }
+        draft.histories[0].state = { fields: btnFld, layouts: btnLay, breakpoint, colorScheme }
       }))
       setisLoading(false)
       setStyles(styles => produce(styles, draftStyle => {
@@ -140,6 +144,9 @@ function FormDetails() {
     resetFormInfo()
     resetCustomCodes()
     resetReportId()
+    resetBuilderHistory()
+
+    // TODO: reset all states of style, themeVars & themeColors
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -215,20 +222,6 @@ function FormDetails() {
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
             const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
-            // experimental start
-            // if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
-            //   const l = responseData.form_content.layout
-            //   const nl = { lg: [], md: [], sm: [] }
-            //   l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-            //   l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-            //   l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
-            //   setLay(nl)
-            //   setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = nl }))
-            // } else {
-            //   setLay(responseData.form_content.layout)
-            //   setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
-            // }
-            // exp end
 
             setFields(responseData.form_content.fields)
             setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
@@ -238,6 +231,7 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+            setBuilderSettings(responseData.builderSettings)
 
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,
@@ -396,8 +390,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',

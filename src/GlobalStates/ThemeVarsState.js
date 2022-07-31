@@ -1,9 +1,8 @@
-import merge from 'deepmerge-alt'
 import { atom, selector } from 'recoil'
-import { $breakpoint } from './GlobalStates'
+import { $breakpoint, $colorScheme } from './GlobalStates'
 
-const $themeVarsLg = atom({
-  key: '$themeVarsLg',
+export const $themeVarsLgLight = atom({
+  key: '$themeVarsLgLight',
   default: {
     '--global-fld-bdr': 'solid', // field border color
     '--g-bdr-rad': '11px', // border radius
@@ -163,7 +162,7 @@ const $themeVarsLg = atom({
     '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
     '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius
 
-    '--btn-fs': '16px', // button txt font size
+    '--btn-fs': 'var(--fld-fs)', // button txt font size
     '--btn-p': '11px 20px', // button padding
     '--btn-m': '0px 0px', // button marging
     '--btn-fw': 700, // button font weight
@@ -174,22 +173,55 @@ const $themeVarsLg = atom({
 
   },
 })
-export const $themeVarsMd = atom({ key: '$themeVarsMd', default: {} })
-export const $themeVarsSm = atom({ key: '$themeVarsSm', default: {} })
+export const $themeVarsMdLight = atom({ key: '$themeVarsMdLight', default: {} })
+export const $themeVarsSmLight = atom({ key: '$themeVarsSmLight', default: {} })
+
+export const $themeVarsLgDark = atom({ key: '$themeVarsLgDark', default: {} })
+export const $themeVarsMdDark = atom({ key: '$themeVarsMdDark', default: {} })
+export const $themeVarsSmDark = atom({ key: '$themeVarsSmDark', default: {} })
 
 export const $themeVars = selector({
   key: '$themeVars',
   get: ({ get }) => {
+    const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
-    if (breakpoint === 'md') return merge(get($themeVarsLg), get($themeVarsMd))
-    if (breakpoint === 'sm') return merge(get($themeVarsLg), get($themeVarsSm))
-    return get($themeVarsLg)
+    if (breakpoint === 'lg') {
+      return isDarkColorScheme ? { ...get($themeVarsLgLight), ...get($themeVarsLgDark) } : get($themeVarsLgLight)
+    }
+    if (breakpoint === 'md') {
+      return {
+        ...get($themeVarsLgLight),
+        ...isDarkColorScheme && get($themeVarsLgDark),
+        ...get($themeVarsMdLight),
+        ...isDarkColorScheme && get($themeVarsMdDark),
+      }
+    }
+    if (breakpoint === 'sm') {
+      return {
+        ...get($themeVarsLgLight),
+        ...isDarkColorScheme && get($themeVarsLgDark),
+        ...get($themeVarsMdLight),
+        ...isDarkColorScheme && get($themeVarsMdDark),
+        ...get($themeVarsSmLight),
+        ...isDarkColorScheme && get($themeVarsSmDark),
+      }
+    }
   },
+
   set: ({ set, get }, newThemeVars) => {
+    const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
-    if (breakpoint === 'md') set($themeVarsMd, newThemeVars)
-    else if (breakpoint === 'sm') set($themeVarsSm, newThemeVars)
-    else set($themeVarsLg, newThemeVars)
+    if (breakpoint === 'lg') {
+      set(isDarkColorScheme ? $themeVarsLgDark : $themeVarsLgLight, newThemeVars)
+    }
+    if (breakpoint === 'md') {
+      // set(isDarkColorScheme ? $themeVarsMdDark : $themeVarsMdLight, getOneLvlObjDiff(get($themeVarsLgLight), newThemeVars))
+      set(isDarkColorScheme ? $themeVarsMdDark : $themeVarsMdLight, newThemeVars)
+    }
+    if (breakpoint === 'sm') {
+      // set(isDarkColorScheme ? $themeVarsSmDark : $themeVarsSmLight, getOneLvlObjDiff(get($themeVarsLgLight), newThemeVars))
+      set(isDarkColorScheme ? $themeVarsSmDark : $themeVarsSmLight, newThemeVars)
+    }
   },
 })
 

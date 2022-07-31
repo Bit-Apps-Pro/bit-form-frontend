@@ -4,7 +4,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import VirtualList from 'react-tiny-virtual-list'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useSWR from 'swr'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
@@ -13,13 +13,16 @@ import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import VirtualList from '../Utilities/VirtualList'
 import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
 export default function FontPickerMenu({ id }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -131,6 +134,7 @@ export default function FontPickerMenu({ id }) {
       drft['--g-font-family'] = fontFamily
     }))
     styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantNStyle()
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `${fontFamily} ${variants}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
   const fontSorted = (orderBy) => {
@@ -150,6 +154,7 @@ export default function FontPickerMenu({ id }) {
       drft.font.fontStyle = []
       drft.font.fontWeightVariants = []
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', font, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
   const customFontHandler = ({ target: { name, value } }) => {
@@ -161,6 +166,7 @@ export default function FontPickerMenu({ id }) {
         drft.font.fontStyle = []
         drft.font.fontWeightVariants = []
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles') }))
     } else {
       setStyles(prvStyle => produce(prvStyle, drft => {
         drft.font.fontType = 'Custom'
@@ -170,6 +176,7 @@ export default function FontPickerMenu({ id }) {
       setThemeVars(prvState => produce(prvState, drft => {
         drft['--g-font-family'] = value
       }))
+      addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
     }
   }
 
@@ -242,27 +249,24 @@ export default function FontPickerMenu({ id }) {
               )}
           </div>
           <VirtualList
-            width="100%"
-            height={200}
+            style={{ width: '100%', height: 200 }}
             itemCount={fonts.length || 1}
-            itemSize={fonts.length ? 30 : 0}
+            itemSizes={fonts.length ? 30 : 0}
             scrollToIndex={fonts.length ? findSelectedFontIndx() : 0}
-            scrollToAlignment="auto"
-            renderItem={({ index, style }) => (
-              <div key={index} style={style}>
-                <button
-                  className={css(fontStyle.btn)}
-                  type="button"
-                  onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}
-                  data-testid={`set-font-${fonts[index]?.family}`}
-                >
-                  <span className={css(fontStyle.title)}>{fonts[index].family}</span>
-                  {
-                    ((checkGoogleFontExist && (themeVars['--g-font-family'] === fonts[index].family || tempStyle.themeVars['--g-font-family'] === fonts[index].family)))
-                    && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
-                  }
-                </button>
-              </div>
+            scrollToAlignment="center"
+            renderItem={(index) => (
+              <button
+                className={css(fontStyle.btn)}
+                type="button"
+                onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}
+                data-testid={`set-font-${fonts[index]?.family}`}
+              >
+                <span className={css(fontStyle.title)}>{fonts[index]?.family}</span>
+                {
+                  ((checkGoogleFontExist && (themeVars['--g-font-family'] === fonts[index]?.family || tempStyle.themeVars['--g-font-family'] === fonts[index]?.family)))
+                  && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
+                }
+              </button>
             )}
           />
         </>

@@ -12,15 +12,6 @@ export default function inputWrapperClasses(fk) {
       border: 'var(--fld-wrp-bdr, medium none)',
       'border-width': 'var(--fld-wrp-bdr-width, 0)',
     },
-    [`.${fk}-fld-wrp.fld-hide::after`]: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      content: '""',
-      width: '100%',
-      height: '100%',
-      'background-color': 'hsla(0, 0%, 0%, 20%)',
-    },
     [`.${fk}-lbl-wrp`]: {
       width: 'var(--lbl-wrp-width, auto)',
       'align-self': 'var(--lbl-wrp-sa, auto)',

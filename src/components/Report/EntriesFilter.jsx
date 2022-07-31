@@ -59,7 +59,7 @@ export default function EntriesFilter({ fetchData }) {
               endDatePlaceholder="End Date"
             />
             <div className="flx flx-between ml-1">
-              <button type="button" className="btn blue mt-0 ml-2" onClick={searchByDateBetween}>{__('Search', 'bitform')}</button>
+              <button type="button" className="btn blue mt-0 ml-2" onClick={searchByDateBetween}>{__('Search')}</button>
               <button type="button" className="btn blue mt-0" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</button>
 
             </div>

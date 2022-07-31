@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
@@ -12,8 +12,6 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const setShowErrMsg = e => {
     const { checked } = e.target
@@ -29,7 +27,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `${title} ${checked ? 'On' : 'Off'}`, type: title, state: { fields: allFields, fldKey } })
   }
 
   return (

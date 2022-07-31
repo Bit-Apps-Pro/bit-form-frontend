@@ -27,7 +27,7 @@ export const $draggableModal = atom({ key: '$draggableModal', default: { show: f
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false, inspectMode: false } })
 export const $isNewThemeStyleLoaded = atom({ key: '$isNewThemeStyleLoaded', default: false })
-export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
+export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
 export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
@@ -35,7 +35,7 @@ export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 export const $customCodes = atom({ key: '$customCodes', default: { JavaScript: '', CSS: '' } })
 export const $reportId = atom({ key: '$reportId', default: {} })
-
+export const $builderSettings = atom({ key: '$builderSettings', default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } } })
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })

@@ -48,13 +48,13 @@ export default function NavBtn({ route,
         {styleOverride && <span className={css(s.overrideIndicator)} title="Theme styles overrided" />}
       </div>
       <div className={css(s.navActionBtn, ut.mr2)} data-action-btn>
-        {cssSelector && (
+        {/* {cssSelector && (
           <Cooltip width={180} icnSize={15} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(s.tipBody)}>
               {`CSS Selector: ${cssSelector}`}
             </div>
           </Cooltip>
-        )}
+        )} */}
         {highlightSelector && (
           <div
             onMouseEnter={() => highlightElm(highlightSelector)}

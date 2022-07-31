@@ -5,12 +5,13 @@
 import produce from 'immer'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
@@ -19,6 +20,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from '
 function TransformControlMenu({ propertyPath, id }) {
   const title = 'Transform'
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let checkImportant = ''
@@ -58,29 +60,29 @@ function TransformControlMenu({ propertyPath, id }) {
     setStyles(prvStyles => produce(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, tnArrToStr)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, arrOfTransformStr.join(' '), { styles: getLatestState('styles') }))
   }
 
   const addTransitionHandler = (name) => {
     const getOldTransform = getTransformStyleVal()
+    const val = getOldTransform === undefined || getOldTransform === ''
+      ? newTransformVal(name, 0, transformProps[name].unit[0])
+      : `${getOldTransform} ${newTransformVal(name, 0, transformProps[name].unit[0])}${checkImportant}`
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const newTransition = () => {
-        const val = getOldTransform === undefined || getOldTransform === ''
-          ? newTransformVal(name, 0, transformProps[name].unit[0])
-          : `${getOldTransform} ${newTransformVal(name, 0, transformProps[name].unit[0])}${checkImportant}`
-        return val
-      }
-      assignNestedObj(drftStyles, propertyPath, newTransition())
+      assignNestedObj(drftStyles, propertyPath, val)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { styles: getLatestState('styles') }))
   }
 
   const deleteTransform = (indx) => {
+    const getOldTransform = getTransformStyleVal()
+    const transformArr = splitMultipleTransform(getOldTransform)
+    if (transformArr.length === 1) return
+    transformArr.splice(indx, 1)
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldTransform = getTransformStyleVal()
-      const transformArr = splitMultipleTransform(getOldTransform)
-      if (transformArr.length === 1) return
-      transformArr.splice(indx, 1)
       assignNestedObj(drftStyles, propertyPath, transformArr.join(' '))
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, transformArr.join(' '), { styles: getLatestState('styles') }))
   }
 
   const sizeHandler = (v, prop, indx, prvUnit) => {

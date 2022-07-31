@@ -1,9 +1,8 @@
 import { arrayMoveImmutable } from 'array-move'
 import produce from 'immer'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
-import VirtualList from 'react-tiny-virtual-list'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
 import DragIcn from '../../../Icons/DragIcn'
@@ -14,6 +13,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Button from '../../Utilities/Button'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Tip from '../../Utilities/Tip'
+import VirtualList from '../../Utilities/VirtualList'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
 
 const SortContainer = SortableContainer(({ children }) => children)
@@ -298,18 +298,12 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
     <>
       <SortContainer onSortEnd={onSortEnd} useDragHandle>
         <VirtualList
-          width="100%"
-          height={300}
-          itemCount={option.length || 1}
-          itemSize={option.length ? generateItemSize() : 0}
-          className="VirtualList"
+          className={css(optionStyle.list)}
+          itemCount={option.length}
+          itemSizes={option.length ? generateItemSize() : 0}
           scrollToIndex={scrolIndex}
-          scrollToAlignment="auto"
-          // overscanCount={20}
-          renderItem={({ index, style }) => (
-            <div key={option[index].id} style={style}>
-              <SortableItem key={`sortable-${option[index].id}`} index={index} optIndx={index} value={option[index]} type={type} option={option} setOption={setOption} lblKey={lblKey} valKey={valKey} setScrolIndex={setScrolIndex} optKey={optKey} checkByDefault={checkByDefault} />
-            </div>
+          renderItem={index => (
+            <SortableItem key={`sortable-${option[index].id}`} index={index} optIndx={index} value={option[index]} type={type} option={option} setOption={setOption} lblKey={lblKey} valKey={valKey} setScrolIndex={setScrolIndex} optKey={optKey} checkByDefault={checkByDefault} />
           )}
         />
       </SortContainer>
@@ -329,6 +323,7 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
 }
 
 const optionStyle = {
+  list: { width: '100%', height: 300 },
   container: { flx: '' },
   groupstart: { pt: 7, pb: 5, bc: 'var(--white-0-93)' },
   groupchild: { pl: 25, bc: 'var(--white-0-93)' },

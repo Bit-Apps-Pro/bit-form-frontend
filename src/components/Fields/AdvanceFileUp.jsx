@@ -3,9 +3,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { create, destroy, registerPlugin, setOptions } from 'filepond'
+import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-
 import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size'
 import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type'
 import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop'
@@ -17,8 +16,8 @@ import bitFilepondPluginMediaPreviewMin from 'bit-filepond-plugin-media-preview'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
 import bitAdvanceFileUploadField from 'bit-advance-file-upload-field'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'

@@ -215,16 +215,28 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-country-field.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
-              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
-            },
-            {
-              from: path.resolve(__dirname, 'packages/bit-helpers/dist/observer.min.js'),
-              to: path.resolve(__dirname, '../assets/js/observer.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-helpers/dist/observeElm.min.js'),
+              to: path.resolve(__dirname, '../assets/js/observeElm.min.js'),
             },
             {
               from: path.resolve(__dirname, 'packages/bit-helpers/dist/select.min.js'),
               to: path.resolve(__dirname, '../assets/js/select.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-create.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-create.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-destroy.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-destroy.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-registerPlugin.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-registerPlugin.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-setOptions.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-filepond-setOptions.min.js'),
             },
             {
               from: path.resolve(__dirname, 'packages/bit-filepond-plugin-file-validate-size/dist/bit-filepond-plugin-file-validate-size.min.js'),
@@ -285,10 +297,6 @@ module.exports = (env, argv) => {
             {
               from: path.resolve(__dirname, 'packages/bit-razorpay-field/dist/bit-razorpay-field.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-razorpay-field.min.js'),
-            },
-            {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-file-pond.min.js'),
-              to: path.resolve(__dirname, '../assets/js/bit-file-pond.min.js'),
             },
             {
               from: path.resolve(__dirname, 'packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),

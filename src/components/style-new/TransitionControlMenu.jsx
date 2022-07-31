@@ -5,6 +5,7 @@
 import produce from 'immer'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -12,7 +13,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -20,6 +21,7 @@ import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces } f
 
 function TransitionControlMenu({ stateObjName, propertyPath, id }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let checkImportant = ''
@@ -64,23 +66,26 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
     setStyles(prvStyles => produce(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, tnArrToStr)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, tnArrToStr, { styles: getLatestState('styles') }))
   }
 
   const addTransitionHandler = () => {
     const getOldTransition = getTransitionStyleVal()
+    const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
       assignNestedObj(drftStyles, propertyPath, newTransition)
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, newTransition, { styles: getLatestState('styles') }))
   }
   const deleteTransition = (indx) => {
+    const getOldTransition = getTransitionStyleVal()
+    const transitionArr = splitMultipleTransition(getOldTransition)
+    if (transitionArr.length === 1) return
+    transitionArr.splice(indx, 1)
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
-      const getOldTransition = getTransitionStyleVal()
-      const transitionArr = splitMultipleTransition(getOldTransition)
-      if (transitionArr.length === 1) return
-      transitionArr.splice(indx, 1)
       assignNestedObj(drftStyles, propertyPath, transitionArr.toString())
     }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, transitionArr.toString(), { styles: getLatestState('styles') }))
   }
   const convartUnit = (vlu, unt, prvUnt) => {
     let newVal

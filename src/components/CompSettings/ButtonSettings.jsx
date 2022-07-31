@@ -4,14 +4,14 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -30,12 +30,10 @@ export default function ButtonSettings() {
   const [error, setError] = useState({})
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-  const { txt, align, fulW, btnTyp } = fieldData
+  const { txt, align, txtAlign, fulW, btnTyp } = fieldData
   const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
 
   const pos = [
@@ -52,7 +50,7 @@ export default function ButtonSettings() {
     fieldData.txt = e.target.value
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Button text updated : ${fieldData.txt}`, type: 'change_btn_txt', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Button text updated : ${fieldData.txt}`, type: 'change_btn_txt', state: { fields: allFields, fldKey } })
   }
 
   function setBtnTyp(e) {
@@ -74,7 +72,7 @@ export default function ButtonSettings() {
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Button Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } })
   }
 
   function setButtonAlign(e) {
@@ -84,7 +82,16 @@ export default function ButtonSettings() {
     fieldData.align = e.target.value
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
     setBtnAlign(e.target.value)
-    addToBuilderHistory(setBuilderHistory, { event: `Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Button Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
+  }
+
+  function setButtonTextAlign(e) {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['justify-content'] = e.target.value
+    }))
+    fieldData.txtAlign = e.target.value
+    setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
+    addToBuilderHistory({ event: `Button Text Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_text_align', state: { fields, fldKey } })
   }
 
   const checkSubmitBtn = () => {
@@ -103,7 +110,7 @@ export default function ButtonSettings() {
     fieldData.fulW = e.target.checked
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory({ event: `Button Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {
@@ -118,6 +125,7 @@ export default function ButtonSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
   }
 
@@ -174,6 +182,20 @@ export default function ButtonSettings() {
         >
           <div className={css(FieldStyle.placeholder)}>
             <select data-testid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
+              {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+            </select>
+          </div>
+        </SimpleAccordion>
+
+        <FieldSettingsDivider />
+        <SimpleAccordion
+          id="txt-algn"
+          title={__('Text Align')}
+          className={css(FieldStyle.fieldSection)}
+          open
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <select data-testid="txt-algn-slct" className={css(FieldStyle.input)} name="" id="" value={txtAlign || 'center'} onChange={setButtonTextAlign}>
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>

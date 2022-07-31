@@ -5,8 +5,8 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -14,7 +14,7 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import DropDown from '../Utilities/DropDown'
 import Modal from '../Utilities/Modal'
@@ -38,8 +38,6 @@ export default function FileUploadSettings() {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const styles = useRecoilValue($styles)
   const { css } = useFela()
@@ -48,7 +46,6 @@ export default function FileUploadSettings() {
 
   const fieldData = deepCopy(fields[fldKey])
   const { multiple, showMaxSize, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, showFilePreview, showFileSize, duplicateAllow, minFile, maxFile } = fieldData.config
-  const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
   const { btnTxt } = fieldData
   const existType = allowedFileType ? allowedFileType.split(',._RF_,') : []
   const options = [
@@ -65,7 +62,9 @@ export default function FileUploadSettings() {
   function maxSizeHandler(unit, value) {
     fieldData.config.maxSize = value
     fieldData.config.sizeUnit = unit
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Maximum size to ${value}${unit}: ${fieldData.lbl || fldKey}`, type: 'modify_maximum_size', state: { fields: allFields, fldKey } })
   }
 
   // function setFileSelectStatus(e) {
@@ -73,29 +72,19 @@ export default function FileUploadSettings() {
   //   setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   // }
 
-  const hideAdminLabel = (e) => {
-    if (e.target.checked) {
-      fieldData.adminLbl = fieldData.lbl || fldKey
-      fieldData.adminLblHide = true
-    } else {
-      fieldData.adminLblHide = false
-      delete fieldData.adminLbl
-    }
-    const req = e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
-  }
-
   function setConfigValue(propName, value) {
     fieldData.config[propName] = value
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
   }
 
   function setUpBtnTxt(e) {
     fieldData.btnTxt = e.target.value
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Button Text Modify: ${fieldData.lbl || fldKey}`, type: 'modify_button_text', state: { fields: allFields, fldKey } })
   }
 
   const setIconModel = (typ) => {
@@ -110,6 +99,7 @@ export default function FileUploadSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
   }
 
@@ -120,8 +110,10 @@ export default function FileUploadSettings() {
     } else {
       fieldData.config.allowedFileType = val.join(',._RF_,')
     }
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields)
+    addToBuilderHistory({ event: `Changed Allowed File Type: ${fieldData.lbl || fldKey}`, type: 'allow_file_type', state: { fldKey, fields: allFields } })
   }
 
   if (isDev) {
@@ -169,10 +161,8 @@ export default function FileUploadSettings() {
         id="btn-icn-stng"
         title={__('Button Icons')}
         className={css(FieldStyle.fieldSection)}
-        toggleAction={hideAdminLabel}
         toggleChecked
         open
-      // disable={!fieldData?.adminLbl}
       >
         <div className={css(ut.mt1)}>
           <FieldIconSettings
@@ -388,4 +378,17 @@ export default function FileUploadSettings() {
       </Modal>
     </>
   )
+}
+
+const propNameLabel = {
+  multiple: 'Allow Multiple',
+  minFile: 'Change Minimum File to',
+  maxFile: 'Change Maximum File to',
+  showSelectStatus: 'Show Selected Status',
+  fileSelectStatus: 'File Select Status',
+  showMaxSize: 'Show Maximum Size',
+  isItTotalMax: 'Total Maximum',
+  showFileList: 'Show File List',
+  showFilePreview: 'Show File Preview',
+  showFileSize: 'Show File Size',
 }

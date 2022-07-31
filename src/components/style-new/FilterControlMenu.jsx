@@ -1,10 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
@@ -12,6 +14,7 @@ import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueF
 
 export default function FilterControlMenu({ title = 'Filters', objectPaths, id }) {
   const { css } = useFela()
+  const { fieldKey, element } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const { object, paths } = objectPaths
@@ -145,6 +148,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
 
     filterValue = checkNAddImportant(filterValue)
     setStyleStateObj(object, paths.filter, filterValue?.trim(), { setThemeColors, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, paths.filter, filterValue?.trim(), { [object]: getLatestState(object) }))
   }
 
   const unitHandler = (filterName, currentUnit, value, indexNo, preUnit) => {
@@ -166,6 +170,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
 
     filterValue = checkNAddImportant(filterValue)
     setStyleStateObj(object, paths.filter, filterValue.trim(), { setThemeColors, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, paths.filter, filterValue?.trim(), { [object]: getLatestState(object) }))
   }
 
   const handleClearProperties = filterName => {
@@ -177,6 +182,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
     value = checkNAddImportant(value)
 
     setStyleStateObj(object, paths.filter, value, { setThemeColors, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, paths.filter, value, { [object]: getLatestState(object) }))
   }
 
   const addFilterToCss = (filterName) => {
@@ -193,6 +199,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
     }
     fltVal = checkNAddImportant(fltVal)
     setStyleStateObj(object, paths.filter, fltVal, { setThemeColors, setStyles })
+    addToBuilderHistory(generateHistoryData(element, fieldKey, paths.filter, fltVal, { [object]: getLatestState(object) }))
   }
 
   const filterProperties = {

@@ -1,4 +1,4 @@
-// import observeElement from './helpers'
+// import  from './helpers'
 
 export default class BitDropdownField {
   #dropdownFieldWrapper = null
@@ -113,7 +113,7 @@ export default class BitDropdownField {
       // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
     }
 
-    observeElement(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
+    observeElm(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
 
   #initOptionsList() {
@@ -671,10 +671,9 @@ export default class BitDropdownField {
     this.#searchInputElm.value = val
   }
 
-  #handleOutsideClick(event) {
-    if (event.target.contains(this.#dropdownFieldWrapper)) {
-      this.setMenu({ open: false })
-    }
+  #handleOutsideClick(e) {
+    if (this.#dropdownFieldWrapper.contains(e.target)) return
+    this.setMenu({ open: false })
   }
 
   #isMenuOpen() {

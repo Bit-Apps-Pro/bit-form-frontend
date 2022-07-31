@@ -20,6 +20,3 @@ const checkNradioBox = (type, fk, direction) => ({
   fieldSize: 'medium',
   classes: checkboxNradioStyle1_4_individual({ fk, type, direction }),
 })
-
-
-
