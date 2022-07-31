@@ -2,7 +2,7 @@ import produce from 'immer'
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
+import { NavLink, Route, Routes, useNavigate, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_styles'
@@ -35,7 +35,7 @@ export const ShowProModalContext = createContext(null)
 
 function FormDetails() {
   let componentMounted = true
-  const history = useHistory()
+  const navigate = useNavigate()
   const { formType, formID } = useParams()
   const setReports = useSetRecoilState($reports)
   const setLay = useSetRecoilState($layouts)
@@ -82,7 +82,7 @@ function FormDetails() {
   useEffect(() => { setFormId(formID) }, [formID])
 
   const activePath = () => {
-    const pathArray = history.location.pathname.split('/')
+    const pathArray = navigate.location.pathname.split('/')
     return pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1)
   }
 
@@ -266,7 +266,7 @@ function FormDetails() {
       title: 'Warning',
       msg: 'Are you sure you want to leave the form? Unsaved data will be lost.',
       btnTxt: 'Okay',
-      action: () => history.push('/'),
+      action: () => navigate.push('/'),
     })
   }
 
@@ -278,13 +278,13 @@ function FormDetails() {
 
   const onChangeHandler = (evn) => {
     if (evn === 'Builder') {
-      history.push(`/form/builder/${formType}/${formID}/fields-list`)
+      navigate.push(`/form/builder/${formType}/${formID}/fields-list`)
     }
     if (evn === 'Responses') {
-      history.push(`/form/responses/${formType}/${formID}/`)
+      navigate.push(`/form/responses/${formType}/${formID}/`)
     }
     if (evn === 'Settings') {
-      history.push(`/form/settings/${formType}/${formID}/form-settings`)
+      navigate.push(`/form/settings/${formType}/${formID}/form-settings`)
     }
   }
 
@@ -347,25 +347,29 @@ function FormDetails() {
           </div>
         </nav>
         <div className={css(navbar.builder_routes)}>
-          <Switch>
-            <Route exact path="/form/builder/:formType/:formID/:rightBar?/:element?/:fieldKey?">
+          <Routes>
+            <Route path="/form/builder/:formType/:formID/:rightBar?/:element?/:fieldKey?" element={
               <Suspense fallback={<BuilderLoader />}>
                 <FormBuilderHOC isLoading={isLoading} />
               </Suspense>
+            } />
+            <Route
+              path="/form/responses/:formType/:formID/"
+              element={
+                !isLoading ? (
+                  <FormEntries
+                    allResp={allResponse}
+                    setAllResp={setAllResponse}
+                    integrations={integrations}
+                  />
+                ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
+              }
+            />
+            <Route
+              path="/form/settings/:formType/:formID/:settings?"
+              element={<FormSettings setProModal={setProModal} />}>
             </Route>
-            <Route path="/form/responses/:formType/:formID/">
-              {!isLoading ? (
-                <FormEntries
-                  allResp={allResponse}
-                  setAllResp={setAllResponse}
-                  integrations={integrations}
-                />
-              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
-            </Route>
-            <Route path="/form/settings/:formType/:formID/:settings?">
-              <FormSettings setProModal={setProModal} />
-            </Route>
-          </Switch>
+          </Routes>
         </div>
       </div>
     </ShowProModalContext.Provider>
@@ -390,8 +394,8 @@ const defaultConfirmationValue = (formID) => {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',

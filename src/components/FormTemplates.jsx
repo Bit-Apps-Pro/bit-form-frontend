@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $formInfo, $newFormId } from '../GlobalStates/GlobalStates'
 import DownloadIcon from '../Icons/DownloadIcon'
@@ -14,8 +14,9 @@ import Modal from './Utilities/Modal'
 export default function FormTemplates({ setTempModal, setSnackbar }) {
   const newFormId = useRecoilValue($newFormId)
   const setFormInfo = useSetRecoilState($formInfo)
-  const history = useHistory()
+  let navigate = useNavigate()
   const [modal, setModal] = useState(false)
+  // console.log("navigate", navigate)
 
   // const [, setTemplates] = useState(null)
   const staticTem = [{ lbl: 'Blank', img: '' }, { lbl: 'Contact Form', img: '' }]
@@ -34,8 +35,7 @@ export default function FormTemplates({ setTempModal, setSnackbar }) {
   const handleTemplateBtnClick = (e, tem) => {
     e.preventDefault()
     setFormInfo(oldInfo => ({ ...oldInfo, formName: tem.lbl === 'Blank' ? oldInfo.formName : tem.lbl, template: tem.lbl }))
-
-    history.push(`/form/builder/new/${newFormId}/fields-list`)
+    navigate(`/form/builder/new/${newFormId}/fields-list`, { replace: true, state: true })
   }
 
   return (

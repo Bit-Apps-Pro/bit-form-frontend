@@ -5,8 +5,8 @@
 
 import { lazy, Suspense, useEffect } from 'react'
 import { useFela } from 'react-fela'
-import toast, { Toaster } from 'react-hot-toast'
-import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import logo from '../logo.svg'
 import Loader from './components/Loaders/Loader'
@@ -16,7 +16,6 @@ import './resource/icons/style.css'
 import './resource/sass/app.scss'
 import './resource/sass/global.scss'
 import ut from './styles/2.utilities'
-import { compareBetweenVersions } from './Utils/Helpers'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
 
@@ -55,7 +54,8 @@ export default function App() {
           },
         }}
       />
-      <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
+      <HashRouter>
+        {/* <Router basename={typeof bits !== 'undefined' ? bits.baseURL + '/' : '/'}> */}
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
@@ -67,17 +67,16 @@ export default function App() {
               </div>
               <nav className="top-nav ml-2">
                 <NavLink
-                  exact
                   to="/"
-                  activeClassName="app-link-active"
+                  className={({ isActive }) => isActive ? 'app-link-active' : ''}
                 >
                   {__('My Forms')}
                 </NavLink>
 
                 <NavLink
                   to="/app-settings/recaptcha"
-                  activeClassName="app-link-active"
-                  isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
+                  className={({ isActive }) => isActive ? 'app-link-active' : ''}
+                // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
                   {__('App Settings')}
                 </NavLink>
@@ -86,35 +85,36 @@ export default function App() {
           </div>
 
           <div className="route-wrp">
-            <Switch>
-              <Route exact path="/">
+            <Routes>
+              <Route path="/*" element={
                 <Suspense fallback={<TableLoader />}>
                   <AllForms />
                 </Suspense>
-              </Route>
-              <Route path="/form/:page/:formType/:formID?/:option?">
+              } />
+              <Route path="/form/:page/:formType/:formID?/:option?" element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FormDetails />
                 </Suspense>
-              </Route>
-              <Route path="/formEntries/:formID">
+              } />
+              <Route path="/formEntries/:formID" element={
                 <Suspense fallback={<TableLoader />}>
                   <FormEntries />
                 </Suspense>
-              </Route>
-              <Route path="/app-settings">
+              } />
+
+              <Route path="/app-settings" element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <AppSettings />
                 </Suspense>
-              </Route>
-              <Route path="*">
-                <Error404 />
-              </Route>
-            </Switch>
+              } />
+
+              <Route path="*" element={<Error404 />} />
+            </Routes>
           </div>
         </div>
-      </Router>
-    </Suspense>
+        {/* </Router> */}
+      </HashRouter>
+    </Suspense >
   )
 }
 
