@@ -226,5 +226,5 @@
       }
     ]
   },
-  "packageManager": "pnpm@3.2.1"
+  "packageManager": "pnpm@7.6.0"
 }
