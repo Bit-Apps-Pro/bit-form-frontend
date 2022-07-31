@@ -14,6 +14,7 @@ import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
+import ErrorBoundary from '../ErrorBoundary'
 import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
 import ThemeCustomize from '../style-new/ThemeCustomize'
 import ThemeGallary from '../style-new/ThemeGallary'
@@ -57,89 +58,90 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
           >
             {/* <TransitionGroup> */}
             {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
+            <ErrorBoundary>
+              <Switch>
+                <Route path={`${path}/fields-list`} component={FieldsList} />
+                <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
+                <Route path={`${path}/themes`}><ThemeGallary /></Route>
+                <Route path={`${path}/theme-customize/:element`}><ThemeCustomize /></Route>
+                <Route path={`${path}/field-theme-customize/:element/:fieldKey`}><FieldStyleCustomizeHOC /></Route>
 
-            <Switch>
-              <Route path={`${path}/fields-list`} component={FieldsList} />
-              <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
-              <Route path={`${path}/themes`}><ThemeGallary /></Route>
-              <Route path={`${path}/theme-customize/:element`}><ThemeCustomize /></Route>
-              <Route path={`${path}/field-theme-customize/:element/:fieldKey`}><FieldStyleCustomizeHOC /></Route>
-
-              <Route exact path={`${path}/style`}>
-                <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
-                  <FieldLinkBtn icn={<ImageIcn w="20" />} title={__('Background Customize')} />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/f`}>
-                  <FieldLinkBtn icn={<FormIcn w="20" />} title={__('Form Customize')} />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
-                  <FieldLinkBtn icn={<ItemBlockIcn w="20" />} title={__('Field Block Customize')} />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
-                  <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Customize')} />
-                </Link>
-              </Route>
-              <Route path={`${path}/style/bg`}>
-                <StyleEditor editorLabel={__('Form Background')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
-              </Route>
-              <Route path={`${path}/style/f`}>
-                <StyleEditor editorLabel={__('Form style')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
-              </Route>
-              <Route path={`${path}/style/fb`}>
-                <StyleEditor editorLabel={__('Field Block')} compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
-              </Route>
-              <Route exact path={`${path}/style/fl`}>
-                <Link to={`/form/builder/${formType}/${formID}/style`}>
-                  <h4 className="w-9 mt-2 m-a flx txt-dp">
-                    <button className="icn-btn" type="button" aria-label="back btn">
-                      <BackIcn />
-                    </button>
-                    <div className="flx w-10">
-                      <span>{__('Back')}</span>
-                      <div className="txt-center w-10 f-5">{__('Field Customize')}</div>
-                    </div>
-                  </h4>
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
-                  <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Style')} />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
-                  <FieldLinkBtn icn={<DropDownIcn w="20" />} title="Dropdown Style" />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
-                  <FieldLinkBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style')} />
-                </Link>
-                <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
-                  <FieldLinkBtn icn={<BtnIcn size="24" />} title="Button Style" />
-                </Link>
-              </Route>
-              <Route path={`${path}/style/fl/fld`}>
-                <StyleEditor editorLabel={__('Field Style')} title={__('Label Style')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
-                <StyleEditor title={__('Field Style')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
-              </Route>
-              <Route path={`${path}/style/fl/ppl`}>
-                <PaypalStyleEditor />
-              </Route>
-              <Route path={`${path}/style/fl/dpd`}>
-                <DropdownStyleEditors
-                  editorLabel="Dropdown Style"
-                  {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
-                />
-              </Route>
-              <Route path={`${path}/style/fl/btn`}>
-                <StyleEditor
-                  title={`${__('Button Style')}`}
-                  noBack
-                  compStyle={style}
-                  cls=".btcd-sub-btn"
-                  styleDispatch={styleDispatch}
-                  brkPoint={brkPoint}
-                  setResponsiveView={setResponsiveView}
-                  styleConfig={styleEditorConfig.button}
-                  formID={formID}
-                />
-              </Route>
-            </Switch>
+                <Route exact path={`${path}/style`}>
+                  <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
+                    <FieldLinkBtn icn={<ImageIcn w="20" />} title={__('Background Customize')} />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/f`}>
+                    <FieldLinkBtn icn={<FormIcn w="20" />} title={__('Form Customize')} />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
+                    <FieldLinkBtn icn={<ItemBlockIcn w="20" />} title={__('Field Block Customize')} />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
+                    <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Customize')} />
+                  </Link>
+                </Route>
+                <Route path={`${path}/style/bg`}>
+                  <StyleEditor editorLabel={__('Form Background')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
+                </Route>
+                <Route path={`${path}/style/f`}>
+                  <StyleEditor editorLabel={__('Form style')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
+                </Route>
+                <Route path={`${path}/style/fb`}>
+                  <StyleEditor editorLabel={__('Field Block')} compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
+                </Route>
+                <Route exact path={`${path}/style/fl`}>
+                  <Link to={`/form/builder/${formType}/${formID}/style`}>
+                    <h4 className="w-9 mt-2 m-a flx txt-dp">
+                      <button className="icn-btn" type="button" aria-label="back btn">
+                        <BackIcn />
+                      </button>
+                      <div className="flx w-10">
+                        <span>{__('Back')}</span>
+                        <div className="txt-center w-10 f-5">{__('Field Customize')}</div>
+                      </div>
+                    </h4>
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
+                    <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Style')} />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
+                    <FieldLinkBtn icn={<DropDownIcn w="20" />} title="Dropdown Style" />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
+                    <FieldLinkBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style')} />
+                  </Link>
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
+                    <FieldLinkBtn icn={<BtnIcn size="24" />} title="Button Style" />
+                  </Link>
+                </Route>
+                <Route path={`${path}/style/fl/fld`}>
+                  <StyleEditor editorLabel={__('Field Style')} title={__('Label Style')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
+                  <StyleEditor title={__('Field Style')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
+                </Route>
+                <Route path={`${path}/style/fl/ppl`}>
+                  <PaypalStyleEditor />
+                </Route>
+                <Route path={`${path}/style/fl/dpd`}>
+                  <DropdownStyleEditors
+                    editorLabel="Dropdown Style"
+                    {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
+                  />
+                </Route>
+                <Route path={`${path}/style/fl/btn`}>
+                  <StyleEditor
+                    title={`${__('Button Style')}`}
+                    noBack
+                    compStyle={style}
+                    cls=".btcd-sub-btn"
+                    styleDispatch={styleDispatch}
+                    brkPoint={brkPoint}
+                    setResponsiveView={setResponsiveView}
+                    styleConfig={styleEditorConfig.button}
+                    formID={formID}
+                  />
+                </Route>
+              </Switch>
+            </ErrorBoundary>
             {/* </CSSTransition> */}
             {/* </TransitionGroup> */}
             <div className="mb-50" />
