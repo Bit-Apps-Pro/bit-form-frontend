@@ -18,8 +18,8 @@ import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterVa
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import DropDown from '../Utilities/DropDown'
 import Modal from '../Utilities/Modal'
-import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -45,7 +45,10 @@ export default function FileUploadSettings() {
   const [icnType, setIcnType] = useState('')
 
   const fieldData = deepCopy(fields[fldKey])
-  const { multiple, showMaxSize, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, showFilePreview, showFileSize, duplicateAllow, minFile, maxFile } = fieldData.config
+  const { multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow } = fieldData.config
+  let { minFile, maxFile } = fieldData.config
+  minFile = isNaN(minFile) ? 0 : Number(minFile)
+  maxFile = isNaN(maxFile) ? 0 : Number(maxFile)
   const { btnTxt } = fieldData
   const existType = allowedFileType ? allowedFileType.split(',._RF_,') : []
   const options = [
@@ -78,6 +81,28 @@ export default function FileUploadSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
+  }
+
+  function setMinMaxValueConfig(propName, value) {
+    value = isNaN(value) ? 0 : Number(value)
+    if (value >= 0) {
+      if (propName === 'maxFile' && minFile && value < minFile && minFile) {
+        console.log('minFile=', typeof minFile)
+        fieldData.config.minFile = value
+        fieldData.err.minFile.dflt = `Minimum ${value} File Required`
+      } else if (propName === 'minFile' && value > maxFile && maxFile) {
+        console.log('maxFile=', typeof maxFile)
+        fieldData.config.maxFile = value
+        fieldData.err.maxFile.dflt = `Maximum ${value} File can uploaded`
+      }
+      if (propName === 'minFile') fieldData.err.minFile.dflt = `Minimum ${value} File Required`
+      else if (propName === 'maxFile') fieldData.err.maxFile.dflt = `Maximum ${value} File can uploaded`
+
+      fieldData.config[propName] = value
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+      addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
+    }
   }
 
   function setUpBtnTxt(e) {
@@ -228,19 +253,33 @@ export default function FileUploadSettings() {
               className={css(FieldStyle.input, ut.w5, ut.mt1)}
               type="number"
               value={minFile}
-              onChange={e => setConfigValue('minFile', e.target.value)}
+              onChange={e => setMinMaxValueConfig('minFile', e.target.value)}
             />
           </div>
-          <div className={css(ut.flxc)}>
+          <ErrorMessageSettings
+            className={css(ut.mt0)}
+            id="min-fil-err-msg"
+            type="minFile"
+            defaultMsg={`Minimum ${minFile} File Required`}
+            allowIcons={false}
+          />
+          <div className={css(ut.flxc, ut.mt2)}>
             <span>Maximum File</span>
             <input
               data-testid="alw-mltpl-max-inp"
               className={css(FieldStyle.input, ut.w5, ut.mt1)}
               type="number"
               value={maxFile}
-              onChange={e => setConfigValue('maxFile', e.target.value)}
+              onChange={e => setMinMaxValueConfig('maxFile', e.target.value)}
             />
           </div>
+          <ErrorMessageSettings
+            className={css(ut.mt0)}
+            id="max-fil-err-msg"
+            type="maxFile"
+            defaultMsg={`Maximum ${maxFile} File can uploaded`}
+            allowIcons={false}
+          />
 
         </div>
       </SimpleAccordion>
@@ -271,27 +310,47 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
-      <SingleToggle
+      <SimpleAccordion
         id="shw-mxmm-siz-stng"
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}
         title={__('Show Maximum Size')}
-        action={e => setConfigValue('showMaxSize', e.target.checked)}
-        isChecked={showMaxSize}
+        // eslint-disable-next-line react/jsx-no-bind
+        toggleAction={e => setConfigValue('showMaxSize', e.target.checked)}
+        toggleChecked={showMaxSize}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
         tip="By disabling this option, the field show maximum size will be hidden"
-      />
+        tipProps={{ width: 200, icnSize: 17 }}
+        open={showMaxSize}
+        disable={!showMaxSize}
+      >
+        <input
+          data-testid="fil-slct-stts-inp"
+          className={css(FieldStyle.input)}
+          type="text"
+          value={maxSizeLabel}
+          placeholder="Write a Max Size Label Ex:(Max 2MB)"
+          onChange={e => setConfigValue('maxSizeLabel', e.target.value)}
+        />
+      </SimpleAccordion>
 
       <FieldSettingsDivider />
 
       <SimpleAccordion
         id="mxmm-upld-siz-stng"
-        title={__('Maximum Upload Size')}
-        className={css(FieldStyle.fieldSection)}
-        open
+        title={__('Allow Maximum Upload Size')}
+        toggleAction={e => setConfigValue('allowMaxSize', e.target.checked)}
+        toggleChecked={allowMaxSize}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
+        tip="By enabling this feature, you will limit the upload size"
+        tipProps={{ width: 200, icnSize: 17 }}
+        open={allowMaxSize}
+        disable={!allowMaxSize}
       >
         <div className={css(FieldStyle.placeholder)}>
           <SizeControl
             dataTestId="mxmm-upld-siz"
-            className={css(ut.w10, ut.mt1, ut.mb1)}
+            className={css(ut.w10, ut.mt2, ut.mb1)}
             inputHandler={({ unit, value }) => maxSizeHandler(unit, value)}
             sizeHandler={({ unitKey, unitValue }) => maxSizeHandler(unitKey, unitValue)}
             value={maxSize}
@@ -304,12 +363,18 @@ export default function FileUploadSettings() {
           {multiple && (
             <CheckBoxMini
               id="ttl-mxmm-siz"
-              className={`${css(ut.mr2)} ${css(ut.fw500)} `}
+              className={`${css(ut.mr2, ut.ml1, ut.fw500)} `}
               checked={isItTotalMax}
               title={__('Total Maximum Size')}
               onChange={e => setConfigValue('isItTotalMax', e.target.checked)}
             />
           )}
+          <ErrorMessageSettings
+            id="mxmm-upld-siz"
+            type="maxSize"
+            defaultMsg="Max Upload Size Exceeded"
+            allowIcons={false}
+          />
         </div>
       </SimpleAccordion>
 
@@ -344,6 +409,23 @@ export default function FileUploadSettings() {
             onChange={e => setConfigValue('showFileSize', e.target.checked)}
           />
         </div>
+      </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="fil-exst-err-msg"
+        title={__('File Exist Message')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <input
+          data-testid="fil-exst-msg-inp"
+          className={css(FieldStyle.input)}
+          type="text"
+          value={fileExistMsg}
+          onChange={e => setConfigValue('fileExistMsg', e.target.value)}
+        />
       </SimpleAccordion>
 
       <FieldSettingsDivider />
