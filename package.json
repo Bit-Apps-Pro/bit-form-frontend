@@ -110,7 +110,7 @@
     "build-storybook": "build-storybook -s public",
     "del-modules": "npkill",
     "build-pkg": "turbo run build",
-    "hot": "cross-env APP_ENV=development vite"
+    "hot": "cross-env APP_ENV=development vite --force"
   },
   "husky": {
     "hooks": {

@@ -25,12 +25,15 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       fldConstructor.destroy()
     }
 
-    const { multiple, showMaxSize, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, showFilePreview, showFileSize, duplicateAllow, accept, minFile, maxFile } = fieldData.config
+    const { multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow, accept, minFile, maxFile } = fieldData.config
 
     const configOptions = {
       fieldKey,
       multiple,
+      allowMaxSize,
+      maxSizeErrMsg: fieldData?.err?.maxSize?.msg || fieldData?.err?.maxSize?.dflt,
       showMaxSize,
+      maxSizeLabel,
       maxSize,
       sizeUnit,
       isItTotalMax,
@@ -38,13 +41,16 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       fileSelectStatus,
       allowedFileType,
       showFileList,
+      fileExistMsg,
       showFilePreview,
       showFileSize,
       duplicateAllow,
       accept,
       minFile,
+      minFileErrMsg: fieldData?.err?.minFile?.msg || fieldData?.err?.minFile?.dflt,
       maxFile,
-      assetsURL: bits.assetsURL,
+      maxFileErrMsg: fieldData?.err?.maxFile?.msg || fieldData?.err?.maxFile?.dflt,
+      assetsURL: `${bits.assetsURL}/../static/file-upload/`,
       document: document.getElementById('bit-grid-layout')?.contentWindow?.document,
       widnow: document.getElementById('bit-grid-layout')?.contentWindow,
     }
@@ -121,13 +127,13 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                     No Choosen File
                   </div>
                 )}
-                {fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (
+                {fieldData.config.allowMaxSize && fieldData.config.showMaxSize && fieldData.config.maxSize !== 0 && (
                   <small
                     data-dev-max-size-lbl={fieldKey}
                     className={`${fieldKey}-max-size-lbl ${getCustomClsName(fieldKey, 'max-size-lbl')}`}
                     {...getCustomAttributs(fieldKey, 'max-size-lbl')}
                   >
-                    {`(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}
+                    {fieldData.config.maxSizeLabel || `(Max ${fieldData.config.maxSize}${fieldData.config.sizeUnit})`}
                   </small>
                 )}
                 <input
