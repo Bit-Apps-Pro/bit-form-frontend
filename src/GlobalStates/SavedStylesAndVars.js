@@ -5,9 +5,9 @@ import { $breakpoint, $colorScheme } from './GlobalStates'
 export const $savedStylesAndVars = atom({
   key: '$savedStylesAndVars',
   default: {
-    themeVars: {},
-    themeColors: {},
-    styles: {},
+    allThemeVars: {},
+    allThemeColors: {},
+    allStyles: {},
   },
 })
 
@@ -15,7 +15,7 @@ export const $savedThemeColors = selector({
   key: '$savedThemeColors',
   get: ({ get }) => {
     const colorScheme = get($colorScheme)
-    const { lightThemeColors, darkThemeColors } = get($savedStylesAndVars).themeColors
+    const { lightThemeColors, darkThemeColors } = get($savedStylesAndVars).allThemeColors
     if (colorScheme === 'dark') return { ...lightThemeColors, ...darkThemeColors }
     return lightThemeColors
   },
@@ -26,28 +26,28 @@ export const $savedThemeVars = selector({
   get: ({ get }) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
-    const { themeVars } = get($savedStylesAndVars)
+    const { lgLightThemeVars, lgDarkThemeVars, mdLightThemeVars, mdDarkThemeVars, smLightThemeVars, smDarkThemeVars } = get($savedStylesAndVars).allThemeVars
     if (breakpoint === 'lg') {
       return isDarkColorScheme
-        ? { ...themeVars.lgLightThemeVars, ...themeVars.lgDarkThemeVars }
-        : themeVars.lgLightThemeVars
+        ? { ...lgLightThemeVars, ...lgDarkThemeVars }
+        : lgLightThemeVars
     }
     if (breakpoint === 'md') {
       return {
-        ...themeVars.lgLightThemeVars,
-        ...isDarkColorScheme && themeVars.lgDarkThemeVars,
-        ...themeVars.mdLightThemeVars,
-        ...isDarkColorScheme && themeVars.mdDarkThemeVars,
+        ...lgLightThemeVars,
+        ...isDarkColorScheme && lgDarkThemeVars,
+        ...mdLightThemeVars,
+        ...isDarkColorScheme && mdDarkThemeVars,
       }
     }
     if (breakpoint === 'sm') {
       return {
-        ...themeVars.lgLightThemeVars,
-        ...isDarkColorScheme && themeVars.lgDarkThemeVars,
-        ...themeVars.mdLightThemeVars,
-        ...isDarkColorScheme && themeVars.mdDarkThemeVars,
-        ...themeVars.smLightThemeVars,
-        ...isDarkColorScheme && themeVars.smDarkThemeVars,
+        ...lgLightThemeVars,
+        ...isDarkColorScheme && lgDarkThemeVars,
+        ...mdLightThemeVars,
+        ...isDarkColorScheme && mdDarkThemeVars,
+        ...smLightThemeVars,
+        ...isDarkColorScheme && smDarkThemeVars,
       }
     }
   },
@@ -58,45 +58,45 @@ export const $savedStyles = selector({
   get: ({ get }) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
-    const { styles } = get($savedStylesAndVars)
+    const { lgLightStyles, lgDarkStyles, mdLightStyles, mdDarkStyles, smLightStyles, smDarkStyles } = get($savedStylesAndVars).allStyles
     if (breakpoint === 'lg') {
       return isDarkColorScheme
         ? mergeNestedObj(
-          styles.lgLightStyles,
-          styles.lgDarkStyles,
+          lgLightStyles,
+          lgDarkStyles,
         )
-        : styles.lgLightStyles
+        : lgLightStyles
     }
     if (breakpoint === 'md') {
       if (isDarkColorScheme) {
         return mergeNestedObj(
-          styles.lgLightStyles,
-          styles.lgDarkStyles,
-          styles.mdLightStyles,
-          styles.mdDarkStyles,
+          lgLightStyles,
+          lgDarkStyles,
+          mdLightStyles,
+          mdDarkStyles,
         )
       }
 
       return mergeNestedObj(
-        styles.lgLightStyles,
-        styles.mdLightStyles,
+        lgLightStyles,
+        mdLightStyles,
       )
     }
     if (breakpoint === 'sm') {
       if (isDarkColorScheme) {
         return mergeNestedObj(
-          styles.lgLightStyles,
-          styles.lgDarkStyles,
-          styles.mdLightStyles,
-          styles.mdDarkStyles,
-          styles.smLightStyles,
-          styles.smDarkStyles,
+          lgLightStyles,
+          lgDarkStyles,
+          mdLightStyles,
+          mdDarkStyles,
+          smLightStyles,
+          smDarkStyles,
         )
       }
       return mergeNestedObj(
-        styles.lgLightStyles,
-        styles.mdLightStyles,
-        styles.smLightStyles,
+        lgLightStyles,
+        mdLightStyles,
+        smLightStyles,
       )
     }
   },

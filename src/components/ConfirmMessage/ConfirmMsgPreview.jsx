@@ -7,7 +7,7 @@ import { useSetRecoilState } from 'recoil'
 import { $confirmations } from '../../GlobalStates/GlobalStates'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
-import confirmMsgCssStyles from './confirm_msg_css_styles'
+import confirmMsgCssStyles from './confirmMsgCssStyles'
 
 export default function ConfirmMsgPreview({ index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)

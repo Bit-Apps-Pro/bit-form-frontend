@@ -1534,10 +1534,13 @@ arrow:after,
 .tippy-backdrop {
   background: var(--dp-blue-bg) !important;
 }
- .isDragging {
-    box-shadow: inset 0 0 4px 1px var(--b-50)
+.isDragging {
+    box-shadow: inset 0 0 4px 1px var(--b-50);
  }
- 
+.isDragging .layout{
+  min-height: calc(100vh - 40px);
+}
+
  .layout-wrapper {
     /* margin: 3px auto auto; */
     /* height: calc(100% - 10px) */
@@ -1545,7 +1548,6 @@ arrow:after,
  
  .layout {
     overflow: visible;
-    min-height: 100px!important
  }
  
  
@@ -1652,7 +1654,8 @@ arrow:after,
  }
  
  .drag:hover:not(.blk-wrp-btn) {
-    background: aliceblue;
+  outline: 2px dashed var(--b-50);
+  outline-offset: -2px;
  }
  
  .drag:active {
