@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import VirtualList from 'react-tiny-virtual-list'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import useSWR from 'swr'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
@@ -18,6 +17,7 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import VirtualList from '../Utilities/VirtualList'
 import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
 export default function FontPickerMenu({ id }) {
@@ -249,27 +249,24 @@ export default function FontPickerMenu({ id }) {
               )}
           </div>
           <VirtualList
-            width="100%"
-            height={200}
+            style={{ width: '100%', height: 200 }}
             itemCount={fonts.length || 1}
-            itemSize={fonts.length ? 30 : 0}
+            itemSizes={fonts.length ? 30 : 0}
             scrollToIndex={fonts.length ? findSelectedFontIndx() : 0}
-            scrollToAlignment="auto"
-            renderItem={({ index, style }) => (
-              <div key={index} style={style}>
-                <button
-                  className={css(fontStyle.btn)}
-                  type="button"
-                  onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}
-                  data-testid={`set-font-${fonts[index]?.family}`}
-                >
-                  <span className={css(fontStyle.title)}>{fonts[index].family}</span>
-                  {
-                    ((checkGoogleFontExist && (themeVars['--g-font-family'] === fonts[index].family || tempStyle.themeVars['--g-font-family'] === fonts[index].family)))
-                    && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
-                  }
-                </button>
-              </div>
+            scrollToAlignment="center"
+            renderItem={(index) => (
+              <button
+                className={css(fontStyle.btn)}
+                type="button"
+                onClick={() => setCheck(fonts[index]?.family, fonts[index]?.variants)}
+                data-testid={`set-font-${fonts[index]?.family}`}
+              >
+                <span className={css(fontStyle.title)}>{fonts[index]?.family}</span>
+                {
+                  ((checkGoogleFontExist && (themeVars['--g-font-family'] === fonts[index]?.family || tempStyle.themeVars['--g-font-family'] === fonts[index]?.family)))
+                  && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
+                }
+              </button>
             )}
           />
         </>

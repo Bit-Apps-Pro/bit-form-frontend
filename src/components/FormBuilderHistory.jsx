@@ -1,5 +1,6 @@
-import { default as BitVirtualizedList } from 'bit-virtualized-list'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
@@ -16,18 +17,7 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { reCalculateFieldHeights } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
-
-const generateItemSize = length => {
-  const arr = []
-  for (let i = 0; i < length; i += 1) {
-    if (i === 0) {
-      arr.push(25)
-    } else {
-      arr.push(40)
-    }
-  }
-  return arr
-}
+import VirtualList from './Utilities/VirtualList'
 
 export function handleUndoRedoShortcut(e) {
   if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
@@ -46,8 +36,8 @@ export default function FormBuilderHistory() {
   const { css } = useFela()
   const [disabled, setDisabled] = useState(false)
   const [showHistory, setShowHistory] = useState(null)
-  const [fields, setFields] = useRecoilState($fields)
-  const [layouts, setLayouts] = useRecoilState($layouts)
+  const setFields = useSetRecoilState($fields)
+  const setLayouts = useSetRecoilState($layouts)
   const setColorScheme = useSetRecoilState($colorScheme)
   const setBreakpoint = useSetRecoilState($breakpoint)
   const setStyles = useSetRecoilState($styles)
@@ -56,71 +46,8 @@ export default function FormBuilderHistory() {
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const [historyListWrpElm, setHistoryListWrpElm] = useState(null)
+  const rowVirtualizer = useRef(null)
   const { active, histories } = builderHistory
-  // const [scrolIndex, setScrolIndex] = useState(0)
-  const virtualizeListRef = useRef(null)
-
-  useEffect(() => {
-    if (historyListWrpElm) {
-      const rowHeights = generateItemSize(histories.length)
-      historyListWrpElm.innerHTML = ''
-      virtualizeListRef.current = new BitVirtualizedList(historyListWrpElm, {
-        height: 300,
-        rowCount: histories.length,
-        rowHeight: rowHeights,
-        initialIndex: 0,
-        renderRow: (index, style) => {
-          const div = document.createElement('div')
-          div.style = style
-          div.key = index
-          div.setAttribute('id', 'user')
-          div.className = css(builderHistoryStyle.item)
-
-          const btn = document.createElement('button')
-          btn.className = `${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`
-          btn.onclick = () => handleHistory(index)
-          btn.title = histories[index].event
-
-          const span1 = document.createElement('span')
-          span1.className = css(builderHistoryStyle.subtitle)
-          span1.innerText = histories[index].event
-          btn.appendChild(span1)
-
-          if (index > 0) {
-            const span2 = document.createElement('span')
-            span2.className = css(builderHistoryStyle.fldkey)
-            span2.innerText = `Field Key: ${histories[index].state.fldKey}`
-            btn.appendChild(span2)
-          }
-          div.appendChild(btn)
-          return div
-
-          // <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)}>
-          //   <button
-          //     type="button"
-          //     className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
-          //     onClick={() => handleHistory(index)}
-          //     title={histories[index].event}
-          //   >
-          //     <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
-          //     {index > 0 && (
-          //       <span className={css(builderHistoryStyle.fldkey)}>
-          //         {`Field Key: ${histories[index].state.fldKey}`}
-          //       </span>
-          //     )}
-          //   </button>
-          // </div>
-        },
-      })
-    }
-
-    // histories.length > 2 && virtualizeList?.setRowCount(histories.length)
-  }, [historyListWrpElm, builderHistory])
-
-  useEffect(() => {
-    if (virtualizeListRef.current) virtualizeListRef.current.setRowCount(histories.length)
-  }, [histories.length])
 
   useEffect(() => {
     document.addEventListener('keypress', handleUndoRedoShortcut)
@@ -182,7 +109,6 @@ export default function FormBuilderHistory() {
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
     reCalculateFieldHeights()
     setDisabled(false)
-    // virtualizeListRef.current.setRowCount(histories.length)
   }
 
   const checkForPreviousState = (indx, setState, stateName) => {
@@ -195,15 +121,15 @@ export default function FormBuilderHistory() {
   }
 
   const onShow = () => {
-    console.log('acitve', active)
-    if (virtualizeListRef.current) virtualizeListRef.current.scrollToIndex(active, 'start')
+    rowVirtualizer?.current?.scrollToIndex(active)
     setShowHistory(true)
   }
 
   const onHide = () => {
     setShowHistory(false)
-    if (virtualizeListRef.current) virtualizeListRef.current.scrollToIndex(active, 'start')
   }
+
+  const itemSizes = [25, ...new Array(histories.length - 1).fill(40)]
 
   return (
     <div>
@@ -251,57 +177,36 @@ export default function FormBuilderHistory() {
               History
             </p>
 
-            {histories.length <= 1 && (
+            {histories.length <= 2 && (
               <span className={css(builderHistoryStyle.secondary)}>
                 no data found
               </span>
             )}
-            {
-              histories.length > 1 && (
-                <div ref={setHistoryListWrpElm} className={css(builderHistoryStyle.list)}>
-
-                  {/* <VirtualList
-                    width="100%"
-                    height={200}
-                    itemCount={histories.length || 1}
-                    itemSize={histories.length ? generateItemSize() : 0}
-                    scrollToIndex={active}
-                    renderItem={({ index, style }) => (
-                      <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)} style={style}>
-                        <button
-                          type="button"
-                          className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
-                          onClick={() => handleHistory(index)}
-                          title={histories[index].event}
-                        >
-                          <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
-                          {index > 0 && (
-                            <span className={css(builderHistoryStyle.fldkey)}>
-                              {`Field Key: ${histories[index].state.fldKey}`}
-                            </span>
-                          )}
-                        </button>
-                      </div>
-                    )}
-
-                  /> */}
-                  {/* {histories.map((history, indx) => (
-                    <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
-                      <button
-                        type="button"
-                        className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
-                        onClick={() => handleHistory(indx)}
-                        title={history.event}
-                      >
-                        <span className={css(builderHistoryStyle.subtitle)}>{history.event}</span>
-                        {indx > 0 && <span className={css(builderHistoryStyle.fldkey)}>{history.state.fldKey}</span>}
-                      </button>
-                    </li>
-                  ))} */}
-                </div>
-              )
-            }
-
+            {histories.length > 2 && (
+              <VirtualList
+                virtualizerRef={rowVirtualizer}
+                className={css(builderHistoryStyle.list)}
+                itemCount={histories.length}
+                itemSizes={itemSizes}
+                renderItem={index => (
+                  <div className={css(builderHistoryStyle.item)}>
+                    <button
+                      type="button"
+                      className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
+                      onClick={() => handleHistory(index)}
+                      title={histories[index].event}
+                    >
+                      <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
+                      {index > 0 && (
+                        <span className={css(builderHistoryStyle.fldkey)}>
+                          {`Field Key: ${histories[index].state.fldKey}`}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+                )}
+              />
+            )}
           </div>
         </Downmenu>
       </div>

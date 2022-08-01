@@ -97,8 +97,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const { data: fetchedBuilderHelperStates, isLoading: isStyleLoading } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
     .then(({ data: [response] }) => response?.builder_helper_state))
 
-  console.log({ isStyleLoading, fetchedBuilderHelperStates })
-
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
     let isV2Form = fetchedBuilderHelperStates !== null
