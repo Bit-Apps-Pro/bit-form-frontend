@@ -7,15 +7,24 @@ import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function TagifyComp({ children, selector, actionId, onChange, value, fFields = true, ph = null, ptrn = null }) {
   const formFields = useRecoilValue($fieldsArr)
-  const fields = []
+  const fields = fFields ? formFields.filter(itm => itm.lbl !== undefined).map(item => ({ name: item.key, value: item.lbl })) : []
+  const smartTags = SmartTagField.map((item) => ({ name: item.name, value: item.label }))
   const tagifyRef = useRef(null)
-  const smartTags = []
-  if (fFields) {
-    formFields.map(item => item.lbl !== undefined && fields.push({ text: item.key, value: item.lbl }))
-  }
-  SmartTagField.map((item) => {
-    smartTags.push({ text: item.name, value: item.label })
-  })
+
+  useEffect(() => {
+    const input = document.querySelector(`input[name=${selector}]`)
+    input.value = value
+    input.setAttribute('value', value)
+    if (tagifyRef.current) {
+      tagifyRef.current.destroy()
+    }
+    tagifyRef.current = new Tagify(input, tagifySettings)
+    tagifyRef.current.DOM.originalInput.value = value
+
+    tagifyRef.current.on('input', (e) => onInput(e))
+      .on('add', onAddTag(tagifyRef.current.DOM.originalInput.value))
+      .on('remove', onRemoveTag(tagifyRef.current.DOM.originalInput.value))
+  }, [actionId])
 
   const modifyTagifyData = val => {
     const matchedBraces = val.match(/({[^{]*?)(?=\})}/g)
@@ -29,20 +38,20 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
     onChange(replacedData)
   }
 
-  const onInput = (e, tagifyIns) => {
+  const onInput = (e) => {
     const { prefix, textContent } = e.detail
     const lastChar = textContent.slice(-1)
     const isLastCharPrefix = (lastChar === '@' || lastChar === '#')
     const pref = isLastCharPrefix ? lastChar : prefix
     if (pref) {
       if (pref === '@' && fFields) {
-        tagifyIns.whitelist = fields
+        tagifyRef.current.whitelist = fields
       } else if (pref === '#') {
-        tagifyIns.whitelist = smartTags
+        tagifyRef.current.whitelist = smartTags
       }
-      tagifyIns.dropdown.show()
+      tagifyRef.current.dropdown.show()
     }
-    modifyTagifyData(tagifyIns.DOM.originalInput.value)
+    modifyTagifyData(tagifyRef.current.DOM.originalInput.value)
   }
 
   const onAddTag = tagifyValue => {
@@ -60,8 +69,9 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
     mixMode: { insertAfterTag: '' },
     pattern: ptrn || /#|@/,
     placeholder: ph || 'Type here...#Smart-tags',
-    tagTextProp: 'text',
+    tagTextProp: 'value',
     duplicates: true,
+    whitelist: [...fields, ...smartTags],
     enforceWhitelist: true,
     trim: true,
     editTags: false,
@@ -73,6 +83,7 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
       maxItems: smartTags.length,
       searchKeys: ['name', 'value'],
       closeOnSelect: true,
+      placeAbove: false,
     },
     callbacks: {
       add: () => {
@@ -83,20 +94,6 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
       },
     },
   }
-
-  useEffect(() => {
-    const input = document.querySelector(`input[name=${selector}]`)
-    if (tagifyRef.current) {
-      tagifyRef.current.DOM.originalInput.value = value
-      tagifyRef.current.destroy()
-    }
-    tagifyRef.current = new Tagify(input, tagifySettings)
-
-    tagifyRef.current.DOM.originalInput.value = value
-    tagifyRef.current.on('input', (e) => onInput(e, tagifyRef.current))
-      .on('add', onAddTag(tagifyRef.current.DOM.originalInput.value))
-      .on('remove', onRemoveTag(tagifyRef.current.DOM.originalInput.value))
-  }, [actionId])
 
   return (
     <div>
