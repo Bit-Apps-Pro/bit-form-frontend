@@ -286,6 +286,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       })
       return newStyles
     })
+
+    // TODO remove tempstyle add savedStylesAndvars
     setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
       draftStyle.styles = newStyles
     }))
@@ -330,6 +332,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
         draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
       })
     }))
+
+    // TODO remove tempstyle add savedStylesAndvars
     setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
       draftStyle.styles = getLatestState('styles')
     }))
@@ -587,7 +591,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   }
 
   return (
-    <div style={{ width: gridWidth + 10 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()} onClick={() => resetContextMenu()}>
+    <div
+      style={{ width: gridWidth + 10 }}
+      className="layout-wrapper"
+      id="layout-wrapper"
+      onDragOver={e => e.preventDefault()}
+      onDragEnter={e => e.preventDefault()}
+      onClick={() => resetContextMenu()}
+    >
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
