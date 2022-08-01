@@ -19,14 +19,14 @@ import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAn
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
-import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight, $tempStyles } from '../GlobalStates/StylesState'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { $allStyles } from '../GlobalStates/StylesState'
+import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { addToBuilderHistory, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { bitCipher, deepCopy, isObjectEmpty, multiAssign } from '../Utils/Helpers'
+import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
@@ -55,7 +55,7 @@ const styleReducer = (style, action) => {
 
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const newFormId = useRecoilValue($newFormId)
-  const isNewForm = formType === 'new'
+  const isNewForm = formType !== 'edit'
   const { element, fieldKey } = useParams()
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
@@ -68,34 +68,19 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const { styleMode } = useRecoilValue($flags)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
-  const [styleLoading, setstyleLoading] = useState(true)
+  const [styleLoading, setStyleLoading] = useState(true)
   const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
   const [showToolBar, setShowToolbar] = useState(false)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
-  const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const setTempStyles = useSetRecoilState($tempStyles)
-  const [styles, setStyle] = useRecoilState($styles)
-  const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
-  const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
 
-  const setLgLightThemeVars = useSetRecoilState($themeVarsLgLight)
-  const setLgDarkThemeVars = useSetRecoilState($themeVarsLgDark)
-  const setMdLightThemeVars = useSetRecoilState($themeVarsMdLight)
-  const setMdDarkThemeVars = useSetRecoilState($themeVarsMdDark)
-  const setSmLightThemeVars = useSetRecoilState($themeVarsSmLight)
-  const setSmDarkThemeVars = useSetRecoilState($themeVarsSmDark)
-  const setLgLightStyles = useSetRecoilState($stylesLgLight)
-  const setLgDarkStyles = useSetRecoilState($stylesLgDark)
-  const setMdLightStyles = useSetRecoilState($stylesMdLight)
-  const setMdDarkStyles = useSetRecoilState($stylesMdDark)
-  const setSmLightStyles = useSetRecoilState($stylesSmLight)
-  const setSmDarkStyles = useSetRecoilState($stylesSmDark)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -104,55 +89,37 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   // useEffect(() => {
   // if (formType === 'new') {
   // sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
-  // setstyleLoading(false)
+  // setStyleLoading(false)
   // }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const { data: fetchedBuilderHelperStates } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
+  const { data: fetchedBuilderHelperStates, isLoading: isStyleLoading } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
     .then(({ data: [response] }) => response?.builder_helper_state))
 
-  useEffect(() => {
-    if (fetchedBuilderHelperStates) {
-      const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
-      // declare new theme exist , no need old theme functions
-      if (!isObjectEmpty(oldStyles)) setIsNewThemeStyleLoaded(true)
-      setLightThemeColors(oldStyles.themeColors.lightThemeColors)
-      setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
-      setLgLightThemeVars(oldStyles.themeVars.lgLightThemeVars)
-      setLgDarkThemeVars(oldStyles.themeVars.lgDarkThemeVars)
-      setMdLightThemeVars(oldStyles.themeVars.mdLightThemeVars)
-      setMdDarkThemeVars(oldStyles.themeVars.mdDarkThemeVars)
-      setSmLightThemeVars(oldStyles.themeVars.smLightThemeVars)
-      setSmDarkThemeVars(oldStyles.themeVars.smDarkThemeVars)
-      setLgLightStyles(oldStyles.style.lgLightStyles)
-      setLgDarkStyles(oldStyles.style.lgDarkStyles)
-      setMdLightStyles(oldStyles.style.mdLightStyles)
-      setMdDarkStyles(oldStyles.style.mdDarkStyles)
-      setSmLightStyles(oldStyles.style.smLightStyles)
-      setSmDarkStyles(oldStyles.style.smDarkStyles)
+  console.log({ isStyleLoading, fetchedBuilderHelperStates })
 
-      // TODO : ignore deep copy
-      const savedStyles = deepCopy({
-        themeColors: oldStyles.themeColors,
-        themeVars: oldStyles.themeVars,
-        styles: oldStyles.style,
+  useEffect(() => {
+    if (isNewForm) setStyleLoading(false)
+    let isV2Form = fetchedBuilderHelperStates !== null
+    const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
+    if (oldStyles && isObjectEmpty(oldStyles)) isV2Form = false
+    if (isV2Form) {
+      // declare new theme exist , no need old theme functions
+      setIsNewThemeStyleLoaded(true)
+      const { themeVars, themeColors, style: oldAllStyles } = oldStyles
+      setAllThemeColors(themeColors)
+      setAllThemeVars(themeVars)
+      setAllStyles(oldAllStyles)
+
+      setSavedStylesAndVars({
+        allThemeColors: themeColors,
+        allThemeVars: themeVars,
+        allStyles: oldAllStyles,
       })
-      setSavedStylesAndVars(prev => ({ ...prev, ...savedStyles }))
 
       setBreakpointSize(oldStyles.breakpointSize)
 
-      // setStyle(oldStyles.style)
-      // setThemeVars(oldStyles.themeVars)
-      // if (oldStyles.themeColors?.lightThemeColors) setLightThemeColors(oldStyles.themeColors.lightThemeColors)
-      // if (oldStyles.themeColors?.darkThemeColors) setDarkThemeColors(oldStyles.themeColors.darkThemeColors)
-      // const allStyleStates = {
-      //   themeVars: oldStyles.themeVars,
-      //   lightThemeColors: oldStyles.themeColors?.lightThemeColors,
-      //   darkThemeColors: oldStyles.themeColors?.darkThemeColors,
-      //   styles: oldStyles.style,
-      // }
-      // setTempStyles(allStyleStates)
       setBuilderHistory(prevHistory => produce(prevHistory, drft => {
         const { state } = drft.histories[0]
         drft.histories[0].state = {
@@ -162,21 +129,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       }))
     } else {
       setOldExistingStyle()
-      const allStyleStates = {
-        themeVars: { ...themeVars },
-        lightThemeColors: { ...lightThemeColors },
-        darkThemeColors: { ...darkThemeColors },
-        themeColors: merge(lightThemeColors, darkThemeColors),
-        styles: { ...styles },
-      }
-      setTempStyles(allStyleStates)
-      setBuilderHistory(prevHistory => produce(prevHistory, drft => {
-        const { state } = drft.histories[0]
-        drft.histories[0].state = {
-          ...state,
-          ...allStyleStates,
-        }
-      }))
     }
   }, [fetchedBuilderHelperStates])
 
@@ -253,13 +205,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         if (response.ok) {
           return response.text()
         }
-        setstyleLoading(false)
+        setStyleLoading(false)
         return Promise.reject(response.statusText)
       })
       .then(oldStyleText => {
         const oldStyle = css2json(oldStyleText)
         styleDispatch({ type: 'init', style: oldStyle })
-        setstyleLoading(false)
+        setStyleLoading(false)
         recheckStyleById(oldStyleText)
       })
       .catch(() => {
@@ -416,7 +368,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
         <Section
           onSizeChanged={setGrWidth}
-          minSize={notIE && 320}
+          minSize={320}
           defaultSize={gridWidth - 28}
         >
           {!isLoading && !styleLoading ? (

@@ -24,9 +24,9 @@ import {
   $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
   $workflows
 } from '../GlobalStates/GlobalStates'
-import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
-import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { $allStyles, $styles } from '../GlobalStates/StylesState'
+import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
@@ -68,20 +68,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
   // const style = useRecoilValue($styles)
   const [style] = useRecoilState($styles)
-  const setLightThemeColors = useSetRecoilState($lightThemeColors)
-  const setDarkThemeColors = useSetRecoilState($darkThemeColors)
-  const setLgLightThemeVars = useSetRecoilState($themeVarsLgLight)
-  const setLgDarkThemeVars = useSetRecoilState($themeVarsLgDark)
-  const setMdLightThemeVars = useSetRecoilState($themeVarsMdLight)
-  const setMdDarkThemeVars = useSetRecoilState($themeVarsMdDark)
-  const setSmLightThemeVars = useSetRecoilState($themeVarsSmLight)
-  const setSmDarkThemeVars = useSetRecoilState($themeVarsSmDark)
-  const setLgLightStyles = useSetRecoilState($stylesLgLight)
-  const setLgDarkStyles = useSetRecoilState($stylesLgDark)
-  const setMdLightStyles = useSetRecoilState($stylesMdLight)
-  const setMdDarkStyles = useSetRecoilState($stylesMdDark)
-  const setSmLightStyles = useSetRecoilState($stylesSmLight)
-  const setSmDarkStyles = useSetRecoilState($stylesSmDark)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
   const builderSettings = useRecoilValue($builderSettings)
 
   const breakpointSize = useRecoilValue($breakpointSize)
@@ -240,6 +229,27 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles } = atomicStyleGenarate(layouts)
 
+    const allThemeColors = {
+      lightThemeColors,
+      darkThemeColors,
+    }
+    const allThemeVars = {
+      lgLightThemeVars,
+      lgDarkThemeVars,
+      mdLightThemeVars,
+      mdDarkThemeVars,
+      smLightThemeVars,
+      smDarkThemeVars,
+    }
+    const allStyles = {
+      lgLightStyles,
+      lgDarkStyles,
+      mdLightStyles,
+      mdDarkStyles,
+      smLightStyles,
+      smDarkStyles,
+    }
+
     // TODO : send here another request to create atomic css file
     const atomicData = {
       form_id: savedFormId || newFormId,
@@ -264,26 +274,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       additional: additionalSettings,
       workFlows,
       formStyle,
-      themeColors: {
-        lightThemeColors,
-        darkThemeColors,
-      },
-      themeVars: {
-        lgLightThemeVars,
-        lgDarkThemeVars,
-        mdLightThemeVars,
-        mdDarkThemeVars,
-        smLightThemeVars,
-        smDarkThemeVars,
-      },
-      style: {
-        lgLightStyles,
-        lgDarkStyles,
-        mdLightStyles,
-        mdDarkStyles,
-        smLightStyles,
-        smDarkStyles,
-      },
+      themeColors: allThemeColors,
+      themeVars: allThemeVars,
+      style: allStyles,
       atomicClassMap,
       breakpointSize,
       customCodes,
@@ -310,6 +303,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
+            // TODO : keep current route but replace form type and id 
             history.replace(`/form/builder/edit/${data.id}/fields-list`)
           }
           setLay(layouts)
@@ -331,20 +325,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             )
           }
 
-          setLightThemeColors(lightThemeColors)
-          setDarkThemeColors(darkThemeColors)
-          setLgLightThemeVars(lgLightThemeVars)
-          setLgDarkThemeVars(lgDarkThemeVars)
-          setMdLightThemeVars(mdLightThemeVars)
-          setMdDarkThemeVars(mdDarkThemeVars)
-          setSmLightThemeVars(smLightThemeVars)
-          setSmDarkThemeVars(smDarkThemeVars)
-          setLgLightStyles(lgLightStyles)
-          setLgDarkStyles(lgDarkStyles)
-          setMdLightStyles(mdLightStyles)
-          setMdDarkStyles(mdDarkStyles)
-          setSmLightStyles(smLightStyles)
-          setSmDarkStyles(smDarkStyles)
+          setAllThemeColors(allThemeColors)
+          setAllThemeVars(allThemeVars)
+          setAllStyles(allStyles)
 
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',

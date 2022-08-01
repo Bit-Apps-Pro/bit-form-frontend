@@ -5,7 +5,7 @@
  * @param {string} fieldType field type
  * @return style classes
 */
-export default function commonStyle(fk, type, fieldType) {
+export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme) {
   switch (type) {
     case 'small-2':
       return {

@@ -3,27 +3,34 @@ import atlassianTheme from './atlassianTheme/3_atlassianTheme'
 
 export default function themeProvider(themeSlug, fieldsArr) {
   const theme = {
-    styles: {},
-    themeVars: {},
-    themeColors: {},
+    themeColors: {
+      lightThemeColors: {},
+      darkThemeColors: {},
+    },
+    themeVars: {
+      lgLightThemeVars: {},
+      lgDarkThemeVars: {},
+      mdLightThemeVars: {},
+      mdDarkThemeVars: {},
+      smLightThemeVars: {},
+      smDarkThemeVars: {},
+    },
+    styles: {
+      lgLightStyles: {},
+      lgDarkStyles: {},
+      mdLightStyles: {},
+      mdDarkStyles: {},
+      smLightStyles: {},
+      smDarkStyles: {},
+    },
   }
 
   if (themeSlug === 'bitformDefault') {
-    theme.styles = bitformDefaultTheme({ fieldsArr })
     theme.themeColors = bitformDefaultTheme({ type: 'themeColors' })
     theme.themeVars = bitformDefaultTheme({ type: 'themeVars' })
+    theme.styles = bitformDefaultTheme({ fieldsArr })
     return theme
   }
-
-  // if (themeSlug === 'material') {
-  //   const thm = materialTheme(null, 'theme')
-  //   thm.form = materialTheme(null, 'form')
-
-  //   fieldsArr?.map(([fieldKey, fieldData]) => {
-  //     thm.fields[fieldKey] = materialTheme(fieldKey, fieldData.typ)
-  //   })
-  //   return thm
-  // }
 
   if (themeSlug === 'atlassian') {
     theme.styles = atlassianTheme({ fieldsArr })

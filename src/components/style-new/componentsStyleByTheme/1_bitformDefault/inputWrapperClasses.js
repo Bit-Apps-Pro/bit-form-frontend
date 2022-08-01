@@ -1,4 +1,4 @@
-export default function inputWrapperClasses(fk) {
+export default function inputWrapperClasses(fk, breakpoint, colorScheme) {
   return {
     [`.${fk}-fld-wrp`]: {
       display: 'var(--fld-wrp-dis, block)',

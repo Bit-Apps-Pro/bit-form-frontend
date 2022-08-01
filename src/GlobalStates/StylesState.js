@@ -33,26 +33,10 @@ export const $stylesLgLight = atom({
     fields: {},
   },
 })
-
-// ==== tmp ====
-// form: {
-//   light: {
-//     // _frm: { 'background-color': 'var(--global-bg-color)' },
-//     '_frm-bg': {
-//       padding: '10px',
-//       border: 'solid hsla(215, 20%, 93%, 100%)',
-//       'border-width': '1px',
-//     },
-//   },
-//   dark: {
-//     // _frm: { 'background-color': 'var(--global-bg-color)' },
-//     // '_frm-bg': { padding: '10px' },
-//   },
-// },
-export const $stylesMdLight = atom({ key: '$stylesMdLight', default: {} })
-export const $stylesSmLight = atom({ key: '$stylesSmLight', default: {} })
 export const $stylesLgDark = atom({ key: '$stylesLgDark', default: {} })
+export const $stylesMdLight = atom({ key: '$stylesMdLight', default: {} })
 export const $stylesMdDark = atom({ key: '$stylesMdDark', default: {} })
+export const $stylesSmLight = atom({ key: '$stylesSmLight', default: {} })
 export const $stylesSmDark = atom({ key: '$stylesSmDark', default: {} })
 
 export const $styles = selector({
@@ -118,5 +102,32 @@ export const $styles = selector({
     if (breakpoint === 'sm') {
       set(isDarkColorScheme ? $stylesSmDark : $stylesSmLight, newStyles)
     }
+  },
+})
+
+export const $allStyles = selector({
+  key: '$allStyles',
+  get: ({ get }) => ({
+    lgLightStyles: get($stylesLgLight),
+    lgDarkStyles: get($stylesLgDark),
+    mdLightStyles: get($stylesMdLight),
+    mdDarkStyles: get($stylesMdDark),
+    smLightStyles: get($stylesSmLight),
+    smDarkStyles: get($stylesSmDark),
+  }
+  ),
+  set: ({ set }, newStyles) => {
+    if (!('lgLightStyles' in newStyles)) throw new Error('$allStyles: lgLightStyles is missing')
+    if (!('lgDarkStyles' in newStyles)) throw new Error('$allStyles: lgDarkStyles is missing')
+    if (!('mdLightStyles' in newStyles)) throw new Error('$allStyles: mdLightStyles is missing')
+    if (!('mdDarkStyles' in newStyles)) throw new Error('$allStyles: mdDarkStyles is missing')
+    if (!('smLightStyles' in newStyles)) throw new Error('$allStyles: smLightStyles is missing')
+    if (!('smDarkStyles' in newStyles)) throw new Error('$allStyles: smDarkStyles is missing')
+    set($stylesLgLight, newStyles.lgLightStyles)
+    set($stylesLgDark, newStyles.lgDarkStyles)
+    set($stylesMdLight, newStyles.mdLightStyles)
+    set($stylesMdDark, newStyles.mdDarkStyles)
+    set($stylesSmLight, newStyles.smLightStyles)
+    set($stylesSmDark, newStyles.smDarkStyles)
   },
 })
