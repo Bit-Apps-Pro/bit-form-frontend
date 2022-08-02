@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
@@ -18,7 +18,7 @@ export default function Payment({ allIntegURL }) {
   const { isPro } = bits
   const { payments, setPayments } = useContext(AppSettings)
   const { type, indx } = useParams()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { css } = useFela()
@@ -29,7 +29,7 @@ export default function Payment({ allIntegURL }) {
   )
 
   if (paySetting.type !== type) {
-    history.push(allIntegURL)
+    navigate(allIntegURL)
   }
 
   const handleInput = e => {

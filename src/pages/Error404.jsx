@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import space from '../resource/img/space.svg'
 import app from '../styles/app.style'
 import { __ } from '../Utils/i18nwrap'
@@ -8,15 +8,15 @@ import { __ } from '../Utils/i18nwrap'
 export default function Error404() {
   const { css } = useFela()
   const [sec, setsec] = useState(9)
-  const history = useHistory()
+  const navigate = useNavigate()
   useEffect(() => {
     setTimeout(() => {
       if (sec === 0) {
-        history.push('/')
+        navigate('/')
       }
       setsec(sec - 1)
     }, 1000)
-  }, [history, sec])
+  }, [navigate, sec])
 
   return (
     <div className="error-404">

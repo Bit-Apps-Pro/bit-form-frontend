@@ -315,7 +315,7 @@ function FormDetails() {
         />
         <nav className={css(navbar.btct_bld_nav)}>
           <div className={css(navbar.btcd_bld_title)}>
-            <NavLink className={css(navbar.nav_back_icn)} exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <NavLink className={css(navbar.nav_back_icn)} to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
             </NavLink>
             <div className={css(navbar.bit_icn)}>

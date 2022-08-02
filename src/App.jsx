@@ -75,6 +75,7 @@ export default function App() {
 
                 <NavLink
                   to="/app-settings/recaptcha"
+                  // to="/app-settings"
                   className={({ isActive }) => isActive ? 'app-link-active' : ''}
                 // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
@@ -102,7 +103,7 @@ export default function App() {
                 </Suspense>
               } />
 
-              <Route path="/app-settings" element={
+              <Route path="app-settings/recaptcha" element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <AppSettings />
                 </Suspense>
