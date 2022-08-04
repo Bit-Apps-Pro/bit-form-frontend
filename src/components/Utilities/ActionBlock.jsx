@@ -5,10 +5,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Button from './Button'
-import MtInput from './MtInput'
+// import MtInput from './MtInput'
 import MtSelect from './MtSelect'
 import TrashIcn from '../../Icons/TrashIcn'
 import { $fields, $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
+import TagifyComp from '../CompSettings/TagifyComp'
 
 function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   const fields = useRecoilValue($fields)
@@ -114,7 +115,12 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
               />
             )
             : (
-              <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />
+              // <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />
+              <div style={{ width: '100%' }}>
+              <TagifyComp selector={`input-${lgcGrpInd}_${actionInd}`} actionId={`${lgcGrpInd}_${actionInd}`} onChange={changeAtnVal} value={action.val || ''}>
+                <input type="text" name={`input-${lgcGrpInd}_${actionInd}`} />
+              </TagifyComp>
+            </div>
             )}
         </>
       )}

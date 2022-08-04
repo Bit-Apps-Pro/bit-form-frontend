@@ -338,92 +338,92 @@ export default function ElementConfiguration({ fldKey }) {
         fieldObj.typ.match(/^(advanced-file-up)/) && (
           <LayerAccordion
             childrenAccodin
-            onClick={() => styleHandler('fld-wrp .filepond--root')}
+            onClick={() => styleHandler('filepond--drop-label')}
             offset="3.5"
-            title="Filepond"
+            title="File Upload Field"
             fldData={fieldObj}
             key={fldKey}
             open={fldKey === selectedFieldKey && (fieldObj.prefixIcn || fieldObj.suffixIcn)}
-            highlightSelector={`[data-dev-pond-root="${fldKey}"]`}
-            styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
+            highlightSelector={`[data-dev-filepond--drop-label="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--drop-label')}
           >
-            <NavBtn
+            {/* <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--root"
+              route="filepond--root"
               label="Root"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-root="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--root')}
-            />
+              highlightSelector={`[data-dev-filepond--root="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--root')}
+            /> */}
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--drop-label"
+              route="filepond--drop-label"
               label="Drop Label"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-drop-lbl="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drop-label')}
+              highlightSelector={`[data-dev-filepond--drop-label="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--drop-label')}
             />
 
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--label-action"
+              route="filepond--label-action"
               label="Label Action"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-lbl-action="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--label-action')}
+              highlightSelector={`[data-dev-filepond--label-action="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--label-action')}
             />
 
-            <NavBtn
+            {/* <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--panel-root"
+              route="filepond--panel-root"
               label="Paenl Root"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-panel-root="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--panel-root')}
-            />
+              highlightSelector={`[data-dev-filepond--panel-root="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--panel-root')}
+            /> */}
 
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--item-panel"
+              route="filepond--item-panel"
               label="Item Panel"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-item-panel="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--item-panel')}
+              highlightSelector={`[data-dev-filepond--item-panel="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--item-panel')}
             />
 
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--file-action-button"
+              route="filepond--file-action-button"
               label="File Action Button"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-action-btn="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file-action-button')}
+              highlightSelector={`[data-dev-filepond--file-action-button="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--file-action-button')}
             />
 
-            <NavBtn
+            {/* <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--drip-blob"
+              route="filepond--drip-blob"
               label="Drip Blob"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-drip-blob="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--drip-blob')}
-            />
+              highlightSelector={`[data-dev-filepond--drip-blob="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--drip-blob')}
+            /> */}
 
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
-              route="fld-wrp .filepond--file"
+              route="filepond--file"
               label="File"
               offset="3.1"
-              highlightSelector={`[data-dev-pond-file="${fldKey}"]`}
-              styleOverride={isLabelOverrideStyles(styles, fldKey, 'fld-wrp .filepond--file')}
+              highlightSelector={`[data-dev-filepond--file="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--file')}
             />
 
           </LayerAccordion>

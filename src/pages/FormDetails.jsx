@@ -5,25 +5,25 @@ import toast from 'react-hot-toast'
 import { NavLink, Route, Routes, useNavigate, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
-import confirmMsgCssStyles from '../components/ConfirmMessage/confirm_msg_css_styles'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
-import atlassianTheme from '../components/style-new/themes/atlassianTheme/3_atlassianTheme'
-import bitformDefaultTheme from '../components/style-new/themes/bitformDefault/1_bitformDefault'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderSettings, $colorScheme, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { $additionalSettings, $builderHistory, $builderSettings, $colorScheme, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $allStyles } from '../GlobalStates/StylesState'
+import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 import FormEntries from './FormEntries'
 import FormSettings from './FormSettings'
 
@@ -38,14 +38,8 @@ function FormDetails() {
   const navigate = useNavigate()
   const { formType, formID } = useParams()
   const setReports = useSetRecoilState($reports)
-  const setLay = useSetRecoilState($layouts)
-  const setStyles = useSetRecoilState($styles)
-  const themeVars = useRecoilValue($themeVars)
-  const newFormId = useRecoilValue($newFormId)
   const setFormId = useSetRecoilState($formId)
   const setFields = useSetRecoilState($fields)
-  const breakpoint = useRecoilValue($breakpoint)
-  const colorScheme = useRecoilValue($colorScheme)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const [fulScn, setFulScn] = useState(true)
   const [allResponse, setAllResponse] = useState([])
@@ -77,6 +71,12 @@ function FormDetails() {
   const setReportId = useSetRecoilState($reportId)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderSettings = useSetRecoilState($builderSettings)
+  const setLayouts = useSetRecoilState($layouts)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const newFormId = useRecoilValue($newFormId)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -86,49 +86,49 @@ function FormDetails() {
     return pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1)
   }
 
-  const setNewFormProps = () => {
-    // for all kind of template
-    if (formType === 'new') {
-      setworkFlows(defaultWorkflowValue)
-      setConfirmations(defaultConfirmationValue(formID))
-    }
-    // form blank form only
-    // if (formId === 'Blank') {
-    if (formType === 'new') {
-      const btnFld = {}
-      const btnFieldKey = `b${newFormId}-1`
-      btnFld[btnFieldKey] = btnData
-      setFields(btnFld)
-      const btnLay = { lg: [], md: [], sm: [] }
-      const subBtnLay = { h: 40, i: btnFieldKey, w: 60, x: 0, y: 0 }
-      btnLay.lg.push(subBtnLay)
-      btnLay.md.push(subBtnLay)
-      btnLay.sm.push(subBtnLay)
-      setLay(btnLay)
-      setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-        draft.histories[0].state = { fields: btnFld, layouts: btnLay, breakpoint, colorScheme }
-      }))
-      setisLoading(false)
-      setStyles(styles => produce(styles, draftStyle => {
-        const globalTheme = draftStyle.theme
-        if (globalTheme === 'bitformDefault') {
-          const fieldStyle = bitformDefaultTheme({ fieldKey: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] })
-          draftStyle.fields[btnFieldKey] = fieldStyle
-        }
+  // const setNewFormProps = () => {
+  //   // for all kind of template
+  //   if (formType === 'new') {
+  //     setworkFlows(defaultWorkflowValue)
+  //     setConfirmations(defaultConfirmationValue(formID))
+  //   }
+  //   // form blank form only
+  //   // if (formId === 'Blank') {
+  //   if (formType === 'new') {
+  //     const btnFld = {}
+  //     const btnFieldKey = `b${newFormId}-1`
+  //     btnFld[btnFieldKey] = btnData
+  //     setFields(btnFld)
+  //     const btnLay = { lg: [], md: [], sm: [] }
+  //     const subBtnLay = { h: 40, i: btnFieldKey, w: 60, x: 0, y: 0 }
+  //     btnLay.lg.push(subBtnLay)
+  //     btnLay.md.push(subBtnLay)
+  //     btnLay.sm.push(subBtnLay)
+  //     setLay(btnLay)
+  //     setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+  //       draft.histories[0].state = { fields: btnFld, layouts: btnLay, breakpoint, colorScheme }
+  //     }))
+  //     setisLoading(false)
+  //     setStyles(styles => produce(styles, draftStyle => {
+  //       const globalTheme = draftStyle.theme
+  //       if (globalTheme === 'bitformDefault') {
+  //         const fieldStyle = bitformDefaultTheme({ fieldKey: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] })
+  //         draftStyle.fields[btnFieldKey] = fieldStyle
+  //       }
 
-        // if (globalTheme === 'material') {
-        //   const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
-        //   draftStyle.fields[btnFieldKey] = fieldStyle
-        // }
+  //       // if (globalTheme === 'material') {
+  //       //   const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
+  //       //   draftStyle.fields[btnFieldKey] = fieldStyle
+  //       // }
 
-        if (globalTheme === 'atlassian') {
-          const obj = { fk: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] }
-          const fieldStyle = atlassianTheme(obj)
-          draftStyle.fields[btnFieldKey] = fieldStyle
-        }
-      }))
-    }
-  }
+  //       if (globalTheme === 'atlassian') {
+  //         const obj = { fk: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] }
+  //         const fieldStyle = atlassianTheme(obj)
+  //         draftStyle.fields[btnFieldKey] = fieldStyle
+  //       }
+  //     }))
+  //   }
+  // }
 
   const resetAllState = () => {
     resetFieldLabels()
@@ -148,14 +148,54 @@ function FormDetails() {
 
     // TODO: reset all states of style, themeVars & themeColors
   }
+
+  const setNewFormInitialStates = () => {
+    const { name,
+      fields,
+      layouts,
+      confirmations,
+      conditions,
+      allThemeColors,
+      allThemeVars,
+      allStyles } = templateProvider(formType, newFormId)
+
+    setFormInfo({ formName: name })
+    setFields(fields)
+    setLayouts(layouts)
+    setConfirmations(confirmations)
+    setworkFlows(conditions)
+    setAllThemeColors(allThemeColors)
+    setAllThemeVars(allThemeVars)
+    setAllStyles(allStyles)
+    setSavedStylesAndVars({ allThemeColors, allThemeVars, allStyles })
+    // TODO: RUBel , recheck this
+    // setBuilderHistory({
+    //   name,
+    //   fields,
+    //   layouts,
+    //   confirmations,
+    //   conditions,
+    //   allThemeColors,
+    //   allThemeVars,
+    //   allStyles,
+    //   breakpoint: 'lg',
+    //   colorScheme: 'light',
+    // })
+    setisLoading(false)
+  }
+
   const onMount = () => {
     window.scrollTo(0, 0)
     hideWpMenu()
+    if (formType !== 'edit') {
+      setNewFormInitialStates()
+      return
+    }
 
     if (sessionStorage.getItem('bitformData')) {
       const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
       if (formData.layout !== undefined) {
-        setLay(formData.layout)
+        setLayouts(formData.layout)
         setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = formData.layout }))
       }
       setFields(formData.fields)
@@ -170,8 +210,7 @@ function FormDetails() {
       toast.error(__('Please try again. Token was expired'))
       if (isLoading) { setisLoading(!isLoading) }
     } else {
-      setNewFormProps()
-      fetchTemplate()
+      setOldFormStates()
     }
   }
 
@@ -190,35 +229,36 @@ function FormDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchTemplate = () => {
-    if (formType === 'new' && formInfo.template !== 'Blank') {
-      bitsFetch({ template: formID, newFormId }, 'bitforms_get_template')
-        .then(res => {
-          if (res?.success && componentMounted) {
-            let responseData = JSON.parse(res.data)
-            if (typeof data !== 'object') { responseData = JSON.parse(res.data) }
-            if (responseData.form_content.layout !== undefined) {
-              setLay(responseData.form_content.layout)
-              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
-            }
-            setFields(responseData.form_content.fields)
-            // setBuilderHistory(oldHistory => oldHistory.histories[0].state.fields = responseData.form_content.fields)
-            setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
-            setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
-            setisLoading(false)
-            sessionStorage.setItem('btcd-lc', '-')
-          } else {
-            setisLoading(false)
-          }
-        })
-        .catch(() => { setisLoading(false) })
-    } else if (formType === 'edit') {
+  const setOldFormStates = () => {
+    // if (formType === 'new' && formInfo.template !== 'Blank') {
+    //   bitsFetch({ template: formID, newFormId }, 'bitforms_get_template')
+    //     .then(res => {
+    //       if (res?.success && componentMounted) {
+    //         let responseData = JSON.parse(res.data)
+    //         if (typeof data !== 'object') { responseData = JSON.parse(res.data) }
+    //         if (responseData.form_content.layout !== undefined) {
+    //           setLay(responseData.form_content.layout)
+    //           setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
+    //         }
+    //         setFields(responseData.form_content.fields)
+    //         // setBuilderHistory(oldHistory => oldHistory.histories[0].state.fields = responseData.form_content.fields)
+    //         setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
+    //         setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    //         setisLoading(false)
+    //         sessionStorage.setItem('btcd-lc', '-')
+    //       } else {
+    //         setisLoading(false)
+    //       }
+    //     })
+    //     .catch(() => { setisLoading(false) })
+    // } else
+    if (formType === 'edit') {
       bitsFetch({ id: formID }, 'bitforms_get_a_form')
         .then(res => {
           if (res?.success && componentMounted) {
             const responseData = res.data
             if (responseData.form_content.layout !== undefined) {
-              setLay(responseData.form_content.layout)
+              setLayouts(responseData.form_content.layout)
               setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
             }
             const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
@@ -231,7 +271,7 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
-            setBuilderSettings(responseData.builderSettings)
+            if (responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
 
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,
@@ -287,7 +327,6 @@ function FormDetails() {
       navigate.push(`/form/settings/${formType}/${formID}/form-settings`)
     }
   }
-
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -376,95 +415,4 @@ function FormDetails() {
   )
 }
 
-export default memo(withRouter(FormDetails))
-
-const defaultConfirmationValue = (formID) => {
-  const msgType = 'snackbar'
-  const position = 'bottom-right'
-  const animation = 'fade'
-  const autoHide = true
-  const duration = 5
-  const styles = {
-    width: '300px',
-    padding: '5px 35px 5px 20px',
-    color: '#000000',
-    background: '#fafafa',
-    borderWidth: '1px',
-    borderType: 'solid',
-    borderColor: 'gray',
-    borderRadius: '10px',
-    boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
-    closeBackground: '#48484829',
-    closeHover: '#dfdfdf',
-    closeIconColor: '#5a5a5a',
-    closeIconHover: '#000',
-  }
-  return {
-    type: {
-      successMsg: [{
-        title: 'Untitled Message 1',
-        msg: __('<p>Successfully Submitted.</p>'),
-        config: {
-          msgType,
-          position,
-          animation,
-          autoHide,
-          duration,
-          styles,
-          stylesObj: confirmMsgCssStyles(formID, 0, msgType, position, animation, styles),
-        },
-      }],
-      redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
-      webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
-    },
-  }
-}
-const defaultWorkflowValue = [
-  {
-    title: __('Show Success Message'),
-    action_type: 'onsubmit',
-    action_run: 'create_edit',
-    action_behaviour: 'always',
-    logics: [
-      {
-        field: '',
-        logic: '',
-        val: '',
-      },
-      'or',
-      {
-        field: '',
-        logic: '',
-        val: '',
-      },
-    ],
-    actions: [
-      {
-        field: '',
-        action: 'value',
-      },
-    ],
-    successAction: [
-      {
-        type: 'successMsg',
-        details: { id: '{"index":0}' },
-      },
-    ],
-  },
-]
-const btnData = {
-  typ: 'button',
-  btnSiz: 'md',
-  btnTyp: 'submit',
-  txt: 'Submit',
-  align: 'end',
-  icn: {
-    pos: '',
-    url: '',
-  },
-  valid: {},
-  customClasses: {},
-  customAttributes: {},
-}
+export default memo(FormDetails)

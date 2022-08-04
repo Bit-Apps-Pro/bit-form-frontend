@@ -56,6 +56,7 @@ export default class BitAdvanceFileUpload {
 
     this.#filePondRef = create(this.#configSetting)
     this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
+    if (this.#config.onFileUpdate) this.#filePondRef.on('updatefiles', this.#config.onFileUpdate)
 
     // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
     if (this.#uploadFileToServer) {

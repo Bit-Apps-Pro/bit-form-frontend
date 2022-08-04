@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { $allStyles, $styles } from '../../GlobalStates/StylesState'
+import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../../GlobalStates/ThemeVarsState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
@@ -17,19 +17,22 @@ import themes from './themes/themeList'
 export default function ThemeGallary() {
   const { css } = useFela()
 
-  const [styles, setStyles] = useRecoilState($styles)
-  const setThemeVars = useSetRecoilState($themeVars)
-  const setThemeColors = useSetRecoilState($themeColors)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+
+  const currentStyles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
   const fieldsArray = Object.entries(fields)
   const [modal, setModal] = useState({ show: false })
 
   const handleThemeApply = (themeSlug) => {
-    const themeStyle = themeProvider(themeSlug, fieldsArray)
-    setStyles(themeStyle.styles)
-    setThemeVars(themeStyle.themeVars)
-    setThemeColors(themeStyle.themeColors)
+    const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsArray)
+    setAllThemeColors(themeColors)
+    setAllThemeVars(themeVars)
+    setAllStyles(styles)
   }
+
   return (
     <div className={css(themeGalStyle.wrp)}>
       <SliderModal show={modal.show} setModal={setModal}>
@@ -47,7 +50,7 @@ export default function ThemeGallary() {
             applyThemeAction={() => handleThemeApply(theme.slug)}
             name={theme.name}
             img={theme.img}
-            isActive={styles.theme === theme.slug}
+            isActive={currentStyles.theme === theme.slug}
           />
         ))}
       </div>

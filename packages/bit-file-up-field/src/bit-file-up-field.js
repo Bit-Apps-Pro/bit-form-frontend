@@ -95,7 +95,7 @@ export default class BitFileUpField {
     // this.#fileUploadInput.onchange = onchange
     this.#fileUploadInput.accept = allowedFileType ? `${allowedFileType}, ${accept}` : accept
 
-    if (showSelectStatus) this.#fileSelectStatus.innerText = fileSelectStatus
+    if (showSelectStatus) this.#fileSelectStatus.innerHTML = fileSelectStatus
     else this.#fileSelectStatus?.remove()
 
     if (!this.#config.showFileList) this.#filesList?.remove()
@@ -106,7 +106,22 @@ export default class BitFileUpField {
   #fileUploadAction(e) {
     const { files } = this.#fileUploadInput
 
-    const { sizeUnit, maxSize, isItTotalMax, multiple, showFileList, showFilePreview, showFileSize, showSelectStatus, fileSelectStatus, minFile, maxFile } = this.#config
+    const { sizeUnit,
+      allowMaxSize,
+      maxSize,
+      maxSizeErrMsg,
+      isItTotalMax,
+      multiple,
+      showFileList,
+      fileExistMsg,
+      showFilePreview,
+      showFileSize,
+      showSelectStatus,
+      fileSelectStatus,
+      minFile,
+      minFileErrMsg,
+      maxFile,
+      maxFileErrMsg } = this.#config
 
     const maxFileSize = this.#maxFileSize(sizeUnit, maxSize)
 
@@ -127,7 +142,7 @@ export default class BitFileUpField {
     for (const file of files) {
       const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
-        if (!maxSize || (file.size + totalFileSize) <= maxFileSize) {
+        if (!allowMaxSize || (!maxSize || (file.size + totalFileSize) <= maxFileSize)) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
             this.#files[fileName] = file
             if (showFileList) {
@@ -142,21 +157,21 @@ export default class BitFileUpField {
             }
             if (isItTotalMax) totalFileSize += file.size
           } else {
-            this.#errorWrap.innerText = 'Maximum File Limit Exceeded'
+            this.#errorWrap.innerHTML = maxFileErrMsg
             this.#addClass(this.#errorWrap, 'active')
             setTimeout(() => {
               this.#removeClass(this.#errorWrap, 'active')
             }, 3000)
           }
         } else {
-          error.push('Max Upload Size Exceeded')
+          error.push(maxSizeErrMsg)
         }
       } else {
-        error.push('File Allready Exist')
+        error.push(fileExistMsg)
       }
     }
-
-    this.#document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
+    // this.#window.document.querySelectorAll()
+    this.#window.document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
@@ -165,11 +180,11 @@ export default class BitFileUpField {
     if (fileLength && showSelectStatus) {
       this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
     } else if (showSelectStatus) {
-      this.#fileSelectStatus.innerText = fileSelectStatus
+      this.#fileSelectStatus.innerHTML = fileSelectStatus
     }
 
     if (minFile > 0 && fileLength < minFile) {
-      this.#errorWrap.innerText = `You should add minmum ${minFile} File`
+      this.#errorWrap.innerHTML = minFileErrMsg
       this.#addClass(this.#errorWrap, 'active')
     }
     error.map((err, errId) => {
@@ -195,7 +210,7 @@ export default class BitFileUpField {
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length
-    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerText = this.#config.fileSelectStatus }
+    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerHTML = this.#config.fileSelectStatus }
   }
 
   #select(selector) { return this.#fileUploadWrap.querySelector(selector) }

@@ -2,11 +2,11 @@ import { arrayMoveImmutable } from 'array-move'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { sortableContainer, sortableElement, SortableHandle } from 'react-sortable-hoc'
-import VirtualList from 'react-tiny-virtual-list'
 import Button from '../components/Utilities/Button'
 import CheckBox from '../components/Utilities/CheckBox'
 import TableCheckBox from '../components/Utilities/TableCheckBox'
 import Tip from '../components/Utilities/Tip'
+import VirtualList from '../components/Utilities/VirtualList'
 import AddIcon from '../Icons/AddIcon'
 import DragIcn from '../Icons/DragIcn'
 import TrashIcn from '../Icons/TrashIcn'
@@ -110,10 +110,9 @@ export default function Option({ options }) {
     <div className={css(optionStyle.wrapper)}>
       <SortableContainer onSortEnd={onSortEnd} useDragHandle=".drag">
         <VirtualList
-          width="100%"
-          height={200}
+          style={{ width: '100%', height: 200 }}
           itemCount={option.length}
-          itemSize={50} // Also supports variable heights (array or function getter)
+          itemSizes={50} // Also supports variable heights (array or function getter)
           className="VirtualList"
           scrollToIndex={scrolIndex}
           scrollToAlignment="center"

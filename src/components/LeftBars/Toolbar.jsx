@@ -245,11 +245,25 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         btnTxt: 'Attach File',
         valid: {},
         prefixIcn: `${bits.assetsURL}/../static/file-upload/paperclip.svg`,
-        err: {},
+        err: {
+          maxSize: {
+            dflt: '<p>File Size is Exceeded</p>',
+            show: true,
+          },
+          minFile: {
+            dflt: '<p>Minimum 0 file required</p>',
+            show: true,
+          },
+          maxFile: {
+            dflt: '<p>Maximum 0 file can uploaded</p>',
+            show: true,
+          },
+        },
         customClasses: {},
         customAttributes: {},
         config: {
           multiple: true,
+          allowMaxSize: true,
           showMaxSize: true,
           maxSize: 2,
           sizeUnit: 'MB',
@@ -258,6 +272,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           fileSelectStatus: 'No File Selected',
           allowedFileType: '',
           showFileList: true,
+          fileExistMsg: 'A file allready exist',
           showFilePreview: true,
           showFileSize: true,
           duplicateAllow: false,

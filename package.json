@@ -10,8 +10,10 @@
     "@atomik-color/core": "^1.0.12",
     "@paypal/react-paypal-js": "^7.8.1",
     "@popperjs/core": "2.11.5",
+    "@tanstack/react-virtual": "3.0.0-beta.13",
     "@tippyjs/react": "^4.2.6",
     "ace-builds": "^1.8.1",
+    "@yaireo/tagify": "^4.13.3",
     "array-move": "^4.0.0",
     "atomize-css": "file:./packages/atomize-css",
     "bit-advance-file-upload-field": "file:./packages/bit-advance-file-upload-field",
@@ -109,7 +111,7 @@
     "build-storybook": "build-storybook -s public",
     "del-modules": "npkill",
     "build-pkg": "turbo run build",
-    "hot": "cross-env APP_ENV=development vite"
+    "hot": "cross-env APP_ENV=development vite --force"
   },
   "husky": {
     "hooks": {
@@ -225,5 +227,5 @@
       }
     ]
   },
-  "packageManager": "pnpm@3.2.1"
+  "packageManager": "pnpm@7.6.0"
 }
