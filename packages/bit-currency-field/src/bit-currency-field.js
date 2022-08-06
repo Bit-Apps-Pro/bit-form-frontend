@@ -731,6 +731,10 @@ export default class BitCurrencyField {
     this.value = ''
     this.#detachAllEvents()
   }
+
+  reset() {
+    this.init()
+  }
 }
 
 // const list = new CurrencyField('.currency-fld-wrp', {
