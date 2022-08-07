@@ -65,6 +65,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
+  const stopTransitionsInGrid = useRef(false)
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
@@ -72,6 +73,15 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const nl = fitAllLayoutItems(layouts)
     setLayouts(nl)
     setRootLayouts(nl)
+
+    if (styleMode) {
+      stopTransitionsInGrid.current = true
+    } else {
+      setTimeout(() => {
+        stopTransitionsInGrid.current = false
+      }, 1);
+    }
+
   }, [styleMode, reCalculateFieldHeights])
 
   useEffect(() => {
@@ -599,6 +609,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       onDragEnter={e => e.preventDefault()}
       onClick={() => resetContextMenu()}
     >
+      {stopTransitionsInGrid.current && <style>{'.layout *{transition:none!important}'}</style>}
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
