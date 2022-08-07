@@ -118,8 +118,7 @@ export const getCustomClsName = (fk, element) => {
   return fields[fk]?.customClasses?.[element] ?? ''
 }
 
-// TODO fix function name typo
-export const getCustomAttributs = (fk, element) => {
+export const getCustomAttributes = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
   if (!attr) return
@@ -137,8 +136,7 @@ export const getCustomAttributs = (fk, element) => {
   return obj
 }
 
-// TODO function name fix typo
-export const getDataDavAttrArr = (fk, element) => {
+export const getDataDevAttrArr = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
   const dataDevObj = { [`data-dev-${element}`]: fk }
