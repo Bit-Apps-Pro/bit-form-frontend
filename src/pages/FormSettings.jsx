@@ -15,7 +15,7 @@ import { __ } from '../Utils/i18nwrap'
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
 const Integrations = lazy(() => import('../components/Integrations'))
-const Workflow = lazy(() => import('../components/Workflow'))
+const Workflow = lazy(() => import('../components/Workflows/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
