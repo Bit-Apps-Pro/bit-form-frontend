@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { NavLink, useHistory, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
@@ -26,13 +26,13 @@ import FormBuilderHistory from './FormBuilderHistory'
 import { removeUnuseStyles } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
-import SingleToggle from './Utilities/SingleToggle'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
-  const history = useHistory()
+  const history = useNavigate()
+
   const { formType, formID, rightBar } = useParams()
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
@@ -42,21 +42,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const [modal, setModal] = useState(false)
   const selectedFldId = useRecoilValue($selectedFieldId)
   const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
-
-  const styleModeHandler = ({ target: { checked } }) => {
-    setFlags(prv => ({ ...prv, styleMode: checked }))
-    if (checked) {
-      if (selectedFldId) {
-        history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
-      } else {
-        history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
-      }
-    } else if (selectedFldId) {
-      history.replace(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`)
-    } else {
-      history.replace(`/form/builder/${formType}/${formID}/fields-list`)
-    }
-  }
+  const navigate = useNavigate()
 
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
@@ -64,9 +50,9 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       return { ...prvFlags, styleMode: true, inspectMode: false }
     })
     if (selectedFldId) {
-      history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`)
+      navigate(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`, { replace: true })
     } else {
-      history.replace(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
+      navigate(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`, { replace: true })
     }
     removeUnuseStyles()
   }
@@ -77,18 +63,18 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       return { ...prvFlags, styleMode: false, inspectMode: false }
     })
     if (selectedFldId) {
-      history.replace(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`)
+      navigate(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`, { replace: true })
     } else {
-      history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+      navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
     }
     removeUnuseStyles()
   }
 
   const handleRightPanel = (currentActive) => {
     if (currentActive === 'fld-settings') {
-      history.push(`/form/builder/${formType}/${formID}/fields-list`)
+      navigate(`/form/builder/${formType}/${formID}/fields-list`)
     } else if (currentActive === 'theme-customize') {
-      history.push(`/form/builder/${formType}/${formID}/themes`)
+      navigate(`/form/builder/${formType}/${formID}/themes`)
     }
     removeUnuseStyles()
   }

@@ -22,10 +22,11 @@ import TextFieldSettings from './TextFieldSettings'
 import TitleSettings from './TitleSettings'
 
 export default function FieldSettings() {
-  const { fieldKey } = useParams()
+  const { element: fieldKey } = useParams()
   const fields = useRecoilValue($fields)
   const styles = useRecoilValue($styles)
   const seletedFieldType = fields?.[fieldKey]?.typ
+  console.log('FieldSettings', fieldKey, seletedFieldType)
 
   if (!fieldKey || !seletedFieldType || !styles?.fields?.[fieldKey]?.classes) {
     return <>Loading</>

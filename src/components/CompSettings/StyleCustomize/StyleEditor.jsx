@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
@@ -18,14 +18,14 @@ import Shadow from './StyleComponents/Shadow'
 import { showDraggableModal } from '../../style-new/styleHelpers'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const setDraggableModal = useSetRecoilState($draggableModal)
 
   const goBackUrl = () => {
-    if (history.location.pathname.match(/style\/fl\/.+/g)) return history.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
+    if (navigate.location.pathname.match(/style\/fl\/.+/g)) return navigate.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    return history.location.pathname.replace(/style\/.+/g, 'style')
+    return navigate.location.pathname.replace(/style\/.+/g, 'style')
   }
   return (
     <div className="mt-2">

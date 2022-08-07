@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import BorderIcn from '../../../Icons/BorderIcn'
 import HeightIcn from '../../../Icons/HeightIcn'
@@ -10,10 +10,10 @@ import SimpleAccordion from './ChildComp/SimpleAccordion'
 import StyleEditor from './StyleEditor'
 
 export default function DropdownStyleEditors({ editorLabel, style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const goBackUrl = () => {
-    if (history.location.pathname.match(/style\/fl\/.+/g)) return history.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
-    return history.location.pathname.replace(/style\/.+/g, 'style')
+    if (navigate.location.pathname.match(/style\/fl\/.+/g)) return navigate.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
+    return navigate.location.pathname.replace(/style\/.+/g, 'style')
   }
 
   const [controlAccordion, setcontrolAccordion] = useState(false)

@@ -24,11 +24,12 @@ export const $stylesLgLight = atom({
       fontStyle: [],
     },
     form: {
-      '_frm-bg': {
+      '._frm-bg': {
         padding: '10px',
         border: 'solid hsla(215, 20%, 93%, 100%)',
         'border-width': '1px',
       },
+      '._frm': {}
     },
     fields: {},
   },

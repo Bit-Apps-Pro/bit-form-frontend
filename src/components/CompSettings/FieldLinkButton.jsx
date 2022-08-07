@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
@@ -38,11 +38,11 @@ import { __ } from '../../Utils/i18nwrap'
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
   const setSeletedFieldId = useSetRecoilState($selectedFieldId)
-  const history = useHistory()
-
+  const naviage = useNavigate()
+  console.log('fieldKey', fieldKey)
   const handleFldLink = () => {
     setSeletedFieldId(fieldKey)
-    history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
+    naviage(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
   }
   return (
     <button type="button" data-testid={`fld-lst-itm-${icn}-${fieldKey}`} onClick={handleFldLink} className="btc-s-l mt-2">
@@ -67,70 +67,38 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   )
 }
 const FieldIcon = icon => {
-  switch (icon) {
-    case 'title':
-      return <TitleIcn w="14" />
-    case 'divider':
-      return <DividerIcn w="14" />
-    case 'image':
-      return <ImageIcn w="14" />
-    case 'text':
-      return <TextIcn size="14" />
-    case 'username':
-      return <UserIcn size="14" />
-    case 'textarea':
-      return <TextareaIcn size="14" />
-    case 'check':
-      return <CheckBoxIcn w="14" />
-    case 'radio':
-      return <RadioIcn size="14" />
-    case 'number':
-      return <NumberIcn w="14" />
-    case 'html-select':
-      return <ChevronDownIcn size="14" />
-    case 'select':
-      return <DropDownIcn w="14" />
-    case 'password':
-      return <PasswordIcn size="14" />
-    case 'email':
-      return <MailIcn size="14" />
-    case 'url':
-      return <UrlIcn w="14" />
-    case 'file-up':
-      return <FileUploadIcn w="14" />
-    case 'date':
-      return <DateIcn w="14" />
-    case 'time':
-      return <TimeIcn size="14" />
-    case 'datetime-local':
-      return <DateTimeIcn w="14" />
-    case 'month':
-      return <MonthIcn w="14" />
-    case 'week':
-      return <WeekIcn size="14" />
-    case 'color':
-      return <ColorPickerIcn w="14" />
-    case 'recaptcha':
-      return <ReCaptchaIcn size="14" />
-    case 'decision-box':
-      return <DecisionBoxIcn size="14" />
-    case 'button':
-      return <BtnIcn size="14" />
-    case 'html':
-      return <CodeSnippetIcn size="14" />
-    case 'paypal':
-      return <PaypalIcn w="14" />
-    case 'razorpay':
-      return <RazorPayIcn w="14" h="19" />
-    case 'advanced-file-up':
-      return <FileUploadIcn w="14" />
-    case 'currency':
-      return <CurrencyIcn size="15" />
-    case 'phone-number':
-      return <PhoneNumberIcn size="15" />
-    case 'country':
-      return <FlagIcn size="14" />
-    default:
-      return false
+  const icons = {
+    title: <TitleIcn w="14" />,
+    divider: <DividerIcn w="14" />,
+    image: <ImageIcn w="14" />,
+    text: <TextIcn size="14" />,
+    username: <UserIcn size="14" />,
+    textarea: <TextareaIcn size="14" />,
+    check: <CheckBoxIcn w="14" />,
+    radio: <RadioIcn size="14" />,
+    number: <NumberIcn w="14" />,
+    'html-select': <ChevronDownIcn size="14" />,
+    select: <DropDownIcn w="14" />,
+    password: <PasswordIcn size="14" />,
+    email: <MailIcn size="14" />,
+    url: <UrlIcn w="14" />,
+    'file-up': <FileUploadIcn w="14" />,
+    date: <DateIcn w="14" />,
+    time: <TimeIcn size="14" />,
+    'datetime-local': <DateTimeIcn w="14" />,
+    month: <MonthIcn w="14" />,
+    week: <WeekIcn size="14" />,
+    color: <ColorPickerIcn w="14" />,
+    recaptcha: <ReCaptchaIcn size="14" />,
+    'decision-box': <DecisionBoxIcn size="14" />,
+    button: <BtnIcn size="14" />,
+    html: <CodeSnippetIcn size="14" />,
+    paypal: <PaypalIcn w="14" />,
+    razorpay: <RazorPayIcn w="14" h="19" />,
+    'advanced-file-up': <FileUploadIcn w="14" />,
+    currency: <CurrencyIcn size="15" />,
+    'phone-number': <PhoneNumberIcn size="15" />,
+    country: <FlagIcn size="14" />,
   }
+  return icons[icon]
 }

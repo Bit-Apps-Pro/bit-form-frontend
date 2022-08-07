@@ -67,7 +67,6 @@ export default function Payment({ allIntegURL }) {
             {__('Available On')}
             <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
-                {' '}
                 {__('Premium')}
               </span>
             </a>

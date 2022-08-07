@@ -41,7 +41,7 @@ module.exports = {
     // 'react-app',
     'plugin:es/no-new-in-esnext',
   ],
-  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node', 'es'],
+  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'promise', 'es'],
   rules: {
     semi: ['error', 'never'],
     indent: ['error', 2, { SwitchCase: 1 }],

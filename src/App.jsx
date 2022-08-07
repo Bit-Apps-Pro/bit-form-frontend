@@ -8,6 +8,7 @@ import { useFela } from 'react-fela'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
+import loadable from '@loadable/component'
 import logo from '../logo.svg'
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader'
@@ -18,10 +19,11 @@ import './resource/sass/global.scss'
 import ut from './styles/2.utilities'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
+import BuilderLoader from './components/Loaders/BuilderLoader'
 
-const AllForms = lazy(() => import('./pages/AllForms'))
+const AllForms = loadable(() => import('./pages/AllForms'), { fallback: <TableLoader /> })
 const AppSettings = lazy(() => import('./pages/AppSettings'))
-const FormDetails = lazy(() => import('./pages/FormDetails'))
+const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <BuilderLoader /> })
 const FormEntries = lazy(() => import('./pages/FormEntries'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
@@ -68,15 +70,15 @@ export default function App() {
               <nav className="top-nav ml-2">
                 <NavLink
                   to="/"
-                  className={({ isActive }) => isActive ? 'app-link-active' : ''}
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                 >
                   {__('My Forms')}
                 </NavLink>
 
                 <NavLink
-                  to="/app-settings/recaptcha"
+                  to="/app-settings"
                   // to="/app-settings"
-                  className={({ isActive }) => isActive ? 'app-link-active' : ''}
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                 // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
                   {__('App Settings')}
@@ -87,27 +89,64 @@ export default function App() {
 
           <div className="route-wrp">
             <Routes>
-              <Route path="/*" element={
-                <Suspense fallback={<TableLoader />}>
-                  <AllForms />
-                </Suspense>
-              } />
-              <Route path="/form/:page/:formType/:formID?/:option?" element={
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <FormDetails />
-                </Suspense>
-              } />
-              <Route path="/formEntries/:formID" element={
-                <Suspense fallback={<TableLoader />}>
-                  <FormEntries />
-                </Suspense>
-              } />
+              <Route path="/" element={<AllForms />} />
+              <Route
+                path="/form/:page/:formType/:formID/*"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              {/* <Route
+                path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/form/:page/:formType/:formID/:rightBar/:element"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/form/:page/:formType/:formID/:rightBar"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              /> */}
+              <Route
+                path="/form/:page/:formType/:formID"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/formEntries/:formID"
+                element={(
+                  <Suspense fallback={<TableLoader />}>
+                    <FormEntries />
+                  </Suspense>
+                )}
+              />
 
-              <Route path="app-settings/recaptcha" element={
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <AppSettings />
-                </Suspense>
-              } />
+              <Route
+                path="app-settings/*"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <AppSettings />
+                  </Suspense>
+                )}
+              />
 
               <Route path="*" element={<Error404 />} />
             </Routes>
@@ -115,7 +154,7 @@ export default function App() {
         </div>
         {/* </Router> */}
       </HashRouter>
-    </Suspense >
+    </Suspense>
   )
 }
 

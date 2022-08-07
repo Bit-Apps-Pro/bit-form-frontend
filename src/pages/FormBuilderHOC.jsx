@@ -369,6 +369,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           minSize={320}
           defaultSize={gridWidth - 28}
         >
+          {console.log({ isLoading, styleLoading })}
+
           {!isLoading && !styleLoading ? (
             <RenderPortal
               id="bit-grid-layout"

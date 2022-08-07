@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -9,7 +9,7 @@ import NavBtn from './NavBtn'
 export default function ElementConfiguration({ fldKey }) {
   const styles = useRecoilValue($styles)
   const { formType, formID } = useParams()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const fields = useRecoilValue($fields)
   const fieldObj = fields[fldKey]
@@ -17,7 +17,7 @@ export default function ElementConfiguration({ fldKey }) {
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
   const styleHandler = (route) => {
-    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+    navigate(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
   // console.log('fieldObj', fieldObj)
   return (
@@ -100,21 +100,20 @@ export default function ElementConfiguration({ fldKey }) {
         )}
       {
         (fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn || fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
-      && (
-        <NavBtn
-          cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}
-          subRoute={fldKey}
-          route="lbl-wrp"
-          label="Label Container"
-          offset="2.5"
-          highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
-          styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-wrp')}
-        />
-      )
+        && (
+          <NavBtn
+            cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}
+            subRoute={fldKey}
+            route="lbl-wrp"
+            label="Label Container"
+            offset="2.5"
+            highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'lbl-wrp')}
+          />
+        )
       }
 
-      {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn)
-        && !fieldObj.typ.match(/^(decision-box|razorpay|paypal)$/gi)?.[0] && (
+      {(fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn) && !fieldObj.typ.match(/^(decision-box|razorpay|paypal)$/gi)?.[0] && (
         <>
           {!(fieldObj.lblPreIcn || fieldObj.lblSufIcn || (fieldObj.valid.req && fieldObj.valid.reqShow)) && (
             <NavBtn
