@@ -92,7 +92,7 @@ export function delAllPrevKeys(obj, key) {
 
 /**
  * convert layout by specific column
- * @param {Array} layout array of object ex: [{x:0,y:0,...}, {x:3:y:0,...}, ...]
+ * @param lay
  * @param {number} tc  targeted column to be convert
  * @param {number} fieldMinW minimum space ned in a row for field
  * @returns {Array} converted array of object
@@ -205,8 +205,8 @@ export const propertyValueSumX = (propertyValue = '') => {
   if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
   if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
   arr = [arr[1], arr[3]]
-  const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
-  return summ || 0
+  const sum = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+  return sum || 0
 }
 
 const FIELDS_EXTRA_ATTR = {
@@ -440,7 +440,6 @@ export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
 }
 
-// TODO can be assign non existing path also
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []
   if (paths.length === 1) {
