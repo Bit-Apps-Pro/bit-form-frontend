@@ -271,7 +271,7 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
-            setBuilderSettings(responseData.builderSettings)
+            if (responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
 
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,
