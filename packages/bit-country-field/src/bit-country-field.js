@@ -389,7 +389,6 @@ export default class BitCountryField {
         const li = this.#createElm('li')
         this.#setAttribute(li, 'data-key', opt.i)
         this.#setAttribute(li, 'data-index', index)
-        // TODO - eta only isBuilder e kaj korbe
         if ('option' in this.#attributes) {
           const optAttr = this.#attributes.option
           this.#setCustomAttr(li, optAttr)
@@ -411,15 +410,12 @@ export default class BitCountryField {
           const optLblWrpCls = this.#classNames['opt-lbl-wrp']
           if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
         }
-        // TODO - eta only isBuilder e kaj korbe
-        // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         if ('opt-lbl-wrp' in this.#attributes) {
           const optLblWrp = this.#attributes['opt-lbl-wrp']
           this.#setCustomAttr(lblimgbox, optLblWrp)
         }
         if (this.#optionFlagImage) {
           const img = this.#createElm('img')
-          // TODO - eta only isBuilder e kaj korbe
           // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
           if ('opt-icn' in this.#attributes) {
             const optIcn = this.#attributes['opt-icn']
@@ -437,8 +433,6 @@ export default class BitCountryField {
           lblimgbox.append(img)
         }
         const lbl = this.#createElm('span')
-        // TODO - eta only isBuilder e kaj korbe
-        // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         if ('opt-lbl' in this.#attributes) {
           const optLbl = this.#attributes['opt-lbl']
           this.#setCustomAttr(lblimgbox, optLbl)
