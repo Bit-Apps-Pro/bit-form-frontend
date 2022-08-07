@@ -20,7 +20,7 @@ import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
-function FormEntries({ allResp, setAllResp, integrations }) {
+function FormEntries({ allResp, setAllResp }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
@@ -518,11 +518,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && (
           <EntryRelatedInfo
             close={setshowRelatedInfoMdl}
-            formID={formID}
             entryID={entryID}
             setSnackbar={setSnackbar}
             rowDtl={allResp[rowDtl.idx]}
-            integrations={integrations}
           />
         )
       }

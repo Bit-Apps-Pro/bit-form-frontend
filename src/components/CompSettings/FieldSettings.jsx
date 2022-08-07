@@ -22,7 +22,7 @@ import TextFieldSettings from './TextFieldSettings'
 import TitleSettings from './TitleSettings'
 
 export default function FieldSettings() {
-  const { element: fieldKey } = useParams()
+  const { fieldKey } = useParams()
   const fields = useRecoilValue($fields)
   const styles = useRecoilValue($styles)
   const seletedFieldType = fields?.[fieldKey]?.typ

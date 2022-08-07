@@ -55,21 +55,17 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
       </div> */}
         {/* <div className="btcd-hr" /> */}
         <div className="settings">
-          <Scrollbars
-            onScroll={onSettingScroll}
-            autoHide
-          >
+          <Scrollbars onScroll={onSettingScroll} autoHide>
             {/* <TransitionGroup> */}
             {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
             <ErrorBoundary>
 
               <Routes>
-                <Route index element={<FieldsList />} />
-                {/* <Route path=":element" element={<FieldSettings />} /> */}
-                <Route path=":element" element={<FieldSettings />} />
-                <Route path={`${pathname}/themes`} element={<ThemeGallary />} />
-                <Route path={`${pathname}/theme-customize/:element`} element={<ThemeCustomize />} />
-                <Route path={`${pathname}/field-theme-customize/:element/:fieldKey`} element={<FieldStyleCustomizeHOC />} />
+                <Route path="fields-list" element={<FieldsList />} />
+                <Route path="field-settings/:fieldKey" element={<FieldSettings />} />
+                <Route path={`themes`} element={<ThemeGallary />} />
+                <Route path={`theme-customize/:element`} element={<ThemeCustomize />} />
+                <Route path={`field-theme-customize/:element/:fieldKey`} element={<FieldStyleCustomizeHOC />} />
 
                 {/* <Route exact path={`${pathname}/style`}>
                 <Link to={`/form/builder/${formType}/${formID}/style/bg`}>

@@ -7,10 +7,12 @@ import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
 import Modal from '../Utilities/Modal'
 import GoogleAdInfo from './GoogleAdInfo'
-import { $fieldLabels } from '../../GlobalStates/GlobalStates'
+import { $fieldLabels, $formId, $integrations } from '../../GlobalStates/GlobalStates'
 
-function EntryRelatedInfo({ formID, entryID, rowDtl, setSnackbar, integrations, close }) {
+function EntryRelatedInfo({ entryID, rowDtl, setSnackbar, close }) {
+  const formID = useRecoilValue($formId)
   const allLabels = useRecoilValue($fieldLabels)
+  const integrations = useRecoilValue($integrations)
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   return (

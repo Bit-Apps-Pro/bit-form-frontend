@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import produce from 'immer'
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
@@ -25,11 +26,11 @@ import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
-import FormEntries from './FormEntries'
 import FormSettings from './FormSettings'
 
 // eslint-disable-next-line import/no-cycle
 const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
+const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
@@ -320,17 +321,18 @@ function FormDetails() {
     { label: 'Settings' },
   ]
 
-  const onChangeHandler = (evn) => {
-    if (evn === 'Builder') {
+  const onChangeHandler = (value) => {
+    if (value === 'Builder') {
       navigate(`/form/builder/${formType}/${formID}/fields-list`)
     }
-    if (evn === 'Responses') {
+    if (value === 'Responses') {
       navigate(`/form/responses/${formType}/${formID}/`)
     }
-    if (evn === 'Settings') {
+    if (value === 'Settings') {
       navigate(`/form/settings/${formType}/${formID}/form-settings`)
     }
   }
+
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -393,6 +395,8 @@ function FormDetails() {
 
           <RouteByParams
             page="responses"
+            formType
+            formID
             render={
               !isLoading ? (
                 <FormEntries
@@ -403,11 +407,12 @@ function FormDetails() {
               ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
             }
           />
-          <Routes>
-            <Route path=":rightBar/:element/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} />
-            <Route path=":rightBar/:element" element={<FormBuilderHOC isLoading={isLoading} />} />
-            <Route path=":rightBar" element={<FormBuilderHOC isLoading={isLoading} />} />
-          </Routes>
+          <RouteByParams page="builder" formType formID render={<FormBuilderHOC isLoading={isLoading} />} />
+          <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />
+          {/* <Routes> */}
+          {/* <Route path=":rightBar/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
+          {/* <Route path=":rightBar/:element/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
+          {/* </Routes> */}
 
           {/* <RouteByParams
             page="builder"
@@ -475,13 +480,7 @@ function FormDetails() {
             //   }
             // /> */}
 
-          <RouteByParams
-            page="settings"
-            formType
-            formId
-            // settings
-            render={<FormSettings setProModal={setProModal} />}
-          />
+
           {/* <Route
               path="/settings/:formType/:formID"
               element={<FormSettings setProModal={setProModal} />}

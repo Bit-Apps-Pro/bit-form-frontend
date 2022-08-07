@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
@@ -13,7 +14,7 @@ import { __ } from '../Utils/i18nwrap'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
-const Integrations = lazy(() => import('../components/Integrations'))
+const Integrations = loadable(() => import('../components/Integrations'), { fallback: <IntegLoader /> })
 const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
@@ -84,12 +85,13 @@ function FormSettings({ setProModal }) {
       <div id="btcd-settings-wrp" className="btcd-s-wrp">
         <Suspense fallback={<FSettingsLoader />}>
           <Routes>
-            <Route path="/form-settings" element={<SingleFormSettings />} />
-            <Route path="/auth-settings" element={<WpAuth formID={formID} />} />
-            {/* <Route path={`${path}confirmations`} element={<ConfType formID={formID} />} />
-              <Route path={`${path}email-templates`} element={<EmailTemplate formID={formID} />} />
-              <Route path={`${path}double-optin`} element={<DoubleOptin formID={formID} />} />
-              <Route path={`${path}workflow`} element={<Workflow setProModal={setProModal} formID={formID} />} /> */}
+            <Route path="form-settings" element={<SingleFormSettings />} />
+            <Route path="auth-settings" element={<WpAuth formID={formID} />} />
+            <Route path="confirmations/*" element={<ConfType formID={formID} />} />
+            <Route path="email-templates" element={<EmailTemplate formID={formID} />} />
+            <Route path="double-optin" element={<DoubleOptin formID={formID} />} />
+            <Route path="workflow" element={<Workflow setProModal={setProModal} formID={formID} />} />
+            <Route path="integrations" element={<Integrations setProModal={setProModal} />} />
           </Routes>
         </Suspense>
         {/* <Routes>

@@ -21,14 +21,13 @@ import ut from './styles/2.utilities'
 import { __ } from './Utils/i18nwrap'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 
+const loaderStyle = { height: '90vh' }
 const AllForms = loadable(() => import('./pages/AllForms'), { fallback: <TableLoader /> })
-const AppSettings = lazy(() => import('./pages/AppSettings'))
+const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
 const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <BuilderLoader /> })
-const FormEntries = lazy(() => import('./pages/FormEntries'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
 export default function App() {
-  const loaderStyle = { height: '90vh' }
   const { css } = useFela()
   const bits = useRecoilValue($bits)
 
@@ -90,14 +89,9 @@ export default function App() {
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
-              <Route
-                path="/form/:page/:formType/:formID/*"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <FormDetails />
-                  </Suspense>
-                )}
-              />
+              <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
+              <Route path="/app-settings/*" element={<AppSettings />} />
+              <Route path="*" element={<Error404 />} />
               {/* <Route
                 path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey"
                 element={(
@@ -122,33 +116,7 @@ export default function App() {
                   </Suspense>
                 )}
               /> */}
-              <Route
-                path="/form/:page/:formType/:formID"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <FormDetails />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/formEntries/:formID"
-                element={(
-                  <Suspense fallback={<TableLoader />}>
-                    <FormEntries />
-                  </Suspense>
-                )}
-              />
 
-              <Route
-                path="app-settings/*"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <AppSettings />
-                  </Suspense>
-                )}
-              />
-
-              <Route path="*" element={<Error404 />} />
             </Routes>
           </div>
         </div>
