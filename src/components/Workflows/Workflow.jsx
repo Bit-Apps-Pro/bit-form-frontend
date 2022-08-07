@@ -6,14 +6,14 @@ import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import produce from 'immer'
 import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
-import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { $bits, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { $bits, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
@@ -22,11 +22,9 @@ import WorkflowConditionSection from './WorkflowCondtionSection'
 
 function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
-  const [allWorkFlows, setworkFlows] = useRecoilState($workflows)
-  const fieldsArr = useRecoilValue($fieldsArr)
+  const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
-  const workFlows = deepCopy(allWorkFlows)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
 
@@ -58,30 +56,58 @@ function Workflow({ formID }) {
   }
 
   const addLogicGrp = () => {
-    workFlows.unshift({
-      title: `Action ${workFlows.length + 1}`,
-      action_type: 'onload',
-      action_run: 'create_edit',
-      action_behaviour: 'cond',
-      logics: [
-        { field: '', logic: '', val: '' },
-        'or',
-        { field: '', logic: '', val: '' },
-      ],
-      actions: [{ field: '', action: 'value' }],
-      successAction: [],
+    const tmpWorkflows = produce(workflows, draftWorkflows => {
+      draftWorkflows.unshift({
+        title: `Action ${workflows.length + 1}`,
+        action_type: 'onload',
+        action_run: 'create_edit',
+        action_behaviour: 'cond',
+        conditions: [
+          {
+            cond_type: 'if',
+            logics: [
+              {
+                field: '',
+                logic: '',
+                val: '',
+              },
+              'or',
+              {
+                field: '',
+                logic: '',
+                val: '',
+              },
+            ],
+            actions: {
+              fields: [
+                {
+                  field: '',
+                  action: 'value',
+                },
+              ],
+              success: [
+                {
+                  type: 'successMsg',
+                  details: { id: '{"index":0}' },
+                },
+              ],
+            },
+          },
+        ],
+      })
     })
-    setworkFlows([...workFlows])
+
+    setWorkflows(tmpWorkflows)
     setUpdateBtn({ unsaved: true })
   }
 
   const delLgcGrp = val => {
-    if (workFlows[val].id) {
-      const prom = bitsFetch({ formID, id: workFlows[val].id }, 'bitforms_delete_workflow')
+    if (workflows[val].id) {
+      const prom = bitsFetch({ formID, id: workflows[val].id }, 'bitforms_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
-            workFlows.splice(val, 1)
-            setworkFlows([...workFlows])
+            workflows.splice(val, 1)
+            setWorkflows([...workflows])
           }
         })
 
@@ -91,14 +117,14 @@ function Workflow({ formID }) {
         error: 'Error occurred, Try again.',
       })
     } else {
-      workFlows.splice(val, 1)
-      setworkFlows([...workFlows])
+      workflows.splice(val, 1)
+      setWorkflows([...workflows])
     }
   }
 
   const handleLgcTitle = (e, i) => {
-    workFlows[i].title = e.target.value
-    setworkFlows([...workFlows])
+    workflows[i].title = e.target.value
+    setWorkflows([...workflows])
     setUpdateBtn({ unsaved: true })
   }
 
@@ -119,8 +145,6 @@ function Workflow({ formID }) {
     setconfMdl({ ...confMdl })
   }
 
-  console.log('workflows', workFlows)
-
   return (
     <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
@@ -133,15 +157,15 @@ function Workflow({ formID }) {
       />
       <h2>{__('Conditional Logics')}</h2>
 
-      {((!isPro && !workFlows.length) || isPro) && (
+      {((!isPro && !workflows.length) || isPro) && (
         <Button className="blue" onClick={addLogicGrp}>
           <CloseIcn size="10" className="icn-rotate-45 mr-1" />
           {__('Add Conditional Logic')}
         </Button>
       )}
 
-      {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
-        <Fragment key={`workFlows-grp-${lgcGrpInd + 13}`}>
+      {workflows.length > 0 ? workflows.map((lgcGrp, lgcGrpInd) => (
+        <Fragment key={`workflows-grp-${lgcGrpInd + 13}`}>
           <div className="workflow-grp d-flx mt-2">
             <Accordions
               title={`${lgcGrp.title}`}
