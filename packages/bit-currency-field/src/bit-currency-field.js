@@ -733,6 +733,8 @@ export default class BitCurrencyField {
   }
 
   reset() {
+    this.#clearSelectedCurrency()
+    this.destroy()
     this.init()
   }
 }

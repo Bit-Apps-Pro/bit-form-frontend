@@ -808,6 +808,8 @@ export default class BitDropdownField {
   }
 
   reset() {
+    this.#clearSelectedOption()
+    this.destroy()
     this.init()
   }
 }

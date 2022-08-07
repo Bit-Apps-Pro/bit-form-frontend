@@ -136,7 +136,6 @@ export default class BitCountryField {
   }
 
   #addEventListenersToElm() {
-    alert('reset event listener')
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
@@ -285,7 +284,6 @@ export default class BitCountryField {
   }
 
   #handleInputValueChange(oldVal, newVal) {
-    alert(`handle input change ${oldVal} ${newVal}`)
     const searchedOption = this.#initialOptions.find(option => (option.val === newVal || option.lbl === newVal))
     if (searchedOption && oldVal !== newVal) {
       this.setSelectedCountryItem(searchedOption.i)
@@ -293,8 +291,7 @@ export default class BitCountryField {
   }
 
   #clearSelectedCountry(e) {
-    alert('clear selected')
-    e.stopPropagation()
+    e?.stopPropagation()
     this.#selectedCountryCode = ''
     if (this.#selectedFlagImage) {
       this.#selectedCountryImgElm.src = this.#placeholderImage
@@ -663,7 +660,8 @@ export default class BitCountryField {
 
   // TODO make public reset api for all custom field
   reset() {
-    if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm.click()
+    // if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm?.click()
+    this.#clearSelectedCountry()
     this.destroy()
     this.init()
   }

@@ -124,6 +124,11 @@ export default class BitPayPalField {
     //   }
     // })
   }
+
+  reset() {
+    this.destroy()
+    this.init()
+  }
 }
 
 // const payPalField = new PayPalField('#paypal-wrp', {
