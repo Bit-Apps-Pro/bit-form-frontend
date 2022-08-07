@@ -91,4 +91,9 @@ export default class BitRazorpayField {
   destroy() {
     this.#razorpayWrapper.innerHTML = ''
   }
+
+  reset() {
+    this.destroy()
+    this.init()
+  }
 }

@@ -233,13 +233,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   }
 
   function addNewField(fieldData, fieldSize, addPosition) {
-    const processedFieldData = handleFieldExtraAttr(fieldData)
+    let processedFieldData = handleFieldExtraAttr(fieldData)
     if (!processedFieldData) return
     const { w, h, minH, maxH, minW } = fieldSize
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `b${formID}-${uniqueFieldId}`
+    processedFieldData = { ...processedFieldData, fieldName: newBlk }
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)

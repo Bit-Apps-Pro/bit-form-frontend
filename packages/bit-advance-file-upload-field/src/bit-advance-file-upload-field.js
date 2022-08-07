@@ -105,4 +105,8 @@ export default class BitAdvanceFileUpload {
       })
     }
   }
+
+  reset() {
+    this.init()
+  }
 }

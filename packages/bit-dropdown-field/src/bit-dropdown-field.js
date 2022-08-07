@@ -806,6 +806,12 @@ export default class BitDropdownField {
     this.value = ''
     this.#detachAllEvents()
   }
+
+  reset() {
+    this.#clearSelectedOption()
+    this.destroy()
+    this.init()
+  }
 }
 
 // const list = new DropdownField('.dpd-fld-wrp', {

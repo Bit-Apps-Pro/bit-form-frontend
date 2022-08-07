@@ -699,6 +699,12 @@ export default class BitPhoneNumberField {
     this.value = ''
     this.#detachAllEvents()
   }
+
+  reset() {
+    this.#clearSelectedCountry()
+    this.destroy()
+    this.init()
+  }
 }
 
 // const list = new PhoneNumberField('.phone-fld-wrp', {

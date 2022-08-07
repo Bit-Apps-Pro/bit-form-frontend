@@ -358,6 +358,11 @@ export default class BitFileUpField {
     if (this.#filesList) this.#filesList.innerHTML = ''
     this.#detachAllEvents()
   }
+
+  reset() {
+    this.destroy()
+    this.init()
+  }
 }
 
 // const field = new FileUploadField('.container', {
