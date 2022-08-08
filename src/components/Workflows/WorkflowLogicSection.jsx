@@ -1,4 +1,4 @@
-import produce, { current } from 'immer'
+import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -162,7 +162,6 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
       } else if (subLgcInd !== undefined) {
         tmpLogics[lgcInd].splice(subLgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
       } else {
-        console.log('tmplogics', current(tmpLogics))
         tmpLogics.splice(lgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
       }
     })
