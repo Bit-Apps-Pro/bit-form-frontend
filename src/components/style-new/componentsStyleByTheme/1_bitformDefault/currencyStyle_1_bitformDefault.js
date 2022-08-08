@@ -339,7 +339,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-opt-icn`]: {
-        margin: '0px 10px',
+        margin: '0px 10px 0px 0px',
         height: '17px',
         width: '25px',
         'border-radius': '3px',
