@@ -106,8 +106,10 @@ function Workflow({ formID }) {
       const prom = bitsFetch({ formID, id: workflows[val].id }, 'bitforms_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
-            workflows.splice(val, 1)
-            setWorkflows([...workflows])
+            const tmpWorkflows = produce(workflows, draftWorkflows => {
+              draftWorkflows.splice(val, 1)
+            })
+            setWorkflows(tmpWorkflows)
           }
         })
 
@@ -117,14 +119,18 @@ function Workflow({ formID }) {
         error: 'Error occurred, Try again.',
       })
     } else {
-      workflows.splice(val, 1)
-      setWorkflows([...workflows])
+      const tmpWorkflows = produce(workflows, draftWorkflows => {
+        draftWorkflows.splice(val, 1)
+      })
+      setWorkflows(tmpWorkflows)
     }
   }
 
   const handleLgcTitle = (e, i) => {
-    workflows[i].title = e.target.value
-    setWorkflows([...workflows])
+    const tmpWorkflows = produce(workflows, draftWorkflows => {
+      draftWorkflows[i].title = e.target.value
+    })
+    setWorkflows(tmpWorkflows)
     setUpdateBtn({ unsaved: true })
   }
 

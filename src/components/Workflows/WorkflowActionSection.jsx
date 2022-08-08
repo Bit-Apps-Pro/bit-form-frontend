@@ -88,9 +88,11 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     setUpdateBtn({ unsaved: true })
   }
 
-  const getValueFromArr = (key, subkey, lgcGrpInd) => {
+  const getValueFromArr = (key, subkey) => {
     const value = successActions.find(val => val.type === key)
-    if (value !== undefined) { return value.details[subkey] }
+    if (value !== undefined) {
+      return value.details[subkey]
+    }
     return ''
   }
 
@@ -210,20 +212,59 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
         <>
           <div className="mb-2">
-            {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-            {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-5 mt-2" title={__('Redirect URL')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-            <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-5 mt-2" title={__('Web Hook')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-            {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-5 mt-2" title={__('Integration')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
+            {lgcGrp.action_run !== 'delete'
+                && (
+                  <TableCheckBox
+                    onChange={e => enableAction(e.target.checked, 'successMsg')}
+                    className="ml-2 mt-2"
+                    title={__('Success Message')}
+                    checked={checkKeyInArr('successMsg')}
+                  />
+                )}
+            {!lgcGrp.action_run.match(/^(delete|edit)$/)
+                && (
+                  <TableCheckBox
+                    onChange={e => enableAction(e.target.checked, 'redirectPage')}
+                    className="ml-5 mt-2"
+                    title={__('Redirect URL')}
+                    checked={checkKeyInArr('redirectPage')}
+                  />
+                )}
+            <TableCheckBox
+              onChange={e => enableAction(e.target.checked, 'webHooks')}
+              className="ml-5 mt-2"
+              title={__('Web Hook')}
+              checked={checkKeyInArr('webHooks')}
+            />
+            {lgcGrp.action_run !== 'delete'
+                && (
+                  <TableCheckBox
+                    onChange={e => enableAction(e.target.checked, 'integ')}
+                    className="ml-5 mt-2"
+                    title={__('Integration')}
+                    checked={checkKeyInArr('integ')}
+                  />
+                )}
           </div>
           <div className="mb-3">
-            <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-            <TableCheckBox onChange={e => enableAction(e.target.checked, 'dblOptin', lgcGrpInd)} className="ml-4 mt-2" title={__('Double Opt-In')} checked={checkKeyInArr('dblOptin', lgcGrpInd)} />
+            <TableCheckBox
+              onChange={e => enableAction(e.target.checked, 'mailNotify')}
+              className="ml-2 mt-2"
+              title={__('Email Notification')}
+              checked={checkKeyInArr('mailNotify')}
+            />
+            <TableCheckBox
+              onChange={e => enableAction(e.target.checked, 'dblOptin')}
+              className="ml-4 mt-2"
+              title={__('Double Opt-In')}
+              checked={checkKeyInArr('dblOptin')}
+            />
           </div>
         </>
       )}
       {lgcGrp.action_run === 'delete' && (
         <CheckBox
-          onChange={e => preventDelete(e.target.checked, lgcGrpInd)}
+          onChange={e => preventDelete(e.target.checked)}
           checked={workflows[lgcGrpInd].avoid_delete}
           title={<small className="txt-dp">Prevent Delete</small>}
         />
@@ -234,7 +275,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
             <DropDown
               action={val => setWebHooks(val)}
               jsonValue
-              value={getValueFromArr('webHooks', 'id', lgcGrpInd)}
+              value={getValueFromArr('webHooks', 'id')}
               title={<span className="f-m f-5">{__('Web Hooks')}</span>}
               titleClassName="mt-2 w-7"
               className="w-10"
@@ -247,7 +288,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
             <DropDown
               action={val => setInteg(val)}
               jsonValue
-              value={getValueFromArr('integ', 'id', lgcGrpInd)}
+              value={getValueFromArr('integ', 'id')}
               title={<span className="f-m f-5">{__('Integrations')}</span>}
               titleClassName="mt-2 w-7"
               className="w-10"
@@ -260,28 +301,50 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
           {lgcGrp.action_run !== 'delete' && (
             <>
               <div className="mt-2" />
-              {checkKeyInArr('successMsg', lgcGrpInd) && (
+              {checkKeyInArr('successMsg') && (
                 <div>
                   <label className="f-m f-5">
                     {__('Success Message:')}
                   </label>
                   <br />
-                  <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
+                  <select
+                    className="btcd-paper-inp w-7"
+                    onChange={e => setSuccessMsg(e.target.value)}
+                    value={getValueFromArr('successMsg', 'id')}
+                  >
                     <option value="">{__('Select Message')}</option>
-                    {confirmations?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                    {confirmations?.type?.successMsg?.map((itm, i) => (
+                      <option
+                        key={`sm-${i + 2.3}`}
+                        value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                      >
+                        {itm.title}
+                      </option>
+                    ))}
                   </select>
                 </div>
               )}
               <div className="mt-2" />
-              {checkKeyInArr('redirectPage', lgcGrpInd) && (
+              {checkKeyInArr('redirectPage') && (
                 <div>
                   <label className="f-m f-5">
                     {__('Redirect URL:')}
                   </label>
                   <br />
-                  <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
+                  <select
+                    className="btcd-paper-inp w-7"
+                    onChange={e => setRedirectPage(e.target.value)}
+                    value={getValueFromArr('redirectPage', 'id')}
+                  >
                     <option value="">{__('Select Page To Redirect')}</option>
-                    {confirmations?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                    {confirmations?.type?.redirectPage?.map((itm, i) => (
+                      <option
+                        key={`sr-${i + 2.5}`}
+                        value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                      >
+                        {itm.title}
+                      </option>
+                    ))}
                   </select>
                 </div>
               )}
@@ -289,15 +352,26 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
           ) }
 
           <div className="mt-2 ml-2">
-            {checkKeyInArr('mailNotify', lgcGrpInd) && (
+            {checkKeyInArr('mailNotify') && (
               <>
                 <label className="f-m f-5">
                   {__('Email Notification:')}
                 </label>
                 <br />
-                <select className="btcd-paper-inp w-7 mt-1" onChange={e => setEmailSetting('id', e.target.value)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
+                <select
+                  className="btcd-paper-inp w-7 mt-1"
+                  onChange={e => setEmailSetting('id', e.target.value)}
+                  value={getValueFromArr('mailNotify', 'id')}
+                >
                   <option value="">{__('Select Email Template')}</option>
-                  {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                  {mailTem?.map((itm, i) => (
+                    <option
+                      key={`sem-${i + 2.3}`}
+                      value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                    >
+                      {itm.title}
+                    </option>
+                  ))}
                 </select>
                 <DropDown
                   action={val => setEmailSetting('to', val ? val.split(',') : [])}
@@ -322,14 +396,14 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
                 />
                 <DropDown
                   action={val => setEmailSetting('cc', val ? val.split(',') : [])}
-                  value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
+                  value={getValueFromArr('mailNotify', 'cc')}
                   placeholder={__('Add Email CC')}
                   title={<span className="f-m f-5">{__('CC')}</span>}
                   isMultiple
                   titleClassName="w-7 mt-2"
                   className="w-10"
                   addable
-                  options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
+                  options={mailOptions(getValueFromArr('mailNotify', 'cc'))}
                 />
                 <DropDown
                   action={val => setEmailSetting('bcc', val ? val.split(',') : [])}
@@ -373,9 +447,20 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
                 <label className="f-m ">
                   {__('Double optin tamplate:')}
                   <br />
-                  <select className="btcd-paper-inp w-7 mt-1" onChange={e => setEmailSetting('id', e.target.value)} value={getValueFromArr('dblOptin', 'id', lgcGrpInd)}>
+                  <select
+                    className="btcd-paper-inp w-7 mt-1"
+                    onChange={e => setEmailSetting('id', e.target.value)}
+                    value={getValueFromArr('dblOptin', 'id')}
+                  >
                     <option value="">{__('Select Email Template')}</option>
-                    {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                    {mailTem?.map((itm, i) => (
+                      <option
+                        key={`sem-${i + 2.3}`}
+                        value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                      >
+                        {itm.title}
+                      </option>
+                    ))}
                   </select>
                 </label>
                 <DropDown
@@ -444,9 +529,21 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
         </>
       )}
       {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
-        <MtSelect onChange={e => changeValidateMsg(e.target.value)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-3 ml-2">
+        <MtSelect
+          onChange={e => changeValidateMsg(e.target.value)}
+          value={validateAction}
+          label="Error Message"
+          className="w-7 mt-3 ml-2"
+        >
           <option value="">{__('Select Message')}</option>
-          {confirmations?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+          {confirmations?.type?.successMsg?.map((itm, i) => (
+            <option
+              key={`vm-${i + 2.7}`}
+              value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+            >
+              {itm.title}
+            </option>
+          ))}
         </MtSelect>
       )}
       {(lgcGrp.action_type !== 'onvalidate' && lgcGrp.action_run !== 'delete') && (
@@ -479,7 +576,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
           ))}
           <br />
           <Button
-            onClick={() => addAction(lgcGrpInd)}
+            onClick={() => addAction()}
             icn
             className="blue sh-sm"
           >
