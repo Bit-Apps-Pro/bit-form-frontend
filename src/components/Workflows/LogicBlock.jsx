@@ -14,7 +14,6 @@ import MtSelect from '../Utilities/MtSelect'
 
 function LogicBlock({ fieldVal,
   delLogic,
-  lgcGrpInd,
   lgcInd,
   subLgcInd,
   subSubLgcInd,
@@ -23,13 +22,11 @@ function LogicBlock({ fieldVal,
   changeLogic,
   logicValue,
   changeValue,
-  changeFormField,
-  actionType = null }) {
+  changeFormField }) {
   const fields = useRecoilValue($fields)
   const formFields = makeFieldsArrByLabel(fields, [], [])
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-
   let type = ''
   let fldType = ''
   let fieldKey = ''
@@ -48,7 +45,7 @@ function LogicBlock({ fieldVal,
   })
 
   const getOptions = () => {
-    let options = []
+    let options
 
     if (fldType === 'select') {
       options = fields?.[fieldKey]?.opt
@@ -60,37 +57,33 @@ function LogicBlock({ fieldVal,
   }
   const customSmartTags = ['_bf_custom_date_format()', '_bf_user_meta_key()', '_bf_query_param()']
 
-  const findFldTypeFromLogicsArr = (fldType, logicsArr) => {
-    const foundFieldType = logicsArr.find(itm => {
-      if (itm === fldType) return true
-      if (!itm.includes('.')) return false
-      const firstDot = itm.indexOf('.')
-      const fieldType = itm.substring(0, firstDot)
-      if (fldType !== fieldType) return false
-      const dataProps = itm.substring(firstDot + 1)
-      if (!dataProps) return false
-      const [propsPath, propValue] = dataProps.split(':')
-      const nestedProps = propsPath.split('.')
-      const nestedPropsValue = nestedProps.reduce((acc, itm) => acc[itm], fields[fieldKey])
-      if (nestedPropsValue === propValue) return true
-      return false
-    })
-    return foundFieldType
-  }
+  const findFldTypeFromLogicsArr = (needleFieldTyp, logicsArr) => logicsArr.find(itm => {
+    if (itm === needleFieldTyp) return true
+    if (!itm.includes('.')) return false
+    const firstDot = itm.indexOf('.')
+    const fieldType = itm.substring(0, firstDot)
+    if (needleFieldTyp !== fieldType) return false
+    const dataProps = itm.substring(firstDot + 1)
+    if (!dataProps) return false
+    const [propsPath, propValue] = dataProps.split(':')
+    const nestedProps = propsPath.split('.')
+    const nestedPropsValue = nestedProps.reduce((acc, nestedItm) => acc[nestedItm], fields[fieldKey])
+    return nestedPropsValue === propValue
+  })
 
   const findTypeFromSmartTags = tagName => {
     const tag = SmartTagField.find(itm => tagName === `\${${itm.name}}`)
     return tag ? tag.type : ''
   }
 
-  const getLogicsBasedOnFieldType = fldType => {
-    const type = findTypeFromSmartTags(fieldVal) || fldType
-    if (!type) return []
+  const getLogicsBasedOnFieldType = needleFldType => {
+    const foundFldType = findTypeFromSmartTags(fieldVal) || needleFldType
+    if (!foundFldType) return []
     const logicsArr = Object.entries(conditionalLogicsList)
     return logicsArr.reduce((acc, [key, data]) => {
-      if (data.notFields && findFldTypeFromLogicsArr(type, data.notFields)) return acc
+      if (data.notFields && findFldTypeFromLogicsArr(foundFldType, data.notFields)) return acc
       if (data.fields) {
-        if (findFldTypeFromLogicsArr(type, data.fields)) return [...acc, { key, lbl: data.label }]
+        if (findFldTypeFromLogicsArr(foundFldType, data.fields)) return [...acc, { key, lbl: data.label }]
         return acc
       }
       return [...acc, { key, lbl: data.label }]
@@ -173,14 +166,14 @@ function LogicBlock({ fieldVal,
           <TrashIcn size="16" />
         </Button>
         <Button
-          onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+          onClick={() => addInlineLogic('and', lgcInd, subLgcInd, subSubLgcInd)}
           className="white mr-2 sh-sm"
         >
           <CloseIcn size="10" className="icn-rotate-45 mr-1" />
           AND
         </Button>
         <Button
-          onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+          onClick={() => addInlineLogic('or', lgcInd, subLgcInd, subSubLgcInd)}
           className="white sh-sm"
         >
           <CloseIcn size="10" className="icn-rotate-45 mr-1" />
