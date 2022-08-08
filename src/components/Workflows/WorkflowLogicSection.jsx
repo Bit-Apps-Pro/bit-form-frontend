@@ -1,4 +1,4 @@
-import produce from 'immer'
+import produce, { current } from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -154,36 +154,22 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     setUpdateBtn({ unsaved: true })
   }
 
-  const addInlineLogic = (typ, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
-    if (typ === 'and') {
-      setWorkflows(prvSt => {
-        const prv = deepCopy(prvSt)
-        if (subSubLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
-        } else if (subLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
-        } else {
-          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
-        }
-        return prv
-      })
-    } else {
-      setWorkflows(prvSt => {
-        const prv = deepCopy(prvSt)
-        if (subSubLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
-        } else if (subLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
-        } else {
-          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
-        }
-        return prv
-      })
-    }
+  const addInlineLogic = (typ, lgcInd, subLgcInd, subSubLgcInd) => {
+    const tmpWorkflows = produce(workflows, draftWorkflows => {
+      const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
+      if (subSubLgcInd !== undefined) {
+        tmpLogics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
+      } else if (subLgcInd !== undefined) {
+        tmpLogics[lgcInd].splice(subLgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
+      } else {
+        console.log('tmplogics', current(tmpLogics))
+        tmpLogics.splice(lgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
+      }
+    })
+
+    setWorkflows(tmpWorkflows)
     setUpdateBtn({ unsaved: true })
   }
-
-  console.log('condGrp', condGrp)
 
   return (
     <>
