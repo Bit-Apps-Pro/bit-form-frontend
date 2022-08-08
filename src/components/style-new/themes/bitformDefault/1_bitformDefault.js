@@ -419,6 +419,7 @@ const lgLightform = {
     padding: '10px',
     border: 'solid hsla(215, 20%, 93%, 100%)',
     'border-width': '1px',
+    width: '100%',
   },
 }
 
