@@ -39,30 +39,30 @@ export const jsPredefinedCodeList = [
     childs: [
       {
         lbl: 'On Form Submit Success',
-        val: `// On Form Submit Success
-document.querySelector(window.bf_globals['formId']).addEventListener('bf-form-submit-success', ({formId, entryId, formData}) => {
-\t// Write your code here...
+        val: `/* On Form Submit Success */
+document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-submit-success', ({detail:{formId, entryId, formData}}) => {
+\t/* Write your code here... */
 })`,
       },
       {
         lbl: 'On Form Submit Error',
-        val: `// On Form Submit Error
-document.querySelector(window.bf_globals['formId']).addEventListener('bf-form-submit-error', ({formId, errors}) => {
-\t// Write your code here...
+        val: `/* On Form Submit Error */
+document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-submit-error', ({detail:{formId, errors}}) => {
+\t/* Write your code here... */
 })`,
       },
       {
         lbl: 'On Form Reset',
         val: `// On Form Reset
-document.querySelector(window.bf_globals['formId']).addEventListener('bf-form-reset', ({formId}) => {
+document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-reset', ({detail:{formId}}) => {
 \t// Write your code here...
 })`,
       },
       {
         lbl: 'On Form Validation Error',
-        val: `// On Form Validation Error
-document.querySelector(window.bf_globals['formId']).addEventListener('bf-form-validation-error', ({formId, fieldId, error}) => {
-\t// Write your code here...
+        val: `/* On Form Validation Error */
+document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-validation-error', ({detail:{formId, fieldId, error}}) => {
+\t/* Write your code here... */
 })`,
       },
     ],
