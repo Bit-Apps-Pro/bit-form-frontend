@@ -34,7 +34,8 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
 
-const BUILDER_PADDING = { all: 10, right: 13 }
+const BUILDER_PADDING = { all: 10, right: 18 }
+const CUSTOM_SCROLLBAR_GUTTER = 8
 
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
@@ -577,14 +578,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
-      <Scrollbars autoHide style={{ overflowX: 'hidden', width: gridWidth - 10 }}>
+      <Scrollbars autoHide style={{ overflowX: 'hidden', width: gridWidth }}>
         <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, paddingRight: BUILDER_PADDING.right }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-${formID}`} data-dev-_frm={formID}>
               {!styleMode ? (
                 <ResponsiveReactGridLayout
                   // style={{ background: 'purple' }}
-                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right)}
+                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right - CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms

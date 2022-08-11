@@ -131,8 +131,9 @@ const lgLightThemeVars = {
   '--fld-m': '', // field margin
   '--fld-fs': '1rem', // field font size
 
-  '--fld-wrp-dis': 'block', // field wrapper display
-  '--fld-wrp-fdir': '', // field wrapper flex direction
+  '--fld-wrp-dis': 'flex', // field wrapper display
+  '--fld-wrp-fdir': 'column', // field wrapper flex direction
+  '--fld-wrp-justify': 'center',
   '--fld-wrp-m': '', // field wrapper margin
   '--fld-wrp-p': '10px', // field wrapper paddin
   '--fld-wrp-bdr': '', // field wrapper border
@@ -414,14 +415,8 @@ const font = {
 }
 
 const lgLightform = ({ formId }) => ({
-  // '._frm': { 'background-color': 'var(--global-bg-color)' },
-  [`._frm-bg-${formId}`]: {
-    // 'background-color': 'blue', 
-    padding: '10px'
-  },
-  [`._frm-${formId}`]: {
-    // 'background-color': 'red', padding: '20px' 
-  },
+  [`._frm-bg-${formId}`]: {},
+  [`._frm-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
 })
 
 const text = ({ type, fk, breakpoint, colorScheme }) => {
