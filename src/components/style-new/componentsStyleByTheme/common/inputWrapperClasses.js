@@ -1,6 +1,7 @@
 export default function inputWrapperClasses(fk) {
   return {
     [`.${fk}-fld-wrp`]: {
+      height: '100%',
       display: 'var(--fld-wrp-dis, block)',
       'flex-direction': 'var(--fld-wrp-fdir, row)',
       'background-color': 'var(--fld-wrp-bg, transparent)',

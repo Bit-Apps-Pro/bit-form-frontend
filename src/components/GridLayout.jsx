@@ -12,13 +12,13 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, calculateFormGutter, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, calculateFormGutter, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, prepareLayout, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -70,22 +70,23 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
+  const { respectLGLayoutOrder } = useSetRecoilState($builderHelperStates)
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
-    setLayouts(nl)
-    setRootLayouts(nl)
+    const nl2 = prepareLayout(nl, respectLGLayoutOrder)
+
+    setLayouts(nl2)
+    setRootLayouts(nl2)
 
     if (styleMode) {
       stopTransitionsInGrid.current = true
     } else {
-      setTimeout(() => {
-        stopTransitionsInGrid.current = false
-      }, 1)
+      setTimeout(() => { stopTransitionsInGrid.current = false }, 1)
     }
-  }, [styleMode, reCalculateFieldHeights])
+  }, [styleMode, reCalculateFieldHeights, breakpoint])
 
   useEffect(() => {
     if (fieldKey) {

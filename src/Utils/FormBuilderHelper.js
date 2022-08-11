@@ -281,10 +281,13 @@ export function produceNewLayouts(layouts, breakpointArr, cols) {
   const lays = deepCopy(layouts)
   lays.lg = sortLayoutItemsByRowCol(lays.lg)
   const minFieldW = lays.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
-  if (breakpointArr.indexOf('md') > -1) {
+  if (breakpointArr.includes('lg')) {
+    lays.lg = convertLayout(lays.lg, cols.lg, minFieldW)
+  }
+  if (breakpointArr.includes('md')) {
     lays.md = convertLayout(lays.lg, cols.md, minFieldW)
   }
-  if (breakpointArr.indexOf('sm') > -1) {
+  if (breakpointArr.includes('sm')) {
     lays.sm = convertLayout(lays.lg, cols.sm, minFieldW)
   }
   return lays
@@ -316,6 +319,40 @@ export function layoutOrderSortedByLg(lay, cols) {
   newLay.sm = convertLayout(newLay.sm, cols.sm, minFieldWidthSm)
 
   return newLay
+}
+
+export function prepareLayout(lays, respectLGLayoutOrder) {
+  const cols = { lg: 60, md: 40, sm: 20 }
+  let layouts = deepCopy(lays)
+
+  // if all layout length not same then produce new layout
+  // if (layouts.lg.length !== layouts.md.length
+  //   || layouts.lg.length !== layouts.sm.length) {
+  //   layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
+  // }
+  layouts = produceNewLayouts(layouts, ['lg', 'md', 'sm'], cols)
+
+  if (respectLGLayoutOrder) {
+    layouts = layoutOrderSortedByLg(layouts, cols)
+  } else {
+    // sort all layout by x and y
+    layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
+    layouts.md = sortLayoutItemsByRowCol(layouts.md)
+    layouts.sm = sortLayoutItemsByRowCol(layouts.sm)
+
+    // if any layout item width cross the max col then produce new layout
+    if (layouts.md.findIndex(itm => itm.w > cols.md) > -1) {
+      const minFieldWidthMd = layouts.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+      layouts.md = convertLayout(layouts.md, cols.md, minFieldWidthMd)
+    }
+    // if any layout item width cross the max col then produce new layout
+    if (layouts.sm.findIndex(itm => itm.w > cols.sm) > -1) {
+      const minFieldWidthSm = layouts.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+      layouts.sm = convertLayout(layouts.sm, cols.sm, minFieldWidthSm)
+    }
+  }
+
+  return layouts
 }
 
 export const addToBuilderHistory = (historyData, unsaved = true) => {
@@ -388,33 +425,60 @@ export function sortLayoutByLg(layoutArr, orderLayout) {
 
 const getElementTotalHeight = (elm) => {
   if (elm) {
+    const elmOldHeight = elm.style.height
+    elm.style.height = 'auto'
     const height = elm.offsetHeight || 0
     const { marginTop, marginBottom } = window.getComputedStyle(elm)
     const marginTopNumber = Number(marginTop.match(/\d+/gi))
     const marginBottomNumber = Number(marginBottom.match(/\d+/gi))
+    elm.style.height = elmOldHeight
     return Math.round(height + marginTopNumber + marginBottomNumber)
   }
+  console.error('getElementTotalHeight: elm is null')
   return 0
 }
 
 export const fitAllLayoutItems = (lays) => produce(lays, draftLayout => {
-  draftLayout.lg.map(fld => {
-    const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fld-wrp`))
-    if (height) {
-      fld.h = Math.round(height / 2)
-    }
-  })
+  for (let i = 0; i < draftLayout.lg.length; i += 1) {
+    const lgHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.lg[i].i}-fld-wrp`)) / 2)
+    if (draftLayout.lg[i].h < lgHeight) draftLayout.lg[i].h = lgHeight
+    draftLayout.lg[i].minH = lgHeight
+
+    const mdHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.md[i].i}-fld-wrp`)) / 2)
+    if (draftLayout.md[i].h < mdHeight) draftLayout.md[i].h = mdHeight
+    draftLayout.md[i].minH = mdHeight
+
+    const smHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.sm[i].i}-fld-wrp`)) / 2)
+    if (draftLayout.sm[i].h < smHeight) draftLayout.sm[i].h = smHeight
+    draftLayout.sm[i].minH = smHeight
+  }
 })
 
 export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayout => {
-  draftLayout.lg.map(fld => {
-    if (fld.i === fieldKey) {
-      const height = getElementTotalHeight(selectInGrid(`.${fieldKey}-fld-wrp`))
-      if (height) {
-        fld.h = Math.round(height / 2)
-      }
-    }
-  })
+  const lgFld = draftLayout.lg.find(itm => itm.i === fieldKey)
+  const mdFld = draftLayout.md.find(itm => itm.i === fieldKey)
+  const smFld = draftLayout.sm.find(itm => itm.i === fieldKey)
+
+  const lgHeight = Math.round(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
+  if (lgFld.h < lgHeight) lgFld.h = lgHeight
+  lgFld.minH = lgHeight
+
+  const mdHeight = Math.round(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
+  if (mdFld.h < mdHeight) mdFld.h = mdHeight
+  mdFld.minH = mdHeight
+
+  const smHeight = Math.round(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
+  if (smFld.h < smHeight) smFld.h = smHeight
+  smFld.minH = smHeight
+
+  // draftLayout.lg.map(fld => {
+  //   if (fld.i === fieldKey) {
+  //     const height = getElementTotalHeight(selectInGrid(`.${fieldKey}-fld-wrp`))
+  //     if (height) {
+  //       fld.h = Math.round(height / 2)
+  //     }
+  //   }
+  // })
 })
 
 export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
@@ -594,6 +658,7 @@ const genaratePropertyName = (propertyName) => {
 
 export const calculateFormGutter = (styles, formId) => {
   let gutter = 0
+  if (!styles) return gutter
   if (styles[`._frm-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-${formId}`]['border-width']) }
   if (styles[`._frm-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-${formId}`].padding) }
   if (styles[`._frm-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-${formId}`].margin) }

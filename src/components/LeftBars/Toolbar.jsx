@@ -61,7 +61,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Text'),
       keywords: 'Text',
       icn: <TextIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'text',
         lbl: __('Text Field'),
