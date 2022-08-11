@@ -6,7 +6,7 @@ import { default as bit_virtualized_list } from 'bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -57,11 +57,11 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       document: document.getElementById('bit-grid-layout').document,
       window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
-        option: getDataDavAttrArr(fieldKey, 'option'),
-        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
-        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
-        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
-        'opt-prefix': getDataDavAttrArr(fieldKey, 'opt-prefix'),
+        option: getDataDevAttrArr(fieldKey, 'option'),
+        'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDevAttrArr(fieldKey, 'opt-lbl'),
+        'opt-prefix': getDataDevAttrArr(fieldKey, 'opt-prefix'),
       },
       classNames: {
         option: getCustomClsName(fieldKey, 'option'),
@@ -97,7 +97,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
             data-dev-phone-fld-wrp={fieldKey}
             className={`${fieldKey}-phone-fld-wrp ${getCustomClsName(fieldKey, 'phone-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={phoneNumberWrapElmRef}
-            {...getCustomAttributs(fieldKey, 'phone-fld-wrp')}
+            {...getCustomAttributes(fieldKey, 'phone-fld-wrp')}
           >
             <input
               name={fieldKey}
@@ -124,7 +124,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                       aria-hidden="true"
                       className={`${fieldKey}-selected-country-img ${getCustomClsName(fieldKey, 'selected-phone-img')}`}
                       src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                      {...getCustomAttributs(fieldKey, 'selected-phone-img')}
+                      {...getCustomAttributes(fieldKey, 'selected-phone-img')}
                     />
                   </div>
                 )}
@@ -162,7 +162,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   type="button"
                   title="Clear value"
                   className={`${fieldKey}-input-clear-btn ${getCustomClsName(fieldKey, 'input-clear-btn')}`}
-                  {...getCustomAttributs(fieldKey, 'input-clear-btn')}
+                  {...getCustomAttributes(fieldKey, 'input-clear-btn')}
                 >
                   <svg
                     width="13"
@@ -186,7 +186,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 <div
                   data-dev-option-search-wrp={fieldKey}
                   className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'option-search-wrp')}`}
-                  {...getCustomAttributs(fieldKey, 'option-search-wrp')}
+                  {...getCustomAttributes(fieldKey, 'option-search-wrp')}
                 >
                   <input
                     data-testid={`${fieldKey}-opt-srch-inp`}
@@ -210,7 +210,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    {...getCustomAttributs(fieldKey, 'opt-search-icn')}
+                    {...getCustomAttributes(fieldKey, 'opt-search-icn')}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -224,7 +224,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                         className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                         data-dev-search-clear-btn={fieldKey}
                         tabIndex="-1"
-                        {...getCustomAttributs(fieldKey, 'search-clear-btn')}
+                        {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                       >
                         <svg
                           width="16"

@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
@@ -18,13 +18,13 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
         data-testid={`${fieldKey}-fld-wrp`}
         data-dev-fld-wrp={fieldKey}
         className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
-        {...getCustomAttributs(fieldKey, 'fld-wrp')}
+        {...getCustomAttributes(fieldKey, 'fld-wrp')}
       >
         <button
           data-testid={fieldKey}
           data-dev-btn={fieldKey}
           className={`${fieldKey}-btn ${getCustomClsName(fieldKey, 'btn')}`}
-          {...getCustomAttributs(fieldKey, 'btn')}
+          {...getCustomAttributes(fieldKey, 'btn')}
           // eslint-disable-next-line react/button-has-type
           type={fieldData.btnTyp}
           {...fieldData.btnTyp === 'reset' && { onClick: handleReset }}
@@ -37,7 +37,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               className={`${fieldKey}-btn-pre-i ${getCustomClsName(fieldKey, 'btn-pre-i')}`}
               src={fieldData.btnPreIcn}
               alt=""
-              {...getCustomAttributs(fieldKey, 'btn-pre-i')}
+              {...getCustomAttributes(fieldKey, 'btn-pre-i')}
             />
           )}
           <RenderHtml html={fieldData.txt || ''} />
@@ -48,7 +48,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
               className={`${fieldKey}-btn-suf-i ${getCustomClsName(fieldKey, 'btn-suf-i')}`}
               src={fieldData.btnSufIcn}
               alt=""
-              {...getCustomAttributs(fieldKey, 'btn-suf-i')}
+              {...getCustomAttributes(fieldKey, 'btn-suf-i')}
             />
           )}
         </button>
@@ -57,7 +57,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
             <div
               data-testid={`${fieldKey}-hlp-txt`}
               data-dev-hlp-txt={fieldKey}
-              {...getCustomAttributs(fieldKey, 'hlp-txt')}
+              {...getCustomAttributes(fieldKey, 'hlp-txt')}
               className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}
             >
               {/* Prefix icon */}
@@ -68,7 +68,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
                   className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`}
                   src={fieldData.hlpPreIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'hlp-txt-pre-i')}
+                  {...getCustomAttributes(fieldKey, 'hlp-txt-pre-i')}
                 />
               )}
               {/* Helper text */}
@@ -81,7 +81,7 @@ export default function Button({ fieldKey, attr: fieldData, styleClasses, button
                   className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`}
                   src={fieldData.hlpSufIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'hlp-txt-suf-i')}
+                  {...getCustomAttributes(fieldKey, 'hlp-txt-suf-i')}
                 />
               )}
             </div>

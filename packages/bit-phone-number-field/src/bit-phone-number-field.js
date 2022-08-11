@@ -718,14 +718,6 @@ export default class BitPhoneNumberField {
 //   options: countryListWithPhoneCode
 // })
 
-// TODO set menu size - done
-// TODO hide browser default search cross button - done
-// TODO hide search cross button when search value empty - done
-// TODO style scrollbar - done
-// TODO option tabindex prblm - done
-// TODO set variables for redundent this.#select - done
-// TODO catchable classname - done
-
 // placeholderImage
 // searchCountryPlaceholder
 // noCountryFoundText

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
-import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -105,11 +105,11 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
           data-testid={`${fieldKey}-cc`}
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
-          {...getCustomAttributs(fieldKey, 'cc')}
+          {...getCustomAttributes(fieldKey, 'cc')}
         >
           {/* <svg
             className={`${fieldKey}-cks ${getCustomClsName(fieldKey, 'cks')}`}
-            {... { ...getCustomAttributs(fieldKey, 'cks') }}
+            {... { ...getCustomAttributes(fieldKey, 'cks') }}
           >
             <symbol id={`${fieldKey}-ck-svg ${getCustomClsName(fieldKey, 'ck-svg')}`} viewBox="0 0 12 10">
               <polyline
@@ -134,7 +134,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
               data-dev-cw={fieldKey}
               key={`opt-${i + 24}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-              {...getCustomAttributs(fieldKey, 'cw')}
+              {...getCustomAttributes(fieldKey, 'cw')}
             >
               <input
                 data-testid={`${fieldKey}-ci`}
@@ -151,7 +151,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 name={`${fieldData.lbl}[]`}
                 checked={checkBoxes.checked.includes(i) || itm?.check}
                 onChange={(e) => onChangeHandler(e, i)}
-                {...getCustomAttributs(fieldKey, 'ci')}
+                {...getCustomAttributes(fieldKey, 'ci')}
               />
               <label
                 data-testid={`${fieldKey}-cl`}
@@ -159,14 +159,14 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 data-cl
                 htmlFor={`${fieldKey}-chk-${i}`}
                 className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-                {...getCustomAttributs(fieldKey, 'cl')}
+                {...getCustomAttributes(fieldKey, 'cl')}
               >
                 <span
                   data-testid={`${fieldKey}-bx`}
                   data-dev-ck={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
-                  {...getCustomAttributs(fieldKey, 'ck')}
+                  {...getCustomAttributes(fieldKey, 'ck')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -176,7 +176,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                  {...getCustomAttributs(fieldKey, 'ct')}
+                  {...getCustomAttributes(fieldKey, 'ct')}
                 >
                   <RenderHtml html={itm.lbl} />
                 </span>
@@ -190,7 +190,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
               data-dev-cw={fieldKey}
               key={`opt-${attr.opt.length + 24}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-              {...getCustomAttributs(fieldKey, 'cw')}
+              {...getCustomAttributes(fieldKey, 'cw')}
             >
               <input
                 data-testid={`${fieldKey}-ci`}
@@ -203,7 +203,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 name={`${fieldData.lbl}[]`}
                 checked={checkBoxes.checked.includes(attr.opt.length)}
                 onChange={(e) => onChangeHandler(e, attr.opt.length)}
-                {...getCustomAttributs(fieldKey, 'ci')}
+                {...getCustomAttributes(fieldKey, 'ci')}
               />
               <label
                 data-testid={`${fieldKey}-cl`}
@@ -211,14 +211,14 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 data-cl
                 htmlFor={`${fieldKey}-chk-${attr.opt.length}`}
                 className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-                {...getCustomAttributs(fieldKey, 'cl')}
+                {...getCustomAttributes(fieldKey, 'cl')}
               >
                 <span
                   data-testid={`${fieldKey}-bx`}
                   data-dev-ck={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
-                  {...getCustomAttributs(fieldKey, 'ck')}
+                  {...getCustomAttributes(fieldKey, 'ck')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -228,7 +228,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                  {...getCustomAttributs(fieldKey, 'ct')}
+                  {...getCustomAttributes(fieldKey, 'ct')}
                 >
                   Others..
                 </span>

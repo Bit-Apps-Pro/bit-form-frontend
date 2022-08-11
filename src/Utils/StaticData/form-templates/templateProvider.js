@@ -34,7 +34,7 @@ export default function templateProvider(templateSlug, formId) {
   })
 
   const fieldsAtrr = Object.entries(fieldsWithKey)
-  const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsAtrr)
+  const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsAtrr, formId)
 
   return {
     name,
@@ -64,8 +64,8 @@ function defaultConfirmations(formID) {
     borderColor: 'gray',
     borderRadius: '10px',
     boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-    { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-    { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
+      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
+      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
     closeBackground: '#48484829',
     closeHover: '#dfdfdf',
     closeIconColor: '#5a5a5a',
@@ -99,29 +99,36 @@ function defaultConditions() {
       action_type: 'onsubmit',
       action_run: 'create_edit',
       action_behaviour: 'always',
-      logics: [
+      conditions: [
         {
-          field: '',
-          logic: '',
-          val: '',
-        },
-        'or',
-        {
-          field: '',
-          logic: '',
-          val: '',
-        },
-      ],
-      actions: [
-        {
-          field: '',
-          action: 'value',
-        },
-      ],
-      successAction: [
-        {
-          type: 'successMsg',
-          details: { id: '{"index":0}' },
+          cond_type: 'if',
+          logics: [
+            {
+              field: '',
+              logic: '',
+              val: '',
+            },
+            'or',
+            {
+              field: '',
+              logic: '',
+              val: '',
+            },
+          ],
+          actions: {
+            fields: [
+              {
+                field: '',
+                action: 'value',
+              },
+            ],
+            success: [
+              {
+                type: 'successMsg',
+                details: { id: '{"index":0}' },
+              },
+            ],
+          },
         },
       ],
     },

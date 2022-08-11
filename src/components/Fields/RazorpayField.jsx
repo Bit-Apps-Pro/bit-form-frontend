@@ -3,7 +3,7 @@ import BitRazorpayField from 'bit-razorpay-field'
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -78,7 +78,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
               type="button"
               data-dev-razorpay-btn={fieldKey}
               className={`${fieldKey}-razorpay-btn ${getCustomClsName(fieldKey, 'razorpay-btn')}`}
-              {...getCustomAttributs(fieldKey, 'razorpay-btn')}
+              {...getCustomAttributes(fieldKey, 'razorpay-btn')}
             >
               <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.077 6.476l-.988 3.569 5.65-3.589-3.695 13.54 3.752.004 5.457-20L7.077 6.476z" fill="#fff" />
@@ -87,12 +87,12 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
               <div
                 data-dev-razorpay-btn-text={fieldKey}
                 className={`${fieldKey}-razorpay-btn-text ${getCustomClsName(fieldKey, 'razorpay-btn-text')}`}
-                {...getCustomAttributs(fieldKey, 'razorpay-btn-text')}
+                {...getCustomAttributes(fieldKey, 'razorpay-btn-text')}
               >
                 <span
                   data-dev-razorpay-btn-title={fieldKey}
                   className={`${fieldKey}-razorpay-btn-title ${getCustomClsName(fieldKey, 'razorpay-btn-title')}`}
-                  {...getCustomAttributs(fieldKey, 'razorpay-btn-title')}
+                  {...getCustomAttributes(fieldKey, 'razorpay-btn-title')}
                 >
                   {fieldData.btnTxt}
                 </span>
@@ -100,7 +100,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
                   <span
                     data-dev-razorpay-btn-sub-title={fieldKey}
                     className={`${fieldKey}-razorpay-btn-sub-title ${getCustomClsName(fieldKey, 'razorpay-btn-sub-title')}`}
-                    {...getCustomAttributs(fieldKey, 'razorpay-btn-sub-title')}
+                    {...getCustomAttributes(fieldKey, 'razorpay-btn-sub-title')}
                   >
                     Secured by Razorpay
                   </span>

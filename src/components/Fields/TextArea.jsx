@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { getCustomAttributs, getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -59,7 +59,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
           data-testid={`${fieldKey}-inp-fld-wrp`}
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
-          {...getCustomAttributs(fieldKey, 'inp-fld-wrp')}
+          {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >
           <textarea
             data-testid={fieldKey}
@@ -67,7 +67,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
             id={fieldKey}
             className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')}`}
             // style={{ height: 'calc(100% - 30px)' }}
-            {...getCustomAttributs(fieldKey, 'fld')}
+            {...getCustomAttributes(fieldKey, 'fld')}
             ref={textAreaRef}
             {...'disabled' in attr && { disabled: attr.disabled }}
             {...'readonly' in attr && { readOnly: attr.readonly }}
@@ -88,7 +88,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
               height="90%"
               src={attr.prefixIcn}
               alt=""
-              {...getCustomAttributs(fieldKey, 'pre-i')}
+              {...getCustomAttributes(fieldKey, 'pre-i')}
             />
           )}
           {attr.suffixIcn && (
@@ -98,7 +98,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
               height="90%"
               src={attr.suffixIcn}
               alt=""
-              {...getCustomAttributs(fieldKey, 'suf-i')}
+              {...getCustomAttributes(fieldKey, 'suf-i')}
             />
           )}
         </div>

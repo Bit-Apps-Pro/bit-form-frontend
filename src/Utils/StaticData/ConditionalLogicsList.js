@@ -57,6 +57,10 @@ const conditionalLogicsList = {
     label: __('End With'),
     notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime', 'month', 'week'],
   },
+  between: {
+    label: __('Between'),
+    fields: ['number', 'date', 'time', 'datetime'],
+  },
   on_click: {
     label: __('On Click'),
     fields: ['button.btnTyp:button'],
