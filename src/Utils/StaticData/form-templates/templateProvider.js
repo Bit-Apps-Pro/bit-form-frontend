@@ -34,7 +34,7 @@ export default function templateProvider(templateSlug, formId) {
   })
 
   const fieldsAtrr = Object.entries(fieldsWithKey)
-  const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsAtrr)
+  const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsAtrr, formId)
 
   return {
     name,
