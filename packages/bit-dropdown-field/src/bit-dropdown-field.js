@@ -851,22 +851,4 @@ export default class BitDropdownField {
 //   }
 // })
 
-// TODO set menu size - done
-// TODO hide browser default search cross button - done
-// TODO hide search cross button when search value empty - done
-// TODO style scrollbar - done
-// TODO option tabindex prblm - done
-// TODO set variables for redundent this.#select - done
-// TODO place selected country image placeholder when empty - done
-// TODO catchable classname - done
-
-// TODO virtual list remove - done
-// TODO render options from php-html - done
-// TODO search field will be configurable
-// TODO there will be multiple option-list by ul, config will have propery name activeList, it can also be empty - done
 // TODO setconfig property
-
-// TODO native select
-
-// multiple select = select on close default vabe false hoi jabe. r single er khetre default vabe true thakbe
-// active list set korte parbe, tobe seta jekono ekta.

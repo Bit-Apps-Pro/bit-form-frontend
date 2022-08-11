@@ -1,9 +1,13 @@
-import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useRef, useState } from 'react'
-import { flushSync } from 'react-dom'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $layouts, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $breakpoint,
+  $builderHistory,
+  $builderHookStates,
+  $colorScheme,
+  $fields,
+  $layouts,
+  $selectedFieldId } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'

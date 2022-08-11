@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -24,7 +24,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
           className={`${fieldKey}-fld ${getCustomClsName(fieldKey, 'fld')} no-drg ${fieldData.readonly ? 'readonly' : ''}`}
           {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
           {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
-          {...getCustomAttributs(fieldKey, 'fld')}
+          {...getCustomAttributes(fieldKey, 'fld')}
           {...'req' in fieldData.valid && { required: fieldData.valid.req }}
         >
           {fieldData.phHide && (
@@ -32,7 +32,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
               data-dev-slct-optn={fieldKey}
               className={`${fieldKey}-slct-optn ${getCustomClsName(fieldKey, 'slct-optn')}`}
               value=""
-              {...getCustomAttributs(fieldKey, 'slct-optn')}
+              {...getCustomAttributes(fieldKey, 'slct-optn')}
             >
               {fieldData.ph}
             </option>
@@ -46,7 +46,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                     className={`${fieldKey}-slct-opt-grp ${getCustomClsName(fieldKey, 'slct-opt-grp')}`}
                     key={opt.title}
                     label={opt.title}
-                    {... { ...getCustomAttributs(fieldKey, 'slct-opt-grp') }}
+                    {... { ...getCustomAttributes(fieldKey, 'slct-opt-grp') }}
                   >
                     {opt.childs.map(opt2 => (
                       <option
@@ -55,7 +55,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                         key={opt2.val}
                         value={opt2.val}
                         selected={opt2.check}
-                        {... { ...getCustomAttributs(fieldKey, 'slct-optn') }}
+                        {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}
                       >
                         {opt2.lbl}
                       </option>
@@ -69,7 +69,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                   key={opt.val}
                   value={opt.val}
                   selected={opt.check}
-                  {... { ...getCustomAttributs(fieldKey, 'slct-optn') }}
+                  {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}
                 >
                   {opt.lbl}
                 </option>

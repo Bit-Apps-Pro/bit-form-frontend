@@ -3,7 +3,7 @@
 import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
-import { getCustomAttributs, getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
@@ -79,7 +79,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
           data-testid={`${fieldKey}-cc`}
           data-dev-cc={fieldKey}
           className={`${fieldKey}-cc ${getCustomClsName(fieldKey, 'cc')}`}
-          {...getCustomAttributs(fieldKey, 'cc')}
+          {...getCustomAttributes(fieldKey, 'cc')}
         >
           {attr.opt.map((itm, i) => (
             <div
@@ -87,7 +87,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               data-dev-cw={fieldKey}
               key={`opr-${i + 22}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-              {...getCustomAttributs(fieldKey, 'cw')}
+              {...getCustomAttributes(fieldKey, 'cw')}
             >
               <input
                 data-testid={`${fieldKey}-ci`}
@@ -105,7 +105,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 checked={value === (itm.val || itm.lbl)}
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
-                {...getCustomAttributs(fieldKey, 'ci')}
+                {...getCustomAttributes(fieldKey, 'ci')}
               />
               <label
                 data-testid={`${fieldKey}-cl`}
@@ -113,7 +113,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 data-cl
                 htmlFor={`${fieldKey}-chk-${i}`}
                 className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-                {...getCustomAttributs(fieldKey, 'cl')}
+                {...getCustomAttributes(fieldKey, 'cl')}
               >
                 {/* <span data-bx className={`${fieldKey}-bx`} /> */}
                 <span
@@ -121,7 +121,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-dev-rdo={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
-                  {...getCustomAttributs(fieldKey, 'rdo')}
+                  {...getCustomAttributes(fieldKey, 'rdo')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -131,7 +131,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                  {...getCustomAttributs(fieldKey, 'ct')}
+                  {...getCustomAttributes(fieldKey, 'ct')}
                 >
                   <RenderHtml html={itm.lbl} />
                 </span>
@@ -144,7 +144,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               data-dev-cw={fieldKey}
               key={`opt-${attr.opt.length + 24}`}
               className={`${fieldKey}-cw ${getCustomClsName(fieldKey, 'cw')}`}
-              {...getCustomAttributs(fieldKey, 'cw')}
+              {...getCustomAttributes(fieldKey, 'cw')}
             >
               <input
                 data-testid={`${fieldKey}-ci`}
@@ -160,7 +160,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 disabled={attr.valid.disabled}
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
-                {...getCustomAttributs(fieldKey, 'ci')}
+                {...getCustomAttributes(fieldKey, 'ci')}
               />
               <label
                 data-testid={`${fieldKey}-cl`}
@@ -168,14 +168,14 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 data-cl
                 htmlFor={`${fieldKey}-chk-${attr.opt.length}`}
                 className={`${fieldKey}-cl ${getCustomClsName(fieldKey, 'cl')}`}
-                {...getCustomAttributs(fieldKey, 'cl')}
+                {...getCustomAttributes(fieldKey, 'cl')}
               >
                 <span
                   data-testid={`${fieldKey}-bx`}
                   data-dev-ck={fieldKey}
                   data-bx
                   className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
-                  {...getCustomAttributs(fieldKey, 'rdo')}
+                  {...getCustomAttributes(fieldKey, 'rdo')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -185,7 +185,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   data-testid={`${fieldKey}-ct`}
                   data-dev-ct={fieldKey}
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
-                  {...getCustomAttributs(fieldKey, 'ct')}
+                  {...getCustomAttributes(fieldKey, 'ct')}
                 >
                   Others..
                 </span>
