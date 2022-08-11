@@ -804,7 +804,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
-      <div className={css(ut.flxc, { my: 5 }, isScroll && Toolbars.searchBar)}>
+      <div className={css(ut.flxc, { mb: 5 }, isScroll && Toolbars.searchBar)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%', marginTop: '2px' }}>
           <input
             ref={searchInput}
@@ -873,5 +873,6 @@ const toolStyle = {
     flx: 'align-center',
     ow: 'hidden',
     w: '90%',
+    cg: 5,
   },
 }

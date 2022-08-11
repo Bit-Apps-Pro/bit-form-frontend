@@ -106,7 +106,7 @@ const Toolbars = {
     dy: 'flex',
     cr: 'var(--dp-blue)',
     fs: 25,
-    mr: 5,
+    mr: 8,
   },
   shortcut: {
     pn: 'absolute',
