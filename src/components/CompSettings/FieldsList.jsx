@@ -12,8 +12,8 @@ export default function FieldsList() {
 
   return (
     <>
-      <FieldsList.Group title="Hidden Fields" filteredFields={hiddenFlds} />
-      <FieldsList.Group title="All Fields List" filteredFields={notHiddenFlds} />
+      <FieldsList.Group title={`Hidden Fields (${hiddenFlds.length})`} filteredFields={hiddenFlds} />
+      <FieldsList.Group title={`Fields (${notHiddenFlds.length})`} filteredFields={notHiddenFlds} />
     </>
   )
 }
@@ -22,8 +22,8 @@ const Group = ({ title, filteredFields }) => {
   const { css } = useFela()
   if (!filteredFields.length) return <> </>
   return (
-    <div className={css(ut.mt5)}>
-      <span className={css(s.title)}>{title}</span>
+    <div>
+      <div className={css(s.title)}>{title}</div>
       {filteredFields.map(([fldKey, fldData]) => {
         let { lbl } = fldData
         const { typ, adminLbl } = fldData
@@ -49,6 +49,11 @@ const s = {
   title: {
     fw: 500,
     fs: 16,
-    mx: 10,
+    mx: 8,
+    pn: 'sticky',
+    pt: 14,
+    tp: 0,
+    bd: 'var(--white)',
+    h: 40,
   },
 }
