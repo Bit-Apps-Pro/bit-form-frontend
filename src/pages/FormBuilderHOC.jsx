@@ -19,39 +19,44 @@ import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAn
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
-import { $allStyles } from '../GlobalStates/StylesState'
+import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
-const styleReducer = (style, action) => {
+const styleReducer = (v1Styles, action) => {
   if (action.brkPoint === 'lg') {
-    multiAssign(style, action.apply)
-    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
-    return { ...style }
+    multiAssign(v1Styles, action.apply)
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(v1Styles)))
+    return { ...v1Styles }
   }
   if (action.brkPoint === 'md') {
-    const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+    const st = v1Styles['@media only screen and (max-width:600px)'] || v1Styles['@media only screen and (max-width: 600px)']
     multiAssign(st, action.apply)
-    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
-    return { ...style }
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(v1Styles)))
+    return { ...v1Styles }
   }
   if (action.brkPoint === 'sm') {
-    const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+    const st = v1Styles['@media only screen and (max-width:400px)'] || v1Styles['@media only screen and (max-width: 400px)']
     multiAssign(st, action.apply)
-    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
-    return { ...style }
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(v1Styles)))
+    return { ...v1Styles }
   }
   if (action.type === 'init') {
-    return action.style
+    return action.v1Style
   }
-  return style
+  return v1Styles
 }
+
+const LEFT_BAR_WIDTH = 180
+const RIGHT_BAR_WIDTH = 300
+const SPLIT_BAR = 8
+const BUILDER_WIDTH = window.innerWidth - LEFT_BAR_WIDTH - RIGHT_BAR_WIDTH - (SPLIT_BAR * 2)
 
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const newFormId = useRecoilValue($newFormId)
@@ -60,14 +65,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
-  const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
+  const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
   const builderHookStates = useRecoilValue($builderHookStates)
   const { styleMode } = useRecoilValue($flags)
-  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
-  const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
+  const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
+  const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
   const [styleLoading, setStyleLoading] = useState(true)
   const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
@@ -81,6 +86,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
+  const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -94,17 +100,18 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const { data: fetchedBuilderHelperStates, isLoading: isStyleLoading } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
+  const { data: fetchedBuilderHelperStates, isValidating: isFetchingStyles } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
     .then(({ data: [response] }) => response?.builder_helper_state))
 
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
-    let isV2Form = fetchedBuilderHelperStates !== null
+    let isV2Form = true
     const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
-    if (oldStyles && isObjectEmpty(oldStyles)) isV2Form = false
-    if (isV2Form) {
-      // declare new theme exist , no need old theme functions
-      setIsNewThemeStyleLoaded(true)
+    if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
+      isV2Form = false
+    }
+
+    if (isV2Form && !isNewForm) {
       const { themeVars, themeColors, style: oldAllStyles } = oldStyles
       setAllThemeColors(themeColors)
       setAllThemeVars(themeVars)
@@ -125,7 +132,10 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           // ...allStyleStates, // TODO fix this with lot of state
         }
       }))
-    } else {
+      setStyleLoading(false)
+    } else if (!isFetchingStyles && !isNewForm) {
+      // declare new theme exist , no need old theme functions
+      setIsNewThemeStyleLoaded(false)
       setOldExistingStyle()
     }
   }, [fetchedBuilderHelperStates])
@@ -133,22 +143,22 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   useEffect(() => {
     if (!isNewThemeStyleLoaded) {
       if (brkPoint === 'md') {
-        const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
-        setStyleSheet(j2c.sheet(merge(style, st)))
+        const st = v1Style['@media only screen and (max-width:600px)'] || v1Style['@media only screen and (max-width: 600px)']
+        setStyleSheet(j2c.sheet(merge(v1Style, st)))
       } else if (brkPoint === 'sm') {
-        const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
-        setStyleSheet(j2c.sheet(merge(style, st)))
+        const st = v1Style['@media only screen and (max-width:400px)'] || v1Style['@media only screen and (max-width: 400px)']
+        setStyleSheet(j2c.sheet(merge(v1Style, st)))
       } else if (brkPoint === 'lg') {
-        setStyleSheet(j2c.sheet(style))
+        setStyleSheet(j2c.sheet(v1Style))
       }
     }
-  }, [brkPoint, style])
+  }, [brkPoint, v1Style])
 
   useEffect(() => { setResponsiveView('lg') }, [forceBuilderWidthToLG])
 
   useEffect(() => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : 180
+    const leftBarWidth = toolbarOff ? 50 : LEFT_BAR_WIDTH
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -177,15 +187,15 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const styleProvider = () => {
     if (!isNewThemeStyleLoaded) {
       if (brkPoint === 'md') {
-        const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
-        return merge(style, st)
+        const st = v1Style['@media only screen and (max-width:600px)'] || v1Style['@media only screen and (max-width: 600px)']
+        return merge(v1Style, st)
       }
       if (brkPoint === 'sm') {
-        const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
-        return merge(style, st)
+        const st = v1Style['@media only screen and (max-width:400px)'] || v1Style['@media only screen and (max-width: 400px)']
+        return merge(v1Style, st)
       }
     }
-    return style
+    return v1Style
   }
 
   function setOldExistingStyle() {
@@ -208,13 +218,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       })
       .then(oldStyleText => {
         const oldStyle = css2json(oldStyleText)
-        styleDispatch({ type: 'init', style: oldStyle })
+        styleDispatch({ type: 'init', v1Style: oldStyle })
         setStyleLoading(false)
         recheckStyleById(oldStyleText)
       })
       .catch(() => {
         const dfThm = defaultTheme(formID)
-        styleDispatch({ type: 'init', style: dfThm })
+        styleDispatch({ type: 'init', v1Style: dfThm })
         sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(dfThm)))
       })
   }
@@ -233,7 +243,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       }
     }
     const modifiedStyle = css2json(oldStyleText)
-    styleDispatch({ type: 'init', style: modifiedStyle })
+    styleDispatch({ type: 'init', v1Style: modifiedStyle })
     sessionStorage.setItem('btcd-fs', bitCipher(oldStyleText))
   }
 
@@ -275,7 +285,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : 180
+    const leftBarWidth = toolbarOff ? 50 : LEFT_BAR_WIDTH
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -302,20 +312,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     conRef.current.applyResizer(resizer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conRef])
+
   const setGrWidth = (paneWidth) => {
     clearTimeout(debounce)
     setDebounce(setTimeout(() => {
       setGridWidth(paneWidth)
-      let w = 0
-      if (!isNewThemeStyleLoaded) {
-        if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
-        if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
-        if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
-        if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
-        if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
-        if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
-      }
-      const gw = Math.round(paneWidth - 0 - w) // inner left-right padding
+      const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
+
+      const gw = Math.round(paneWidth - w) // inner left-right padding
       if (gw <= 510) {
         setbrkPoint('sm')
       } else if (gw > 420 && gw <= 700) {
@@ -351,7 +355,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       >
         <Section
           className="tool-sec"
-          defaultSize={showToolBar ? 0 : 180}
+          defaultSize={showToolBar ? 0 : LEFT_BAR_WIDTH}
         >
           {styleMode ? <StyleLayers /> : (
             <ToolBar
@@ -367,12 +371,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <Section
           onSizeChanged={setGrWidth}
           minSize={320}
-          defaultSize={gridWidth - 28}
+          defaultSize={BUILDER_WIDTH}
         >
           {!isLoading && !styleLoading ? (
             <RenderPortal
               id="bit-grid-layout"
-              style={{ width: gridWidth + 10, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
+              style={{ width: gridWidth, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
             >
               <RenderThemeVarsAndFormCSS />
               <RenderCssInPortal />
@@ -393,7 +397,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
         <Bar className="bar bar-r" />
 
-        <Section id="settings-menu" defaultSize={300}>
+        <Section id="settings-menu" defaultSize={RIGHT_BAR_WIDTH} minSize={100}>
           <BuilderRightPanel
             brkPoint={brkPoint}
             style={styleProvider()}

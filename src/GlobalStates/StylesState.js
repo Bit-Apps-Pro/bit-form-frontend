@@ -15,22 +15,16 @@ export const $tempStyles = atom({
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
   default: {
-    theme: 'bitformDefault',
-    fieldsSize: 'medium',
-    font: {
-      fontType: '',
-      fontURL: '',
-      fontWeightVariants: [],
-      fontStyle: [],
-    },
-    form: {
-      '_frm-bg': {
-        padding: '10px',
-        border: 'solid hsla(215, 20%, 93%, 100%)',
-        'border-width': '1px',
-      },
-    },
-    fields: {},
+    // theme: 'bitformDefault',
+    // fieldsSize: 'medium',
+    // font: {
+    //   fontType: '',
+    //   fontURL: '',
+    //   fontWeightVariants: [],
+    //   fontStyle: [],
+    // },
+    // form: {},
+    // fields: {},
   },
 })
 export const $stylesLgDark = atom({ key: '$stylesLgDark', default: {} })

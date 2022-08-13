@@ -4,12 +4,11 @@ import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
-export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1, dataTestId }) {
+export default function SizeControl({ label, className, width, customStyle, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1, dataTestId }) {
   const { css } = useFela()
   const isPreDefined = preDefinedValues?.includes(actualValue)
-  // const step = 1
   return (
-    <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width }}>
+    <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width, ...customStyle }}>
 
       {preDefinedValues && (
         <div className={css(sizeControlStyle.listContainer)}>

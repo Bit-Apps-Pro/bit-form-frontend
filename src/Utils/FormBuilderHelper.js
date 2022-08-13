@@ -506,7 +506,7 @@ export const reCalculateFieldHeights = (fieldKey) => {
 }
 
 export const generateHistoryData = (element, fieldKey, path, changedValue, state) => {
-  const propertyName = generePropertyName(path)
+  const propertyName = genaratePropertyName(path)
   let event = ''
   if (fieldKey) {
     state.fldKey = fieldKey
@@ -531,63 +531,74 @@ export const getLatestState = (stateName) => {
 }
 
 const elementLabel = (element) => {
-  switch (element) {
-    case 'quick-tweaks': return 'Theme Quick Tweaks'
-    case '_frm-bg': return 'Form Wrapper'
-    case '_frm': return 'Form Container'
-    case 'field-containers': return 'Field Container'
-    case 'label-containers': return 'Label & Subtitle Container'
-    case 'lbl-wrp': return 'Label Container'
-    case 'lbl': return 'Label'
-    case 'lbl-pre-i': return 'Label Leading Icon'
-    case 'lbl-suf-i': return 'Label Trailing Icon'
-    case 'sub-titl': return 'Sub Title'
-    case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
-    case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
-    case 'pre-i': return 'Input Leading Icon'
-    case 'suf-i': return 'Input Trailing Icons'
-    case 'hlp-txt': return 'Helper Text'
-    case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
-    case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
-    case 'err-msg': return 'Error Message'
-    case 'err-txt-pre-i': return 'Error Text Leading Icon'
-    case 'err-txt-suf-i': return 'Error Text Trailing Icon'
-    case 'btn': return 'Button'
-    case 'btn-pre-i': return 'Button Leading Icon'
-    case 'btn-suf-i': return 'Button Trailing Icon'
-    case 'req-smbl': return 'Asterisk Symbol'
-    case 'fld': return 'Input Field'
-    default: return element || ''
+  const labels = {
+    'quick-tweaks': 'Theme Quick Tweaks',
+    '_frm-bg': 'Form Wrapper',
+    _frm: 'Form Container',
+    'field-containers': 'Field Container',
+    'label-containers': 'Label & Subtitle Container',
+    'lbl-wrp': 'Label Container',
+    lbl: 'Label',
+    'lbl-pre-i': 'Label Leading Icon',
+    'lbl-suf-i': 'Label Trailing Icon',
+    'sub-titl': 'Sub Title',
+    'sub-titl-pre-i': 'Subtitle Leading Icon',
+    'sub-titl-suf-i': 'Subtitle Trailing Icon',
+    'pre-i': 'Input Leading Icon',
+    'suf-i': 'Input Trailing Icons',
+    'hlp-txt': 'Helper Text',
+    'hlp-txt-pre-i': 'Helper Text Leading Icon',
+    'hlp-txt-suf-i': 'Helper Text Trailing Icon',
+    'err-msg': 'Error Message',
+    'err-txt-pre-i': 'Error Text Leading Icon',
+    'err-txt-suf-i': 'Error Text Trailing Icon',
+    btn: 'Button',
+    'btn-pre-i': 'Button Leading Icon',
+    'btn-suf-i': 'Button Trailing Icon',
+    'req-smbl': 'Asterisk Symbol',
+    fld: 'Input Field',
   }
+  return labels[element] || element || ''
 }
 
-const generePropertyName = (propertyName) => {
-  let newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+const genaratePropertyName = (propertyName) => {
+  const newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
   // eslint-disable-next-line es/no-string-prototype-replaceall
-  newPropertyName = newPropertyName.replaceAll('--', '')
-    .replaceAll('-', ' ')
-    .replaceAll(/\b(fld)\b/g, 'Field')
-    .replaceAll(/\b(pre)\b/g, 'Leading')
-    .replaceAll(/\b(suf)\b/g, 'Suffix')
-    .replaceAll(/\b(i)\b/g, 'Icon')
-    .replaceAll(/\b(lbl)\b/g, 'Label')
-    .replaceAll(/\b(clr)\b/g, 'Color')
-    .replaceAll(/\b(c)\b/g, 'Color')
-    .replaceAll(/\b(bdr)\b/g, 'Border')
-    .replaceAll(/\b(fltr)\b/g, 'Filter')
-    .replaceAll(/\b(sh)\b/g, 'Shadow')
-    .replaceAll(/\b(bg)\b/g, 'Background')
-    .replaceAll(/\b(hlp)\b/g, 'Helper')
-    .replaceAll(/\b(err)\b/g, 'Error')
-    .replaceAll(/\b(titl)\b/g, 'Title')
-    .replaceAll(/\b(smbl)\b/g, 'Symbol')
-    .replaceAll(/\b(fs)\b/g, 'Font Size')
-    .replaceAll(/\b(m)\b/g, 'Margin')
-    .replaceAll(/\b(p)\b/g, 'Padding')
-    .replaceAll(/\b(w)\b/g, 'Width')
-    .replaceAll(/\b(h)\b/g, 'Height')
-    .replaceAll(/\b(wrp)\b/g, 'Container')
-    .replaceAll(/\b(req)\b/g, 'Required')
-    .replaceAll(/\b\w/g, c => c.toUpperCase())
   return newPropertyName
+    .replaceAll(/--/g, '')
+    .replace(/-/g, ' ')
+    .replace(/\b(fld)\b/g, 'Field')
+    .replace(/\b(pre)\b/g, 'Leading')
+    .replace(/\b(suf)\b/g, 'Suffix')
+    .replace(/\b(i)\b/g, 'Icon')
+    .replace(/\b(lbl)\b/g, 'Label')
+    .replace(/\b(clr)\b/g, 'Color')
+    .replace(/\b(c)\b/g, 'Color')
+    .replace(/\b(bdr)\b/g, 'Border')
+    .replace(/\b(fltr)\b/g, 'Filter')
+    .replace(/\b(sh)\b/g, 'Shadow')
+    .replace(/\b(bg)\b/g, 'Background')
+    .replace(/\b(hlp)\b/g, 'Helper')
+    .replace(/\b(err)\b/g, 'Error')
+    .replace(/\b(titl)\b/g, 'Title')
+    .replace(/\b(smbl)\b/g, 'Symbol')
+    .replace(/\b(fs)\b/g, 'Font Size')
+    .replace(/\b(m)\b/g, 'Margin')
+    .replace(/\b(p)\b/g, 'Padding')
+    .replace(/\b(w)\b/g, 'Width')
+    .replace(/\b(h)\b/g, 'Height')
+    .replace(/\b(wrp)\b/g, 'Container')
+    .replace(/\b(req)\b/g, 'Required')
+    .replace(/\b\w/g, c => c.toUpperCase())
+}
+
+export const calculateFormGutter = (styles, formId) => {
+  let gutter = 0
+  if (styles[`._frm-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-${formId}`]['border-width']) }
+  if (styles[`._frm-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-${formId}`].padding) }
+  if (styles[`._frm-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-${formId}`].margin) }
+  if (styles[`._frm-bg-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`]['border-width']) }
+  if (styles[`._frm-bg-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].padding) }
+  if (styles[`._frm-bg-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].margin) }
+  return gutter
 }
