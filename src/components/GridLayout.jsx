@@ -12,7 +12,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
@@ -20,6 +20,7 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { addNewItemInLayout, addToBuilderHistory, calculateFormGutter, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, prepareLayout, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
+import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -70,13 +71,12 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
-  const { respectLGLayoutOrder } = useSetRecoilState($builderHelperStates)
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
-    const nl2 = prepareLayout(nl, respectLGLayoutOrder)
+    const nl2 = compactResponsiveLayouts(nl, cols)
 
     setLayouts(nl2)
     setRootLayouts(nl2)

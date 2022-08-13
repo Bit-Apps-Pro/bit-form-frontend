@@ -7,6 +7,7 @@ import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { selectInGrid } from './globalHelpers'
+import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
 
 /**
@@ -323,14 +324,13 @@ export function layoutOrderSortedByLg(lay, cols) {
 
 export function prepareLayout(lays, respectLGLayoutOrder) {
   const cols = { lg: 60, md: 40, sm: 20 }
-  let layouts = deepCopy(lays)
+  let layouts = compactResponsiveLayouts(lays)
 
   // if all layout length not same then produce new layout
-  // if (layouts.lg.length !== layouts.md.length
-  //   || layouts.lg.length !== layouts.sm.length) {
-  //   layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
-  // }
-  layouts = produceNewLayouts(layouts, ['lg', 'md', 'sm'], cols)
+  if (layouts.lg.length !== layouts.md.length
+    || layouts.lg.length !== layouts.sm.length) {
+    layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
+  }
 
   if (respectLGLayoutOrder) {
     layouts = layoutOrderSortedByLg(layouts, cols)
@@ -402,8 +402,6 @@ export const addNewItemInLayout = (layouts, newItem) => produce(layouts, draftLa
   draftLayouts.lg.push(newItem)
   draftLayouts.md.push(newItem)
   draftLayouts.sm.push(newItem)
-  // draftLayouts.md.push(newItem)
-  // draftLayouts.sm.push(newItem)
 })
 
 export const filterLayoutItem = (fldKey, layouts) => produce(layouts, draft => {
