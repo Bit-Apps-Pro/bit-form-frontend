@@ -149,13 +149,11 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...getCustomAttributes(fieldKey, 'file-upload-input')}
                 />
               </div>
-              {fieldData.config.showFileList && (
-                <div
-                  data-dev-files-list={fieldKey}
-                  className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
-                  {...getCustomAttributes(fieldKey, 'files-list')}
-                />
-              )}
+              <div
+                data-dev-files-list={fieldKey}
+                className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
+                {...getCustomAttributes(fieldKey, 'files-list')}
+              />
             </div>
             <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} {...getCustomAttributes(fieldKey, 'option')} />
           </div>

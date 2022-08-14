@@ -47,7 +47,7 @@ function TitleSettings() {
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
-    const allFields = produce(allFields, draft => { draft[fieldKey] = fieldData })
+    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${name} Modified to ${value}`, type: `${name}_changes`, state: { fldKey: fieldKey, fields: allFields } })
   }
