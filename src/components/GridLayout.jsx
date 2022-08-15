@@ -86,7 +86,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     } else {
       setTimeout(() => { stopTransitionsInGrid.current = false }, 1)
     }
-  }, [styleMode, reCalculateFieldHeights, breakpoint])
+  }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
 
   useEffect(() => {
     if (fieldKey) {
