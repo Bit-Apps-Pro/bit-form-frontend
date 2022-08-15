@@ -324,7 +324,7 @@ export function layoutOrderSortedByLg(lay, cols) {
 
 export function prepareLayout(lays, respectLGLayoutOrder) {
   const cols = { lg: 60, md: 40, sm: 20 }
-  let layouts = compactResponsiveLayouts(lays)
+  let layouts = compactResponsiveLayouts(lays, cols)
 
   // if all layout length not same then produce new layout
   if (layouts.lg.length !== layouts.md.length
