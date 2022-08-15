@@ -75,6 +75,7 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
           >
             <div
               data-dev-file-input-wrpr={fieldKey}
+              data-inp-wrp
               className={`${fieldKey}-file-input-wrpr ${getCustomClsName(fieldKey, 'file-input-wrpr')}`}
               {...getCustomAttributes(fieldKey, 'file-input-wrpr')}
             >

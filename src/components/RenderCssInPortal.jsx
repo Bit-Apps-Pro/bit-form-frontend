@@ -1586,7 +1586,7 @@ arrow:after,
  .tip-btn {
     border: 0;
     padding: 6px 15px;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     background: var(--white-0-93);
@@ -1629,20 +1629,23 @@ arrow:after,
  }
  
  .blk-wrp-btn {
-    background: 0 0;
-    color: var(--dp-blue);
-    cursor: pointer!important;
+    background: none;
+    color: var(--white-100);
+    cursor: pointer;
     outline: 0;
     width: 30px;
     height: 30px;
     border-radius: 7px;
     border: 0;
-    transform: scale(0);
-    transition: transform 300ms
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0px 1px .7px #00000032);
+    transition: background .2s ease-in-out;
  }
  
  .blk-wrp-btn:hover {
-    background: hsl(215deg 100% 50%);
+    background: hsl(215deg 100% 40%);
  }
  
  .blk-wrp-btn:focus-visible {
