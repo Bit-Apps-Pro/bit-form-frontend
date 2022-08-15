@@ -140,6 +140,7 @@ export default class BitAdvanceFileUpload {
                 uri.searchParams.delete('action')
               }
               uri.searchParams.append('action', 'bitforms_file_delete')
+              uri.searchParams.append('file_name', uniqueFileId)
 
               const xhr = new XMLHttpRequest()
               xhr.open('DELETE', uri.href)
