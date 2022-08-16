@@ -133,6 +133,7 @@ export default class BitAdvanceFileUpload {
             const existFileId = this.uploaded_files.find(
               (file) => file === uniqueFileId,
             )
+           
             if (existFileId) {
               const fileIndex = this.uploaded_files.indexOf(uniqueFileId)
               this.uploaded_files.splice(fileIndex, 1)
@@ -171,7 +172,7 @@ export default class BitAdvanceFileUpload {
   }
 
   reset() {
-    this.init()
     this.#filePondRef.destroy(this.#filePondRef.element)
+    this.init()
   }
 }
