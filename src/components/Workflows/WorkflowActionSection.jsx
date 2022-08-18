@@ -48,7 +48,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
   const checkKeyInArr = key => successActions?.some(v => v.type === key)
 
@@ -58,7 +58,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       actions.avoid_delete = val
     })
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addAction = () => {
@@ -71,7 +71,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       tmpFldActions.push({ field: '', action: actionVal })
     })
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setWebHooks = val => {
@@ -85,7 +85,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       }
     })
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const getValueFromArr = (key, subkey) => {
@@ -146,7 +146,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setInteg = val => {
@@ -161,7 +161,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeValidateMsg = val => {
@@ -169,7 +169,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions.failure = val
     })
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setSuccessMsg = val => {
@@ -184,7 +184,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setRedirectPage = val => {
@@ -199,7 +199,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

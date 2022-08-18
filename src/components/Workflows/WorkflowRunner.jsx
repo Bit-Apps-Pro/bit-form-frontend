@@ -19,7 +19,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeActionType = typ => {
@@ -38,7 +38,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeActionBehave = typ => {
@@ -49,7 +49,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (
