@@ -12,13 +12,35 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
+import { $additionalSettings,
+  $breakpoint,
+  $builderHookStates,
+  $deletedFldKey,
+  $draggingField,
+  $fields,
+  $flags,
+  $isNewThemeStyleLoaded,
+  $layouts,
+  $selectedFieldId,
+  $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, calculateFormGutter, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout,
+  addToBuilderHistory,
+  calculateFormGutter,
+  checkFieldsExtraAttr,
+  filterLayoutItem,
+  filterNumber,
+  fitAllLayoutItems,
+  fitSpecificLayoutItem,
+  getLatestState,
+  produceNewLayouts,
+  propertyValueSumY,
+  reCalculateFldHeights,
+  removeFormUpdateError } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -194,6 +216,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory({ event, type, state })
+
+    //  remove if it has any update button errors
+    removeFormUpdateError(fldKey)
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -260,8 +285,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       newStyles = produce(preStyles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
-          const fieldStyle = bitformDefaultTheme({ type: processedFieldData.typ, fieldKey: newBlk, direction: themeVars['--dir'] })
-          draftStyle.fields[newBlk] = fieldStyle
+          draftStyle.fields[newBlk] = bitformDefaultTheme({
+            type: processedFieldData.typ,
+            fieldKey: newBlk,
+            direction: themeVars['--dir'],
+          })
         }
 
         // if (globalTheme === 'material') {
@@ -275,8 +303,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             fk: newBlk,
             direction: themeVars['--dir'],
           }
-          const fieldStyle = atlassianTheme(obj)
-          draftStyle.fields[newBlk] = fieldStyle
+          draftStyle.fields[newBlk] = atlassianTheme(obj)
         }
         // newStyles = draftStyle
       })
@@ -289,6 +316,10 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }))
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
+
+    setTimeout(() => {
+      reCalculateFldHeights(newBlk)
+    }, 100)
 
     return { newBlk }
   }
