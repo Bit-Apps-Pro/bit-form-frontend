@@ -332,8 +332,51 @@ export const addToBuilderHistory = (historyData, unsaved = true) => {
   setRecoil($builderHistory, changedHistory)
 
   if (unsaved) {
-    setRecoil($updateBtn, { unsaved })
+    const updateBtn = getRecoil($updateBtn)
+    setRecoil($updateBtn, { ...updateBtn, unsaved: true })
   }
+}
+
+const checkErrKeyIndex = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  return Array.isArray(updateBtn.errors) ? updateBtn.errors.findIndex(({ fieldKey: fldKey,
+    errorKey: errKey }) => (fieldKey || errorKey) && (fieldKey ? fieldKey === fldKey : true) && (errorKey ? errorKey === errKey : true)) : -1
+}
+
+export const addFormUpdateError = (err) => {
+  const updateBtn = getRecoil($updateBtn)
+  const { fieldKey, errorKey } = err
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+  if (errIndex > -1) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    if (!draftUpdateBtn.errors) {
+      draftUpdateBtn.errors = []
+    }
+    draftUpdateBtn.errors.push(err)
+  })
+  setRecoil($updateBtn, newUpdateBtn)
+}
+
+export const removeFormUpdateError = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+
+  if (errIndex < 0) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    draftUpdateBtn.errors.splice(errIndex, 1)
+
+    const otherFldErrors = draftUpdateBtn.errors.filter(({ errorKey: errKey }) => errorKey === errKey)
+    if (otherFldErrors.length === 1) {
+      const otherErrorsIndex = checkErrKeyIndex('', errorKey)
+      draftUpdateBtn.errors.splice(otherErrorsIndex, 1)
+    }
+
+    if (draftUpdateBtn.errors.length === 0) {
+      delete draftUpdateBtn.errors
+    }
+  })
+
+  setRecoil($updateBtn, newUpdateBtn)
 }
 
 export const cols = { lg: 60, md: 40, sm: 20 }
