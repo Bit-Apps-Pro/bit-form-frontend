@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { loadScript, selectInGrid } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 import RecaptchaField from '../../resource/js/re-captchaV2'
@@ -29,7 +29,7 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
       sitekey: bits?.allFormSettings?.gReCaptcha?.siteKey,
       theme: fieldData.theme,
     })
-    reCalculateFieldHeights(fieldKey)
+    reCalculateFldHeights(fieldKey)
   }
 
   useEffect(() => {

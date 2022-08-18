@@ -529,7 +529,7 @@ export const propertyValueSumY = (propertyValue = '') => {
 
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
-export const reCalculateFieldHeights = (fieldKey) => {
+export const reCalculateFldHeights = (fieldKey) => {
   const builderHookState = getRecoil($builderHookStates)
   if (fieldKey) {
     const newBuilderHookState = produce(builderHookState, draft => {
