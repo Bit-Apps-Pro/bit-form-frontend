@@ -4,7 +4,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
 export default function generateRollupConfig() {
-  const fileNames = ['observeElm', 'select']
+  const fileNames = ['observeElm', 'select', 'isFormValidatedWithoutError']
 
   const external = [
     'window',
