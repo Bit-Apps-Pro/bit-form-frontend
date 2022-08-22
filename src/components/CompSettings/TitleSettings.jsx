@@ -16,10 +16,14 @@ import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import { addDefaultStyleClasses,
+  iconElementLabel,
+  isStyleExist,
+  setIconFilterValue,
+  styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -47,7 +51,7 @@ function TitleSettings() {
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
-    const allFields = produce(allFields, draft => { draft[fieldKey] = fieldData })
+    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${name} Modified to ${value}`, type: `${name}_changes`, state: { fldKey: fieldKey, fields: allFields } })
   }
@@ -63,7 +67,7 @@ function TitleSettings() {
     setIconFilterValue(typ, fieldKey)
     setFieldName(typ)
     setIcnMdl(true)
-    reCalculateFieldHeights(fieldKey)
+    reCalculateFldHeights(fieldKey)
   }
 
   const removeIcon = (iconType) => {
@@ -85,8 +89,12 @@ function TitleSettings() {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      reCalculateFieldHeights(fieldKey)
-      addToBuilderHistory({ event: `${iconElementLabel[name]} Icon Deleted`, type: `delete_${name}`, state: { fldKey: fieldKey, fields: allFields } })
+      reCalculateFldHeights(fieldKey)
+      addToBuilderHistory({
+        event: `${iconElementLabel[name]} Icon Deleted`,
+        type: `delete_${name}`,
+        state: { fldKey: fieldKey, fields: allFields },
+      })
     }
   }
 
@@ -103,8 +111,12 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory({ event: `Title ${req}:  ${fieldData.lbl || fieldKey}`, type: 'title_toggle', state: { fields: allFields, fldKey: fieldKey } })
+    reCalculateFldHeights(fieldKey)
+    addToBuilderHistory({
+      event: `Title ${req}:  ${fieldData.lbl || fieldKey}`,
+      type: 'title_toggle',
+      state: { fields: allFields, fldKey: fieldKey },
+    })
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
@@ -120,8 +132,12 @@ function TitleSettings() {
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`, type: 'subtitle_toggle', state: { fields: allFields, fldKey: fieldKey } })
+    reCalculateFldHeights(fieldKey)
+    addToBuilderHistory({
+      event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`,
+      type: 'subtitle_toggle',
+      state: { fields: allFields, fldKey: fieldKey },
+    })
   }
 
   const inputHandler = (val, type) => {
@@ -132,8 +148,12 @@ function TitleSettings() {
     }
     const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory({ event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`, type: 'subtitle_change', state: { fields: allFields, fldKey: fieldKey } })
+    reCalculateFldHeights(fieldKey)
+    addToBuilderHistory({
+      event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`,
+      type: 'subtitle_change',
+      state: { fields: allFields, fldKey: fieldKey },
+    })
   }
 
   const flexDirectionHandle = (val, type) => {
@@ -141,8 +161,12 @@ function TitleSettings() {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     })
     setStyles(newStyles)
-    reCalculateFieldHeights(fieldKey)
-    addToBuilderHistory({ event: `Direction Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'direction_changes', state: { styles: newStyles, fldKey: fieldKey } })
+    reCalculateFldHeights(fieldKey)
+    addToBuilderHistory({
+      event: `Direction Change to ${val}:  ${fieldData.lbl || fieldKey}`,
+      type: 'direction_changes',
+      state: { styles: newStyles, fldKey: fieldKey },
+    })
   }
 
   const positionHandle = (val, type) => {
@@ -159,7 +183,7 @@ function TitleSettings() {
 
   useEffect(() => {
     if (fieldData?.logo || fieldData?.titlePreIcn || fieldData?.titleSufIcn || fieldData?.subTitlPreIcn || fieldData?.subTitlSufIcn) {
-      reCalculateFieldHeights(fieldKey)
+      reCalculateFldHeights(fieldKey)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [icnMdl])

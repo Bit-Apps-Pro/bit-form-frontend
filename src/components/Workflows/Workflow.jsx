@@ -18,7 +18,7 @@ import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import WorkflowRunner from './WorkflowRunner'
-import WorkflowConditionSection from './WorkflowCondtionSection'
+import WorkflowConditionSection from './WorkflowConditionSection'
 
 function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -98,7 +98,7 @@ function Workflow({ formID }) {
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delLgcGrp = val => {
@@ -131,7 +131,7 @@ function Workflow({ formID }) {
       draftWorkflows[i].title = e.target.value
     })
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const closeConfMdl = () => {

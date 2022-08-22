@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
 import InputWrapper from '../InputWrapper'
@@ -62,7 +62,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
       checkBoxes.checked.splice(getIndx, 1)
       setCheckBoxes({ checked: checkBoxes.checked })
     }
-    reCalculateFieldHeights(fieldKey)
+    reCalculateFldHeights(fieldKey)
     // if (attr.valid.disabled) {
     //   return
     // }

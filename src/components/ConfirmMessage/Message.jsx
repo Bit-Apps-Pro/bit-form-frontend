@@ -43,35 +43,35 @@ function Message({ id, msgItem }) {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.position = value
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleMsgType = ({ target: { value } }) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.msgType = value
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleMsgAnimation = ({ target: { value } }) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.animation = value
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleDelay = ({ target: { value } }) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.duration = value > 0 ? value : 1
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleAutoHide = () => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.autoHide = !draft.type.successMsg[id].config.autoHide
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleColorTypeChange = ({ target: { name, value } }) => {
@@ -86,35 +86,42 @@ function Message({ id, msgItem }) {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles[name] = value
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleConfirmationShadow = ({ target: { name, value } }, index) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow[index][name] = value
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleShadowDelete = (e, index) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow.splice(index, 1)
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleAddShadow = () => {
     setAllConf(prevConf => produce(prevConf, draft => {
-      draft.type.successMsg[id].config.styles.boxShadow.push({ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' })
+      draft.type.successMsg[id].config.styles.boxShadow.push({
+        x: '0px',
+        y: '27px',
+        blur: '30px',
+        spread: '',
+        color: 'rgb(0 0 0 / 18%)',
+        inset: '',
+      })
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleMsg = (mg, idx) => {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[idx].msg = mg
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   let values = msgItem?.config?.styles?.padding?.trim().split(' ')
@@ -134,7 +141,7 @@ function Message({ id, msgItem }) {
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles.padding = v
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const unitOption = ['px', 'em', 'rem']

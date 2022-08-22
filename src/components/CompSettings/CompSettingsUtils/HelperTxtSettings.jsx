@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
@@ -45,21 +45,29 @@ export default function HelperTxtSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`,
+      type: `helpetTxt_${req}`,
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const setHelperTxt = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.helperTxt
       // recalculate builder field height
-      reCalculateFieldHeights(fldKey)
+      reCalculateFldHeights(fldKey)
     } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`,
+      type: 'change_helperTxt',
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const setIconModel = (typ) => {
@@ -78,7 +86,7 @@ export default function HelperTxtSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(fldKey)
+      reCalculateFldHeights(fldKey)
     }
   }
 

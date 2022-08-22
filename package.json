@@ -20,6 +20,7 @@
     "bit-country-field": "file:./packages/bit-country-field",
     "bit-currency-field": "file:./packages/bit-currency-field",
     "bit-dropdown-field": "file:./packages/bit-dropdown-field",
+    "bit-recaptcha-field": "file:./packages/bit-recaptcha-field",
     "bit-file-pond": "file:./packages/bit-file-pond",
     "bit-file-up-field": "file:./packages/bit-file-up-field",
     "bit-filepond-plugin-file-validate-size": "file:./packages/bit-filepond-plugin-file-validate-size",

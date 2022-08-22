@@ -219,6 +219,10 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/observeElm.min.js'),
             },
             {
+              from: path.resolve(__dirname, 'packages/bit-recaptcha-field/dist/bit-recaptcha-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-recaptcha-field.min.js'),
+            },
+            {
               from: path.resolve(__dirname, 'packages/bit-helpers/dist/select.min.js'),
               to: path.resolve(__dirname, '../assets/js/select.min.js'),
             },
@@ -301,6 +305,50 @@ module.exports = (env, argv) => {
             {
               from: path.resolve(__dirname, 'packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-advance-file-upload-field.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/checkFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/checkFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/checkMinMaxOptions.min.js'),
+              to: path.resolve(__dirname, '../assets/js/checkMinMaxOptions.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/dcsnbxFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/dcsnbxFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/emailFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/emailFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/fileupFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/fileupFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/generateBackslashPattern.min.js'),
+              to: path.resolve(__dirname, '../assets/js/generateBackslashPattern.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/nmbrFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/nmbrFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/regexPatternValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/regexPatternValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/requiredFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/requiredFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/urlFldValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/urlFldValidation.min.js'),
+            },
+            {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/validation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/validation.min.js'),
             },
           ],
         }),

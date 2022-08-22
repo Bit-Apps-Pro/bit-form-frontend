@@ -21,7 +21,12 @@ import {
   $integrations,
   $layouts,
   $mailTemplates,
-  $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
+  $newFormId,
+  $reportId,
+  $reports,
+  $reportSelector,
+  $selectedFieldId,
+  $updateBtn,
   $workflows
 } from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
@@ -30,9 +35,9 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { convertLayout, layoutOrderSortedByLg, prepareLayout, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
-import { select } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
+import { prepareLayout } from '../Utils/FormBuilderHelper'
+import { select, selectInGrid } from '../Utils/globalHelpers'
+import { bitCipher, bitDecipher } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -71,6 +76,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const builderSettings = useRecoilValue($builderSettings)
 
   const breakpointSize = useRecoilValue($breakpointSize)
@@ -127,11 +133,31 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
   })
 
+  const checkUpdateBtnErrors = () => {
+    if (updateBtn.errors) {
+      const firstErr = updateBtn.errors[0]
+      if (firstErr.errorMsg) toast.error(firstErr.errorMsg)
+      else toast.error(__('Please fix the errors'))
+      if (firstErr.errorUrl) {
+        history.push(firstErr.errorUrl)
+      }
+      if (firstErr.fieldKey) {
+        setSelectedFieldId(firstErr.fieldKey)
+        setTimeout(() => {
+          selectInGrid(`[data-key="${firstErr.fieldKey}"]`)?.focus()
+        }, 500)
+      }
+      return true
+    }
+    return false
+  }
+
   const saveOrUpdateForm = btnTyp => {
     const saveBtn = select('#secondary-update-btn')
     if (saveBtn) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
+      if (checkUpdateBtnErrors()) return
       if (style.font.fontType === 'Google') updateGoogleFontUrl()
       removeUnuseStyles()
       saveForm()
@@ -270,7 +296,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
-            // TODO : keep current route but replace form type and id 
+            // TODO : keep current route but replace form type and id
             history.replace(`/form/builder/edit/${data.id}/fields-list`)
           }
           setLay(layouts)

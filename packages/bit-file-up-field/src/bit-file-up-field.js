@@ -92,13 +92,14 @@ export default class BitFileUpField {
       fileSelectStatus } = this.#config
 
     this.#fileUploadInput.multiple = multiple
-    // this.#fileUploadInput.onchange = onchange
+    /* this.#fileUploadInput.onchange = onchange */
     this.#fileUploadInput.accept = allowedFileType ? `${allowedFileType}, ${accept}` : accept
-
     if (showSelectStatus) this.#fileSelectStatus.innerHTML = fileSelectStatus
     else this.#fileSelectStatus?.remove()
+    this.#files = {}
+    if (this.#filesList) this.#filesList.innerHTML = ''
 
-    if (!this.#config.showFileList) this.#filesList?.remove()
+    /* if (!this.#config.showFileList) this.#filesList?.remove() */
 
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
   }
@@ -170,7 +171,7 @@ export default class BitFileUpField {
         error.push(fileExistMsg)
       }
     }
-    // this.#window.document.querySelectorAll()
+    /* this.#window.document.querySelectorAll() */
     this.#window.document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
@@ -206,7 +207,7 @@ export default class BitFileUpField {
 
   #removeAction = e => {
     const id = e.target.getAttribute('data-file-id')
-    this.#document.querySelector(`#file-wrp-${id}`)?.remove()
+    this.#remove(`#file-wrp-${id}`)
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length
@@ -365,23 +366,23 @@ export default class BitFileUpField {
   }
 }
 
-// const field = new FileUploadField('.container', {
-//   // fieldLbl: 'File Upload Here',
-//   // btnTxt: 'Upload Button',
-//   // required: true,
-//   multiple: true,
-//   maxSize: 5,
-//   sizeUnit: 'MB',
-//   isItTotalMax: true,
-//   fileSelectStatus: 'Empty Selected',
-//   // showMaxSize: true,
-//   allowedFileType: 'image/*, .zip',
-//   showFileList: true,
-//   showFileSize: true,
-//   duplicateAllow: false,
-//   onchange: () => {
-//   },
-//   accept: '.jpg, .png, .jpeg',
-//   minFile: 2,
-//   maxFile: 3,
-// })
+/* const field = new FileUploadField('.container', {
+  // fieldLbl: 'File Upload Here',
+  // btnTxt: 'Upload Button',
+  // required: true,
+  multiple: true,
+  maxSize: 5,
+  sizeUnit: 'MB',
+  isItTotalMax: true,
+  fileSelectStatus: 'Empty Selected',
+  // showMaxSize: true,
+  allowedFileType: 'image/*, .zip',
+  showFileList: true,
+  showFileSize: true,
+  duplicateAllow: false,
+  onchange: () => {
+  },
+  accept: '.jpg, .png, .jpeg',
+  minFile: 2,
+  maxFile: 3,
+}) */

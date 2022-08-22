@@ -34,7 +34,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       fldActions[actionInd].action = val
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeAtnVal = val => {
@@ -42,7 +42,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       fldActions[actionInd].val = val
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeAtnField = val => {
@@ -51,7 +51,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
       fldActions[actionInd].field = val
       fldActions[actionInd].val = ''
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delAction = () => {
@@ -61,7 +61,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
         fldActions.splice(actionInd, 1)
       }
     }))
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const isNotFileUpField = fields[action.field]?.typ !== 'file-up'
