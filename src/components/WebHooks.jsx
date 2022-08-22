@@ -31,7 +31,7 @@ function WebHooks({ removeIntegration }) {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[idx].title = e.target.value
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleLink = (val, i) => {
@@ -39,14 +39,14 @@ function WebHooks({ removeIntegration }) {
     confirmation.type.webHooks[i].url = val
     confirmation.type.webHooks[i].params = splitParamsFromUrl(val)
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleMethod = (val, i) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[i].method = val
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleParam = (typ, val, hookIndx, paramIndx) => {
@@ -54,7 +54,7 @@ function WebHooks({ removeIntegration }) {
     confirmation.type.webHooks[hookIndx].params[paramIndx][typ] = val
     confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delParam = (hookIndx, paramIndx) => {
@@ -62,7 +62,7 @@ function WebHooks({ removeIntegration }) {
     confirmation.type.webHooks[hookIndx].params.splice(paramIndx, 1)
     confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addParam = hookIndx => {
@@ -73,7 +73,7 @@ function WebHooks({ removeIntegration }) {
     confirmation.type.webHooks[hookIndx].params.push({ key: 'key', value: 'value' })
     confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addMoreHook = () => {
@@ -86,7 +86,7 @@ function WebHooks({ removeIntegration }) {
       confirmation.type.webHooks.push({ title: `Web Hook ${confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     }
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const rmvHook = async i => {

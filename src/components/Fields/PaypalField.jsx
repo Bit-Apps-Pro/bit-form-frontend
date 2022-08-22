@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -70,7 +70,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       shipping: 0,
       tax: 0,
       onInit: () => {
-        reCalculateFieldHeights(fieldKey)
+        reCalculateFldHeights(fieldKey)
       },
     }
 

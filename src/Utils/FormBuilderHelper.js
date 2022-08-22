@@ -227,6 +227,10 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
     return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
   }
 
+  if (field.typ === 'recaptcha' && (bits.allFormSettings?.gReCaptcha?.secretKey === '' || bits.allFormSettings?.gReCaptcha?.siteKey === '')) {
+    return { validType: 'onlyOne', msg: __('to use ReCaptchaV3, you must set site key and secret from') }
+  }
+
   // eslint-disable-next-line no-undef
   if (FIELDS_EXTRA_ATTR[field.typ]?.pro && !bits.isPro) {
     return { validType: 'pro', msg: __(`${field.typ} field is available in Pro Version!`) }
@@ -332,8 +336,51 @@ export const addToBuilderHistory = (historyData, unsaved = true) => {
   setRecoil($builderHistory, changedHistory)
 
   if (unsaved) {
-    setRecoil($updateBtn, { unsaved })
+    const updateBtn = getRecoil($updateBtn)
+    setRecoil($updateBtn, { ...updateBtn, unsaved: true })
   }
+}
+
+const checkErrKeyIndex = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  return Array.isArray(updateBtn.errors) ? updateBtn.errors.findIndex(({ fieldKey: fldKey,
+    errorKey: errKey }) => (fieldKey || errorKey) && (fieldKey ? fieldKey === fldKey : true) && (errorKey ? errorKey === errKey : true)) : -1
+}
+
+export const addFormUpdateError = (err) => {
+  const updateBtn = getRecoil($updateBtn)
+  const { fieldKey, errorKey } = err
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+  if (errIndex > -1) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    if (!draftUpdateBtn.errors) {
+      draftUpdateBtn.errors = []
+    }
+    draftUpdateBtn.errors.push(err)
+  })
+  setRecoil($updateBtn, newUpdateBtn)
+}
+
+export const removeFormUpdateError = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+
+  if (errIndex < 0) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    draftUpdateBtn.errors.splice(errIndex, 1)
+
+    const otherFldErrors = draftUpdateBtn.errors.filter(({ errorKey: errKey }) => errorKey === errKey)
+    if (otherFldErrors.length === 1) {
+      const otherErrorsIndex = checkErrKeyIndex('', errorKey)
+      draftUpdateBtn.errors.splice(otherErrorsIndex, 1)
+    }
+
+    if (draftUpdateBtn.errors.length === 0) {
+      delete draftUpdateBtn.errors
+    }
+  })
+
+  setRecoil($updateBtn, newUpdateBtn)
 }
 
 export const cols = { lg: 60, md: 40, sm: 20 }
@@ -486,7 +533,7 @@ export const propertyValueSumY = (propertyValue = '') => {
 
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
-export const reCalculateFieldHeights = (fieldKey) => {
+export const reCalculateFldHeights = (fieldKey) => {
   const builderHookState = getRecoil($builderHookStates)
   if (fieldKey) {
     const newBuilderHookState = produce(builderHookState, draft => {

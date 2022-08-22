@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { createRef, useRef, useState } from 'react'
 import validateForm from '../../user-frontend/validation'
-import { reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -54,7 +54,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
     if (onBlurHandler) {
       onBlurHandler(event)
     }
-    reCalculateFieldHeights(fieldKey)
+    reCalculateFldHeights(fieldKey)
   }
 
   const handleBlur = e => {

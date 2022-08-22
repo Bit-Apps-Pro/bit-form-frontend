@@ -24,7 +24,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
       tmp.push(...logicData)
     }))
 
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delLogic = (lgcInd, subLgcInd, subSubLgcInd) => {
@@ -75,7 +75,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeLogic = (val, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -100,7 +100,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeLogicChip = (e, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -116,7 +116,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeValue = (val, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -132,7 +132,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const changeFormField = (val, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -151,7 +151,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addInlineLogic = (typ, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -167,7 +167,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     })
 
     setWorkflows(tmpWorkflows)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

@@ -18,7 +18,7 @@ import UndoIcon from '../Icons/UndoIcon'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { reCalculateFieldHeights } from '../Utils/FormBuilderHelper'
+import { reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import VirtualList from './Utilities/VirtualList'
@@ -111,7 +111,7 @@ export default function FormBuilderHistory() {
     }
 
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
-    reCalculateFieldHeights()
+    reCalculateFldHeights()
     setDisabled(false)
   }
 
