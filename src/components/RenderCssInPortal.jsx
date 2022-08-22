@@ -1540,11 +1540,6 @@ arrow:after,
 .isDragging .layout{
   min-height: calc(100vh - 40px);
 }
-
- .layout-wrapper {
-    /* margin: 3px auto auto; */
-    /* height: calc(100% - 10px) */
- }
  
  .layout {
     overflow: visible;
@@ -1904,6 +1899,10 @@ arrow:after,
     background-size: 10px 10px;
     font-family: var(--g-font-family)
   /* background-color: var(--white-100); */
+}
+/* hide default scrollbar in custom scrollbar */
+.layout-wrapper > div > div::-webkit-scrollbar {
+display:none;
 }
 
 

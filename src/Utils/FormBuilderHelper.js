@@ -430,7 +430,7 @@ const getElementTotalHeight = (elm) => {
     const marginTopNumber = Number(marginTop.match(/\d+/gi))
     const marginBottomNumber = Number(marginBottom.match(/\d+/gi))
     elm.style.height = elmOldHeight
-    return Math.round(height + marginTopNumber + marginBottomNumber)
+    return Math.ceil(height + marginTopNumber + marginBottomNumber)
   }
   console.error('getElementTotalHeight: elm is null')
   return 0
@@ -438,17 +438,9 @@ const getElementTotalHeight = (elm) => {
 
 export const fitAllLayoutItems = (lays) => produce(lays, draftLayout => {
   for (let i = 0; i < draftLayout.lg.length; i += 1) {
-    const lgHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.lg[i].i}-fld-wrp`)) / 2)
-    if (draftLayout.lg[i].h < lgHeight) draftLayout.lg[i].h = lgHeight
-    draftLayout.lg[i].minH = lgHeight
-
-    const mdHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.md[i].i}-fld-wrp`)) / 2)
-    if (draftLayout.md[i].h < mdHeight) draftLayout.md[i].h = mdHeight
-    draftLayout.md[i].minH = mdHeight
-
-    const smHeight = Math.round(getElementTotalHeight(selectInGrid(`.${draftLayout.sm[i].i}-fld-wrp`)) / 2)
-    if (draftLayout.sm[i].h < smHeight) draftLayout.sm[i].h = smHeight
-    draftLayout.sm[i].minH = smHeight
+    draftLayout.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.lg[i].i}-fld-wrp`)) / 2)
+    draftLayout.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.md[i].i}-fld-wrp`)) / 2)
+    draftLayout.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.sm[i].i}-fld-wrp`)) / 2)
   }
 })
 
@@ -457,26 +449,9 @@ export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayo
   const mdFld = draftLayout.md.find(itm => itm.i === fieldKey)
   const smFld = draftLayout.sm.find(itm => itm.i === fieldKey)
 
-  const lgHeight = Math.round(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
-  if (lgFld.h < lgHeight) lgFld.h = lgHeight
-  lgFld.minH = lgHeight
-
-  const mdHeight = Math.round(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
-  if (mdFld.h < mdHeight) mdFld.h = mdHeight
-  mdFld.minH = mdHeight
-
-  const smHeight = Math.round(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
-  if (smFld.h < smHeight) smFld.h = smHeight
-  smFld.minH = smHeight
-
-  // draftLayout.lg.map(fld => {
-  //   if (fld.i === fieldKey) {
-  //     const height = getElementTotalHeight(selectInGrid(`.${fieldKey}-fld-wrp`))
-  //     if (height) {
-  //       fld.h = Math.round(height / 2)
-  //     }
-  //   }
-  // })
+  lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
+  mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
+  smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
 })
 
 export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
@@ -664,4 +639,12 @@ export const calculateFormGutter = (styles, formId) => {
   if (styles[`._frm-bg-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].padding) }
   if (styles[`._frm-bg-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].margin) }
   return gutter
+}
+
+export const getResizableHandles = fieldType => {
+  switch (fieldType) {
+    case 'textarea':
+      return ['se', 'e']
+    default:
+  }
 }
