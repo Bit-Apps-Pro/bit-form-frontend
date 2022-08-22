@@ -13,7 +13,7 @@ import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
+import { getActualElementKey, getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
@@ -41,13 +41,13 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
   const fldStyleObj = styles?.fields?.[fieldKey]
+  const elementKey = getActualElementKey(element)
   let borderPropObj
   try {
     if (!fldStyleObj && rightBar === 'theme-customize') {
-      borderPropObj = editorConfig[element].properties.border
+      borderPropObj = editorConfig[elementKey].properties.border
     } else {
       const { fieldType } = fldStyleObj
-      const elementKey = element
       borderPropObj = editorConfig[fieldType][elementKey].properties.border
     }
   } catch (error) {

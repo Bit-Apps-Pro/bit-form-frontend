@@ -36,13 +36,13 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, addableCssPropsObj, arrayToObject, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
+import { addableCssPropsByField, addableCssPropsObj, arrayToObject, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'
 import TransformControl from './TransformControl'
 import TransitionControl from './TransitionControl'
 
-export default function IndividualCustomStyle({ elementKey, fldKey }) {
+export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const themeVars = useRecoilValue($themeVars)
   const themeColors = useRecoilValue($themeColors)
@@ -50,6 +50,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const fieldObj = fields[fldKey]
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
+
+  const elementKey = getActualElementKey(elmKey)
 
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
@@ -157,6 +159,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     'btn-pre-i': 'Button Leading Icon',
     'btn-suf-i': 'Button Trailing Icon',
     'other-inp': 'Other Option Input',
+    'inp-wrp .filepond--item-panel': 'Item Panel',
+    'inp-wrp .filepond--file-action-button': 'File Action Button',
+    'inp-wrp .filepond--file': 'File',
+    'inp-wrp .filepond--drop-label': 'Drop Label',
+    'inp-wrp .filepond--label-action': 'Label Action',
   }
 
   const fldTitle = getTitle[elementKey]

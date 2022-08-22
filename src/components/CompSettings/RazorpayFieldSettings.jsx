@@ -51,7 +51,7 @@ export default function RazorpayFieldSettings() {
     fieldData.payIntegID = e.target.value
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Cofiguration changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_configuration', state: { fields: allFields, fldKey } })
   }
@@ -83,8 +83,8 @@ export default function RazorpayFieldSettings() {
   const setAmountType = e => {
     if (e.target.value) fieldData.options.amountType = e.target.value
     else delete fieldData.options.amountType
-    delete fieldData.options.amount
-    delete fieldData.options.amountFld
+    // delete fieldData.options.amount
+    // delete fieldData.options.amountFld
 
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -239,7 +239,7 @@ export default function RazorpayFieldSettings() {
                 <div className={css(ut.ml2, ut.p1)}>
                   <b>{__('Amount Type')}</b>
                   <br />
-                  <CheckBox id="amnt-typ-fxd" onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed')} />
+                  <CheckBox id="amnt-typ-fxd" onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed')} value="fixed" />
                   <CheckBox id="amnt-typ-dynmc" onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic')} value="dynamic" />
                 </div>
                 {!isDynamicAmount && (

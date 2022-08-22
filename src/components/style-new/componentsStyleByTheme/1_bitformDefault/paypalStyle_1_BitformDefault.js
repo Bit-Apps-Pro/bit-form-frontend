@@ -3,7 +3,7 @@ export default function paypalStyle_1_BitformDefault({ fk, breakpoint, colorSche
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       [`.${fk}-paypal-wrp`]: {
-        width: '750px',
+        width: 'auto',
         'min-width': 150,
         'max-width': 750,
         margin: 'auto',

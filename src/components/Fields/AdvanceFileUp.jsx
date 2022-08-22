@@ -88,13 +88,11 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   }, [fieldData?.config])
 
   const addAttrAndClass = (selector, isMultiple = false) => {
-    selectInGrid(`.${fieldKey}-fld-wrp .${selector}`)?.setAttribute(`data-dev-${selector}`, fieldKey)
-    selectInGrid(`.${fieldKey}-fld-wrp .${selector}`)?.classList.add(`${fieldKey}-${selector}`)
+    selectInGrid(`.${fieldKey}-inp-wrp .${selector}`)?.setAttribute(`data-dev-${selector}`, fieldKey)
     if (isMultiple) {
-      const btnList = selectAllInGrid(`.${fieldKey}-fld-wrp .${selector}`)
+      const btnList = selectAllInGrid(`.${fieldKey}-inp-wrp .${selector}`)
       btnList.length > 0 && [...btnList].map(btn => {
         btn.setAttribute(`data-dev-${selector}`, fieldKey)
-        btn.classList.add(`${fieldKey}-${selector}`)
       })
     }
   }

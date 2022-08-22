@@ -872,3 +872,17 @@ export const styleToGradientObj = (styleStr) => {
   }
   return gardient
 }
+
+export const getActualElementKey = (elmKey) => {
+  const obj = {
+    'filepond--root': 'inp-wrp .filepond--root',
+    'filepond--drop-label': 'inp-wrp .filepond--drop-label',
+    'filepond--label-action': 'inp-wrp .filepond--label-action',
+    'filepond--panel-root': 'inp-wrp .filepond--panel-root',
+    'filepond--item-panel': 'inp-wrp .filepond--item-panel',
+    'filepond--file-action-button': 'inp-wrp .filepond--file-action-button',
+    'filepond--drip-blob': 'inp-wrp .filepond--drip-blob',
+    'filepond--file': 'inp-wrp .filepond--file',
+  }
+  return obj[elmKey] || elmKey
+}
