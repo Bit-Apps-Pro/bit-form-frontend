@@ -1,7 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import ut from '../../styles/2.utilities'
 import FieldLinkBtn from './FieldLinkButton'
 
 export default function FieldsList() {
@@ -43,6 +42,7 @@ const Group = ({ title, filteredFields }) => {
     </div>
   )
 }
+
 FieldsList.Group = Group
 
 const s = {
