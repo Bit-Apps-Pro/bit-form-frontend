@@ -36,7 +36,7 @@ export default function FieldBlockWrapper({ layoutItem,
           title={__('Move')}
           data-testid={`${layoutItem.i}-move-btn`}
         >
-          <MoveIcn size="20" stroke="2" />
+          <MoveIcn size="19" stroke="3" />
         </button>
         <button
           type="button"
@@ -45,7 +45,7 @@ export default function FieldBlockWrapper({ layoutItem,
           onClick={styleNavigation}
           data-testid={`${layoutItem.i}-style-btn`}
         >
-          <BrushIcn height="18" width="14" />
+          <BrushIcn stroke={2.3} height="17" width="14" />
         </button>
         <button
           type="button"
@@ -54,7 +54,7 @@ export default function FieldBlockWrapper({ layoutItem,
           onClick={navigateToFieldSettings}
           data-testid={`${layoutItem.i}-settings-btn`}
         >
-          <EditIcn size="20" />
+          <EditIcn size="20" stroke={2} />
         </button>
         <FieldDeleteButton
           className="g-c drag us-n no-drg blk-wrp-btn"
@@ -73,16 +73,8 @@ export default function FieldBlockWrapper({ layoutItem,
           onClick={e => handleContextMenu(e, layoutItem.i)}
           data-testid={`${layoutItem.i}-more-options`}
         >
-          <ChevronDownIcn size="19" />
+          <ChevronDownIcn size="21" stroke={2.2} />
         </button>
-        {/* <FieldContextMenu
-            layoutItem={layoutItem}
-            navigateToFieldSettings={navigateToFieldSettings}
-            navigateToStyle={navigateToStyle}
-            cloneLayoutItem={cloneLayoutItem}
-            removeLayoutItem={removeLayoutItem}
-          /> */}
-        {/* </Downmenu> */}
       </div>
       <ComponentsByTheme
         fields={fields}
@@ -101,6 +93,7 @@ const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
   if (componentProps && componentProps.typ === 'recaptcha') {
     componentProps.siteKey = reCaptchaV2.siteKey
   }
+  // TODO : handle old components in v1 compitable
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }

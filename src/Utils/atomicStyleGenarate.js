@@ -364,10 +364,10 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const lgFld = layouts.lg[i]
     const lgClsName = lgFld.i
 
-    const lg_g_r_s = lgFld.y + 1
-    const lg_g_c_s = lgFld.x + 1
-    const lg_g_r_e = lgFld.y !== 1 ? lgFld.h + (lgFld.y + 1) : 1
-    const lg_g_c_e = (lgFld.x + 1) + lgFld.w
+    const lg_g_r_s = Math.round(lgFld.y + 1)
+    const lg_g_c_s = Math.round(lgFld.x + 1)
+    const lg_g_r_e = Math.round(lgFld.y !== 1 ? lgFld.h + (lgFld.y + 1) : 1)
+    const lg_g_c_e = Math.round((lgFld.x + 1) + lgFld.w)
     // const lg_g_r_span = lg_g_r_e - lg_g_r_s
     // const lg_g_c_span = lg_g_c_e - lg_g_c_s
     const lg_min_height = `${lgFld.h * rowHeight}px;`
@@ -385,10 +385,10 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const mdFld = layouts.md[i]
     const mdClsName = mdFld.i
 
-    const md_g_r_s = mdFld.y + 1
-    const md_g_c_s = mdFld.x + 1
-    const md_g_r_e = mdFld.y !== 1 ? mdFld.h + (mdFld.y + 1) : 1
-    const md_g_c_e = (mdFld.x + 1) + mdFld.w
+    const md_g_r_s = Math.round(mdFld.y + 1)
+    const md_g_c_s = Math.round(mdFld.x + 1)
+    const md_g_r_e = Math.round(mdFld.y !== 1 ? mdFld.h + (mdFld.y + 1) : 1)
+    const md_g_c_e = Math.round((mdFld.x + 1) + mdFld.w)
     // const md_g_r_span = md_g_r_e - md_g_r_s
     // const md_g_c_span = md_g_c_e - md_g_c_s
     const md_min_height = `${mdFld.h * rowHeight}px;`
@@ -406,10 +406,10 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const smFld = layouts.sm[i]
     const smClsName = smFld.i
 
-    const sm_g_r_s = smFld.y + 1
-    const sm_g_c_s = smFld.x + 1
-    const sm_g_r_e = smFld.y !== 1 ? smFld.h + (smFld.y + 1) : 1
-    const sm_g_c_e = (smFld.x + 1) + smFld.w
+    const sm_g_r_s = Math.round(smFld.y + 1)
+    const sm_g_c_s = Math.round(smFld.x + 1)
+    const sm_g_r_e = Math.round(smFld.y !== 1 ? smFld.h + (smFld.y + 1) : 1)
+    const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
     // const sm_g_c_span = sm_g_c_e - sm_g_c_s
     const sm_min_height = `${smFld.h * rowHeight}px;`

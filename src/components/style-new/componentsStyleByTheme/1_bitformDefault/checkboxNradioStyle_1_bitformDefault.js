@@ -21,7 +21,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         // 'flex-wrap': 'wrap',
         // 'margin-top': '8px',
         display: 'grid',
-        'grid-template-columns': '1',
+        'grid-template-columns': '1fr',
         width: '100%',
         'grid-row-gap': '10px',
         'column-gap': '10px',
@@ -61,15 +61,15 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         position: 'absolute',
         opacity: '0!important',
       },
-      [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-bx`]: {
+      [`.${fk}-ci:checked ~ [data-cl] [data-bx]`]: {
         background: 'var(--global-accent-color)',
         'border-color': 'var(--global-accent-color)',
       },
-      [`.${fk}-ci:checked ~ .${fk}-other-inp-wrp`]: { display: 'block !important' },
-      [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
-      [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
-      [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
-      [`.${fk}-ci:disabled ~ .${fk}-cl`]: {
+      [`.${fk}-ci:checked ~ [data-oinp-wrp]`]: { display: 'block !important' },
+      [`.${fk}-ci:focus ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
+      [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
+      [`.${fk}-ci:active ~ [data-cl] [data-bx]`]: { transform: 'scale(0.9)' },
+      [`.${fk}-ci:disabled ~ [data-cl]`]: {
         opacity: 0.6,
         'pointer-events': 'none',
         cursor: 'not-allowed',
@@ -130,7 +130,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
           'stroke-width': '2px',
           'stroke-dasharray': '16px',
         },
-        [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-ck-icn`]: { 'stroke-dashoffset': 0 },
+        [`.${fk}-ci:checked ~ [data-cl] [data-ck-icn]`]: { 'stroke-dashoffset': 0 },
       },
 
       ...type === 'radio' && {
@@ -150,7 +150,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
           'box-shadow': '0 1px 3px 0px grey',
           transform: 'translate(-50%, -50%)',
         },
-        [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-rdo::before`]: {
+        [`.${fk}-ci:checked ~ [data-cl] [data-bx]::before`]: {
           width: '50%',
           height: '50%',
         },

@@ -507,11 +507,6 @@ input[type="checkbox"].disabled:checked:before {
   height: 200px;
 }
 
-.layout-wrapper {
-  margin: auto;
-  margin-top: 3px;
-  height: calc(100% - 40px);
-}
 
 .isDragging {
   box-shadow: inset 0 0 4px 1px #2c9eff;
@@ -2810,8 +2805,6 @@ nav.top-nav {
   // background-size: 10px 10px;
   // background-color: var(--white-100);
 }
-
-.layout-wrapper {}
 
 .btcd-ful-scn {
   top: 0 !important;
