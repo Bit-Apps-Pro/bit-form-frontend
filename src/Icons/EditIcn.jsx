@@ -1,5 +1,3 @@
-import { Edit } from 'iconsax-react'
-
 export default function EditIcn({ className, stroke = 1.8, size = 14 }) {
   // return (
   //   <svg

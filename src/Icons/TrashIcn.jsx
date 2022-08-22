@@ -1,5 +1,3 @@
-import { Trash } from 'iconsax-react'
-
 export default function TrashIcn({ size = 15, stroke = 2 }) {
   return (
     <svg
