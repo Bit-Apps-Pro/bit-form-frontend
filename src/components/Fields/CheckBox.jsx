@@ -233,7 +233,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                   Others..
                 </span>
               </label>
-              <div className={`${fieldKey}-other-inp-wrp`}>
+              <div data-oinp-wrp className={`${fieldKey}-other-inp-wrp`}>
                 <input
                   data-testid={`${fieldKey}-other-inp`}
                   data-dev-other-inp={fieldKey}

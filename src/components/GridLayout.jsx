@@ -42,6 +42,7 @@ import { addNewItemInLayout,
   reCalculateFldHeights,
   removeFormUpdateError } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
+import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -56,7 +57,8 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
 
-const BUILDER_PADDING = { all: 10, right: 13 }
+const BUILDER_PADDING = { all: 10, right: 18 }
+const CUSTOM_SCROLLBAR_GUTTER = 0
 
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
@@ -96,17 +98,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
-    setLayouts(nl)
-    setRootLayouts(nl)
+    const nl2 = compactResponsiveLayouts(nl, cols)
+
+    setLayouts(nl2)
+    setRootLayouts(nl2)
 
     if (styleMode) {
       stopTransitionsInGrid.current = true
     } else {
-      setTimeout(() => {
-        stopTransitionsInGrid.current = false
-      }, 1)
+      setTimeout(() => { stopTransitionsInGrid.current = false }, 1)
     }
-  }, [styleMode, reCalculateFieldHeights])
+  }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
 
   useEffect(() => {
     if (fieldKey) {
@@ -263,6 +265,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const newBlk = `b${formID}-${uniqueFieldId}`
     processedFieldData = { ...processedFieldData, fieldName: newBlk }
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
+    const resizeHandles = getResizableHandles(fieldData.typ)
+    if (resizeHandles) {
+      newLayoutItem.resizeHandles = resizeHandles
+      console.log({ resizeHandles, newLayoutItem })
+    }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     const newFields = { ...fields, [newBlk]: processedFieldData }
     setLayouts(newLayouts)
@@ -276,7 +283,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
-      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add style
@@ -605,24 +611,24 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       onClick={() => resetContextMenu()}
     >
       {stopTransitionsInGrid.current && <style>{'.layout *{transition:none!important}'}</style>}
-      {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
-      <Scrollbars autoHide style={{ overflowX: 'hidden', width: gridWidth - 10 }}>
+      <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
         <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, paddingRight: BUILDER_PADDING.right }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-${formID}`} data-dev-_frm={formID}>
+
               {!styleMode ? (
                 <ResponsiveReactGridLayout
                   // style={{ background: 'purple' }}
-                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right)}
+                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right - CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
                   className="layout"
                   onDrop={onDrop}
-                  resizeHandles={['se', 'e']}
+                  resizeHandles={['e']}
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
                   cols={cols}
