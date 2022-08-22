@@ -131,8 +131,8 @@ const lgLightThemeVars = {
   '--fld-m': '', // field margin
   '--fld-fs': '1rem', // field font size
 
-  '--fld-wrp-dis': 'flex', // field wrapper display
-  '--fld-wrp-fdir': 'column', // field wrapper flex direction
+  '--fld-wrp-dis': 'block', // field wrapper display
+  '--fld-wrp-fdir': '', // field wrapper flex direction
   '--fld-wrp-justify': 'center',
   '--fld-wrp-m': '', // field wrapper margin
   '--fld-wrp-p': '10px', // field wrapper paddin
