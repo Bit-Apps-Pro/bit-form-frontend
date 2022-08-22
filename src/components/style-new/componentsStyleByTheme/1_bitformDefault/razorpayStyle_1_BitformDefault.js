@@ -1,13 +1,30 @@
+
 /* eslint-disable camelcase */
 export default function razorpayStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
+      [`.${fk}-fld-wrp`]: {
+        display: 'var(--fld-wrp-dis, block)',
+        'flex-direction': 'var(--fld-wrp-fdir, row)',
+        'background-color': 'var(--fld-wrp-bg, transparent)',
+        padding: 'var(--fld-wrp-p, 0)',
+        margin: 'var(--fld-wrp-m, 0)',
+        position: 'relative',
+        'box-shadow': 'var(--fld-wrp-sh, none)',
+        'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
+        border: 'var(--fld-wrp-bdr, medium none)',
+        'border-width': 'var(--fld-wrp-bdr-width, 0)',
+      },
+
+      [`.${fk}-inp-wrp`]: { /* width: 'var(--inp-wrp-width, auto)' */ },
+
       [`.${fk}-razorpay-wrp`]: {
         display: 'flex',
         'justify-content': 'center',
       },
 
       [`.${fk}-razorpay-btn`]: {
+        cursor: 'pointer',
         position: 'relative',
         display: 'inline-block',
         ' min-width': '160px',
