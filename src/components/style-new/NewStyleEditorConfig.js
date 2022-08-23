@@ -1566,6 +1566,12 @@ const editorConfig = {
       },
     },
   },
+  paypal: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
   razorpay: {
     'fld-wrp': {
       states: ['hover'],

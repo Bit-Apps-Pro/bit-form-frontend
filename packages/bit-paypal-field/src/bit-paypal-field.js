@@ -41,7 +41,7 @@ export default class BitPayPalField {
     } else {
       btnProps.createOrder = (data, actions) => this.#createOrderHandler(data, actions)
     }
-    btnProps.onClick = this.#handleOnClick
+    btnProps.onClick = () => this.#handleOnClick(this.#getContentId())
     btnProps.onApprove = (data, actions) => this.#onApproveHanlder(data, actions)
 
     if (this.#config.onInit) {
@@ -55,24 +55,26 @@ export default class BitPayPalField {
 
   #isStandalone() { return this.#config.style.layout === 'standalone' }
 
+  #getContentId() { return this.#config.contentId }
+
   #createSubscriptionHandler(_, action) {
-    if (typeof validateForm !== 'undefined' && !validateForm({ form: this.#config.contentId })) throw new Error('form validation is failed!')
+    if (typeof validateForm !== 'undefined' && !validateForm({ form: this.#getContentId() })) throw new Error('form validation is failed!')
     return action.subscription.create({ plan_id: this.#config.planId })
   }
 
-  #handleOnClick() {
-    return isFormValidatedWithoutError(this.#config.contentId, handleFormValidationErrorMessages)
+  #handleOnClick(contentId) {
+    return isFormValidatedWithoutError(contentId, handleFormValidationErrorMessages)
       .then(() => true)
       .catch(() => false)
   }
 
   #onApproveHanlder(_, actions) {
-    const formParent = document.getElementById(`${this.#config.contentId}`)
+    const formParent = document.getElementById(`${this.#getContentId()}`)
     formParent.classList.add('pos-rel', 'form-loading')
     const order = this.#isSubscription() ? actions.subscription.get() : actions.order.capture()
     order.then(result => {
-      const form = document.getElementById(`form-${this.#config.contentId}`)
-      const formID = this.#config.contentId?.split('_')[1]
+      const form = document.getElementById(`form-${this.#getContentId()}`)
+      const formID = this.#getContentId()?.split('_')[1]
       if (typeof form !== 'undefined' && form !== null) {
         const input = document.createElement('input')
         input.setAttribute('type', 'hidden')
@@ -97,8 +99,8 @@ export default class BitPayPalField {
         }
         // bitsFetchFront(paymentParams, 'bitforms_payment_insert')
         //   .then(() => formParent.classList.remove('pos-rel', 'form-loading'))
-        const uri = new URL(bf_globals[this.#config.contentId]?.ajaxURL)
-        uri.searchParams.append('_ajax_nonce', bf_globals[this.#config.contentId]?.nonce)
+        const uri = new URL(bf_globals[this.#getContentId()]?.ajaxURL)
+        uri.searchParams.append('_ajax_nonce', bf_globals[this.#getContentId()]?.nonce)
         uri.searchParams.append('action', 'bitforms_payment_insert')
         const submitResp = fetch(
           uri,

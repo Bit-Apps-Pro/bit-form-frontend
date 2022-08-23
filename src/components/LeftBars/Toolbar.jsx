@@ -609,12 +609,12 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       elm: {
         typ: 'paypal',
         currency: 'USD',
-        lbl: __('PayPal'),
         style: {
           layout: 'vertical',
           color: 'gold',
           shape: 'rect',
           label: 'paypal',
+          height: '55px',
         },
         valid: {},
       },
