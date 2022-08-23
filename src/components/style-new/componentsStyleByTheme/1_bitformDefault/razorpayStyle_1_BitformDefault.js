@@ -1,4 +1,3 @@
-
 /* eslint-disable camelcase */
 export default function razorpayStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
