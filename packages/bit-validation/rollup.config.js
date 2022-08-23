@@ -14,7 +14,7 @@ export default function generateRollupConfig() {
     'nmbrFldValidation',
     'requiredFldValidation',
     'urlFldValidation',
-    'validation',
+    'validateForm',
     'regexPatternValidation',
   ]
 
