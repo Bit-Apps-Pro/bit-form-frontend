@@ -260,14 +260,24 @@ export const csvToJson = (string, delimiter = ',') => {
 
 export const isType = (type, val) => !!(val?.constructor && val.constructor.name.toLowerCase() === type.toLowerCase())
 
+export const firstCharCap = str => str.charAt(0).toUpperCase() + str.slice(1)
+
 export const getFormsFromPhpVariable = () => {
   let allForms = []
   if (typeof bits !== 'undefined'
-    //  eslint-disable-next-line no-undef
-    && bits.allForms !== null) {
+      //  eslint-disable-next-line no-undef
+      && bits.allForms !== null) {
     //  eslint-disable-next-line no-undef
     allForms = bits?.allForms?.map(form => (
-      { formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, created_at: form.created_at }))
+      {
+        formID: form.id,
+        status: form.status !== '0',
+        formName: form.form_name,
+        shortcode: `bitform id='${form.id}'`,
+        entries: form.entries,
+        views: form.views,
+        created_at: form.created_at,
+      }))
   }
   return allForms
 }

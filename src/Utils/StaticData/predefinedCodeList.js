@@ -1,13 +1,12 @@
 import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { SmartTagField } from './SmartTagField'
+import { firstCharCap } from '../Helpers'
 
 const fields = getRecoil($fields)
 const generateFldName = fld => (fld.lbl || fld.adminLbl || fld.txt)
 const generateFieldsOpts = () => Object.entries(fields).map(([fldKey, fldData]) => ({ lbl: generateFldName(fldData) || fldKey, val: `${fldKey}` }))
 const generateSmartTagOpts = () => SmartTagField.map(({ name, label }) => ({ lbl: label, val: `window.bf_globals['${name}']` }))
-// first character capital
-const firstCharCap = str => str.charAt(0).toUpperCase() + str.slice(1)
 const generateEventCodeForFld = eventTyp => `// On Field ${firstCharCap(eventTyp)}
 document.querySelector(fieldKey).addEventListener('${eventTyp}', event => {
   // Write your code here
