@@ -21,7 +21,12 @@ import {
   $integrations,
   $layouts,
   $mailTemplates,
-  $newFormId, $reportId, $reports, $reportSelector, $updateBtn,
+  $newFormId,
+  $reportId,
+  $reports,
+  $reportSelector,
+  $selectedFieldId,
+  $updateBtn,
   $workflows
 } from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
@@ -30,9 +35,9 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
-import { select } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
+import { prepareLayout } from '../Utils/FormBuilderHelper'
+import { select, selectInGrid } from '../Utils/globalHelpers'
+import { bitCipher, bitDecipher } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -71,6 +76,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const builderSettings = useRecoilValue($builderSettings)
 
   const breakpointSize = useRecoilValue($breakpointSize)
@@ -127,11 +133,31 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
   })
 
+  const checkUpdateBtnErrors = () => {
+    if (updateBtn.errors) {
+      const firstErr = updateBtn.errors[0]
+      if (firstErr.errorMsg) toast.error(firstErr.errorMsg)
+      else toast.error(__('Please fix the errors'))
+      if (firstErr.errorUrl) {
+        history.push(firstErr.errorUrl)
+      }
+      if (firstErr.fieldKey) {
+        setSelectedFieldId(firstErr.fieldKey)
+        setTimeout(() => {
+          selectInGrid(`[data-key="${firstErr.fieldKey}"]`)?.focus()
+        }, 500)
+      }
+      return true
+    }
+    return false
+  }
+
   const saveOrUpdateForm = btnTyp => {
     const saveBtn = select('#secondary-update-btn')
     if (saveBtn) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
+      if (checkUpdateBtnErrors()) return
       if (style.font.fontType === 'Google') updateGoogleFontUrl()
       removeUnuseStyles()
       saveForm()
@@ -144,39 +170,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
     const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
     return (payFields.length > 0 || btns.length > 0)
-  }
-
-  const prepareLayout = (lays) => {
-    const cols = { lg: 60, md: 40, sm: 20 }
-    let layouts = deepCopy(lays)
-
-    // if all layout length not same then produce new layout
-    if (layouts.lg.length !== layouts.md.length
-      || layouts.lg.length !== layouts.sm.length) {
-      layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
-    }
-
-    if (builderHelperStates.respectLGLayoutOrder) {
-      layouts = layoutOrderSortedByLg(layouts, cols)
-    } else {
-      // sort all layout by x and y
-      layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
-      layouts.md = sortLayoutItemsByRowCol(layouts.md)
-      layouts.sm = sortLayoutItemsByRowCol(layouts.sm)
-
-      // if any layout item width cross the max col then produce new layout
-      if (layouts.md.findIndex(itm => itm.w > cols.md) > -1) {
-        const minFieldWidthMd = layouts.md.reduce((prv, cur) => (prv < cur ? prv : cur))
-        layouts.md = convertLayout(layouts.md, cols.md, minFieldWidthMd)
-      }
-      // if any layout item width cross the max col then produce new layout
-      if (layouts.sm.findIndex(itm => itm.w > cols.sm) > -1) {
-        const minFieldWidthSm = layouts.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
-        layouts.sm = convertLayout(layouts.sm, cols.sm, minFieldWidthSm)
-      }
-    }
-
-    return layouts
   }
 
   const saveForm = (type, updatedData) => {
@@ -211,7 +204,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     // setUpdateBtn({ disabled: true, loading: true })
 
-    const layouts = prepareLayout(lay)
+    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
     const { atomicCssText,
       atomicClassMap,
       lightThemeColors,
@@ -303,6 +296,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
+            // TODO : keep current route but replace form type and id
             navigate(`/form/builder/edit/${data.id}/fields-list`, { replace: true })
           }
           setLay(layouts)

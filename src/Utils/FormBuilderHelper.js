@@ -7,6 +7,7 @@ import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { selectInGrid } from './globalHelpers'
+import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
 
 /**
@@ -92,7 +93,7 @@ export function delAllPrevKeys(obj, key) {
 
 /**
  * convert layout by specific column
- * @param {Array} layout array of object ex: [{x:0,y:0,...}, {x:3:y:0,...}, ...]
+ * @param lay
  * @param {number} tc  targeted column to be convert
  * @param {number} fieldMinW minimum space ned in a row for field
  * @returns {Array} converted array of object
@@ -205,8 +206,8 @@ export const propertyValueSumX = (propertyValue = '') => {
   if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
   if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
   arr = [arr[1], arr[3]]
-  const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
-  return summ || 0
+  const sum = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+  return sum || 0
 }
 
 const FIELDS_EXTRA_ATTR = {
@@ -225,6 +226,10 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
 
   if (field.typ === 'recaptcha' && additionalSettings?.enabled?.recaptchav3) {
     return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
+  }
+
+  if (field.typ === 'recaptcha' && (bits.allFormSettings?.gReCaptcha?.secretKey === '' || bits.allFormSettings?.gReCaptcha?.siteKey === '')) {
+    return { validType: 'onlyOne', msg: __('to use ReCaptchaV3, you must set site key and secret from') }
   }
 
   // eslint-disable-next-line no-undef
@@ -281,10 +286,13 @@ export function produceNewLayouts(layouts, breakpointArr, cols) {
   const lays = deepCopy(layouts)
   lays.lg = sortLayoutItemsByRowCol(lays.lg)
   const minFieldW = lays.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
-  if (breakpointArr.indexOf('md') > -1) {
+  if (breakpointArr.includes('lg')) {
+    lays.lg = convertLayout(lays.lg, cols.lg, minFieldW)
+  }
+  if (breakpointArr.includes('md')) {
     lays.md = convertLayout(lays.lg, cols.md, minFieldW)
   }
-  if (breakpointArr.indexOf('sm') > -1) {
+  if (breakpointArr.includes('sm')) {
     lays.sm = convertLayout(lays.lg, cols.sm, minFieldW)
   }
   return lays
@@ -318,6 +326,39 @@ export function layoutOrderSortedByLg(lay, cols) {
   return newLay
 }
 
+export function prepareLayout(lays, respectLGLayoutOrder) {
+  const cols = { lg: 60, md: 40, sm: 20 }
+  let layouts = compactResponsiveLayouts(lays, cols)
+
+  // if all layout length not same then produce new layout
+  if (layouts.lg.length !== layouts.md.length
+    || layouts.lg.length !== layouts.sm.length) {
+    layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
+  }
+
+  if (respectLGLayoutOrder) {
+    layouts = layoutOrderSortedByLg(layouts, cols)
+  } else {
+    // sort all layout by x and y
+    layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
+    layouts.md = sortLayoutItemsByRowCol(layouts.md)
+    layouts.sm = sortLayoutItemsByRowCol(layouts.sm)
+
+    // if any layout item width cross the max col then produce new layout
+    if (layouts.md.findIndex(itm => itm.w > cols.md) > -1) {
+      const minFieldWidthMd = layouts.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+      layouts.md = convertLayout(layouts.md, cols.md, minFieldWidthMd)
+    }
+    // if any layout item width cross the max col then produce new layout
+    if (layouts.sm.findIndex(itm => itm.w > cols.sm) > -1) {
+      const minFieldWidthSm = layouts.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+      layouts.sm = convertLayout(layouts.sm, cols.sm, minFieldWidthSm)
+    }
+  }
+
+  return layouts
+}
+
 export const addToBuilderHistory = (historyData, unsaved = true) => {
   const builderHistoryState = getRecoil($builderHistory)
   const changedHistory = produce(builderHistoryState, draft => {
@@ -332,8 +373,51 @@ export const addToBuilderHistory = (historyData, unsaved = true) => {
   setRecoil($builderHistory, changedHistory)
 
   if (unsaved) {
-    setRecoil($updateBtn, { unsaved })
+    const updateBtn = getRecoil($updateBtn)
+    setRecoil($updateBtn, { ...updateBtn, unsaved: true })
   }
+}
+
+const checkErrKeyIndex = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  return Array.isArray(updateBtn.errors) ? updateBtn.errors.findIndex(({ fieldKey: fldKey,
+    errorKey: errKey }) => (fieldKey || errorKey) && (fieldKey ? fieldKey === fldKey : true) && (errorKey ? errorKey === errKey : true)) : -1
+}
+
+export const addFormUpdateError = (err) => {
+  const updateBtn = getRecoil($updateBtn)
+  const { fieldKey, errorKey } = err
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+  if (errIndex > -1) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    if (!draftUpdateBtn.errors) {
+      draftUpdateBtn.errors = []
+    }
+    draftUpdateBtn.errors.push(err)
+  })
+  setRecoil($updateBtn, newUpdateBtn)
+}
+
+export const removeFormUpdateError = (fieldKey, errorKey) => {
+  const updateBtn = getRecoil($updateBtn)
+  const errIndex = checkErrKeyIndex(fieldKey, errorKey)
+
+  if (errIndex < 0) return
+  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    draftUpdateBtn.errors.splice(errIndex, 1)
+
+    const otherFldErrors = draftUpdateBtn.errors.filter(({ errorKey: errKey }) => errorKey === errKey)
+    if (otherFldErrors.length === 1) {
+      const otherErrorsIndex = checkErrKeyIndex('', errorKey)
+      draftUpdateBtn.errors.splice(otherErrorsIndex, 1)
+    }
+
+    if (draftUpdateBtn.errors.length === 0) {
+      delete draftUpdateBtn.errors
+    }
+  })
+
+  setRecoil($updateBtn, newUpdateBtn)
 }
 
 export const cols = { lg: 60, md: 40, sm: 20 }
@@ -365,8 +449,6 @@ export const addNewItemInLayout = (layouts, newItem) => produce(layouts, draftLa
   draftLayouts.lg.push(newItem)
   draftLayouts.md.push(newItem)
   draftLayouts.sm.push(newItem)
-  // draftLayouts.md.push(newItem)
-  // draftLayouts.sm.push(newItem)
 })
 
 export const filterLayoutItem = (fldKey, layouts) => produce(layouts, draft => {
@@ -388,33 +470,35 @@ export function sortLayoutByLg(layoutArr, orderLayout) {
 
 const getElementTotalHeight = (elm) => {
   if (elm) {
+    const elmOldHeight = elm.style.height
+    elm.style.height = 'auto'
     const height = elm.offsetHeight || 0
     const { marginTop, marginBottom } = window.getComputedStyle(elm)
     const marginTopNumber = Number(marginTop.match(/\d+/gi))
     const marginBottomNumber = Number(marginBottom.match(/\d+/gi))
-    return Math.round(height + marginTopNumber + marginBottomNumber)
+    elm.style.height = elmOldHeight
+    return Math.ceil(height + marginTopNumber + marginBottomNumber)
   }
+  console.error('getElementTotalHeight: elm is null')
   return 0
 }
 
 export const fitAllLayoutItems = (lays) => produce(lays, draftLayout => {
-  draftLayout.lg.map(fld => {
-    const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fld-wrp`))
-    if (height) {
-      fld.h = Math.round(height / 2)
-    }
-  })
+  for (let i = 0; i < draftLayout.lg.length; i += 1) {
+    draftLayout.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.lg[i].i}-fld-wrp`)) / 2)
+    draftLayout.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.md[i].i}-fld-wrp`)) / 2)
+    draftLayout.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.sm[i].i}-fld-wrp`)) / 2)
+  }
 })
 
 export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayout => {
-  draftLayout.lg.map(fld => {
-    if (fld.i === fieldKey) {
-      const height = getElementTotalHeight(selectInGrid(`.${fieldKey}-fld-wrp`))
-      if (height) {
-        fld.h = Math.round(height / 2)
-      }
-    }
-  })
+  const lgFld = draftLayout.lg.find(itm => itm.i === fieldKey)
+  const mdFld = draftLayout.md.find(itm => itm.i === fieldKey)
+  const smFld = draftLayout.sm.find(itm => itm.i === fieldKey)
+
+  lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
+  mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
+  smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
 })
 
 export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
@@ -440,7 +524,6 @@ export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
 }
 
-// TODO can be assign non existing path also
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []
   if (paths.length === 1) {
@@ -487,7 +570,7 @@ export const propertyValueSumY = (propertyValue = '') => {
 
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
-export const reCalculateFieldHeights = (fieldKey) => {
+export const reCalculateFldHeights = (fieldKey) => {
   const builderHookState = getRecoil($builderHookStates)
   if (fieldKey) {
     const newBuilderHookState = produce(builderHookState, draft => {
@@ -507,7 +590,7 @@ export const reCalculateFieldHeights = (fieldKey) => {
 }
 
 export const generateHistoryData = (element, fieldKey, path, changedValue, state) => {
-  const propertyName = generePropertyName(path)
+  const propertyName = genaratePropertyName(path)
   let event = ''
   if (fieldKey) {
     state.fldKey = fieldKey
@@ -532,63 +615,83 @@ export const getLatestState = (stateName) => {
 }
 
 const elementLabel = (element) => {
-  switch (element) {
-    case 'quick-tweaks': return 'Theme Quick Tweaks'
-    case '_frm-bg': return 'Form Wrapper'
-    case '_frm': return 'Form Container'
-    case 'field-containers': return 'Field Container'
-    case 'label-containers': return 'Label & Subtitle Container'
-    case 'lbl-wrp': return 'Label Container'
-    case 'lbl': return 'Label'
-    case 'lbl-pre-i': return 'Label Leading Icon'
-    case 'lbl-suf-i': return 'Label Trailing Icon'
-    case 'sub-titl': return 'Sub Title'
-    case 'sub-titl-pre-i': return 'Subtitle Leading Icon'
-    case 'sub-titl-suf-i': return 'Subtitle Trailing Icon'
-    case 'pre-i': return 'Input Leading Icon'
-    case 'suf-i': return 'Input Trailing Icons'
-    case 'hlp-txt': return 'Helper Text'
-    case 'hlp-txt-pre-i': return 'Helper Text Leading Icon'
-    case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon'
-    case 'err-msg': return 'Error Message'
-    case 'err-txt-pre-i': return 'Error Text Leading Icon'
-    case 'err-txt-suf-i': return 'Error Text Trailing Icon'
-    case 'btn': return 'Button'
-    case 'btn-pre-i': return 'Button Leading Icon'
-    case 'btn-suf-i': return 'Button Trailing Icon'
-    case 'req-smbl': return 'Asterisk Symbol'
-    case 'fld': return 'Input Field'
-    default: return element || ''
+  const labels = {
+    'quick-tweaks': 'Theme Quick Tweaks',
+    '_frm-bg': 'Form Wrapper',
+    _frm: 'Form Container',
+    'field-containers': 'Field Container',
+    'label-containers': 'Label & Subtitle Container',
+    'lbl-wrp': 'Label Container',
+    lbl: 'Label',
+    'lbl-pre-i': 'Label Leading Icon',
+    'lbl-suf-i': 'Label Trailing Icon',
+    'sub-titl': 'Sub Title',
+    'sub-titl-pre-i': 'Subtitle Leading Icon',
+    'sub-titl-suf-i': 'Subtitle Trailing Icon',
+    'pre-i': 'Input Leading Icon',
+    'suf-i': 'Input Trailing Icons',
+    'hlp-txt': 'Helper Text',
+    'hlp-txt-pre-i': 'Helper Text Leading Icon',
+    'hlp-txt-suf-i': 'Helper Text Trailing Icon',
+    'err-msg': 'Error Message',
+    'err-txt-pre-i': 'Error Text Leading Icon',
+    'err-txt-suf-i': 'Error Text Trailing Icon',
+    btn: 'Button',
+    'btn-pre-i': 'Button Leading Icon',
+    'btn-suf-i': 'Button Trailing Icon',
+    'req-smbl': 'Asterisk Symbol',
+    fld: 'Input Field',
   }
+  return labels[element] || element || ''
 }
 
-const generePropertyName = (propertyName) => {
-  let newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
+const genaratePropertyName = (propertyName) => {
+  const newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
   // eslint-disable-next-line es/no-string-prototype-replaceall
-  newPropertyName = newPropertyName.replaceAll('--', '')
-    .replaceAll('-', ' ')
-    .replaceAll(/\b(fld)\b/g, 'Field')
-    .replaceAll(/\b(pre)\b/g, 'Leading')
-    .replaceAll(/\b(suf)\b/g, 'Suffix')
-    .replaceAll(/\b(i)\b/g, 'Icon')
-    .replaceAll(/\b(lbl)\b/g, 'Label')
-    .replaceAll(/\b(clr)\b/g, 'Color')
-    .replaceAll(/\b(c)\b/g, 'Color')
-    .replaceAll(/\b(bdr)\b/g, 'Border')
-    .replaceAll(/\b(fltr)\b/g, 'Filter')
-    .replaceAll(/\b(sh)\b/g, 'Shadow')
-    .replaceAll(/\b(bg)\b/g, 'Background')
-    .replaceAll(/\b(hlp)\b/g, 'Helper')
-    .replaceAll(/\b(err)\b/g, 'Error')
-    .replaceAll(/\b(titl)\b/g, 'Title')
-    .replaceAll(/\b(smbl)\b/g, 'Symbol')
-    .replaceAll(/\b(fs)\b/g, 'Font Size')
-    .replaceAll(/\b(m)\b/g, 'Margin')
-    .replaceAll(/\b(p)\b/g, 'Padding')
-    .replaceAll(/\b(w)\b/g, 'Width')
-    .replaceAll(/\b(h)\b/g, 'Height')
-    .replaceAll(/\b(wrp)\b/g, 'Container')
-    .replaceAll(/\b(req)\b/g, 'Required')
-    .replaceAll(/\b\w/g, c => c.toUpperCase())
   return newPropertyName
+    .replaceAll(/--/g, '')
+    .replace(/-/g, ' ')
+    .replace(/\b(fld)\b/g, 'Field')
+    .replace(/\b(pre)\b/g, 'Leading')
+    .replace(/\b(suf)\b/g, 'Suffix')
+    .replace(/\b(i)\b/g, 'Icon')
+    .replace(/\b(lbl)\b/g, 'Label')
+    .replace(/\b(clr)\b/g, 'Color')
+    .replace(/\b(c)\b/g, 'Color')
+    .replace(/\b(bdr)\b/g, 'Border')
+    .replace(/\b(fltr)\b/g, 'Filter')
+    .replace(/\b(sh)\b/g, 'Shadow')
+    .replace(/\b(bg)\b/g, 'Background')
+    .replace(/\b(hlp)\b/g, 'Helper')
+    .replace(/\b(err)\b/g, 'Error')
+    .replace(/\b(titl)\b/g, 'Title')
+    .replace(/\b(smbl)\b/g, 'Symbol')
+    .replace(/\b(fs)\b/g, 'Font Size')
+    .replace(/\b(m)\b/g, 'Margin')
+    .replace(/\b(p)\b/g, 'Padding')
+    .replace(/\b(w)\b/g, 'Width')
+    .replace(/\b(h)\b/g, 'Height')
+    .replace(/\b(wrp)\b/g, 'Container')
+    .replace(/\b(req)\b/g, 'Required')
+    .replace(/\b\w/g, c => c.toUpperCase())
+}
+
+export const calculateFormGutter = (styles, formId) => {
+  let gutter = 0
+  if (!styles) return gutter
+  if (styles[`._frm-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-${formId}`]['border-width']) }
+  if (styles[`._frm-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-${formId}`].padding) }
+  if (styles[`._frm-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-${formId}`].margin) }
+  if (styles[`._frm-bg-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`]['border-width']) }
+  if (styles[`._frm-bg-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].padding) }
+  if (styles[`._frm-bg-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].margin) }
+  return gutter
+}
+
+export const getResizableHandles = fieldType => {
+  switch (fieldType) {
+    case 'textarea':
+      return ['se', 'e']
+    default:
+  }
 }

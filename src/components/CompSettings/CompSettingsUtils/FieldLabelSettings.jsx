@@ -9,10 +9,14 @@ import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses,
+  iconElementLabel,
+  isStyleExist,
+  setIconFilterValue,
+  styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
@@ -40,8 +44,12 @@ export default function FieldLabelSettings() {
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Field Label Change ${fieldData.lbl || fldKey}`,
+      type: 'field_label_change',
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const hideFieldLabel = e => {
@@ -57,8 +65,12 @@ export default function FieldLabelSettings() {
     const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Field Label Hide ${req}: ${fieldData.lbl || fldKey}`,
+      type: `field_label_hide_${req}`,
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const removeIcon = (iconType) => {
@@ -66,8 +78,12 @@ export default function FieldLabelSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      reCalculateFieldHeights(fldKey)
-      addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
+      reCalculateFldHeights(fldKey)
+      addToBuilderHistory({
+        event: `${iconElementLabel[iconType]} Icon Deleted`,
+        type: `delete_${iconType}`,
+        state: { fldKey, fields: allFields },
+      })
     }
   }
 

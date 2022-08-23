@@ -6,7 +6,7 @@ import { memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributs, getCustomClsName, getDataDavAttrArr, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -45,10 +45,10 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       closeOnSelect,
       activeList,
       attributes: {
-        'opt-lbl-wrp': getDataDavAttrArr(fieldKey, 'opt-lbl-wrp'),
-        'opt-icn': getDataDavAttrArr(fieldKey, 'opt-icn'),
-        'opt-lbl': getDataDavAttrArr(fieldKey, 'opt-lbl'),
-        'opt-prefix': getDataDavAttrArr(fieldKey, 'opt-prefix'),
+        'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
+        'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
+        'opt-lbl': getDataDevAttrArr(fieldKey, 'opt-lbl'),
+        'opt-prefix': getDataDevAttrArr(fieldKey, 'opt-prefix'),
       },
       classNames: {
         'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),
@@ -79,7 +79,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
             data-dev-dpd-fld-wrp={fieldKey}
             className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
             ref={dropdownWrapElmRef}
-            {...getCustomAttributs(fieldKey, 'dpd-fld-wrp')}
+            {...getCustomAttributes(fieldKey, 'dpd-fld-wrp')}
           >
             <input
               data-testid={`${fieldKey}-dpd-hdn-inp`}
@@ -99,7 +99,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
               aria-expanded="false"
               tabIndex="0"
               aria-label="Dropdown"
-              {...getCustomAttributs(fieldKey, 'dpd-wrp')}
+              {...getCustomAttributes(fieldKey, 'dpd-wrp')}
             >
               <div
                 data-testid={`${fieldKey}-slctd-opt-wrp`}
@@ -113,7 +113,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     aria-hidden="true"
                     alt="selected option icon"
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
-                    {...getCustomAttributs(fieldKey, 'selected-opt-img')}
+                    {...getCustomAttributes(fieldKey, 'selected-opt-img')}
                   />
                 )}
                 <span
@@ -121,7 +121,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                   aria-label="Selected Option Label"
                   data-dev-selected-opt-lbl={fieldKey}
                   className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
-                  {...getCustomAttributs(fieldKey, 'selected-opt-lbl')}
+                  {...getCustomAttributes(fieldKey, 'selected-opt-lbl')}
                 >
                   {ph}
                 </span>
@@ -136,7 +136,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                   aria-label="Clear selected option value"
                   data-dev-selected-opt-clear-btn={fieldKey}
                   className={`${fieldKey}-selected-opt-clear-btn ${getCustomClsName(fieldKey, 'selected-opt-clear-btn')}`}
-                  {...getCustomAttributs(fieldKey, 'selected-opt-clear-btn')}
+                  {...getCustomAttributes(fieldKey, 'selected-opt-clear-btn')}
                 >
                   <svg
                     width="15"
@@ -184,7 +184,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     aria-label="Search Options"
                     aria-hidden="true"
                     tabIndex="-1"
-                    {...getCustomAttributs(fieldKey, 'opt-search-input')}
+                    {...getCustomAttributes(fieldKey, 'opt-search-input')}
                   />
                   <svg
                     data-dev-opt-search-icn={fieldKey}
@@ -200,7 +200,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    {...getCustomAttributs(fieldKey, 'opt-search-icn')}
+                    {...getCustomAttributes(fieldKey, 'opt-search-icn')}
                   >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -213,7 +213,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                         data-dev-custom-opt-btn={fieldKey}
                         className={`${fieldKey}-icn ${fieldKey}-custom-opt-btn ${getCustomClsName(fieldKey, 'custom-opt-btn')}`}
                         tabIndex="-1"
-                        {... { ...getCustomAttributs(fieldKey, 'custom-opt-btn') }}
+                        {... { ...getCustomAttributes(fieldKey, 'custom-opt-btn') }}
                       >
                         Add Option
                       </button>
@@ -225,7 +225,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     data-dev-search-clear-btn={fieldKey}
                     className={`${fieldKey}-icn ${fieldKey}-search-clear-btn ${getCustomClsName(fieldKey, 'search-clear-btn')}`}
                     tabIndex="-1"
-                    {...getCustomAttributs(fieldKey, 'search-clear-btn')}
+                    {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                   >
                     <svg
                       width="13"
@@ -256,7 +256,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                         data-list={listName}
                         tabIndex="-1"
                         role="listbox"
-                        {...getCustomAttributs(fieldKey, 'option-list')}
+                        {...getCustomAttributes(fieldKey, 'option-list')}
                       >
 
                         <li
@@ -268,7 +268,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                           role="option"
                           aria-selected="false"
                           tabIndex="-1"
-                          {...getCustomAttributs(fieldKey, 'option')}
+                          {...getCustomAttributes(fieldKey, 'option')}
                           style={{ display: 'none' }}
                         >
                           <span className={`${fieldKey}-opt-lbl-wrp`}>
@@ -285,7 +285,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                     data-testid={`${fieldKey}-opt-${dataIndex}`}
                                     data-index={dataIndex++}
                                     className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
-                                    {...getCustomAttributs(fieldKey, 'opt-group-title')}
+                                    {...getCustomAttributes(fieldKey, 'opt-group-title')}
                                   >
                                     <span className={`${fieldKey}-opt-lbl`}>{opt.title}</span>
                                   </li>
@@ -299,9 +299,9 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                       role="option"
                                       aria-selected="false"
                                       tabIndex="-1"
-                                      {...getCustomAttributs(fieldKey, 'option')}
+                                      {...getCustomAttributes(fieldKey, 'option')}
                                     >
-                                      <span className={`${fieldKey}-opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`} {...getCustomAttributs(fieldKey, 'opty-lbl-wrp')}>
+                                      <span className={`${fieldKey}-opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`} {...getCustomAttributes(fieldKey, 'opty-lbl-wrp')}>
                                         {optionIcon && (
                                           <img
                                             className={`${fieldKey}-opt-icn`}
@@ -328,7 +328,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                 role="option"
                                 aria-selected="false"
                                 tabIndex="-1"
-                                {...getCustomAttributs(fieldKey, 'option')}
+                                {...getCustomAttributes(fieldKey, 'option')}
                               >
                                 <span className={`${fieldKey}-opt-lbl-wrp`}>
                                   {optionIcon && (

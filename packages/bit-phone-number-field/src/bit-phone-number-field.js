@@ -699,6 +699,12 @@ export default class BitPhoneNumberField {
     this.value = ''
     this.#detachAllEvents()
   }
+
+  reset() {
+    this.#clearSelectedCountry()
+    this.destroy()
+    this.init()
+  }
 }
 
 // const list = new PhoneNumberField('.phone-fld-wrp', {
@@ -711,14 +717,6 @@ export default class BitPhoneNumberField {
 //   // defaultCountryKey: 'BD',
 //   options: countryListWithPhoneCode
 // })
-
-// TODO set menu size - done
-// TODO hide browser default search cross button - done
-// TODO hide search cross button when search value empty - done
-// TODO style scrollbar - done
-// TODO option tabindex prblm - done
-// TODO set variables for redundent this.#select - done
-// TODO catchable classname - done
 
 // placeholderImage
 // searchCountryPlaceholder

@@ -210,7 +210,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         /* border-top: 1px solid #ddd, */
         /* border-bottom: 1px solid #ddd, */
         height: '35px',
-        'border-radius': '8px',
+        'border-radius': '8px !important',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
         'font-size': '16px',
         'font-family': 'var(--g-font-family)',

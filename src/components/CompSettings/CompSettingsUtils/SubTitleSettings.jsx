@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
@@ -43,22 +43,30 @@ export default function SubTitleSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Sub Title ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Sub Title ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`,
+      type: `subtitle_${req}`,
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const setSubTitle = ({ target: { value } }) => {
     if (value === '') {
       delete fieldData.subtitle
-      reCalculateFieldHeights(fldKey)
+      reCalculateFldHeights(fldKey)
     } else {
       fieldData.subtitle = value
     }
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    reCalculateFieldHeights(fldKey)
-    addToBuilderHistory({ event: `Sub Title updated: ${adminLabel || fieldData.subtitle || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Sub Title updated: ${adminLabel || fieldData.subtitle || fldKey}`,
+      type: 'change_subtitle',
+      state: { fields: allFields, fldKey },
+    })
   }
 
   const setIconModel = (typ) => {
@@ -77,7 +85,7 @@ export default function SubTitleSettings() {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))
-      reCalculateFieldHeights(fldKey)
+      reCalculateFldHeights(fldKey)
     }
   }
 

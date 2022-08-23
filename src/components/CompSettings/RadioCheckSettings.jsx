@@ -10,7 +10,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
-import { addToBuilderHistory, assignNestedObj, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -161,8 +161,12 @@ function RadioCheckSettings() {
   const handleOptions = newOpts => {
     const allFields = produce(fields, draft => { draft[fldKey].opt = newOpts })
     setFields(allFields)
-    addToBuilderHistory({ event: `Options List Moddified: ${fieldData.lbl || adminLabel || fldKey}`, type: 'option_list_modify', state: { fields: allFields, fldKey } })
-    reCalculateFieldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Options List Moddified: ${fieldData.lbl || adminLabel || fldKey}`,
+      type: 'option_list_modify',
+      state: { fields: allFields, fldKey },
+    })
+    reCalculateFldHeights(fldKey)
   }
 
   function setColumn({ target: { value } }) {
@@ -195,8 +199,12 @@ function RadioCheckSettings() {
     })
     setFields(allFields)
     setStyles(newStyles)
-    addToBuilderHistory({ event: `Column Update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'columns_update', state: { fields: allFields, styles: newStyles, fldKey } })
-    reCalculateFieldHeights(fldKey)
+    addToBuilderHistory({
+      event: `Column Update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`,
+      type: 'columns_update',
+      state: { fields: allFields, styles: newStyles, fldKey },
+    })
+    reCalculateFldHeights(fldKey)
   }
   if (isDev) {
     window.selectedFieldData = fieldData

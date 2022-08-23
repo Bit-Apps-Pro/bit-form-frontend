@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
-import { lazy, memo, Suspense, useEffect } from 'react'
-import { NavLink, Route, Routes, useMatch, useParams } from 'react-router-dom'
+import { lazy, memo, Suspense } from 'react'
+import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
@@ -15,7 +15,7 @@ import { __ } from '../Utils/i18nwrap'
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
 const Integrations = loadable(() => import('../components/Integrations'), { fallback: <IntegLoader /> })
-const Workflow = lazy(() => import('../components/Workflow'))
+const Workflow = lazy(() => import('../components/Workflows/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))

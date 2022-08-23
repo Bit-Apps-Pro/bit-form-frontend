@@ -12,14 +12,38 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHookStates, $colorScheme, $deletedFldKey, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates/GlobalStates'
+import { $additionalSettings,
+  $breakpoint,
+  $builderHookStates,
+  $deletedFldKey,
+  $draggingField,
+  $fields,
+  $flags,
+  $isNewThemeStyleLoaded,
+  $layouts,
+  $selectedFieldId,
+  $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitAllLayoutItems, fitSpecificLayoutItem, getLatestState, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout,
+  addToBuilderHistory,
+  calculateFormGutter,
+  checkFieldsExtraAttr,
+  filterLayoutItem,
+  filterNumber,
+  fitAllLayoutItems,
+  fitSpecificLayoutItem,
+  getLatestState,
+  getResizableHandles,
+  produceNewLayouts,
+  propertyValueSumY,
+  reCalculateFldHeights,
+  removeFormUpdateError } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
+import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -34,7 +58,10 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
 
-function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID }) {
+const BUILDER_PADDING = { all: 10, right: 18 }
+const CUSTOM_SCROLLBAR_GUTTER = 0
+
+function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
   const { formType } = useParams()
   const { payments } = useContext(AppSettings)
@@ -50,9 +77,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const themeVars = useRecoilValue($themeVars)
-  const colorScheme = useRecoilValue($colorScheme)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
-  const [builderWidth, setBuilderWidth] = useState(gridWidth)
   const setTempStyles = useSetRecoilState($tempStyles)
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
@@ -65,14 +90,26 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
+  const stopTransitionsInGrid = useRef(false)
+  const [resizingFld, setResizingFld] = useState({})
+  const delayRef = useRef(null)
+  const [formGutter, setFormGutter] = useState(0)
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
-    setLayouts(nl)
-    setRootLayouts(nl)
-  }, [styleMode, reCalculateFieldHeights])
+    const nl2 = compactResponsiveLayouts(nl, cols)
+
+    setLayouts(nl2)
+    setRootLayouts(nl2)
+
+    if (styleMode) {
+      stopTransitionsInGrid.current = true
+    } else {
+      setTimeout(() => { stopTransitionsInGrid.current = false }, 1)
+    }
+  }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
 
   useEffect(() => {
     if (fieldKey) {
@@ -100,50 +137,34 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   }, [breakpoint])
 
   useEffect(() => {
-    let w = 0
+    const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Styles, formID)
     let h = 0
+
     if (!isNewThemeStyleLoaded) {
-      if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
-      if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
-      if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
-      if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
-      if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
-      if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
-      if (style[`._frm-g-${formID}`]?.gap) {
-        const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
+      if (v1Styles[`._frm-g-${formID}`]?.gap) {
+        const gaps = v1Styles[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
         setgridContentMargin([Number(gaps[1]), Number(gaps[0])])
       }
 
-      if (style[`.fld-lbl-${formID}`]?.['font-size']) {
+      if (v1Styles[`.fld-lbl-${formID}`]?.['font-size']) {
         let lineHeight = 1
-        if (style[`.fld-lbl-${formID}`]?.['line-height']) {
-          lineHeight = filterNumber(style[`.fld-lbl-${formID}`]['line-height'])
+        if (v1Styles[`.fld-lbl-${formID}`]?.['line-height']) {
+          lineHeight = filterNumber(v1Styles[`.fld-lbl-${formID}`]['line-height'])
         }
-        h += filterNumber(style[`.fld-lbl-${formID}`]['font-size']) * lineHeight
+        h += filterNumber(v1Styles[`.fld-lbl-${formID}`]['font-size']) * lineHeight
       }
-      if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
-      if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
-      if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) {
-        h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height)
+      if (v1Styles[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(v1Styles[`.fld-wrp-${formID}`].padding) }
+      if (v1Styles[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(v1Styles[`input.fld-${formID},textarea.fld-${formID}`].margin) }
+      if (v1Styles[`input.fld-${formID},textarea.fld-${formID}`]?.height) {
+        h += filterNumber(v1Styles[`input.fld-${formID},textarea.fld-${formID}`].height)
       } else { h += 40 /* default field height */ }
+      sessionStorage.setItem('btcd-rh', h / 2)
     }
 
-    // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
-    // let topNbottomPadding = 0
-    // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
-    //   topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
-    // }
-    // if (topNbottomPadding > 39) {
-    //   h += topNbottomPadding - 39
-    // }
-    // h += 40 // default field height
-    // setRowHeight((h / 2) / 10)
-
-    setBuilderWidth(gridWidth - 0 - w)
+    setFormGutter(w)
 
     // set row height in local
-    sessionStorage.setItem('btcd-rh', h / 2)
-  }, [style, gridWidth, formID])
+  }, [v1Styles, gridWidth, formID, styles])
 
   const margeNewData = () => {
     if (newData !== null) {
@@ -200,6 +221,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory({ event, type, state })
+
+    //  remove if it has any update button errors
+    removeFormUpdateError(fldKey)
   }
 
   const handleFieldExtraAttr = (fieldData) => {
@@ -235,15 +259,20 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
   }
 
   function addNewField(fieldData, fieldSize, addPosition) {
-    const processedFieldData = handleFieldExtraAttr(fieldData)
+    let processedFieldData = handleFieldExtraAttr(fieldData)
     if (!processedFieldData) return
     const { w, h, minH, maxH, minW } = fieldSize
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `b${formID}-${uniqueFieldId}`
+    processedFieldData = { ...processedFieldData, fieldName: newBlk }
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
-    // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
+    const resizeHandles = getResizableHandles(fieldData.typ)
+    if (resizeHandles) {
+      newLayoutItem.resizeHandles = resizeHandles
+      console.log({ resizeHandles, newLayoutItem })
+    }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     const newFields = { ...fields, [newBlk]: processedFieldData }
     setLayouts(newLayouts)
@@ -257,7 +286,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
-      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add style
@@ -266,8 +294,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
       newStyles = produce(preStyles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
-          const fieldStyle = bitformDefaultTheme({ type: processedFieldData.typ, fieldKey: newBlk, direction: themeVars['--dir'] })
-          draftStyle.fields[newBlk] = fieldStyle
+          draftStyle.fields[newBlk] = bitformDefaultTheme({
+            type: processedFieldData.typ,
+            fieldKey: newBlk,
+            direction: themeVars['--dir'],
+          })
         }
 
         // if (globalTheme === 'material') {
@@ -281,8 +312,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
             fk: newBlk,
             direction: themeVars['--dir'],
           }
-          const fieldStyle = atlassianTheme(obj)
-          draftStyle.fields[newBlk] = fieldStyle
+          draftStyle.fields[newBlk] = atlassianTheme(obj)
         }
         // newStyles = draftStyle
       })
@@ -295,6 +325,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     }))
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
+
+    setTimeout(() => {
+      reCalculateFldHeights(newBlk)
+    }, 100)
 
     return { newBlk }
   }
@@ -542,25 +576,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
     }
   }, [inspectMode])
 
-  const getBuilderWidth = () => {
-    let width = builderWidth - 10
-    const builderPadding = styles.form?.['_frm-bg']?.padding || ''
-    const builderBorderWidth = styles.form?.['_frm-bg']?.['border-width'] || ''
-    const builderMargin = styles.form?.['_frm-bg']?.margin || ''
-    if (builderPadding && builderPadding !== '10px') {
-      width -= (parseInt(builderPadding.replace('px', ''), 10) * 2) - 3
-    }
-
-    if (builderBorderWidth && builderBorderWidth !== '1px') {
-      width -= (parseInt(builderBorderWidth.replace('px', ''), 10))
-    }
-    if (builderMargin) {
-      width -= (parseInt(builderMargin.replace('px', ''), 10))
-    }
-
-    return Math.round(width)
-  }
-
   // sort the fields in the order of their position based on the y and x coordinates
   const sortLayoutsBasedOnXY = () => {
     const lays = deepCopy(layouts[breakpoint])
@@ -568,9 +583,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
     return lays
   }
-
-  const [resizingFld, setResizingFld] = useState({})
-  const delayRef = useRef(null)
 
   const setResizingFalse = () => {
     if (isObjectEmpty(resizingFld)) return
@@ -595,37 +607,38 @@ function GridLayout({ newData, setNewData, style, gridWidth, setAlertMdl, formID
 
   return (
     <div
-      style={{ width: gridWidth + 10 }}
+      style={{ width: gridWidth, display: 'inline-block' }}
       className="layout-wrapper"
       id="layout-wrapper"
       onDragOver={e => e.preventDefault()}
       onDragEnter={e => e.preventDefault()}
       onClick={() => resetContextMenu()}
     >
-      {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
+      {stopTransitionsInGrid.current && <style>{'.layout *{transition:none!important}'}</style>}
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
-        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID} _frm-bg`} data-dev-_frm-bg={formID}>
+        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, paddingRight: BUILDER_PADDING.right }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
+          <div className={`_frm-bg-${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-${formID}`} data-dev-_frm={formID}>
+
               {!styleMode ? (
                 <ResponsiveReactGridLayout
-                  width={getBuilderWidth()}
+                  // style={{ background: 'purple' }}
+                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right - CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
                   className="layout"
                   onDrop={onDrop}
-                  resizeHandles={['se', 'e']}
+                  resizeHandles={['e']}
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
                   cols={cols}
                   breakpoints={{ lg: 700, md: 420, sm: 300 }}
                   rowHeight={rowHeight}
                   margin={gridContentMargin}
-                  // containerPadding={[1, 1]}
                   draggableCancel=".no-drg"
                   draggableHandle=".drag"
                   layouts={layouts}

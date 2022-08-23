@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
@@ -36,8 +36,12 @@ export default function OtherOptionSettings() {
     const evnt = e.target.checked ? 'Add' : 'Remove'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `${evnt} Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } })
-    reCalculateFieldHeights(fldKey)
+    addToBuilderHistory({
+      event: `${evnt} Other Option: ${fieldData.lbl || adminLabel || fldKey}`,
+      type: `${evnt.toLowerCase()}_Other_Option`,
+      state: { fields: allFields, fldKey },
+    })
+    reCalculateFldHeights(fldKey)
   }
 
   const toggleOtherOptReq = (e) => {

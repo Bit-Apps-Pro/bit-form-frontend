@@ -1,11 +1,12 @@
 import { useFela } from 'react-fela'
 
-export default function Select({ options = [], onChange, value, size = 'md', inputClass, color = 'default' }) {
+export default function Select({ options = [], onChange, value, size = 'md', w, inputClass, color = 'default' }) {
   const { css } = useFela()
 
   const cls = {
     selectInput: {
       fs: `${size === 'sm' ? 12 : 14}px!important`,
+      w: w || '100%',
       fw: 500,
       p: `${size === 'sm' ? '0px' : '2px 24px 2px 12px'}!important`,
       cr: 'var(--b-44-20)!important',

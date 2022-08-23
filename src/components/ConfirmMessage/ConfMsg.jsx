@@ -26,7 +26,7 @@ function ConfMsg({ removeIntegration }) {
     const confirmation = deepCopy(allConf)
     confirmation.type.successMsg[idx].title = e.target.value
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addMoreMsg = () => {
@@ -63,7 +63,7 @@ function ConfMsg({ removeIntegration }) {
       },
     })
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const closeMdl = () => {

@@ -1540,11 +1540,6 @@ arrow:after,
 .isDragging .layout{
   min-height: calc(100vh - 40px);
 }
-
- .layout-wrapper {
-    /* margin: 3px auto auto; */
-    /* height: calc(100% - 10px) */
- }
  
  .layout {
     overflow: visible;
@@ -1586,7 +1581,7 @@ arrow:after,
  .tip-btn {
     border: 0;
     padding: 6px 15px;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
     background: var(--white-0-93);
@@ -1629,20 +1624,23 @@ arrow:after,
  }
  
  .blk-wrp-btn {
-    background: 0 0;
-    color: var(--dp-blue);
-    cursor: pointer!important;
+    background: none;
+    color: var(--white-100);
+    cursor: pointer;
     outline: 0;
     width: 30px;
     height: 30px;
     border-radius: 7px;
     border: 0;
-    transform: scale(0);
-    transition: transform 300ms
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0px 1px .7px #00000032);
+    transition: background .2s ease-in-out;
  }
  
  .blk-wrp-btn:hover {
-    background: hsl(215deg 100% 50%);
+    background: hsl(215deg 100% 40%);
  }
  
  .blk-wrp-btn:focus-visible {
@@ -1708,8 +1706,6 @@ arrow:after,
  
  .react-grid-item>.react-resizable-handle {
     position: absolute;
-    right: 0;
-    bottom: 0;
     transform: scale(0)
  }
  
@@ -1735,27 +1731,35 @@ arrow:after,
     background-repeat: no-repeat;
     background-origin: content-box;
     box-sizing: border-box;
-    background-position: bottom right;
-    padding: 0 1px 1px 0
- }
- 
- .react-resizable-handle-se {
-    right: 0;
-    bottom: 0;
+    padding: 0 1px 1px 0;
+    border-radius:20px;
+    background-color:var(--b-50);
+    box-shadow: 0 1px 1.5px 0 #7b7a7a;
+  }
+  
+  .react-resizable-handle-se {
+    right: -8px;
+    bottom: -8px;
     width: 20px;
     height: 20px;
     cursor: se-resize;
     transform: rotate(90deg);
-    background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewbox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" class="s" /><path d="M7 9L9 7" class="s"/><style>.s{stroke:black;stroke-width:1.5;stroke-linecap:round;}</style></svg>')
- }
+    background-position: bottom right;
+    background-position: 60% 58%;
+    z-index: 1;
+    background-image: url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.909822 0.753938L13.0461 1.84232L6.03541 11.8085L0.909822 0.753938Z" fill="white"/><path d="M20.0902 14.2461L7.95387 13.1577L14.9646 3.19152L20.0902 14.2461Z" fill="white"/></svg>')
+  }
  
- .react-resizable-handle-e {
-    top: 43%;
-    width: 15px;
-    height: 25px;
+  .react-resizable-handle-e {
+    top: 35%;
+    width: 13px;
+    right: -8px;
+    height: 30px;
     margin-top: -10px;
     cursor: ew-resize;
-    background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill: black;width: 12px;height: 12px;rx: 10px;}</style><rect x="10" y="1" class="r" /><rect x="10" y="31" class="r" /><rect x="10" y="61" class="r" /></svg>')
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill:white;width: 12px;height: 12px;rx: 10px;}</style><rect x="10" y="1" class="r" /><rect x="10" y="31" class="r" /><rect x="10" y="61" class="r" /></svg>')
  }
  .context-menu {
     display: flex;
@@ -1895,6 +1899,10 @@ arrow:after,
     background-size: 10px 10px;
     font-family: var(--g-font-family)
   /* background-color: var(--white-100); */
+}
+/* hide default scrollbar in custom scrollbar */
+.layout-wrapper > div > div::-webkit-scrollbar {
+display:none;
 }
 
 

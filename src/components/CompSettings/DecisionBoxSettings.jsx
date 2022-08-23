@@ -20,6 +20,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
@@ -106,6 +107,10 @@ export default function DecisionBoxSettings() {
       />
 
       <AdminLabelSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldNameSettings />
 
       <FieldSettingsDivider />
 

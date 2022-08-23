@@ -20,7 +20,7 @@ export default function BreakpointSizeControl() {
     // eslint-disable-next-line no-param-reassign
     const size = produce(breakpointSize, draft => { draft[name] = value })
     setBreakpointSize(size)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

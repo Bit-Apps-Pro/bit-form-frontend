@@ -25,7 +25,6 @@ export const $allThemeColors = selector({
     darkThemeColors: get($darkThemeColors),
   }),
   set: ({ set }, newThemeColors) => {
-    console.trace('$allThemeColors.set', newThemeColors)
     if (!('lightThemeColors' in newThemeColors)) throw new Error('$allThemeColors: lightThemeColors is required')
     if (!('darkThemeColors' in newThemeColors)) throw new Error('$allThemeColors: darkThemeColors is required')
     set($lightThemeColors, newThemeColors.lightThemeColors)

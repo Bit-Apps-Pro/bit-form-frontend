@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
-import { getCustomAttributs, getCustomClsName } from '../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
@@ -46,14 +46,14 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       data-dev-fld-wrp={fieldKey}
       className={`${fieldKey}-fld-wrp ${getCustomClsName(fieldKey, 'fld-wrp')} ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
-      {...getCustomAttributs(fieldKey, 'fld-wrp')}
+      {...getCustomAttributes(fieldKey, 'fld-wrp')}
     >
       {!noLabel && (
         <div
           data-testid={`${fieldKey}-lbl-wrp`}
           data-dev-lbl-wrp={fieldKey}
           className={`${fieldKey}-lbl-wrp ${getCustomClsName(fieldKey, 'lbl-wrp')}`}
-          {...getCustomAttributs(fieldKey, 'lbl-wrp')}
+          {...getCustomAttributes(fieldKey, 'lbl-wrp')}
         >
           {(!fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
             <label
@@ -62,14 +62,14 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               title={fieldData.lbl}
               className={`${fieldKey}-lbl ${getCustomClsName(fieldKey, 'lbl')}`}
               htmlFor={fieldKey}
-              {...getCustomAttributs(fieldKey, 'lbl')}
+              {...getCustomAttributes(fieldKey, 'lbl')}
             >
               {fieldData.valid?.req && fieldData.valid?.reqShow && fieldData.valid?.reqPos === 'before' && (
                 <span
                   data-testid={`${fieldKey}-req-smbl`}
                   data-dev-req-smbl={fieldKey}
                   className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}
-                  {...getCustomAttributs(fieldKey, 'req-smbl')}
+                  {...getCustomAttributes(fieldKey, 'req-smbl')}
                 >
                   *
                 </span>
@@ -81,7 +81,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   className={`${fieldKey}-lbl-pre-i ${getCustomClsName(fieldKey, 'lbl-pre-i')}`}
                   src={fieldData.lblPreIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'lbl-pre-i')}
+                  {...getCustomAttributes(fieldKey, 'lbl-pre-i')}
                 />
               )}
 
@@ -94,7 +94,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   className={`${fieldKey}-lbl-suf-i ${getCustomClsName(fieldKey, 'lbl-suf-i')}`}
                   src={fieldData.lblSufIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'lbl-suf-i')}
+                  {...getCustomAttributes(fieldKey, 'lbl-suf-i')}
                 />
               )}
 
@@ -103,7 +103,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   data-testid={`${fieldKey}-req-smbl`}
                   data-dev-req-smbl={fieldKey}
                   className={`${fieldKey}-req-smbl ${getCustomClsName(fieldKey, 'req-smbl')}`}
-                  {...getCustomAttributs(fieldKey, 'req-smbl')}
+                  {...getCustomAttributes(fieldKey, 'req-smbl')}
                 >
                   *
                 </span>
@@ -116,7 +116,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 data-testid={`${fieldKey}-sub-titl`}
                 data-dev-sub-titl={fieldKey}
                 className={`${fieldKey}-sub-titl ${getCustomClsName(fieldKey, 'sub-titl')}`}
-                {...getCustomAttributs(fieldKey, 'sub-titl')}
+                {...getCustomAttributes(fieldKey, 'sub-titl')}
               >
                 {fieldData.subTlePreIcn && (
                   <img
@@ -125,7 +125,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                     className={`${fieldKey}-sub-titl-pre-i ${getCustomClsName(fieldKey, 'sub-titl-pre-i')}`}
                     src={fieldData.subTlePreIcn}
                     alt=""
-                    {...getCustomAttributs(fieldKey, 'sub-titl-pre-i')}
+                    {...getCustomAttributes(fieldKey, 'sub-titl-pre-i')}
                   />
                 )}
                 <RenderHtml html={fieldData.subtitle || ''} />
@@ -136,7 +136,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                     className={`${fieldKey}-sub-titl-suf-i ${getCustomClsName(fieldKey, 'sub-titl-suf-i')}`}
                     src={fieldData.subTleSufIcn}
                     alt=""
-                    {...getCustomAttributs(fieldKey, 'sub-titl-suf-i')}
+                    {...getCustomAttributes(fieldKey, 'sub-titl-suf-i')}
                   />
                 )}
               </div>
@@ -149,7 +149,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         data-testid={`${fieldKey}-inp-wrp`}
         data-dev-inp-wrp={fieldKey}
         className={`${fieldKey}-inp-wrp ${getCustomClsName(fieldKey, 'inp-wrp')}`}
-        {...getCustomAttributs(fieldKey, 'inp-wrp')}
+        {...getCustomAttributes(fieldKey, 'inp-wrp')}
       >
         {/* field content here */}
         {children}
@@ -161,7 +161,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
               data-testid={`${fieldKey}-hlp-txt`}
               data-dev-hlp-txt={fieldKey}
               className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}
-              {...getCustomAttributs(fieldKey, 'hlp-txt')}
+              {...getCustomAttributes(fieldKey, 'hlp-txt')}
             >
               {fieldData.hlpPreIcn && (
                 <img
@@ -170,7 +170,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`}
                   src={fieldData.hlpPreIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'hlp-txt-pre-i')}
+                  {...getCustomAttributes(fieldKey, 'hlp-txt-pre-i')}
                 />
               )}
               <RenderHtml html={fieldData.helperTxt || ''} />
@@ -181,7 +181,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                   className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`}
                   src={fieldData.hlpSufIcn}
                   alt=""
-                  {...getCustomAttributs(fieldKey, 'hlp-txt-suf-i')}
+                  {...getCustomAttributes(fieldKey, 'hlp-txt-suf-i')}
                 />
               )}
             </div>
@@ -203,7 +203,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             data-testid={`${fieldKey}-err-msg`}
             data-dev-err-msg={fieldKey}
             className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}
-            {...getCustomAttributs(fieldKey, 'err-msg')}
+            {...getCustomAttributes(fieldKey, 'err-msg')}
           >
             {fieldData.errPreIcn && (
               <img
@@ -212,7 +212,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`}
                 src={fieldData.errPreIcn}
                 alt=""
-                {...getCustomAttributs(fieldKey, 'err-txt-pre-i')}
+                {...getCustomAttributes(fieldKey, 'err-txt-pre-i')}
               />
             )}
             {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
@@ -223,7 +223,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`}
                 src={fieldData.errSufIcn}
                 alt=""
-                {...getCustomAttributs(fieldKey, 'err-txt-suf-i')}
+                {...getCustomAttributes(fieldKey, 'err-txt-suf-i')}
               />
             )}
           </div>

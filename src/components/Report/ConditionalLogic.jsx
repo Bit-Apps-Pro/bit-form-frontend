@@ -3,7 +3,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import { deepCopy } from '../../Utils/Helpers'
 import Button from '../Utilities/Button'
 import LogicBlock from './LogicBlock'
-import LogicChip from '../Utilities/LogicChip'
+import LogicChip from './LogicChip'
 import { disabledLogicType, stringToArray } from './helper'
 
 function ConditionalLogic({ formFields, dataConf, setDataConf, reportInd }) {

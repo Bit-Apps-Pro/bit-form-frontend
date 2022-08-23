@@ -27,7 +27,7 @@ const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutI
         title={__('Remove')}
         data-testid={`${fieldId}-remove`}
       >
-        <TrashIcn size="19" />
+        <TrashIcn size="19" stroke={2} />
         {label && <span>{label}</span>}
       </button>
       <div className="wdt-200">

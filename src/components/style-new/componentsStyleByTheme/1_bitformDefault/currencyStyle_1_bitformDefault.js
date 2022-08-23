@@ -237,7 +237,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'box-shadow': 'none',
         border: 'none',
         height: '35px',
-        'border-radius': '8px',
+        'border-radius': '8px !important',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
         'font-size': '16px',
         'font-family': 'var(--g-font-family)',
@@ -339,7 +339,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-opt-icn`]: {
-        margin: '0px 10px',
+        margin: '0px 10px 0px 0px',
         height: '17px',
         width: '25px',
         'border-radius': '3px',

@@ -1,7 +1,7 @@
 import bitformDefaultTheme from './bitformDefault/1_bitformDefault'
 import atlassianTheme from './atlassianTheme/3_atlassianTheme'
 
-export default function themeProvider(themeSlug, fieldsArr) {
+export default function themeProvider(themeSlug, fieldsArr, formId) {
   const theme = {
     themeColors: {
       lightThemeColors: {},
@@ -28,7 +28,7 @@ export default function themeProvider(themeSlug, fieldsArr) {
   if (themeSlug === 'bitformDefault') {
     theme.themeColors = bitformDefaultTheme({ type: 'themeColors' })
     theme.themeVars = bitformDefaultTheme({ type: 'themeVars' })
-    theme.styles = bitformDefaultTheme({ fieldsArr })
+    theme.styles = bitformDefaultTheme({ fieldsArr, formId })
     return theme
   }
 

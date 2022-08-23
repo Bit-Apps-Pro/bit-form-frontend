@@ -397,8 +397,8 @@ export const optimizeQuadValue = (str) => {
 export const normalizeSelector = (selector) => selector
   .trim()
   .replace(/\s{2,}/g, ' ') // replace multiple whiteSpace to one whitespace
-  .replace(/\\n\s*/g, '') // replace ",   " -> "," and "\n   " -> ""
-  .replace(/(?<=\[)(\s+)|(\s+)(?=\])/g, '') // replace "[  " -> "[" and  "  ]" -> "]"
+  .replace(/\\n\s*/g, '') // replace ",   " to "," and "\n   " to ""
+  .replace(/(?<=\[)(\s+)|(\s+)(?=\])/g, '') // replace "[  " to "[" and  "  ]" to "]"
   .replace(/\s*(::?|~|\+|=|,)\s*/g, '$1') // trim whitespce for : or :: or ~ or , or + or =
 
 export const isValidPropAndValue = (prop, value, matchObj) => {

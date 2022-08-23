@@ -26,6 +26,7 @@ export default function CustomThemeGallary({ fldKey }) {
   const allowFldInIndividualTheme = ['check', 'radio']
   const newThemes = themes
   const isExistTheme = newThemes.filter(theme => theme.slug === 'individual')
+
   useEffect(() => {
     if (allowFldInIndividualTheme.includes(fieldType)) {
       const customThemeObj = { name: 'Checkbox Theme', slug: 'individual', img: 'defaultTheme.svg' }

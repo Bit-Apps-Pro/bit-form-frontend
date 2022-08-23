@@ -1,8 +1,16 @@
 export default function MoveIcn({ size, stroke = 3 }) {
   return (
-    <svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth={stroke} viewBox="0 0 30 30">
-      <polyline points="23.31 12.31 26 15 23.31 17.69 26 15 4 15 6.69 17.69 4 15 6.69 12.31" />
-      <polyline points="17.69 23.31 15 26 12.31 23.31 15 26 15 4 12.31 6.69 15 4 17.69 6.69" />
+    // <svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth={stroke} viewBox="0 0 30 30">
+    //   <polyline points="23.31 12.31 26 15 23.31 17.69 26 15 4 15 6.69 17.69 4 15 6.69 12.31" />
+    //   <polyline points="17.69 23.31 15 26 12.31 23.31 15 26 15 4 12.31 6.69 15 4 17.69 6.69" />
+    // </svg>
+    <svg height={size} width={size} viewBox="0 0 20 20" strokeWidth={stroke}>
+      <g fill="none">
+        <path
+          d="M6.97 4.78a.75.75 0 0 0 1.06 0l1.22-1.22v3.19a.75.75 0 0 0 1.5 0V3.56l1.22 1.22a.75.75 0 1 0 1.06-1.06l-2.5-2.5a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 0 0 0 1.06zM4.78 8.03a.75.75 0 0 0-1.06-1.06l-2.5 2.5a.75.75 0 0 0 0 1.06l2.5 2.5a.75.75 0 0 0 1.06-1.06l-1.22-1.22h3.19a.75.75 0 0 0 0-1.5H3.56l1.22-1.22zm10.44-1.06a.75.75 0 0 1 1.06 0l2.5 2.5a.75.75 0 0 1 0 1.06l-2.5 2.5a.75.75 0 1 1-1.06-1.06l1.22-1.22h-3.19a.75.75 0 0 1 0-1.5h3.19l-1.22-1.22a.75.75 0 0 1 0-1.06zm-5.97 9.47l-1.22-1.22a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l2.5-2.5a.75.75 0 1 0-1.06-1.06l-1.22 1.22v-3.19a.75.75 0 0 0-1.5 0v3.19z"
+          fill="currentColor"
+        />
+      </g>
     </svg>
   )
 }

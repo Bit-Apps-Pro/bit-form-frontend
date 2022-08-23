@@ -20,7 +20,7 @@ import selectStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitform
 import textStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 
-export default function bitformDefaultTheme({ type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light' }) {
+export default function bitformDefaultTheme({ type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId }) {
   const lgLightFieldStyles = {}
   const lgDarkFieldStyles = {}
   const mdLightFieldStyles = {}
@@ -107,7 +107,7 @@ export default function bitformDefaultTheme({ type, fieldKey: fk, direction, fie
           theme: 'bitformDefault',
           fieldsSize: 'medium',
           font,
-          form: lgLightform,
+          form: lgLightform({ formId }),
           fields: lgLightFieldStyles,
         },
         lgDarkStyles: cleanObj({ form: {}, fields: lgDarkFieldStyles }),
@@ -133,6 +133,7 @@ const lgLightThemeVars = {
 
   '--fld-wrp-dis': 'block', // field wrapper display
   '--fld-wrp-fdir': '', // field wrapper flex direction
+  '--fld-wrp-justify': 'center',
   '--fld-wrp-m': '', // field wrapper margin
   '--fld-wrp-p': '10px', // field wrapper paddin
   '--fld-wrp-bdr': '', // field wrapper border
@@ -413,14 +414,10 @@ const font = {
   fontStyle: [],
 }
 
-const lgLightform = {
-  '._frm': { 'background-color': 'var(--global-bg-color)' },
-  '._frm-bg': {
-    padding: '10px',
-    border: 'solid hsla(215, 20%, 93%, 100%)',
-    'border-width': '1px',
-  },
-}
+const lgLightform = ({ formId }) => ({
+  [`._frm-bg-${formId}`]: {},
+  [`._frm-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+})
 
 const text = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {

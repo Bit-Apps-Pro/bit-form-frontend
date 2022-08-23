@@ -20,6 +20,7 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -173,6 +174,10 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldNameSettings />
 
       <FieldSettingsDivider />
 

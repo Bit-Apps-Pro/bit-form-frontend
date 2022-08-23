@@ -10,7 +10,10 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, generateHistoryData, getLatestState, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory,
+  generateHistoryData,
+  getLatestState,
+  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -89,8 +92,11 @@ export default function ThemeQuickTweaksCustomizer() {
     }))
 
     setThemeVars(tmpThemeVar)
-    reCalculateFieldHeights()
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
+    reCalculateFldHeights()
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, {
+      styles: getLatestState('styles'),
+      themeVars: getLatestState('themeVars'),
+    }))
   }
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'

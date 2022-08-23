@@ -29,6 +29,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         display: 'flex',
         'flex-direction': 'column',
         transition: 'box-shadow .3s',
+        'z-index': 1,
       },
       [`.${fk}-phone-inner-wrp.disabled`]: {
         cursor: 'not-allowed',
@@ -221,7 +222,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'box-shadow': 'none',
         border: 'none',
         height: '35px',
-        'border-radius': '8px',
+        'border-radius': '8px !important',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
         'font-size': '16px',
         'font-family': 'var(--g-font-family)',
@@ -237,7 +238,9 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-search-clear-btn`]: {
         display: 'none',
+        position: 'absolute',
         right: '6px',
+        top: '15px',
         height: '16px', // unused css
         padding: '0px',
         margin: '0px', // unused css

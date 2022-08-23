@@ -282,11 +282,8 @@ function FormDetails() {
               id: responseData?.form_content?.report_id || defaultReport?.id,
               isDefault: responseData?.form_content?.report_id === null,
             })
-            // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
             setReports(responseData.reports || [])
-            /* if ('reports' in responseData) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: responseData.reports }))
-            else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] })) */
             setisLoading(false)
           } else {
             if (!res.success && res.data === 'Token expired') {

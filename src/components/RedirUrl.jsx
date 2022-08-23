@@ -34,21 +34,21 @@ function RedirUrl({ removeIntegration }) {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[idx].title = e.target.value
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handlePage = (e, idx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[idx].url = e.target.value
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleLink = (val, i) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[i].url = val
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
@@ -67,14 +67,14 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(`${pram}&`, '?')
     }
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delParam = (i, param) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(param, '')
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addParam = i => {
@@ -85,7 +85,7 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage[i].url += '?key=value'
     }
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setFromField = (val, i, param) => {
@@ -94,7 +94,7 @@ function RedirUrl({ removeIntegration }) {
     a[1] = val
     confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(param, a.join('='))
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addMoreUrl = () => {
@@ -107,7 +107,7 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage.push({ title: `Redirect Url ${confirmation.type.redirectPage.length + 1}`, url: '' })
     }
     setAllConf(confirmation)
-    setUpdateBtn({ unsaved: true })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const rmvUrl = async i => {

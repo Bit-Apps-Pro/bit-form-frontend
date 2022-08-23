@@ -17,7 +17,7 @@ import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { addToBuilderHistory, reCalculateFieldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
 import { iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
@@ -115,8 +115,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
-        setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-        reCalculateFieldHeights(fldKey)
+        setFields(allFields => produce(allFields, draft => {
+          draft[fldKey] = fieldData
+        }))
+        reCalculateFldHeights(fldKey)
         setModal(false)
       })
 
@@ -172,8 +174,12 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             })
             setStyles(newStyles)
           }
-          reCalculateFieldHeights(fldKey)
-          addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Added`, type: `add_${iconType}`, state: { fldKey, fields: newFields, styles: newStyles } })
+          reCalculateFldHeights(fldKey)
+          addToBuilderHistory({
+            event: `${iconElementLabel[iconType]} Icon Added`,
+            type: `add_${iconType}`,
+            state: { fldKey, fields: newFields, styles: newStyles },
+          })
         }
         setDnLoading(false)
         setModal(false)
@@ -260,8 +266,12 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       setStyles(newStyles)
     }
     setModal(false)
-    addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Added`, type: `add_${iconType}`, state: { fldKey, fields: newFields, styles: newStyles } })
-    reCalculateFieldHeights(fldKey)
+    addToBuilderHistory({
+      event: `${iconElementLabel[iconType]} Icon Added`,
+      type: `add_${iconType}`,
+      state: { fldKey, fields: newFields, styles: newStyles },
+    })
+    reCalculateFldHeights(fldKey)
   }
 
   const handlePrefixIcon = e => {
