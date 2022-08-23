@@ -5,6 +5,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
@@ -80,9 +81,17 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
-      <div className={`${fieldKey}-paypal-wrp`}>
-        <div ref={paypalElemnRaf} id={`${fieldKey}-paypal-wrp`} />
-      </div>
+      <InputWrapper
+        formID={formID}
+        fieldData={attr}
+        fieldKey={fieldKey}
+        noLabel
+        isBuilder={isBuilder}
+      >
+        <div className={`${fieldKey}-paypal-wrp`}>
+          <div ref={paypalElemnRaf} id={`${fieldKey}-paypal-wrp`} />
+        </div>
+      </InputWrapper>
     </>
   )
 }
