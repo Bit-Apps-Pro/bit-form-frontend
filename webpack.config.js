@@ -223,6 +223,10 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-recaptcha-field.min.js'),
             },
             {
+              from: path.resolve(__dirname, 'packages/bit-helpers/dist/isFormValidatedWithoutError.min.js'),
+              to: path.resolve(__dirname, '../assets/js/isFormValidatedWithoutError.min.js'),
+            },
+            {
               from: path.resolve(__dirname, 'packages/bit-helpers/dist/select.min.js'),
               to: path.resolve(__dirname, '../assets/js/select.min.js'),
             },

@@ -6,17 +6,17 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
-import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
-import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
+import PaypalFieldQuickTweaks from './QuickTweaks/PaypalFieldQuickTweaks'
+import RazorpayFieldQuickTweaks from './QuickTweaks/RazorpayFieldQuickTweaks'
+import TitleFieldQuickTweaks from './QuickTweaks/TitleFieldQuickTweaks'
 import SimpleColorPicker from './SimpleColorPicker'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import ThemeControl from './ThemeControl'
@@ -26,12 +26,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const { element } = useParams()
   const themeVars = useRecoilValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
-  const [fields, setFields] = useRecoilState($fields)
+  const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const { fieldType, classes, fieldSize } = fldStyleObj
-  const wrpCLass = `.${fieldKey}-fld-wrp`
-  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
+  const { fieldType, fieldSize } = fldStyleObj
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 
   const rtlCurrencyFldCheck = () => {
@@ -66,38 +64,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
       }
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
-  }
-
-  const setMuptipleProperty = (propertyPaths, values) => {
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      propertyPaths.map((path, index) => {
-        assignNestedObj(drftStyle, path, values[index])
-      })
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPaths[0], values[0], { styles: getLatestState('styles') }))
-  }
-
-  const setBtnSize = (elementKey, value) => {
-    const btnSizeValues = {
-      'small-2': ['12px', '7px 10px'],
-      'small-1': ['14px', '9px 15px'],
-      medium: ['16px', '11px 20px'],
-      'large-1': ['18px', '12px 22px'],
-      'large-2': ['21px', '14px 24px'],
-    }
-
-    const propertyPaths = [
-      propertyPath(elementKey, 'font-size'),
-      propertyPath(elementKey, 'padding'),
-    ]
-    const values = btnSizeValues[value]
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fieldKey].fieldSize = value
-      propertyPaths.map((path, index) => {
-        assignNestedObj(drftStyle, path, values[index])
-      })
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Button Size', value, { styles: getLatestState('styles') }))
   }
 
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
@@ -203,27 +169,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const [borderRadVal, borderRadUnit] = getPropValue()
-  const [fldWidthVal, fldWidthUnit] = getPropValue('width')
-  const [fldHeightVal, fldHeightUnit] = getPropValue('height')
-
-  const positionHandle = (val, type) => {
-    let justifyContent = 'left'
-    if (val === 'center') justifyContent = 'center'
-    else if (val === 'flex-end') justifyContent = 'right'
-
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
-      drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Alignment', val, { styles: getLatestState('styles') }))
-  }
-
-  const flexDirectionHandle = (val, type) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'flex-direction', val, { styles: getLatestState('styles') }))
-  }
 
   const fldTypWiseAccentColorObjName = () => {
     let objName = ''
@@ -303,55 +248,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', rtlCurrencyFldCheck(), { styles: getLatestState('styles') }))
   }
 
-  const razorpayBtnThemeHandler = (e) => {
-    const themeValue = e.target.value
-    fieldData.btnTheme = themeValue
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      let btnBg
-      let border
-      let color
-      let btnBeforeBg
-      switch (themeValue) {
-        case 'dark':
-          btnBg = 'hsla(216, 85%, 18%, 100%)'
-          border = 'solid hsla(216, 85%, 18%, 100%)'
-          color = 'hsla(0, 0%, 100%, 100%)'
-          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
-          break
-
-        case 'light':
-          btnBg = 'hsla(0, 0%, 100%, 100%)'
-          border = 'solid hsla(0, 0%, 100%, 100%)'
-          color = 'hsla(224, 68%, 37%, 100%)'
-          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
-          break
-
-        case 'outline':
-          btnBg = 'hsla(216, 91%, 96%, 100%)'
-          border = 'solid hsla(216, 85%, 18%, 100%)'
-          color = 'hsla(216, 85%, 18%, 100%)'
-          btnBeforeBg = 'hsla(224, 68%, 37%, 100%)'
-          break
-
-        case 'brand':
-          btnBg = 'hsla(241, 100%, 50%, 100%)'
-          border = 'solid hsla(241, 100%, 50%, 100%)'
-          color = 'hsla(0, 0%, 100%, 100%)'
-          btnBeforeBg = 'hsla(241, 100%, 50%, 100%)'
-          break
-
-        default:
-          break
-      }
-      assignNestedObj(drft, propertyPath('razorpay-btn', 'background-color'), btnBg)
-      assignNestedObj(drft, propertyPath('razorpay-btn', 'border'), border)
-      assignNestedObj(drft, propertyPath('razorpay-btn-text', 'color'), color)
-      assignNestedObj(drft, propertyPath('razorpay-btn::before', 'background-color'), btnBeforeBg)
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Razorpay Theme', themeValue, { fields: getLatestState('fields'), styles: getLatestState('styles') }))
-  }
   return (
     <>
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
@@ -387,87 +283,11 @@ export default function FieldQuickTweaks({ fieldKey }) {
       )}
 
       {fieldType === 'button' && (
-        <>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Size</span>
-            <select
-              data-testid="btn-size-ctrl"
-              value={fieldSize}
-              onChange={e => setBtnSize('btn', e.target.value)}
-              className={css(sc.select)}
-            >
-              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
-            </select>
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Width</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                min={0}
-                max={100}
-                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWidthUnit, 'width')}
-                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWidthUnit, 'width')}
-                value={fldWidthVal || 0}
-                unit={fldWidthUnit || 'px'}
-                width="128px"
-                options={['px', 'em', 'rem', '%']}
-                dataTestId="btn-width"
-              />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Height</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                min={0}
-                max={100}
-                inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldHeightUnit, 'height')}
-                sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldHeightUnit, 'height')}
-                value={fldHeightVal || 0}
-                unit={fldHeightUnit || 'px'}
-                width="128px"
-                options={['px', 'em', 'rem', '%']}
-                dataTestId="btn-height"
-              />
-            </div>
-          </div>
-        </>
+        <ButtonQuickTweaks />
       )}
 
       {fieldType === 'title' && (
-        <>
-          <div className={css(style.main, ut.mt2)}>
-            <span className={css(style.label)}>Label Alignment</span>
-            <StyleSegmentControl
-              show={['icn']}
-              tipPlace="bottom"
-              className={css(style.segment)}
-              options={[
-                { icn: <TxtAlignLeftIcn size="17" />, label: 'flex-start', tip: 'Left' },
-                { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
-                { icn: <TxtAlignRightIcn size="17" />, label: 'flex-end', tip: 'Right' },
-              ]}
-              onChange={val => positionHandle(val, 'align-items')}
-              defaultActive={position}
-            />
-          </div>
-          <div className={css(style.main, ut.mt2)}>
-            <span className={css(style.label)}>Flex Direction</span>
-            <StyleSegmentControl
-              show={['icn']}
-              tipPlace="bottom"
-              className={css(style.segment)}
-              options={[
-                { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
-                { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
-                { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
-                { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
-              ]}
-              onChange={val => flexDirectionHandle(val, 'flex-direction')}
-              defaultActive={flex}
-            />
-          </div>
-        </>
+        <TitleFieldQuickTweaks />
       )}
 
       {(fieldType === 'currency' || fieldType === 'phone-number') && (
@@ -495,51 +315,15 @@ export default function FieldQuickTweaks({ fieldKey }) {
         </div>
       )}
       {(fieldType === 'paypal') && (
-        <div className={css(ut.flxcb, ut.mt2)}>
-          <span className={css(ut.fw500)}>Width</span>
-          <div className={css(ut.flxc)}>
-            <SizeControl
-              min={150}
-              max={750}
-              inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWidthUnit, 'width')}
-              sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWidthUnit, 'width')}
-              value={fldWidthVal || 0}
-              unit={fldWidthUnit || 'px'}
-              width="128px"
-              options={['px', 'em', 'rem', '%']}
-              dataTestId="paypal-btn-width"
-            />
-          </div>
-        </div>
+        <PaypalFieldQuickTweaks />
       )}
       {fieldType === 'razorpay' && (
-        <div className={css(ut.flxcb, ut.mt2)}>
-          <span className={css(ut.fw500)}>Button Theme</span>
-          <select
-            data-testid="razorpay-btn-theme"
-            onChange={razorpayBtnThemeHandler}
-            className={css(sc.select)}
-            value={fieldData.btnTheme}
-          >
-            <option value="dark">Razorpay Dark</option>
-            <option value="light">Razorpay Light</option>
-            <option value="outline">Razorpay Outline</option>
-            <option value="brand">Brand Color</option>
-          </select>
-        </div>
+        <RazorpayFieldQuickTweaks />
       )}
     </>
   )
 }
 
-const style = {
-  main: { flx: 'center-between' },
-  label: { fw: 500 },
-  segment: {
-    mr: 7,
-    mt: 4,
-  },
-}
 const sizes = {
   'small-2': 'Extra Small',
   'small-1': 'Small',
