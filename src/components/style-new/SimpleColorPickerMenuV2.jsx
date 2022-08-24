@@ -199,23 +199,23 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
 
           <Grow open={controller === 'Var'}>
             <div className={css(c.varClr)}>
-              <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
+              <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' && c.active)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
                 <ColorPreview bg={themeBgColor} className={css(ut.mr2)} />
                 <span>Background Color</span>
               </button>
-              <button className={css(c.clrItem, color === '--global-accent-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-accent-color')}>
+              <button className={css(c.clrItem, color === '--global-accent-color' && c.active)} type="button" onClick={() => setColorState('--global-accent-color')}>
                 <ColorPreview bg={themePrimaryColor} className={css(ut.mr2)} />
                 <span>Background Accent Color</span>
               </button>
-              <button className={css(c.clrItem, color === '--global-font-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-font-color')}>
+              <button className={css(c.clrItem, color === '--global-font-color' && c.active)} type="button" onClick={() => setColorState('--global-font-color')}>
                 <ColorPreview bg={themeFontColor} className={css(ut.mr2)} />
                 <span>Font Color</span>
               </button>
-              <button className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bdr-clr')}>
+              <button className={css(c.clrItem, color === '--global-fld-bdr-clr' && c.active)} type="button" onClick={() => setColorState('--global-fld-bdr-clr')}>
                 <ColorPreview bg={themeFldBdrClr} className={css(ut.mr2)} />
                 <span>Field Border Color</span>
               </button>
-              <button className={css(c.clrItem, color === '--global-fld-bg-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bg-color')}>
+              <button className={css(c.clrItem, color === '--global-fld-bg-color' && c.active)} type="button" onClick={() => setColorState('--global-fld-bg-color')}>
                 <ColorPreview bg={themeFldBgColor} className={css(ut.mr2)} />
                 <span>Field Background Color</span>
               </button>
