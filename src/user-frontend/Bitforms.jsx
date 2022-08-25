@@ -22,6 +22,34 @@ export default function Bitforms(props) {
     if (!props.editMode && props.gRecaptchaVersion === 'v3' && props.gRecaptchaSiteKey) {
       loadScript(`https://www.google.com/recaptcha/api.js?render=${props.gRecaptchaSiteKey}`, 'g-recaptcha-script')
     }
+    const form = document.getElementById(props.contentID)
+    if(form){
+      let currentNonce= form.querySelector('input[name="bitforms_token"]')
+      const uri = new URL(bitFormsFront.ajaxURL)
+      uri.searchParams.append('action', 'bitforms_nonce_expire_check')
+      const body = { nonce: currentNonce.value, formId : props.formID }
+      fetch(
+        uri,
+        {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json' },
+        },
+      )
+        .then(response => response.json())
+        .then(data=>{
+          if(data?.success !== undefined){
+            const {nonceValid, nonce} = data?.data
+            if(!nonceValid){
+                let currentNonce = form.querySelector('input[name="bitforms_token"]')
+                currentNonce.value = nonce
+            }
+          }
+        })
+        
+
+    }
+   
   }, [])
 
   const blk = (field) => {
