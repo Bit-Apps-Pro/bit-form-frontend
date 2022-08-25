@@ -4,6 +4,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function AutonamiAuthorization({ formID, autonamiConf, setAutonamiConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
@@ -41,6 +43,10 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
   return (
     <>
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      <TutorialLink
+        title={tutorialLinks.autonami.title}
+        youTubeLink={tutorialLinks.autonami.link}
+      />
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="name" value={autonamiConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 

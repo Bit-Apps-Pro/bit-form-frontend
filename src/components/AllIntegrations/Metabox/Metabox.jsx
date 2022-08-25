@@ -100,10 +100,10 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      {/* <TutorialLink
+      <TutorialLink
         title={tutorialLinks.metaBox.title}
         youTubeLink={tutorialLinks.metaBox.link}
-      /> */}
+      />
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
