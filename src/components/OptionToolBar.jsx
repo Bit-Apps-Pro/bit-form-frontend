@@ -231,8 +231,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             </Tip> */}
             <Tip msg="Custom Styling">
               <NavLink
-                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${({ isActive }) => (isActive ? 'active' : '')}`}
-                activeClassName="active"
+                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
                 to={`/form/builder/${formType}/${formID}/style`}
               >
                 <BrushIcn size="20" />

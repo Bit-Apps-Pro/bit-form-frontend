@@ -8,8 +8,9 @@ import ConfMsg from './ConfirmMessage/ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
 
-export default function ConfType({ formID }) {
+export default function ConfType({ formID, formType }) {
   // const { path } = useMatch()
+  const path = `/form/settings/${formType}/${formID}/confirmations`
   const removeIntegration = async (id, type = null) => {
     let action = 'bitforms_delete_integration'
     if (type && type === 'msg') {
@@ -29,18 +30,19 @@ export default function ConfType({ formID }) {
     }
     return status
   }
+  const activeClasses = (isActive) => (isActive ? 'btcd-f-c-t-o mr-4 sh-sm btcd-f-c-t-o-a' : 'btcd-f-c-t-o mr-4 sh-sm')
 
   return (
     <div className="mt-4" style={{ width: 900 }}>
       <h2>{__('Confirmations')}</h2>
       <div>
-        <NavLink to={`/form/settings/edit/${formID}/confirmations`} className={`btcd-f-c-t-o mr-4 sh-sm ${({ isActive }) => (isActive ? 'btcd-f-c-t-o-a' : '')}`}>
+        <NavLink to={path} className={({ isActive }) => activeClasses(isActive)}>
           {__('Success/Error Messages')}
         </NavLink>
-        <NavLink to={`/form/settings/edit/${formID}/confirmations/redirect-url`} className={`btcd-f-c-t-o mr-4 sh-sm ${({ isActive }) => (isActive ? 'btcd-f-c-t-o-a' : '')}`}>
+        <NavLink to={`${path}/redirect-url`} className={({ isActive }) => activeClasses(isActive)}>
           {__('Redirect Page')}
         </NavLink>
-        <NavLink to={`/form/settings/edit/${formID}/confirmations/webhooks`} className={`btcd-f-c-t-o mr-4 sh-sm ${({ isActive }) => (isActive ? 'btcd-f-c-t-o-a' : '')}`}>
+        <NavLink to={`${path}/webhooks`} className={({ isActive }) => activeClasses(isActive)}>
           {__('Web Hooks')}
         </NavLink>
       </div>

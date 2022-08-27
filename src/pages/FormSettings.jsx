@@ -87,7 +87,7 @@ function FormSettings({ setProModal }) {
           <Routes>
             <Route path="form-settings" element={<SingleFormSettings />} />
             <Route path="auth-settings" element={<WpAuth formID={formID} />} />
-            <Route path="confirmations/*" element={<ConfType formID={formID} />} />
+            <Route path="confirmations/*" element={<ConfType formType={formType} formID={formID} />} />
             <Route path="email-templates/*" element={<EmailTemplate formID={formID} />} />
             <Route path="double-optin" element={<DoubleOptin formID={formID} />} />
             <Route path="workflow" element={<Workflow setProModal={setProModal} formID={formID} />} />
