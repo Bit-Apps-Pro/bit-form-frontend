@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, checkMetaMappedFields, handleInput } from './GroundhoggCommonFunc'
+import { handleInput } from './GroundhoggCommonFunc'
 import GroundhoggIntegLayout from './GroundhoggIntegLayout'
 
 function EditGroundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [groundhoggConf, setGroundhoggConf] = useState({ ...integrations[id] })

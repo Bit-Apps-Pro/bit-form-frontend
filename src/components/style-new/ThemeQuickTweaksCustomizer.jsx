@@ -1,3 +1,4 @@
+/* eslint-disable es/no-string-prototype-replaceall */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
@@ -10,10 +11,12 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -168,6 +171,7 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select
+          defaultValue=""
           value={styles.fieldsSize}
           onChange={setSizes}
           className={css(sc.select)}

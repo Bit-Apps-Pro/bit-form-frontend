@@ -3,23 +3,21 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
+import loadable from '@loadable/component'
 import { lazy, Suspense, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import loadable from '@loadable/component'
 import logo from '../logo.svg'
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader'
-import { $bits } from './GlobalStates/GlobalStates'
 import './resource/icons/style.css'
 import './resource/sass/app.scss'
 import './resource/sass/global.scss'
 import ut from './styles/2.utilities'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from './Utils/i18nwrap'
 import BuilderLoader from './components/Loaders/BuilderLoader'
+import { __ } from './Utils/i18nwrap'
 
 const loaderStyle = { height: '90vh' }
 const AllForms = loadable(() => import('./pages/AllForms'), { fallback: <TableLoader /> })
@@ -29,7 +27,6 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 export default function App() {
   const { css } = useFela()
-  const bits = useRecoilValue($bits)
 
   useEffect(() => {
     removeUnwantedCSS()

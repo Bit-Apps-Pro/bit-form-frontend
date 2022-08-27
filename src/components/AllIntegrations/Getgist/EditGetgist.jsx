@@ -1,19 +1,18 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import GetgistIntegLayout from './GetgistIntegLayout'
-import { checkMappedFields, handleInput } from './GetgistCommonFunc'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { checkMappedFields, handleInput } from './GetgistCommonFunc'
+import GetgistIntegLayout from './GetgistIntegLayout'
 
 function EditGetgist({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
   const [getgistConf, setGetgistConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
-  const [snack, setSnackbar] = useState({ show: false })
 
   const saveConfig = () => {
     if (!checkMappedFields(getgistConf)) {

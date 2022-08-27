@@ -139,7 +139,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       if (firstErr.errorMsg) toast.error(firstErr.errorMsg)
       else toast.error(__('Please fix the errors'))
       if (firstErr.errorUrl) {
-        history.push(firstErr.errorUrl)
+        navigate(firstErr.errorUrl)
       }
       if (firstErr.fieldKey) {
         setSelectedFieldId(firstErr.fieldKey)

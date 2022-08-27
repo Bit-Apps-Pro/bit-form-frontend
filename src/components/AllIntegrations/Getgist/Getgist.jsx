@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useNavigate } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -13,7 +13,7 @@ import { checkMappedFields, handleInput } from './GetgistCommonFunc'
 import GetgistIntegLayout from './GetgistIntegLayout'
 
 function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })

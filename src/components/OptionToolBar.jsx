@@ -31,7 +31,6 @@ import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
-  const history = useNavigate()
   console.log('================', useParams())
   const { formType, formID, '*': rightBar } = useParams()
 
@@ -232,7 +231,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             </Tip> */}
             <Tip msg="Custom Styling">
               <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${({ isActive }) => (isActive ? 'active' : '')}`}
                 activeClassName="active"
                 to={`/form/builder/${formType}/${formID}/style`}
               >

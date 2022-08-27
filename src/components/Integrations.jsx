@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
+import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
@@ -70,9 +70,10 @@ function Integrations() {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
-  const { path, url } = useRouteMatch()
-  const allIntegURL = url
-  const history = useHistory()
+  // const { path, url } = useRouteMatch()
+  const location = useLocation()
+  const allIntegURL = location.pathname
+  const navigate = useNavigate()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
   const { isPro, proInfo } = bits
@@ -178,7 +179,7 @@ function Integrations() {
     }
     const { type } = inte
     closeIntegModal()
-    history.push(`${allIntegURL}/new/${type}`)
+    navigate(`${allIntegURL}/new/${type}`)
   }
 
   const closeIntegModal = () => {
@@ -235,94 +236,85 @@ function Integrations() {
         body={confMdl.body}
         action={confMdl.action}
       />
-      <Switch>
-        <Route exact path={path}>
-          <h2>{__('Integrations')}</h2>
-          <div className="flx flx-wrp">
-            <Modal
-              title={__('Available Integrations')}
-              show={showMdl}
-              setModal={closeIntegModal}
-              style={{ width: 1000 }}
-            >
-              <div className=" btcd-inte-wrp txt-center">
-                <input aria-label="Search Ingegration" type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
-                <div className="flx flx-center flx-wrp pb-3">
-                  {availableIntegs.map((inte, i) => (
-                    <div
-                      key={`inte-sm-${i + 2}`}
-                      onClick={() => !inte.disable && setNewInteg(inte)}
-                      onKeyPress={() => !inte.disable && setNewInteg(inte)}
-                      role="button"
-                      tabIndex="0"
-                      className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}
-                    >
-                      {(inte.pro && !isPro) && (
-                        <div className="pro-filter">
-                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium')}</a></span>
+      <Routes>
+        <Route
+          index
+          element={(
+            <>
+              <h2>{__('Integrations')}</h2>
+              <div className="flx flx-wrp">
+                <Modal
+                  title={__('Available Integrations')}
+                  show={showMdl}
+                  setModal={closeIntegModal}
+                  style={{ width: 1000 }}
+                >
+                  <div className=" btcd-inte-wrp txt-center">
+                    <input aria-label="Search Ingegration" type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
+                    <div className="flx flx-center flx-wrp pb-3">
+                      {availableIntegs.map((inte, i) => (
+                        <div
+                          key={`inte-sm-${i + 2}`}
+                          onClick={() => !inte.disable && setNewInteg(inte)}
+                          onKeyPress={() => !inte.disable && setNewInteg(inte)}
+                          role="button"
+                          tabIndex="0"
+                          className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}
+                        >
+                          {(inte.pro && !isPro) && (
+                            <div className="pro-filter">
+                              <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium')}</a></span>
+                            </div>
+                          )}
+                          <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
+                          <div className="txt-center">
+                            {inte.type}
+                          </div>
                         </div>
-                      )}
-                      <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
-                      <div className="txt-center">
-                        {inte.type}
-                      </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+                </Modal>
+
+                <div role="button" className="btcd-inte-card flx flx-center add-inte mr-4 mt-3" tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
+                  <div>+</div>
                 </div>
+
+                {integrations.map((inte, i) => (
+                  <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
+                    {getLogo(inte.type)}
+                    <div className="btcd-inte-atn txt-center">
+                      <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit')}'` }} type="button">
+                        <EditIcn size="15" />
+                      </Link>
+                      <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'` }} onClick={() => inteDelConf(i)} type="button">
+                        <TrashIcn />
+                      </button>
+                      <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone')}'` }} onClick={() => inteCloneConf(i)} type="button">
+                        <CopyIcn size="15" />
+                      </button>
+                      {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
+                        <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info')}'` }} type="button">
+                          <InfoIcn />
+                        </Link>
+                      )}
+                    </div>
+                    <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
+                      <div className="int-name">{inte.name}</div>
+                      <small className="txt-dp int-type">{inte.type}</small>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </Modal>
-
-            <div role="button" className="btcd-inte-card flx flx-center add-inte mr-4 mt-3" tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
-              <div>+</div>
-            </div>
-
-            {integrations.map((inte, i) => (
-              <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
-                {getLogo(inte.type)}
-                <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit')}'` }} type="button">
-                    <EditIcn size="15" />
-                  </Link>
-                  <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'` }} onClick={() => inteDelConf(i)} type="button">
-                    <TrashIcn />
-                  </button>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone')}'` }} onClick={() => inteCloneConf(i)} type="button">
-                    <CopyIcn size="15" />
-                  </button>
-                  {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
-                    <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info')}'` }} type="button">
-                      <InfoIcn />
-                    </Link>
-                  )}
-
-                </div>
-                <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
-                  <div className="int-name">{inte.name}</div>
-                  <small className="txt-dp int-type">{inte.type}</small>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Route>
-
-        <Route path={`${path}/new/:integUrlName`}>
-          <NewInteg allIntegURL={allIntegURL} />
-        </Route>
-
+            </>
+          )}
+        />
+        <Route path="new/:integUrlName" element={<NewInteg allIntegURL={allIntegURL} />} />
         {integrations?.length
-          && (
-            <Route exact path={`${path}/edit/:id`}>
-              <EditInteg allIntegURL={allIntegURL} />
-            </Route>
-          )}
+          && (<Route path="/edit/:id" element={<EditInteg allIntegURL={allIntegURL} />} />)}
         {integrations && integrations.length > 0
-          && (
-            <Route exact path={`${path}/info/:id`}>
-              <IntegInfo allIntegURL={allIntegURL} />
-            </Route>
-          )}
-      </Switch>
-
+          && (<Route path="/info/:id" element={<IntegInfo allIntegURL={allIntegURL} />} />)}
+      </Routes>
     </div>
   )
 }
