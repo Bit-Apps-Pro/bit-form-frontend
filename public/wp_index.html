@@ -9,6 +9,11 @@
     <p>Modern Form builder and database management system for Wordpress</p>
   </div>
 </div>
+<script>
+  const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
+  document.querySelector('#wpbody').style.backgroundColor = backgroundColor
+  document.querySelector('#wpcontent').style.paddingLeft = 0
+</script>
 <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"></script>
 
 <?php if(defined('BIT_DEV') && BIT_DEV){ ?>
