@@ -477,7 +477,6 @@ function FormDetails() {
             //   }
             // /> */}
 
-
           {/* <Route
               path="/settings/:formType/:formID"
               element={<FormSettings setProModal={setProModal} />}

@@ -14,7 +14,7 @@ const staticTem = [{ slug: 'Blank', img: '' }, { slug: 'Contact Form', img: '' }
 
 export default function FormTemplates({ setTempModal, setSnackbar }) {
   const newFormId = useRecoilValue($newFormId)
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const [modal, setModal] = useState(false)
   const { css } = useFela()
 

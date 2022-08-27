@@ -63,9 +63,9 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
               <Routes>
                 <Route path="fields-list" element={<FieldsList />} />
                 <Route path="field-settings/:fieldKey" element={<FieldSettings />} />
-                <Route path={`themes`} element={<ThemeGallary />} />
-                <Route path={`theme-customize/:element`} element={<ThemeCustomize />} />
-                <Route path={`field-theme-customize/:element/:fieldKey`} element={<FieldStyleCustomizeHOC />} />
+                <Route path="themes" element={<ThemeGallary />} />
+                <Route path="theme-customize/:element" element={<ThemeCustomize />} />
+                <Route path="field-theme-customize/:element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
 
                 {/* <Route exact path={`${pathname}/style`}>
                 <Link to={`/form/builder/${formType}/${formID}/style/bg`}>

@@ -11,12 +11,10 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import {
-  addToBuilderHistory,
+import { addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights
-} from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'

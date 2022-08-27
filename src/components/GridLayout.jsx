@@ -215,7 +215,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     // navigate.replace(`/form/builder/${formType}/${formID}/fields-list`)
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
 
-
     // add to history
     const event = `${generateFieldLblForHistory(fldData)} removed`
     const type = 'remove_fld'
