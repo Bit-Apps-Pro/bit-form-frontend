@@ -68,7 +68,7 @@ const setTitle = (component) => {
     'spacing-control': 'Label Spacing',
     'text-decoration': 'Text Decoration',
     'field-margin-control': 'Field Margin',
-    'theme-control': 'Theme Gallary',
+    'theme-control': 'Theme Gallery',
     'form-wrapper-control': 'Form Wrapper',
     'space-control': 'Margin & Padding',
     'size-control': 'Width & Height',
@@ -88,19 +88,18 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable } = draggableModal
   const location = useLocation()
   const [pos, setPos] = useState('')
-  const dragableRef = useRef(null)
+  const draggableRef = useRef(null)
   useEffect(() => {
     setPos({ ...position })
   }, [position])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => location?.listen(() => setDraggableModal({ show: false })), [location])
   useEffect(() => setDraggableModal({ show: false }), [location])
   if (!show) return <></>
 
   return (
     <Draggable
-      ref={dragableRef}
+      ref={draggableRef}
       bounds="parent"
       handle=".draggable-modal-handle"
       position={pos !== null ? position : pos}
