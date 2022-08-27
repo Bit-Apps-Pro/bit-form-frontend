@@ -52,12 +52,12 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
     setstep(2)
   }
   const note = `
-    <h4> Step of generating api key:</h4>
+    <h4> Step of generating  Access Token:</h4>
     <ul>
       <li>Login to your HubSpot account, click the <b>Settings</b> icon settings in the main navigation bar..</li>
-      <li>In the left sidebar menu, navigate to <b>Integrations > API key</b>.</li>
-      <li>If a key has never been generated for your account, click <b>Generate API key</b>.</li>
-      <li>If you've already generated an API key, click Show to display your key.</li>
+      <li>In the left sidebar menu, navigate to <b>Integrations > Private App</b>.</li>
+      <li>Give name and description and select all necessary scope.</li>
+      <li>Then create Access token.</li>
   </ul>
   `
 

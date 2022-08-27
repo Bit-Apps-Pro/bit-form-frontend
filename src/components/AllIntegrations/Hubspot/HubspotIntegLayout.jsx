@@ -78,7 +78,7 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
         dealFields,
         ticketFields,
       }
-      if (value !== 'contact-create') {
+      if (value === 'deal-create' || value === 'ticket-create') {
         getAllPipelines(tmp, setHubspotConf, setIsLoading)
       } else {
         setHubspotConf(tmp)
@@ -104,7 +104,7 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       </div>
       <br />
       <br />
-      {hubspotConf?.actionName !== 'contact-create' && (
+      {(hubspotConf?.actionName === 'deal-create' || hubspotConf.actionName === 'ticket-create' ) && (
         <>
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Pipeline:', 'bitform')}</b>
