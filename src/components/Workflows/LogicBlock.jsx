@@ -1,18 +1,19 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import TrashIcn from '../../Icons/TrashIcn'
 import { makeFieldsArrByLabel } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import conditionalLogicsList from '../../Utils/StaticData/ConditionalLogicsList'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
-import Button from '../Utilities/Button'
 import MtInput from '../Utilities/MtInput'
 import MtSelect from '../Utilities/MtSelect'
+import Button from '../Utilities/Button'
+import TrashIcn from '../../Icons/TrashIcn'
+import CloseIcn from '../../Icons/CloseIcn'
 
-function LogicBlock({ fieldVal,
+function LogicBlock({ logic, fieldVal,
   delLogic,
   lgcInd,
   subLgcInd,
@@ -22,9 +23,11 @@ function LogicBlock({ fieldVal,
   changeLogic,
   logicValue,
   changeValue,
+  changeSmartKey,
   changeFormField }) {
+  const { css } = useFela()
   const fields = useRecoilValue($fields)
-  const formFields = makeFieldsArrByLabel(fields, [], [])
+  const formFields = makeFieldsArrByLabel(fields, [])
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   let type = ''
@@ -55,7 +58,6 @@ function LogicBlock({ fieldVal,
 
     return options
   }
-  const customSmartTags = ['_bf_custom_date_format()', '_bf_user_meta_key()', '_bf_query_param()']
 
   const findFldTypeFromLogicsArr = (needleFieldTyp, logicsArr) => logicsArr.find(itm => {
     if (itm === needleFieldTyp) return true
@@ -71,13 +73,14 @@ function LogicBlock({ fieldVal,
     return nestedPropsValue === propValue
   })
 
-  const findTypeFromSmartTags = tagName => {
-    const tag = SmartTagField.find(itm => tagName === `\${${itm.name}}`)
-    return tag ? tag.type : ''
+  const findTagFromSmartTags = tagName => SmartTagField.find(itm => tagName === `\${${itm.name}}`)
+
+  if (!type) {
+    type = findTagFromSmartTags(fieldVal)?.type
   }
 
   const getLogicsBasedOnFieldType = needleFldType => {
-    const foundFldType = findTypeFromSmartTags(fieldVal) || needleFldType
+    const foundFldType = findTagFromSmartTags(fieldVal)?.type || needleFldType
     if (!foundFldType) return []
     const logicsArr = Object.entries(conditionalLogicsList)
     return logicsArr.reduce((acc, [key, data]) => {
@@ -90,72 +93,153 @@ function LogicBlock({ fieldVal,
     }, [])
   }
 
+  const getCustomSmartTagsLabel = tagName => {
+    // eslint-disable-next-line no-template-curly-in-string
+    if (tagName === '${_bf_custom_date_format()}') return __('Date Format')
+    // eslint-disable-next-line no-template-curly-in-string
+    if (tagName === '${_bf_user_meta_key()}') return __('Meta Key')
+    // eslint-disable-next-line no-template-curly-in-string
+    if (tagName === '${_bf_query_param()}') return __('Query Param')
+    return 'Smart Key'
+  }
+  const notNeededValField = ['null', 'not_null']
   return (
-    <div className="flx pos-rel btcd-logic-blk">
-      <span className="btcd-logic-chip mr-2">IF</span>
-      <MtSelect
-        label="Form Fields"
-        value={fieldVal || ''}
-        style={{ width: 720 }}
-        onChange={e => changeFormField(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
-      >
-        <option value="">{__('Select Form Field')}</option>
-        <optgroup label="Form Fields">
-          {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
-                && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
-        </optgroup>
-        <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-          {SmartTagField?.map(f => !customSmartTags.includes(f.name) && (
-            <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`} disabled={!isPro}>
-              {f.label}
-            </option>
-          ))}
-        </optgroup>
-      </MtSelect>
+    <div className={`${css(lgcStyle.lgcBlk)} btcd-logic-blk`}>
+      <div className={css(lgcStyle.processDgrm)}>
+        <div className="block-wrapper">
+          <div className="block-content">
+            <MtSelect
+              label="Form Fields"
+              value={fieldVal}
+              onChange={e => changeFormField(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+            >
+              <option value="">{__('Select Form Field')}</option>
+              {!!formFields.length && (
+                  <optgroup label="Form Fields">
+                    {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
+                        && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+                  </optgroup>
+              )}
+              <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                {SmartTagField?.map(({ name, label }) => (
+                  <option key={`ff-rm-${name}`} value={`\${${name}}`} disabled={!isPro}>
+                    {label}
+                  </option>
+                ))}
+              </optgroup>
+            </MtSelect>
+          </div>
+        </div>
 
-      <svg height="35" width="100" className="mt-1">
-        <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-      </svg>
+        {findTagFromSmartTags(fieldVal)?.custom && (
+          <div className="block-wrapper">
+            <div className="block-content">
+              <MtInput
+                label={getCustomSmartTagsLabel(fieldVal)}
+                type="text"
+                onChange={e => changeSmartKey(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+                value={logic.smartKey || ''}
+              />
+            </div>
+          </div>
+        )}
 
-      <MtSelect
-        label="Logic"
-        value={logicValue || ''}
-        onChange={e => changeLogic(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
-        className="w-5"
-      >
-        <option value="">{__('Select One')}</option>
-        {getLogicsBasedOnFieldType(fldType).map(({ key, lbl }) => (
-          <option key={key} value={key}>
-            {lbl}
-          </option>
-        ))}
-      </MtSelect>
+        <div className="block-wrapper">
+          <div className="block-content">
+            <MtSelect
+              label="Logic"
+              value={logicValue}
+              onChange={e => changeLogic(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+            >
+              <option value="">{__('Select One')}</option>
+              {getLogicsBasedOnFieldType(type).map(({ key, lbl }) => (
+                <option key={key} value={key}>
+                  {lbl}
+                </option>
+              ))}
+            </MtSelect>
+          </div>
+        </div>
 
-      <svg height="35" width="100" className="mt-1">
-        <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-      </svg>
+        {logicValue !== 'between' && logicValue !== 'not between' && !notNeededValField.includes(logicValue) && (
+          <div className="block-wrapper">
+            <div className="block-content">
+              {fldType.match(/select|check|radio/g)
+                ? (
+                  <MultiSelect
+                    className="msl-wrp-options btcd-paper-drpdwn"
+                    defaultValue={value || ''}
+                    onChange={e => changeValue(e, lgcInd, subLgcInd, subSubLgcInd)}
+                    options={getOptions()}
+                    customValue
+                    fldType={fldType}
+                  />
+                ) : (
+                  <MtInput
+                    label="Value"
+                    type={type}
+                    disabled={logicValue === 'null' || logicValue === 'not_null'}
+                    onChange={e => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+                    value={value || ''}
+                  />
+                )}
+            </div>
+          </div>
+        )}
 
-      {
-        fldType.match(/select|check|radio/g)
-          ? (
-            <MultiSelect
-              className="msl-wrp-options btcd-paper-drpdwn w-10"
-              defaultValue={value || ''}
-              onChange={e => changeValue(e, lgcInd, subLgcInd, subSubLgcInd)}
-              options={getOptions()}
-              customValue
-              fldType={fldType}
-            />
-          ) : (
-            <MtInput
-              label="Value"
-              type={type}
-              disabled={logicValue === 'null' || logicValue === 'not_null'}
-              onChange={e => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
-              value={value || ''}
-            />
-          )
-      }
+        {(logicValue === 'between' || logicValue === 'not between') && (
+          <div className="block-wrapper">
+            <div className="block-group">
+              <div className="block-wrapper">
+                <div className="block-content">
+                  {fldType.match(/select|check|radio/g)
+                    ? (
+                      <MultiSelect
+                        className="msl-wrp-options btcd-paper-drpdwn"
+                        defaultValue={value.min || ''}
+                        onChange={e => changeValue(e, lgcInd, subLgcInd, subSubLgcInd, 'min')}
+                        options={getOptions()}
+                        customValue
+                        fldType={fldType}
+                      />
+                    ) : (
+                      <MtInput
+                        label="Min Value"
+                        type={type}
+                        disabled={logicValue === 'null' || logicValue === 'not_null'}
+                        onChange={e => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd, 'min')}
+                        value={value.min || ''}
+                      />
+                    )}
+                </div>
+              </div>
+              <div className="block-wrapper">
+                <div className="block-content">
+                  {fldType.match(/select|check|radio/g)
+                    ? (
+                      <MultiSelect
+                        className="msl-wrp-options btcd-paper-drpdwn"
+                        defaultValue={value.max || ''}
+                        onChange={e => changeValue(e, lgcInd, subLgcInd, subSubLgcInd, 'max')}
+                        options={getOptions()}
+                        customValue
+                        fldType={fldType}
+                      />
+                    ) : (
+                      <MtInput
+                        label="Max Value"
+                        type={type}
+                        disabled={logicValue === 'null' || logicValue === 'not_null'}
+                        onChange={e => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd, 'max')}
+                        value={value.max || ''}
+                      />
+                    )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="btcd-li-side-btn">
         <Button
@@ -185,3 +269,170 @@ function LogicBlock({ fieldVal,
 }
 
 export default LogicBlock
+
+const lgcStyle = {
+  lgcBlk: {
+    pn: 'relative',
+    dy: 'flex',
+    cg: 15,
+    rg: 15,
+    my: 5,
+
+    ':hover': { bc: '#F0F0F0' },
+  },
+
+  lgcGrp: {
+    b: '0.5px solid #D5D5D5',
+    brs: 8,
+    p: 10,
+    ml: 20,
+  },
+
+  blkItm: { w: '100%' },
+
+  processDgrm: {
+    '--linethick': '1px',
+    '--linewidth': '1.5em',
+    '--line-color': '#b9c5ff',
+
+    flx: 'align-center',
+    w: '100%',
+    m: 0,
+    p: 0,
+    ls: 'none',
+    ta: 'center',
+
+    '& > .block-wrapper': { flex: '1 1 auto' },
+
+    /* node style */
+    '& .block-wrapper>.block-content': {
+      cr: '#666',
+      brs: 10,
+    },
+
+    /* connecting lines between nodes */
+    '& .block-wrapper::before, & .block-wrapper::after, & .block-group::before, & .block-group::after, & .block-content::before, & .block-content::after': {
+      bse: 'solid',
+      bcr: 'var(--line-color)',
+    },
+
+    '& .block-wrapper .block-group .block-wrapper:first-child .block-content::before, &  .block-wrapper .block-group .block-wrapper:first-child::before': { btlr: 10 },
+
+    '&  .block-wrapper .block-group .block-wrapper:first-child .block-content::after, & .block-wrapper .block-group .block-wrapper:first-child::after': { btrr: 10 },
+
+    '&  .block-wrapper .block-group .block-wrapper:last-child .block-content::before, &  .block-wrapper .block-group .block-wrapper:last-child::before': { bblr: 10 },
+
+    '&  .block-wrapper .block-group .block-wrapper:last-child .block-content::after, &  .block-wrapper .block-group .block-wrapper:last-child::after': { bbrr: 10 },
+
+    '& ol, & .block-group, & .block-wrapper': {
+      ls: 'none',
+      ta: 'center',
+    },
+
+    '& .block-wrapper': { pn: 'relative', mb: 0 },
+
+    '& > .block-wrapper, & ol > .block-wrapper, & .block-group > .block-wrapper': { p: '4px 0' },
+
+    '&  .block-group': { pn: 'relative', pl: 'var(--linewidth)' },
+
+    '& .block-group::before, &  .block-group::after': {
+      pn: 'absolute',
+      ct: '""',
+      tp: '50%',
+      w: 'var(--linewidth)',
+      dy: 'block',
+      bwh: 'var(--linethick) 0 0',
+    },
+
+    '& .block-group::before': { lt: 0 },
+
+    '&  .block-group::after': { rt: 0 },
+
+    '&  .block-group>.block-wrapper::after, &  .block-group>.block-wrapper::before': {
+      pn: 'absolute',
+      ct: '""',
+      tp: 0,
+      bm: 0,
+      w: 'var(--linewidth)',
+      h: '100%',
+      dy: 'block',
+    },
+
+    '&  .block-group>.block-wrapper::before': {
+      lt: 0,
+      bwh: '0 0 0 var(--linethick)',
+    },
+
+    '&  .block-group>.block-wrapper::after': {
+      rt: 0,
+      bwh: '0 var(--linethick) 0 0',
+    },
+
+    /* correct length and pn of dashes for first and last .block-wrapper-item in .block-group */
+    '&  .block-group>.block-wrapper:first-child::before, &  .block-group>.block-wrapper:first-child::after': {
+      tp: '50%',
+      bm: 'auto',
+      h: '50%',
+    },
+
+    '&  .block-group>.block-wrapper:last-child::before, &  .block-group>.block-wrapper:last-child::after': {
+      tp: 0,
+      bm: 'auto',
+      h: '50%',
+    },
+
+    '&  .block-group>.block-wrapper:first-child:last-child::before, &  .block-group>.block-wrapper:first-child:last-child::after': {
+      tp: 0,
+      bm: 'auto',
+      h: '50%',
+    },
+
+    '&  .block-wrapper>.block-content': {
+      pn: 'relative',
+      ml: 'var(--linewidth)',
+    },
+
+    '& >.block-wrapper:first-child>.block-content': { ml: 0 },
+
+    '&  .block-wrapper:not(:last-child) .block-wrapper>.block-content': { mr: 'var(--linewidth)' },
+
+    '&  .block-wrapper>.block-content::before, &  .block-wrapper>.block-content::after': {
+      ct: '""',
+      tp: '50%',
+      w: 'var(--linewidth)',
+      pn: 'absolute',
+      bwh: 'var(--linethick) 0 0',
+      h: '50%',
+    },
+
+    '&  .block-wrapper>.block-content::after': {
+      rt: 'calc(0em - var(--linewidth) + 2px)',
+      mr: 'calc(0px - var(--linethick))',
+    },
+
+    '&  .block-wrapper>.block-content::before': {
+      lt: 'calc(0em - var(--linewidth) + 2px)',
+      ml: 'calc(0px - var(--linethick))',
+    },
+
+    '&  .block-wrapper:last-child>.block-content::after, & .block-wrapper:last-child>.block-content::before': {
+      tp: 0,
+      bwh: '0 0 var(--linethick)',
+    },
+
+    '& >.block-wrapper:first-child>.block-content::before, & >.block-wrapper:first-child>.block-group::before, & >.block-wrapper:first-child>.block-group>.block-wrapper::before, & >.block-wrapper:first-child>.block-group>.block-wrapper>.block-content:first-child::before, & >.block-wrapper:first-child>.block-group>.block-wrapper>ol>.block-wrapper:first-child>.block-content::before, & >.block-wrapper:last-child>.block-content::after, & >.block-wrapper:last-child>.block-group::after': { b: 0 },
+
+    '& >.block-wrapper>.block-content::after,  &  ol>.block-wrapper>.block-content::after, & >.block-wrapper>.block-group::after,  &  ol>.block-wrapper>.block-group::after': { dy: 'none' },
+
+    '& >.block-wrapper>.block-content, &  ol>.block-wrapper>.block-content': { mr: 0 },
+
+    '& >.block-wrapper>.block-group,  &  ol>.block-wrapper>.block-group': { pr: 0 },
+
+    '& >.block-wrapper:last-child>.block-content::after,  &  ol>.block-wrapper:last-child>.block-content::after,  & >.block-wrapper:last-child>.block-group::after,  &  ol>.block-wrapper:last-child>.block-group::after': { dy: 'block' },
+
+    '& >.block-wrapper:last-child>.block-content, & ol>.block-wrapper:last-child>.block-content': { mr: 0 },
+
+    '&  .block-wrapper:last-child>.block-group::after,  &  .block-wrapper:last-child>.block-group>.block-wrapper::after,  &  .block-wrapper:last-child>.block-group>.block-wrapper>.block-content::after': { dy: 'none' },
+  },
+
+}

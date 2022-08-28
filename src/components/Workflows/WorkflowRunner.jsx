@@ -22,17 +22,18 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
-  const changeActionType = typ => {
+  const changeActionEffect = typ => {
     const tmpWorkflows = produce(workflows, draft => {
       if (typ === 'onsubmit') {
-        draft[lgcGrpInd].conditions.forEach(cond => {
-          const len = cond.actions.fields.length
+        draft[lgcGrpInd].conditions.forEach(draftCond => {
+          const len = draftCond.actions.fields.length
           for (let i = 0; i < len; i += 1) {
-            cond.actions.fields[i].action = 'value'
+            draftCond.actions.fields[i].action = 'value'
           }
         })
-      } else if (typ === 'onvalidate') {
+      } else if (typ === 'onvalidate' || typ === 'oninput') {
         draft[lgcGrpInd].action_behaviour = 'cond'
+        draft[lgcGrpInd].conditions[0].cond_type = 'if'
       }
       draft[lgcGrpInd].action_type = typ
     })
@@ -97,28 +98,28 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
           <div className="ml-2">
             <CheckBox
               radio
-              onChange={e => changeActionType(e.target.value, lgcGrpInd)}
+              onChange={e => changeActionEffect(e.target.value)}
               title={<small className="txt-dp">{__('On Form Load')}</small>}
               checked={lgcGrp.action_type === 'onload'}
               value="onload"
             />
             <CheckBox
               radio
-              onChange={e => changeActionType(e.target.value, lgcGrpInd)}
+              onChange={e => changeActionEffect(e.target.value)}
               title={<small className="txt-dp">{__('On Field Input')}</small>}
               checked={lgcGrp.action_type === 'oninput'}
               value="oninput"
             />
             <CheckBox
               radio
-              onChange={e => changeActionType(e.target.value, lgcGrpInd)}
+              onChange={e => changeActionEffect(e.target.value)}
               title={<small className="txt-dp">{__('On Form Validate')}</small>}
               checked={lgcGrp.action_type === 'onvalidate'}
               value="onvalidate"
             />
             <CheckBox
               radio
-              onChange={e => changeActionType(e.target.value, lgcGrpInd)}
+              onChange={e => changeActionEffect(e.target.value)}
               title={<small className="txt-dp">{__('On Form Submit')}</small>}
               checked={lgcGrp.action_type === 'onsubmit'}
               value="onsubmit"
