@@ -43,6 +43,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const selectedFldId = useRecoilValue($selectedFieldId)
   const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
   const navigate = useNavigate()
+  const path = `/form/builder/${formType}/${formID}`
 
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
@@ -50,9 +51,9 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       return { ...prvFlags, styleMode: true, inspectMode: false }
     })
     if (selectedFldId) {
-      navigate(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${selectedFldId}`, { replace: true })
+      navigate(`${path}/field-theme-customize/quick-tweaks/${selectedFldId}`, { replace: true })
     } else {
-      navigate(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`, { replace: true })
+      navigate(`${path}/theme-customize/quick-tweaks`, { replace: true })
     }
     removeUnuseStyles()
   }
@@ -63,18 +64,18 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       return { ...prvFlags, styleMode: false, inspectMode: false }
     })
     if (selectedFldId) {
-      navigate(`/form/builder/${formType}/${formID}/field-settings/${selectedFldId}`, { replace: true })
+      navigate(`${path}/field-settings/${selectedFldId}`, { replace: true })
     } else {
-      navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
+      navigate(`${path}/fields-list`, { replace: true })
     }
     removeUnuseStyles()
   }
 
   const handleRightPanel = (currentActive) => {
     if (currentActive === 'fld-settings') {
-      navigate(`/form/builder/${formType}/${formID}/fields-list`)
+      navigate(`${path}/fields-list`)
     } else if (currentActive === 'theme-customize') {
-      navigate(`/form/builder/${formType}/${formID}/themes`)
+      navigate(`${path}/themes`)
     }
     removeUnuseStyles()
   }
