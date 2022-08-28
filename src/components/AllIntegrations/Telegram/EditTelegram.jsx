@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -9,7 +9,7 @@ import { handleInput } from './TelegramCommonFunc'
 import TelegramIntegLayout from './TelegramIntegLayout'
 
 function EditTelegram({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [telegramConf, setTelegramConf] = useState({ ...integrations[id] })
@@ -18,14 +18,19 @@ function EditTelegram({ formFields, setIntegration, integrations, allIntegURL })
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, telegramConf, setTelegramConf)} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-7"
+          onChange={e => handleInput(e, telegramConf, setTelegramConf)}
+          name="name"
+          value={telegramConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <br />
-
       <TelegramIntegLayout
         formID={formID}
         formFields={formFields}

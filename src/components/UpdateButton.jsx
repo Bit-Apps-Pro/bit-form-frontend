@@ -3,7 +3,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $additionalSettings,
   $breakpointSize,
@@ -43,7 +43,7 @@ import LoaderSm from './Loaders/LoaderSm'
 import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { formType, formID } = useParams()
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
@@ -137,7 +137,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       if (firstErr.errorMsg) toast.error(firstErr.errorMsg)
       else toast.error(__('Please fix the errors'))
       if (firstErr.errorUrl) {
-        history.push(firstErr.errorUrl)
+        navigate(firstErr.errorUrl)
       }
       if (firstErr.fieldKey) {
         setSelectedFieldId(firstErr.fieldKey)
@@ -295,7 +295,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             setSavedFormId(data.id)
             setButtonText('Update')
             // TODO : keep current route but replace form type and id
-            history.replace(`/form/builder/edit/${data.id}/fields-list`)
+            navigate(`/form/builder/edit/${data.id}/fields-list`, { replace: true })
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))

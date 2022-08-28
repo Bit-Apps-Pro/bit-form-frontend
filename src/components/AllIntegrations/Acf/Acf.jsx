@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -15,7 +15,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
   const [users, setUsers] = useState([])
   const [snack, setSnackbar] = useState({ show: false })
-  const history = useHistory()
+  const history = useNavigate()
   const [acfFields, setAcfFields] = useState([])
   const [acfFileFields, setAcfFileFields] = useState([])
   const { css } = useFela()
@@ -113,7 +113,12 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+        <select
+          name="post_type"
+          defaultValue="0"
+          onChange={(e) => getCustomFields(e.target.name, e.target.value)}
+          className="btcd-paper-inp w-5 mt-1"
+        >
           <option disabled selected>Select Post Type</option>
           {postTypes.map((postType, key) => (
             <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
@@ -131,7 +136,12 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </Cooltip>
       </div>
-      <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+      <select
+        name="post_status"
+        defaultValue="0"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-2"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
@@ -150,7 +160,12 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+        <select
+          name="post_author"
+          defaultValue="0"
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>{__('Select Author')}</option>
           <option value="logged_in_user">Logged In User</option>
           {users.map((user, key) => (
@@ -163,7 +178,12 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         <b>{__('Comment Status')}</b>
 
       </div>
-      <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+      <select
+        name="comment_status"
+        defaultValue="0"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-2"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>

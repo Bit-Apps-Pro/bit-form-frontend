@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
@@ -14,7 +14,7 @@ import { handleInput } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
 
 function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { css } = useFela()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)

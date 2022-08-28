@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -12,7 +10,7 @@ import { checkMappedFields, handleInput } from './ElasticEmailCommonFunc'
 import ElasticEmailIntegLayout from './ElasticEmailIntegLayout'
 
 function EditElasticEmail({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [elasticEmailConf, setElasticEmailConf] = useState({ ...integrations[id] })

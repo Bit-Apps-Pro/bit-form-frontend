@@ -3,33 +3,30 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
+import loadable from '@loadable/component'
 import { lazy, Suspense, useEffect } from 'react'
 import { useFela } from 'react-fela'
-import toast, { Toaster } from 'react-hot-toast'
-import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { Toaster } from 'react-hot-toast'
+import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
 import logo from '../logo.svg'
 import Loader from './components/Loaders/Loader'
 import TableLoader from './components/Loaders/TableLoader'
-import { $bits } from './GlobalStates/GlobalStates'
 import './resource/icons/style.css'
 import './resource/sass/app.scss'
 import './resource/sass/global.scss'
 import ut from './styles/2.utilities'
-import { compareBetweenVersions } from './Utils/Helpers'
 // eslint-disable-next-line import/no-extraneous-dependencies
+import BuilderLoader from './components/Loaders/BuilderLoader'
 import { __ } from './Utils/i18nwrap'
 
-const AllForms = lazy(() => import('./pages/AllForms'))
-const AppSettings = lazy(() => import('./pages/AppSettings'))
-const FormDetails = lazy(() => import('./pages/FormDetails'))
-const FormEntries = lazy(() => import('./pages/FormEntries'))
+const loaderStyle = { height: '90vh' }
+const AllForms = loadable(() => import('./pages/AllForms'), { fallback: <TableLoader /> })
+const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
+const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <BuilderLoader /> })
 const Error404 = lazy(() => import('./pages/Error404'))
 
 export default function App() {
-  const loaderStyle = { height: '90vh' }
   const { css } = useFela()
-  const bits = useRecoilValue($bits)
 
   useEffect(() => {
     removeUnwantedCSS()
@@ -55,7 +52,8 @@ export default function App() {
           },
         }}
       />
-      <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
+      <HashRouter>
+        {/* <Router basename={typeof bits !== 'undefined' ? bits.baseURL + '/' : '/'}> */}
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
@@ -67,17 +65,17 @@ export default function App() {
               </div>
               <nav className="top-nav ml-2">
                 <NavLink
-                  exact
                   to="/"
-                  activeClassName="app-link-active"
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                 >
                   {__('My Forms')}
                 </NavLink>
 
                 <NavLink
-                  to="/app-settings/recaptcha"
-                  activeClassName="app-link-active"
-                  isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
+                  to="/app-settings"
+                  // to="/app-settings"
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
                   {__('App Settings')}
                 </NavLink>
@@ -86,34 +84,41 @@ export default function App() {
           </div>
 
           <div className="route-wrp">
-            <Switch>
-              <Route exact path="/">
-                <Suspense fallback={<TableLoader />}>
-                  <AllForms />
-                </Suspense>
-              </Route>
-              <Route path="/form/:page/:formType/:formID?/:option?">
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <FormDetails />
-                </Suspense>
-              </Route>
-              <Route path="/formEntries/:formID">
-                <Suspense fallback={<TableLoader />}>
-                  <FormEntries />
-                </Suspense>
-              </Route>
-              <Route path="/app-settings">
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <AppSettings />
-                </Suspense>
-              </Route>
-              <Route path="*">
-                <Error404 />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/" element={<AllForms />} />
+              <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
+              <Route path="/app-settings/*" element={<AppSettings />} />
+              <Route path="*" element={<Error404 />} />
+              {/* <Route
+                path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/form/:page/:formType/:formID/:rightBar/:element"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/form/:page/:formType/:formID/:rightBar"
+                element={(
+                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                    <FormDetails />
+                  </Suspense>
+                )}
+              /> */}
+
+            </Routes>
           </div>
         </div>
-      </Router>
+        {/* </Router> */}
+      </HashRouter>
     </Suspense>
   )
 }

@@ -239,7 +239,7 @@ function SimpleColorsPickerMenu({ stateObjName,
           <Grow open={controller === 'Var'}>
             <div className={css(c.varClr)}>
               <button
-                className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`}
+                className={`${css(c.clrItem)} ${css(color === '--global-bg-color' && c.active)}`}
                 type="button"
                 onClick={() => setColorState('--global-bg-color')}
                 data-testid={`${id}-g-bg-c`}
@@ -249,7 +249,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               </button>
 
               <button
-                className={css(c.clrItem, color === '--global-accent-color' ? c.active : null)}
+                className={css(c.clrItem, color === '--global-accent-color' && c.active)}
                 type="button"
                 onClick={() => setColorState('--global-accent-color')}
                 data-testid={`${id}-g-a-c`}
@@ -259,7 +259,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               </button>
 
               <button
-                className={css(c.clrItem, color === '--global-font-color' ? c.active : null)}
+                className={css(c.clrItem, color === '--global-font-color' && c.active)}
                 type="button"
                 onClick={() => setColorState('--global-font-color')}
                 data-testid={`${id}-g-f-c`}
@@ -269,7 +269,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               </button>
 
               <button
-                className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)}
+                className={css(c.clrItem, color === '--global-fld-bdr-clr' && c.active)}
                 type="button"
                 onClick={() => setColorState('--global-fld-bdr-clr')}
                 data-testid={`${id}-g-f-b`}
@@ -279,7 +279,7 @@ function SimpleColorsPickerMenu({ stateObjName,
               </button>
 
               <button
-                className={css(c.clrItem, color === '--global-fld-bg-color' ? c.active : null)}
+                className={css(c.clrItem, color === '--global-fld-bg-color' && c.active)}
                 type="button"
                 onClick={() => setColorState('--global-fld-bg-color')}
                 data-testid={`${id}-g-f-bg-c`}
