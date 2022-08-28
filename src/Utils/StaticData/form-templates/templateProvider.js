@@ -92,6 +92,37 @@ function defaultConfirmations(formID) {
   }
 }
 
+export const defaultConds = {
+  cond_type: 'if',
+  logics: [
+    {
+      field: '',
+      logic: '',
+      val: '',
+    },
+    'or',
+    {
+      field: '',
+      logic: '',
+      val: '',
+    },
+  ],
+  actions: {
+    fields: [
+      {
+        field: '',
+        action: 'value',
+      },
+    ],
+    success: [
+      {
+        type: 'successMsg',
+        details: { id: '{"index":0}' },
+      },
+    ],
+  },
+}
+
 function defaultConditions() {
   return ([
     {
@@ -99,38 +130,7 @@ function defaultConditions() {
       action_type: 'onsubmit',
       action_run: 'create_edit',
       action_behaviour: 'always',
-      conditions: [
-        {
-          cond_type: 'if',
-          logics: [
-            {
-              field: '',
-              logic: '',
-              val: '',
-            },
-            'or',
-            {
-              field: '',
-              logic: '',
-              val: '',
-            },
-          ],
-          actions: {
-            fields: [
-              {
-                field: '',
-                action: 'value',
-              },
-            ],
-            success: [
-              {
-                type: 'successMsg',
-                details: { id: '{"index":0}' },
-              },
-            ],
-          },
-        },
-      ],
+      conditions: [defaultConds],
     },
   ])
 }
