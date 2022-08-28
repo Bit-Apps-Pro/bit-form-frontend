@@ -79,7 +79,7 @@ const accordionStyle = {
     p: '0 13px',
   },
 
-  titleIcn: { ml: 5, flx: 'center' },
+  titleIcn: { ml: 8, flx: 'center' },
 
   content: {
     my: 5,
