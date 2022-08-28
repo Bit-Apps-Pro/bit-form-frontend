@@ -31,7 +31,7 @@ export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGr
     <div className={css(ut.mt2)}>
       <div className={css(actionStyle.title)}><b className="txt-dp">Field Actions</b></div>
       {fldActions.map((action, actionInd) => (
-        <div key={`atn-${actionInd + 22}`} className={`mt-2 ${condGrp.cond_type === 'always' && 'ml-2'}`}>
+        <div key={`atn-${actionInd + 22}`} className={`mt-2 ${condGrp.cond_type === 'always' && 'ml-4'}`}>
           <ActionBlock
             lgcGrp={lgcGrp}
             lgcGrpInd={lgcGrpInd}
@@ -46,7 +46,7 @@ export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGr
         <Button
           onClick={() => addAction()}
           icn
-          className={`blue sh-sm mt-2 ${condGrp.cond_type === 'always' && 'ml-2'}`}
+          className={`blue sh-sm mt-2 ${condGrp.cond_type === 'always' && 'ml-4'}`}
         >
           <CloseIcn size="14" className="icn-rotate-45" />
         </Button>

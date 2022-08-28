@@ -72,7 +72,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
         <>
           <div className={css(ut.mt3, ut.mb1)}><b className="txt-dp">Additional Actions</b></div>
-          <div className={condGrp.cond_type === 'always' && 'ml-2'}>
+          <div className={condGrp.cond_type === 'always' && 'ml-4'}>
             {lgcGrp.action_run !== 'delete' && (
               <SuccessMsgWorkflowAction
                 lgcGrpInd={lgcGrpInd}
@@ -130,7 +130,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       )}
       {lgcGrp.action_run === 'delete' && (
         <CheckBox
-          className={css({ mt: 5, ml: condGrp.cond_type === 'always' ? 2 : -8 })}
+          className={css({ mt: 5, ml: condGrp.cond_type === 'always' ? 12 : -8 })}
           onChange={e => preventDelete(e.target.checked)}
           checked={workflows[lgcGrpInd].avoid_delete}
           title={<small className="txt-dp">Prevent Delete</small>}
