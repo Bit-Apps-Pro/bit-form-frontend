@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useNavigate } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -13,7 +14,7 @@ import { checkMappedFields, handleInput } from './MailerLiteCommonFunc'
 import MailerLiteIntegLayout from './MailerLiteIntegLayout'
 
 function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -38,7 +39,7 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
     resp.then(res => {
       if (res.success) {
         toast.success(res.data?.msg)
-        history.push(allIntegURL)
+        history(allIntegURL)
       } else {
         toast.error(res.data || res)
       }

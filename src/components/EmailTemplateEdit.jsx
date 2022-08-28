@@ -2,7 +2,7 @@
 
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom'
+import { NavLink, Redirect, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
@@ -15,7 +15,7 @@ import TinyMCE from './Utilities/TinyMCE'
 function EmailTemplateEdit() {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
   const { formType, formID, id } = useParams()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [mailTemp, setMailTem] = useRecoilState($mailTemplates)
   const formFields = useRecoilValue($fieldsArr)
   const { css } = useFela()
@@ -52,7 +52,7 @@ function EmailTemplateEdit() {
       draft.push({ updateTem: 1 })
     })
     setMailTem(newMailTem)
-    history.push(`/form/settings/${formType}/${formID}/email-templates`)
+    navigate(`/form/settings/${formType}/${formID}/email-templates`)
   }
 
   return (

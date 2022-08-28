@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable max-len */
+import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import SendFoxAuthorization from './SendFoxAuthorization'
-import { handleInput, checkMappedFields, checkMappedListFields, checkMappedSubscribeFields, isDisabled } from './SendFoxCommonFunc'
+import { handleInput, isDisabled } from './SendFoxCommonFunc'
 import SendFoxIntegLayout from './SendFoxIntegLayout'
 
 function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)

@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -11,8 +10,8 @@ import { checkMappedFields, handleInput } from './HubspotCommonFunc'
 import HubspotIntegLayout from './HubspotIntegLayout'
 
 function EditHubspot({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
-  const { id, formID } = useParams()
+  const history = useNavigate()
+  const { id } = useParams()
   const [hubspotConf, setHubspotConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
