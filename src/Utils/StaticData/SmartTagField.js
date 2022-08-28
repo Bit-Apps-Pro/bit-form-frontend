@@ -3,7 +3,7 @@ export const SmartTagField = [
   {
     name: '_bf_current_time',
     label: 'Current Date Time',
-    type: 'datetime',
+    type: 'datetime-local',
   },
   {
     name: '_bf_admin_email',
@@ -178,15 +178,18 @@ export const SmartTagField = [
     name: '_bf_query_param()',
     label: 'URL Query Parameter',
     type: 'text',
+    custom: true,
   },
   {
     name: '_bf_user_meta_key()',
     label: 'User Meta Key',
     type: 'text',
+    custom: true,
   },
   {
     name: '_bf_custom_date_format()',
     label: 'Custom Date Format',
     type: 'date',
+    custom: true,
   },
 ]
