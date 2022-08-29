@@ -2,6 +2,9 @@ import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }) {
+  if (breakpoint === 'md' && colorScheme === 'dark') {
+    return { [`.${fk}-fld`]: { color: 'red !important' } }
+  }
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),

@@ -15,10 +15,12 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'

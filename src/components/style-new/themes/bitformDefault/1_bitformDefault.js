@@ -169,7 +169,7 @@ const lgLightThemeVars = {
   '--req-smbl-lt': '', // Required Symbol Left Value
   '--req-smbl-rt': '', // Required Symbol Right Value
 
-  '--sub-titl-m': '', // subtitle margin
+  '--sub-titl-m': '2px 0px 0px 0px', // subtitle margin
   '--sub-titl-p': '3px 0', // subtitle padding
   '--sub-titl-al': '', // subtitle align
   '--sub-titl-fs': '12px', // subtitle font size
@@ -179,7 +179,7 @@ const lgLightThemeVars = {
   '--sub-titl-font-w': 500, // sub title font weight
   '--sub-titl-font-style': '', // subtitle font style
 
-  '--hlp-txt-m': '', // helper text margin
+  '--hlp-txt-m': '2px 0px 0px 0px', // helper text margin
   '--hlp-txt-p': '3px 0', // hepler text padding
   '--hlp-txt-fs': '12px', // hepler text font size
   '--hlp-txt-al': '', // helper text align
