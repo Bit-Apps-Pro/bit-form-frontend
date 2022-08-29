@@ -363,7 +363,6 @@ export const styleClasses = {
   lbl: ['lbl', 'lbl-wrp'],
   lblPreIcn: ['lbl-pre-i'],
   lblSufIcn: ['lbl-suf-i'],
-  reqSmbl: ['req-smbl'],
   subTitl: ['sub-titl'],
   subTlePreIcn: ['sub-titl-pre-i'],
   subTleSufIcn: ['sub-titl-suf-i'],
@@ -391,7 +390,6 @@ export const styleClasses = {
   err: ['err-msg'],
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
-  reqSmbl: ['req-smbl'],
 }
 
 export const iconElementLabel = {
@@ -491,11 +489,20 @@ const breakpointAndColorScheme = {
   smDarkStyles: { breakpoint: 'sm', colorScheme: 'dark' },
 }
 
+const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle }) => {
+  styleClasses[element].forEach(cls => {
+    const clsNam = `.${fk}-${cls}`
+    const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
+    const value = fieldStyle[clsNam]
+    assignNestedObj(drftAllStyles, path, value)
+  })
+}
+
 export const addDefaultStyleClasses = (fk, element) => {
   const allStyles = getRecoil($allStyles)
   const allNewStyles = produce(allStyles, drftAllStyles => {
-    Object.keys(allStyles).forEach(p => {
-      const fldTyp = allStyles[p]?.fields?.[fk]?.fieldType
+    Object.keys(allStyles).forEach(brkPntColorSchema => {
+      const fldTyp = allStyles[brkPntColorSchema]?.fields?.[fk]?.fieldType
       if (!fldTyp) return
       switch (fldTyp) {
         case 'text':
@@ -511,154 +518,94 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'week':
         case 'color':
         case 'textarea':
-          const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in textStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = textStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: textStyleBitFormDefault })
           }
           break
         case 'title':
-          const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in titleStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = titleStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: titleStyleBitFormDefault })
           }
           break
         case 'divider':
-          const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in dividerStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = dividerStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dividerStyleBitFormDefault })
           }
           break
         case 'image':
-          const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in imageStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = imageStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: imageStyleBitFormDefault })
           }
           break
         case 'button':
-          const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-fld-wrp`] in buttonStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = buttonStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: buttonStyleBitFormDefault })
           }
           break
         case 'check':
         case 'radio':
-          const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in checkBoxStyleBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: checkBoxStyleBitFormDefault })
           }
           break
         case 'advanced-file-up':
-          const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in advanceFileUpBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = advanceFileUpBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: advanceFileUpBitFormDefault })
           }
           break
         case 'html':
-          const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in htmlBitFormDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = htmlBitFormDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: htmlBitFormDefault })
           }
           break
         case 'currency':
-          const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, ...breakpointAndColorScheme[p] })
+          const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in currencyStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = currencyStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: currencyStyle1BitformDefault })
           }
           break
         case 'country':
-          const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in countryStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = countryStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: countryStyle1BitformDefault })
           }
           break
         case 'file-up':
-          const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in fileUploadStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = fileUploadStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
           }
           break
         case 'recaptcha':
-          const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in recaptchaStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = recaptchaStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: recaptchaStyle1BitformDefault })
           }
           break
         case 'html-select':
-          const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in selectStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = selectStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: selectStyle1BitformDefault })
           }
           break
         case 'select':
-          const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[p] })
+          const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in dropdownStyle1BitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = dropdownStyle1BitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dropdownStyle1BitformDefault })
           }
           break
         case 'phone-number':
-          const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[p] })
+          const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in phoneNumberStyleBitformDefault) {
-            styleClasses[element].forEach(cls => {
-              const path = `${p}->fields->${fk}->classes->.${fk}-${cls}`
-              const value = phoneNumberStyleBitformDefault[`.${fk}-${cls}`]
-              assignNestedObj(drftAllStyles, path, value)
-            })
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
           }
           break
         default:
