@@ -2,7 +2,7 @@
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../../../GlobalStates/GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
@@ -57,49 +57,49 @@ const RenderComponent = ({ component, action, value, defaultValue, objectPaths, 
 }
 
 const setTitle = (component) => {
-  switch (component) {
-    case 'border-style': return 'Border'
-    case 'border-image': return 'Border Image'
-    case 'color-picker': return 'Color picker'
-    case 'background': return 'Background'
-    case 'individual-shadow-control': return 'Shadow'
-    case 'font': return 'Fonts'
-    case 'label-control': return 'Label Placement'
-    case 'spacing-control': return 'Label Spacing'
-    case 'text-decoration': return 'Text Decoration'
-    case 'field-margin-control': return 'Field Margin'
-    case 'theme-control': return 'Theme Gallary'
-    case 'form-wrapper-control': return 'Form Wrapper'
-    case 'space-control': return 'Margin & Padding'
-    case 'size-control': return 'Width & Height'
-    case 'shadow-control': return 'Shadow'
-    case 'transition-control': return 'Transition'
-    case 'transform-control': return 'Transform'
-    case 'filter-control': return 'Filter'
-    case 'backdrop-filter-control': return 'Backdrop Filter'
-    case 'filter-color': return 'Filter Color'
-    default: return '...'
+  const titles = {
+    'border-style': 'Border',
+    'border-image': 'Border Image',
+    'color-picker': 'Color picker',
+    background: 'Background',
+    'individual-shadow-control': 'Shadow',
+    font: 'Fonts',
+    'label-control': 'Label Placement',
+    'spacing-control': 'Label Spacing',
+    'text-decoration': 'Text Decoration',
+    'field-margin-control': 'Field Margin',
+    'theme-control': 'Theme Gallery',
+    'form-wrapper-control': 'Form Wrapper',
+    'space-control': 'Margin & Padding',
+    'size-control': 'Width & Height',
+    'shadow-control': 'Shadow',
+    'transition-control': 'Transition',
+    'transform-control': 'Transform',
+    'filter-control': 'Filter',
+    'backdrop-filter-control': 'Backdrop Filter',
+    'filter-color': 'Filter Color',
   }
+  return titles[component] || '...'
 }
 
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable } = draggableModal
-  const history = useHistory()
+  const location = useLocation()
   const [pos, setPos] = useState('')
-  const dragableRef = useRef(null)
+  const draggableRef = useRef(null)
   useEffect(() => {
     setPos({ ...position })
   }, [position])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => history?.listen(() => setDraggableModal({ show: false })), [history])
+  useEffect(() => setDraggableModal({ show: false }), [location])
   if (!show) return <></>
 
   return (
     <Draggable
-      ref={dragableRef}
+      ref={draggableRef}
       bounds="parent"
       handle=".draggable-modal-handle"
       position={pos !== null ? position : pos}

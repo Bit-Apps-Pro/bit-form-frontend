@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -18,7 +18,7 @@ export default function StyleLayers() {
   const { css } = useFela()
   const styles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
-  const history = useHistory()
+  const navigate = useNavigate()
   const { formID, formType, fieldKey } = useParams()
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
@@ -26,8 +26,8 @@ export default function StyleLayers() {
     if (fldData) {
       route = (fldData.typ === 'html' || fldData.typ === 'divider') ? 'fld-wrp' : route
     }
-    if (fldKey) history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
-    else history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
+    if (fldKey) navigate(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+    else navigate(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
   }
   return (
     <div className={css(s.con)}>

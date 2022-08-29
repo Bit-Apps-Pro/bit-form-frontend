@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -13,7 +13,7 @@ import FieldMap from './FieldMap'
 import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
 
 function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id } = useParams()
   const [postTypes, setPostTypes] = useState([])
   const [metaboxFields, setMetaboxFields] = useState([])

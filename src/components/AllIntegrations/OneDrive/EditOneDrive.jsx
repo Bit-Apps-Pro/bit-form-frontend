@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -9,7 +9,7 @@ import { handleInput } from './OneDriveCommonFunc'
 import OneDriveIntegLayout from './OneDriveIntegLayout'
 
 function EditOneDrive({ allIntegURL, formFields, integrations, setIntegration }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
   const [oneDriveConf, setOneDriveConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)

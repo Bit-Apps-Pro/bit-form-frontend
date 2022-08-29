@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { NavLink, useHistory, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 // import '../resource/css/tinymce.css'
@@ -22,7 +21,7 @@ function EmailTemplateNew() {
   const formFields = useRecoilValue($fieldsArr)
   const [showTemplateModal, setTemplateModal] = useState(false)
   const { formType, formID } = useParams()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { css } = useFela()
 
   const bits = useRecoilValue($bits)
@@ -44,7 +43,7 @@ function EmailTemplateNew() {
       draft.push({ updateTem: 1 })
     })
     setMailTem(newMailTem)
-    history.push(`/form/settings/${formType}/${formID}/email-templates`)
+    navigate(`/form/settings/${formType}/${formID}/email-templates`)
   }
 
   const addFieldToSubject = ({ target: { value } }) => {

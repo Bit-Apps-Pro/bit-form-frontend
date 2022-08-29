@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $newFormId } from '../GlobalStates/GlobalStates'
-
 import DownloadIcon from '../Icons/DownloadIcon'
 import FormIcn from '../Icons/FormIcn'
 import app from '../styles/app.style'
@@ -15,13 +14,12 @@ const staticTem = [{ slug: 'Blank', img: '' }, { slug: 'Contact Form', img: '' }
 
 export default function FormTemplates({ setTempModal, setSnackbar }) {
   const newFormId = useRecoilValue($newFormId)
-
-  const history = useHistory()
+  const navigate = useNavigate()
   const [modal, setModal] = useState(false)
   const { css } = useFela()
 
   const handleTemplateBtnClick = (templatSlug) => () => {
-    history.push(`/form/builder/${templatSlug}/${newFormId}/fields-list`)
+    navigate(`/form/builder/${templatSlug}/${newFormId}/fields-list`, { replace: true, state: true })
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -12,7 +12,7 @@ import { checkMappedFields, getAutonamiFields } from './AutonamiCommonFunc'
 import AutonamiIntegLayout from './AutonamiIntegLayout'
 
 export default function Autonami({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
@@ -27,10 +27,10 @@ export default function Autonami({ formFields, setIntegration, integrations, all
   })
 
   const nextPage = (val) => {
-    if (val == 2 && autonamiConf.name !== '') {
+    if (val === 2 && autonamiConf.name !== '') {
       getAutonamiFields(autonamiConf, setAutonamiConf, setIsLoading, setSnackbar)
       setStep(val)
-    } else if (val == 3) {
+    } else if (val === 3) {
       if (!checkMappedFields(autonamiConf)) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return

@@ -1,19 +1,19 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useNavigate } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import { checkMappedFields, handleInput } from './TwilioCommonFunc'
-import TwilioAuthorization from './TwilioAuthorization'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import TwilioAuthorization from './TwilioAuthorization'
+import { checkMappedFields, handleInput } from './TwilioCommonFunc'
 import TwilioIntegLayout from './TwilioIntegLayout'
 
 function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -27,13 +27,13 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
     name: 'Twilio',
     type: 'Twilio',
     sid:
-            process.env.NODE_ENV === 'development'
-              ? 'AC320b8d36a8a82cebf0b9356f36bf43e9'
-              : '',
+      process.env.NODE_ENV === 'development'
+        ? 'AC320b8d36a8a82cebf0b9356f36bf43e9'
+        : '',
     token:
-            process.env.NODE_ENV === 'development'
-              ? 'ec4d20136c1af5c033c545c6c7b1257f'
-              : '',
+      process.env.NODE_ENV === 'development'
+        ? 'ec4d20136c1af5c033c545c6c7b1257f'
+        : '',
     from_num: process.env.NODE_ENV === 'development' ? '01861054127' : '',
     field_map: [
       { formField: '', twilioField: 'To' },
@@ -44,7 +44,7 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(integrations, setIntegration, allIntegURL, twilioConf, history)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, twilioConf, history)
   }
   const nextPage = (pageNo) => {
     if (!checkMappedFields(twilioConf)) {
@@ -108,7 +108,7 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next', 'bit-integrations')}
           {' '}
-&nbsp;
+          &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

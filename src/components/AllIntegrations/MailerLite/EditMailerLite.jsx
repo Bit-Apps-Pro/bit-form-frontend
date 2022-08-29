@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput } from './MailerLiteCommonFunc'
 import MailerLiteIntegLayout from './MailerLiteIntegLayout'
 
 function EditMailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
   const [mailerLiteConf, setMailerLiteConf] = useState({ ...integrations[id] })
   const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +25,6 @@ function EditMailerLite({ formFields, setIntegration, integrations, allIntegURL 
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, mailerLiteConf, history, id, 1)
   }
-  console.log('mailerLiteConf', mailerLiteConf)
 
   return (
     <div style={{ width: 900 }}>

@@ -1,19 +1,19 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useNavigate } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import HubspotAuthorization from './HubspotAuthorization'
-import HubspotIntegLayout from './HubspotIntegLayout'
 import { checkMappedFields, handleInput } from './HubspotCommonFunc'
+import HubspotIntegLayout from './HubspotIntegLayout'
 
 function Hubspot({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -71,7 +71,6 @@ function Hubspot({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-
       <HubspotAuthorization
         hubspotConf={hubspotConf}
         setHubspotConf={setHubspotConf}
@@ -84,7 +83,6 @@ function Hubspot({ formFields, setIntegration, integrations, allIntegURL }) {
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
         <HubspotIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, hubspotConf, setHubspotConf, setIsLoading, setSnackbar)}

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -10,7 +10,7 @@ import { handleInput } from './ZohoSignCommonFunc'
 import ZohoSignIntegLayout from './ZohoSignIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
   const [signConf, setSignConf] = useState({ ...integrations[id] })

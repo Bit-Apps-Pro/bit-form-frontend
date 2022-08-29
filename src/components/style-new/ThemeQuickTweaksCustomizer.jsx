@@ -1,3 +1,4 @@
+/* eslint-disable es/no-string-prototype-replaceall */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
@@ -168,6 +169,7 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select
+          defaultValue=""
           value={styles.fieldsSize}
           onChange={setSizes}
           className={css(sc.select)}

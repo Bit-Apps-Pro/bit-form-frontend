@@ -23,7 +23,7 @@ const conditionalLogicsList = {
   },
   contain: {
     label: __('Contain'),
-    notFields: ['button', 'date', 'time', 'datetime', 'month', 'week'],
+    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week'],
   },
   contain_all: {
     label: __('Contain All'),
@@ -31,35 +31,35 @@ const conditionalLogicsList = {
   },
   not_contain: {
     label: __('Not Contain'),
-    notFields: ['button', 'date', 'time', 'datetime', 'month', 'week'],
+    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week'],
   },
   greater: {
     label: __('Greater Than'),
-    fields: ['number', 'date', 'time', 'datetime'],
+    fields: ['number', 'date', 'time', 'datetime-local'],
   },
   less: {
     label: __('Less Than'),
-    fields: ['number', 'date', 'time', 'datetime'],
+    fields: ['number', 'date', 'time', 'datetime-local'],
   },
   greater_or_equal: {
     label: __('Greater Than or Equal'),
-    fields: ['number', 'date', 'time', 'datetime'],
+    fields: ['number', 'date', 'time', 'datetime-local'],
   },
   less_or_equal: {
     label: __('Less Than or Equal'),
-    fields: ['number', 'date', 'time', 'datetime'],
+    fields: ['number', 'date', 'time', 'datetime-local'],
   },
   start_with: {
     label: __('Start With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime', 'month', 'week'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week'],
   },
   end_with: {
     label: __('End With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime', 'month', 'week'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week'],
   },
   between: {
     label: __('Between'),
-    fields: ['number', 'date', 'time', 'datetime'],
+    fields: ['number', 'date', 'time', 'datetime-local'],
   },
   on_click: {
     label: __('On Click'),
