@@ -81,6 +81,14 @@ export default function FileUploadSettings() {
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    const addStyleSettingType = [
+      'showFileSize',
+      'showFilePreview',
+      'showFileList',
+    ]
+    if (addStyleSettingType.includes(propName) && value) {
+      addDefaultStyleClasses(selectedFieldId, propName)
+    }
     addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
   }
 

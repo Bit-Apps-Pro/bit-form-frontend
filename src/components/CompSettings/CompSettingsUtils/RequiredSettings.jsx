@@ -2,8 +2,8 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../../Icons/TxtAlignRightIcn'
@@ -12,6 +12,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, assignNestedObj } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
@@ -26,6 +27,7 @@ export default function RequiredSettings() {
   const { css } = useFela()
   const isRequired = fieldData.valid.req || false
   const adminLabel = fieldData.adminLbl || ''
+  const selectedFieldId = useRecoilValue($selectedFieldId)
 
   const getPropertyPath = (elementKey, cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}->${cssProperty}`
 
@@ -53,6 +55,7 @@ export default function RequiredSettings() {
     const { checked } = e.target
     if (checked) {
       fieldData.valid.reqShow = true
+      addDefaultStyleClasses(selectedFieldId, 'reqSmbl')
     } else {
       delete fieldData.valid.reqShow
     }

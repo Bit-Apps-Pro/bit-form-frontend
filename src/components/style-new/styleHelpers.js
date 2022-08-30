@@ -390,6 +390,10 @@ export const styleClasses = {
   err: ['err-msg'],
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
+  reqSmbl: ['req-smbl'],
+  showFileList: ['files-list', 'file-wrpr', 'cross-btn', 'cross-btn:hover'],
+  showFilePreview: ['file-preview'],
+  showFileSize: ['file-size'],
 }
 
 export const iconElementLabel = {
@@ -414,7 +418,9 @@ export const iconElementLabel = {
   bg_img: 'Background Image',
 }
 
-const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+const deleteStyles = (obj, clsArr, fk) => {
+  clsArr && clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+}
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
 export const removeUnuseStyles = () => {
@@ -472,6 +478,12 @@ export const getUpdatedStyles = () => {
           if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
           break
 
+        case 'file-up':
+          if (!fld.config.showFilePreview) deleteStyles(deftStyles, styleClasses.showFilePreview, fldkey)
+          if (!fld.config.showFileSize) deleteStyles(deftStyles, styleClasses.showFileSize, fldkey)
+          if (!fld.config.showFileList) deleteStyles(deftStyles, styleClasses.showFileList, fldkey)
+          break
+
         default:
           break
       }
@@ -493,8 +505,8 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
   styleClasses[element].forEach(cls => {
     const clsNam = `.${fk}-${cls}`
     const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
-    const value = fieldStyle[clsNam]
-    assignNestedObj(drftAllStyles, path, value)
+    if (!fieldStyle[clsNam]) return
+    assignNestedObj(drftAllStyles, path, fieldStyle[clsNam])
   })
 }
 
@@ -581,6 +593,15 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'file-up':
           const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
           if ([`.${fk}-inp-fld-wrp`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-wrpr`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-size`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-preview`] in fileUploadStyle1BitformDefault) {
             addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
           }
           break
