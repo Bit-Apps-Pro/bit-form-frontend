@@ -2,7 +2,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $updateBtn } from '../GlobalStates/GlobalStates'
+import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
+import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -694,4 +695,29 @@ export const getResizableHandles = fieldType => {
       return ['se', 'e']
     default:
   }
+}
+
+export const setRequired = (e, callBack) => {
+  const fields = getRecoil($fields)
+  const fldKey = getRecoil($selectedFieldId)
+  const fieldData = deepCopy(fields[fldKey])
+  if (e.target.checked) {
+    const tmp = { ...fieldData.valid }
+    tmp.req = true
+    tmp.reqShow = true
+    tmp.reqPos = 'after'
+    fieldData.valid = tmp
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err.req) fieldData.err.req = {}
+    fieldData.err.req.dflt = '<p>This field is required</p>'
+    fieldData.err.req.show = true
+    addDefaultStyleClasses(fldKey, 'reqSmbl')
+  } else {
+    delete fieldData.valid.req
+  }
+  const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  setRecoil($fields, allFields)
+  const req = e.target.checked ? 'on' : 'off'
+  addToBuilderHistory({ event: `Field required ${req}: ${fieldData.adminLbl || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })
+  callBack && callBack()
 }

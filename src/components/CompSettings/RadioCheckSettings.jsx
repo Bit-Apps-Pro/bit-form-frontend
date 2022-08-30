@@ -10,13 +10,14 @@ import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
-import { addToBuilderHistory, assignNestedObj, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, reCalculateFldHeights, setRequired } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -78,22 +79,6 @@ function RadioCheckSettings() {
     addToBuilderHistory({ event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, styles: newStyles, fldKey } })
   }
 
-  const setRadioRequired = e => {
-    if (e.target.checked) {
-      fieldData.valid.req = true
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-      delete fieldData.mn
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Option rounded ${e.target.checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, fldKey } })
-  }
-
   const openOptionModal = () => {
     setOptionMdl(true)
   }
@@ -106,19 +91,18 @@ function RadioCheckSettings() {
     if (!isPro) return
     if (!Number(e.target.value)) {
       delete fieldData.mn
-      setRadioRequired({ target: { checked: false } })
     } else {
       fieldData.mn = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mn) fieldData.err.mn = {}
       fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
       fieldData.err.mn.show = true
-      if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
     }
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
+    if (!isOptionRequired) setRequired({ target: { checked: e.target.value >= 1 } })
   }
 
   function setMax(e) {
@@ -303,6 +287,10 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
+      <FieldHideSettings />
+
+      <FieldSettingsDivider />
+
       <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
         <SingleToggle
           id="rnd-stng"
@@ -369,7 +357,7 @@ function RadioCheckSettings() {
                   aria-label="Minimum number"
                   className={css(FieldStyle.input)}
                   value={min}
-                  type="text"
+                  type="number"
                   onChange={setMin}
                   disabled={!isPro}
                 />
