@@ -10,6 +10,7 @@ export default function generateRollupConfig() {
     'dcsnbxFldValidation',
     'emailFldValidation',
     'fileupFldValidation',
+    'advanceFileUpFldValidation',
     'generateBackslashPattern',
     'nmbrFldValidation',
     'requiredFldValidation',

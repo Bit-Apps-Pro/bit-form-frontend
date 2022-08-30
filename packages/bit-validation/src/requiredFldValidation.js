@@ -1,2 +1,2 @@
-const requiredFldValidation = fldData => (fldData?.valid?.req ? 'required' : '')
+const requiredFldValidation = fldData => (fldData?.valid?.req ? 'req' : '')
 export default requiredFldValidation
