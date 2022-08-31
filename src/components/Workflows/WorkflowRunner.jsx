@@ -3,6 +3,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
+import {defaultConds} from "../../Utils/StaticData/form-templates/templateProvider";
 
 export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
@@ -33,7 +34,9 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
         })
       } else if (typ === 'onvalidate' || typ === 'oninput') {
         draft[lgcGrpInd].action_behaviour = 'cond'
-        draft[lgcGrpInd].conditions[0].cond_type = 'if'
+        const [cond] = draft[lgcGrpInd].conditions
+        cond.cond_type = 'if'
+        if(!cond.logics) cond.logics = defaultConds.logics
       }
       draft[lgcGrpInd].action_type = typ
     })
@@ -45,8 +48,11 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   const changeActionBehave = typ => {
     const tmpWorkflows = produce(workflows, draftWorkflows => {
       draftWorkflows[lgcGrpInd].action_behaviour = typ
-      draftWorkflows[lgcGrpInd].conditions[0].cond_type = typ === 'always' ? 'always' : 'if'
-      draftWorkflows[lgcGrpInd].conditions = [draftWorkflows[lgcGrpInd].conditions[0]]
+      const [cond] = draftWorkflows[lgcGrpInd].conditions
+      cond.cond_type = typ === 'cond' ? 'if' : typ
+      if(typ === 'always') delete cond.logics
+      else if(typ === 'cond')  cond.logics = defaultConds.logics
+      draftWorkflows[lgcGrpInd].conditions = [cond]
     })
 
     setWorkflows(tmpWorkflows)

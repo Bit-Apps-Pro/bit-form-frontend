@@ -329,7 +329,7 @@ const lgcStyle = {
       ta: 'center',
     },
 
-    '& .block-wrapper': { pn: 'relative', mb: 0 },
+    '& .block-wrapper': { pn: 'relative', mb: 0, w: '100%' },
 
     '& > .block-wrapper, & ol > .block-wrapper, & .block-group > .block-wrapper': { p: '4px 0' },
 

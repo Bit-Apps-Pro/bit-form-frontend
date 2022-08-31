@@ -197,7 +197,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
 
   return (
     <>
-      {condGrp.logics.map((logic, ind) => (
+      {condGrp?.logics?.map((logic, ind) => (
         <span key={`logic-${ind + 44}`}>
           {typeof logic === 'object' && !Array.isArray(logic) && (
             <LogicBlock
