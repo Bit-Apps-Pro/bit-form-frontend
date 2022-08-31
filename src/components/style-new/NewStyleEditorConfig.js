@@ -180,6 +180,10 @@ const textFldCssProps = {
     states: ['hover'],
     properties: { ...labelCssProps },
   },
+  'err-txt': {
+    states: ['hover'],
+    properties: { ...labelCssProps },
+  },
   'err-txt-pre-i': {
     states: ['hover'],
     properties: { ...iconCssProps },
@@ -912,6 +916,10 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
+    'err-txt': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
     'err-txt-pre-i': {
       states: ['hover'],
       properties: { ...iconCssProps },
@@ -1040,6 +1048,10 @@ const editorConfig = {
     },
 
     'err-msg': {
+      states: ['hover'],
+      properties: { ...labelCssProps },
+    },
+    'err-txt': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },

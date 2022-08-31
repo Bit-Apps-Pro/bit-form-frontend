@@ -84,10 +84,6 @@ export default class BitFileUpField {
     const { multiple,
       allowedFileType,
       accept,
-      required,
-      showMaxSize,
-      maxSize,
-      sizeUnit,
       showSelectStatus,
       fileSelectStatus } = this.#config
 
@@ -140,7 +136,8 @@ export default class BitFileUpField {
       if (this.#filesList) this.#filesList.innerHTML = ''
     }
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i += 1) {
+      const file = files[i]
       const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
         if (!allowMaxSize || (!maxSize || (file.size + totalFileSize) <= maxFileSize)) {
@@ -172,11 +169,13 @@ export default class BitFileUpField {
       }
     }
     /* this.#window.document.querySelectorAll() */
-    this.#window.document.querySelectorAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
+    this.#selectAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
     const fileLength = Object.keys(this.#files).length
+
+    this.#filesIntializeToInput()
 
     if (fileLength && showSelectStatus) {
       this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
@@ -205,18 +204,33 @@ export default class BitFileUpField {
     })
   }
 
+  #filesIntializeToInput() {
+    const dataTransfer = new DataTransfer()
+    Object.values(this.#files)?.forEach(file => {
+      dataTransfer.items.add(file)
+    })
+    this.#fileUploadInput.files = dataTransfer.files
+  }
+
   #removeAction = e => {
     const id = e.target.getAttribute('data-file-id')
     this.#remove(`#file-wrp-${id}`)
 
     delete this.#files[id]
     const fileLength = Object.keys(this.#files).length
-    if (fileLength) { this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected` } else { this.#fileSelectStatus.innerHTML = this.#config.fileSelectStatus }
+    if (fileLength) {
+      this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
+    } else {
+      this.#fileSelectStatus.innerHTML = this.#config.fileSelectStatus
+    }
+    this.#filesIntializeToInput()
   }
 
   #select(selector) { return this.#fileUploadWrap.querySelector(selector) }
 
-  #remove(selector) { this.#document.querySelector(selector)?.remove() }
+  #selectAll(selector) { return this.#fileUploadWrap.querySelectorAll(selector) }
+
+  #remove(selector) { this.#select(selector)?.remove() }
 
   #getPreviewUrl(file) {
     const extention = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -365,24 +379,3 @@ export default class BitFileUpField {
     this.init()
   }
 }
-
-/* const field = new FileUploadField('.container', {
-  // fieldLbl: 'File Upload Here',
-  // btnTxt: 'Upload Button',
-  // required: true,
-  multiple: true,
-  maxSize: 5,
-  sizeUnit: 'MB',
-  isItTotalMax: true,
-  fileSelectStatus: 'Empty Selected',
-  // showMaxSize: true,
-  allowedFileType: 'image/*, .zip',
-  showFileList: true,
-  showFileSize: true,
-  duplicateAllow: false,
-  onchange: () => {
-  },
-  accept: '.jpg, .png, .jpeg',
-  minFile: 2,
-  maxFile: 3,
-}) */

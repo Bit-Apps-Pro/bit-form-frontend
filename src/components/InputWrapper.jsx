@@ -13,8 +13,8 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
   const { styleMode } = flages
-  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'err-msg'
-  const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && element === 'err-msg' && urlFldKey === fieldKey
+  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)
+  const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0) && urlFldKey === fieldKey
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
@@ -215,7 +215,14 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 {...getCustomAttributes(fieldKey, 'err-txt-pre-i')}
               />
             )}
-            {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
+            <div
+              data-testid={`${fieldKey}-err-txt`}
+              data-dev-err-txt={fieldKey}
+              className={`${fieldKey}-err-txt ${getCustomClsName(fieldKey, 'err-txt')}`}
+              {...getCustomAttributes(fieldKey, 'err-txt')}
+            >
+              {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
+            </div>
             {fieldData.errSufIcn && (
               <img
                 data-testid={`${fieldKey}-err-txt-suf-i`}

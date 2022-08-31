@@ -13,6 +13,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { fileFormats } from '../../Utils/StaticData/fileformat'
@@ -27,6 +28,7 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -43,27 +45,18 @@ function AdvanceFileUpSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
 
-  function setFieldProperty(e) {
-    const { value, name } = e.target
-    if (e.target.value === '') {
-      delete fieldData[name]
+  const handle = ({ target: { checked, name } }) => {
+    if (checked) {
+      fieldData.config[name] = true
     } else {
-      fieldData[name] = value
+      fieldData.config[name] = false
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${name} ${checked ? 'on' : 'off'} : ${fieldData.lbl || fldKey}`, type: name, state: { fldKey, fields: allFields } })
   }
 
-  const handle = e => {
-    if (e.target.checked) {
-      fieldData.config[e.target.name] = true
-    } else {
-      fieldData.config[e.target.name] = false
-    }
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-  }
-
-  const setErrorMsg = e => {
+  const setConfigProp = e => {
     const { value, name, type } = e.target
     if (value && type === 'number') {
       fieldData.config[name] = Number(value)
@@ -72,7 +65,9 @@ function AdvanceFileUpSettings() {
     } else {
       delete fieldData.config[name]
     }
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${name} value changed to ${value} : ${fieldData.lbl || fldKey}`, type: name, state: { fldKey, fields: allFields } })
   }
 
   function setFileFilter(value, typ) {
@@ -82,7 +77,9 @@ function AdvanceFileUpSettings() {
     }
     fieldData.config[typ] = val
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Modify Accepted File Type : ${fieldData.lbl || fldKey}`, type: typ, state: { fldKey, fields: allFields } })
   }
 
   const enablePlugin = (e, typ) => {
@@ -100,8 +97,9 @@ function AdvanceFileUpSettings() {
     if (fieldData?.config?.allowImageCrop || fieldData?.config?.allowImageResize) {
       fieldData.config.allowImageTransform = true
     }
-
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${typ} Plugin ${checked ? 'on' : 'off'} : ${fieldData.lbl || fldKey}`, type: typ, state: { fldKey, fields: allFields } })
   }
 
   return (
@@ -130,7 +128,7 @@ function AdvanceFileUpSettings() {
       >
         <div className={css({ mx: 5 })}>
 
-          <select data-testid="cptr-stng-slct" className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
+          <select data-testid="cptr-stng-slct" className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setConfigProp}>
             <option value="">Select</option>
             <option value="null">Off</option>
             <option value="capture">On</option>
@@ -142,31 +140,15 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion
-        id="nam-stng"
-        title={__('Name')}
-        className={css(FieldStyle.fieldSection)}
-        open
-      >
-        <div className={css(FieldStyle.placeholder)}>
-          <input
-            data-testid="nam-stng-inp"
-            aria-label="Name for this Field"
-            name="fieldName"
-            value={fieldData?.fieldName}
-            placeholder="Type field name here..."
-            className={css(FieldStyle.input)}
-            onChange={setFieldProperty}
-          />
-        </div>
-      </SimpleAccordion>
+      <FieldNameSettings />
+
       <FieldSettingsDivider />
       <SimpleAccordion
         id="fil-styl-stng"
         title="File Style"
         className={css(FieldStyle.fieldSection)}
       >
-        <FileStyle action={setErrorMsg} value={fieldData?.config} />
+        <FileStyle action={setConfigProp} value={fieldData?.config} />
       </SimpleAccordion>
       <FieldSettingsDivider />
       <SimpleAccordion
@@ -344,6 +326,28 @@ function AdvanceFileUpSettings() {
             />
 
           </div>
+          <div className={css(ut.flxc, ut.fw500, FieldStyle.labelTip)}>
+            <span>Maximum File</span>
+            <input
+              data-testid="alw-mltpl-max-inp"
+              className={css(FieldStyle.input, ut.w3, ut.mt1)}
+              type="number"
+              name="maxFiles"
+              value={fieldData?.config?.maxFiles}
+              onChange={setConfigProp}
+            />
+          </div>
+          <div className={css(ut.flxc, ut.fw500, FieldStyle.labelTip)}>
+            <span>Maximum Paraller Upload</span>
+            <input
+              data-testid="alw-mltpl-max-inp"
+              className={css(FieldStyle.input, ut.w3, ut.mt1)}
+              type="number"
+              name="maxParallelUploads"
+              value={fieldData?.config?.maxParallelUploads}
+              onChange={setConfigProp}
+            />
+          </div>
         </div>
 
       </SimpleAccordion>
@@ -362,7 +366,7 @@ function AdvanceFileUpSettings() {
         tip="Note : If you enable this option, the File size validation features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <FileTypeSize action={setErrorMsg} />
+        <FileTypeSize action={setConfigProp} />
       </SimpleAccordion>
 
       <FieldSettingsDivider />
@@ -412,7 +416,7 @@ function AdvanceFileUpSettings() {
               name="labelFileTypeNotAllowed"
               value={fieldData?.config?.labelFileTypeNotAllowed}
               on
-              Change={setErrorMsg}
+              Change={setConfigProp}
             />
           </div>
           <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -431,7 +435,7 @@ function AdvanceFileUpSettings() {
               type="text"
               name="fileValidateTypeLabelExpectedTypes"
               value={fieldData?.config?.fileValidateTypeLabelExpectedTypes}
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
         </div>
@@ -470,7 +474,7 @@ function AdvanceFileUpSettings() {
               name="imagePreviewMinHeight"
               value={fieldData?.config?.imagePreviewMinHeight}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
           <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -490,7 +494,7 @@ function AdvanceFileUpSettings() {
               name="imagePreviewMaxHeight"
               value={fieldData?.config?.imagePreviewMaxHeight}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
           <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -510,7 +514,7 @@ function AdvanceFileUpSettings() {
               name="imagePreviewHeight"
               value={fieldData?.config?.imagePreviewHeight}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
         </div>
@@ -568,7 +572,7 @@ function AdvanceFileUpSettings() {
               type="text"
               name="imageCropAspectRatio"
               value={fieldData?.config?.imageCropAspectRatio}
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
         </div>
@@ -606,7 +610,7 @@ function AdvanceFileUpSettings() {
               name="imageResizeTargetWidth"
               value={fieldData?.config?.imageResizeTargetWidth}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
           <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -626,7 +630,7 @@ function AdvanceFileUpSettings() {
               name="imageResizeTargetHeight"
               value={fieldData?.config?.imageResizeTargetHeight}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
           <div className={css(ut.mt2, FieldStyle.labelTip)}>
@@ -642,7 +646,7 @@ function AdvanceFileUpSettings() {
               data-testid="img-resiz-mod-slct"
               className={css(FieldStyle.selectBox, ut.mr2, ut.ml1, ut.fw500)}
               name="imageResizeMode"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             >
               <option value="">Select</option>
               <option value="cover">Cover</option>
@@ -681,7 +685,7 @@ function AdvanceFileUpSettings() {
               data-testid="img-outpt-typ-slct"
               className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)}
               name="imageTransformOutputMimeType"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             >
               <option value="">Select</option>
               <option value="image/jpeg">Image/jpeg</option>
@@ -705,7 +709,7 @@ function AdvanceFileUpSettings() {
               name="imageTransformOutputQuality"
               value={fieldData?.config?.imageTransformOutputQuality}
               min="0"
-              onChange={setErrorMsg}
+              onChange={setConfigProp}
             />
           </div>
           {/* <div className={css(ut.mt2, FieldStyle.labelTip)}>
@@ -735,7 +739,7 @@ function AdvanceFileUpSettings() {
                 data-testid="clnt-trnsfrm-slct"
                 className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)}
                 name="imageTransformClientTransforms"
-                onChange={setErrorMsg}
+                onChange={setConfigProp}
               >
                 <option value="">Select</option>
                 <option value="resize">Resize</option>

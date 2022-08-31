@@ -351,8 +351,8 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/urlFldValidation.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-validation/dist/validation.min.js'),
-              to: path.resolve(__dirname, '../assets/js/validation.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/validateForm.min.js'),
+              to: path.resolve(__dirname, '../assets/js/validateForm.min.js'),
             },
           ],
         }),

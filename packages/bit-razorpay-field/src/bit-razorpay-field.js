@@ -133,10 +133,7 @@ export default class BitRazorpayField {
         const paymentObject = new this.#window.Razorpay(options)
         paymentObject.open()
       })
-      .catch((err) => {
-        alert(`restult 1${err}`)
-        return false
-      })
+      .catch((err) => false)
   }
 
   destroy() {

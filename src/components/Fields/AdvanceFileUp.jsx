@@ -37,29 +37,29 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     if (!window.registerPlugin) window.registerPlugin = registerPlugin
     if (!window.setOptions) window.setOptions = setOptions
 
-    if (!window.FilePondPluginImagePreview) {
-      window.FilePondPluginImagePreview = bitFilepondPluginImagePreviewMin
+    if (!window.bit_filepond_plugin_image_preview) {
+      window.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreviewMin
     }
-    if (!window.FilePondPluginFileValidateSize) {
-      window.FilePondPluginFileValidateSize = bitFilepondPluginFileValidateSize
+    if (!window.bit_filepond_plugin_file_validate_size) {
+      window.bit_filepond_plugin_file_validate_size = bitFilepondPluginFileValidateSize
     }
-    if (!window.FilePondPluginFileValidateType) {
-      window.FilePondPluginFileValidateType = bitFilepondPluginFileValidateTypeMin
+    if (!window.bit_filepond_plugin_file_validate_type) {
+      window.bit_filepond_plugin_file_validate_type = bitFilepondPluginFileValidateTypeMin
     }
-    if (!window.FilePondPluginImageCrop) {
-      window.FilePondPluginImageCrop = bitFilepondPluginImageCropMin
+    if (!window.bit_filepond_plugin_image_crop) {
+      window.bit_filepond_plugin_image_crop = bitFilepondPluginImageCropMin
     }
-    if (!window.FilePondPluginImageResize) {
-      window.FilePondPluginImageResize = bitFilepondPluginImageResizeMin
+    if (!window.bit_filepond_plugin_image_resize) {
+      window.bit_filepond_plugin_image_resize = bitFilepondPluginImageResizeMin
     }
-    if (!window.FilePondPluginImageTransform) {
-      window.FilePondPluginImageTransform = bitFilepondPluginImageTransformMin
+    if (!window.bit_filepond_plugin_image_transform) {
+      window.bit_filepond_plugin_image_transform = bitFilepondPluginImageTransformMin
     }
-    if (!window.FilePondPluginImageValidateSize) {
-      window.FilePondPluginImageValidateSize = bitFilepondPluginImageValidateSizeMin
+    if (!window.bit_filepond_plugin_image_validate_size) {
+      window.bit_filepond_plugin_image_validate_size = bitFilepondPluginImageValidateSizeMin
     }
-    if (!window.FilePondPluginMediaPreview) {
-      window.FilePondPluginMediaPreview = bitFilepondPluginMediaPreviewMin
+    if (!window.bit_filepond_plugin_media_preview) {
+      window.bit_filepond_plugin_media_preview = bitFilepondPluginMediaPreviewMin
     }
 
     const configuration = {
