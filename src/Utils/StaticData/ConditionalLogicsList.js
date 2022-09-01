@@ -11,19 +11,19 @@ const conditionalLogicsList = {
   },
   not_equal: {
     label: __('Not Equal'),
-    notFields: ['button'],
+    notFields: ['button', 'user'],
   },
   null: {
     label: __('Is Null'),
-    notFields: ['button'],
+    notFields: ['button','user'],
   },
   not_null: {
     label: __('Is Not Null'),
-    notFields: ['button'],
+    notFields: ['button', 'user'],
   },
   contain: {
     label: __('Contain'),
-    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week'],
+    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week', 'user'],
   },
   contain_all: {
     label: __('Contain All'),
@@ -31,7 +31,7 @@ const conditionalLogicsList = {
   },
   not_contain: {
     label: __('Not Contain'),
-    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week'],
+    notFields: ['button', 'date', 'time', 'datetime-local', 'month', 'week', 'user'],
   },
   greater: {
     label: __('Greater Than'),
@@ -51,11 +51,11 @@ const conditionalLogicsList = {
   },
   start_with: {
     label: __('Start With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week','user'],
   },
   end_with: {
     label: __('End With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week','user'],
   },
   between: {
     label: __('Between'),
