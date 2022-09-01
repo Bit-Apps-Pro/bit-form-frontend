@@ -8,15 +8,11 @@
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
-import { $builderRightPanelScroll, $colorScheme, $flags } from '../../GlobalStates/GlobalStates'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import DarkIcn from '../../Icons/DarkIcn'
-import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
-import { addToBuilderHistory, generateHistoryData } from '../../Utils/FormBuilderHelper'
 import AsteriskCustomizer from './AsteriskCustomizer'
 import ButtonCustomizer from './ButtonCustomizer'
 import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
@@ -32,8 +28,7 @@ import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
-  const { formType, formID, element, fieldKey } = useParams()
-  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
+  const { formType, formID, element } = useParams()
   const setFlags = useSetRecoilState($flags)
   const scrollTo = useRecoilValue($builderRightPanelScroll)
 
@@ -71,11 +66,6 @@ export default function ThemeCustomize() {
     return title[element] || 'Theme Customization'
   }
 
-  const handlecolorScheme = (colorSchemeName) => {
-    setColorScheme(colorSchemeName)
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Color Scheme', colorSchemeName, { colorScheme: getRecoil($colorScheme) }))
-  }
-
   return (
     <div className={css(cls.mainWrapper)}>
       <div className={css(ut.pb1, style.flxColumn, style.fixed, scrollTo && style.shw)}>
@@ -96,38 +86,9 @@ export default function ThemeCustomize() {
           {' '}
           (Global)
         </h4>
+        {/* <div className={css(cls.divider)} /> */}
       </div>
-      <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-
-        <div className={css(ut.flxc, { ws: 'nowrap', cg: 10 })}>
-          <h4 className={css(cls.subTitle)}>Color Scheme</h4>
-          <div className={css(ut.flxc, ut.w9, ut.mt1)}>
-            <button
-              onClick={() => handlecolorScheme('light')}
-              data-active={colorScheme === 'light'}
-              className={css(cls.thmBtn, colorScheme === 'light' && cls.clrActive)}
-              type="button"
-              data-testid="light-btn"
-            >
-              <LightIcn size="17" />
-              Light
-            </button>
-            <button
-              onClick={() => handlecolorScheme('dark')}
-              data-active={colorScheme === 'dark'}
-              className={css(cls.thmBtn, colorScheme === 'dark' && cls.clrActive)}
-              type="button"
-              data-testid="dark-btn"
-            >
-              <DarkIcn size="17" />
-              Dark
-            </button>
-          </div>
-        </div>
-
-        <div className={css(cls.divider)} />
-
         {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
         {element === '_frm-bg' && <FormWrapperCustomizer element={element} />}
         {element === '_frm' && <FormContainerCustomizer element={element} />}
