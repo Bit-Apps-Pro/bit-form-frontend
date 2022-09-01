@@ -30,6 +30,7 @@ function LogicBlock({ logic, fieldVal,
   const formFields = makeFieldsArrByLabel(fields, [])
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  let isSingleSelect = false
   let type = ''
   let fldType = ''
   let fieldKey = ''
@@ -46,12 +47,18 @@ function LogicBlock({ logic, fieldVal,
       return true
     }
   })
+  const checkLoginOption = [
+    { label: __('Logged In'), value: 1},
+    { label: __('Logged Out'), value:2 },
+  ]
 
   const getOptions = () => {
     let options
 
-    if (fldType === 'select') {
+    if (type === 'select') {
       options = fields?.[fieldKey]?.opt
+    } else if (type === 'user') {
+      options = checkLoginOption
     } else {
       options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
@@ -76,7 +83,10 @@ function LogicBlock({ logic, fieldVal,
   const findTagFromSmartTags = tagName => SmartTagField.find(itm => tagName === `\${${itm.name}}`)
 
   if (!type) {
-    type = findTagFromSmartTags(fieldVal)?.type
+    type = findTagFromSmartTags(fieldVal)?.type || ''
+  }
+  if (!isSingleSelect) {
+    isSingleSelect = findTagFromSmartTags(fieldVal)?.singleSelect || false
   }
 
   const getLogicsBasedOnFieldType = needleFldType => {
@@ -102,6 +112,7 @@ function LogicBlock({ logic, fieldVal,
     if (tagName === '${_bf_query_param()}') return __('Query Param')
     return 'Smart Key'
   }
+
   const notNeededValField = ['null', 'not_null']
   return (
     <div className={`${css(lgcStyle.lgcBlk)} btcd-logic-blk`}>
@@ -115,10 +126,10 @@ function LogicBlock({ logic, fieldVal,
             >
               <option value="">{__('Select Form Field')}</option>
               {!!formFields.length && (
-                  <optgroup label="Form Fields">
-                    {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
+                <optgroup label="Form Fields">
+                  {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
                         && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
-                  </optgroup>
+                </optgroup>
               )}
               <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
                 {SmartTagField?.map(({ name, label }) => (
@@ -164,15 +175,16 @@ function LogicBlock({ logic, fieldVal,
         {logicValue !== 'between' && logicValue !== 'not between' && !notNeededValField.includes(logicValue) && (
           <div className="block-wrapper">
             <div className="block-content">
-              {fldType.match(/select|check|radio/g)
+              {type.match(/user|select|check|radio/g)
                 ? (
                   <MultiSelect
                     className="msl-wrp-options btcd-paper-drpdwn"
                     defaultValue={value || ''}
                     onChange={e => changeValue(e, lgcInd, subLgcInd, subSubLgcInd)}
                     options={getOptions()}
-                    customValue
-                    fldType={fldType}
+                    // customValue
+                    fldType={type}
+                    singleSelect={isSingleSelect}
                   />
                 ) : (
                   <MtInput
