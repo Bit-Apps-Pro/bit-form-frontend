@@ -48,8 +48,8 @@ function LogicBlock({ logic, fieldVal,
     }
   })
   const checkLoginOption = [
-    { label: __('Logged In'), value: 1},
-    { label: __('Logged Out'), value:2 },
+    { label: __('Logged In'), value: 'logged_in' },
+    { label: __('Logged Out'), value: 'logged_out' },
   ]
 
   const getOptions = () => {
