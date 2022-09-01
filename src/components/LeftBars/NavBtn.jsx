@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHighlight } from '../style-new/styleHelpers'
@@ -24,10 +24,10 @@ export default function NavBtn({ route,
   } else if (rightBar === 'field-theme-customize' && subRoute && subRoute === fieldKey && element === route) {
     active = true
   }
-  const history = useHistory()
+  const navigate = useNavigate()
   const styleHandler = () => {
-    if (!subRoute) history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
-    else history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${subRoute}`)
+    if (!subRoute) navigate(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
+    else navigate(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${subRoute}`)
   }
   const { css } = useFela()
   return (

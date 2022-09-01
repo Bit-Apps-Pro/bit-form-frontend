@@ -1,13 +1,15 @@
+import loadable from '@loadable/component'
 import produce from 'immer'
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
+import { Route, Routes, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
+import RouteByParams from '../components/RouteByParams'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
@@ -24,18 +26,18 @@ import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
-import FormEntries from './FormEntries'
 import FormSettings from './FormSettings'
 
 // eslint-disable-next-line import/no-cycle
 const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
+const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
 
 function FormDetails() {
   let componentMounted = true
-  const history = useHistory()
+  const navigate = useNavigate()
   const { formType, formID } = useParams()
   const setReports = useSetRecoilState($reports)
   const setFormId = useSetRecoilState($formId)
@@ -82,7 +84,8 @@ function FormDetails() {
   useEffect(() => { setFormId(formID) }, [formID])
 
   const activePath = () => {
-    const pathArray = history.location.pathname.split('/')
+    const loaciton = useLocation()
+    const pathArray = loaciton.pathname.split('/')
     return pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1)
   }
 
@@ -148,8 +151,10 @@ function FormDetails() {
 
     // TODO: reset all states of style, themeVars & themeColors
   }
-
+  const a = useParams()
   const setNewFormInitialStates = () => {
+    console.log('=====', a, formType, newFormId)
+
     const { name,
       fields,
       layouts,
@@ -303,7 +308,7 @@ function FormDetails() {
       title: 'Warning',
       msg: 'Are you sure you want to leave the form? Unsaved data will be lost.',
       btnTxt: 'Okay',
-      action: () => history.push('/'),
+      action: () => navigate('/', { replace: true }),
     })
   }
 
@@ -313,17 +318,18 @@ function FormDetails() {
     { label: 'Settings' },
   ]
 
-  const onChangeHandler = (evn) => {
-    if (evn === 'Builder') {
-      history.push(`/form/builder/${formType}/${formID}/fields-list`)
+  const onChangeHandler = (value) => {
+    if (value === 'Builder') {
+      navigate(`/form/builder/${formType}/${formID}/fields-list`)
     }
-    if (evn === 'Responses') {
-      history.push(`/form/responses/${formType}/${formID}/`)
+    if (value === 'Responses') {
+      navigate(`/form/responses/${formType}/${formID}/`)
     }
-    if (evn === 'Settings') {
-      history.push(`/form/settings/${formType}/${formID}/form-settings`)
+    if (value === 'Settings') {
+      navigate(`/form/settings/${formType}/${formID}/form-settings`)
     }
   }
+
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -351,7 +357,7 @@ function FormDetails() {
         />
         <nav className={css(navbar.btct_bld_nav)}>
           <div className={css(navbar.btcd_bld_title)}>
-            <NavLink className={css(navbar.nav_back_icn)} exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <NavLink className={css(navbar.nav_back_icn)} to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
             </NavLink>
             <div className={css(navbar.bit_icn)}>
@@ -383,29 +389,107 @@ function FormDetails() {
           </div>
         </nav>
         <div className={css(navbar.builder_routes)}>
-          <Switch>
-            <Route exact path="/form/builder/:formType/:formID/:rightBar?/:element?/:fieldKey?">
-              <Suspense fallback={<BuilderLoader />}>
-                <FormBuilderHOC isLoading={isLoading} />
-              </Suspense>
-            </Route>
-            <Route path="/form/responses/:formType/:formID/">
-              {!isLoading ? (
+
+          <RouteByParams
+            page="responses"
+            formType
+            formID
+            render={
+              !isLoading ? (
                 <FormEntries
                   allResp={allResponse}
                   setAllResp={setAllResponse}
                   integrations={integrations}
                 />
-              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
-            </Route>
-            <Route path="/form/settings/:formType/:formID/:settings?">
-              <FormSettings setProModal={setProModal} />
-            </Route>
-          </Switch>
+              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
+            }
+          />
+          <RouteByParams page="builder" formType formID render={<FormBuilderHOC isLoading={isLoading} />} />
+          <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />
+          {/* <Routes> */}
+          {/* <Route path=":rightBar/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
+          {/* <Route path=":rightBar/:element/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
+          {/* </Routes> */}
+
+          {/* <RouteByParams
+            page="builder"
+            formType
+            formId
+            rightBar="?"
+            fieldKey="?"
+            element="?"
+            render={<FormBuilderHOC isLoading={isLoading} />}
+          /> */}
+          {/* <RouteByParams
+            page="responses"
+            formType
+            formId
+            render={
+
+            }
+          /> */}
+
+          {/* <Routes> */}
+
+          {/* <Route
+              path="/builder/:formType/:formID/:rightBar/:element/:fieldKey"
+              element={(
+                <Suspense fallback={<BuilderLoader />}>
+                  <FormBuilderHOC isLoading={isLoading} />
+                </Suspense>
+              )}
+            /> */}
+          {/* <Route
+              path="/builder/:formType/:formID/:rightBar/:element"
+              element={(
+                <Suspense fallback={<BuilderLoader />}>
+                  <FormBuilderHOC isLoading={isLoading} />
+                </Suspense>
+              )}
+            /> */}
+          {/* <Route
+              path="/builder/:formType/:formID/:rightBar"
+              element={(
+                <Suspense fallback={<BuilderLoader />}>
+                  <FormBuilderHOC isLoading={isLoading} />
+                </Suspense>
+              )}
+            /> */}
+          {/* <Route
+              path="/builder/:formType/:formID"
+              element={(
+                <Suspense fallback={<BuilderLoader />}>
+                  <FormBuilderHOC isLoading={isLoading} />
+                </Suspense>
+              )}
+            /> */}
+
+          {/* // <Route
+            //   path="/responses/:formType/:formID"
+            //   element={
+            //     !isLoading ? (
+            //       <FormEntries
+            //         allResp={allResponse}
+            //         setAllResp={setAllResponse}
+            //         integrations={integrations}
+            //       />
+            //     ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
+            //   }
+            // /> */}
+
+          {/* <Route
+              path="/settings/:formType/:formID"
+              element={<FormSettings setProModal={setProModal} />}
+            /> */}
+          {/* <Route
+              path="/settings/:formType/:formID/:settings"
+              element={<FormSettings setProModal={setProModal} />}
+            /> */}
+          {/* </Routes> */}
         </div>
       </div>
     </ShowProModalContext.Provider>
   )
 }
 
-export default memo(withRouter(FormDetails))
+export default memo(FormDetails)

@@ -1,8 +1,8 @@
 import produce from 'immer'
-import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
 import { useEffect } from 'react'
+import { useFela } from 'react-fela'
+import { useLocation, useParams } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../../Utils/FormBuilderHelper'
@@ -12,7 +12,7 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function FieldNameSettings() {
   console.log('%cRander Place Holder Setting', 'background:green;padding:3px;border-radius:5px;color:white')
-  const history = useHistory()
+  const location = useLocation()
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -35,7 +35,7 @@ export default function FieldNameSettings() {
         fieldKey: fldKey,
         errorKey: 'duplicateFieldName',
         errorMsg: __('Duplicate field name'),
-        errorUrl: history.location.pathname,
+        errorUrl: location.pathname,
       }
       addFormUpdateError(errorData)
     } else {
@@ -51,7 +51,7 @@ export default function FieldNameSettings() {
         fieldKey: fldKey,
         errorKey: 'fieldNameEmpty',
         errorMsg: __('Field name cannot be empty'),
-        errorUrl: history.location.pathname,
+        errorUrl: location.pathname,
       }
       addFormUpdateError(errorData)
     } else {

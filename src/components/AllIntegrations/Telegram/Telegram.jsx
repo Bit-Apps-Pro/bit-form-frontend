@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -11,7 +11,7 @@ import TelegramAuthorization from './TelegramAuthorization'
 import TelegramIntegLayout from './TelegramIntegLayout'
 
 export default function Telegram({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
   const [step, setStep] = useState(1)
@@ -55,7 +55,10 @@ export default function Telegram({ formFields, setIntegration, integrations, all
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%`, minHeight: step === 2 && `${200}px` }}>
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && `${100}%`, minHeight: step === 2 && `${200}px` }}
+      >
         <TelegramIntegLayout
           formID={formID}
           formFields={formFields}

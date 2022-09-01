@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -15,7 +15,7 @@ import { checkMappedFields } from './ActiveCampaignCommonFunc'
 import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 
 function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)

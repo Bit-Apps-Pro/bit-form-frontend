@@ -1,19 +1,20 @@
 /* eslint-disable no-continue */
 let contentId
 let fields
+let fieldKeysByName = {}
 export default function validateForm({ form, input }) {
   if (form) contentId = form
   else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
-  if (typeof window[contentId] === 'undefined') return false
+  if (typeof window?.bf_globals?.[contentId] === 'undefined') return false
   let formEntries = {}
-  fields = window[contentId].fields
+  fields = window?.bf_globals?.[contentId].fields
   if (form) {
     formEntries = generateFormEntries()
   } else if (input) {
-    if (!window[contentId].validateFocusLost) return true
-    const name = generateFieldKey(input.name)
-    formEntries = { [name]: input.value }
-    fields = { [name]: fields[name] }
+    if (!window?.bf_globals?.[contentId].validateFocusLost) return true
+    const fldKey = generateFieldKey(input.name)
+    formEntries = { [fldKey]: input.value }
+    fields = { [fldKey]: fields[fldKey] }
   }
 
   let formCanBeSubmitted = true
@@ -32,9 +33,12 @@ export default function validateForm({ form, input }) {
     }
 
     let errKey = ''
-
+    if (fldType === 'check' && fldValue) {
+      errKey = typeof checkFldValidation !== 'undefined' ? checkFldValidation(fldValue, fldData) : ''
+      generateErrMsg(errKey, fldKey, fldData)
+      if (errKey) formCanBeSubmitted = false
+    }
     if (!fldValue) {
-      if (fldType === 'check') errKey = typeof checkFldValidation !== 'undefined' ? checkFldValidation(fldValue, fldData) : ''
       errKey = typeof requiredFldValidation !== 'undefined' ? requiredFldValidation(fldData) : null
       generateErrMsg(errKey, fldKey, fldData)
       if (errKey) formCanBeSubmitted = false
@@ -47,6 +51,7 @@ export default function validateForm({ form, input }) {
     else if (fldType === 'decision-box' && typeof dcsnbxFldValidation !== 'undefined') errKey = dcsnbxFldValidation(fldValue, fldData)
     else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
+    else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
 
     if (fldData?.valid?.regexr) {
       errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
@@ -63,12 +68,29 @@ export default function validateForm({ form, input }) {
   return formCanBeSubmitted
 }
 
-const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, fldKey.length - 2) : fldKey)
+const getFieldInstance = fldKey => window?.bf_globals?.[contentId].inits?.[fldKey]
+
+const generateFieldKey = keyName => {
+  const fldKey = document.getElementById(`form-${contentId}`).querySelector(`[name="${keyName}"]`).id
+  if (fldKey !== keyName) {
+    if (fieldKeysByName[keyName]) return fieldKeysByName[keyName]
+    const fldEntries = Object.entries(fields)
+    for (let i = 0; i < fldEntries.length; i += 1) {
+      const [key, fldData] = fldEntries[i]
+      if (fldData?.fieldName === keyName) {
+        fieldKeysByName[keyName] = key
+        return key
+      }
+    }
+  }
+  return fldKey
+}
 
 const generateFormEntries = () => {
   const formData = new FormData(document.getElementById(`form-${contentId}`))
   const formEntries = {}
   const entries = Array.from(formData.entries())
+  fieldKeysByName = {}
   entries.forEach(([key, value]) => {
     const fldKey = generateFieldKey(key)
     if (!(fldKey in fields)) return
@@ -82,16 +104,19 @@ const generateFormEntries = () => {
 }
 
 const generateErrMsg = (errKey, fldKey, fldData) => {
-  const errFld = document.querySelector(`#form-${contentId} #${fldKey}-error`)
+  const errFld = document.querySelector(`#form-${contentId} .${fldKey}-err-txt`)
   if (errFld && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      errFld.parentElement.style.marginTop = '5px'
+      errFld.parentElement.style.marginTop = '9px'
       errFld.parentElement.style.height = `${errFld.offsetHeight}px`
+      errFld.parentElement.style.display = 'block'
       scrollToFld(fldKey)
     } else {
+      errFld.innerHTML = ''
       errFld.parentElement.style.marginTop = 0
       errFld.parentElement.style.height = 0
+      errFld.parentElement.style.display = 'none'
     }
   }
 }

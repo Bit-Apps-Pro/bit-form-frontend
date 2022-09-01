@@ -9,7 +9,7 @@ import produce from 'immer'
 import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $additionalSettings,
@@ -86,7 +86,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const additional = useRecoilValue($additionalSettings)
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
-  const history = useHistory()
+  const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
@@ -212,7 +212,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     sessionStorage.setItem('btcd-lc', '-')
 
     // redirect to fields list
-    history.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    // navigate.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
 
     // add to history
     const event = `${generateFieldLblForHistory(fldData)} removed`
@@ -484,12 +485,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
+    navigate.replace(navigate.location.pathname.replace(/style\/.+|style/g, 'fs'))
     resetContextMenu()
   }
 
   const navigateToStyle = fldKey => {
-    history.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`)
+    // navigate.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`)
+    navigate(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`, { replace: true })
     resetContextMenu()
   }
 
@@ -500,7 +502,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
     setResizingFalse()
     if (styleMode) return
-    history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
+    navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
 
   const elmCurrentHighlightedRef = useRef(null)
@@ -549,7 +551,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
           } else {
             styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
           }
-          history.push(styleUrl)
+          navigate(styleUrl)
           setFlags(prvFlags => produce(prvFlags, draft => {
             draft.inspectMode = false
           }))

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
@@ -13,10 +13,9 @@ import { checkMappedFields, checkMetaMappedFields, handleInput } from './Groundh
 import GroundhoggIntegLayout from './GroundhoggIntegLayout'
 
 function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
-  const { isPro } = bits
 
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
@@ -28,7 +27,6 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
     { key: 'user_id', label: 'User Id', required: false },
     { key: 'owner_id', label: 'Owner Id', required: false },
     { key: 'optin_status', label: 'Optin Status', required: false },
-
   ]
 
   const contactMetaFields = [
@@ -38,7 +36,6 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
     { key: 'postal_zip', label: 'Postal Zip', required: false },
     { key: 'city', label: 'City', required: false },
     { key: 'country', label: 'Country', required: false },
-
   ]
 
   const allActions = [

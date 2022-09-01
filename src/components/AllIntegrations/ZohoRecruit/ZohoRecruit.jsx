@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -11,10 +12,9 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
 import { checkMappedFields, handleInput } from './ZohoRecruitCommonFunc'
 import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
-import app from '../../../styles/app.style'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)

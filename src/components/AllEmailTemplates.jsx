@@ -1,29 +1,33 @@
+/* eslint-disable react/no-unstable-nested-components */
 import produce from 'immer'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { Link, NavLink, useRouteMatch } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { $mailTemplates } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
+import LayoutIcn from '../Icons/LayoutIcn'
+import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'
+import ut from '../styles/2.utilities'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
-import app from '../styles/app.style'
-import LayoutIcn from '../Icons/LayoutIcn'
-import StackIcn from '../Icons/StackIcn'
-import ut from '../styles/2.utilities'
 
 export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
   const { css } = useFela()
-  const { url } = useRouteMatch()
+  // const matchR = matchRoutes()
+  // console(matchR)
+  // const { url } = useRouteMatch()
+  const { pathname: url } = useLocation()
 
   const duplicateTem = i => {
     const newMailTemObj = produce(mailTem, draft => {

@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
-import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, isDisabled } from './SendFoxCommonFunc'
+import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
+import { handleInput, isDisabled } from './SendFoxCommonFunc'
 import SendFoxIntegLayout from './SendFoxIntegLayout'
 
 function EditSendFox({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [sendFoxConf, setSendFoxConf] = useState({ ...integrations[id] })
@@ -23,7 +23,14 @@ function EditSendFox({ formFields, setIntegration, integrations, allIntegURL }) 
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, sendFoxConf, setSendFoxConf)} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, sendFoxConf, setSendFoxConf)}
+          name="name"
+          value={sendFoxConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
 
