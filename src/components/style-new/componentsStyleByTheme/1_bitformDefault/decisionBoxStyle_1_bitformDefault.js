@@ -3,8 +3,17 @@ import inputWrapperClasses from '../common/inputWrapperClasses'
 /* eslint-disable camelcase */
 export default function decisionBoxStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
+
     return {
-      ...inputWrapperClasses(fk),
+      [`.${fk}-fld-wrp`]: {
+        ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
+      },
+      [`.${fk}-inp-wrp`]: {
+        ...inputWrapperClasses(fk)[`.${fk}-inp-wrp`],
+      },
+      [`.${fk}-err-msg`]: {
+        ...inputWrapperClasses(fk)[`.${fk}-err-msg`],
+      },
 
       // checkbox symbol
       [`.${fk}-cks`]: {
