@@ -8,7 +8,6 @@ export default defineConfig({
 
   plugins: [
     react(),
-    reactRefresh(),
   ],
 
   optimizeDeps: {
