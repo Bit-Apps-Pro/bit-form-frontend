@@ -1,11 +1,10 @@
 import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import Button from '../Utilities/Button'
-import LogicBlock from './LogicBlock'
 import LogicChip from './LogicChip'
 import { accessToNested } from './WorkflowHelpers'
+import LogicBlock from './LogicBlock'
+import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
@@ -103,15 +102,15 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
-  const changeLogicChip = (e, lgcInd, subLgcInd, subSubLgcInd) => {
+  const changeLogicChip = (val, lgcInd, subLgcInd, subSubLgcInd) => {
     const tmpWorkflows = produce(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       if (subSubLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd][subSubLgcInd] = e
+        tmpLogics[lgcInd][subLgcInd][subSubLgcInd] = val
       } else if (subLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd] = e
+        tmpLogics[lgcInd][subLgcInd] = val
       } else {
-        tmpLogics[lgcInd] = e
+        tmpLogics[lgcInd] = val
       }
     })
 
@@ -119,15 +118,27 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
-  const changeValue = (val, lgcInd, subLgcInd, subSubLgcInd) => {
+  const getLogicPath = (logicsObj, lgcInd, subLgcInd, subSubLgcInd) => {
+    if (subSubLgcInd !== undefined) {
+      return logicsObj[lgcInd][subLgcInd][subSubLgcInd]
+    } if (subLgcInd !== undefined) {
+      return logicsObj[lgcInd][subLgcInd]
+    }
+    return logicsObj[lgcInd]
+  }
+
+  const changeValue = (val, lgcInd, subLgcInd, subSubLgcInd, valKey = '') => {
     const tmpWorkflows = produce(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
-      if (subSubLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd][subSubLgcInd].val = val
-      } else if (subLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd].val = val
+      const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
+
+      if (valKey) {
+        if (typeof logicPath.val === 'string') {
+          logicPath.val = {}
+        }
+        logicPath.val[valKey] = val
       } else {
-        tmpLogics[lgcInd].val = val
+        logicPath.val = val
       }
     })
 
@@ -136,18 +147,21 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const changeFormField = (val, lgcInd, subLgcInd, subSubLgcInd) => {
+    const isSmartTag = SmartTagField.find(field => field.name === val)
     const tmpWorkflows = produce(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
+      const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
       if (subSubLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd][subSubLgcInd].field = val
-        tmpLogics[lgcInd][subLgcInd][subSubLgcInd].val = ''
+        logicPath.field = val
+        logicPath.val = ''
       } else if (subLgcInd !== undefined) {
-        tmpLogics[lgcInd][subLgcInd].field = val
-        tmpLogics[lgcInd][subLgcInd].val = ''
+        logicPath.field = val
+        logicPath.val = ''
       } else {
-        tmpLogics[lgcInd].field = val
-        tmpLogics[lgcInd].val = ''
+        logicPath.field = val
+        logicPath.val = ''
       }
+      if (!isSmartTag?.custom) delete logicPath.smartKey
     })
 
     setWorkflows(tmpWorkflows)
@@ -170,15 +184,28 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
+  const changeSmartKey = (val, lgcInd, subLgcInd, subSubLgcInd) => {
+    const tmpWorkflows = produce(workflows, draftWorkflows => {
+      const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
+      const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
+      logicPath.smartKey = val
+    })
+
+    setWorkflows(tmpWorkflows)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
+
   return (
     <>
-      {condGrp.logics.map((logic, ind) => (
+      {condGrp?.logics?.map((logic, ind) => (
         <span key={`logic-${ind + 44}`}>
           {typeof logic === 'object' && !Array.isArray(logic) && (
             <LogicBlock
+              logic={logic}
               fieldVal={logic.field}
               changeFormField={changeFormField}
               changeValue={changeValue}
+              changeSmartKey={changeSmartKey}
               logicValue={logic.logic}
               changeLogic={changeLogic}
               addInlineLogic={addInlineLogic}
@@ -189,30 +216,31 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
               actionType={lgcGrp?.action_type}
             />
           )}
-          {typeof logic === 'string'
-                  && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, ind)} />}
+          {typeof logic === 'string' && (
+            <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, ind)} />
+          )}
           {Array.isArray(logic) && (
-            <div className="p-2 pl-6 br-10 btcd-logic-grp">
-
+            <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
               {logic.map((subLogic, subInd) => (
                 <span key={`subLogic-${subInd * 7}`}>
-                  {typeof subLogic === 'object' && !Array.isArray(subLogic)
-                      && (
-                        <LogicBlock
-                          fieldVal={subLogic.field}
-                          changeFormField={changeFormField}
-                          changeValue={changeValue}
-                          logicValue={subLogic.logic}
-                          changeLogic={changeLogic}
-                          addInlineLogic={addInlineLogic}
-                          delLogic={delLogic}
-                          lgcGrpInd={lgcGrpInd}
-                          lgcInd={ind}
-                          subLgcInd={subInd}
-                          value={subLogic.val}
-                          actionType={lgcGrp?.action_type}
-                        />
-                      )}
+                  {typeof subLogic === 'object' && !Array.isArray(subLogic) && (
+                    <LogicBlock
+                      logic={subLogic}
+                      fieldVal={subLogic.field}
+                      changeFormField={changeFormField}
+                      changeValue={changeValue}
+                      changeSmartKey={changeSmartKey}
+                      logicValue={subLogic.logic}
+                      changeLogic={changeLogic}
+                      addInlineLogic={addInlineLogic}
+                      delLogic={delLogic}
+                      lgcGrpInd={lgcGrpInd}
+                      lgcInd={ind}
+                      subLgcInd={subInd}
+                      value={subLogic.val}
+                      actionType={lgcGrp?.action_type}
+                    />
+                  )}
                   {typeof subLogic === 'string' && (
                     <LogicChip
                       logic={subLogic}
@@ -221,28 +249,28 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                     />
                   )}
                   {Array.isArray(subLogic) && (
-                    <div className="p-2 pl-6 br-10 btcd-logic-grp">
-
+                    <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
                       {subLogic.map((subSubLogic, subSubLgcInd) => (
                         <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                          {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic)
-                              && (
-                                <LogicBlock
-                                  fieldVal={subSubLogic.field}
-                                  changeFormField={changeFormField}
-                                  changeValue={changeValue}
-                                  logicValue={subSubLogic.logic}
-                                  changeLogic={changeLogic}
-                                  addInlineLogic={addInlineLogic}
-                                  delLogic={delLogic}
-                                  lgcGrpInd={lgcGrpInd}
-                                  lgcInd={ind}
-                                  subLgcInd={subInd}
-                                  subSubLgcInd={subSubLgcInd}
-                                  value={subSubLogic.val}
-                                  actionType={lgcGrp?.action_type}
-                                />
-                              )}
+                          {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && (
+                            <LogicBlock
+                              logic={subSubLogic}
+                              fieldVal={subSubLogic.field}
+                              changeFormField={changeFormField}
+                              changeValue={changeValue}
+                              changeSmartKey={changeSmartKey}
+                              logicValue={subSubLogic.logic}
+                              changeLogic={changeLogic}
+                              addInlineLogic={addInlineLogic}
+                              delLogic={delLogic}
+                              lgcGrpInd={lgcGrpInd}
+                              lgcInd={ind}
+                              subLgcInd={subInd}
+                              subSubLgcInd={subSubLgcInd}
+                              value={subSubLogic.val}
+                              actionType={lgcGrp?.action_type}
+                            />
+                          )}
                           {typeof subSubLogic === 'string' && (
                             <LogicChip
                               logic={subSubLogic}
@@ -252,77 +280,14 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                           )}
                         </span>
                       ))}
-                      <div className=" btcd-workFlows-btns">
-                        <div className="flx">
-                          <Button icn className="blue">
-                            <CloseIcn
-                              size="14"
-                              className="icn-rotate-45"
-                            />
-                          </Button>
-                          <Button onClick={() => addLogic('and', `${ind}.${subInd}`)} className="blue ml-2">
-                            <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                            AND
-                            {' '}
-                          </Button>
-                          <Button onClick={() => addLogic('or', `${ind}.${subInd}`)} className="blue ml-2">
-                            <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                            OR
-                            {' '}
-                          </Button>
-                        </div>
-                      </div>
                     </div>
                   )}
                 </span>
               ))}
-              <div className=" btcd-workFlows-btns">
-                <div className="flx">
-                  <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
-                  <Button onClick={() => addLogic('and', `${ind}`)} className="blue ml-2">
-                    <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                    AND
-                  </Button>
-                  <Button onClick={() => addLogic('or', `${ind}`)} className="blue ml-2">
-                    <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                    OR
-                  </Button>
-                  <Button onClick={() => addLogic('or', `${ind}`, 1)} className="blue ml-2">
-                    <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                    OR Group
-                  </Button>
-                  <Button onClick={() => addLogic('and', `${ind}`, 1)} className="blue ml-2">
-                    <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-                    AND Group
-                  </Button>
-                </div>
-              </div>
             </div>
           )}
         </span>
       ))}
-      {lgcGrp.action_behaviour === 'cond' && (
-        <div className="btcd-workFlows-btns">
-          <div className="flx">
-            <Button onClick={() => addLogic('and')} className="blue ml-2">
-              <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-              AND
-            </Button>
-            <Button onClick={() => addLogic('or')} className="blue ml-2">
-              <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-              OR
-            </Button>
-            <Button onClick={() => addLogic('or', '', 1)} className="blue ml-2">
-              <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-              OR Group
-            </Button>
-            <Button onClick={() => addLogic('and', '', 1)} className="blue ml-2">
-              <CloseIcn size="10" className="icn-rotate-45 mr-1" />
-              AND Group
-            </Button>
-          </div>
-        </div>
-      )}
     </>
   )
 }

@@ -2,15 +2,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SnackMsg from '../../Utilities/SnackMsg'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './ActiveCampaignCommonFunc'
 import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 
 function EditActiveCampaign({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [activeCampaingConf, setActiveCampaingConf] = useState({ ...integrations[id] })

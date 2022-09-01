@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
 
 function EditZapier({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { id, formID } = useParams()
 
   const [zapier, setZapier] = useState({ ...integrations[id] })

@@ -2,8 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $colorScheme } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
 import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
@@ -20,17 +19,17 @@ import TransitionControl from './TransitionControl'
 
 export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
-  const { fieldKey } = useParams()
+  const { fieldKey, formID } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
-  const colorScheme = useRecoilValue($colorScheme)
-  const formWrpStylesObj = styles.form[element]
+  const elemn = `.${element}-${formID}`
+  const formWrpStylesObj = styles.form[elemn]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
 
   const addableCssProps = Object
     .keys(editorConfig[element].properties)
     .filter(x => !formWrpStylesPropertiesArr.includes(x))
 
-  const getPropertyPath = (cssProperty) => `form->${colorScheme}->${element}->${cssProperty}`
+  const getPropertyPath = (cssProperty) => `form->${elemn}->${cssProperty}`
 
   const delPropertyHandler = (property) => {
     setStyles(prvStyles => produce(prvStyles, drft => {

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -11,7 +11,7 @@ import DropboxAuthorization from './DropboxAuthorization'
 import DropboxIntegLayout from './DropboxIntegLayout'
 
 function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
-  const history = useHistory()
+  const history = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)

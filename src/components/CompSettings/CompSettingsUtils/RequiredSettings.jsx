@@ -9,7 +9,7 @@ import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../../Icons/TxtAlignRightIcn'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, assignNestedObj } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, setRequired } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
@@ -28,26 +28,6 @@ export default function RequiredSettings() {
   const adminLabel = fieldData.adminLbl || ''
 
   const getPropertyPath = (elementKey, cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}->${cssProperty}`
-
-  function setRequired(e) {
-    if (e.target.checked) {
-      const tmp = { ...fieldData.valid }
-      tmp.req = true
-      tmp.reqShow = true
-      tmp.reqPos = 'after'
-      fieldData.valid = tmp
-      if (!fieldData.err) fieldData.err = {}
-      if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
-      fieldData.err.req.show = true
-    } else {
-      delete fieldData.valid.req
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    const req = e.target.checked ? 'on' : 'off'
-    addToBuilderHistory({ event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })
-  }
 
   const setReqShow = e => {
     const { checked } = e.target

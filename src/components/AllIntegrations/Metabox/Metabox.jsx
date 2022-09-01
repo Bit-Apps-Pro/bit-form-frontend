@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -15,7 +15,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
   const [users, setUsers] = useState([])
   const [snack, setSnackbar] = useState({ show: false })
-  const history = useHistory()
+  const history = useNavigate()
   const { css } = useFela()
   const [metaboxFields, setMetaboxFields] = useState([])
   const [metaboxFileFields, setMetaboxFileFields] = useState([])

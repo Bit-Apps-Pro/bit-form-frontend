@@ -11,7 +11,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import { $fields, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import TagifyComp from '../CompSettings/TagifyComp'
 
-function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
+function ActionBlock({ action,lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
   const setWorkflows = useSetRecoilState($workflows)
   const fields = useRecoilValue($fields)
   const formFields = useRecoilValue($fieldsArr)
@@ -94,7 +94,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
       </MtSelect>
 
       <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
-        <div className={css({ w: '100%', bd: '#dce2ff', h: 2 })} />
+        <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />
       </div>
 
       <MtSelect
@@ -105,6 +105,9 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
         className="w-4"
       >
         <option value="">{__('Select One')}</option>
+        {(!isNotButtonField && lgcGrp.action_type === 'oninput') && (
+            <option value="click">{__('Click')}</option>
+        )}
         {(isNotFileUpField && isNotButtonField && isNotValidateAction)
               && <option value="value">{__('Value')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
@@ -120,7 +123,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
       {action.action === 'value' && (
         <>
           <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
-            <div className={css({ w: '100%', bd: '#dce2ff', h: 2 })} />
+            <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />
           </div>
 
           {type === 'select' || type === 'check' || type === 'radio'
@@ -142,19 +145,18 @@ function ActionBlock({ action, lgcGrpInd, actionInd, condGrpInd, actionType }) {
           // <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />
               <div style={{ width: '100%' }}>
                 <TagifyComp
-                  selector={`input-${lgcGrpInd}_${actionInd}`}
-                  actionId={`${lgcGrpInd}_${actionInd}`}
+                  selector={`input-${lgcGrpInd}_${condGrpInd}_${actionInd}`}
+                  actionId={`${lgcGrpInd}_${condGrpInd}_${actionInd}`}
                   onChange={changeAtnVal}
                   value={action.val || ''}
                 >
-                  <input type="text" name={`input-${lgcGrpInd}_${actionInd}`} />
+                  <input type="text" name={`input-${lgcGrpInd}_${condGrpInd}_${actionInd}`} />
                 </TagifyComp>
               </div>
             )}
         </>
       )}
-
-      <div className="btcd-li-side-btn mt-2">
+      <div className="btcd-li-side-btn">
         <Button onClick={delAction} icn className="ml-2 sh-sm white">
           <TrashIcn />
         </Button>

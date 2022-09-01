@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { useFela } from 'react-fela'
-import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
+import { Link, Route, Routes, useMatch, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import EditIcn from '../Icons/EditIcn'
@@ -23,9 +23,9 @@ export default function Payments() {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
-  const { path, url } = useRouteMatch()
+  const { url } = useMatch()
   const allIntegURL = url
-  const history = useHistory()
+  const navigate = useNavigate()
   const { css } = useFela()
 
   const pays = [
@@ -74,7 +74,7 @@ export default function Payments() {
 
   const setNewInteg = (type) => {
     setShowMdl(false)
-    history.push(`${allIntegURL}/${type}`)
+    navigate(`${allIntegURL}/${type}`)
   }
 
   const closeConfMdl = () => {
@@ -95,8 +95,8 @@ export default function Payments() {
           body={confMdl.body}
           action={confMdl.action}
         />
-        <Switch>
-          <Route exact path={path}>
+        <Routes>
+          <Route index>
             <h2>{__('Payment Settings')}</h2>
             <div className="btcd-hr" />
             <div className="flx flx-wrp pos-rel">
@@ -166,10 +166,8 @@ export default function Payments() {
               ))}
             </div>
           </Route>
-          <Route path={`${path}/:type/:indx?`}>
-            <Payment allIntegURL={allIntegURL} />
-          </Route>
-        </Switch>
+          <Route path=":type/:indx?" element={<Payment allIntegURL={allIntegURL} />} />
+        </Routes>
 
       </div>
     </div>

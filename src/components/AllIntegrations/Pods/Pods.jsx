@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { postFields } from '../../../Utils/StaticData/postField'
@@ -18,7 +18,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   const [pods, setPods] = useState([])
   const [users, setUsers] = useState([])
   const { css } = useFela()
-  const history = useHistory()
+  const history = useNavigate()
   const [data, setData] = useState({
     name: 'Pods',
     type: 'Pods',
@@ -96,14 +96,24 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         youTubeLink={tutorialLinks.pods.link}
       />
       <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
-
+      <input
+        className="btcd-paper-inp w-5 mt-1"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        name="name"
+        value={data.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
       <div className="mt-3">
         <b>{__('Pod')}</b>
         {' '}
         <span style={{ color: 'red' }}>*</span>
       </div>
-      <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_type"
+        onChange={(e) => getPodsField(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
           <option key={`pod-${key * 2}`} value={type.name}>{type.label}</option>
@@ -115,7 +125,11 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         {' '}
         <span style={{ color: 'red' }}>*</span>
       </div>
-      <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
@@ -126,14 +140,22 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3"><b>{__('Comment Status')}</b></div>
-      <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="comment_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
 
       <div className="mt-3"><b>{__('Author')}</b></div>
-      <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_author"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>{__('Select Author')}</option>
         <option value="logged_in_user">Logged In User</option>
         {users.map((user, key) => (
@@ -170,7 +192,18 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
             />
           ))
         }
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
 
         <div>
           <div className="mt-3 mb-1"><b>Post Fields Mapping</b></div>
@@ -195,7 +228,18 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <button

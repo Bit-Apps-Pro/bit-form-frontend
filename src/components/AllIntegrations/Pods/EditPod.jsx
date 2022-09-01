@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { postFields } from '../../../Utils/StaticData/postField'
@@ -15,7 +15,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
   const [types, setTypes] = useState([])
   const [users, setUsers] = useState([])
   const { id } = useParams()
-  const history = useHistory()
+  const history = useNavigate()
   const { css } = useFela()
   const [data, setData] = useState({ ...integrations[id] })
   const [pods, setPods] = useState([])
@@ -147,7 +147,15 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
           />
         ))
       }
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
+        <button
+          onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
 
       <div>
         <div className="mt-3 mb-1"><b>Post Fields Mapping</b></div>
@@ -173,7 +181,15 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         ))
       }
 
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
+        <button
+          onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <button
         className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"

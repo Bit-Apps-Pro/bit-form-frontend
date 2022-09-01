@@ -34,42 +34,41 @@ export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID, element, fieldKey } = useParams()
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
-
   const setFlags = useSetRecoilState($flags)
-
   const scrollTo = useRecoilValue($builderRightPanelScroll)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const genarateTitle = () => {
-    switch (element) {
-      case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case '_frm-bg': return 'Form Wrapper'
-      case '_frm': return 'Form Container'
-      case 'field-containers': return 'Field Container(s)'
-      case 'label-containers': return 'Label & Subtitle Container(s)'
-      case 'lbl': return 'Label(s)'
-      case 'lbl-pre-i': return 'Label Leading Icon(s)'
-      case 'lbl-suf-i': return 'Label Trailing Icon(s)'
-      case 'sub-titl': return 'Sub Title(s)'
-      case 'sub-titl-pre-i': return 'Subtitle Leading Icon(s)'
-      case 'sub-titl-suf-i': return 'Subtitle Trailing Icon(s)'
-      case 'pre-i': return 'Input Leading Icon(s)'
-      case 'suf-i': return 'Input Trailing Icons'
-      case 'hlp-txt': return 'Helper Text(s)'
-      case 'hlp-txt-pre-i': return 'Helper Text Leading Icon(s)'
-      case 'hlp-txt-suf-i': return 'Helper Text Trailing Icon(s)'
-      case 'err-msg': return 'Error Message(s)'
-      case 'err-txt-pre-i': return 'Error Text Leading Icon(s)'
-      case 'err-txt-suf-i': return 'Error Text Trailing Icon(s)'
-      case 'btn': return 'Button(s)'
-      case 'btn-pre-i': return 'Button Leading Icon(s)'
-      case 'btn-suf-i': return 'Button Trailing Icon(s)'
-      case 'req-smbl': return 'Asterisk Symbol'
-      default: return 'Theme Customization'
+    const title = {
+      'quick-tweaks': 'Theme Quick Tweaks',
+      '_frm-bg': 'Form Wrapper',
+      _frm: 'Form Container',
+      'field-containers': 'Field Container(s)',
+      'label-containers': 'Label & Subtitle Container(s)',
+      lbl: 'Label(s)',
+      'lbl-pre-i': 'Label Leading Icon(s)',
+      'lbl-suf-i': 'Label Trailing Icon(s)',
+      'sub-titl': 'Sub Title(s)',
+      'sub-titl-pre-i': 'Subtitle Leading Icon(s)',
+      'sub-titl-suf-i': 'Subtitle Trailing Icon(s)',
+      'pre-i': 'Input Leading Icon(s)',
+      'suf-i': 'Input Trailing Icons',
+      'hlp-txt': 'Helper Text(s)',
+      'hlp-txt-pre-i': 'Helper Text Leading Icon(s)',
+      'hlp-txt-suf-i': 'Helper Text Trailing Icon(s)',
+      'err-msg': 'Error Message(s)',
+      'err-txt-pre-i': 'Error Text Leading Icon(s)',
+      'err-txt-suf-i': 'Error Text Trailing Icon(s)',
+      btn: 'Button(s)',
+      'btn-pre-i': 'Button Leading Icon(s)',
+      'btn-suf-i': 'Button Trailing Icon(s)',
+      'req-smbl': 'Asterisk Symbol',
     }
+    return title[element] || 'Theme Customization'
   }
 
   const handlecolorScheme = (colorSchemeName) => {
