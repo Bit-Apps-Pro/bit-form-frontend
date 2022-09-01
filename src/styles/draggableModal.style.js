@@ -38,7 +38,7 @@ const draggableModalStyle = {
 
   hr: { mx: 10, mb: 10, mt: 5 },
 
-  content: { px: 10, mxh: 401, mnw: 248 },
+  content: { px: 10, mxh: 401, /*mnw: 248*/ },
 
   titleBar: {
     h: 35,
