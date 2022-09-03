@@ -5,6 +5,7 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { getRecoil } from 'recoil-nexus'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import app from '../../styles/app.style'
@@ -102,7 +103,7 @@ function RadioCheckSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
-    if (!isOptionRequired) setRequired({ target: { checked: e.target.value >= 1 } })
+    if (e.target.value >= 1 && !fieldData.req) setRequired({ target: { checked: true } })
   }
 
   function setMax(e) {
@@ -143,7 +144,15 @@ function RadioCheckSettings() {
   }
 
   const handleOptions = newOpts => {
-    const allFields = produce(fields, draft => { draft[fldKey].opt = newOpts })
+    const reqOpts = newOpts.filter(opt => opt.req)
+    reqOpts.length && setRequired({ target: { checked: true } })
+    const allFields = produce(getRecoil($fields), draft => {
+      draft[fldKey].opt = newOpts
+      if (reqOpts.length) {
+        draft[fldKey].err.req.custom = true
+        draft[fldKey].err.req.msg = `<p>${reqOpts.map(opt => opt.lbl).join(',')} is required</p>`
+      } else draft[fldKey].err.req.msg = '<p>This field is required</p>'
+    })
     setFields(allFields)
     addToBuilderHistory({
       event: `Options List Moddified: ${fieldData.lbl || adminLabel || fldKey}`,
