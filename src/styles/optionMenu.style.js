@@ -62,7 +62,7 @@ const optionmenu = {
     tn: 'opacity 200ms ease, visibility 0s ease 300ms',
     m: '0',
     oy: 0,
-    '& :is(button, a)': {
+    '& :is(button), & :is(a)': {
       cr: 'var(--b-37-18)',
       flx: 'align-center',
       b: 'none',
@@ -82,7 +82,6 @@ const optionmenu = {
         cr: 'var(--b-37-18)',
       },
     },
-
   },
   hamburger: {
     bc: 'transparent',

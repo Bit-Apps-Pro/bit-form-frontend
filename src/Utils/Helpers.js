@@ -232,8 +232,8 @@ export const makeFieldsArrByLabel = (fields, labels = [], fldsToFilter = ['butto
       type: fld.typ,
       name: fldByLabel?.adminLbl
         || fldByLabel?.name
-        || fld.lbl
         || fld.adminLbl
+        || fld.lbl
         || fld.txt // for submit button
         || fldKey,
     }
