@@ -71,7 +71,6 @@ function TextFieldSettings() {
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
   const ac = fieldData?.ac ? fieldData.ac.trim().split(',') : ['Off']
-  const { fieldName } = fieldData
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
@@ -126,7 +125,7 @@ function TextFieldSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Default value updated: ${ value || fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Default value updated: ${value || fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
   }
 
   function setMin(e) {
@@ -337,15 +336,7 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } })
   }
-  const handleFieldName = ({ target: { value } }) => {
-    if (value !== '') fieldData.fieldName = value
-    // else fieldData.fieldName = fldKey
-    else delete fieldData.fieldName
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } })
-  }
   const handleInputmode = ({ target: { value } }) => {
     if (value !== '') fieldData.inputMode = value
 
@@ -434,7 +425,6 @@ function TextFieldSettings() {
               setIcon={() => setIconModel('prefixIcn')}
               removeIcon={() => removeIcon('prefixIcn')}
             />
-
             <FieldIconSettings
               label="Trailing Icon"
               iconSrc={fieldData?.suffixIcn}
@@ -444,7 +434,6 @@ function TextFieldSettings() {
             />
 
           </div>
-
         </SimpleAccordion>
 
         <FieldSettingsDivider />
