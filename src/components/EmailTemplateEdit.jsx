@@ -2,7 +2,7 @@
 
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { NavLink, Redirect, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
@@ -56,7 +56,7 @@ function EmailTemplateEdit() {
   }
 
   return (
-    mailTemp.length < 1 ? <Redirect to={`/form/settings/edit/${formID}/email-templates`} /> : (
+    mailTemp.length < 1 ? <Navigate to={`/form/settings/edit/${formID}/email-templates`} replace /> : (
       <div style={{ width: 900 }}>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className={`${css(app.btn)} btcd-btn-o-gray`}>
           <BackIcn className="mr-1" />
