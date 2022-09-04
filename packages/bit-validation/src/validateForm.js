@@ -35,8 +35,6 @@ export default function validateForm({ form, input }) {
     let errKey = ''
     if (fldType === 'check' && fldValue) {
       errKey = typeof checkFldValidation !== 'undefined' ? checkFldValidation(fldValue, fldData) : ''
-      generateErrMsg(errKey, fldKey, fldData)
-      if (errKey) formCanBeSubmitted = false
     }
     if (!fldValue) {
       errKey = typeof requiredFldValidation !== 'undefined' ? requiredFldValidation(fldData) : null
@@ -52,7 +50,7 @@ export default function validateForm({ form, input }) {
     else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
     else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
-
+    if ((fldType === 'check' || fldType === 'radio') && customOptionValidation !== 'undefined') customOptionValidation(fldValue, fldData)
     if (fldData?.valid?.regexr) {
       errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
       if (errKey) {
@@ -72,13 +70,14 @@ const getFieldInstance = fldKey => window?.bf_globals?.[contentId].inits?.[fldKe
 
 const generateFieldKey = keyName => {
   const fldKey = document.getElementById(`form-${contentId}`).querySelector(`[name="${keyName}"]`).id
-  if (fldKey !== keyName) {
-    if (fieldKeysByName[keyName]) return fieldKeysByName[keyName]
+  const fldName = keyName.slice(-2) === '[]' ? keyName.slice(0, keyName.length - 2) : keyName
+  if (fldKey !== fldName) {
+    if (fieldKeysByName[fldName]) return fieldKeysByName[fldName]
     const fldEntries = Object.entries(fields)
     for (let i = 0; i < fldEntries.length; i += 1) {
       const [key, fldData] = fldEntries[i]
-      if (fldData?.fieldName === keyName) {
-        fieldKeysByName[keyName] = key
+      if (fldData?.fieldName === fldName) {
+        fieldKeysByName[fldName] = key
         return key
       }
     }
@@ -109,7 +108,7 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       errFld.parentElement.style.marginTop = '9px'
-      errFld.parentElement.style.height = `${errFld.offsetHeight}px`
+      errFld.parentElement.style.height = 'auto'
       errFld.parentElement.style.display = 'block'
       scrollToFld(fldKey)
     } else {

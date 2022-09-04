@@ -156,7 +156,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (checkUpdateBtnErrors()) return
-      if (style.font.fontType === 'Google') updateGoogleFontUrl()
+      if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
       removeUnuseStyles()
       saveForm()
     } else {

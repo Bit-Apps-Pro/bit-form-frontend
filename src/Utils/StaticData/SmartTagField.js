@@ -38,6 +38,7 @@ export const SmartTagField = [
   {
     name: '_bf_weekday',
     label: 'Weekday',
+    type: 'text',
   },
   {
     name: '_bf_http_referer_url',
@@ -191,5 +192,11 @@ export const SmartTagField = [
     label: 'Custom Date Format',
     type: 'date',
     custom: true,
+  },
+  {
+    name: '_bf_is_user_logged_in',
+    label: 'User',
+    type: 'user',
+    singleSelect: true,
   },
 ]

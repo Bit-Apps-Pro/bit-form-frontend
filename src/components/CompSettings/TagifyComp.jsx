@@ -27,14 +27,16 @@ export default function TagifyComp({ children, selector, actionId, onChange, val
   }, [actionId])
 
   const modifyTagifyData = val => {
-    const matchedBraces = val.match(/({[^{]*?)(?=\})}/g)
+    const matchedBraces = val.match(/(\${{"name":".*?)"}}/g)
     let replacedData = val
-    matchedBraces?.forEach(t => {
-      if (t[1] === '"') {
-        const parseData = JSON.parse(t)
-        replacedData = replacedData.replace(t, parseData.name)
-      }
-    })
+    if(matchedBraces) {
+      matchedBraces.forEach(item => {
+        const itm = item.slice(2, -1)
+        const parseData = JSON.parse(itm)
+        replacedData = replacedData.replace(item, `\${${parseData.name}}`)
+      })
+    }
+
     onChange(replacedData)
   }
 
