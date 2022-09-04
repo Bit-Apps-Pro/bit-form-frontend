@@ -12,7 +12,8 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -22,13 +23,15 @@ import { $additionalSettings,
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId } from '../GlobalStates/GlobalStates'
+  $uniqueFieldId
+} from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout,
+import {
+  addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
@@ -41,7 +44,8 @@ import { addNewItemInLayout,
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError } from '../Utils/FormBuilderHelper'
+  removeFormUpdateError
+} from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
@@ -58,8 +62,8 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
 
-const BUILDER_PADDING = { all: 10, right: 18 }
-const CUSTOM_SCROLLBAR_GUTTER = 0
+const BUILDER_PADDING = { all: 5 }
+const CUSTOM_SCROLLBAR_GUTTER = 10
 
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
@@ -617,14 +621,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
-        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, paddingRight: BUILDER_PADDING.right }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
+        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '23px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-${formID}`} data-dev-_frm={formID}>
 
               {!styleMode ? (
                 <ResponsiveReactGridLayout
                   // style={{ background: 'purple' }}
-                  width={gridWidth - (formGutter + BUILDER_PADDING.all + BUILDER_PADDING.right - CUSTOM_SCROLLBAR_GUTTER)}
+                  width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
