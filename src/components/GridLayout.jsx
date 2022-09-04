@@ -9,10 +9,11 @@ import produce from 'immer'
 import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -22,13 +23,15 @@ import { $additionalSettings,
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId } from '../GlobalStates/GlobalStates'
+  $uniqueFieldId
+} from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout,
+import {
+  addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
@@ -41,7 +44,8 @@ import { addNewItemInLayout,
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError } from '../Utils/FormBuilderHelper'
+  removeFormUpdateError
+} from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
@@ -94,6 +98,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
+  const location = useLocation()
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
@@ -485,7 +490,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const navigateToFieldSettings = () => {
-    navigate.replace(navigate.location.pathname.replace(/style\/.+|style/g, 'fs'))
+    navigate(location.pathname.replace(/style\/.+|style/g, 'fs'), { replace: true })
     resetContextMenu()
   }
 

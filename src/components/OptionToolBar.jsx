@@ -31,8 +31,8 @@ import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
-  console.log('================', useParams())
-  const { formType, formID, '*': rightBar } = useParams()
+  const { formType, formID, '*': rightBarUrl } = useParams()
+  const rightBar = rightBarUrl.split('/')?.[0]
 
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)

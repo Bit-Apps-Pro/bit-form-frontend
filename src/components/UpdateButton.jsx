@@ -5,7 +5,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
   $builderHookStates,
@@ -26,7 +27,8 @@ import { $additionalSettings,
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows } from '../GlobalStates/GlobalStates'
+  $workflows
+} from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -44,7 +46,7 @@ import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
-  const { formType, formID } = useParams()
+  const { page, formType, formID, '*': rightBarUrl } = useParams()
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
@@ -295,7 +297,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             setSavedFormId(data.id)
             setButtonText('Update')
             // TODO : keep current route but replace form type and id
-            navigate(`/form/builder/edit/${data.id}/fields-list`, { replace: true })
+            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
@@ -312,7 +314,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
                 id: data?.form_content?.report_id,
                 isDefault: data?.form_content?.is_default || 0,
               },
-
             )
           }
 
