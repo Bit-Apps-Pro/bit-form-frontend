@@ -1,22 +1,24 @@
+import inputWrapperClasses from './inputWrapperClasses'
+
 /* eslint-disable camelcase */
 export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
-      [`.${fk}-fld-wrp`]: {
-        display: 'flex',
-        'flex-direction': 'column',
-        'background-color': 'var(--fld-wrp-bg, transparent)',
-        // width: '100%',
-        padding: 'var(--fld-wrp-p, 0)',
-        margin: 'var(--fld-wrp-m, 0)',
-        position: 'relative',
-        'box-shadow': 'var(--fld-wrp-sh, none)',
-        'border-style': 'var(--fld-wrp-bdr, medium)',
-        'border-color': 'var(--fld-wrp-bdr-clr, none)',
-        'border-width': 'var(--fld-wrp-bdr-width, 0)',
-        'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
-        'align-items': 'start',
-      },
+      [`.${fk}-fld-wrp`]: { ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`] },
+      // [`.${fk}-fld-wrp`]: {
+      //   display: 'flex',
+      //   'flex-direction': 'column',
+      //   'background-color': 'var(--fld-wrp-bg, transparent)',
+      //   padding: 'var(--fld-wrp-p, 0)',
+      //   margin: 'var(--fld-wrp-m, 0)',
+      //   position: 'relative',
+      //   'box-shadow': 'var(--fld-wrp-sh, none)',
+      //   'border-style': 'var(--fld-wrp-bdr, medium)',
+      //   'border-color': 'var(--fld-wrp-bdr-clr, none)',
+      //   'border-width': 'var(--fld-wrp-bdr-width, 0)',
+      //   'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
+      //   'align-items': 'start',
+      // },
 
       [`.${fk}-btn`]: {
         'font-size': 'var(--btn-fs)',
