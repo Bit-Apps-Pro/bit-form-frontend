@@ -1888,10 +1888,14 @@ arrow:after,
   .highlight-padding {
     overflow: hidden;
     background-color: rgb(86, 111, 255);
+    outline: 1px dashed #003f53;
+    outline-offset: -1px;
   }
   .highlight-element {
     overflow: hidden;
     background: rgb(255, 255, 103);
+    outline: 1px dashed #635700;
+    outline-offset: -1px;
   }
   .layout-wrapper{
     background-size: 13px 13px;
