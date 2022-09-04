@@ -13,7 +13,6 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
@@ -77,11 +76,11 @@ function SimpleColorsPickerMenu({ stateObjName,
         const styleColor = getValueByObjPath(styles, pathArr)
         let c = styleColor
         if (styleColor?.match(/var/gi)?.[0] === 'var') {
-          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
+          const varClr = styleColor?.replace(/\(|var|,.*|\)|(!important)|\s/gi, '')
           c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
         }
         if (styleColor?.match(/(!important)/gi)) {
-          c = styleColor?.replaceAll(/(!important)|\s/gi, '')
+          c = styleColor?.replace(/(!important)|\s/gi, '')
         }
         setColor(str2Color(c))
         break
@@ -200,7 +199,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     }
   }
 
-  const transparantColor = (e) => {
+  const transparentColor = (e) => {
     const colorObj = { h: 0, s: 0, v: 0, a: 0 }
     if (e.target.checked) {
       setColorState(colorObj)
@@ -209,7 +208,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     }
   }
 
-  const checkTransparant = () => {
+  const checkTransparent = () => {
     if (color?.h === 0 && color?.s === 0 && color?.v === 0 && color?.a === 0) {
       return true
     }
@@ -220,7 +219,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     <div className={css(c.preview_wrp)}>
       {canSetVariable ? (
         <>
-          <div className={css(boxSizeControlStyle.titlecontainer, c.mb)}>
+          <div className={css(c.mb)}>
             <StyleSegmentControl
               square
               noShadow
@@ -294,10 +293,10 @@ function SimpleColorsPickerMenu({ stateObjName,
             <div className={css(c.container)}>
               <div className={css(c.subContainer)}>
                 <SingleToggle
-                  title={__('Transparant')}
-                  action={transparantColor}
-                  isChecked={checkTransparant()}
-                  id="color-transparant"
+                  title={__('Transparent')}
+                  action={transparentColor}
+                  isChecked={checkTransparent()}
+                  id="color-transparent"
                 />
               </div>
               <ColorPicker
@@ -313,10 +312,10 @@ function SimpleColorsPickerMenu({ stateObjName,
         <div className={css(c.container)}>
           <div className={css(c.subContainer)}>
             <SingleToggle
-              title={__('Transparant')}
-              action={transparantColor}
-              isChecked={checkTransparant()}
-              id="color-transparant"
+              title={__('Transparent')}
+              action={transparentColor}
+              isChecked={checkTransparent()}
+              id="color-transparent"
             />
           </div>
           <ColorPicker

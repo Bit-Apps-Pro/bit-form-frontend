@@ -395,6 +395,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                     data-testid={`dwnlodd-inc-del-btn-${index}`}
                     type="button"
                     className={`${css(s.delBtn)} trash`}
+                    key={`download-icn-${index + (Math.random() * 2)}`}
                     title="Delete"
                     onClick={() => {
                       setShowWarning(true)
@@ -407,10 +408,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                     data-testid={`dwnlodd-inc-prv-btn-${index}`}
                     onClick={handlePrefixIcon}
                     type="button"
+                    key={`download-icn-${index + (Math.random() * 5)}`}
                     title={file.name}
                     className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}
                   >
-                    <img src={`${bits.iconURL}/${file}`} alt={`icon ${file}`} width="40" height="30" />
+                    <img src={`${bits.iconURL}/${file}`} alt={`icon-${file}`} width="40" height="30" />
                   </button>
                 </div>
               ))}

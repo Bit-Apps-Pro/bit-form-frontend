@@ -693,7 +693,7 @@ function TextFieldSettings() {
             <>
               <UniqFieldSettings
                 type="entryUnique"
-                title="Validate as Entry Unique"
+                title="Validate as Unique Entry"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 isUnique="show"
