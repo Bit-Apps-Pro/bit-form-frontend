@@ -496,10 +496,9 @@ export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayo
   const lgFld = draftLayout.lg.find(itm => itm.i === fieldKey)
   const mdFld = draftLayout.md.find(itm => itm.i === fieldKey)
   const smFld = draftLayout.sm.find(itm => itm.i === fieldKey)
-
-  lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
-  mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
-  smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
+  if (lgFld) { lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2) }
+  if (mdFld) { mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2) }
+  if (smFld) { smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2) }
 })
 
 export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
