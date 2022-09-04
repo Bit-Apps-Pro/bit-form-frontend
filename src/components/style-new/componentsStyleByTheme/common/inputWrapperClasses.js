@@ -11,6 +11,7 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
       border: 'var(--fld-wrp-bdr, medium none)',
       'border-width': 'var(--fld-wrp-bdr-width, 0)',
+      'border-style': 'var(--fld-wrp-bdr, medium)',
     },
     [`.${fk}-lbl-wrp`]: {
       width: 'var(--lbl-wrp-width, auto)',
