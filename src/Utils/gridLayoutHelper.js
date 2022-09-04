@@ -267,7 +267,6 @@ export function compactRGL(layout, cols, compactType = 'vertical') {
  * */
 export function compactResponsiveLayouts(layouts, cols) {
   const lays = deepCopy(layouts)
-  console.log({ lays: lays.lg })
   lays.lg = compactRGL(lays.lg, cols.lg)
   lays.md = compactRGL(lays.md, cols.md)
   lays.sm = compactRGL(lays.sm, cols.sm)
