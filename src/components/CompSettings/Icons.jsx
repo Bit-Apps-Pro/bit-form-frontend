@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
-import { $styles } from '../../GlobalStates/StylesState'
+import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
@@ -17,10 +17,10 @@ import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
-import { iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
+import { getValueByObjPath, iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
@@ -40,13 +40,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const [scrollLoading, setScrollLoading] = useState(false)
   const uploadLabel = uploadLbl || 'Upload Icon'
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()
   const { css } = useFela()
   const url = 'https://raw.githack.com'
   const ref = useRef()
+  const [allStyles, setAllStyles] = useRecoilState($allStyles)
 
   const iconPacks = [
     { label: 'Font Awesome', value: 't=2_id_fontawesome', id: 'font-awesome', status: false },
@@ -160,19 +160,23 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
           let newFields = fields
-          let newStyles = styles
+          let newStyles = allStyles
           setFields(allFields => {
             newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
             return newFields
           })
           if (addPaddingOnSelect) {
-            newStyles = produce(styles, draft => {
-              const padding = styles.fields[selectedFieldId]?.classes[`.${selectedFieldId}-fld`]?.padding || ''
-
-              if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
-              if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
+            newStyles = produce(allStyles, draft => {
+              Object.keys(allStyles).forEach(brkPnt => {
+                const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
+                const padding = getValueByObjPath(allStyles, path) || ''
+                const leftPadding = paddingGenerator(padding, 'left', true)
+                const rightPadding = paddingGenerator(padding, '', true)
+                if (iconType === 'prefixIcn') assignNestedObj(draft, path, leftPadding)
+                if (iconType === 'suffixIcn') assignNestedObj(draft, path, rightPadding)
+              })
             })
-            setStyles(newStyles)
+            setAllStyles(newStyles)
           }
           reCalculateFldHeights(fldKey)
           addToBuilderHistory({
@@ -255,15 +259,19 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     fieldData[iconType] = prefix
     const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(newFields)
-    let newStyles = styles
+    let newStyles = allStyles
     if (addPaddingOnSelect) {
-      newStyles = produce(styles, draft => {
-        const padding = styles.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]?.padding || ''
-
-        if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', true)
-        if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', true)
+      newStyles = produce(allStyles, draft => {
+        Object.keys(allStyles).forEach(brkPnt => {
+          const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
+          const padding = getValueByObjPath(allStyles, path) || ''
+          const leftPadding = paddingGenerator(padding, 'left', true)
+          const rightPadding = paddingGenerator(padding, '', true)
+          if (iconType === 'prefixIcn') assignNestedObj(draft, path, leftPadding)
+          if (iconType === 'suffixIcn') assignNestedObj(draft, path, rightPadding)
+        })
       })
-      setStyles(newStyles)
+      setAllStyles(newStyles)
     }
     setModal(false)
     addToBuilderHistory({
@@ -301,7 +309,6 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             >
               {iconPack.label}
             </button>
-
           ))}
         </div>
         <div className={css(ut.flxc, s.searchBar, ut.mt2, ut.mb2)}>
@@ -333,7 +340,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             <div title="Loading...">
               <div className={css(ut.mt2)} />
               {Array(26).fill(1).map((itm, i) => (
-                <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div key={`loading-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
               ))}
             </div>
           )}
@@ -355,7 +362,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             <div title="Loading...">
               <div className={css(ut.mt2)} />
               {Array(26).fill(1).map((itm, i) => (
-                <div key={`loderfnt--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div key={`loading-2--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
               ))}
             </div>
           )}
@@ -381,7 +388,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           <div className={css({ h: 300 })}>
             <div title="Loading..." className={css({ flxp: 'wrap', jc: 'center', flx: 1 })}>
               {Array(22).fill(1).map((itm, i) => (
-                <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div key={`loading-3-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
               ))}
             </div>
           </div>
@@ -390,12 +397,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
             <div className={css(ut.flxc, ut.mt4, s.icon)}>
               {!!files.length && files.map((file, index) => (
-                <div className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
+                <div key={`download-icn-${index * 2}`} className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
                   <button
                     data-testid={`dwnlodd-inc-del-btn-${index}`}
                     type="button"
                     className={`${css(s.delBtn)} trash`}
-                    key={`download-icn-${index + (Math.random() * 2)}`}
                     title="Delete"
                     onClick={() => {
                       setShowWarning(true)
