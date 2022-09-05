@@ -65,6 +65,7 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 const BUILDER_PADDING = { all: 5 }
 const CUSTOM_SCROLLBAR_GUTTER = 10
 
+// ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   console.log('render gridlay')
   const { formType } = useParams()
@@ -94,10 +95,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
-  const stopTransitionsInGrid = useRef(false)
+  const stopGridTransition = useRef(false)
   const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
+  const elmCurrentHighlightedRef = useRef(null)
+  const eventAbortControllerRef = useRef(null)
+  const insptectModeTurnedOnRef = useRef(false)
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
@@ -109,9 +113,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setRootLayouts(nl2)
 
     if (styleMode) {
-      stopTransitionsInGrid.current = true
+      stopGridTransition.current = true
     } else {
-      setTimeout(() => { stopTransitionsInGrid.current = false }, 1)
+      setTimeout(() => { stopGridTransition.current = false }, 1)
     }
   }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
 
@@ -184,6 +188,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       delete draftStyles.fields[fldKey]
     }))
   }
+
   const removeLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
@@ -509,10 +514,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
 
-  const elmCurrentHighlightedRef = useRef(null)
-  const eventAbortControllerRef = useRef(null)
-  const insptectModeTurnedOnRef = useRef(false)
-
   const highlightElmEvent = event => {
     const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
     if (iFrameDocument.elementsFromPoint) {
@@ -617,7 +618,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       onDragEnter={e => e.preventDefault()}
       onClick={() => resetContextMenu()}
     >
-      {stopTransitionsInGrid.current && <style>{'.layout *{transition:none!important}'}</style>}
+      {stopGridTransition.current && <style>{'.layout *{transition:none!important}'}</style>}
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
