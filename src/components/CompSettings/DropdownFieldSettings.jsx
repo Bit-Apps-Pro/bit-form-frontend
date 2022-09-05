@@ -324,11 +324,9 @@ export default function DropdownFieldSettings() {
           <span>Options Lists</span>
           {optionsList.map((listObj, index) => {
             const listName = Object.keys(listObj)
-
             return (
               <>
-
-                <div className={css(ut.flxcb)}>
+                <div key={`list-name-${index * 5 + 1}`} className={css(ut.flxcb)}>
                   <input
                     data-testid={`lst-name-inp-${index}`}
                     type="text"
@@ -368,7 +366,6 @@ export default function DropdownFieldSettings() {
                       <TrashIcn size={19} />
                     </button>
                   )}
-
                 </div>
                 {duplicateListName === index && <span className={css({ cr: 'red', ml: 5 })}>Duplicate List Name Not Allowed</span>}
               </>

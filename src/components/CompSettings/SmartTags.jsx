@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
-
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -45,8 +44,8 @@ function SmartTags({ fieldName }) {
 
       <ul className={css(style.ul)}>
         <h4 style={{ margin: 0 }}>Smart Tags</h4>
-        {SmartTagField.map(f => (
-          <li className={css(style.li)}>
+        {SmartTagField.map((f, indx) => (
+          <li key={`smart-tag-${indx * 2}`} className={css(style.li)}>
             <button
               type="button"
               className={`${css(style.button)} btnHover`}
