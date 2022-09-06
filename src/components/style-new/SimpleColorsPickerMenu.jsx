@@ -59,6 +59,8 @@ function SimpleColorsPickerMenu({ stateObjName,
     '--global-font-color': themeFontColor,
     '--global-accent-color': themePrimaryColor } = themeColors
 
+  const path = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
+
   useEffect(() => {
     switch (stateObjName) {
       case 'themeColors':
@@ -116,7 +118,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             drftThmClr['--fld-focs-i-fltr'] = setFilterValue.filter
           }
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeColors: getLatestState('themeColors') }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
@@ -129,7 +131,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             if ('a' in hslaPaths) { drftThmVar[hslaPaths.a] = `${a}%` }
           }
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeVars: getLatestState('themeVars') }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'field-accent-color':
@@ -140,7 +142,7 @@ function SimpleColorsPickerMenu({ stateObjName,
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = v
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { styles: getLatestState('styles') }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { styles: getLatestState('styles') }))
         break
 
       case 'styles':
@@ -167,7 +169,7 @@ function SimpleColorsPickerMenu({ stateObjName,
             assignNestedObj(drftStyles, propertyPath, clr)
           }
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { styles: getLatestState('styles') }))
+        addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { styles: getLatestState('styles') }))
         break
 
       default:
