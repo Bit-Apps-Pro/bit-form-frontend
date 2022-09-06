@@ -102,7 +102,7 @@ export default function SimpleAccordion({ className,
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
               {switching && (
-                <SingleToggle id={id} className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
+                <SingleToggle id={id} className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked || ''} />
               )}
               {actionComponent && actionComponent}
             </div>
