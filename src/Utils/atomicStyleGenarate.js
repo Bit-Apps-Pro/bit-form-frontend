@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, optimizeAndDefineCssClassProps, objectToCssText } from 'atomize-css'
-import { getIterator } from 'core-js'
 import { useRecoilValue } from 'recoil'
 import { getRecoil } from 'recoil-nexus'
 import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'

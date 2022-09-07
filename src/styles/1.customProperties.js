@@ -1,4 +1,3 @@
-// import { isInteger } from "core-js/core/number"
 const customProperties = {
   // border
   b: $ => ({ border: $ }),
