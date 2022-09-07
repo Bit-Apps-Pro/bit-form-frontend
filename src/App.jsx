@@ -86,6 +86,11 @@ export default function App() {
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
+              {/* <Route path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey" element={<FormDetails />} /> */}
+              {/* <Route path="/form/:page/:formType/:formID/:rightBar/:element" element={<FormDetails />} /> */}
+              {/* <Route path="/form/:page/:formType/:formID/:rightBar/*" element={<FormDetails />} /> */}
+              {/* <Route path="/form/:page/:formType/:formID/:rightBar" element={<FormDetails />} /> */}
+              {/* <Route path="/form/:page/:formType/:formID" element={<FormDetails />} /> */}
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
               <Route path="*" element={<Error404 />} />

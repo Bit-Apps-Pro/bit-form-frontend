@@ -9,7 +9,7 @@ export default function OptionMenu({ title, children, w = 200, h = 250 }) {
 
   return (
     <div ref={ref} className={css(optionmenu.dropdownWrp)}>
-      <div className={`${css(optionmenu.dropDown, isActive && optionmenu.dropDownShow)} ${isActive && 'drop-down-show'}`} style={{ ...isActive && { width: w, height: h } }}>
+      <div className={`${css([optionmenu.dropDown, isActive && optionmenu.dropDownShow])} ${isActive && 'drop-down-show'}`} style={{ ...isActive && { width: w, height: h } }}>
         <button onClick={optionHandler} type="button" className={`${css(optionmenu.menuBtn)} menu-btn ${isActive && css(optionmenu.btnActive)}`} aria-label="Toggle option menu">
           <div aria-hidden="true" className={`hamburger ${css(optionmenu.hamburger)} ${isActive && 'open'}`}>
             <svg width="20" height="20" viewBox="0 0 100 100">

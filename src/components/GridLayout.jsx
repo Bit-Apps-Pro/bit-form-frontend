@@ -9,7 +9,7 @@ import produce from 'immer'
 import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
@@ -102,6 +102,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const elmCurrentHighlightedRef = useRef(null)
   const eventAbortControllerRef = useRef(null)
   const insptectModeTurnedOnRef = useRef(false)
+  const location = useLocation()
 
   useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
 
@@ -494,7 +495,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const navigateToFieldSettings = () => {
-    navigate.replace(navigate.location.pathname.replace(/style\/.+|style/g, 'fs'))
+    navigate(location.pathname.replace(/style\/.+|style/g, 'fs'), { replace: true })
     resetContextMenu()
   }
 

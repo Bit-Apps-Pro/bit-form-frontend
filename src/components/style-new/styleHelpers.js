@@ -5,7 +5,7 @@ import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $styles, $stylesLgLight } from '../../GlobalStates/StylesState'
+import { $allStyles, $styles, $stylesLgLight } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -363,7 +363,6 @@ export const styleClasses = {
   lbl: ['lbl', 'lbl-wrp'],
   lblPreIcn: ['lbl-pre-i'],
   lblSufIcn: ['lbl-suf-i'],
-  reqSmbl: ['req-smbl'],
   subTitl: ['sub-titl'],
   subTlePreIcn: ['sub-titl-pre-i'],
   subTleSufIcn: ['sub-titl-suf-i'],
@@ -392,6 +391,9 @@ export const styleClasses = {
   errPreIcn: ['err-txt-pre-i'],
   errSufIcn: ['err-txt-suf-i'],
   reqSmbl: ['req-smbl'],
+  showFileList: ['files-list', 'file-wrpr', 'cross-btn', 'cross-btn:hover'],
+  showFilePreview: ['file-preview'],
+  showFileSize: ['file-size'],
 }
 
 export const iconElementLabel = {
@@ -416,7 +418,9 @@ export const iconElementLabel = {
   bg_img: 'Background Image',
 }
 
-const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+const deleteStyles = (obj, clsArr, fk) => {
+  clsArr && clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+}
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
 export const removeUnuseStyles = () => {
@@ -474,6 +478,12 @@ export const getUpdatedStyles = () => {
           if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
           break
 
+        case 'file-up':
+          if (!fld.config.showFilePreview) deleteStyles(deftStyles, styleClasses.showFilePreview, fldkey)
+          if (!fld.config.showFileSize) deleteStyles(deftStyles, styleClasses.showFileSize, fldkey)
+          if (!fld.config.showFileList) deleteStyles(deftStyles, styleClasses.showFileList, fldkey)
+          break
+
         default:
           break
       }
@@ -482,119 +492,149 @@ export const getUpdatedStyles = () => {
   return newStyles
 }
 
-export const addDefaultStyleClasses = (fk, element) => {
-  const styles = getRecoil($styles)
-  const newStyles = produce(styles, drftStyle => {
-    const fldTyp = styles.fields[fk]?.fieldType
-    switch (fldTyp) {
-      case 'text':
-      case 'number':
-      case 'password':
-      case 'username':
-      case 'email':
-      case 'url':
-      case 'date':
-      case 'datetime-local':
-      case 'time':
-      case 'month':
-      case 'week':
-      case 'color':
-      case 'textarea':
-        const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'title':
-        const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = titleStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'divider':
-        const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dividerStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'image':
-        const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = imageStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'button':
-        const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = buttonStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'check':
-      case 'radio':
-        const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = checkBoxStyleBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'advanced-file-up':
-        const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = advanceFileUpBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'html':
-        const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = htmlBitFormDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'currency':
-        const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = currencyStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'country':
-        const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = countryStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'file-up':
-        const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = fileUploadStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'recaptcha':
-        const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = recaptchaStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'html-select':
-        const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = selectStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'select':
-        const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = dropdownStyle1BitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      case 'phone-number':
-        const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk })
-        styleClasses[element].forEach(cls => {
-          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = phoneNumberStyleBitformDefault[`.${fk}-${cls}`]
-        })
-        break
-      default:
-        break
-    }
+const breakpointAndColorScheme = {
+  lgLightStyles: { breakpoint: 'lg', colorScheme: 'light' },
+  lgDarkStyles: { breakpoint: 'lg', colorScheme: 'dark' },
+  mdLightStyles: { breakpoint: 'md', colorScheme: 'light' },
+  mdDarkStyles: { breakpoint: 'md', colorScheme: 'dark' },
+  smLightStyles: { breakpoint: 'sm', colorScheme: 'light' },
+  smDarkStyles: { breakpoint: 'sm', colorScheme: 'dark' },
+}
+
+const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle }) => {
+  styleClasses[element].forEach(cls => {
+    const clsNam = `.${fk}-${cls}`
+    const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
+    if (!fieldStyle[clsNam]) return
+    assignNestedObj(drftAllStyles, path, fieldStyle[clsNam])
   })
-  setRecoil($styles, newStyles)
+}
+
+export const addDefaultStyleClasses = (fk, element) => {
+  const allStyles = getRecoil($allStyles)
+  const allNewStyles = produce(allStyles, drftAllStyles => {
+    Object.keys(allStyles).forEach(brkPntColorSchema => {
+      const fldTyp = allStyles[brkPntColorSchema]?.fields?.[fk]?.fieldType
+      if (!fldTyp) return
+      switch (fldTyp) {
+        case 'text':
+        case 'number':
+        case 'password':
+        case 'username':
+        case 'email':
+        case 'url':
+        case 'date':
+        case 'datetime-local':
+        case 'time':
+        case 'month':
+        case 'week':
+        case 'color':
+        case 'textarea':
+          const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in textStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: textStyleBitFormDefault })
+          }
+          break
+        case 'title':
+          const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in titleStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: titleStyleBitFormDefault })
+          }
+          break
+        case 'divider':
+          const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in dividerStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dividerStyleBitFormDefault })
+          }
+          break
+        case 'image':
+          const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in imageStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: imageStyleBitFormDefault })
+          }
+          break
+        case 'button':
+          const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-fld-wrp`] in buttonStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: buttonStyleBitFormDefault })
+          }
+          break
+        case 'check':
+        case 'radio':
+          const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in checkBoxStyleBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: checkBoxStyleBitFormDefault })
+          }
+          break
+        case 'advanced-file-up':
+          const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in advanceFileUpBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: advanceFileUpBitFormDefault })
+          }
+          break
+        case 'html':
+          const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in htmlBitFormDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: htmlBitFormDefault })
+          }
+          break
+        case 'currency':
+          const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in currencyStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: currencyStyle1BitformDefault })
+          }
+          break
+        case 'country':
+          const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in countryStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: countryStyle1BitformDefault })
+          }
+          break
+        case 'file-up':
+          const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-wrpr`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-size`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          if ([`.${fk}-file-preview`] in fileUploadStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          }
+          break
+        case 'recaptcha':
+          const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in recaptchaStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: recaptchaStyle1BitformDefault })
+          }
+          break
+        case 'html-select':
+          const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in selectStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: selectStyle1BitformDefault })
+          }
+          break
+        case 'select':
+          const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in dropdownStyle1BitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dropdownStyle1BitformDefault })
+          }
+          break
+        case 'phone-number':
+          const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          if ([`.${fk}-inp-fld-wrp`] in phoneNumberStyleBitformDefault) {
+            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
+          }
+          break
+        default:
+          break
+      }
+    })
+  })
+  setRecoil($allStyles, allNewStyles)
 }
 
 export const generateFontUrl = (font, string) => {

@@ -31,8 +31,8 @@ import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
-  console.log('================', useParams())
-  const { formType, formID, '*': rightBar } = useParams()
+  const { formType, formID, '*': rightBarUrl } = useParams()
+  const rightBar = rightBarUrl.split('/')?.[0]
 
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
@@ -108,18 +108,33 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       <div className={css(OptionToolBarStyle.form_section)}>
         <div className={css(ut.flxc)}>
           <Tip msg="Form Fields">
-            <button data-testid="field-mode" onClick={formFieldButtonHandler} type="button" className={`${css(OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2)} ${(!flags.styleMode && !showToolBar) && 'active'}`}>
+            <button
+              data-testid="field-mode"
+              onClick={formFieldButtonHandler}
+              type="button"
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2])} ${(!flags.styleMode && !showToolBar) && 'active'}`}
+            >
               <AddIcon size="22" />
             </button>
           </Tip>
           <Tip msg="Elements & Layers">
-            <button data-testid="style-mode" onClick={styleModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}>
+            <button
+              data-testid="style-mode"
+              onClick={styleModeButtonHandler}
+              type="button"
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}
+            >
               <LayerIcon size="22" />
             </button>
           </Tip>
           {flags.styleMode && (
             <Tip msg="Inspect Element">
-              <button data-testid="inspect-element" onClick={inspectModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}>
+              <button
+                data-testid="inspect-element"
+                onClick={inspectModeButtonHandler}
+                type="button"
+                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
+              >
                 <BtnIcn size="22" />
               </button>
             </Tip>

@@ -114,7 +114,7 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <RequiredSettings />
+      <RequiredSettings asteriskIsAllow={false} />
 
       <FieldSettingsDivider />
 

@@ -67,6 +67,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
+    console.log({ v: value, u: unit, preN: prvUnit, p: prop })
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
@@ -77,6 +78,17 @@ export default function FieldQuickTweaks({ fieldKey }) {
           case 'text':
           case 'date':
           case 'html-select':
+          case 'number':
+          case 'password':
+          case 'username':
+          case 'email':
+          case 'url':
+          case 'time':
+          case 'datetime-local':
+          case 'month':
+          case 'week':
+          case 'color':
+          case 'textarea':
             elemntKey = 'fld'
             break
 
@@ -130,6 +142,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'email':
       case 'url':
       case 'time':
+      case 'datetime-local':
       case 'month':
       case 'week':
       case 'color':

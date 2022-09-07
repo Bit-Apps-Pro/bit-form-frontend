@@ -11,10 +11,12 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -169,16 +171,14 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select
-          defaultValue=""
-          value={styles.fieldsSize}
+          defaultValue={styles.fieldsSize || 'medium'}
           onChange={setSizes}
           className={css(sc.select)}
           data-testid="field-sizes-select"
         >
           {Object.keys(sizes).map((key, index) => (
             <option
-              selected={!!(key === styles.fieldsSize)}
-              key={`size-${index * 5}`}
+              key={`size-${index * 5 * 2}`}
               value={key}
               data-testid={`globl-size-${key}`}
             >

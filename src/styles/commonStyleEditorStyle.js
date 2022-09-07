@@ -3,6 +3,7 @@ const sc = {
     w: '128px !important',
     bc: 'var(--white-0-95) !important',
     b: 'none',
+    fs: '12px !important',
     brs: '10px !important',
     fw: 500,
     cr: 'var(--b-54-12) !important',

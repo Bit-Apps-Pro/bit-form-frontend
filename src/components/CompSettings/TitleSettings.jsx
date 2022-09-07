@@ -19,11 +19,13 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses,
+import {
+  addDefaultStyleClasses,
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses } from '../style-new/styleHelpers'
+  styleClasses
+} from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -251,7 +253,7 @@ function TitleSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select data-testid="titl-tag-slct" className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
-                {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
+                {tagOptions.map((opt, index) => <option key={`opt-title-${index * 4}`} value={opt.value}>{opt.title}</option>)}
               </select>
             </div>
           </div>
@@ -324,7 +326,7 @@ function TitleSettings() {
                 value={fieldData?.subTitleTag}
                 onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}
               >
-                {tagOptions.map(opt => <option value={opt.value}>{opt.title}</option>)}
+                {tagOptions.map((opt, indx) => <option key={`title-opt-${indx * 4}`} value={opt.value}>{opt.title}</option>)}
               </select>
             </div>
           </div>

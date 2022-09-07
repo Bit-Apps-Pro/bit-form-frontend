@@ -8,7 +8,7 @@ import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
-  const { rightBar, element, fieldKey: urlFldKey } = useParams()
+  const { '*': rightBar, element, fieldKey: urlFldKey } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)

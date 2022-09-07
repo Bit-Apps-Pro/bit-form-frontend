@@ -9,7 +9,7 @@ export default function IconStyleBtn({ route }) {
   const { css } = useFela()
 
   const styleHandler = () => {
-    navigate.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
+    navigate(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)
   }
   return (
     <button data-testid={`${route}-styl-btn`} type="button" onClick={styleHandler} className={css(ut.icnBtn)}>

@@ -27,7 +27,7 @@ export default function LayerAccordion({ className,
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
-  const { element, rightBar } = useParams()
+  const { element, '*': rightBar } = useParams()
 
   const dataTestId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc`
   const dataTestFocusId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc-focus`

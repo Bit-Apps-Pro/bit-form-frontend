@@ -169,7 +169,7 @@ const lgLightThemeVars = {
   '--req-smbl-lt': '', // Required Symbol Left Value
   '--req-smbl-rt': '', // Required Symbol Right Value
 
-  '--sub-titl-m': '', // subtitle margin
+  '--sub-titl-m': '2px 0px 0px 0px', // subtitle margin
   '--sub-titl-p': '3px 0', // subtitle padding
   '--sub-titl-al': '', // subtitle align
   '--sub-titl-fs': '12px', // subtitle font size
@@ -179,7 +179,7 @@ const lgLightThemeVars = {
   '--sub-titl-font-w': 500, // sub title font weight
   '--sub-titl-font-style': '', // subtitle font style
 
-  '--hlp-txt-m': '', // helper text margin
+  '--hlp-txt-m': '2px 0px 0px 0px', // helper text margin
   '--hlp-txt-p': '3px 0', // hepler text padding
   '--hlp-txt-fs': '12px', // hepler text font size
   '--hlp-txt-al': '', // helper text align
@@ -199,25 +199,25 @@ const lgLightThemeVars = {
   '--err-txt-font-w': 400, // helper text font weight
   '--err-txt-font-style': '', // helper text font style
 
-  '--pre-i-h': '40px', // fld prefix icon height
-  '--pre-i-w': '40px', // fld prefix icon width
-  '--pre-i-m': '', // fld prefix icon margin
-  '--pre-i-p': '7px', // fld prefix icon padding
+  '--pre-i-h': '25px', // fld prefix icon height
+  '--pre-i-w': '25px', // fld prefix icon width
+  '--pre-i-m': '0px 0px 0px 3px', // fld prefix icon margin
+  '--pre-i-p': '', // fld prefix icon padding
   '--pre-i-bdr': '', // prefix icon border
   '--pre-i-bdr-width': '', // fld prefix icon border width
   '--pre-i-bdr-rad': '8px', // fld prefix icon message border radius
 
-  '--suf-i-h': '40px', // fld suffix icon height
-  '--suf-i-w': '40px', // fld suffix icon width
-  '--suf-i-m': '', // fld suffix icon margin
-  '--suf-i-p': '7px', // fld suffix icon padding
+  '--suf-i-h': '25px', // fld suffix icon height
+  '--suf-i-w': '25px', // fld suffix icon width
+  '--suf-i-m': '0px 3px 0px 0px', // fld suffix icon margin
+  '--suf-i-p': '', // fld suffix icon padding
   '--suf-i-bdr': '', // suffix icon border
   '--suf-i-bdr-width': '', // fld suffix icon border width
   '--suf-i-bdr-rad': '8px', // fld suffix icon border radius
 
   '--lbl-pre-i-h': '20px', // label prefix icon height
   '--lbl-pre-i-w': '20px', // label prefix icon width
-  '--lbl-pre-i-m': '0 5px 0 0', // label prefix icon margin
+  '--lbl-pre-i-m': '0px 5px 0px 0px', // label prefix icon margin
   '--lbl-pre-i-p': '', // label prefix icon padding
   '--lbl-pre-i-bdr': '', // label prefix icon border
   '--lbl-pre-i-bdr-width': '', // label prefix icon border width
@@ -225,55 +225,55 @@ const lgLightThemeVars = {
 
   '--lbl-suf-i-h': '20px', // Label suffix icon height
   '--lbl-suf-i-w': '20px', // Label suffix icon width
-  '--lbl-suf-i-m': '5px', // Label suffix icon margin
+  '--lbl-suf-i-m': '0px 0px 0px 5px', // Label suffix icon margin
   '--lbl-suf-i-p': '', // Label suffix icon padding
   '--lbl-suf-i-bdr': '', // label suffix icon border
   '--lbl-suf-i-bdr-width': '', // Label suffix icon border width
   '--lbl-suf-i-bdr-rad': '8px', // Label suffix icon border radius
 
-  '--sub-titl-pre-i-h': '20px', // sub title prefix icon height
-  '--sub-titl-pre-i-w': '20px', // sub title prefix icon width
-  '--sub-titl-pre-i-m': '5px', // sub title prefix icon margin
+  '--sub-titl-pre-i-h': '15px', // sub title prefix icon height
+  '--sub-titl-pre-i-w': '15px', // sub title prefix icon width
+  '--sub-titl-pre-i-m': '0px 5px 0px 0px', // sub title prefix icon margin
   '--sub-titl-pre-i-p': '', // sub title prefix icon padding
   '--sub-titl-pre-i-bdr': '', // sub title prefix icon border
   '--sub-titl-pre-i-bdr-width': '', // sub title prefix icon border width
   '--sub-titl-pre-i-bdr-rad': '8px', // sub title prefix icon message border radius
 
-  '--sub-titl-suf-i-h': '20px', // sub title suffix icon height
-  '--sub-titl-suf-i-w': '20px', // sub title suffix icon width
-  '--sub-titl-suf-i-m': '5px', // sub title suffix icon margin
+  '--sub-titl-suf-i-h': '15px', // sub title suffix icon height
+  '--sub-titl-suf-i-w': '15px', // sub title suffix icon width
+  '--sub-titl-suf-i-m': '0px 0px 0px 5px', // sub title suffix icon margin
   '--sub-titl-suf-i-p': '', // sub title suffix icon padding
   '--sub-titl-suf-i-bdr': '', // sub title suffix icon border
   '--sub-titl-suf-i-bdr-width': '', // sub title suffix icon border width
   '--sub-titl-suf-i-bdr-rad': '8px', // sub title suffix icon border radius
 
-  '--hlp-txt-pre-i-h': '20px', // helper txt prefix icon height
-  '--hlp-txt-pre-i-w': '20px', // helper txt prefix icon width
-  '--hlp-txt-pre-i-m': '5px', // helper txt prefix icon margin
+  '--hlp-txt-pre-i-h': '15px', // helper txt prefix icon height
+  '--hlp-txt-pre-i-w': '15px', // helper txt prefix icon width
+  '--hlp-txt-pre-i-m': '0px 5px 0px 0px', // helper txt prefix icon margin
   '--hlp-txt-pre-i-p': '', // helper txt prefix icon padding
   '--hlp-txt-pre-i-bdr': '', // helper txt prefix icon border
   '--hlp-txt-pre-i-bdr-width': '', // helper txt prefix icon border width
   '--hlp-txt-pre-i-bdr-rad': '8px', // helper txt prefix icon message border radius
 
-  '--hlp-txt-suf-i-h': '20px', // helper txt suffix icon height
-  '--hlp-txt-suf-i-w': '20px', // helper txt suffix icon width
-  '--hlp-txt-suf-i-m': '5px', // helper txt suffix icon margin
+  '--hlp-txt-suf-i-h': '15px', // helper txt suffix icon height
+  '--hlp-txt-suf-i-w': '15px', // helper txt suffix icon width
+  '--hlp-txt-suf-i-m': '0px 0px 0px 5px', // helper txt suffix icon margin
   '--hlp-txt-suf-i-p': '', // helper txt suffix icon padding
   '--hlp-txt-suf-i-bdr': '', // helper txt suffix icon border
   '--hlp-txt-suf-i-bdr-width': '', // helper txt suffix icon border width
   '--hlp-txt-suf-i-bdr-rad': '8px', // helper txt suffix icon border radius
 
-  '--err-txt-pre-i-h': '20px', // error txt prefix icon height
-  '--err-txt-pre-i-w': '20px', // error txt prefix icon width
-  '--err-txt-pre-i-m': '5px', // error txt prefix icon margin
+  '--err-txt-pre-i-h': '15px', // error txt prefix icon height
+  '--err-txt-pre-i-w': '15px', // error txt prefix icon width
+  '--err-txt-pre-i-m': '0px 5px 0px 0px', // error txt prefix icon margin
   '--err-txt-pre-i-p': '', // error txt prefix icon padding
   '--err-txt-pre-i-bdr': '', // helper txt prefix icon border
   '--err-txt-pre-i-bdr-width': '', // error txt prefix icon border width
   '--err-txt-pre-i-bdr-rad': '8px', // error txt prefix icon message border radius
 
-  '--err-txt-suf-i-h': '20px', // error txt suffix icon height
-  '--err-txt-suf-i-w': '20px', // error txt suffix icon width
-  '--err-txt-suf-i-m': '5px', // error txt suffix icon margin
+  '--err-txt-suf-i-h': '15px', // error txt suffix icon height
+  '--err-txt-suf-i-w': '15px', // error txt suffix icon width
+  '--err-txt-suf-i-m': '0px 0px 0px 5px', // error txt suffix icon margin
   '--err-txt-suf-i-p': '', // error txt suffix icon padding
   '--err-txt-suf-i-bdr': '', // helper txt suffix icon border
   '--err-txt-suf-i-bdr-width': '', // error txt suffix icon border width
