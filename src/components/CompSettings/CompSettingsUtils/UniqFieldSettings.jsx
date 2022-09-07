@@ -15,7 +15,6 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
 
   const setShowErrMsg = e => {
     const { checked } = e.target
-    // console.log('name', name)
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
     if (checked) {
@@ -36,7 +35,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
       title={title}
       className={className}
       tip={tipTitle}
-      toggleName={isUnique}
+      toggleName={type}
       toggleAction={setShowErrMsg}
       toggleChecked={fieldData?.err?.[type]?.[isUnique]}
       switching

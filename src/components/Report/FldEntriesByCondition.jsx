@@ -271,7 +271,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                 <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>All Reports</div>
                 <div className="report-search mb-3">
                   <span><SearchIcn size="16" /></span>
-                  <input type="text" placeholder="Search reports" onChange={searchReport} className="dpdw-input-box" />
+                  <input aria-label="Search reports" type="text" placeholder="Search reports" onChange={searchReport} className="dpdw-input-box" />
 
                 </div>
                 {availableReports.length === 0 && (
@@ -279,10 +279,9 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                 )}
                 <Scrollbars style={{ height: '70%' }} autoHide>
                   <div>
-                    {availableReports?.map(report => (
-                      <div className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
+                    {availableReports?.map((report, indx) => (
+                      <div key={`fld-condition-${indx * (5 + 2)}`} className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
                         <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
-
                           {report?.label?.length > 14 ? (
                             `${report?.label?.slice(0, 14)}...`
                           ) : (
@@ -299,19 +298,15 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                                 <OutlineDeleteIcn size={12} />
                               </button>
                             )}
-
                           </div>
                         )}
-
                       </div>
-
                     ))}
                   </div>
                 </Scrollbars>
               </div>
             )}
           >
-
             <div>
               <button className="btn btcd-btn-sm br-15" type="button">
                 <MoreVerticalIcn size="14" />
@@ -322,13 +317,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
           <Modal md show={showMdl} setModal={setshowMdl} title="Report" style={{ overflow: 'auto' }} onCloseMdl={onCloseMdl}>
             <>
               <div className="flx mt-4">
-                <label> Name  </label>
-                <input type="text" name="report_name" value={reports[reportIndex]?.details?.report_name || ''} onChange={reportHandler} placeholder="Please enter report name" className="ml-2 btcd-paper-inp w-6" />
+                <label htmlFor="Name">Name</label>
+                <input aria-label="Report name" type="text" name="report_name" value={reports[reportIndex]?.details?.report_name || ''} onChange={reportHandler} placeholder="Please enter report name" className="ml-2 btcd-paper-inp w-6" />
               </div>
               <div className="mt-4">
                 <ConditionalLogic formFields={formFields} dataConf={reports} setDataConf={setReports} reportInd={reportIndex || 0} />
               </div>
-
               <div className="mt-2 f-left">
                 <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
                   Save
@@ -357,7 +351,6 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             <div className="txt-center">
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
             </div>
-
           </Modal>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function NavBtn({ route,
   icn,
   highlightSelector,
   styleOverride }) {
-  const { formType, formID, fieldKey, element, rightBar } = useParams()
+  const { formType, formID, fieldKey, element, '*': rightBar } = useParams()
 
   const dataTestId = `${subRoute ? `${subRoute}-` : ''}${route}-nav`
   const dataTestFocusId = `${subRoute ? `${subRoute}-` : ''}${route}-nav-focus`

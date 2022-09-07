@@ -250,6 +250,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     let dataIndex = 0
                     return (
                       <ul
+                        key={`list-option-${5 * Math.random()}`}
                         className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')} ${activeList === index ? 'active-list' : ''}`}
                         aria-hidden="true"
                         aria-label="Option List"
@@ -282,6 +283,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               return (
                                 <>
                                   <li
+                                    key={`option-grp-ttl-${9 * Math.random()}`}
                                     data-testid={`${fieldKey}-opt-${dataIndex}`}
                                     data-index={dataIndex++}
                                     className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
@@ -291,6 +293,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                   </li>
                                   {opt.childs.map(opt2 => (
                                     <li
+                                      key={`opt-grp-child-${Math.random() * 2}`}
                                       data-testid={`${fieldKey}-opt-${dataIndex}`}
                                       data-dev-option={fieldKey}
                                       data-index={dataIndex++}

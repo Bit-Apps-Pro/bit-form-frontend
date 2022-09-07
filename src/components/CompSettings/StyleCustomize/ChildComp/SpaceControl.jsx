@@ -97,7 +97,6 @@ export default function SpaceControl({ value,
             noShadow
           />
         </span>
-
       </div>
       <div className={css(s.segmentcontainer)}>
         <Grow open={controller === 'All'}>
@@ -182,7 +181,7 @@ const s = {
     flx: 'align-center',
     jc: 'flex-end',
     flxp: 'wrap',
-    mt: 10,
+    my: 10,
     w: 220,
   },
   titlecontainer: { flx: 'center-between' },

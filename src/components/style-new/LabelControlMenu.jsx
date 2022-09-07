@@ -15,10 +15,12 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -225,7 +227,7 @@ export default function LabelControlMenu() {
       </div>
       <Grow open={openVarPos} overflw="visible">
         <div className={css(ut.mb2, mainStyle.main)}>
-          <span className={css(mainStyle.label)}>Label Postion Vertical</span>
+          <span className={css(mainStyle.label)}>Label Position Vertical</span>
           <ResetStyle
             propertyPath="--lbl-wrp-sa"
             stateObjName="themeVars"
@@ -240,7 +242,7 @@ export default function LabelControlMenu() {
               { icn: <LblvarticalPlsmntBottomIcon size="17" />, label: 'end', tip: 'Bottom' },
             ]}
             onChange={e => setLabelVerticalPos(e)}
-            defaultActive={lwSa}
+            defaultActive={lwSa === '' ? 'top' : lwSa}
             width="100px"
           />
         </div>
@@ -261,7 +263,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setLabelAlign(e)}
-          defaultActive={lblAl}
+          defaultActive={lblAl === '' ? 'left' : lblAl}
           width="100px"
         />
       </div>
@@ -281,7 +283,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setSubLabelAlign(e)}
-          defaultActive={stAl}
+          defaultActive={stAl === '' ? 'left' : stAl}
           width="100px"
         />
       </div>
@@ -301,7 +303,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setHelperTextAlign(e)}
-          defaultActive={htAl}
+          defaultActive={htAl === '' ? 'left' : htAl}
           width="100px"
         />
       </div>

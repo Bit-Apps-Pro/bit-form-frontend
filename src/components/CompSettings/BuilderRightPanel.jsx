@@ -1,17 +1,9 @@
 import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { Outlet, Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import { Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
-import BackIcn from '../../Icons/BackIcn'
-import BtnIcn from '../../Icons/BtnIcn'
-import DropDownIcn from '../../Icons/DropDownIcn'
-import FieldIcn from '../../Icons/FieldIcn'
-import FormIcn from '../../Icons/FormIcn'
-import ImageIcn from '../../Icons/ImageIcn'
-import ItemBlockIcn from '../../Icons/ItemBlockIcn'
-import PaypalIcn from '../../Icons/PaypalIcn'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
@@ -19,7 +11,6 @@ import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
 import ThemeCustomize from '../style-new/ThemeCustomize'
 import ThemeGallary from '../style-new/ThemeGallary'
 import Modal from '../Utilities/Modal'
-import FieldLinkBtn from './FieldLinkButton'
 import FieldSettings from './FieldSettings'
 import FieldsList from './FieldsList'
 import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
@@ -29,15 +20,11 @@ import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
-  // TODO change useRouteMatch
-  // const { path } = useRouteMatch()
   const { pathname } = useLocation()
-  const { formType, formID, fieldKey, rightBar, element } = useParams()
+  const { formID, fieldKey, '*': rightBar, element } = useParams()
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
-  const params = useParams()
-  console.log('BuilderRightpanel', params)
 
   useEffect(() => {
     const settingsScroll = select('.settings')?.firstChild?.firstChild
@@ -60,6 +47,20 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
             {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
             <ErrorBoundary>
 
+              {/* <RouteByParams rightBar="fields-list" render={<FieldsList />} /> */}
+              {/* <RouteByParams rightBar="field-settings" fieldKey render={<FieldSettings />} /> */}
+              {/* <Routes path="/field-settings">
+                <Route path=":fieldKey" element={<FieldSettings />} />
+              </Routes>
+              <Routes path="/fields-list">
+                <Route index element={<FieldsList />} />
+              </Routes>
+              <Routes path="/field-theme-customize">
+                <Route path=":element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
+              </Routes>
+              <Routes path="/themes">
+                <Route index element={<ThemeGallary />} />
+              </Routes> */}
               <Routes>
                 <Route path="fields-list" element={<FieldsList />} />
                 <Route path="field-settings/:fieldKey" element={<FieldSettings />} />

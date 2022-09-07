@@ -313,7 +313,6 @@ const fontStyle = {
     scrollBehavior: 'auto !important',
     mb: 5,
     '& *': { scrollBehavior: 'auto !important' },
-    w: '95%',
   },
   url: {
     w: '100%',

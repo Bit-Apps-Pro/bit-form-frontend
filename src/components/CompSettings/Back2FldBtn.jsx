@@ -12,7 +12,7 @@ export default function Back2FldBtn({ className, size }) {
   const navigate = useNavigate()
 
   const navigate2fldList = () => {
-    navigate.push(`/form/builder/${formType}/${formID}/fields-list`)
+    navigate(`/form/builder/${formType}/${formID}/fields-list`)
     setSelectedFieldId(null)
   }
   return (

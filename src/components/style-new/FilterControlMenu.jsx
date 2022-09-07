@@ -229,7 +229,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
         if (filter.name === 'drop-shadow') {
           const valueArr = filter.value.split(/\s(?![^(]*\))/gi)
           return (
-            <>
+            <div key={filter.name}>
               <SimpleAccordion
                 key={filter.name}
                 className={css(c.accordionHead, c.containerHover)}
@@ -308,7 +308,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
                 </div>
               </SimpleAccordion>
               <div className={css(c.divider)} />
-            </>
+            </div>
           )
         }
 
