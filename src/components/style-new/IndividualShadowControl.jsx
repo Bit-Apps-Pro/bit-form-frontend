@@ -64,7 +64,7 @@ export default function IndividualShadowControl({ title,
   }
   const getValue = () => {
     if (value?.match(/(var)/gi)) {
-      const shVar = value?.replaceAll(/\(|var|\)/gi, '')
+      const shVar = value?.replace(/\(|var|\)/gi, '')
       return themeColors[shVar]
     }
     return value

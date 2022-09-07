@@ -652,9 +652,8 @@ const elementLabel = (element) => {
 
 const genaratePropertyName = (propertyName) => {
   const newPropertyName = propertyName?.includes('->') ? propertyName.slice(propertyName.lastIndexOf('->') + 2) : propertyName
-  // eslint-disable-next-line es/no-string-prototype-replaceall
   return newPropertyName
-    ?.replaceAll(/--/g, '')
+    ?.replace(/--/g, '')
     .replace(/-/g, ' ')
     .replace(/\b(fld)\b/g, 'Field')
     .replace(/\b(pre)\b/g, 'Leading')

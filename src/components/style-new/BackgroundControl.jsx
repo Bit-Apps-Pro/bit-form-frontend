@@ -101,7 +101,7 @@ export default function BackgroundControl({ title,
             data-testid={`${modalId}-bg-img-btn`}
           >
             <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+            <span className={css(c.clrVal)}>{value?.replace(/\(|var|\)/gi, '')}</span>
           </button>
           {value && (
             <button

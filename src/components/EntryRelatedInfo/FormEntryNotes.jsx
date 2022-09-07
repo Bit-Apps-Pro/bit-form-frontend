@@ -96,7 +96,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
 
     for (let i = 0; i < uniqueKeys.length; i += 1) {
       const uniqueKey = uniqueKeys[i].slice(2, -1)
-      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
+      replacedStr = replacedStr.replace(new RegExp(uniqueKeys[i], 'gi'), uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
     }
     return replacedStr
   }

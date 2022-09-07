@@ -41,7 +41,7 @@ export default function FieldLabelSettings() {
     if (value === '') {
       delete fieldData.lbl
     } else {
-      fieldData.lbl = value.replaceAll('\\', '$_bf_$')
+      fieldData.lbl = value.replace(/\\\\/g, '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -100,7 +100,7 @@ export default function FieldLabelSettings() {
     <>
       <SimpleAccordion
         id="fld-lbl-stng"
-        title={__('Field Label:')}
+        title={__('Label')}
         className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
         switching
         tip="By disabling this option, the field label will be hidden"
@@ -114,9 +114,9 @@ export default function FieldLabelSettings() {
           <div className={css({ w: '97%', mx: 5 })}>
             <AutoResizeInput
               id="fld-lbl-stng"
-              ariaLabel="Field Label input"
+              ariaLabel="Label input"
               changeAction={setLabel}
-              value={label.replaceAll('$_bf_$', '\\')}
+              value={label.replace(/\$_bf_\$/g, '\\')}
             />
           </div>
 

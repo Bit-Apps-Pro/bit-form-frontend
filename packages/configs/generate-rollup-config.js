@@ -21,7 +21,7 @@ const terserOptions = {
 export default function generateRollupConfig() {
   const packageJson = require('./package.json') // eslint-disable-line global-require, import/no-unresolved
   const inputFileName = packageJson.name
-  const libName = packageJson.name.replaceAll('-', '_')
+  const libName = packageJson.name.replace(/-/g, '_')
   const inputFilePath = `src/${inputFileName}.js`
   const outputFilePath = `dist/${inputFileName}.min.js`
   const devOutputFilePath = `dist/${inputFileName}.dev.js`

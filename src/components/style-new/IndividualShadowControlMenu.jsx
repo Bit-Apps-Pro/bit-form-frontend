@@ -33,12 +33,12 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
   const getShadowStyleVal = () => {
     let shadowValue = getValueByObjPath(styles, propertyPath)
     if (shadowValue?.match(/var/gi)?.[0] === 'var') {
-      const themeVarShadow = shadowValue.replaceAll(/\(|var|,.*|\)/gi, '')
+      const themeVarShadow = shadowValue.replace(/\(|var|,.*|\)/gi, '')
       shadowValue = themeVars[themeVarShadow]
     }
     if (shadowValue?.match(/(!important)/gi)) {
       importantAlreadyExist = '!important'
-      shadowValue = shadowValue.replaceAll(/(!important)/gi, '')
+      shadowValue = shadowValue.replace(/(!important)/gi, '')
     }
     return shadowValue
   }

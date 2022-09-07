@@ -77,8 +77,8 @@ function TextFieldSettings() {
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
-  const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
+  const generateBackslashPattern = str => str.replace(/\$_bf_\$/g, '\\')
+  const escapeBackslashPattern = str => str.replace(/\\\\/g, '$_bf_$')
 
   function setAutoComplete(e) {
     if (e.target.checked) {

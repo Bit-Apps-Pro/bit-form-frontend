@@ -114,7 +114,7 @@ export default class FileUploadField {
     }
 
     for (const file of files) {
-      const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
+      const fileName = file.name.replace(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
         if (!maxSize || (file.size + totalFileSize) <= maxFileSize) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {

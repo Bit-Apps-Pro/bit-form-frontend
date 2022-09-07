@@ -19,7 +19,7 @@ export default function SpaceControl({ value,
   width, dataTestId }) {
   const { css } = useFela()
 
-  let values = (value?.replaceAll(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')
+  let values = (value?.replace(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')
 
   if (values.length === 4) {
     const distinct = values.filter((val, index, self) => self.indexOf(val) === index)

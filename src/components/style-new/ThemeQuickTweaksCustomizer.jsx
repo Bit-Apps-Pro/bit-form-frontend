@@ -1,4 +1,3 @@
-/* eslint-disable es/no-string-prototype-replaceall */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
@@ -79,7 +78,7 @@ export default function ThemeQuickTweaksCustomizer() {
                 const comStlVal = comStlPropertiesObj[comnStlProperty]
                 if (mainStlVal !== comStlVal) {
                   if (mainStlVal?.match(/(var)/gi)) {
-                    const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')
                     if (tmpThemeVar[mainStateVar] !== comStlVal) {
                       tmpThemeVar[mainStateVar] = comStlVal
                     }

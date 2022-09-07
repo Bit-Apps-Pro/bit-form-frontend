@@ -56,7 +56,7 @@ function FilterColorsPickerMenu({ stateObjName,
         const styleColor = getValueByObjPath(styles, pathArr)
         let c = styleColor
         if (styleColor?.match(/var/gi)?.[0] === 'var') {
-          const varClr = styleColor?.replaceAll(/\(|var|,.*|\)/gi, '')
+          const varClr = styleColor?.replace(/\(|var|,.*|\)/gi, '')
           c = themeVars[varClr] ? themeVars[varClr] : themeColors[varClr]
         }
         setColor(str2Color(c))

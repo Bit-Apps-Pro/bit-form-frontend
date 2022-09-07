@@ -138,7 +138,7 @@ export default class BitFileUpField {
 
     for (let i = 0; i < files.length; i += 1) {
       const file = files[i]
-      const fileName = file.name.replaceAll(/( |\.|\(|\))/g, '')
+      const fileName = file.name.replace(/( |\.|\(|\))/g, '')
       if (!this.#files[fileName]) {
         if (!allowMaxSize || (!maxSize || (file.size + totalFileSize) <= maxFileSize)) {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
