@@ -37,7 +37,6 @@
     "bit-razorpay-field": "file:./packages/bit-razorpay-field",
     "bit-recaptcha-field": "file:./packages/bit-recaptcha-field",
     "bit-virtualized-list": "file:./packages/bit-virtualized-list",
-    "core-js": "3.25.0",
     "create-file-list": "^1.1.0",
     "date-fns": "^2.29.2",
     "deep-object-diff": "^1.1.7",
@@ -126,7 +125,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.18.13",
+    "@babel/core": "7.12.9",
     "@babel/eslint-parser": "^7.18.9",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
@@ -208,6 +207,7 @@
     "typescript": "^4.8.2",
     "url-loader": "^4.1.1",
     "vite": "^3.0.9",
+    "vite-plugin-preload": "^0.1.7",
     "vitest": "^0.22.1",
     "webpack": "5.74.0",
     "webpack-bundle-analyzer": "^4.6.1",
