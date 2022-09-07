@@ -484,23 +484,27 @@ const getElementTotalHeight = (elm) => {
   return 0
 }
 
-export const fitAllLayoutItems = (lays) => produce(lays, draftLayout => {
-  for (let i = 0; i < draftLayout.lg.length; i += 1) {
-    draftLayout.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.lg[i].i}-fld-wrp`)) / 2)
-    draftLayout.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.md[i].i}-fld-wrp`)) / 2)
-    draftLayout.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${draftLayout.sm[i].i}-fld-wrp`)) / 2)
+export const fitAllLayoutItems = (lays) => {
+  const newLays = deepCopy(lays)
+  for (let i = 0; i < newLays.lg.length; i += 1) {
+    newLays.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.lg[i].i}-fld-wrp`)) / 2)
+    newLays.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.md[i].i}-fld-wrp`)) / 2)
+    newLays.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.sm[i].i}-fld-wrp`)) / 2)
   }
-})
+  return newLays
+}
 
-export const fitSpecificLayoutItem = (lays, fieldKey) => produce(lays, draftLayout => {
-  const lgFld = draftLayout.lg.find(itm => itm.i === fieldKey)
-  const mdFld = draftLayout.md.find(itm => itm.i === fieldKey)
-  const smFld = draftLayout.sm.find(itm => itm.i === fieldKey)
+export const fitSpecificLayoutItem = (lays, fieldKey) => {
+  const newLays = deepCopy(lays)
+  const lgFld = newLays.lg.find(itm => itm.i === fieldKey)
+  const mdFld = newLays.md.find(itm => itm.i === fieldKey)
+  const smFld = newLays.sm.find(itm => itm.i === fieldKey)
 
-  lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
-  mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
-  smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
-})
+  if (lgFld) lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
+  if (mdFld) mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
+  if (smFld) smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
+  return newLays
+}
 
 export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
   const path = paths?.split?.('->') || []
