@@ -14,6 +14,7 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
+import VerticalIcn from '../../Icons/DirectionIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
@@ -36,6 +37,7 @@ import SmartTags from './SmartTags'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import DirectionIcn from '../../Icons/DirectionIcn'
 
 function TitleSettings() {
   const { css } = useFela()
@@ -57,12 +59,6 @@ function TitleSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `${name} Modified to ${value}`, type: `${name}_changes`, state: { fldKey: fieldKey, fields: allFields } })
   }
-
-  // useEffect(() => {
-  //   setStyles(preStyle => produce(preStyle, drftStyle => {
-  //     drftStyle.fields[fieldKey].classes[wrpCLass]['background-image'] = `url(${fieldData?.bg_img || ''})`
-  //   }))
-  // }, [fieldData?.bg_img])
 
   const setIconModel = (typ) => {
     if (!isStyleExist(styles, fieldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
@@ -201,7 +197,7 @@ function TitleSettings() {
         <FieldIconSettings
           classNames={css(style.section)}
           labelClass={css(style.logoLabel)}
-          label="Logo"
+          label="Logo/Icon"
           iconSrc={fieldData?.logo}
           styleRoute="logo"
           setIcon={() => setIconModel('logo')}
@@ -222,7 +218,7 @@ function TitleSettings() {
         >
           <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
             <div className={css(style.title)}>
-              <label className={css(ut.fw500)}>Title</label>
+              <label className={css(ut.fw500)}>Text</label>
               <Downmenu>
                 <button
                   data-testid="titl-mor-opt-btn"
@@ -236,21 +232,19 @@ function TitleSettings() {
                 >
                   <BdrDottedIcn size="16" />
                 </button>
-                <SmartTags
-                  fieldName="title"
-                />
+                <SmartTags fieldName="title" />
               </Downmenu>
             </div>
             <AutoResizeInput
               id="titl"
-              placeholder="Title..."
+              placeholder="Type title text here..."
               name="title"
               value={fieldData?.title}
               changeAction={handleTitle}
             />
           </div>
           <div className={css(ut.flxcb, ut.mt1)}>
-            <span className={css(ut.fw500, ut.ml2)}>Tag</span>
+            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select data-testid="titl-tag-slct" className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
                 {tagOptions.map((opt, index) => <option key={`opt-title-${index * 4}`} value={opt.value}>{opt.title}</option>)}
@@ -303,9 +297,7 @@ function TitleSettings() {
                 >
                   <BdrDottedIcn size="16" />
                 </button>
-                <SmartTags
-                  fieldName="subtitle"
-                />
+                <SmartTags fieldName="subtitle" />
               </Downmenu>
             </div>
 
@@ -318,7 +310,7 @@ function TitleSettings() {
             />
           </div>
           <div className={css(ut.flxcb, ut.mt1)}>
-            <span className={css(ut.fw500, ut.ml2)}>Tag</span>
+            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
             <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
               <select
                 data-testid="sub-titl-tag"
@@ -364,16 +356,16 @@ function TitleSettings() {
         </div>
         <FieldSettingsDivider />
         <div className={css(style.section, style.main)}>
-          <span className={css(style.label)}>Flex Direction</span>
+          <span className={css(style.label)}>Layout Direction</span>
           <StyleSegmentControl
             show={['icn']}
             tipPlace="bottom"
             className={css(style.segment)}
             options={[
-              { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
-              { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
-              { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
-              { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
+              { icn: <DirectionIcn size="17" dir="down" />, label: 'column', tip: 'Vertical' },
+              { icn: <DirectionIcn size="17" dir="up" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
+              { icn: <DirectionIcn size="17" dir="right" />, label: 'row', tip: 'Horizontal' },
+              { icn: <DirectionIcn size="17" dir="left" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
             ]}
             onChange={val => flexDirectionHandle(val, 'flex-direction')}
             defaultActive={flex}

@@ -223,7 +223,7 @@ export default function ButtonSettings() {
           <SingleToggle
             id="ful-wid-btn"
             tip="By disabling this option, the button full width will be remove"
-            title={__('Full Width Button')}
+            title={__('Full Width')}
             action={setFulW}
             isChecked={fulW}
           />

@@ -663,7 +663,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         typ: 'title',
         titleImg: '',
         logoHide: true,
-        title: __('Title'),
+        title: 'Your Title Here',
         titleHide: false,
         subtitleHide: true,
         titleTag: 'h1',

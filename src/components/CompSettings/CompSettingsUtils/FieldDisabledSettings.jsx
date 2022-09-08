@@ -35,7 +35,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
       <SingleToggle
         id="fld-dsbl-stng"
         tip="By disabling this option, the field will be enable"
-        title={__('Disabled Field')}
+        title={__('Disabled')}
         action={setDiasabled}
         isChecked={isDiasabled}
       />

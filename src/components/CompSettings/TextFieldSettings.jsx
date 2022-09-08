@@ -571,7 +571,7 @@ function TextFieldSettings() {
             <>
               <SimpleAccordion
                 id="ptrn-stng"
-                title={__('Pattern')}
+                title={__('RegEx Pattern')}
                 className={css(FieldStyle.fieldSection)}
               >
                 <>

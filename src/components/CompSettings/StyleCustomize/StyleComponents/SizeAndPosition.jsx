@@ -81,7 +81,7 @@ function SizeAndPosition({ fldKey }) {
   }
   return (
     <SimpleAccordion
-      title="Sizes & Positions"
+      title="Size & Position"
       className={css(FieldStyle.fieldSection)}
       id="siz-n-pos"
     >
