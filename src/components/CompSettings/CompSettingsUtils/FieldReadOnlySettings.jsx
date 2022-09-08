@@ -7,6 +7,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldReadOnlySettings({ cls }) {
@@ -34,7 +35,7 @@ export default function FieldReadOnlySettings({ cls }) {
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.singleOption, FieldStyle.hover_tip)} ${cls}`}>
       <SingleToggle
         id="rdonly-stng"
-        tip="By disabling this option, the field readonly will be hidden"
+        tip={tippyHelperMsg.readonly}
         title={__('Read only Field')}
         action={setReadOnly}
         isChecked={isReadOnly}

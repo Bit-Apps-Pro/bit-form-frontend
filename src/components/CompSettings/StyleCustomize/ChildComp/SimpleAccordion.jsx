@@ -9,6 +9,7 @@ import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
+import RenderHtml from '../../../Utilities/RenderHtml'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
 export default function SimpleAccordion({ className,
@@ -93,7 +94,10 @@ export default function SimpleAccordion({ className,
             {title}
             {tip && (
               <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
-                <div className="txt-body">{__(tip)}</div>
+                {/* <div className="txt-body">{__(tip)}</div> */}
+                <div className="txt-body">
+                  <RenderHtml html={tip} />
+                </div>
               </Cooltip>
             )}
 

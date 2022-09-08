@@ -7,6 +7,7 @@ import { $breakpoint, $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings({ cls }) {
@@ -37,7 +38,7 @@ export default function FieldHideSettings({ cls }) {
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle
         id="fld-hid-stng"
-        tip="By disabling this option, the field will be hidden"
+        tip={tippyHelperMsg.fieldHidden}
         title={__('Hidden Field')}
         action={setHidden}
         isChecked={isHidden}

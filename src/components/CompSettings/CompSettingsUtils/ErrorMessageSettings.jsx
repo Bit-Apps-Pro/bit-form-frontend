@@ -109,7 +109,7 @@ export default function ErrorMessageSettings({ className, id, type, title, tipTi
             title={__('Show Error Message')}
             onChange={setShowErrMsg}
           />
-          <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+          <Cooltip width={250} icnSize={13} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(ErrorMessages.tipBody)}>
               Check the box to enable the custom error message.
               <br />
@@ -131,7 +131,7 @@ export default function ErrorMessageSettings({ className, id, type, title, tipTi
                 title={__('Custom Error Message')}
                 onChange={setCustomErrMsg}
               />
-              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+              <Cooltip width={250} icnSize={13} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(ErrorMessages.tipBody)}>
                   Check the box to enable the custom error message.
                   <br />

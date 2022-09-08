@@ -7,6 +7,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldDisabledSettings({ cls, tip }) {
@@ -34,7 +35,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
     <div className={`${css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)} ${cls}`}>
       <SingleToggle
         id="fld-dsbl-stng"
-        tip="By disabling this option, the field will be enable"
+        tip={tippyHelperMsg.disabled}
         title={__('Disabled Field')}
         action={setDiasabled}
         isChecked={isDiasabled}
