@@ -139,6 +139,7 @@ const lgLightThemeVars = {
   '--fld-wrp-bdr': '', // field wrapper border
   '--fld-wrp-bdr-width': '', // field wrapper border width
   '--fld-wrp-bdr-rad': '', // field wrapper border radius
+  '--fld-wrp-width': '', // field wrapper width
 
   '--lbl-wrp-sa': '',
   '--lbl-wrp-width': '100%', // label wrapper  width
