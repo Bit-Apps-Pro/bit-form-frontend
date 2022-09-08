@@ -7,7 +7,6 @@ const Toolbars = {
     mnw: 55,
     px: 3,
     pt: 8,
-    pb: 140,
     tn: 'width 500ms',
     bs: '0 0 0 1px var(--b-44-87)',
   },
@@ -82,7 +81,7 @@ const Toolbars = {
     owy: 'scroll',
     px: 2,
     pt: 5,
-    pb: 40,
+    mb: 200,
 
   },
   sort_btn: {
