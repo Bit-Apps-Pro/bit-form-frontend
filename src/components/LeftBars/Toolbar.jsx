@@ -283,7 +283,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       },
     },
     {
-      name: __('Advanced File Upload'),
+      name: __('Advance File Upload'),
       keywords: 'Advanced File Upload',
       icn: <FileUploadIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, minW: 20 },
