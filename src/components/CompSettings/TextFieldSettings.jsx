@@ -28,9 +28,7 @@ import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { addDefaultStyleClasses, iconElementLabel, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
-import RenderHtml from '../Utilities/RenderHtml'
 import SingleInput from '../Utilities/SingleInput'
-import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -67,7 +65,6 @@ function TextFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const patternTippy = useRef()
-  const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const imputMode = fieldData.inputMode || 'text'
   const defaultValue = fieldData.defaultValue || ''
@@ -82,16 +79,16 @@ function TextFieldSettings() {
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
 
-  function setAutoComplete(e) {
-    if (e.target.checked) {
-      fieldData.ac = 'on'
-    } else {
-      delete fieldData.ac
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
-  }
+  // function setAutoComplete(e) {
+  //   if (e.target.checked) {
+  //     fieldData.ac = 'on'
+  //   } else {
+  //     delete fieldData.ac
+  //   }
+  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   setFields(allFields)
+  //   addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
+  // }
 
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
@@ -675,7 +672,7 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        {
+        {/* {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
             <>
               <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
@@ -690,7 +687,7 @@ function TextFieldSettings() {
               <FieldSettingsDivider />
             </>
           )
-        }
+        } */}
 
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
