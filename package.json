@@ -99,7 +99,7 @@
     "fwp": "webpack --progress --color --config webpack.frontend.config.js --watch --mode=development",
     "pd": "webpack --progress --color --config webpack.config.js --mode=production && pnpm i18n:php",
     "fpd": "webpack --progress --color --config webpack.frontend.config.js --mode=production",
-    "pda": "npm run pd && npm run fpd",
+    "pda": "pnpm run pd && pnpm run fpd",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
     "i18n:json": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x",
     "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bitform;wp i18n make-pot ../ --include=*.php --skip-js --slug=bitform --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
