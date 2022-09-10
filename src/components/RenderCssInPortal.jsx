@@ -1579,6 +1579,7 @@ arrow:after,
  }
  
  .tip-btn {
+    font-family: "Outfit", sans-serif;
     border: 0;
     padding: 6px 15px;
     font-weight: 600;
