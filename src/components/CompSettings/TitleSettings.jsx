@@ -14,19 +14,16 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
-import VerticalIcn from '../../Icons/DirectionIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import {
-  addDefaultStyleClasses,
+import { addDefaultStyleClasses,
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses
-} from '../style-new/styleHelpers'
+  styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'

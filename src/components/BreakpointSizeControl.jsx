@@ -27,11 +27,11 @@ export default function BreakpointSizeControl() {
     <div className={css(s.wraper)}>
       <h4 className={css(s.title)}>Breakpoint Sizes</h4>
       <div className={css(s.divider)} />
-      <div className={css(ut.flxc, s.inputWrp)}>
+      {/* <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><LaptopIcn size="27" /></span>
         <input title="Large device breakpoint size" aria-label="Large device breakpoint size" name="lg" onChange={breakpointSizeHandler} value={breakpointSize.lg} className={css(s.input)} type="number" />
         <span>px</span>
-      </div>
+      </div> */}
       <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><TabletIcon size="24" /></span>
         <input title="Medium device breakpoint size" aria-label="Medium device breakpoint size" name="md" onChange={breakpointSizeHandler} value={breakpointSize.md} className={css(s.input)} type="number" />

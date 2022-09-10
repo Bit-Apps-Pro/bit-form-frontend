@@ -338,7 +338,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <>
-      {/* {formType === 'edit' && <FetchBuilderHelperStates formID={formID} />} */}
       <OptionToolBar
         setResponsiveView={setResponsiveView}
         setShowToolbar={setShowToolbar}
