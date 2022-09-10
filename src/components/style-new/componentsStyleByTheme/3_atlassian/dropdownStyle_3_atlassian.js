@@ -277,7 +277,7 @@ export default function dropdownStyle_3_atlassian({ fk }) {
     '.selected-opt:focus-visible': { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
     [`.${fk}-opt-group-title`]: {
-      'font-size': 'calc(var(--font-size) - 2px)',
+      'font-size': 'calc(var(--fld-fs) - 2px)',
       cursor: 'default',
       background: 'hsla(0, 0%, 98%, 100%)',
       opacity: '.7',
