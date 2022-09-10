@@ -23,7 +23,7 @@ const groupAllOptions = options => {
   }, [])
 }
 
-export default function ListGroup({ options, action, className }) {
+export default function ListGroup({ options, action }) {
   const { css } = useFela()
   const optionGroups = groupAllOptions(options)
   const [searchData, setSearchData] = useState(optionGroups)
@@ -86,7 +86,6 @@ export default function ListGroup({ options, action, className }) {
               &nbsp;
             </span>
           )}
-
         <span title="search" className={css(style.search_icn)}>
           <SearchIcon size="20" />
         </span>
@@ -96,10 +95,10 @@ export default function ListGroup({ options, action, className }) {
           {searchData.map(group => (
             <>
               {group.type === 'group-accordion' && (
-                <LayerAccordion title={group.name}>
+                <LayerAccordion key={group.name} title={group.name}>
                   <ul className={css(style.ul)}>
                     {'childs' in group && group.childs.map(option => (
-                      <li className={css(style.li)}>
+                      <li key={option.val} className={css(style.li)}>
                         <button
                           type="button"
                           className={`${css(style.button)} btnHover`}
@@ -117,7 +116,7 @@ export default function ListGroup({ options, action, className }) {
                 <ul className={css(style.ul)}>
                   {group.type.match(/group-opts|group-title/) && (<h4 className={css(style.title)}>{group.name}</h4>)}
                   {'childs' in group && group.childs.map(option => (
-                    <li className={css(style.li)}>
+                    <li key={`-${option.val}`} className={css(style.li)}>
                       <button
                         type="button"
                         className={`${css(style.button)} btnHover`}
