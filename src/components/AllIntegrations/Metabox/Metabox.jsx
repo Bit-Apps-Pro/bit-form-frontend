@@ -79,19 +79,19 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!data.post_type) {
-      setSnackbar({ show: true, msg: __('Post Type cann\'t be empty', 'bitform') })
+      setSnackbar({ show: true, msg: __('Post Type cann\'t be empty') })
       return
     }
     if (!data.post_status) {
-      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty', 'bitform') })
+      setSnackbar({ show: true, msg: __('Post Status cann\'t be empty') })
       return
     }
     if (!checkMappedPostFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     if (!checkMappedAcfFields(data)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)
