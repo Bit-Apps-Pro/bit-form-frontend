@@ -1,10 +1,10 @@
 import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import LogicBlock from './LogicBlock'
 import LogicChip from './LogicChip'
 import { accessToNested } from './WorkflowHelpers'
-import LogicBlock from './LogicBlock'
-import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
@@ -196,98 +196,96 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   return (
-    <>
-      {condGrp?.logics?.map((logic, ind) => (
-        <span key={`logic-${ind + 44}`}>
-          {typeof logic === 'object' && !Array.isArray(logic) && (
-            <LogicBlock
-              logic={logic}
-              fieldVal={logic.field}
-              changeFormField={changeFormField}
-              changeValue={changeValue}
-              changeSmartKey={changeSmartKey}
-              logicValue={logic.logic}
-              changeLogic={changeLogic}
-              addInlineLogic={addInlineLogic}
-              delLogic={delLogic}
-              lgcGrpInd={lgcGrpInd}
-              lgcInd={ind}
-              value={logic.val}
-              actionType={lgcGrp?.action_type}
-            />
-          )}
-          {typeof logic === 'string' && (
-            <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, ind)} />
-          )}
-          {Array.isArray(logic) && (
-            <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
-              {logic.map((subLogic, subInd) => (
-                <span key={`subLogic-${subInd * 7}`}>
-                  {typeof subLogic === 'object' && !Array.isArray(subLogic) && (
-                    <LogicBlock
-                      logic={subLogic}
-                      fieldVal={subLogic.field}
-                      changeFormField={changeFormField}
-                      changeValue={changeValue}
-                      changeSmartKey={changeSmartKey}
-                      logicValue={subLogic.logic}
-                      changeLogic={changeLogic}
-                      addInlineLogic={addInlineLogic}
-                      delLogic={delLogic}
-                      lgcGrpInd={lgcGrpInd}
-                      lgcInd={ind}
-                      subLgcInd={subInd}
-                      value={subLogic.val}
-                      actionType={lgcGrp?.action_type}
-                    />
-                  )}
-                  {typeof subLogic === 'string' && (
-                    <LogicChip
-                      logic={subLogic}
-                      nested
-                      onChange={e => changeLogicChip(e.target.value, ind, subInd)}
-                    />
-                  )}
-                  {Array.isArray(subLogic) && (
-                    <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
-                      {subLogic.map((subSubLogic, subSubLgcInd) => (
-                        <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                          {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && (
-                            <LogicBlock
-                              logic={subSubLogic}
-                              fieldVal={subSubLogic.field}
-                              changeFormField={changeFormField}
-                              changeValue={changeValue}
-                              changeSmartKey={changeSmartKey}
-                              logicValue={subSubLogic.logic}
-                              changeLogic={changeLogic}
-                              addInlineLogic={addInlineLogic}
-                              delLogic={delLogic}
-                              lgcGrpInd={lgcGrpInd}
-                              lgcInd={ind}
-                              subLgcInd={subInd}
-                              subSubLgcInd={subSubLgcInd}
-                              value={subSubLogic.val}
-                              actionType={lgcGrp?.action_type}
-                            />
-                          )}
-                          {typeof subSubLogic === 'string' && (
-                            <LogicChip
-                              logic={subSubLogic}
-                              nested
-                              onChange={e => changeLogicChip(e.target.value, ind, subInd, subSubLgcInd)}
-                            />
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </span>
-              ))}
-            </div>
-          )}
-        </span>
-      ))}
-    </>
+    condGrp?.logics?.map((logic, ind) => (
+      <span key={`logic-${ind + 44}`}>
+        {typeof logic === 'object' && !Array.isArray(logic) && (
+          <LogicBlock
+            logic={logic}
+            fieldVal={logic.field}
+            changeFormField={changeFormField}
+            changeValue={changeValue}
+            changeSmartKey={changeSmartKey}
+            logicValue={logic.logic}
+            changeLogic={changeLogic}
+            addInlineLogic={addInlineLogic}
+            delLogic={delLogic}
+            lgcGrpInd={lgcGrpInd}
+            lgcInd={ind}
+            value={logic.val}
+            actionType={lgcGrp?.action_type}
+          />
+        )}
+        {typeof logic === 'string' && (
+          <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, ind)} />
+        )}
+        {Array.isArray(logic) && (
+          <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
+            {logic.map((subLogic, subInd) => (
+              <span key={`subLogic-${subInd * 7}`}>
+                {typeof subLogic === 'object' && !Array.isArray(subLogic) && (
+                  <LogicBlock
+                    logic={subLogic}
+                    fieldVal={subLogic.field}
+                    changeFormField={changeFormField}
+                    changeValue={changeValue}
+                    changeSmartKey={changeSmartKey}
+                    logicValue={subLogic.logic}
+                    changeLogic={changeLogic}
+                    addInlineLogic={addInlineLogic}
+                    delLogic={delLogic}
+                    lgcGrpInd={lgcGrpInd}
+                    lgcInd={ind}
+                    subLgcInd={subInd}
+                    value={subLogic.val}
+                    actionType={lgcGrp?.action_type}
+                  />
+                )}
+                {typeof subLogic === 'string' && (
+                  <LogicChip
+                    logic={subLogic}
+                    nested
+                    onChange={e => changeLogicChip(e.target.value, ind, subInd)}
+                  />
+                )}
+                {Array.isArray(subLogic) && (
+                  <div className="p-2 br-10 btcd-logic-grp mt-2 mb-2 pl-4 pr-4">
+                    {subLogic.map((subSubLogic, subSubLgcInd) => (
+                      <span key={`subsubLogic-${subSubLgcInd + 90}`}>
+                        {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && (
+                          <LogicBlock
+                            logic={subSubLogic}
+                            fieldVal={subSubLogic.field}
+                            changeFormField={changeFormField}
+                            changeValue={changeValue}
+                            changeSmartKey={changeSmartKey}
+                            logicValue={subSubLogic.logic}
+                            changeLogic={changeLogic}
+                            addInlineLogic={addInlineLogic}
+                            delLogic={delLogic}
+                            lgcGrpInd={lgcGrpInd}
+                            lgcInd={ind}
+                            subLgcInd={subInd}
+                            subSubLgcInd={subSubLgcInd}
+                            value={subSubLogic.val}
+                            actionType={lgcGrp?.action_type}
+                          />
+                        )}
+                        {typeof subSubLogic === 'string' && (
+                          <LogicChip
+                            logic={subSubLogic}
+                            nested
+                            onChange={e => changeLogicChip(e.target.value, ind, subInd, subSubLgcInd)}
+                          />
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </span>
+            ))}
+          </div>
+        )}
+      </span>
+    ))
   )
 }
