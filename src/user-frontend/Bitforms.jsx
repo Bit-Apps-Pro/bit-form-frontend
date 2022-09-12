@@ -25,6 +25,24 @@ export default function Bitforms(props) {
     const form = document.getElementById(props.contentID)
     if(form){
       let currentNonce= form.querySelector('input[name="bitforms_token"]')
+      let bitformId = form.querySelector('input[name="bitforms_id"]')
+
+      if(!currentNonce){
+        currentNonce = document.createElement('input')
+        currentNonce.type = 'hidden'
+        currentNonce.name = 'bitforms_token'
+        currentNonce.value = props.nonce
+        form.appendChild(currentNonce)
+      }
+
+      if(!bitformId){
+        bitformId = document.createElement('input')
+        bitformId.type = 'hidden'
+        bitformId.name = 'bitforms_id'
+        bitformId.value = `bitforms_${props.formId}`
+        form.appendChild(bitformId)
+      }
+
       const uri = new URL(bitFormsFront.ajaxURL)
       uri.searchParams.append('action', 'bitforms_nonce_expire_check')
       const body = { nonce: currentNonce.value, formId : props.formID }
