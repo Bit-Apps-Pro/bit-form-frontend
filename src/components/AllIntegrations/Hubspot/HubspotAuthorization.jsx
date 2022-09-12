@@ -18,8 +18,8 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
     const newConf = { ...hubspotConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty', 'bit-integrations') : '',
-        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bit-integrations') : '',
+        name: !newConf.name ? __('Integration name cann\'t be empty') : '',
+        api_key: !newConf.api_key ? __('API Key cann\'t be empty') : '',
       })
       return
     }
@@ -63,16 +63,16 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={hubspotConf?.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={hubspotConf?.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
-      <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={hubspotConf?.api_key} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('API Key:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={hubspotConf?.api_key} type="text" placeholder={__('API Key...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get API , Please Visit', 'bit-integrations')}
+        {__('To get API , Please Visit')}
         {' '}
-        <a className="btcd-link" href="https://app.hubspot.com/api-key" target="_blank" rel="noreferrer">{__('Hubspot API Console', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://app.hubspot.com/api-key" target="_blank" rel="noreferrer">{__('Hubspot API Console')}</a>
       </small>
       {isLoading === 'auth' && (
         <div className="flx mt-5">
@@ -92,12 +92,12 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
       {!isInfo && (
         <>
           <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bit-integrations')}
+            {__('Next')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
