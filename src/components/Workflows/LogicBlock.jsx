@@ -1,17 +1,18 @@
+import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
-import { useFela } from 'react-fela'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import { makeFieldsArrByLabel } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import conditionalLogicsList from '../../Utils/StaticData/ConditionalLogicsList'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import Button from '../Utilities/Button'
+import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtInput from '../Utilities/MtInput'
 import MtSelect from '../Utilities/MtSelect'
-import Button from '../Utilities/Button'
-import TrashIcn from '../../Icons/TrashIcn'
-import CloseIcn from '../../Icons/CloseIcn'
 
 function LogicBlock({ logic, fieldVal,
   delLogic,
@@ -187,11 +188,11 @@ function LogicBlock({ logic, fieldVal,
                     singleSelect={isSingleSelect}
                   />
                 ) : (
-                  <MtInput
+                  <CalculatorField
                     label="Value"
                     type={type}
                     disabled={logicValue === 'null' || logicValue === 'not_null'}
-                    onChange={e => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+                    onChange={val => changeValue(val, lgcInd, subLgcInd, subSubLgcInd)}
                     value={value || ''}
                   />
                 )}
