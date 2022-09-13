@@ -6,7 +6,6 @@ const app = {
     flx: 'center-between',
   },
   inte_sm: {
-    bd: 'var(--b-97)',
     pn: 'relative',
     w: 110,
     h: 130,
@@ -105,12 +104,7 @@ const app = {
     },
   },
 
-  inte_sm_img: {
-    mxw: '110px !important',
-    mxh: '110px !important',
-    m: 'auto',
-    p: 12,
-  },
+
 
   blueGrd: {
     bd: 'linear-gradient(145deg, var(--b-50), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important',
