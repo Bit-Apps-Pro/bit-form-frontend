@@ -77,7 +77,7 @@ const tutorialLinks = {
   },
   wooCommerce: {
     title: 'How to Setup WooCommerce integration',
-    link: 'https://www.youtube.com/watch?v=Jxn1110dzNc&ab_channel=BitApps',
+    link: 'https://www.youtube.com/playlist?list=PL7c6CDwwm-AIRTzF919Kh67QBmTlNa3td',
   },
   zapier: {
     title: 'How to Setup Zapier integration',
