@@ -24,11 +24,11 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
+import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { addDefaultStyleClasses, iconElementLabel, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
-import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
@@ -65,7 +65,6 @@ function TextFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const patternTippy = useRef()
-  const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const imputMode = fieldData.inputMode || 'text'
   const defaultValue = fieldData.defaultValue || ''
@@ -80,16 +79,16 @@ function TextFieldSettings() {
   const generateBackslashPattern = str => str.replace(/\$_bf_\$/g, '\\')
   const escapeBackslashPattern = str => str.replace(/\\\\/g, '$_bf_$')
 
-  function setAutoComplete(e) {
-    if (e.target.checked) {
-      fieldData.ac = 'on'
-    } else {
-      delete fieldData.ac
-    }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
-  }
+  // function setAutoComplete(e) {
+  //   if (e.target.checked) {
+  //     fieldData.ac = 'on'
+  //   } else {
+  //     delete fieldData.ac
+  //   }
+  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   setFields(allFields)
+  //   addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
+  // }
 
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
@@ -449,7 +448,7 @@ function TextFieldSettings() {
               title={__('Default value')}
               className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
               switching
-              tip="By disabling this option, the field default will be hidden"
+              tip={tippyHelperMsg.defaultValue}
               tipProps={{ width: 250, icnSize: 17 }}
               toggleAction={hideDefalutValue}
               toggleChecked={fieldData?.defaultValueHide}
@@ -487,7 +486,7 @@ function TextFieldSettings() {
                 title={__('Suggestion')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
-                tip="By disabling this option, the field suggestion will be hidden"
+                tip={tippyHelperMsg.suggestion}
                 tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideSuggestionVal}
                 toggleChecked={fieldData?.suggestionHide}
@@ -509,7 +508,7 @@ function TextFieldSettings() {
                 title={__('Auto Complete')}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 switching
-                tip="By disabling this option, the field auto complete will be hidden"
+                tip={tippyHelperMsg.autoComplete}
                 tipProps={{ width: 250, icnSize: 17 }}
                 toggleAction={hideAutoComplete}
                 toggleChecked={fieldData?.acHide}
@@ -546,7 +545,9 @@ function TextFieldSettings() {
               <SimpleAccordion
                 id="inp-mod-stng"
                 title={__('Input mode')}
-                className={css(FieldStyle.fieldSection)}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+                tip={tippyHelperMsg.inputMode}
+                tipProps={{ width: 250, icnSize: 17 }}
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
@@ -645,7 +646,7 @@ function TextFieldSettings() {
                       id="ptrn-stng-expn"
                       type="regexr"
                       title="Error Message"
-                      tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
+                      tipTitle={tippyHelperMsg.patternsErrMsg}
                     />
                   )}
                 </>
@@ -671,13 +672,13 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
-        {
+        {/* {
           fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
             <>
               <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
                 <SingleToggle
                   id="ato-fil-stng"
-                  tip="By disabling this option, the field auto fill will be hidden"
+                  tip={tippyHelperMsg.autoFill}
                   title={__('Auto Fill')}
                   action={setAutoComplete}
                   isChecked={isAutoComplete}
@@ -686,7 +687,7 @@ function TextFieldSettings() {
               <FieldSettingsDivider />
             </>
           )
-        }
+        } */}
 
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
@@ -694,7 +695,7 @@ function TextFieldSettings() {
               <UniqFieldSettings
                 type="entryUnique"
                 title="Validate as Unique Entry"
-                tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+                tipTitle={tippyHelperMsg.uniqueEntry}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 isUnique="show"
               />
@@ -849,7 +850,7 @@ function TextFieldSettings() {
                 <UniqFieldSettings
                   type="userUnique"
                   title="Validate as User Unique"
-                  tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+                  tipTitle={tippyHelperMsg.userUnique}
                   className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                   isUnique="show"
                 />

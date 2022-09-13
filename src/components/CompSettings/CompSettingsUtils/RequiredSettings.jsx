@@ -12,6 +12,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, assignNestedObj, setRequired } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
@@ -87,7 +88,7 @@ export default function RequiredSettings({ asteriskIsAllow = true }) {
       toggleChecked={isRequired}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
-      tip="By enabling this feature, user will see the error message when input is empty"
+      tip={tippyHelperMsg.required}
       tipProps={{ width: 200, icnSize: 17 }}
       open={isRequired}
       disable={!isRequired}

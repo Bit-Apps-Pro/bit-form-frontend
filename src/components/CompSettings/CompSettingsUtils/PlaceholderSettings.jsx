@@ -7,6 +7,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function PlaceholderSettings() {
@@ -49,7 +50,7 @@ export default function PlaceholderSettings() {
       title={__('Placeholder')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
-      tip="By disabling this option, the field placeholder will be hidden"
+      tip={tippyHelperMsg.placeholder}
       tipProps={{ width: 250, icnSize: 17 }}
       toggleAction={hidePlaceholder}
       toggleChecked={fieldData?.phHide}

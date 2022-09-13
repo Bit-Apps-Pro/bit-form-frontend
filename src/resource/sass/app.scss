@@ -4057,6 +4057,49 @@ select.btcd-paper-inp {
   }
 }
 
+/* Input, Textarea for calculator field style */
+.cal-fld-inp{
+  border-radius: 0px;
+}
+
+.cal-fld-inp>input,
+.cal-fld-inp>textarea {
+  border-radius: 8px 0px 0px 8px !important;
+  border-color: none;
+}
+
+.cal-fld-inp>input+span::after,
+.cal-fld-inp>textarea+span::after {
+  border-radius: 0 !important;
+}
+
+/*animation for caret blink*/
+@keyframes caretblink{
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  70%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+.calculator-field .caret{
+  width: 1px;
+  height: inherit;
+  position: absolute;
+  background-color: black;
+  animation-name: caretblink;
+  animation-duration: 800ms;
+  animation-timing-function: cubic-bezier(0.42, 0, 1.0, 1.0);
+  animation-iteration-count: infinite;
+}
+
 .btcd-mt-sel {
   display: inline-block;
   position: relative;

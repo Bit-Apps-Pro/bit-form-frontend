@@ -252,7 +252,7 @@ function Message({ id, msgItem }) {
       cr: 'var(--b-54-12)',
       ':disabled': { oy: 0.4, cur: 'not-allowed' },
       ':focus:not(:focus-visible)': { bs: 'none' },
-      ':hover:not(:disabled, .active)': { cr: 'var(--b-53-13)' },
+      ':hover:is(:not(:disabled),:not(.active))': { cr: 'var(--b-53-13)' },
       ':focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
       '&.active': {
         bd: 'var(--b-79-96)',

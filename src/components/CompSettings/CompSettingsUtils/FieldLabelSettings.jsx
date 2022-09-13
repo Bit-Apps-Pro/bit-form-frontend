@@ -12,6 +12,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import {
   addDefaultStyleClasses,
   iconElementLabel,
@@ -103,7 +104,7 @@ export default function FieldLabelSettings() {
         title={__('Label')}
         className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
         switching
-        tip="By disabling this option, the field label will be hidden"
+        tip={tippyHelperMsg.lbl}
         tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={hideFieldLabel}
         toggleChecked={!fieldData.valid.hideLbl}

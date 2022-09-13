@@ -10,6 +10,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
@@ -97,7 +98,7 @@ export default function HelperTxtSettings() {
         title={__('Helper Text')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
-        tip="By disabling this option, the field helper text will be hidden"
+        tip={tippyHelperMsg.helpText}
         tipProps={{ width: 250, icnSize: 17 }}
         toggleAction={hideHelperTxt}
         toggleChecked={fieldData?.hlpTxtHide}
