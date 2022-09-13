@@ -518,13 +518,11 @@ export default function SingleFormSettings() {
         checked={additionalSetting?.enabled?.is_login}
         cls="w-6 mt-3"
       >
-        <>
-          <div className="mb-2 ml-2">
-            <b>Error message</b>
-            <br />
-            <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
-          </div>
-        </>
+        <div className="mb-2 ml-2">
+          <b>Error message</b>
+          <br />
+          <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
+        </div>
       </Accordions>
       <Accordions
         customTitle={(
@@ -532,7 +530,7 @@ export default function SingleFormSettings() {
             <span className="mr-2">
               <EmptyIcn size="20" />
             </span>
-            {__('Disallow empty form submission')}
+            {__('Prevent empty form submission')}
           </b>
         )}
         cls="w-6 mt-3"
