@@ -65,6 +65,7 @@ const optionmenu = {
     '& :is(button), & :is(a)': {
       cr: 'var(--b-37-18)',
       flx: 'align-center',
+      gap: '5px',
       b: 'none',
       bd: 'transparent',
       fw: 500,
