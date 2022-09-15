@@ -39,11 +39,12 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
   const setSeletedFieldId = useSetRecoilState($selectedFieldId)
   const naviage = useNavigate()
-  console.log('fieldKey', fieldKey)
+
   const handleFldLink = () => {
     setSeletedFieldId(fieldKey)
     naviage(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
   }
+
   return (
     <button type="button" data-testid={`fld-lst-itm-${icn}-${fieldKey}`} onClick={handleFldLink} className="btc-s-l mt-2">
       <div className="flx flx-between ">
