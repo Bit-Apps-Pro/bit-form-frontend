@@ -74,9 +74,9 @@ export const SmartTagField = [
   },
   {
     id: 13,
-    name: '_bf_random_digit_num',
-    label: 'Random Digit',
-    type: 'number',
+    name: '_bf_random_digit',
+    label: 'Random String',
+    type: 'text',
   },
   {
     id: 14,
