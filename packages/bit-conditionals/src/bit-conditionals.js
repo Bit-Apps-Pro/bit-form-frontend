@@ -135,6 +135,8 @@ export default function onBlurHandler(event) {
 
   const { onfieldCondition } = props
 
+  if (!onfieldCondition) return
+
   const oninputConds = onfieldCondition.filter(cond => cond.event_type === 'on_input')
 
   const oninputCondsForField = oninputConds.filter(cond => cond.conditions.some(c => c?.logics?.some(lgc => lgc.field === fldKey)))
