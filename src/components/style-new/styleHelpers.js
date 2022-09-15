@@ -531,103 +531,73 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'color':
         case 'textarea':
           const textStyleBitFormDefault = textStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in textStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: textStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: textStyleBitFormDefault })
           break
         case 'title':
           const titleStyleBitFormDefault = titleStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in titleStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: titleStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: titleStyleBitFormDefault })
           break
         case 'divider':
           const dividerStyleBitFormDefault = dividerStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in dividerStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dividerStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dividerStyleBitFormDefault })
           break
         case 'image':
           const imageStyleBitFormDefault = imageStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in imageStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: imageStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: imageStyleBitFormDefault })
           break
         case 'button':
           const buttonStyleBitFormDefault = buttonStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-fld-wrp`] in buttonStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: buttonStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: buttonStyleBitFormDefault })
           break
         case 'check':
         case 'radio':
           const checkBoxStyleBitFormDefault = checkboxNradioStyle1BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in checkBoxStyleBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: checkBoxStyleBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: checkBoxStyleBitFormDefault })
           break
         case 'advanced-file-up':
           const advanceFileUpBitFormDefault = advancedFileUp_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in advanceFileUpBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: advanceFileUpBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: advanceFileUpBitFormDefault })
           break
         case 'html':
           const htmlBitFormDefault = htmlStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in htmlBitFormDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: htmlBitFormDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: htmlBitFormDefault })
           break
         case 'currency':
           const currencyStyle1BitformDefault = currencyStyle_1_BitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in currencyStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: currencyStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: currencyStyle1BitformDefault })
           break
         case 'country':
           const countryStyle1BitformDefault = countryStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in countryStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: countryStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: countryStyle1BitformDefault })
           break
         case 'file-up':
           const fileUploadStyle1BitformDefault = fileUploadStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in fileUploadStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
-          }
-          if ([`.${fk}-file-wrpr`] in fileUploadStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
-          }
-          if ([`.${fk}-file-size`] in fileUploadStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
-          }
-          if ([`.${fk}-file-preview`] in fileUploadStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          // if ([`.${fk}-file-wrpr`] in fileUploadStyle1BitformDefault) {
+          //   addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          // }
+          // if ([`.${fk}-file-size`] in fileUploadStyle1BitformDefault) {
+          //   addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          // }
+          // if ([`.${fk}-file-preview`] in fileUploadStyle1BitformDefault) {
+          //   addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: fileUploadStyle1BitformDefault })
+          // }
           break
         case 'recaptcha':
           const recaptchaStyle1BitformDefault = recaptchaStyle_1_bitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in recaptchaStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: recaptchaStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: recaptchaStyle1BitformDefault })
           break
         case 'html-select':
           const selectStyle1BitformDefault = selectStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in selectStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: selectStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: selectStyle1BitformDefault })
           break
         case 'select':
           const dropdownStyle1BitformDefault = dropdownStyle_1_BitformDefault({ fk, fldTyp, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in dropdownStyle1BitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dropdownStyle1BitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: dropdownStyle1BitformDefault })
           break
         case 'phone-number':
           const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
-          if ([`.${fk}-inp-fld-wrp`] in phoneNumberStyleBitformDefault) {
-            addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
-          }
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
           break
         default:
           break
