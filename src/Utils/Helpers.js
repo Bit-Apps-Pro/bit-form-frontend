@@ -265,8 +265,8 @@ export const firstCharCap = str => str.charAt(0).toUpperCase() + str.slice(1)
 export const getFormsFromPhpVariable = () => {
   let allForms = []
   if (typeof bits !== 'undefined'
-      //  eslint-disable-next-line no-undef
-      && bits.allForms !== null) {
+    //  eslint-disable-next-line no-undef
+    && bits.allForms !== null) {
     //  eslint-disable-next-line no-undef
     allForms = bits?.allForms?.map(form => (
       {
@@ -476,3 +476,5 @@ export const compareBetweenVersions = (ver1, ver2) => {
     return -1
   }
 }
+
+export const isFirefox = () => navigator.userAgent.includes('Firefox')
