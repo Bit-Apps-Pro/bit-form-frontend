@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
+import { $builderRightPanelScroll, $selectedFieldId, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
@@ -21,15 +21,18 @@ import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()
-  const { formID, '*': rightBar, element } = useParams()
+  const { formID, '*': rightPanel } = useParams()
+  const [rightBar, fieldKey] = rightPanel.split('/')
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
 
   useEffect(() => {
+    setSelectedFieldId(fieldKey)
     const settingsScroll = select('.settings')?.firstChild?.firstChild
     if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
-  }, [rightBar, element])
+  }, [fieldKey, rightBar])
 
   const onSettingScroll = ({ target: { scrollTop } }) => (scrollTop > 20 ? setScrollTop(true) : setScrollTop(false))
 
@@ -202,6 +205,6 @@ const c = {
     mr: 0,
     ml: 'auto',
     fs: 18,
-    oe: '1px solid var(--b-44-87)'
+    oe: '1px solid var(--b-44-87)',
   },
 }
