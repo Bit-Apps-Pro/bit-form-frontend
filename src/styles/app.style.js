@@ -104,8 +104,6 @@ const app = {
     },
   },
 
-
-
   blueGrd: {
     bd: 'linear-gradient(145deg, var(--b-50), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important',
     cr: 'var(--white) !important',

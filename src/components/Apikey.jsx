@@ -52,13 +52,13 @@ export default function Apikey() {
         if (res !== undefined && res.success) {
           setKey(res.data)
         }
-        if (res?.data) return 'Successfully fetched API key.'
+        if (res?.data) return 'Fetched.'
         return 'Error'
       })
       toast.promise(loadApiKeyProm, {
         success: data => data,
         error: __('Error Occured'),
-        loading: __('Loading API key...'),
+        loading: __('Fetching API key...'),
       })
     } else {
       setKey('**********************************')

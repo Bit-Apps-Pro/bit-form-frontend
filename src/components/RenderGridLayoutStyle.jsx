@@ -6,9 +6,9 @@ import { generateLayoutStyle } from '../Utils/atomicStyleGenarate'
 export default function RenderGridLayoutStyle() {
   const layouts = useRecoilValue($layouts)
   const breakpoint = useRecoilValue($breakpoint)
-  const lay_row_height = 2
+  // const layoutRowHeight = 2
 
-  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(layouts, lay_row_height)
+  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(layouts)
 
   let colRepeat = 60
   if (breakpoint === 'md') colRepeat = 40

@@ -487,9 +487,9 @@ const getElementTotalHeight = (elm) => {
 export const fitAllLayoutItems = (lays) => {
   const newLays = deepCopy(lays)
   for (let i = 0; i < newLays.lg.length; i += 1) {
-    newLays.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.lg[i].i}-fld-wrp`)) / 2)
-    newLays.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.md[i].i}-fld-wrp`)) / 2)
-    newLays.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.sm[i].i}-fld-wrp`)) / 2)
+    newLays.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.lg[i].i}-fld-wrp`)))
+    newLays.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.md[i].i}-fld-wrp`)))
+    newLays.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.sm[i].i}-fld-wrp`)))
   }
   return newLays
 }
@@ -500,9 +500,9 @@ export const fitSpecificLayoutItem = (lays, fieldKey) => {
   const mdFld = newLays.md.find(itm => itm.i === fieldKey)
   const smFld = newLays.sm.find(itm => itm.i === fieldKey)
 
-  if (lgFld) lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)) / 2)
-  if (mdFld) mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)) / 2)
-  if (smFld) smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)) / 2)
+  if (lgFld) lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)))
+  if (mdFld) mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)))
+  if (smFld) smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)))
   return newLays
 }
 

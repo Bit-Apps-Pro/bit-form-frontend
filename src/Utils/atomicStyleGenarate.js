@@ -28,7 +28,7 @@ export default function atomicStyleGenarate(sortedLayout) {
 
   const formId = getRecoil($formId)
 
-  const layoutRowHeight = 2
+  // const layoutRowHeight = 2
 
   const themeColorsLight = getRecoil($lightThemeColors)
   const themeColorsDark = getRecoil($darkThemeColors)
@@ -207,7 +207,7 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightCombinedSelectors = combineSelectors(smLightAtomicStylesPostfixed)
   const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStylesPostfixed)
 
-  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(sortedLayout, layoutRowHeight)
+  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(sortedLayout)
 
   // console.log('combine selectors', {
   //   lgLightCombineSelectors,
@@ -353,7 +353,7 @@ function addPrefixInObjectKeys(obj, prefix) {
   return newObj
 }
 
-export function generateLayoutStyle(layouts, rowHeight) {
+export function generateLayoutStyle(layouts) {
   let lgLayoutStyleText = ''
   let mdLayoutStyleText = ''
   let smLayoutStyleText = ''
@@ -369,7 +369,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const lg_g_c_e = Math.round((lgFld.x + 1) + lgFld.w)
     // const lg_g_r_span = lg_g_r_e - lg_g_r_s
     // const lg_g_c_span = lg_g_c_e - lg_g_c_s
-    const lg_min_height = `${lgFld.h * rowHeight}px;`
+    const lg_min_height = `${lgFld.h}px;`
 
     lgLayoutStyleText += `.${lgClsName}{`
     lgLayoutStyleText += `grid-area:${lg_g_r_s}/${lg_g_c_s}/${lg_g_r_e}/${lg_g_c_e};`
@@ -390,7 +390,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const md_g_c_e = Math.round((mdFld.x + 1) + mdFld.w)
     // const md_g_r_span = md_g_r_e - md_g_r_s
     // const md_g_c_span = md_g_c_e - md_g_c_s
-    const md_min_height = `${mdFld.h * rowHeight}px;`
+    const md_min_height = `${mdFld.h}px;`
 
     mdLayoutStyleText += `.${mdClsName}{`
     mdLayoutStyleText += `grid-area:${md_g_r_s}/${md_g_c_s}/${md_g_r_e}/${md_g_c_e};`
@@ -411,7 +411,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
     // const sm_g_c_span = sm_g_c_e - sm_g_c_s
-    const sm_min_height = `${smFld.h * rowHeight}px;`
+    const sm_min_height = `${smFld.h}px;`
 
     smLayoutStyleText += `.${smClsName}{`
     smLayoutStyleText += `grid-area:${sm_g_r_s}/${sm_g_c_s}/${sm_g_r_e}/${sm_g_c_e};`

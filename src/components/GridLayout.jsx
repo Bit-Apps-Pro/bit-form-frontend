@@ -63,7 +63,7 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may chnage size and pos in different breakpoint
 
 const BUILDER_PADDING = { all: 5 }
-const CUSTOM_SCROLLBAR_GUTTER = 10
+const CUSTOM_SCROLLBAR_GUTTER = navigator.userAgent.includes('Firefox') ? 20 : 12
 
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
@@ -85,8 +85,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setTempStyles = useSetRecoilState($tempStyles)
   const cols = { lg: 60, md: 40, sm: 20 }
-  const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
-  const [rowHeight, setRowHeight] = useState(2)
+  const [gridContentMargin, setgridContentMargin] = useState([0, 0])
+  const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
   const [contextMenu, setContextMenu] = useState({})

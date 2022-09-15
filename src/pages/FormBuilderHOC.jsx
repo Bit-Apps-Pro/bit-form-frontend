@@ -5,7 +5,7 @@ import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'r
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import useSWRImmutable from 'swr/immutable'
+import useSWR from 'swr'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
@@ -100,7 +100,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const { data: fetchedBuilderHelperStates, isValidating: isFetchingStyles } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
+  const { data: fetchedBuilderHelperStates, isValidating: isFetchingStyles } = useSWR(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
     .then(({ data: [response] }) => response?.builder_helper_state))
 
   useEffect(() => {
