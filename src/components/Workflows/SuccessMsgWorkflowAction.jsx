@@ -19,12 +19,8 @@ export default function SuccessMsgWorkflowAction({ lgcGrpInd,
   const setSuccessMsg = val => {
     const tmpWorkflows = produce(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
-      for (let i = 0; i < draftSuccessActions.length; i += 1) {
-        if (draftSuccessActions[i].type === 'successMsg') {
-          draftSuccessActions[i].details.id = val
-          break
-        }
-      }
+      const findSuccessMsg = draftSuccessActions.find(v => v.type === 'successMsg')
+      if (findSuccessMsg) findSuccessMsg.details.id = val
     })
 
     setWorkflows(tmpWorkflows)

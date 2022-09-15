@@ -1,4 +1,4 @@
-import produce from 'immer'
+import produce, { current } from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -20,12 +20,8 @@ export default function WebhookWorkflowAction({ lgcGrpInd,
   const setWebHooks = val => {
     const tmpWorkflows = produce(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
-      for (let i = 0; i < draftSuccessActions.length; i += 1) {
-        if (draftSuccessActions[i].type === 'webHooks') {
-          draftSuccessActions[i].details.id = val.map(itm => itm.value)
-          break
-        }
-      }
+      const findWebhook = draftSuccessActions.find(action => action.type === 'webHooks')
+      if (findWebhook) findWebhook.details.id = val.map(itm => itm.value)
     })
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
