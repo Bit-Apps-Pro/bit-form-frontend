@@ -121,7 +121,8 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   const getLogicPath = (logicsObj, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
       return logicsObj[lgcInd][subLgcInd][subSubLgcInd]
-    } if (subLgcInd !== undefined) {
+    }
+    if (subLgcInd !== undefined) {
       return logicsObj[lgcInd][subLgcInd]
     }
     return logicsObj[lgcInd]
