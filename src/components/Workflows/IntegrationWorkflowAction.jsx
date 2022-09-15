@@ -1,18 +1,18 @@
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import TableCheckBox from '../Utilities/TableCheckBox'
-import { __ } from '../../Utils/i18nwrap'
 import { $integrations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import ut from '../../styles/2.utilities'
+import { __ } from '../../Utils/i18nwrap'
 import DropDown from '../Utilities/DropDown'
-import {useFela} from "react-fela";
-import ut from "../../styles/2.utilities";
+import TableCheckBox from '../Utilities/TableCheckBox'
 
 export default function IntegrationWorkflowAction({ lgcGrpInd,
   condGrpInd,
   enableAction,
   checkKeyInArr,
   getValueFromArr }) {
-  const {css} = useFela()
+  const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const integrations = useRecoilValue($integrations)
@@ -20,12 +20,8 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
   const setInteg = val => {
     const tmpWorkflows = produce(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
-      for (let i = 0; i < draftSuccessActions.length; i += 1) {
-        if (draftSuccessActions[i].type === 'integ') {
-          draftSuccessActions[i].details.id = val.map(itm => itm.value)
-          break
-        }
-      }
+      const findInteg = draftSuccessActions.find(v => v.type === 'integ')
+      if (findInteg) findInteg.details.id = val.map(itm => itm.value)
     })
 
     setWorkflows(tmpWorkflows)

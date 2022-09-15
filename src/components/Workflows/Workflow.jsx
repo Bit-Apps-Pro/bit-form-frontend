@@ -15,6 +15,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
+import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
@@ -64,38 +65,7 @@ function Workflow({ formID }) {
         action_type: 'onload',
         action_run: 'create_edit',
         action_behaviour: 'cond',
-        conditions: [
-          {
-            cond_type: 'if',
-            logics: [
-              {
-                field: '',
-                logic: '',
-                val: '',
-              },
-              'or',
-              {
-                field: '',
-                logic: '',
-                val: '',
-              },
-            ],
-            actions: {
-              fields: [
-                {
-                  field: '',
-                  action: 'value',
-                },
-              ],
-              success: [
-                {
-                  type: 'successMsg',
-                  details: { id: '{"index":0}' },
-                },
-              ],
-            },
-          },
-        ],
+        conditions: [{ ...defaultConds }],
       })
     })
 
@@ -154,6 +124,7 @@ function Workflow({ formID }) {
   }
 
   const onWorkflowSortEnd = ({ oldIndex, newIndex }) => {
+    if (oldIndex === newIndex) return
     setWorkflows(oldWorkflows => arrayMoveImmutable(oldWorkflows, oldIndex, newIndex))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }

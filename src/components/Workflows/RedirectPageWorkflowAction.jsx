@@ -19,12 +19,8 @@ export default function RedirectPageWorkflowAction({ lgcGrpInd,
   const setRedirectPage = val => {
     const tmpWorkflows = produce(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
-      for (let i = 0; i < draftSuccessActions.length; i += 1) {
-        if (draftSuccessActions[i].type === 'redirectPage') {
-          draftSuccessActions[i].details.id = val
-          break
-        }
-      }
+      const findRedirectPage = draftSuccessActions.find(v => v.type === 'redirectPage')
+      if (findRedirectPage) findRedirectPage.details.id = val
     })
 
     setWorkflows(tmpWorkflows)
