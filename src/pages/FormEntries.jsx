@@ -471,16 +471,6 @@ function FormEntries({ allResp, setAllResp }) {
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
-  const loadRightHeaderComponent = () => (
-    <>
-      {/* <EntriesFilter fetchData={fetchData} /> */}
-      <ExportImportMenu data={allResp} cols={entryLabels} formID={formID} report={reports} />
-    </>
-  )
-  const loadLeftHeaderComponent = () => (
-    <FldEntriesByCondition fetchData={fetchData} setRefreshResp={setRefreshResp} />
-  )
-
   const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
     const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
     return !ignoreLbls.includes(lbl.accessor)
@@ -563,8 +553,20 @@ function FormEntries({ allResp, setAllResp }) {
           columnHidable
           hasAction
           rowClickable
-          rightHeader={loadRightHeaderComponent()}
-          leftHeader={loadLeftHeaderComponent()}
+          rightHeader={(
+            <ExportImportMenu
+              data={allResp}
+              cols={entryLabels}
+              formID={formID}
+              report={reports}
+            />
+          )}
+          leftHeader={(
+            <FldEntriesByCondition
+              fetchData={fetchData}
+              setRefreshResp={setRefreshResp}
+            />
+          )}
           formID={formID}
           setTableCols={setTableColumns}
           fetchData={fetchData}
