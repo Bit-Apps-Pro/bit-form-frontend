@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 
-export default function Select({ options = [], onChange, value, size = 'md', w, inputClass, color = 'default' }) {
+export default function Select({ options = [], onChange, value, size = 'md', w, className, color = 'default' }) {
   const { css } = useFela()
 
   const cls = {
@@ -8,7 +8,7 @@ export default function Select({ options = [], onChange, value, size = 'md', w, 
       fs: `${size === 'sm' ? 12 : 14}px!important`,
       w: w || '100%',
       fw: 500,
-      p: `${size === 'sm' ? '0px' : '2px 24px 2px 12px'}!important`,
+      p: `${size === 'sm' ? '2px 20px 2px 8px' : '2px 24px 2px 12px'}!important`,
       cr: 'var(--b-44-20)!important',
       bc: color === 'default' ? 'var(--white-0-95)!important' : 'var(--b-79-96)!important',
       bs: 'none!important',
