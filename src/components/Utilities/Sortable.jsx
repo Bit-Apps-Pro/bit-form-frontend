@@ -5,6 +5,6 @@ export const SortableList = SortableContainer(({ children }) => (<div>{children}
 
 export const SortableItem = SortableElement(({ children }) => children)
 
-export const DragHandle = SortableHandle(({ className }) => (
-  <span className={`handle ${className}`} style={{ cursor: 'move' }}><DragIcn size={14} /></span>
+export const DragHandle = SortableHandle(({ className, children }) => (
+  <span className={`handle ${className}`} style={{ cursor: 'move' }}>{children || <DragIcn size={14} />}</span>
 ))
