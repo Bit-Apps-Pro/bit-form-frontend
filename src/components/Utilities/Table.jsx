@@ -8,19 +8,23 @@ import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePaginati
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
+import ChevronLeft from '../../Icons/ChevronLeft'
+import ChevronLeftDoubleIcn from '../../Icons/ChevronDoubleIcn'
+import ChevronRightIcon from '../../Icons/ChevronRightIcon'
 import CopyIcn from '../../Icons/CopyIcn'
 import EyeOffIcon from '../../Icons/EyeOffIcon'
 import SearchIcn from '../../Icons/SearchIcn'
-import SearchIcon from '../../Icons/SearchIcon'
 import SortIcn from '../../Icons/SortIcn'
 import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
-import ExportImportMenu from '../ExportImport/ExportImportMenu'
 import TableLoader2 from '../Loaders/TableLoader2'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
+import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
+import ut from '../../styles/2.utilities'
+import Select from './Select'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -33,7 +37,7 @@ const IndeterminateCheckbox = forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
   const [delay, setDelay] = useState(null)
   const handleSearch = e => {
     delay && clearTimeout(delay)
@@ -47,37 +51,14 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, leftHeaderComp
   }
 
   return (
-    <div className="table-right-menu">
-
-      <div className="flx">
-        {/* <div className="f-search">
-          <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}>
-            <span className="btcd-icn icn-search" />
-          </button>
-
-           <label>
-            <input
-              value={globalFilter || ''}
-              onChange={handleSearch}
-              placeholder={__('Search')}
-            />
-          </label>
-
-        </div> */}
-        <div className="f-search mr-2">
-          <span><SearchIcn size="16" /></span>
-          <input
-            value={globalFilter || ''}
-            onChange={handleSearch}
-            placeholder={__('Search')}
-            className="search-input-box"
-          />
-
-        </div>
-        {leftHeaderComp}
-
-      </div>
-
+    <div className="f-search mr-2">
+      <span><SearchIcn size="16" /></span>
+      <input
+        value={globalFilter || ''}
+        onChange={handleSearch}
+        placeholder={__('Search')}
+        className="search-input-box"
+      />
     </div>
   )
 }
@@ -102,7 +83,7 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const { columns, data, fetchData, refreshResp, report } = props
+  const { columns, data, fetchData, refreshResp, report, rightHeader, leftHeader } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)
   const reportId = useRecoilValue($reportId)
 
@@ -126,7 +107,7 @@ function Table(props) {
     selectedFlatRows, // row select
     allColumns, // col hide
     setGlobalFilter,
-    state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns, conditions },
+    state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder } = useTable(
     {
       debug: true,
@@ -193,7 +174,7 @@ function Table(props) {
   }, [gotoPage, pageCount, pageIndex])
 
   useEffect(() => {
-    if (!isNaN(report)) {
+    if (!Number.isNaN(report)) {
       let details
 
       if (currentReportData && currentReportData.details && typeof currentReportData.details === 'object') {
@@ -301,122 +282,123 @@ function Table(props) {
         btn2Action={confMdl.btn2Action}
         btnClass={confMdl.btnClass}
       />
-      <div className="btcd-t-actions">
-        <div className="flx">
+      <div className="flx flx-between mt-1 mr-2">
+        <div className="btcd-t-actions">
+          <div className="flx">
 
-          {props.columnHidable && <ColumnHide cols={props.columns} setCols={props.setTableCols} tableCol={columns} tableAllCols={allColumns} />}
-          {props.leftHeader}
-          {props.rowSeletable && selectedFlatRows.length > 0
-            && (
-              <>
-                {'setBulkStatus' in props
-                  && (
-                    <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
-                      <ToggleLeftIcn stroke="1.5" />
-                    </button>
-                  )}
-                {'duplicateData' in props
-                  && (
-                    <button onClick={showBulkDupMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Duplicate"' }} aria-label="icon-btn" type="button">
-                      <CopyIcn w="15" />
-                    </button>
-                  )}
-                <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
-                  <TrashIcn size="21" />
-                </button>
-                <small className={css(cls.pill)}>
-                  {selectedFlatRows.length}
-                  {' '}
-                  {__('Row Selected')}
-                </small>
-              </>
-            )}
+            {props.columnHidable && <ColumnHide cols={props.columns} setCols={props.setTableCols} tableCol={columns} tableAllCols={allColumns} />}
+            {leftHeader}
+            {props.rowSeletable && selectedFlatRows.length > 0
+              && (
+                <>
+                  {'setBulkStatus' in props
+                    && (
+                      <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
+                        <ToggleLeftIcn size="22" stroke="2" />
+                      </button>
+                    )}
+                  {'duplicateData' in props
+                    && (
+                      <button onClick={showBulkDupMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Duplicate"' }} aria-label="icon-btn" type="button">
+                        <CopyIcn w="15" />
+                      </button>
+                    )}
+                  <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
+                    <TrashIcn size="21" />
+                  </button>
+                  <small className={css(cls.pill)}>
+                    {selectedFlatRows.length}
+                    {' '}
+                    {__('Row Selected')}
+                  </small>
+                </>
+              )}
+          </div>
+        </div>
+        <div className="table-right-menu">
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+            setSearch={setSearch}
+            data={props.data}
+            cols={props.columns}
+            formID={props.formID}
+            report={report}
+            fetchData={fetchData}
+          />
+          {rightHeader}
         </div>
       </div>
-      <>
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-          setSearch={setSearch}
-          leftHeaderComp={props.rightHeader}
-          data={props.data}
-          cols={props.columns}
-          formID={props.formID}
-          report={report}
-          fetchData={fetchData}
-
-        />
-        <div className="mt-2">
-          <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
-            <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
-              <div className="thead">
-                {headerGroups.map((headerGroup, i) => (
-                  <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map(column => (
-                      <div key={column.id} className="th flx" {...column.getHeaderProps()}>
-                        <div {...column.id !== 't_action' && column.getSortByToggleProps()} style={{ display: 'flex', alignItems: 'center' }}>
-                          {column.render('Header')}
-                          {' '}
-                          {(column.id !== 't_action' && column.id !== 'selection') && (
-                            <span style={{ marginLeft: 5, display: 'flex', flexDirection: 'column' }}>
-                              {(column.isSorted || column.isSortedDesc) && <SortIcn />}
-                              {(column.isSorted || !column.isSortedDesc) && <SortIcn style={{ transform: 'rotate(180deg)' }} />}
-                            </span>
-                          )}
-                        </div>
-                        {props.resizable
-                          && (
-                            <div
-                              {...column.getResizerProps()}
-                              className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
-                            />
-                          )}
+      <div className="mt-2">
+        <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
+          <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
+            <div className="thead">
+              {headerGroups.map((headerGroup, i) => (
+                <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <div key={column.id} className="th flx" {...column.getHeaderProps()}>
+                      <div {...column.id !== 't_action' && column.getSortByToggleProps()} style={{ display: 'flex', alignItems: 'center' }}>
+                        {column.render('Header')}
+                        {' '}
+                        {(column.id !== 't_action' && column.id !== 'selection') && (
+                          <span style={{ marginLeft: 5, display: 'flex', flexDirection: 'column' }}>
+                            {(column.isSorted || column.isSortedDesc) && <SortIcn />}
+                            {(column.isSorted || !column.isSortedDesc) && <SortIcn style={{ transform: 'rotate(180deg)' }} />}
+                          </span>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-              {props.loading ? <TableLoader2 /> : (
-                <div className="tbody" {...getTableBodyProps()}>
-                  {page.map(row => {
-                    prepareRow(row)
-                    return (
-                      <div
-                        key={`t-r-${row.index}`}
-                        className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
-                        {...row.getRowProps()}
-                      >
-                        {row.cells.map(cell => (
+                      {props.resizable
+                        && (
                           <div
-                            key={`t-d-${cell.row.index}`}
-                            className="td flx"
-                            {...cell.getCellProps()}
-                            {...props.rorowClickable
-                            && typeof cell.column.Header === 'string'
-                            && {
-                              onClick: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
-                              onKeyPress: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
-                              role: 'button',
-                              tabIndex: 0,
-                            }
-                            }
-                            // onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            // onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            aria-label="cell"
-                          >
-                            {cell.render('Cell')}
-                          </div>
-                        ))}
-                      </div>
-                    )
-                  })}
+                            {...column.getResizerProps()}
+                            className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                          />
+                        )}
+                    </div>
+                  ))}
                 </div>
-              )}
+              ))}
             </div>
-          </Scrollbars>
-        </div>
-      </>
+            {props.loading ? <TableLoader2 /> : (
+              <div className="tbody" {...getTableBodyProps()}>
+                {page.map(row => {
+                  prepareRow(row)
+                  return (
+                    <div
+                      key={`t-r-${row.index}`}
+                      className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
+                      {...row.getRowProps()}
+                    >
+                      {row.cells.map(cell => (
+                        <div
+                          key={`t-d-${cell.row.index}`}
+                          className="td flx"
+                          {...cell.getCellProps()}
+                          {...props.rorowClickable
+                          && typeof cell.column.Header === 'string'
+                          && {
+                            onClick: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
+                            onKeyPress: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
+                            role: 'button',
+                            tabIndex: 0,
+                          }
+                          }
+                          // onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                          // onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                          aria-label="cell"
+                        >
+                          {cell.render('Cell')}
+                        </div>
+                      ))}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        </Scrollbars>
+      </div>
 
       <div className="btcd-pagination">
         <small>
@@ -425,59 +407,47 @@ function Table(props) {
             ${props.countEntries}`
           )}
         </small>
-        <div>
+        <div className="flx mr-2">
           <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            &laquo;
+            <ChevronDoubleIcn dir="left" />
           </button>
-          {' '}
           <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
-            &lsaquo;
+            <ChevronLeft />
           </button>
-          {' '}
           <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
-            &rsaquo;
+            <ChevronRightIcon />
           </button>
-          {' '}
           <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            &raquo;
+            <ChevronDoubleIcn dir="right" />
           </button>
-          {' '}
-          <small>
-            &nbsp;
-            {__('Page')}
-            {' '}
+
+          <small className="mr-2">
+            {__('Page ')}
             <strong>
               {pageIndex + 1}
-              {' '}
-              {__('of')}
-              {' '}
+              {__(' of ')}
               {pageOptions.length}
-              {' '}
-              &nbsp;
             </strong>
-            {' '}
           </small>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label>
-            <select
-              className="btcd-paper-inp"
-              value={pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value))
-                if (props.getPageSize) {
-                  props.getPageSize(e.target.value, pageIndex)
-                }
-              }}
-            >
-              {[10, 20, 30, 40, 50].map(pageSiz => (
-                <option key={pageSiz} value={pageSiz}>
-                  {__('Show')}
-                  {' '}
-                  {pageSiz}
-                </option>
-              ))}
-            </select>
-          </label>
+
+          <Select
+            size="sm"
+            value={pageSize}
+            onChange={e => {
+              setPageSize(Number(e.target.value))
+              if (props.getPageSize) {
+                props.getPageSize(e.target.value, pageIndex)
+              }
+            }}
+            options={[
+              { label: 10, value: 10 },
+              { label: 20, value: 20 },
+              { label: 30, value: 30 },
+              { label: 40, value: 40 },
+              { label: 50, value: 50 },
+            ]}
+          />
+
         </div>
       </div>
 
