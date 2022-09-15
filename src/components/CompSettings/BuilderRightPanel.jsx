@@ -21,7 +21,7 @@ import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()
-  const { formID, fieldKey, '*': rightBar, element } = useParams()
+  const { formID, '*': rightBar, element } = useParams()
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
@@ -29,7 +29,7 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
   useEffect(() => {
     const settingsScroll = select('.settings')?.firstChild?.firstChild
     if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
-  }, [fieldKey, rightBar, element])
+  }, [rightBar, element])
 
   const onSettingScroll = ({ target: { scrollTop } }) => (scrollTop > 20 ? setScrollTop(true) : setScrollTop(false))
 
