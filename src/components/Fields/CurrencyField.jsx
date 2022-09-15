@@ -35,7 +35,6 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     }
 
     const { options, inputFormatOptions, valueFormatOptions, customAttributes, customClasses } = fieldData
-    console.log(customAttributes, customClasses)
 
     const configOptions = {
       fieldKey,
@@ -70,12 +69,11 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
 
     // add bit_virtualized_list to global
     if (!window.bit_virtualized_list) {
-      window.bit_virtualized_list = bit_virtualized_list
+      window.bit_virtualized_list = bit_virtualized_list // eslint-disable-line camelcase
     }
     if (!window.observeElm) {
       window.observeElm = observeElm
     }
-    console.log(configOptions, fldElm)
     const alreadyChecked = options.find(opt => opt.check)
     if (alreadyChecked) configOptions.defaultCurrencyKey = alreadyChecked.i
     currencyFieldRef.current = new BitCurrencyField(fldElm, configOptions)

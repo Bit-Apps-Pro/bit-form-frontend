@@ -2,23 +2,26 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import { Fragment, useState } from 'react'
+import { arrayMoveImmutable } from 'array-move'
+import produce from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import produce from 'immer'
+import { $bits, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
-import { $bits, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
-import WorkflowRunner from './WorkflowRunner'
+import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import WorkflowConditionSection from './WorkflowConditionSection'
+import WorkflowRunner from './WorkflowRunner'
 
 function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -62,38 +65,7 @@ function Workflow({ formID }) {
         action_type: 'onload',
         action_run: 'create_edit',
         action_behaviour: 'cond',
-        conditions: [
-          {
-            cond_type: 'if',
-            logics: [
-              {
-                field: '',
-                logic: '',
-                val: '',
-              },
-              'or',
-              {
-                field: '',
-                logic: '',
-                val: '',
-              },
-            ],
-            actions: {
-              fields: [
-                {
-                  field: '',
-                  action: 'value',
-                },
-              ],
-              success: [
-                {
-                  type: 'successMsg',
-                  details: { id: '{"index":0}' },
-                },
-              ],
-            },
-          },
-        ],
+        conditions: [{ ...defaultConds }],
       })
     })
 
@@ -151,6 +123,12 @@ function Workflow({ formID }) {
     setconfMdl({ ...confMdl })
   }
 
+  const onWorkflowSortEnd = ({ oldIndex, newIndex }) => {
+    if (oldIndex === newIndex) return
+    setWorkflows(oldWorkflows => arrayMoveImmutable(oldWorkflows, oldIndex, newIndex))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
+
   return (
     <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
@@ -170,72 +148,87 @@ function Workflow({ formID }) {
         </Button>
       )}
 
-      {workflows.length > 0 ? workflows.map((lgcGrp, lgcGrpInd) => (
-        <Fragment key={`workflows-grp-${lgcGrpInd + 13}`}>
-          <div className="workflow-grp d-flx mt-2">
-            <Accordions
-              title={`${lgcGrp.title}`}
-              header={(
-                <small className="f-right txt-dp mr-4">
-                  <span className="mr-2">
-                    <i className="btcd-chat-dot mr-1" />
-                    {actionsTitle(lgcGrp.action_run)}
-                  </span>
-                  {lgcGrp.action_type !== undefined && (
-                    <span className="mr-2">
-                      <i className="btcd-chat-dot mr-1" />
-                      {actionsTitle(lgcGrp.action_type)}
-                    </span>
-                  )}
-                  <span>
-                    <i className="btcd-chat-dot mr-1" />
-                    {actionsTitle(lgcGrp.action_behaviour)}
-                  </span>
-                </small>
-              )}
-              titleEditable
-              onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
-              notScroll
-              cls={!isPro ? 'w-10' : 'w-9'}
-            >
-              <WorkflowRunner lgcGrpInd={lgcGrpInd} lgcGrp={lgcGrp} />
-              <WorkflowConditionSection lgcGrpInd={lgcGrpInd} lgcGrp={lgcGrp} />
-            </Accordions>
-            {isPro && (
-              <div className="mt-2">
-                <Button
-                  onClick={() => lgcGrpDelConf(lgcGrpInd)}
-                  icn
-                  className="ml-2 sh-sm btcd-menu-btn tooltip"
-                  style={{ '--tooltip-txt': '"Delete Action"' }}
-                >
-                  <TrashIcn size="16" />
-                </Button>
-              </div>
-            )}
-          </div>
-          {!isPro && (
-            <div className="txt-center bg-pro p-5 mt-2">
-              {__('For')}
-                    &nbsp;
-              <span className="txt-pro">{__('UNLIMITED')}</span>
-                    &nbsp;
-              {__('Conditional Logics')}
-              ,&nbsp;
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                <b
-                  className="txt-pro"
-                >
-                  {__('Buy Premium')}
-                </b>
-              </a>
-            </div>
-          )}
-        </Fragment>
-      )) : (
+      {workflows.length === 0 && (
         <div className={css(ut.btcdEmpty, ut.txCenter)}>
           <StackIcn size="50" />
           {__('Empty')}
+        </div>
+      )}
+
+      <SortableList onSortEnd={onWorkflowSortEnd} useDragHandle>
+        {workflows.map((lgcGrp, lgcGrpInd) => (
+          <SortableItem
+            key={`workflows-grp-${lgcGrpInd + 13}`}
+            index={lgcGrpInd}
+          >
+            <div className="workflow-grp d-flx mt-2">
+              <Accordions
+                customTitle={<DragHandle className="mr-1" />}
+                title={`${lgcGrp.title}`}
+                header={(
+                  <small className="f-right txt-dp mr-4">
+                    <span className="mr-2">
+                      <i className="btcd-chat-dot mr-1" />
+                      {actionsTitle(lgcGrp.action_run)}
+                    </span>
+                    {lgcGrp.action_type !== undefined && (
+                      <span className="mr-2">
+                        <i className="btcd-chat-dot mr-1" />
+                        {actionsTitle(lgcGrp.action_type)}
+                      </span>
+                    )}
+                    <span>
+                      <i className="btcd-chat-dot mr-1" />
+                      {actionsTitle(lgcGrp.action_behaviour)}
+                    </span>
+                  </small>
+                )}
+                titleEditable
+                onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
+                notScroll
+                cls={!isPro ? 'w-10' : 'w-9'}
+              >
+                <WorkflowRunner lgcGrpInd={lgcGrpInd} lgcGrp={lgcGrp} />
+                <WorkflowConditionSection lgcGrpInd={lgcGrpInd} lgcGrp={lgcGrp} />
+              </Accordions>
+              {isPro && (
+                <div className="mt-2">
+                  <Button
+                    onClick={() => lgcGrpDelConf(lgcGrpInd)}
+                    icn
+                    className="ml-2 sh-sm btcd-menu-btn tooltip"
+                    style={{ '--tooltip-txt': '"Delete Action"' }}
+                  >
+                    <TrashIcn size="16" />
+                  </Button>
+                </div>
+              )}
+            </div>
+            {!isPro && (
+              <div className="txt-center bg-pro p-5 mt-2">
+                {__('For')}
+                &nbsp;
+                <span className="txt-pro">{__('UNLIMITED')}</span>
+                &nbsp;
+                {__('Conditional Logics')}
+                ,&nbsp;
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                  <b
+                    className="txt-pro"
+                  >
+                    {__('Buy Premium')}
+                  </b>
+                </a>
+              </div>
+            )}
+          </SortableItem>
+        ))}
+      </SortableList>
+
+      {workflows.length > 1 && (
+        <div className={css(ut.w9, { fs: 13 }, ut.mt4)}>
+          <strong>Note: </strong>
+          Conditional Logics are triggered based on the order of the logic groups. The higher the logic group, the higher the priority. If you want to change the priority, you can sort by drag and drop the logic group.
         </div>
       )}
     </div>

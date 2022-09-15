@@ -3,17 +3,10 @@ import inputWrapperClasses from '../common/inputWrapperClasses'
 /* eslint-disable camelcase */
 export default function decisionBoxStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
-
     return {
-      [`.${fk}-fld-wrp`]: {
-        ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
-      },
-      [`.${fk}-inp-wrp`]: {
-        ...inputWrapperClasses(fk)[`.${fk}-inp-wrp`],
-      },
-      [`.${fk}-err-msg`]: {
-        ...inputWrapperClasses(fk)[`.${fk}-err-msg`],
-      },
+      [`.${fk}-fld-wrp`]: { ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`] },
+      [`.${fk}-inp-wrp`]: { ...inputWrapperClasses(fk)[`.${fk}-inp-wrp`] },
+      [`.${fk}-err-msg`]: { ...inputWrapperClasses(fk)[`.${fk}-err-msg`] },
 
       // checkbox symbol
       [`.${fk}-cks`]: {
@@ -45,14 +38,14 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         position: 'absolute',
         opacity: '0!important',
       },
-      [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-bx`]: {
+      [`.${fk}-ci:checked ~ [data-cl] [data-bx]`]: {
         background: 'var(--global-accent-color)',
         'border-color': 'var(--global-accent-color)',
       },
-      [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
-      [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
-      [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
-      [`.${fk}-ci:disabled ~ .${fk}-cl`]: {
+      [`.${fk}-ci:focus ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
+      [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
+      [`.${fk}-ci:active ~ [data-cl] [data-bx]`]: { transform: 'scale(0.9)' },
+      [`.${fk}-ci:disabled ~ [data-cl]`]: {
         opacity: 0.6,
         'pointer-events': 'none',
         cursor: 'not-allowed',
@@ -85,7 +78,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         'stroke-width': '2px',
         'stroke-dasharray': '16px',
       },
-      [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-ck-icn`]: { 'stroke-dashoffset': 0 },
+      [`.${fk}-ci:checked ~ [data-cl] [data-ck-icn]`]: { 'stroke-dashoffset': 0 },
 
     }
   }

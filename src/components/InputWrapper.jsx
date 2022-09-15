@@ -85,7 +85,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 />
               )}
 
-              <RenderHtml html={fieldData.lbl.replaceAll('$_bf_$', '\\')} />
+              <RenderHtml html={fieldData.lbl.replace(/\$_bf_\$/g, '\\')} />
 
               {fieldData.lblSufIcn && (
                 <img

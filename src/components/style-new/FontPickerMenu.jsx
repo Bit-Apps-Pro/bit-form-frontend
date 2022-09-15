@@ -97,7 +97,7 @@ export default function FontPickerMenu({ id }) {
       }
     }
     if (weight.length !== 0) {
-      const str = param.sort().toString().replaceAll(/;,/gi, ';')
+      const str = param.sort().toString().replace(/;,/gi, ';')
       string = str.substring(0, str.length - 1)
       string = `wght@${string}`
     }

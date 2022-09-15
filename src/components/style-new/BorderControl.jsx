@@ -44,7 +44,6 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
     const bdrRdsVar = objectPaths[0].paths['border-radius']
 
     bdrVal = themeVars[bdrStylVar]
-    // const [, bdrColor] = splitValueBySpaces(bdrVal?.replaceAll(/(!important)/gi, ''))
     bdrClr = themeColors[bdrClrVar]
     bdrWdthVal = themeVars[bdrWdthVar]
     bdrRdsVal = themeVars[bdrRdsVar]

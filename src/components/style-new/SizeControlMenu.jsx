@@ -28,7 +28,7 @@ export default function SizeControlMenu({ objectPaths }) {
       let value = getValueByObjPath(styles, propertyPath)
       const isCssVar = value?.match(/var/gi)?.[0]
       if (isCssVar === 'var') {
-        const getVarProperty = value.replaceAll(/\(|var|,.*|\)/gi, '')
+        const getVarProperty = value.replace(/\(|var|,.*|\)/gi, '')
         value = themeVars[getVarProperty]
       }
       return value

@@ -68,8 +68,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
             {(lgcGrp.action_behaviour === 'cond' && condGrp.cond_type !== 'else') && (
               <WorkflowAccordion
                 title={generateAccrTtl(condGrp.cond_type)}
-                accordionActions={condGrp.cond_type !== 'if'
-                                    && <WorkflowAccordionActions lgcGrpInd={lgcGrpInd} condGrpInd={condGrpInd} />}
+                accordionActions={condGrp.cond_type !== 'if' && <WorkflowAccordionActions lgcGrpInd={lgcGrpInd} condGrpInd={condGrpInd} />}
               >
                 <WorkflowLogicSection
                   lgcGrp={lgcGrp}
@@ -132,14 +131,14 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
                 title={condGrp.cond_type === 'else' ? 'Else' : 'Then'}
                 titleOutline={condGrp.cond_type !== 'else'}
                 accordionActions={condGrp.cond_type === 'else'
-                                    && (
-                                      <WorkflowAccordionActions
-                                        lgcGrpInd={lgcGrpInd}
-                                        condGrpInd={condGrpInd}
-                                        add={false}
-                                        clone={false}
-                                      />
-                                    )}
+                  && (
+                    <WorkflowAccordionActions
+                      lgcGrpInd={lgcGrpInd}
+                      condGrpInd={condGrpInd}
+                      add={false}
+                      clone={false}
+                    />
+                  )}
               >
                 <WorkflowActionSection
                   lgcGrp={lgcGrp}

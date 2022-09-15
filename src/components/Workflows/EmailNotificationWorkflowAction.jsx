@@ -62,12 +62,8 @@ export default function EmailNotificationWorkflowAction({ lgcGrpInd,
   const setEmailSetting = (typ, value) => {
     const tmpWorkflows = produce(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
-      for (let i = 0; i < draftSuccessActions.length; i += 1) {
-        if (['mailNotify', 'dblOptin'].includes(draftSuccessActions[i].type)) {
-          draftSuccessActions[i].details[typ] = value
-          break
-        }
-      }
+      const findEmailActions = draftSuccessActions.find(val => val.type === actionKey)
+      if (findEmailActions) findEmailActions.details[typ] = value
     })
 
     setWorkflows(tmpWorkflows)

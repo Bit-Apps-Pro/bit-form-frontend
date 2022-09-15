@@ -15,7 +15,7 @@ export default function SimpleColorPickerTooltip({ action, value }) {
           className={css(c.pickrBtn)}
         >
           <ColorPreview bg={value} h={25} w={25} className={css(ut.mr2)} />
-          <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+          <span className={css(c.clrVal)}>{value?.replace(/\(|var|\)/gi, '')}</span>
         </button>
         <SimpleColorPickerMenuV2 action={action} value={value} />
       </Downmenu>

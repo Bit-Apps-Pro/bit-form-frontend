@@ -795,6 +795,6 @@ const s = {
     ws: 'nowrap',
   },
 
-  scrollDiv: { ow: 'hidden' },
+  scrollDiv: { ow: 'hidden', mb: 300 },
   divider: { bb: '1px solid var(--white-0-83)' },
 }

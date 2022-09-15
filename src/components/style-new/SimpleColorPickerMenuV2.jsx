@@ -39,7 +39,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
     const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
     if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100)'
     if (colorValue.match(/var/g)?.[0] === 'var') {
-      const getVarProperty = colorValue.replaceAll(/\(|var|,.*|\)/gi, '')
+      const getVarProperty = colorValue.replace(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]
     }
     return colorValue

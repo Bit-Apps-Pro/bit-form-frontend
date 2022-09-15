@@ -1036,21 +1036,21 @@ input[type="checkbox"].disabled:checked:before {
   }
 
   &::before {
-    // color     : #b1b1b1;
+    background: var(--b-44-87);
     color: var(--white-0-69);
     position: absolute;
-    top: 38vh;
-    left: -2px;
-    content: "\02551";
-    height: 64px;
+    top: 35vh;
+    width: 5px;
+    content: "";
+    height: 30px;
+    border-radius: 50px;
     text-align: center;
+    transform: translateX(50%);
   }
 
   &:hover::before {
+    background: var(--blue);
     color: #2f2f2f;
-    // color: #4e4e4e;
-    // content: "";
-    // color: var(--white-100);
   }
 }
 
@@ -1399,10 +1399,11 @@ input[type="checkbox"].disabled:checked:before {
   height: 203px;
   text-decoration: none;
   overflow: hidden;
-  border-radius: 15px;
+  border-radius: 13px;
   outline: none;
-  box-shadow: 1px 2px 3px var(--b-38-89);
-  background-color: var(--b-97);
+  border: 2px solid #e3eff8 ;
+  // box-shadow: 1px 2px 3px var(--b-38-89);
+  // background-color: var(--b-97);
   transition: box-shadow 0.2s, transform 0.3s;
 }
 
@@ -1463,7 +1464,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .btcd-inte-card:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter) {
   transform: scale(1.02);
-  box-shadow: 2px 2px 7px var(--b-35-86);
+  box-shadow: 0 2px 4px var(--b-38-89);
 }
 
 .btcd-inte-card:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter)>.btcd-inte-atn {
@@ -1852,9 +1853,8 @@ nav.top-nav {
   border-radius: 12px;
   box-shadow: none;
 
-  &:hover {
+  &:hover:not(.app-link-active) {
     color: var(--white)!important;
-    -webkit-filter: brightness(1.2);
     filter: brightness(1.2);
   }
   &:focus-visible{
@@ -2162,20 +2162,20 @@ nav.top-nav {
 //   }
 // }
 .f-search span {
-  position: absolute !important;
-  top: 50%;
-  left: 7px;
   display: flex;
   /* padding: 0px 0px 0px 25px; */
   color: hsl(0deg, 0%, 50%);
+  position: absolute !important;
+  top: 50%;
+  left: 7px;
   transform: translateY(-50%);
 }
 
 .f-search {
+  background: #F3F3F3 !important;
   position: relative;
   height: 29px;
   margin-top: 5px;
-  background: #F3F3F3 !important;
   border-radius: 8px;
 
   & input:focus {
@@ -2185,6 +2185,7 @@ nav.top-nav {
 }
 
 .search-input-box {
+  background: none;
   box-sizing: border-box;
   border: none;
   outline: none !important;
@@ -2195,7 +2196,6 @@ nav.top-nav {
   font-size: 12px;
   line-height: 15px;
   height: 29px;
-  background: none;
   transition: width 0.5s;
   width: 110px;
 
@@ -3030,7 +3030,7 @@ nav.top-nav {
     height: 15px;
     width: 15px;
     background-color: transparent;
-    border-radius: 15px 0 0 0;
+    border-radius: 12px 0 0 0;
     box-shadow: -5px -3px 0 2px var(--dp-blue-bg);
   }
 
@@ -3074,7 +3074,7 @@ nav.top-nav {
     content: "";
     width: 15px;
     height: 18px;
-    border-radius: 0 0 15px 0;
+    border-radius: 0 0 12px 0;
     box-shadow: 5px 4px 0 3px var(--white);
   }
 
@@ -3793,24 +3793,25 @@ select.btcd-paper-inp {
   margin-left: auto;
   margin-right: 20px;
   font-weight: 500;
-  box-shadow: 0 1px 2px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
-  border: none;
-
-  & .lft-icn {
-    // background     : #f5f5f5;
+  border: 2px solid #e3eff8;
+  transition: background .2s;
+  outline: none;
+& .lft-icn {
     background: var(--white-0-95);
     color: var(--dp-blue);
+    transition: background .2s;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     justify-content: center;
   }
 
-  &:hover {
+  &:hover , &:focus-visible{
+    background: var(--b-97);
     color: var(--b-50);
-
+    border-color: #ddeaf3;
     & .lft-icn {
-      background: hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 48%));
+      background: hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 43%));
       color: var(--b-50);
     }
   }
@@ -3820,8 +3821,8 @@ select.btcd-paper-inp {
   display: none;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   left: calc(100% + 2px);
+  transform: translateY(-50%);
 }
 
 .pos-rel {
@@ -4233,8 +4234,8 @@ select.btcd-ud-inp {
   }
 
   &.logic-chip-custom {
-    color: #555555 !important;
     background: #ebebeb;
+    color: #555555 !important;
     border: none !important;
     border-radius: 5px !important;
   }
@@ -4585,6 +4586,10 @@ select.btcd-ud-inp {
 
     &:hover {
       background: hsla(var(--dbg-h), var(--dbg-s), var(--dbg-l), 0.1);
+    }
+    &:focus-visible{
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
     }
   }
 }
@@ -5205,23 +5210,23 @@ _:-ms-fullscreen,
 /*css for reponse report*/
 .btcd-date-range {
   display: inline-block;
+  background: white;
   color: #13233c !important;
   width: 100%;
   border-color: #e2e2e2 !important;
-  background: white;
   padding: 8px 9px;
   border-radius: 8px;
 }
 
 .btcd-custom-report-dpdw {
+
+  background: #F3F3F3;
+  color: #3F3F3F;
   border: 1px solid #e2e2e2;
   min-width: 180px;
 
   border-radius: 6px;
-
-  background: #F3F3F3;
   padding: 2px 8px 2px 8px;
-  color: #3F3F3F;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
@@ -5230,10 +5235,10 @@ _:-ms-fullscreen,
 }
 
 .btcd-custom-date-range {
+  display: flex;
   border: 1px solid #e2e2e2 !important;
   min-width: 100%;
   justify-content: center;
-  display: flex;
   border-radius: 8px;
   padding: 0px 5px 0px 5px;
   height: 30px;
@@ -5250,12 +5255,12 @@ _:-ms-fullscreen,
 }
 
 .report-content-btn-item {
+  display: flex;
   //background: white;
   background: none;
   border: none;
   font-size: 16px;
   padding: 3px 7px;
-  display: flex;
   min-height: 30px;
 
   font-family: 'Montserrat';
@@ -5293,12 +5298,12 @@ _:-ms-fullscreen,
 // }
 
 .report-tippy-box {
+  bottom: 7px;
   // background-color: #FFFFFF !important;
 
   // border:1px solid #E0E0E0 !important;
   // border-radius: 8px !important;
   border-radius: 16px !important;
-  bottom: 7px;
   min-width: 241px !important;
 }
 
@@ -5311,9 +5316,9 @@ _:-ms-fullscreen,
 }
 
 .btn-date-range {
+  background: #F3F3F3;
   border: none;
   border-radius: 8px;
-  background: #F3F3F3;
 }
 
 .dpdw-input-box {
@@ -5336,10 +5341,10 @@ _:-ms-fullscreen,
 }
 
 .report-search span {
-  position: absolute !important;
-  top: 7px;
   /* padding: 0px 0px 0px 25px; */
   color: hsla(0, 0%, 50%, 100%);
+  position: absolute !important;
+  top: 7px;
   left: 6px;
 }
 

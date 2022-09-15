@@ -333,7 +333,7 @@ export const expressCssVar = (cssVarStr, cssVarDefinations = {}) => {
 
     if (!isTargetVarNameFound) {
       tmpCssVarStr = tmpCssVarStr.replace(varStr, '')
-      console.error('missing css variable', cssVarValue)
+      console.error('missing css variable', cssVarValue, cssVarStr)
     }
   })
   if (tmpCssVarStr === cssVarStr) {

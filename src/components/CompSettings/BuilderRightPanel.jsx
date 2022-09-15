@@ -205,5 +205,6 @@ const c = {
     mr: 0,
     ml: 'auto',
     fs: 18,
+    oe: '1px solid var(--b-44-87)'
   },
 }

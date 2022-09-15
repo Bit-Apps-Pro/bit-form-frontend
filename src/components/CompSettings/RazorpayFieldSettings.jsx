@@ -350,7 +350,7 @@ export default function RazorpayFieldSettings() {
               />
               <SingleToggle
                 id="btn-txt"
-                title={__('Full Width Button:')}
+                title={__('Full Width')}
                 action={setFulW}
                 isChecked={fieldData.fulW}
                 className="mt-5"

@@ -6,10 +6,10 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
-import BtnIcn from '../Icons/BtnIcn'
 import DarkIcn from '../Icons/DarkIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
+import InspectIcn from '../Icons/InspectIcn'
 import LaptopIcn from '../Icons/LaptopIcn'
 import LayerIcon from '../Icons/LayerIcon'
 import LightIcn from '../Icons/LightIcn'
@@ -135,7 +135,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
                 type="button"
                 className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
               >
-                <BtnIcn size="22" />
+                <InspectIcn size="20" />
               </button>
             </Tip>
           )}

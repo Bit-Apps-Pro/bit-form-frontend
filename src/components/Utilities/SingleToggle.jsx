@@ -64,7 +64,7 @@ const c = {
     h: 22,
     w: 32,
     brs: 25,
-    bd: 'var(--white-0-0-32)',
+    bd: 'var(--white-0-86)',
     tn: 'background-color 0.15s ease-in, box-shadow .2s',
     ':after': {
       bd: 'white',

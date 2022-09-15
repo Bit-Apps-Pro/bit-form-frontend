@@ -8,7 +8,6 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
-import InfoIcn from '../Icons/InfoIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
@@ -54,6 +53,7 @@ import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import app from '../styles/app.style'
+import style from '../styles/integrations.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -63,6 +63,7 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
+import Tip from './Utilities/Tip'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -162,7 +163,15 @@ function Integrations() {
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
-        return <img alt={type || 'bitform integration logo'} loading="lazy" src={integs[i].logo} />
+        return (
+          <img
+            tabIndex={-1}
+            className={css(style.integLogo)}
+            alt={type || 'bitform integration logo'}
+            loading="lazy"
+            src={integs[i].logo}
+          />
+        )
       }
     }
     return null
@@ -259,15 +268,19 @@ function Integrations() {
                           onKeyPress={() => !inte.disable && setNewInteg(inte)}
                           role="button"
                           tabIndex="0"
-                          className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${(inte.pro && !isPro) && 'btcd-inte-pro'}`}
+                          className={`${css(style.thumb)} ${inte.disable && !inte.pro && css(style.integCardDisabled)}`}
                         >
                           {(inte.pro && !isPro) && (
-                            <div className="pro-filter">
-                              <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium')}</a></span>
+                            <div className={css(style.thumbPro)}>
+                              <a className={css(style.thumbProTxt)} href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                                {__('Available on')}
+                                <br />
+                                {__('Pro')}
+                              </a>
                             </div>
                           )}
-                          <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
-                          <div className="txt-center">
+                          <img className={css(style.thumbImg)} loading="lazy" src={inte.logo} alt="" />
+                          <div className={css(style.thumbTitle)}>
                             {inte.type}
                           </div>
                         </div>
@@ -276,33 +289,41 @@ function Integrations() {
                   </div>
                 </Modal>
 
-                <div role="button" className="btcd-inte-card flx flx-center add-inte mr-4 mt-3" tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
-                  <div>+</div>
+                <div role="button" className={css(style.itegCard)} tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
+                  <div className={css(style.integPlus)}>+</div>
                 </div>
 
                 {integrations.map((inte, i) => (
-                  <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
-                    {getLogo(inte.type)}
-                    <div className="btcd-inte-atn txt-center">
-                      <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit')}'` }} type="button">
-                        <EditIcn size="15" />
+                  <div role="button" className={css(style.itegCard)} key={`inte-${i + 3}`}>
+                    <Link to={`${allIntegURL}/info/${i}`}>
+                      {getLogo(inte.type)}
+                    </Link>
+                    <div className="py-1" title={`${inte.name} | ${inte.type}`}>
+                      <Link to={`${allIntegURL}/info/${i}`} className={css(style.integTitle)}>
+                        {inte.name}
                       </Link>
-                      <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete')}'` }} onClick={() => inteDelConf(i)} type="button">
-                        <TrashIcn />
-                      </button>
-                      <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Clone')}'` }} onClick={() => inteCloneConf(i)} type="button">
-                        <CopyIcn size="15" />
-                      </button>
+                      <small className={css(style.integSubtitle)}>{inte.type}</small>
+                    </div>
+                    <div className={`${css(style.actionWrp)} action-wrp`}>
+                      <Tip msg={__('Delete')}>
+                        <button className={`${css(style.actionBtn)}`} onClick={() => inteDelConf(i)} type="button">
+                          <TrashIcn size={18} />
+                        </button>
+                      </Tip>
+                      <Tip msg={__('Clone')}>
+                        <button className={`${css(style.actionBtn)}`} onClick={() => inteCloneConf(i)} type="button">
+                          <CopyIcn stroke={2.5} size="18" />
+                        </button>
+                      </Tip>
                       {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
-                        <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info')}'` }} type="button">
-                          <InfoIcn />
-                        </Link>
+                        <Tip msg={__('Edit')}>
+                          <Link to={`${allIntegURL}/edit/${i}`} className={`${css(style.actionBtn)}`} type="button">
+                            <EditIcn size={19} />
+                          </Link>
+                        </Tip>
                       )}
                     </div>
-                    <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
-                      <div className="int-name">{inte.name}</div>
-                      <small className="txt-dp int-type">{inte.type}</small>
-                    </div>
+
                   </div>
                 ))}
               </div>

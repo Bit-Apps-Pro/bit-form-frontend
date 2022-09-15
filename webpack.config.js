@@ -354,6 +354,10 @@ module.exports = (env, argv) => {
               from: path.resolve(__dirname, 'packages/bit-validation/dist/validateForm.min.js'),
               to: path.resolve(__dirname, '../assets/js/validateForm.min.js'),
             },
+            {
+              from: path.resolve(__dirname, 'packages/bit-conditionals/dist/bit-conditionals.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-conditionals.min.js'),
+            },
           ],
         }),
         new WorkboxPlugin.GenerateSW({
@@ -415,7 +419,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               ['@babel/plugin-proposal-class-properties', { loose: true }],
               ['@babel/plugin-proposal-private-methods', { loose: true }],
-              ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
+              // ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
               ...(!hot ? [] : ['react-refresh/babel']),
             ],

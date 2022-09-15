@@ -40,18 +40,10 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
 
   const timyMceInit = () => {
     if (typeof tinymce !== 'undefined') {
-      // if (formFields) {
-      //   const s = document.querySelectorAll('.form-fields-em')
-      //   for (let i = 0; i < s.length; i += 1) {
-      //     s[i].style.display = 'none'
-      //   }
-      // }
-      // eslint-disable-next-line no-undef
-
       tinymce.init({
         selector: `textarea#${id}-settings`,
         menubar,
-        height: height || 150,
+        height: height || 260,
         width: width || '100%',
         branding: false,
         resize: 'verticle',

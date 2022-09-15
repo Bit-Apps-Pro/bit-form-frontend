@@ -92,7 +92,7 @@ export default function FilterControlMenu({ title = 'Filters', objectPaths, id }
 
   const checkNStoreImportant = (fltVal) => {
     if (fltVal?.match(/(!important)/gi)) {
-      fltVal = fltVal?.replaceAll(/(!important)/gi, '')
+      fltVal = fltVal?.replace(/(!important)/gi, '')
       checkImportant = true
       return fltVal
     }

@@ -28,12 +28,12 @@ function TransformControlMenu({ propertyPath, id }) {
     let transformValue = getValueByObjPath(styles, propertyPath)
 
     if (transformValue?.match(/var/gi)?.[0] === 'var') {
-      const themeVarTransition = transformValue?.replaceAll(/\(|var|,.*|\)/gi, '')
+      const themeVarTransition = transformValue?.replace(/\(|var|,.*|\)/gi, '')
       transformValue = themeVars[themeVarTransition]
     }
     if (transformValue?.match(/(!important)/gi)?.[0]) {
       checkImportant = '!important'
-      transformValue = transformValue?.replaceAll(/(!important)/gi, '')
+      transformValue = transformValue?.replace(/(!important)/gi, '')
     }
     return transformValue
   }

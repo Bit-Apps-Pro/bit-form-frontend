@@ -74,11 +74,11 @@ export default function SimpleColorPicker({ title,
   const checkVarValue = () => {
     let val = value
     if (value?.match(/(var)/gi)?.[0]) {
-      const str = value.replaceAll(/\(|var|,.*|\)|(!important)|\s/gi, '')
+      const str = value.replace(/\(|var|,.*|\)|(!important)|\s/gi, '')
       val = themeColors[str]
     }
     if (val?.match(/(!important)/gi)) {
-      val = val?.replaceAll(/(!important)/gi, '')
+      val = val?.replace(/(!important)/gi, '')
     }
     return val
   }

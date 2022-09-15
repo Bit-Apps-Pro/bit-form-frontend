@@ -29,12 +29,12 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
     let transitionValue = getValueByObjPath(styles, propertyPath)
 
     if (transitionValue.match(/var/gi)?.[0] === 'var') {
-      const themeVarTransition = transitionValue?.replaceAll(/\(|var|,.*|\)/gi, '')
+      const themeVarTransition = transitionValue?.replace(/\(|var|,.*|\)/gi, '')
       transitionValue = themeVars[themeVarTransition]
     }
     if (transitionValue.match(/(!important)/gi)?.[0]) {
       checkImportant = '!important'
-      transitionValue = transitionValue.replaceAll(/(!important)/gi, '')
+      transitionValue = transitionValue.replace(/(!important)/gi, '')
     }
     return transitionValue
   }
