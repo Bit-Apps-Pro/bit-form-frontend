@@ -48,7 +48,7 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -63,7 +63,7 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may chnage size and pos in different breakpoint
 
 const BUILDER_PADDING = { all: 5 }
-const CUSTOM_SCROLLBAR_GUTTER = navigator.userAgent.includes('Firefox') ? 20 : 12
+const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
