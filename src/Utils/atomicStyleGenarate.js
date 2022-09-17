@@ -8,6 +8,7 @@ import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLigh
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
 export default function atomicStyleGenarate(sortedLayout) {
+  console.log("==== ~ sortedLayout", sortedLayout)
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
