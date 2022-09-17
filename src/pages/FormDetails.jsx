@@ -229,7 +229,7 @@ function FormDetails() {
     onMount()
     return () => {
       componentMounted = false
-      onUnmount()
+      // onUnmount() // disable for now because its causing hot reload prblm
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
