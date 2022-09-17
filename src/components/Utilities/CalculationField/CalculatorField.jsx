@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-param-reassign */
 
@@ -55,7 +56,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
   const inputKeyPressAction = (event) => {
     const { key } = event
     const newPosition = event.target.selectionEnd
-    setCaretPosition(newPosition)
+    setCaretPosition(oldPosition => oldPosition = newPosition)
     if (enableCalculator) keyPressAction({ key })
   }
 
@@ -67,24 +68,24 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         oldExp.splice(caretPosition, 1)
         oldExp.unshift({ id: 0, type: 'caret', dataObj: { content: '' } })
       })
-      setCaretPosition(0)
+      setCaretPosition(oldPosition => oldPosition = 0)
     } else if ((key === 'ArrowDown' || key === 'End') && caretPosition < expressions.length - 1) {
       const newCaretPos = expressions.length - 1
       setExpressions(oldExp => {
         oldExp.splice(caretPosition, 1)
         oldExp.push({ id: 0, type: 'caret', dataObj: { content: '' } })
       })
-      setCaretPosition(newCaretPos)
+      setCaretPosition(oldPosition => oldPosition = newCaretPos)
     } else if (key === 'ArrowLeft' && caretPosition > 0) {
       const newCaretPos = caretPosition - 1
-      setCaretPosition(newCaretPos)
+      setCaretPosition(oldPosition => oldPosition = newCaretPos)
       setExpressions(oldExp => {
         [oldExp[newCaretPos], oldExp[newCaretPos + 1]] = [oldExp[newCaretPos + 1], oldExp[newCaretPos]]
       })
     } else if (key === 'ArrowRight' && caretPosition < expressions.length - 1) {
       const newCaretPos = caretPosition + 1
 
-      setCaretPosition(newCaretPos)
+      setCaretPosition(oldPosition => oldPosition = newCaretPos)
       setExpressions(oldExp => {
         [oldExp[newCaretPos - 1], oldExp[newCaretPos]] = [oldExp[newCaretPos], oldExp[newCaretPos - 1]]
       })
@@ -142,7 +143,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
           oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
           return oldExpression
         })
-        setCaretPosition(newPosition)
+        setCaretPosition(oldPosition => oldPosition = newPosition)
       }
     } else if (side === 'before' && caretPosition !== newPosition - 1) {
       if (caretPosition < newPosition) newPosition -= 1
@@ -150,7 +151,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         oldExpression.splice(caretPosition, 1)
         oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
       })
-      setCaretPosition(newPosition)
+      setCaretPosition(oldPosition => oldPosition = newPosition)
     } else if (side === 'after' && caretPosition !== newPosition + 1) {
       newPosition += 1
       if (caretPosition < newPosition) newPosition -= 1
@@ -158,14 +159,14 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         oldExpression.splice(caretPosition, 1)
         oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
       })
-      setCaretPosition(newPosition)
+      setCaretPosition(oldPosition => oldPosition = newPosition)
     }
   }
 
   /* Input Click action for Specified caret Position */
   const inputClickAction = (event) => {
     const newPosition = event.target.selectionStart
-    setCaretPosition(newPosition)
+    setCaretPosition(oldPosition => oldPosition = newPosition)
   }
 
   /* Calculator Field Click Action For Specified Caret Position */
@@ -317,7 +318,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         onHidden={() => {
 
         }}
-        hideOnClick="false"
+        // hideOnClick="false"
         p="5px"
         distance="400"
         interactive
@@ -447,6 +448,6 @@ const style = {
     dy: 'inline-block',
     w: 0,
     pn: 'relative',
-    h: '23px',
+    h: '20px',
   },
 }
