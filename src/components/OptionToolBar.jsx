@@ -23,7 +23,7 @@ import BuilderSettings from './BuilderSettings'
 import CustomCodeEditor from './CompSettings/CustomCodeEditor'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
 import FormBuilderHistory from './FormBuilderHistory'
-import { removeUnuseStyles } from './style-new/styleHelpers'
+import { removeUnuseStylesAndUpdateState } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
@@ -55,7 +55,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else {
       navigate(`${path}/theme-customize/quick-tweaks`, { replace: true })
     }
-    removeUnuseStyles()
+    removeUnuseStylesAndUpdateState()
   }
 
   const formFieldButtonHandler = () => {
@@ -68,7 +68,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else {
       navigate(`${path}/fields-list`, { replace: true })
     }
-    removeUnuseStyles()
+    removeUnuseStylesAndUpdateState()
   }
 
   const handleRightPanel = (currentActive) => {
@@ -77,7 +77,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else if (currentActive === 'theme-customize') {
       navigate(`${path}/themes`)
     }
-    removeUnuseStyles()
+    removeUnuseStylesAndUpdateState()
   }
 
   const inspectModeButtonHandler = () => {

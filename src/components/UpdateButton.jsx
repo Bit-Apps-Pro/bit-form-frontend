@@ -37,12 +37,12 @@ import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { prepareLayout } from '../Utils/FormBuilderHelper'
 import { select, selectInGrid } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher } from '../Utils/Helpers'
+import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
 // TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
-import { removeUnuseStyles, updateGoogleFontUrl } from './style-new/styleHelpers'
+import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -158,8 +158,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (checkUpdateBtnErrors()) return
+      // TODO: update the code
       if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
-      removeUnuseStyles()
       saveForm()
     } else {
       select('#update-btn').click()
@@ -205,6 +205,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     // setUpdateBtn({ disabled: true, loading: true })
 
     const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+
+    const isStyleNotLoaded = isObjectEmpty(style)
+
     const { atomicCssText,
       atomicClassMap,
       lightThemeColors,
@@ -220,7 +223,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdLightStyles,
       mdDarkStyles,
       smLightStyles,
-      smDarkStyles } = atomicStyleGenarate(layouts)
+      smDarkStyles } = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
 
     const allThemeColors = {
       lightThemeColors,
@@ -243,18 +246,18 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smDarkStyles,
     }
 
-    // TODO : send here another request to create atomic css file
-    const atomicData = {
-      form_id: savedFormId || newFormId,
-      atomicCssText,
+    if (!isStyleNotLoaded) {
+      const atomicData = {
+        form_id: savedFormId || newFormId,
+        atomicCssText,
+      }
+      bitsFetch(atomicData, 'bitforms_save_css')
+        .catch(err => console.error('save css error=', err))
     }
-    bitsFetch(atomicData, 'bitforms_save_css').then(res => {
-      console.log('save css response=', res)
-    })
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle = formStyle && (bitDecipher(formStyle))
-    // console.log(formStyle.toString())
+
     const formData = {
       ...(savedFormId && { id: savedFormId }),
       ...(!savedFormId && { form_id: newFormId }),
@@ -267,10 +270,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       additional: additionalSettings,
       workFlows,
       formStyle,
-      themeColors: allThemeColors,
-      themeVars: allThemeVars,
-      style: allStyles,
-      atomicClassMap,
+      themeColors: isStyleNotLoaded ? undefined : allThemeColors,
+      themeVars: isStyleNotLoaded ? undefined : allThemeVars,
+      style: isStyleNotLoaded ? undefined : allStyles,
+      atomicClassMap: isStyleNotLoaded ? undefined : atomicClassMap,
       breakpointSize,
       customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
@@ -288,6 +291,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (savedFormId && deletedFldKey.length !== 0) {
       formData.deletedFldKey = deletedFldKey
     }
+
     const fetchProm = bitsFetch(formData, action)
       .then(response => {
         if (response?.success && componentMounted) {
@@ -320,6 +324,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           setAllThemeColors(allThemeColors)
           setAllThemeVars(allThemeVars)
           setAllStyles(allStyles)
+          removeUnuseStylesAndUpdateState()
 
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
