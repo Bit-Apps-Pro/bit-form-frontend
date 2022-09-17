@@ -14,18 +14,7 @@ export const $tempStyles = atom({
 
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
-  default: {
-    // theme: 'bitformDefault',
-    // fieldsSize: 'medium',
-    // font: {
-    //   fontType: '',
-    //   fontURL: '',
-    //   fontWeightVariants: [],
-    //   fontStyle: [],
-    // },
-    // form: {},
-    // fields: {},
-  },
+  default: {},
 })
 export const $stylesLgDark = atom({ key: '$stylesLgDark', default: {} })
 export const $stylesMdLight = atom({ key: '$stylesMdLight', default: {} })
