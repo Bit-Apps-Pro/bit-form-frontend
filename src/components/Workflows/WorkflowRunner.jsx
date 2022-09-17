@@ -2,8 +2,8 @@ import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
+import { defaultConds } from "../../Utils/StaticData/form-templates/templateProvider"
 import CheckBox from '../Utilities/CheckBox'
-import { defaultConds } from "../../Utils/StaticData/form-templates/templateProvider";
 
 export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
@@ -35,15 +35,20 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
       }
 
       draft[lgcGrpInd].action_behaviour = 'cond'
+      draft[lgcGrpInd].conditions.forEach(draftCond => {
+        if (typ === 'onvalidate') {
+          draftCond.actions.failure = ''
+          delete draftCond.actions.fields
+          delete draftCond.actions.success
+        } else {
+          draftCond.actions.fields = [{ field: '', action: 'value' }]
+          draftCond.actions.success = []
+          delete draftCond.actions.failure
+        }
+      })
+
       const [cond] = draft[lgcGrpInd].conditions
       cond.cond_type = 'if'
-      if (typ === 'onvalidate') {
-        delete cond.actions.fields
-        delete cond.actions.success
-      } else {
-        cond.actions.fields = [{ field: '', action: 'value' }]
-        cond.actions.success = []
-      }
       if (!cond.logics) cond.logics = defaultConds.logics
       draft[lgcGrpInd].action_type = typ
     })
