@@ -1,7 +1,21 @@
 import { replaceWithField } from './checkLogic'
 
-const setFieldValue = (fldKey, val) => {
-  const fld = document.querySelector(`[name^='${fldKey}']`)
+const setFieldValue = (fldData, val) => {
+  const { fieldName, typ } = fldData
+  if (typ === 'radio') {
+    document.querySelector(`input[name="${fieldName}"][value="${val}"]`).checked = true
+    return
+  }
+
+  if (typ === 'check') {
+    const vals = val.split(',')
+    document.querySelectorAll(`input[name="${fieldName}[]"]`).forEach((el) => {
+      el.checked = vals.includes(el.value)
+    })
+    return
+  }
+
+  const fld = document.querySelector(`[name^='${fieldName}']`)
   if (fld.value === val) return
   fld.value = val
 }
@@ -25,7 +39,7 @@ const setReadonly = (fldKey, props, val) => {
 const setActionValue = (actionDetail, props, fieldValues) => {
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
     const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props) : ''
-    setFieldValue(props.fields[actionDetail.field].fieldName, actionValue)
+    setFieldValue(props.fields[actionDetail.field], actionValue)
   }
 }
 
