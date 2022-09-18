@@ -51,7 +51,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
 
-  const elementKey = getActualElementKey(elmKey)
+  const elementKey = getActualElementKey(elmKey, fieldObj.typ)
 
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
@@ -164,6 +164,12 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'inp-wrp .filepond--file': 'File',
     'inp-wrp .filepond--drop-label': 'Drop Label',
     'inp-wrp .filepond--label-action': 'Label Action',
+    'option-list .option': 'Option',
+    'option-list .opt-lbl-wrp': 'Option Label Container',
+    'option-list .opt-icn': 'Option Icon',
+    'option-list .opt-lbl': 'Option Label',
+    'option-list .opt-suffix': 'Option Suffix',
+    'option-list .opt-prefix': 'Option Prefix',
   }
 
   const fldTitle = getTitle[elementKey]

@@ -32,14 +32,14 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         transition: 'box-shadow .3s',
       },
 
-      '.disabled .dpd-wrp': {
+      [`.${fk}-country-fld-wrp.disabled .${fk}-dpd-wrp`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
-      '.readonly .dpd-wrp': {
+      [`.${fk}-country-fld-wrp.readonly .${fk}-dpd-wrp`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -138,7 +138,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'align-items': 'center', // unused css
       },
 
-      [`.${fk}-opt-lbl`]: {},
+      [`.${fk}-option-list .opt-lbl`]: {},
 
       [`.${fk}-option-wrp`]: {
         'max-height': '0px',
@@ -233,25 +233,30 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       },
 
       [`.${fk}-search-clear-btn`]: {
+        position: 'absolute',
+        stroke: 'hsla(0, 1%, 68%, 100%)',
+        top: '50%',
+        transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
-        width: '16px',
-        height: '16px',
-        padding: '0',
-        margin: '0',
+        padding: '0px',
+        margin: '0px',
         background: 'transparent',
-        border: '0',
-        outline: '0',
+        border: '',
+        'border-width': '0px',
+        'border-radius': '50%',
+        outline: 0,
         cursor: 'pointer',
         'margin-right': '5px',
         'place-content': 'center',
-        'border-radius': '50%',
+        width: '16px',
+        height: '16px',
         color: 'var(--global-font-color) !important',
       },
 
       [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
 
-      [`.${fk}-option`]: {
+      [`.${fk}-option-list .option`]: {
         margin: '0 5px',
         transition: 'background 0.2s',
         'border-radius': '6px',
@@ -265,18 +270,18 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'justify-content': 'space-between',
       },
 
-      [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
 
-      [`.${fk}-option:focus-visible`]: {
+      [`.${fk}-option-list .option:focus-visible`]: {
         'box-shadow': '0 0 0 2px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
         outline: 'none',
       },
 
-      '.selected-opt': { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
-      '.selected-opt:focus-visible': { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
-      '.opt-not-found': {
+      [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
         'list-style': 'none',
         margin: '5px',
@@ -292,12 +297,12 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         outline: 'none',
       },
 
-      [`.${fk}-opt-lbl-wrp`]: {
+      [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
       },
 
-      [`.${fk}-opt-icn`]: {
+      [`.${fk}-option-list .opt-icn`]: {
         'margin-right': '10px',
         height: '17px',
         width: '25px',
@@ -314,13 +319,13 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         transition: 'transform 0.2s',
       },
 
-      '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
+      [`.${fk}-country-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
 
-      '.disabled .selected-country-lbl': { color: 'hsla(0, 0%, 33%, 100%) !important' },
+      // [`.${fk}-country-fld-wrp.disabled .${fk}-selected-country-lbl`]: { color: 'hsla(0, 0%, 33%, 100%) !important' },
 
-      '.disabled .selected-country-clear-btn': { cursor: 'not-allowed' },
+      // [`.${fk}-country-fld-wrp.disabled .${fk}-selected-country-clear-btn`]: { cursor: 'not-allowed' },
 
-      '.disabled-opt': {
+      [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
         color: 'hsla(0, 0%, 33%, 100%) !important',

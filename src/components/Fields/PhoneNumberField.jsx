@@ -129,7 +129,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   </div>
                 )}
 
-                <div className={`${fieldKey}-dpd-down-btn dpd-down-btn`}>
+                <div className={`${fieldKey}-dpd-down-btn`}>
                   <svg
                     width="15"
                     height="15"
@@ -151,7 +151,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 data-dev-phone-number-input={fieldKey}
                 aria-label="Phone Number"
                 type="tel"
-                className={`${fieldKey}-phone-number-input phone-number-input`}
+                className={`${fieldKey}-phone-number-input`}
                 autoComplete="tel"
                 tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />

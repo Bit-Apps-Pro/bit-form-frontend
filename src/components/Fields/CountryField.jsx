@@ -105,7 +105,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}
-              className={`${fieldKey}-dpd-wrp drp-wrp`}
+              className={`${fieldKey}-dpd-wrp`}
               aria-live="assertive"
               aria-label="Select a Country"
               role="combobox"
@@ -126,12 +126,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 <span
                   data-testid={`${fieldKey}-slctd-cntry-lbl`}
                   data-dev-selected-country-lbl={fieldKey}
-                  className={`${fieldKey}-selected-country-lbl selected-country-lbl`}
+                  className={`${fieldKey}-selected-country-lbl`}
                 >
                   {ph}
                 </span>
               </div>
-              <div className={`${fieldKey}-dpd-btn-wrp dpd-down-btn`}>
+              <div className={`${fieldKey}-dpd-btn-wrp`}>
                 {fieldData.config.selectedCountryClearable && (
                   <button
                     data-testid={`${fieldKey}-clr-slctd-cntry-btn`}
