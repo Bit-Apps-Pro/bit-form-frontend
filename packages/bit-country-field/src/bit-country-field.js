@@ -124,6 +124,7 @@ export default class BitCountryField {
     this.#setCountryNameFromURL()
 
     this.#addEventListenersToElm()
+    observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
     this.#generateOptions()
 
     if (!this.#selectedFlagImage) {
@@ -148,8 +149,6 @@ export default class BitCountryField {
     }
 
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
-
-    observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
 
   #setCountryNameFromURL() {
@@ -288,6 +287,9 @@ export default class BitCountryField {
     const searchedOption = this.#initialOptions.find(option => (option.val === newVal || option.lbl === newVal))
     if (searchedOption && oldVal !== newVal) {
       this.setSelectedCountryItem(searchedOption.i)
+    }
+    if (typeof bit_conditionals !== 'undefined') {
+      bit_conditionals({ target: this.#countryHiddenInputElm })
     }
   }
 
@@ -586,19 +588,21 @@ export default class BitCountryField {
     if (String(status).toLowerCase() === 'true') {
       this.#countryFieldWrapper.classList.add('disabled')
       this.#countryHiddenInputElm.disabled = true
-      this.#dropdownWrapperElm.tabIndex = '-1'
       if (this.#selectedCountryClearable) {
-        this.#selectedCountryClearBtnElm.tabIndex = '-1'
+        this.#setAttribute(this.#selectedCountryClearBtnElm, 'tabindex', '-1')
       }
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Country Field disabled')
+      this.#setAttribute(this.#dropdownWrapperElm, 'tabindex', '-1')
       this.setMenu({ open: false })
-      removeEventListener()
+      this.#allEventListeners.forEach(({ selector, eventType, cb }) => {
+        selector.removeEventListener(eventType, cb)
+      })
     } else if (String(status).toLowerCase() === 'false') {
       this.#countryFieldWrapper.classList.remove('disabled')
       this.#countryHiddenInputElm.removeAttribute('disabled')
-      this.#dropdownWrapperElm.tabIndex = '0'
+      this.#setAttribute(this.#dropdownWrapperElm, 'tabindex', '0')
       if (this.#selectedCountryClearable) {
-        this.#selectedCountryClearBtnElm.tabIndex = '0'
+        this.#setAttribute(this.#selectedCountryClearBtnElm, 'tabindex', '0')
       }
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder)
       this.#addEventListenersToElm()
@@ -613,18 +617,18 @@ export default class BitCountryField {
     if (String(status).toLowerCase() === 'true') {
       this.#countryFieldWrapper.classList.add('disabled')
       this.#countryHiddenInputElm.readOnly = true
-      this.#dropdownWrapperElm.tabIndex = '-1'
+      this.#setAttribute(this.#dropdownWrapperElm, 'tabindex', '-1')
       if (this.#selectedCountryClearable) {
-        this.#selectedCountryClearBtnElm.tabIndex = '-1'
+        this.#setAttribute(this.#selectedCountryClearBtnElm, 'tabindex', '-1')
       }
       this.setMenu({ open: false })
     } else if (String(status).toLowerCase() === 'false') {
       this.#countryFieldWrapper.classList.remove('disabled')
       this.#countryHiddenInputElm.removeAttribute('readonly')
       if (this.#selectedCountryClearable) {
-        this.#dropdownWrapperElm.tabIndex = '0'
+        this.#setAttribute(this.#dropdownWrapperElm, 'tabindex', '0')
       }
-      this.#selectedCountryClearBtnElm.tabIndex = '0'
+      this.#setAttribute(this.#selectedCountryClearBtnElm, 'tabindex', '0')
     }
   }
 
