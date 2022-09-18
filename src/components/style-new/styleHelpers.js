@@ -394,6 +394,7 @@ export const styleClasses = {
   showFileList: ['files-list', 'file-wrpr', 'cross-btn', 'cross-btn:hover'],
   showFilePreview: ['file-preview'],
   showFileSize: ['file-size'],
+  otherOptions: ['other-inp-wrp', 'other-inp', 'other-inp:focus', 'other-inp:hover']
 }
 
 export const iconElementLabel = {
@@ -479,6 +480,11 @@ const filterUnusedStyles = (styles) => {
           if (!fld.config.showFilePreview) deleteStyles(draftStyle, styleClasses.showFilePreview, fldkey)
           if (!fld.config.showFileSize) deleteStyles(draftStyle, styleClasses.showFileSize, fldkey)
           if (!fld.config.showFileList) deleteStyles(draftStyle, styleClasses.showFileList, fldkey)
+          break
+
+        case 'radio':
+        case 'check':
+          if (!fld.valid.otherOptReq) deleteStyles(draftStyle, styleClasses.otherOptions, fldkey)
           break
 
         default:
