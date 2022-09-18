@@ -67,6 +67,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
           <>
             {(lgcGrp.action_behaviour === 'cond' && condGrp.cond_type !== 'else') && (
               <WorkflowAccordion
+                key={condGrp.cond_type}
                 title={generateAccrTtl(condGrp.cond_type)}
                 accordionActions={condGrp.cond_type !== 'if' && <WorkflowAccordionActions lgcGrpInd={lgcGrpInd} condGrpInd={condGrpInd} />}
               >
