@@ -106,7 +106,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
     let isV2Form = true
-    const oldStyles = JSON.parse(fetchedBuilderHelperStates || '{}')
+    const oldStyles = fetchedBuilderHelperStates || {}
     if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
       isV2Form = false
     }
