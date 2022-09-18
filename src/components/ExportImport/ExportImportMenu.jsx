@@ -1,27 +1,21 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import OutlineDownloadIcn from '../../Icons/OutlineDownloadIcn'
+import ExportIcn from '../../Icons/ExportIcn'
+import tableStyle from '../../styles/table.style'
 import { __ } from '../../Utils/i18nwrap'
+import Tip from '../Utilities/Tip'
 import Export from './Export'
 
 export default function ExportImportMenu({ formID, cols, report }) {
-  // const [showImportMdl, setshowImportMdl] = useState(false)
   const [showExportMdl, setshowExportMdl] = useState(false)
   const { css } = useFela()
-  // const importShow = () => {
-  //   setshowImportMdl(true)
-  // }
+
   const exportShow = () => {
     setshowExportMdl(true)
   }
+
   return (
     <div>
-      {/*  <Import
-        showImportMdl={showImportMdl}
-        close={setshowImportMdl}
-        formID={formID}
-        cols={cols}
-      /> */}
       <Export
         showExportMdl={showExportMdl}
         close={setshowExportMdl}
@@ -29,15 +23,16 @@ export default function ExportImportMenu({ formID, cols, report }) {
         cols={cols}
         report={report}
       />
-      <div className="btcd-menu">
-        {/* <button onClick={() => importShow()} className="" type="button">Import Data</button>
-        {' '} */}
-        <button onClick={() => exportShow()} className="btn btn-date-range  mb3 tooltip" style={{ '--tooltip-txt': `'${__('Export')}'` }} type="button">
-          {' '}
-          <OutlineDownloadIcn size="16" />
-          {' '}
+
+      <Tip msg={__('Export Form Data')}>
+        <button
+          onClick={exportShow}
+          className={css(tableStyle.tableActionBtn)}
+          type="button"
+        >
+          <ExportIcn size="16" />
         </button>
-      </div>
+      </Tip>
     </div>
 
   )

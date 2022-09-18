@@ -10,7 +10,7 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
-import { getIconsGlobalFilterVariable, getIconsParentElement } from '../../Utils/Helpers'
+import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
 import advancedFileUp_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
@@ -423,36 +423,33 @@ const deleteStyles = (obj, clsArr, fk) => {
 }
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
-export const removeUnuseStyles = () => {
-  const newStyles = getUpdatedStyles()
-  setRecoil($styles, newStyles)
-}
+const filterUnusedStyles = (styles) => {
+  if (isObjectEmpty(styles)) return styles
 
-export const getUpdatedStyles = () => {
   const fields = getRecoil($fields)
-  const styles = getRecoil($stylesLgLight)
   const fieldsArray = Object.keys(fields)
-  const newStyles = produce(styles, deftStyles => {
+
+  return produce(styles, draftStyle => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
-      if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
-      if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
-      if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
-      if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
-      if (!fld.subTlePreIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
-      if (!fld.subTleSufIcn && !(fld.typ === 'title')) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
-      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hlpTxt, fldkey)
-      if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
-      if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
-      if (!fld.err) deleteStyles(deftStyles, styleClasses.err, fldkey)
-      if (!fld.errPreIcn) deleteStyles(deftStyles, styleClasses.errPreIcn, fldkey)
-      if (!fld.errSufIcn) deleteStyles(deftStyles, styleClasses.errSufIcn, fldkey)
-      if (!fld.valid.reqShow) deleteStyles(deftStyles, styleClasses.reqSmbl, fldkey)
+      if (!fld.lbl) deleteStyles(draftStyle, styleClasses.lbl, fldkey)
+      if (!fld.lblPreIcn) deleteStyles(draftStyle, styleClasses.lblPreIcn, fldkey)
+      if (!fld.lblSufIcn) deleteStyles(draftStyle, styleClasses.lblSufIcn, fldkey)
+      if (!fld.subtitle) deleteStyles(draftStyle, styleClasses.subTitl, fldkey)
+      if (!fld.subTlePreIcn && !(fld.typ === 'title')) deleteStyles(draftStyle, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn && !(fld.typ === 'title')) deleteStyles(draftStyle, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.helperTxt) deleteStyles(draftStyle, styleClasses.hlpTxt, fldkey)
+      if (!fld.hlpPreIcn) deleteStyles(draftStyle, styleClasses.hlpPreIcn, fldkey)
+      if (!fld.hlpSufIcn) deleteStyles(draftStyle, styleClasses.hlpSufIcn, fldkey)
+      if (!fld.err) deleteStyles(draftStyle, styleClasses.err, fldkey)
+      if (!fld.errPreIcn) deleteStyles(draftStyle, styleClasses.errPreIcn, fldkey)
+      if (!fld.errSufIcn) deleteStyles(draftStyle, styleClasses.errSufIcn, fldkey)
+      if (!fld.valid.reqShow) deleteStyles(draftStyle, styleClasses.reqSmbl, fldkey)
 
       switch (fld.typ) {
         case 'button':
-          if (!fld.btnPreIcn) deleteStyles(deftStyles, styleClasses.btnPreIcn, fldkey)
-          if (!fld.btnSufIcn) deleteStyles(deftStyles, styleClasses.btnSufIcn, fldkey)
+          if (!fld.btnPreIcn) deleteStyles(draftStyle, styleClasses.btnPreIcn, fldkey)
+          if (!fld.btnSufIcn) deleteStyles(draftStyle, styleClasses.btnSufIcn, fldkey)
           break
         case 'text':
         case 'number':
@@ -467,21 +464,21 @@ export const getUpdatedStyles = () => {
         case 'week':
         case 'color':
         case 'textarea':
-          if (!fld.prefixIcn) deleteStyles(deftStyles, styleClasses.prefixIcn, fldkey)
-          if (!fld.suffixIcn) deleteStyles(deftStyles, styleClasses.suffixIcn, fldkey)
+          if (!fld.prefixIcn) deleteStyles(draftStyle, styleClasses.prefixIcn, fldkey)
+          if (!fld.suffixIcn) deleteStyles(draftStyle, styleClasses.suffixIcn, fldkey)
           break
 
         case 'title':
-          if (!fld.subTitlPreIcn) deleteStyles(deftStyles, styleClasses.subTitlPreIcn, fldkey)
-          if (!fld.subTitlSufIcn) deleteStyles(deftStyles, styleClasses.subTitlSufIcn, fldkey)
-          if (!fld.titlePreIcn) deleteStyles(deftStyles, styleClasses.titlePreIcn, fldkey)
-          if (!fld.titleSufIcn) deleteStyles(deftStyles, styleClasses.titleSufIcn, fldkey)
+          if (!fld.subTitlPreIcn) deleteStyles(draftStyle, styleClasses.subTitlPreIcn, fldkey)
+          if (!fld.subTitlSufIcn) deleteStyles(draftStyle, styleClasses.subTitlSufIcn, fldkey)
+          if (!fld.titlePreIcn) deleteStyles(draftStyle, styleClasses.titlePreIcn, fldkey)
+          if (!fld.titleSufIcn) deleteStyles(draftStyle, styleClasses.titleSufIcn, fldkey)
           break
 
         case 'file-up':
-          if (!fld.config.showFilePreview) deleteStyles(deftStyles, styleClasses.showFilePreview, fldkey)
-          if (!fld.config.showFileSize) deleteStyles(deftStyles, styleClasses.showFileSize, fldkey)
-          if (!fld.config.showFileList) deleteStyles(deftStyles, styleClasses.showFileList, fldkey)
+          if (!fld.config.showFilePreview) deleteStyles(draftStyle, styleClasses.showFilePreview, fldkey)
+          if (!fld.config.showFileSize) deleteStyles(draftStyle, styleClasses.showFileSize, fldkey)
+          if (!fld.config.showFileList) deleteStyles(draftStyle, styleClasses.showFileList, fldkey)
           break
 
         default:
@@ -489,7 +486,36 @@ export const getUpdatedStyles = () => {
       }
     })
   })
-  return newStyles
+}
+
+export const removeUnuseStylesAndUpdateState = () => {
+  const updatedStyles = removeUnusedStyles()
+  setRecoil($allStyles, updatedStyles)
+}
+
+export const removeUnusedStyles = () => {
+  const { lgLightStyles,
+    lgDarkStyles,
+    mdLightStyles,
+    mdDarkStyles,
+    smLightStyles,
+    smDarkStyles } = getRecoil($allStyles)
+
+  const lgLightStylesUpdated = filterUnusedStyles(lgLightStyles)
+  const lgDarkStylesUpdated = filterUnusedStyles(lgDarkStyles)
+  const mdLightStylesUpdated = filterUnusedStyles(mdLightStyles)
+  const mdDarkStylesUpdated = filterUnusedStyles(mdDarkStyles)
+  const smLightStylesUpdated = filterUnusedStyles(smLightStyles)
+  const smDarkStylesUpdated = filterUnusedStyles(smDarkStyles)
+
+  return {
+    lgLightStyles: lgLightStylesUpdated,
+    lgDarkStyles: lgDarkStylesUpdated,
+    mdLightStyles: mdLightStylesUpdated,
+    mdDarkStyles: mdDarkStylesUpdated,
+    smLightStyles: smLightStylesUpdated,
+    smDarkStyles: smDarkStylesUpdated,
+  }
 }
 
 const breakpointAndColorScheme = {

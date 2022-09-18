@@ -11,6 +11,7 @@ import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
 
 import Scrollbars from 'react-custom-scrollbars-2'
+import { useFela } from 'react-fela'
 import { $fieldsArr, $reportId, $reports, $bits, $reportSelector } from '../../GlobalStates/GlobalStates'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
 import OutlineDeleteIcn from '../../Icons/OutlineDeleteIcn'
@@ -26,6 +27,9 @@ import Modal from '../Utilities/Modal'
 import ConditionalLogic from './ConditionalLogic'
 import LoaderSm from '../Loaders/LoaderSm'
 import SnackMsg from '../Utilities/SnackMsg'
+import EditIcn from '../../Icons/EditIcn'
+import tableStyle from '../../styles/table.style'
+import Tip from '../Utilities/Tip'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -45,6 +49,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const { isPro } = bits
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
 
   useEffect(() => {
     setReportIndex(rprtIndx)
@@ -190,7 +195,6 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     const { value } = e.target
     const filtedReports = setAvailableReport().filter(r => r.label?.toLowerCase().includes(value.toLowerCase()))
     setAvailableReports(filtedReports)
-    // setReports(tmpConf)
   }
 
   const deleteReportAlert = (val) => {
@@ -228,13 +232,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     confMdl.show = false
     setconfMdl({ ...confMdl })
   }
-  console.log('reportId currentReport', reportId, currentReport, reports)
 
   return (
     <>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-      <div className="flx w-10">
+      <div className="flx">
         <div className="flx btcd-custom-report-dpdw mr-2">
           <div className="w-9">
             {currentReport?.details?.report_name?.length > 11 ? (
@@ -268,10 +271,10 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             className="report-tippy-box"
             content={(
               <div style={{ height: 250 }}>
-                <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>All Reports</div>
+                <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
                 <div className="report-search mb-3">
                   <span><SearchIcn size="16" /></span>
-                  <input aria-label="Search reports" type="text" placeholder="Search reports" onChange={searchReport} className="dpdw-input-box" />
+                  <input aria-label="Search reports" type="text" placeholder="Search filters" onChange={searchReport} className="dpdw-input-box" />
 
                 </div>
                 {availableReports.length === 0 && (
@@ -280,18 +283,16 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                 <Scrollbars style={{ height: '70%' }} autoHide>
                   <div>
                     {availableReports?.map((report, indx) => (
-                      <div key={`fld-condition-${indx * (5 + 2)}`} className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
+                      <div key={`fld-condition-${indx * 5}`} className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
                         <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
                           {report?.label?.length > 14 ? (
                             `${report?.label?.slice(0, 14)}...`
-                          ) : (
-                            report?.label
-                          )}
+                          ) : (report?.label)}
                         </button>
                         {(report.isDefault.toString() === '0') && (
                           <div className="show_tippy_action">
                             <button className="icn-btn sm" title="Edit" onClick={() => editCurrentReport(report.value)} type="button">
-                              <OutlineEditIcn size={12} />
+                              <EditIcn size={17} />
                             </button>
                             {report.value !== currentReport?.id && (
                               <button className="icn-btn sm" title="Delete" onClick={() => deleteReportAlert(report.value)} type="button">
@@ -307,11 +308,9 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
               </div>
             )}
           >
-            <div>
-              <button className="btn btcd-btn-sm br-15" type="button">
-                <MoreVerticalIcn size="14" />
-              </button>
-            </div>
+            <button className={css(tableStyle.tableActionBtn)} type="button">
+              <MoreVerticalIcn size="14" />
+            </button>
           </Tippy>
 
           <Modal md show={showMdl} setModal={setshowMdl} title="Report" style={{ overflow: 'auto' }} onCloseMdl={onCloseMdl}>
@@ -332,11 +331,17 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             </>
           </Modal>
         </div>
-        <div className="w-1 mt-2">
-          <button className="btn btcd-btn-sm mt-0 br-15 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Create New Report')}'` }} onClick={createNewReport} type="button">
-            <PlusIcn size={14} />
+
+        <Tip msg="Add new filter">
+          <button
+            className={css(tableStyle.tableActionBtn)}
+            onClick={createNewReport}
+            type="button"
+          >
+            <PlusIcn size={16} />
           </button>
-        </div>
+        </Tip>
+
         <div>
           <Modal
             sm

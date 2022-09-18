@@ -48,7 +48,7 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -63,7 +63,7 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user may chnage size and pos in different breakpoint
 
 const BUILDER_PADDING = { all: 5 }
-const CUSTOM_SCROLLBAR_GUTTER = 10
+const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
@@ -85,8 +85,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setTempStyles = useSetRecoilState($tempStyles)
   const cols = { lg: 60, md: 40, sm: 20 }
-  const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
-  const [rowHeight, setRowHeight] = useState(2)
+  const [gridContentMargin, setgridContentMargin] = useState([0, 0])
+  const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
   const [contextMenu, setContextMenu] = useState({})

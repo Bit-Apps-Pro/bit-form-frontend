@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, optimizeAndDefineCssClassProps, objectToCssText } from 'atomize-css'
-import { useRecoilValue } from 'recoil'
 import { getRecoil } from 'recoil-nexus'
+import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'
-import { $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
 export default function atomicStyleGenarate(sortedLayout) {
+  console.log("==== ~ sortedLayout", sortedLayout)
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
@@ -28,18 +28,25 @@ export default function atomicStyleGenarate(sortedLayout) {
 
   const formId = getRecoil($formId)
 
-  const layoutRowHeight = 2
+  // const layoutRowHeight = 2
 
   const themeColorsLight = getRecoil($lightThemeColors)
   const themeColorsDark = getRecoil($darkThemeColors)
 
-  const stylesLgLight = getRecoil($stylesLgLight)
-  const stylesMdLight = getRecoil($stylesMdLight)
-  const stylesSmLight = getRecoil($stylesSmLight)
+  const { lgLightStyles: stylesLgLight,
+    lgDarkStyles: stylesLgDark,
+    mdLightStyles: stylesMdLight,
+    mdDarkStyles: stylesMdDark,
+    smLightStyles: stylesSmLight,
+    smDarkStyles: stylesSmDark } = removeUnusedStyles()
 
-  const stylesLgDark = getRecoil($stylesLgDark)
-  const stylesMdDark = getRecoil($stylesMdDark)
-  const stylesSmDark = getRecoil($stylesSmDark)
+  // const stylesLgLight = getRecoil($stylesLgLight)
+  // const stylesMdLight = getRecoil($stylesMdLight)
+  // const stylesSmLight = getRecoil($stylesSmLight)
+
+  // const stylesLgDark = getRecoil($stylesLgDark)
+  // const stylesMdDark = getRecoil($stylesMdDark)
+  // const stylesSmDark = getRecoil($stylesSmDark)
 
   const themeVarsLgLight = getRecoil($themeVarsLgLight)
   const themeVarsMdLight = getRecoil($themeVarsMdLight)
@@ -118,39 +125,6 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightAtomicStylesFiltered = getObjectDiff(mergeNestedObj(lgLightAtomicStyles, mdLightAtomicStyles), smLightAtomicStyles)
   const smDarkAtomicStylesFiltered = getObjectDiff(mergeNestedObj(lgLightAtomicStyles, lgDarkAtomicStyles, mdDarkAtomicStyles), smDarkAtomicStyles)
 
-  // console.log('classmaps', {
-  //   lgLightAtomicClassMap,
-  //   lgDarkAtomicClassMap,
-  //   mdLightAtomicClassMap,
-  //   mdDarkAtomicClassMap,
-  //   smLightAtomicClassMap,
-  //   smDarkAtomicClassMap,
-  // })
-
-  // console.log({
-  //   lgLightAtomicStyles,
-  //   lgDarkAtomicStyles,
-  //   mdLightAtomicStyles,
-  //   mdDarkAtomicStyles,
-  //   smLightAtomicStyles,
-  //   smDarkAtomicStyles,
-  // })
-
-  // console.log(
-  //   {
-  //     lgDarkAtomicStylesFiltered,
-  //     mdLightAtomicStylesFiltered,
-  //     mdDarkAtomicStylesFiltered,
-  //     smLightAtomicStylesFiltered,
-  //     smDarkAtomicStylesFiltered,
-  //   },
-  // )
-  // console.log('lgDarkAtomicStylesFiltered', lgDarkAtomicStylesFiltered)
-  // console.log('mdLightAtomicStylesFiltered', mdLightAtomicStylesFiltered)
-  // console.log('mdDarkAtomicStylesFiltered', mdDarkAtomicStylesFiltered)
-  // console.log('smLightAtomicStylesFiltered', smLightAtomicStylesFiltered)
-  // console.log('smDarkAtomicStylesFiltered', smDarkAtomicStylesFiltered)
-
   // filter classmap according to atomic classes
   const lgDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(lgDarkAtomicStylesFiltered, lgDarkAtomicClassMap)
   const mdLightAtomicClassMapFiltered = getElmClassNamesByAtomicClass(mdLightAtomicStylesFiltered, mdLightAtomicClassMap)
@@ -158,36 +132,12 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smLightAtomicStylesFiltered, smLightAtomicClassMap)
   const smDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smDarkAtomicStylesFiltered, smDarkAtomicClassMap)
 
-  // console.log('filtered class map  ', {
-  //   lgDarkAtomicClassMapFiltered,
-  //   mdLightAtomicClassMapFiltered,
-  //   mdDarkAtomicClassMapFiltered,
-  //   smLightAtomicClassMapFiltered,
-  //   smDarkAtomicClassMapFiltered,
-  // })
-
   // add suffic to atomic class and classmap of dark mode css and breakpoint css
   const [lgDarkAtomicClassesPostfixed, lgDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(lgDarkAtomicStylesFiltered, lgDarkAtomicClassMapFiltered, LgDarkAtomicClassPostfix)
   const [mdLightAtomicStylesPostfixed, mdLightClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdLightAtomicStylesFiltered, mdLightAtomicClassMapFiltered, MdLightAtomicClassPostfix)
   const [mdDarkAtomicStylesPostfixed, mdDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdDarkAtomicStylesFiltered, mdDarkAtomicClassMapFiltered, MdDarkAtomicClassPostfix)
   const [smLightAtomicStylesPostfixed, smLightClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(smLightAtomicStylesFiltered, smLightAtomicClassMapFiltered, SmLightAtomicClassPostfix)
   const [smDarkAtomicStylesPostfixed, smDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(smDarkAtomicStylesFiltered, smDarkAtomicClassMapFiltered, SmDarkAtomicClassPostfix)
-
-  // console.log('atimic style postfixed', {
-  //   lgDarkAtomicClassesPostfixed,
-  //   mdLightAtomicStylesPostfixed,
-  //   mdDarkAtomicStylesPostfixed,
-  //   smLightAtomicStylesPostfixed,
-  //   smDarkAtomicStylesPostfixed,
-  // })
-
-  // console.log('atomic classMap postfixed', {
-  //   lgDarkClassMapPostfixed,
-  //   mdLightClassMapPostfixed,
-  //   mdDarkClassMapPostfixed,
-  //   smLightClassMapPostfixed,
-  //   smDarkClassMapPostfixed,
-  // })
 
   const allMergedClassMaps = mergeNestedObj(
     lgLightAtomicClassMap,
@@ -198,7 +148,6 @@ export default function atomicStyleGenarate(sortedLayout) {
     smDarkClassMapPostfixed,
   )
 
-  // console.log('all merge class map', allMergedClassMaps)
   // optimize css by combine same styles selectors
   const lgLightCombineSelectors = combineSelectors(lgLightAtomicStyles)
   const lgDarkCombinedSelectors = combineSelectors(lgDarkAtomicClassesPostfixed)
@@ -207,16 +156,7 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightCombinedSelectors = combineSelectors(smLightAtomicStylesPostfixed)
   const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStylesPostfixed)
 
-  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(sortedLayout, layoutRowHeight)
-
-  // console.log('combine selectors', {
-  //   lgLightCombineSelectors,
-  //   lgDarkCombinedSelectors,
-  //   mdLightCombinedSelectors,
-  //   mdDarkCombinedSelectors,
-  //   smLightCombinedSelectors,
-  //   smDarkCombinedSelectors,
-  // })
+  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(sortedLayout)
 
   // generate css text from objects and add dark mode prefix if need
   const mdLightCssText = objectToCssText(mdLightCombinedSelectors)?.trim()
@@ -353,7 +293,7 @@ function addPrefixInObjectKeys(obj, prefix) {
   return newObj
 }
 
-export function generateLayoutStyle(layouts, rowHeight) {
+export function generateLayoutStyle(layouts) {
   let lgLayoutStyleText = ''
   let mdLayoutStyleText = ''
   let smLayoutStyleText = ''
@@ -369,7 +309,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const lg_g_c_e = Math.round((lgFld.x + 1) + lgFld.w)
     // const lg_g_r_span = lg_g_r_e - lg_g_r_s
     // const lg_g_c_span = lg_g_c_e - lg_g_c_s
-    const lg_min_height = `${lgFld.h * rowHeight}px;`
+    const lg_min_height = `${lgFld.h}px;`
 
     lgLayoutStyleText += `.${lgClsName}{`
     lgLayoutStyleText += `grid-area:${lg_g_r_s}/${lg_g_c_s}/${lg_g_r_e}/${lg_g_c_e};`
@@ -390,7 +330,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const md_g_c_e = Math.round((mdFld.x + 1) + mdFld.w)
     // const md_g_r_span = md_g_r_e - md_g_r_s
     // const md_g_c_span = md_g_c_e - md_g_c_s
-    const md_min_height = `${mdFld.h * rowHeight}px;`
+    const md_min_height = `${mdFld.h}px;`
 
     mdLayoutStyleText += `.${mdClsName}{`
     mdLayoutStyleText += `grid-area:${md_g_r_s}/${md_g_c_s}/${md_g_r_e}/${md_g_c_e};`
@@ -411,7 +351,7 @@ export function generateLayoutStyle(layouts, rowHeight) {
     const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
     // const sm_g_c_span = sm_g_c_e - sm_g_c_s
-    const sm_min_height = `${smFld.h * rowHeight}px;`
+    const sm_min_height = `${smFld.h}px;`
 
     smLayoutStyleText += `.${smClsName}{`
     smLayoutStyleText += `grid-area:${sm_g_r_s}/${sm_g_c_s}/${sm_g_r_e}/${sm_g_c_e};`

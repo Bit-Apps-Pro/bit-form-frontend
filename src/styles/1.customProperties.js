@@ -146,5 +146,6 @@ const customProperties = {
   ct: $ => ({ content: $ }),
 
   focusShadow: () => ({ boxShadow: '0 0 0 2px var(--b-50) !important' }),
+  focusOutline: () => ({ tn: 'outline .2s', outline: '3px solid var(--b-50)!important', outlineOffset: '3px' }),
 }
 export default customProperties

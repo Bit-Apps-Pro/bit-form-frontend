@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { handleUndoRedoShortcut } from './components/FormBuilderHistory'
 import { searchKey } from './components/style-new/styleHelpers'
+import { isFirefox } from './Utils/Helpers'
 
 // eslint-disable-next-line import/prefer-default-export
 export const RenderPortal = ({ children, title, ...props }) => {
@@ -15,7 +17,12 @@ export const RenderPortal = ({ children, title, ...props }) => {
   }
 
   return (
-    <iframe title={title} {...props} ref={setContentRef}>
+    <iframe
+      title={title}
+      {...props}
+      {...isFirefox() && { onLoad: e => setContentRef(e.target) }}
+      {...!isFirefox() && { ref: setContentRef }}
+    >
       {mountNode && createPortal(children, mountNode)}
     </iframe>
   )
