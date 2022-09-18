@@ -91,7 +91,7 @@ export default class BitCountryField {
     this.#maxHeight = config.maxHeight || 370
     this.#selectedFlagImage = config.selectedFlagImage
     this.#selectedCountryClearable = config.selectedCountryClearable
-    this.#searchClearable = config.searchClearabl
+    this.#searchClearable = config.searchClearable
     this.#optionFlagImage = config.optionFlagImage
     this.#detectCountryByIp = config.detectCountryByIp
     this.#detectCountryByGeo = config.detectCountryByGeo
@@ -99,6 +99,8 @@ export default class BitCountryField {
     this.#onChange = config.onChange
     this.#initialOptions = config.options
     this.#listOptions = [...this.#initialOptions]
+    this.#attributes = config.attributes || {}
+    this.#classNames = config.classNames || {}
     // rubel vaiya! can we use tarnary operator here?
     if (config.document) this.#document = config.document
     else this.#document = document
@@ -202,11 +204,10 @@ export default class BitCountryField {
       if (e.key === 'ArrowDown' || (!e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#select(`.${this.fieldKey}-option:not(.disabled-opt)`)
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+          focussableEl = this.#select('.option:not(.disabled-opt)')
+        } else if (activeEl.classList.contains('option')) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
-          console.log('nextElm', nextElm)
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#listOptions.length) {
@@ -224,7 +225,7 @@ export default class BitCountryField {
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+        } else if (activeEl.classList.contains('option')) {
           const prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous')
           const prevElm = this.#selectOptElmByIndex(prevIndex)
           if (prevElm) {
@@ -265,7 +266,7 @@ export default class BitCountryField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`.${this.fieldKey}-option-list .${this.fieldKey}-option[data-index="${index}"]`)
+    return this.#select(`.${this.fieldKey}-option-list .option[data-index="${index}"]`)
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -399,13 +400,13 @@ export default class BitCountryField {
           this.#setClassName(li, 'opt-not-found')
           return li
         }
-        this.#setClassName(li, `${this.fieldKey}-option`)
+        this.#setClassName(li, 'option')
         if ('option' in this.#classNames) {
           const optCls = this.#classNames.option
           if (optCls) this.#setClassName(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
-        this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if ('opt-lbl-wrp' in this.#classNames) {
           const optLblWrpCls = this.#classNames['opt-lbl-wrp']
           if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
@@ -419,9 +420,9 @@ export default class BitCountryField {
           // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
           if ('opt-icn' in this.#attributes) {
             const optIcn = this.#attributes['opt-icn']
-            if (optIcn) this.#setCustomAttr(lblimgbox, optIcn)
+            if (optIcn) this.#setCustomAttr(img, optIcn)
           }
-          this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+          this.#setClassName(img, 'opt-icn')
           if ('opt-icn' in this.#classNames) {
             const optIcnCls = this.#classNames['opt-icn']
             if (optIcnCls) this.#setClassName(img, optIcnCls)
@@ -435,9 +436,9 @@ export default class BitCountryField {
         const lbl = this.#createElm('span')
         if ('opt-lbl' in this.#attributes) {
           const optLbl = this.#attributes['opt-lbl']
-          this.#setCustomAttr(lblimgbox, optLbl)
+          this.#setCustomAttr(lbl, optLbl)
         }
-        this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+        this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#classNames) {
           const optLblCls = this.#classNames['opt-lbl']
           if (optLblCls) this.#setClassName(lbl, optLblCls)
@@ -462,13 +463,13 @@ export default class BitCountryField {
         })
 
         if (opt.disabled) {
-          this.#setClassName(li, `${this.fieldKey}-disabled-opt`)
+          this.#setClassName(li, 'disabled-opt')
         }
 
         li.append(lblimgbox, prefix)
 
         if (this.#selectedCountryCode === opt.i) {
-          this.#setClassName(li, '__fld-key__-selected-opt')
+          this.#setClassName(li, 'selected-opt')
           this.#setAttribute(li, 'aria-selected', true)
         } else {
           this.#setAttribute(li, 'aria-selected', false)

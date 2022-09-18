@@ -29,16 +29,16 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         display: 'flex',
         'flex-direction': 'column',
         transition: 'box-shadow .3s',
-        'z-index': 1,
+        'z-index': '1',
       },
-      [`.${fk}-phone-inner-wrp.disabled`]: {
+      [`.${fk}-phone-fld-wrp.disabled .${fk}-phone-inner-wrp`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
-      [`.${fk}-phone-inner-wrp.readonly`]: {
+      [`.${fk}-phone-fld-wrp.readonly .${fk}-phone-inner-wrp`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
@@ -46,18 +46,18 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
 
-      '.disabled .phone-number-input': {
+      [`.${fk}-phone-fld-wrp.disabled .${fk}-phone-number-input`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
-        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa)) !important',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
-      '.readonly .phone-number-input': {
+      [`.${fk}-phone-fld-wrp.readonly .${fk}-phone-number-input`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
-        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
+        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa)) !important',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
 
@@ -280,7 +280,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-radius': '10px',
       },
 
-      [`.${fk}-option`]: {
+      [`.${fk}-option-list .option`]: {
         margin: '0px 5px',
         transition: 'background 0.2s',
         'border-radius': '6px',
@@ -293,33 +293,33 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'align-items': 'center',
       },
 
-      [`.${fk}-option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
 
-      [`.${fk}-option:focus-visible`]: {
+      [`.${fk}-option-list .option:focus-visible`]: {
         'box-shadow': '0 0 0 1.5px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
         outline: 'none',
       },
 
-      [`.${fk}-option.selected-opt`]: {
+      [`.${fk}-option-list .option.selected-opt`]: {
         // color: ' hsla(0, 0%, 100%, 100%)',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
       },
 
-      [`.${fk}-option.selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .option.selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
-      [`.${fk}-opt-not-found`]: {
+      [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
         'list-style': 'none',
         margin: '5px',
       },
 
-      [`.${fk}-opt-lbl-wrp`]: {
+      [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
         'margin-right': '5px',
       },
 
-      [`.${fk}-opt-icn`]: {
+      [`.${fk}-option-list .opt-icn`]: {
         'margin-right': '10px',
         height: '17px',
         width: '25px',
@@ -329,9 +329,9 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'user-select': 'none',
       },
 
-      [`.${fk}-opt-prefix`]: { 'font-size': 'calc(var(--fld-fs) - 40%)' },
+      [`.${fk}-option-list .opt-prefix`]: { 'font-size': 'calc(var(--fld-fs) - 40%)' },
 
-      '.menu-open .dpd-down-btn': { transform: 'rotate(180deg)' },
+      [`.${fk}-phone-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
     }
   }
   return {}

@@ -310,7 +310,7 @@ export default class BitCurrencyField {
       if (e.key === 'ArrowDown' || (!e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#select(`.${this.fieldKey}-option:not(.${this.fieldKey}-disabled-opt)`)
+          focussableEl = this.#select('.option:not(.disabled-opt)')
         } else if (activeEl.classList.contains('option')) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
@@ -384,7 +384,7 @@ export default class BitCurrencyField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`.${this.fieldKey}-option-list .${this.fieldKey}-option[data-index="${index}"]`)
+    return this.#select(`.${this.fieldKey}-option-list .option[data-index="${index}"]`)
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -497,10 +497,10 @@ export default class BitCurrencyField {
         }
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
-          this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
+          this.#setClassName(li, 'opt-not-found')
           return li
         }
-        this.#setClassName(li, `${this.fieldKey}-option`)
+        this.#setClassName(li, 'option')
         if ('option' in this.#config.classNames) {
           const optCls = this.#config.classNames.option
           if (optCls) this.#setClassName(li, optCls)
@@ -511,7 +511,7 @@ export default class BitCurrencyField {
           const optLblWrp = this.#config.attributes['opt-lbl-wrp']
           this.#setCustomAttr(lblimgbox, optLblWrp)
         }
-        this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+        this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if ('opt-lbl-wrp' in this.#config.classNames) {
           const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
           if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
@@ -523,7 +523,7 @@ export default class BitCurrencyField {
             const optIcn = this.#config.attributes['opt-icn']
             this.#setCustomAttr(img, optIcn)
           }
-          this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+          this.#setClassName(img, 'opt-icn')
           if ('opt-icn' in this.#config.classNames) {
             const optIcnCls = this.#config.classNames['opt-icn']
             if (optIcnCls) this.#setClassName(img, optIcnCls)
@@ -540,7 +540,7 @@ export default class BitCurrencyField {
           const optLbl = this.#config.attributes['opt-lbl']
           this.#setCustomAttr(lbl, optLbl)
         }
-        this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+        this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#config.classNames) {
           const optLblCls = this.#config.classNames['opt-lbl']
           if (optLblCls) this.#setClassName(lbl, optLblCls)
@@ -553,7 +553,7 @@ export default class BitCurrencyField {
           const optsufix = this.#config.attributes['opt-suffix']
           this.#setCustomAttr(suffix, optsufix)
         }
-        this.#setClassName(suffix, `${this.fieldKey}-opt-suffix`)
+        this.#setClassName(suffix, 'opt-suffix')
         if ('opt-suffix' in this.#config.classNames) {
           const optsuffixCls = this.#config.classNames['opt-suffix']
           if (optsuffixCls) this.#setClassName(suffix, optsuffixCls)
@@ -574,13 +574,13 @@ export default class BitCurrencyField {
         })
 
         if (opt.disabled) {
-          this.#setClassName(li, `${this.fieldKey}-disabled-opt`)
+          this.#setClassName(li, 'disabled-opt')
         }
 
         li.append(lblimgbox, suffix)
 
         if (this.#selectedCurrencyCode === opt.i) {
-          this.#setClassName(li, `${this.fieldKey}-selected-opt`)
+          this.#setClassName(li, 'selected-opt')
           this.#setAttribute(li, 'aria-selected', true)
         } else {
           this.#setAttribute(li, 'aria-selected', false)
@@ -659,7 +659,7 @@ export default class BitCurrencyField {
   }
 
   #isMenuOpen() {
-    return this.#currencyNumberFieldWrapper.classList.contains(`${this.fieldKey}-menu-open`)
+    return this.#currencyNumberFieldWrapper.classList.contains('menu-open')
   }
 
   #openDropdownAsPerWindowSpace() {
@@ -681,14 +681,14 @@ export default class BitCurrencyField {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
-      this.#setClassName(this.#currencyNumberFieldWrapper, `${this.fieldKey}-menu-open`)
+      this.#setClassName(this.#currencyNumberFieldWrapper, 'menu-open')
       this.#addEvent(this.#document, 'click', e => this.#handleOutsideClick(e))
       this.#setAttribute(this.#searchInputElm, 'tabindex', 0)
       this.#setAttribute(this.#clearSearchBtnElm, 'tabindex', 0)
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-expanded', true)
       this.#reRenderVirtualOptions()
     } else {
-      this.#currencyNumberFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
+      this.#currencyNumberFieldWrapper.classList.remove('menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#setAttribute(this.#searchInputElm, 'tabindex', -1)
