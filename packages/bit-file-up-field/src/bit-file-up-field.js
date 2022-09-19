@@ -144,13 +144,13 @@ export default class BitFileUpField {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
             this.#files[fileName] = file
             if (showFileList) {
-              this.#filesList.innerHTML += `<div id="file-wrp-${fileName}" data-dev-file-wrpr='${this.fieldKey}' class="${this.fieldKey}-file-wrpr">
-                ${showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="${this.fieldKey}-file-preview" />` : ''}
-                  <div class="${this.fieldKey}-file-details">
-                    <span data-dev-file-title='${this.fieldKey}' class="${this.fieldKey}-file-title">${file.name}</span>
-                    ${showFileSize ? `<span data-dev-file-size='${this.fieldKey}' class="${this.fieldKey}-file-size">${this.#returnFileSize(file.size)}</span>` : ''}
+              this.#filesList.innerHTML += `<div id="file-wrp-${fileName}" data-dev-file-wrpr='${this.fieldKey}' class="file-wrpr">
+                ${showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="file-preview" />` : ''}
+                  <div class="file-details">
+                    <span data-dev-file-title='${this.fieldKey}' class="file-title">${file.name}</span>
+                    ${showFileSize ? `<span data-dev-file-size='${this.fieldKey}' class="file-size">${this.#returnFileSize(file.size)}</span>` : ''}
                   </div>
-                  <button data-file-id="${fileName}" data-dev-cross-btn='${this.fieldKey}' class="${this.fieldKey}-cross-btn">×</button>
+                  <button data-file-id="${fileName}" data-dev-cross-btn='${this.fieldKey}' class="cross-btn">×</button>
               </div>`
             }
             if (isItTotalMax) totalFileSize += file.size
@@ -169,7 +169,7 @@ export default class BitFileUpField {
       }
     }
     /* this.#window.document.querySelectorAll() */
-    this.#selectAll(`.${this.fieldKey}-cross-btn`).forEach(element => {
+    this.#selectAll(`.${this.fieldKey}-files-list .cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 

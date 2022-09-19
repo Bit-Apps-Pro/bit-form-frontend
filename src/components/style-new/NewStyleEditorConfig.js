@@ -1026,23 +1026,23 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'file-wrpr': {
+    'files-list .file-wrpr': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'file-preview': {
+    'files-list .file-preview': {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
-    'file-title': {
+    'files-list .file-title': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'file-size': {
+    'files-list .file-size': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'cross-btn': {
+    'files-list .cross-btn': {
       states: ['hover'],
       properties: { ...buttonCssProps },
     },

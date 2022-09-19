@@ -5,7 +5,7 @@ import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $allStyles, $styles, $stylesLgLight } from '../../GlobalStates/StylesState'
+import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -925,6 +925,12 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'opt-lbl': 'option-list .opt-lbl',
     'opt-suffix': 'option-list .opt-suffix',
     'opt-prefix': 'option-list .opt-prefix',
+    'file-wrpr': 'files-list .file-wrpr',
+    'file-preview': 'files-list .file-preview',
+    'file-details': 'files-list .file-details',
+    'file-title': 'files-list .file-title',
+    'file-size': 'files-list .file-size',
+    'cross-btn': 'files-list .cross-btn'
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey

@@ -77,7 +77,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         opacity: '0',
         cursor: 'pointer',
       },
-      [`.${fk}-file-wrpr`]: {
+      [`.${fk}-files-list .file-wrpr`]: {
         'background-color': 'hsla(0, 0%, 97%, 100%)',
         'border-radius': '10px',
         display: 'flex',
@@ -88,12 +88,12 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'margin-top': '10px',
         padding: '5px',
       },
-      [`.${fk}-file-preview`]: {
+      [`.${fk}-files-list .file-preview`]: {
         'border-radius': '10px',
         height: '25px',
         width: '25px',
       },
-      [`.${fk}-file-details`]: {
+      [`.${fk}-files-list .file-details`]: {
         display: 'flex',
         'align-items': 'center',
         'justify-content': 'space-between',
@@ -101,7 +101,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '0px 10px',
       },
 
-      [`.${fk}-file-title`]: {
+      [`.${fk}-files-list .file-title`]: {
         display: 'inline-block',
         'font-size': '14px',
         overflow: 'hidden',
@@ -110,11 +110,11 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         width: '80%',
       },
 
-      [`.${fk}-file-size`]: {
+      [`.${fk}-files-list .file-size`]: {
         'font-size': '12px',
         'line-height': '1',
       },
-      [`.${fk}-cross-btn`]: {
+      [`.${fk}-files-list .cross-btn`]: {
         cursor: 'pointer',
         border: 'none',
         'border-radius': '50px',
@@ -130,7 +130,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         width: '25px',
         transition: 'background-color 5ms',
       },
-      [`.${fk}-cross-btn:hover`]: { 'background-color': 'hsla(0, 0%, 91%, 100%)' },
+      [`.${fk}-files-list .cross-btn:hover`]: { 'background-color': 'hsla(0, 0%, 91%, 100%)' },
       [`.${fk}-err-wrp`]: {
         display: 'none',
         opacity: '0',
