@@ -2087,7 +2087,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    option: {
+    'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -2104,7 +2104,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-lbl-wrp': {
+    'option-list .opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -2125,7 +2125,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'opt-icn': {
+    'option-list .opt-icn': {
       states: ['hover'],
       properties: {
         border: {
@@ -2143,7 +2143,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    'opt-lbl': {
+    'option-list .opt-lbl': {
       states: ['hover'],
       properties: {
         border: {
