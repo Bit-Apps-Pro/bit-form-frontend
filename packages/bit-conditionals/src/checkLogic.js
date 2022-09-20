@@ -231,10 +231,17 @@ const checkBetweenLogic = (logics, fields, targetFieldValue, logicsVal) => {
   if (!targetFieldValue) {
     return false
   }
+
+  let targetVal = targetFieldValue
+  let minVal = logicsVal.min
+  let maxVal = logicsVal.max
   if (fields[logics.field].type === 'number') {
-    return Number(targetFieldValue) >= Number(logicsVal) && Number(targetFieldValue) <= Number(logicsVal)
+    targetVal = Number(targetFieldValue)
+    minVal = Number(logicsVal.min)
+    maxVal = Number(logicsVal.max)
   }
-  return targetFieldValue >= logicsVal && targetFieldValue <= logicsVal
+
+  return targetVal >= minVal && targetVal <= maxVal
 }
 
 export const checkLogic = (logics, fields, props) => {
@@ -256,7 +263,7 @@ export const checkLogic = (logics, fields, props) => {
     return conditionStatus
   }
   if (fields[logics.field] !== undefined) {
-    const logicsVal = replaceWithField(logics.val, fields, props)
+    const logicsVal = typeof logics.val !== 'object' ? replaceWithField(logics.val, fields, props) : logics.val
     let { value } = fields[logics.field]
     if (typeof logicsVal === 'number') {
       value = parseInt(value, 10)
