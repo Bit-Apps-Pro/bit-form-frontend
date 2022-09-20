@@ -303,6 +303,9 @@ export default class BitPhoneNumberField {
       this.#handlePhoneValue(this.#unformatPhoneNumber(newVal))
       // this.#triggerEvent(this.#phoneInputElm, 'input')
     }
+    if (typeof bit_conditionals !== 'undefined') {
+      bit_conditionals({ target: this.#phoneHiddenInputElm })
+    }
   }
 
   #handlePhoneInput(e) {
