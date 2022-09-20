@@ -148,10 +148,10 @@ function RadioCheckSettings() {
     reqOpts.length && setRequired({ target: { checked: true } })
     const allFields = produce(getRecoil($fields), draft => {
       draft[fldKey].opt = newOpts
-      if (reqOpts.length) {
+      if (reqOpts.length && draft[fldKey].err.req) {
         draft[fldKey].err.req.custom = true
         draft[fldKey].err.req.msg = `<p>${reqOpts.map(opt => opt.lbl).join(',')} is required</p>`
-      } else draft[fldKey].err.req.msg = '<p>This field is required</p>'
+      } else if (draft[fldKey].err.req) draft[fldKey].err.req.msg = '<p>This field is required</p>'
     })
     setFields(allFields)
     addToBuilderHistory({

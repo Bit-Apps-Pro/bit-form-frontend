@@ -5,7 +5,7 @@ import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { $allStyles, $styles, $stylesLgLight } from '../../GlobalStates/StylesState'
+import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
@@ -915,7 +915,7 @@ export const styleToGradientObj = (styleStr) => {
   return gardient
 }
 
-export const getActualElementKey = (elmKey) => {
+export const getActualElementKey = (elmKey, fldType = '') => {
   const obj = {
     'filepond--root': 'inp-wrp .filepond--root',
     'filepond--drop-label': 'inp-wrp .filepond--drop-label',
@@ -925,6 +925,67 @@ export const getActualElementKey = (elmKey) => {
     'filepond--file-action-button': 'inp-wrp .filepond--file-action-button',
     'filepond--drip-blob': 'inp-wrp .filepond--drip-blob',
     'filepond--file': 'inp-wrp .filepond--file',
+    option: 'option-list .option',
+    'opt-lbl-wrp': 'option-list .opt-lbl-wrp',
+    'opt-icn': 'option-list .opt-icn',
+    'opt-lbl': 'option-list .opt-lbl',
+    'opt-suffix': 'option-list .opt-suffix',
+    'opt-prefix': 'option-list .opt-prefix',
+    'file-wrpr': 'files-list .file-wrpr',
+    'file-preview': 'files-list .file-preview',
+    'file-details': 'files-list .file-details',
+    'file-title': 'files-list .file-title',
+    'file-size': 'files-list .file-size',
+    'cross-btn': 'files-list .cross-btn'
+    // select: { [elmKey]: elmKey },
   }
-  return obj[elmKey] || elmKey
+  return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
+}
+
+export const msgDefaultConfig = {
+  msgType: 'snackbar',
+  position: 'top-center',
+  animation: 'fade',
+  autoHide: false,
+  duration: 1,
+  styles: {
+    width: '300px',
+    padding: '5px 35px 5px 20px',
+    background: '#fafafa',
+    color: '#000000',
+    borderWidth: '1px',
+    borderType: 'solid',
+    borderColor: 'gray',
+    borderRadius: '10px',
+    boxShadow: [
+      {
+        x: '0px',
+        y: '27px',
+        blur: '30px',
+        spread: '',
+        color: 'rgb(0 0 0 / 18%)',
+        inset: '',
+      },
+      {
+        x: '0px',
+        y: '5.2px',
+        blur: '9.4px',
+        spread: '5px',
+        color: 'rgb(0 0 0 / 6%)',
+        inset: '',
+      },
+      {
+        x: '0px',
+        y: '11.1px',
+        blur: '14px',
+        spread: '',
+        color: 'rgb(0 0 0 / 14%)',
+        inset: '',
+      },
+    ],
+    closeBackground: '#48484829',
+    closeHover: '#dfdfdf',
+    closeIconColor: '#5a5a5a',
+    closeIconHover: '#000',
+  },
 }

@@ -31,28 +31,28 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         transition: 'box-shadow .3s',
       },
 
-      [`.${fk}-dpd-fld-wrp:hover:not(.${fk}-menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
+      [`.${fk}-dpd-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
 
-      [`.${fk}-dpd-fld-wrp:focus-within:not(.${fk}-menu-open,.disabled)`]: {
+      [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open,.disabled)`]: {
         'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
         'border-color': 'var(--global-accent-color) !important',
       },
 
-      [`.disabled .${fk}-dpd-wrp`]: {
+      [`.${fk}-dpd-fld-wrp.disabled .${fk}-dpd-wrp`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
-      [`.readonly .${fk}-dpd-wrp`]: {
+      [`.${fk}-dpd-fld-wrp.readonly .${fk}-dpd-wrp`]: {
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
 
-      [`.${fk}-menu-open`]: {
+      [`.${fk}-dpd-fld-wrp.menu-open`]: {
         'z-index': '999',
         'box-shadow':
           `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
@@ -255,7 +255,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       // [`.${fk}-create-opt`]: { display: 'none !important' },
 
-      [`.${fk}-option`]: {
+      [`.${fk}-option-list .option`]: {
         margin: '2px 5px',
         transition: 'background 0.2s',
         'border-radius': '6px',
@@ -269,43 +269,43 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'justify-content': 'space-between',
       },
 
-      [`.${fk}-option:hover:not(.selected-opt):not(.${fk}-opt-group-title)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.opt-group-title)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
 
-      [`.${fk}-option:focus-visible`]: {
+      [`.${fk}-option-list .option:focus-visible`]: {
         'box-shadow': '0 0 0 2px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
         outline: 'none',
       },
 
-      '.selected-opt:focus-visible': { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
-      [`.${fk}-opt-group-title`]: {
+      [`.${fk}-option-list .opt-group-title`]: {
         'font-size': 'calc(var(--fld-fs) - 2px)',
         cursor: 'default',
         background: 'hsla(0, 0%, 98%, 100%)',
         opacity: '.7',
       },
 
-      [`.${fk}-opt-group-child`]: { 'padding-left': '15px' },
+      [`.${fk}-option-list .opt-group-child`]: { 'padding-left': '15px' },
 
-      '.selected-opt': {
+      [`.${fk}-option-list .selected-opt`]: {
         // color: 'white',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
         // 'background-color': 'hsla(216, 100%, 50%, 100%)',
       },
 
-      [`.${fk}-opt-not-found`]: {
+      [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
         'list-style': 'none',
         margin: '5px',
       },
 
-      [`.${fk}-opt-lbl-wrp`]: {
+      [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
       },
-      [`.${fk}-opt-lbl`]: {},
+      [`.${fk}-option-list .opt-lbl`]: {},
 
-      [`.${fk}-opt-icn`]: {
+      [`.${fk}-option-list .opt-icn`]: {
         'margin-right': '5px',
         height: '17px',
         width: '25px',
@@ -322,19 +322,13 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         transition: 'transform 0.2s',
       },
 
-      [`.${fk}-menu-open .dpd-down-btn`]: { transform: 'rotate(180deg)' },
+      [`.${fk}-dpd-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
 
-      [`.${fk}-disabled .dpd-wrp`]: {
-        'background-color': 'hsla(0, 0%, 94%, 30%)',
-        cursor: 'not-allowed',
-        'pointer-events': 'none',
-      },
+      // [`.${fk}-dpd-fld-wrp.disabled .${fk}-selected-opt-lbl`]: { color: 'hsla(0, 0%, 94%, 30%) !important' },
 
-      [`.${fk}-disabled .selected-opt-lbl`]: { color: 'hsla(0, 0%, 94%, 30%) !important' },
+      // [`.${fk}-dpd-fld-wrp.disabled .${fk}-selected-opt-clear-btn`]: { cursor: 'not-allowed' },
 
-      [`.${fk}-disabled .selected-opt-clear-btn`]: { cursor: 'not-allowed' },
-
-      [`.${fk}-disabled-opt`]: {
+      [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
         color: 'hsla(0, 0%, 94%, 30%) !important',
