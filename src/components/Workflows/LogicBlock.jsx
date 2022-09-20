@@ -25,7 +25,8 @@ function LogicBlock({ logic, fieldVal,
   logicValue,
   changeValue,
   changeSmartKey,
-  changeFormField }) {
+  changeFormField,
+  smartTagAllowed }) {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
   const formFields = makeFieldsArrByLabel(fields, [])
@@ -129,16 +130,18 @@ function LogicBlock({ logic, fieldVal,
               {!!formFields.length && (
                 <optgroup label="Form Fields">
                   {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
-                        && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+                    && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
                 </optgroup>
               )}
-              <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-                {SmartTagField?.map(({ name, label }) => (
-                  <option key={`ff-rm-${name}`} value={`\${${name}}`} disabled={!isPro}>
-                    {label}
-                  </option>
-                ))}
-              </optgroup>
+              {smartTagAllowed && (
+                <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                  {SmartTagField?.map(({ name, label }) => (
+                    <option key={`ff-rm-${name}`} value={`\${${name}}`} disabled={!isPro}>
+                      {label}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
             </MtSelect>
           </div>
         </div>
