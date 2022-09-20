@@ -5,8 +5,10 @@ import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshAcfFields, refreshPostTypes } from './AcfHelperFunction'
 import FieldMap from './FieldMap'
@@ -100,7 +102,13 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="mt-3"><b>{__('Integration Name ')}</b></div>
+
+      <TutorialLink
+        title={tutorialLinks.acf.title}
+        youTubeLink={tutorialLinks.acf.link}
+      />
+
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
 
       <div className="mt-3 flx">

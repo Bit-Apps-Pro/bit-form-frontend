@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
 
 export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo }) {
@@ -34,7 +36,11 @@ export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+      <TutorialLink
+        title={tutorialLinks.mailerlite.title}
+        youTubeLink={tutorialLinks.mailerlite.link}
+      />
+      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
       <small className="d-blk mt-3">
