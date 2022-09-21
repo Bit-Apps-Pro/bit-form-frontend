@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { fetchAllList, handleAuthorize } from './AcumbamailCommonFunc'
 
 export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
@@ -27,6 +29,12 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+
+        <TutorialLink
+          title={tutorialLinks.acumbamail.title}
+          youTubeLink={tutorialLinks.acumbamail.link}
+        />
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={acumbamailConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 

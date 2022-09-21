@@ -231,10 +231,17 @@ const checkBetweenLogic = (logics, fields, targetFieldValue, logicsVal) => {
   if (!targetFieldValue) {
     return false
   }
+
+  let targetVal = targetFieldValue
+  let minVal = logicsVal.min
+  let maxVal = logicsVal.max
   if (fields[logics.field].type === 'number') {
-    return Number(targetFieldValue) >= Number(logicsVal) && Number(targetFieldValue) <= Number(logicsVal)
+    targetVal = Number(targetFieldValue)
+    minVal = Number(logicsVal.min)
+    maxVal = Number(logicsVal.max)
   }
-  return targetFieldValue >= logicsVal && targetFieldValue <= logicsVal
+
+  return targetVal >= minVal && targetVal <= maxVal
 }
 
 export const checkLogic = (logics, fields, props) => {
@@ -255,18 +262,18 @@ export const checkLogic = (logics, fields, props) => {
     }
     return conditionStatus
   }
-  if (fields[logics.field] !== undefined) {
-    const logicsVal = replaceWithField(logics.val, fields, props)
-    let { value } = fields[logics.field]
-    if (typeof logicsVal === 'number') {
-      value = parseInt(value, 10)
-    }
-    return compareValueLogic(logics, fields, value, logicsVal)
+
+  const logicsVal = replaceWithField(logics.val, fields)
+  const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}${typeof value === 'string' ? '' : '()'}}`]: { value: typeof value === 'string' ? value : (value?.[logics?.smartKey] || ''), type: 'text', multiple: false } }), {})
+  const flds = { ...fields, ...smartFields }
+  if (flds[logics.field] !== undefined) {
+    const targetFieldValue = flds[logics.field].value
+    return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
   }
   return false
 }
 
-export const replaceWithField = (stringToReplace, fieldValues, props) => {
+export const replaceWithField = (stringToReplace, fieldValues) => {
   if (!stringToReplace) {
     return stringToReplace
   }
@@ -282,7 +289,10 @@ export const replaceWithField = (stringToReplace, fieldValues, props) => {
   const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
   if (matchedFields) {
     matchedFields.map(field => {
-      const fieldName = field.substring(2, field.length - 1)
+      let fieldName = field
+      if (!fieldValues[fieldName]) {
+        fieldName = field.substring(2, field.length - 1)
+      }
       if (fieldValues[fieldName]) {
         let val2Rplc = fieldValues[fieldName].value
         if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
@@ -292,8 +302,6 @@ export const replaceWithField = (stringToReplace, fieldValues, props) => {
           })
         }
         mutatedString = mutatedString.replace(field, val2Rplc)
-      } else if (props.smartTags[fieldName]) {
-        mutatedString = mutatedString.replace(field, props.smartTags[fieldName])
       }
     })
   }
@@ -320,7 +328,7 @@ export const evalMathExpression = (stringToReplace) => {
     mutatedString = mutatedString.replace(/\}|\]/g, ')')
     try {
       // eslint-disable-next-line no-new-func
-      mutatedString = Function(`"use strict";return (${mutatedString})`)()
+      mutatedString = Function(`"use strict"; return (${mutatedString})`)()
     } catch (error) {
       return stringToReplace
     }

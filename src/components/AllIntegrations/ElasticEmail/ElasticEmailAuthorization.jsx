@@ -5,6 +5,7 @@ import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { getAllList } from './ElasticEmailCommonFunc'
 
 export default function ElasticEmailAuthorization({ elasticEmailConf, setElasticEmailConf, step, setstep, isInfo }) {
@@ -52,7 +53,13 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+
+      <TutorialLink
+        title={tutorialLinks.elasticemail.title}
+        youTubeLink={tutorialLinks.elasticemail.link}
+      />
+
+      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
       <div className="mt-3"><b>{__('API Key:')}</b></div>

@@ -85,7 +85,8 @@ export default function onBlurHandler(event) {
       }
       if (!alreadySetActions[actionDetail.field].includes(actionDetail.action)) {
         alreadySetActions[actionDetail.field].push(actionDetail.action)
-        setActions(actionDetail, fldKey, props, fieldValues)
+        const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}}`]: { value, type: 'text', multiple: false } }), {})
+        setActions(actionDetail, fldKey, props, { ...fieldValues, ...smartFields })
       }
     })
   })
