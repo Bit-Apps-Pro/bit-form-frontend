@@ -264,14 +264,13 @@ export const checkLogic = (logics, fields, props) => {
   }
 
   const logicsVal = replaceWithField(logics.val, fields)
-  if (fields[logics.field] !== undefined) {
-    const targetFieldValue = fields[logics.field].value
-    // alert('targetFieldValue: ' + targetFieldValue + ' logicsVal: ' + logicsVal)
-    return compareValueLogic(logics, fields, targetFieldValue, logicsVal)
-  }
   const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}${typeof value === 'string' ? '' : '()'}}`]: { value: typeof value === 'string' ? value : (value?.[logics?.smartKey] || ''), type: 'text', multiple: false } }), {})
-  const targetFieldValue = replaceWithField(logics.field, smartFields)
-  return compareValueLogic(logics, smartFields, targetFieldValue, logicsVal)
+  const flds = { ...fields, ...smartFields }
+  if (flds[logics.field] !== undefined) {
+    const targetFieldValue = flds[logics.field].value
+    return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
+  }
+  return false
 }
 
 export const replaceWithField = (stringToReplace, fieldValues) => {
