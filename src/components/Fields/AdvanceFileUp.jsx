@@ -81,8 +81,6 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       destroy(container.current)
       if (fldElm.firstChild) fldElm.removeChild(fldElm.firstChild)
     }
-
-    // TODO set the filepond packages to window global
     advanceFileFieldRef.current = new bitAdvanceFileUploadField(fldElm, configuration)
     setFileChange(prv => prv + 1)
   }, [fieldData?.config])
