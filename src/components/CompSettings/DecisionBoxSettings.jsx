@@ -26,6 +26,7 @@ import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -110,7 +111,7 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 

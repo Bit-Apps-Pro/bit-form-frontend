@@ -115,7 +115,7 @@ export default function SimpleAccordion({ className,
         </div>
       </div>
 
-      <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
+      <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden', padding: '2px' }}>
         <CSSTransition
           in={tgl}
           timeout={300}

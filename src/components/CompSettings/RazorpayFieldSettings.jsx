@@ -21,6 +21,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function RazorpayFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -209,6 +210,9 @@ export default function RazorpayFieldSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
+
+      <SizeAndPosition />
+      <FieldSettingsDivider />
 
       <div className={css(ut.ml2, ut.mr2, ut.mt2, ut.p1)}>
         <b>{__('Select Config')}</b>

@@ -16,6 +16,7 @@ import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function HtmlFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -55,6 +56,9 @@ export default function HtmlFieldSettings() {
         fieldKey={fldKey}
       />
 
+      <SizeAndPosition />
+      <FieldSettingsDivider />
+
       {/*
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
@@ -84,7 +88,7 @@ export default function HtmlFieldSettings() {
           data-testid="cntnt"
           role="button"
           tabIndex="-1"
-          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto' })}
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto', fs: '12px !important' })}
           onClick={() => setLabelModal(true)}
           onKeyPress={() => setLabelModal(true)}
         >

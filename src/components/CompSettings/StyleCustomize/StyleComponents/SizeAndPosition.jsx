@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $builderHookStates, $layouts } from '../../../../GlobalStates/GlobalStates'
 import ut from '../../../../styles/2.utilities'
@@ -8,8 +9,9 @@ import FieldStyle from '../../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../ChildComp/SimpleAccordion'
 
-function SizeAndPosition({ fldKey }) {
+function SizeAndPosition() {
   const { css } = useFela()
+  const { fieldKey: fldKey } = useParams()
   const [layouts, setLayouts] = useRecoilState($layouts)
   const breakpoint = useRecoilValue($breakpoint)
   const fieldSize = layouts[breakpoint].find(fl => (fl.i === fldKey))
@@ -112,7 +114,7 @@ const s = {
   fd: {
     flx: 'center',
     flxp: 1,
-    m: 10,
+    m: 6,
   },
   label: { pn: 'relative' },
   name: {
@@ -123,10 +125,10 @@ const s = {
   },
   input: {
     ta: 'center',
-    bd: 'var(--white-0-95) !important',
+    bd: 'var(--b-79-96) !important',
+    b: '1px solid rgb(230, 230, 230) !important',
     oe: 'none',
-    b: 'none !important',
-    brs: '10px !important',
+    brs: '8px !important',
     pl: '30px !important',
     w: 100,
     lh: '1 !important',

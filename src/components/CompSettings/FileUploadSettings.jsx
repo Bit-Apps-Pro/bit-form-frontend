@@ -23,7 +23,6 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -34,6 +33,7 @@ import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function FileUploadSettings() {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -167,11 +167,15 @@ export default function FileUploadSettings() {
 
       <FieldSettingsDivider />
 
+      <SubTitleSettings />
+
+      <FieldSettingsDivider />
+
       <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <SubTitleSettings />
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 
@@ -223,10 +227,6 @@ export default function FileUploadSettings() {
       <FieldSettingsDivider />
 
       <HelperTxtSettings />
-
-      <FieldSettingsDivider />
-
-      <FieldNameSettings />
 
       <FieldSettingsDivider />
 
@@ -364,7 +364,7 @@ export default function FileUploadSettings() {
         <div className={css(FieldStyle.placeholder)}>
           <SizeControl
             dataTestId="mxmm-upld-siz"
-            className={css(ut.w10, ut.mt2, ut.mb1)}
+            className={css(ut.w10, ut.mt2, ut.mb1, { bd: 'var(--b-79-96) !important', brs: '8px !important', p: 5, })}
             inputHandler={({ unit, value }) => maxSizeHandler(unit, value)}
             sizeHandler={({ unitKey, unitValue }) => maxSizeHandler(unitKey, unitValue)}
             value={maxSize}
@@ -377,7 +377,7 @@ export default function FileUploadSettings() {
           {multiple && (
             <CheckBoxMini
               id="ttl-mxmm-siz"
-              className={`${css(ut.mr2, ut.ml1, ut.fw500)} `}
+              className={`${css(ut.mr2, ut.ml1, ut.mt1, ut.fw500)} `}
               checked={isItTotalMax}
               title={__('Total Maximum Size')}
               onChange={e => setConfigValue('isItTotalMax', e.target.checked)}

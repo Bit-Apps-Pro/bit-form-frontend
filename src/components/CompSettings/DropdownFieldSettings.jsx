@@ -20,7 +20,6 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -31,6 +30,7 @@ import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -165,19 +165,23 @@ export default function DropdownFieldSettings() {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
-
-      <FieldSettingsDivider />
-
       <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <SizeAndPosition />
+
+      <FieldSettingsDivider />
+
+      <PlaceholderSettings />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
@@ -190,10 +194,6 @@ export default function DropdownFieldSettings() {
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
-
-      <FieldSettingsDivider />
-
-      <PlaceholderSettings />
 
       <FieldSettingsDivider />
 
@@ -301,14 +301,7 @@ export default function DropdownFieldSettings() {
 
       <FieldSettingsDivider />
 
-      <UniqFieldSettings
-        type="entryUnique"
-        title="Validate as Entry Unique"
-        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        isUnique="show"
-      />
-      <FieldSettingsDivider />
+
 
       <FieldHideSettings />
 
@@ -333,7 +326,7 @@ export default function DropdownFieldSettings() {
                     name=""
                     id=""
                     value={listName}
-                    className={css(FieldStyle.input, { mr: 10, mt: 3 })}
+                    className={css(FieldStyle.input, { mr: 10, my: 5 })}
                     onChange={e => handleListNameChange(e, index)}
                   />
                   <CheckBox
@@ -374,7 +367,7 @@ export default function DropdownFieldSettings() {
           <button
             data-testid="ad-opt-lst-btn"
             onClick={handleAddNewOptionList}
-            className={css(app.btn, { my: 0 })}
+            className={css(app.btn, { mt: 5, mb: 0 })}
             type="button"
           >
             &nbsp;
@@ -384,6 +377,15 @@ export default function DropdownFieldSettings() {
         </div>
       </SimpleAccordion>
 
+      <FieldSettingsDivider />
+
+      <UniqFieldSettings
+        type="entryUnique"
+        title="Validate as Entry Unique"
+        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        isUnique="show"
+      />
       <FieldSettingsDivider />
 
       <Modal

@@ -61,7 +61,7 @@ const ut = {
   mb4: { mb: 20 },
   mb50: { mb: 250 },
   mt0: { mt: '0 !important' },
-  mt1: { mt: 5 },
+  mt1: { mt: '5px !important' },
   mt2: { mt: '10px !important' },
   mt3: { mt: 15 },
   mt4: { mt: 20 },

@@ -22,6 +22,7 @@ import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function ButtonSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -132,7 +133,15 @@ export default function ButtonSettings() {
   return (
     <>
       <div className="">
-        <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
+        <FieldSettingTitle
+          title="Field Settings"
+          subtitle={fieldData.typ}
+          fieldKey={fldKey}
+        />
+
+        <SizeAndPosition />
+
+        <FieldSettingsDivider />
 
         <SimpleAccordion
           id="btn-txt-stng"

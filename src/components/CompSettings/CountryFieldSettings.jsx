@@ -16,7 +16,6 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -26,6 +25,7 @@ import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 const CountryFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
@@ -105,23 +105,27 @@ const CountryFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
-
-      <FieldSettingsDivider />
-
       <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 
       <RequiredSettings />
+
+      <FieldSettingsDivider />
+
+      <PlaceholderSettings />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
@@ -130,10 +134,6 @@ const CountryFieldSettings = () => {
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
-
-      <FieldSettingsDivider />
-
-      <PlaceholderSettings />
 
       <FieldSettingsDivider />
 

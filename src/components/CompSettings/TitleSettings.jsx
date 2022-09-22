@@ -19,11 +19,13 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses,
+import {
+  addDefaultStyleClasses,
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses } from '../style-new/styleHelpers'
+  styleClasses
+} from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -35,6 +37,7 @@ import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import DirectionIcn from '../../Icons/DirectionIcn'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function TitleSettings() {
   const { css } = useFela()
@@ -191,6 +194,77 @@ function TitleSettings() {
           subtitle={fieldData.typ}
           fieldKey={fieldKey}
         />
+        <SimpleAccordion
+          id="sub-titl-stng"
+          title={__('Sub Title')}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+          switching
+          tip="By disabling this option, the field sub title will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
+          toggleAction={hideSubTitle}
+          toggleChecked={!fieldData?.subtitleHide}
+          open={fieldData?.subtitleHide}
+          disable={fieldData?.subtitleHide}
+        >
+          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
+            <div className={css(style.title)}>
+              <label className={css(ut.fw500, ut.flxcb)}>Sub Title</label>
+              <Downmenu>
+                <button
+                  data-testid="sub-titl-mor-opt-btn"
+                  data-close
+                  type="button"
+                  className={css(style.btn)}
+                  unselectable="on"
+                  draggable="false"
+                  style={{ cursor: 'pointer' }}
+                  title={__('Fields')}
+                >
+                  <BdrDottedIcn size="16" />
+                </button>
+                <SmartTags fieldName="subtitle" />
+              </Downmenu>
+            </div>
+
+            <AutoResizeInput
+              id="sub-titl-stng"
+              placeholder="Sub Title..."
+              name="subtitle"
+              value={fieldData?.subtitle}
+              changeAction={handleTitle}
+            />
+          </div>
+          <div className={css(ut.flxcb, ut.mt1)}>
+            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
+            <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
+              <select
+                data-testid="sub-titl-tag"
+                className={css(style.select)}
+                value={fieldData?.subTitleTag}
+                onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}
+              >
+                {tagOptions.map((opt, indx) => <option key={`title-opt-${indx * 4}`} value={opt.value}>{opt.title}</option>)}
+              </select>
+            </div>
+          </div>
+          <FieldIconSettings
+            label="Leading Icon"
+            iconSrc={fieldData?.subTitlPreIcn}
+            styleRoute="sub-titl-pre-i"
+            setIcon={() => setIconModel('subTitlPreIcn')}
+            removeIcon={() => removeIcon('subTitlPreIcn')}
+          />
+          <FieldIconSettings
+            label="Trailing Icon"
+            iconSrc={fieldData?.subTitlSufIcn}
+            styleRoute="sub-titl-suf-i"
+            setIcon={() => setIconModel('subTitlSufIcn')}
+            removeIcon={() => removeIcon('subTitlSufIcn')}
+          />
+        </SimpleAccordion>
+        <FieldSettingsDivider />
+        <SizeAndPosition />
+        <FieldSettingsDivider />
         <FieldIconSettings
           classNames={css(style.section)}
           labelClass={css(style.logoLabel)}
@@ -262,78 +336,11 @@ function TitleSettings() {
             setIcon={() => setIconModel('titleSufIcn')}
             removeIcon={() => removeIcon('titleSufIcn')}
           />
-
         </SimpleAccordion>
+
         <FieldSettingsDivider />
 
-        <SimpleAccordion
-          id="sub-titl-stng"
-          title={__('Sub Title')}
-          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-          switching
-          tip="By disabling this option, the field sub title will be hidden"
-          tipProps={{ width: 250, icnSize: 17 }}
-          toggleAction={hideSubTitle}
-          toggleChecked={!fieldData?.subtitleHide}
-          open={fieldData?.subtitleHide}
-          disable={fieldData?.subtitleHide}
-        >
-          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
-            <div className={css(style.title)}>
-              <label className={css(ut.fw500, ut.flxcb)}>Sub Title</label>
-              <Downmenu>
-                <button
-                  data-testid="sub-titl-mor-opt-btn"
-                  data-close
-                  type="button"
-                  className={css(style.btn)}
-                  unselectable="on"
-                  draggable="false"
-                  style={{ cursor: 'pointer' }}
-                  title={__('Fields')}
-                >
-                  <BdrDottedIcn size="16" />
-                </button>
-                <SmartTags fieldName="subtitle" />
-              </Downmenu>
-            </div>
 
-            <AutoResizeInput
-              id="sub-titl-stng"
-              placeholder="Sub Title..."
-              name="subtitle"
-              value={fieldData?.subtitle}
-              changeAction={handleTitle}
-            />
-          </div>
-          <div className={css(ut.flxcb, ut.mt1)}>
-            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
-            <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
-              <select
-                data-testid="sub-titl-tag"
-                className={css(style.select)}
-                value={fieldData?.subTitleTag}
-                onChange={(e) => inputHandler(e.target.value, 'subTitleTag')}
-              >
-                {tagOptions.map((opt, indx) => <option key={`title-opt-${indx * 4}`} value={opt.value}>{opt.title}</option>)}
-              </select>
-            </div>
-          </div>
-          <FieldIconSettings
-            label="Leading Icon"
-            iconSrc={fieldData?.subTitlPreIcn}
-            styleRoute="sub-titl-pre-i"
-            setIcon={() => setIconModel('subTitlPreIcn')}
-            removeIcon={() => removeIcon('subTitlPreIcn')}
-          />
-          <FieldIconSettings
-            label="Trailing Icon"
-            iconSrc={fieldData?.subTitlSufIcn}
-            styleRoute="sub-titl-suf-i"
-            setIcon={() => setIconModel('subTitlSufIcn')}
-            removeIcon={() => removeIcon('subTitlSufIcn')}
-          />
-        </SimpleAccordion>
 
         <FieldSettingsDivider />
         <div className={css(style.section, style.main)}>
