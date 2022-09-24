@@ -25,13 +25,11 @@ import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
-
-export const FormSaveContext = createContext(null)
-export const ShowProModalContext = createContext(null)
 const FormSettings = loadable(() => import('./FormSettings'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 function FormDetails() {
