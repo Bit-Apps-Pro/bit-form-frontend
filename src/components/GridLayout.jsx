@@ -6,15 +6,13 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { memo, useContext, useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import {
-  $additionalSettings,
+import { $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -24,15 +22,12 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId
-} from '../GlobalStates/GlobalStates'
+  $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import {
-  addNewItemInLayout,
+import { addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
@@ -45,8 +40,7 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
-} from '../Utils/FormBuilderHelper'
+  removeFormUpdateError } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'

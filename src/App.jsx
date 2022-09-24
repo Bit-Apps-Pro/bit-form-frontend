@@ -58,7 +58,6 @@ export default function App() {
                 <NavLink
                   to="/app-settings"
                   className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
                   {__('App Settings')}
                 </NavLink>
