@@ -136,6 +136,9 @@ export default class BitDropdownField {
     if (oldVal !== newVal) {
       this.setSelectedOption(newVal)
     }
+    if (typeof bit_conditionals !== 'undefined') {
+      bit_conditionals({ target: this.#dropdownHiddenInputElm })
+    }
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {

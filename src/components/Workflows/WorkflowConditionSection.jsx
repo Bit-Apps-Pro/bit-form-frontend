@@ -1,23 +1,23 @@
-import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
 import produce from 'immer'
 import { useState } from 'react'
+import { useFela } from 'react-fela'
+import { useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import WorkflowActionSection from './WorkflowActionSection'
-import WorkflowAccordion from './WorkflowAccordion'
-import { deepCopy, firstCharCap } from '../../Utils/Helpers'
-import WorkflowLogicSection from './WorkflowLogicSection'
-import Downmenu from '../Utilities/Downmenu'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
-import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
-import { accessToNested } from './WorkflowHelpers'
 import CloseIcn from '../../Icons/CloseIcn'
-import Button from '../Utilities/Button'
-import Tip from '../Utilities/Tip'
-import TrashIcn from '../../Icons/TrashIcn'
-import ConfirmModal from '../Utilities/ConfirmModal'
 import CopyIcn from '../../Icons/CopyIcn'
 import PlusIcn from '../../Icons/PlusIcn'
+import TrashIcn from '../../Icons/TrashIcn'
+import { deepCopy, firstCharCap } from '../../Utils/Helpers'
+import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
+import Button from '../Utilities/Button'
+import ConfirmModal from '../Utilities/ConfirmModal'
+import Downmenu from '../Utilities/Downmenu'
+import Tip from '../Utilities/Tip'
+import WorkflowAccordion from './WorkflowAccordion'
+import WorkflowActionSection from './WorkflowActionSection'
+import { accessToNested } from './WorkflowHelpers'
+import WorkflowLogicSection from './WorkflowLogicSection'
 
 export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
   const { css } = useFela()
@@ -67,7 +67,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
           <>
             {(lgcGrp.action_behaviour === 'cond' && condGrp.cond_type !== 'else') && (
               <WorkflowAccordion
-                key={condGrp.cond_type}
+                key={condGrp.cond_type + 0}
                 title={generateAccrTtl(condGrp.cond_type)}
                 accordionActions={condGrp.cond_type !== 'if' && <WorkflowAccordionActions lgcGrpInd={lgcGrpInd} condGrpInd={condGrpInd} />}
               >
@@ -129,6 +129,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
             )}
             {lgcGrp.action_behaviour === 'cond' && (
               <WorkflowAccordion
+                key={condGrp.cond_type + 1}
                 title={condGrp.cond_type === 'else' ? 'Else' : 'Then'}
                 titleOutline={condGrp.cond_type !== 'else'}
                 accordionActions={condGrp.cond_type === 'else'
