@@ -76,7 +76,7 @@ export const removeScript = (id, scriptInGrid = false) => {
 }
 
 export const select = (selector) => document.querySelector(selector)
-export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelector(selector)
+export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentDocument.querySelector(selector)
 export const selectAllInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelectorAll(selector)
 
 export function escapeHTMLEntity(string) {
