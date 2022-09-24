@@ -120,7 +120,7 @@ import UserIcn from '../Icons/UserIcn'
 import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
-import MenuIcon from '../Icons/__MenuIcon'
+import MenuIcon from '../Icons/MenuIcon'
 import './ShowIcon.css'
 
 export default function ShowIcon() {

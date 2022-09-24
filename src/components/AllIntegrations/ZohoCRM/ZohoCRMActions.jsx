@@ -13,7 +13,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import Modal from '../../Utilities/Modal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import TitleModal from '../../Utilities/TitleModal'
-import MenuIcon from '../../../Icons/__MenuIcon'
+import MenuIcon from '../../../Icons/MenuIcon'
 import { refreshAssigmentRules, refreshOwners, refreshTags } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
