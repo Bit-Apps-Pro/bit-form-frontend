@@ -151,6 +151,7 @@ function FormDetails() {
     // TODO: reset all states of style, themeVars & themeColors
   }
 
+  const setNewFormInitialStates = () => {
     const { name,
       fields,
       layouts,
@@ -399,7 +400,7 @@ function FormDetails() {
               />
             )}
           />
-          <RouteByParams page="builder" formType formID render={<FormBuilderHOC isLoading={isLoading} />} />
+          <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
           <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />
           {/* <Routes> */}
           {/* <Route path=":rightBar/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
