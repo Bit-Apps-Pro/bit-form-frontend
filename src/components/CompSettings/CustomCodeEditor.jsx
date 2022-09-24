@@ -120,7 +120,7 @@ function CustomCodeEditor() {
     value: customCodes[editorTab] || '',
     onChange: (newValue) => { handleEditorValue(newValue) },
     height: '330px',
-    width: '99%',
+    width: '100%',
     placeholder: 'Write your code here...',
     setOptions: editorOptions,
     ref: addToRefs,
@@ -221,7 +221,7 @@ function CustomCodeEditor() {
       </Grow>
       <div className={css(ut.flxb, ut.mt1, { jc: 'between' })}>
         <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
-          <CheckBoxMini title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
+          <CheckBoxMini className={css(ut.mr2)} title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
           {enableEditor === 'on' && (
             <>
               <Select
@@ -261,7 +261,6 @@ const style = {
     fw: 800,
     px: 15,
     py: 8,
-    mr: 8,
     cr: 'var(--white-100)',
     ':hover': { bd: 'var(--b-36)' },
   },
