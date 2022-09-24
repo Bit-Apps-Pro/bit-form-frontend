@@ -11,8 +11,11 @@ import 'ace-builds/src-min-noconflict/theme-tomorrow'
 import 'ace-builds/src-min-noconflict/theme-twilight'
 // extensions
 import 'ace-builds/src-min-noconflict/ext-language_tools'
-import 'ace-builds/src-noconflict/ext-beautify'
-import 'ace-builds/webpack-resolver'
+
+// both extension occur error in build time
+// import 'ace-builds/src-min-noconflict/ext-beautify'
+// import 'ace-builds/webpack-resolver'
+
 import { useEffect, useRef, useState } from 'react'
 import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
