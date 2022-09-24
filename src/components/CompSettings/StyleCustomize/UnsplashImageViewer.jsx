@@ -206,7 +206,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
             ))}
           </div>
         )}
-        <div className={css(ut.flxc, ut.mt2, s.icon)}>
+        <div className={css(ut.mt2, s.imgWrp)}>
           {images.map((item) => (
             <button
               type="button"
@@ -238,10 +238,14 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
 }
 
 const s = {
-  scrollBar: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
-  loadingPlaceholder: { w: 150, h: 100, brs: 8, lh: 2, my: 3, mx: 5, dy: 'inline-block' },
-  downloadedBtnWrapper: {
-    pn: 'relative',
+  // scrollBar: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
+  loadingPlaceholder: {
+    w: 150,
+    h: 100,
+    brs: 8,
+    lh: 2,
+    my: 3,
+    mx: 5,
     dy: 'inline-block',
     '&:hover > .trash':
       { flx: 'align-center' },

@@ -1544,7 +1544,24 @@ arrow:after,
  .layout {
     overflow: visible;
  }
- 
+
+.loader{
+  background: rgb(255, 255, 255);
+  width:200px;
+  height: 70px;
+  background-image: linear-gradient(90deg, #e9e9e9 0px, #f7f7f7 30px, #ebebeb 60px);
+  background-size: 200%;
+  animation: skeleton .6s infinite ease-out;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: calc(100%);
+  }
+  60%, 100% {
+    background-position: -100%;
+  }
+}
  
  .itm-focus {
     outline: 3px solid var(--b-50);

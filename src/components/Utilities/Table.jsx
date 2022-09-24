@@ -432,6 +432,7 @@ function Table(props) {
 
           <Select
             size="sm"
+            w={170}
             value={pageSize}
             onChange={e => {
               setPageSize(Number(e.target.value))

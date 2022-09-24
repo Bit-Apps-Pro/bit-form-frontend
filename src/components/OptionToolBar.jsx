@@ -197,7 +197,7 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
 
           <div className={css(OptionToolBarStyle.border_right)} />
 
-          <div className={css([ut.flxc])}>
+          <div className={css(ut.flxc)}>
             <Tip msg="Custom Styling">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
