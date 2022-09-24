@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHighlight } from '../style-new/styleHelpers'
-import Cooltip from '../Utilities/Cooltip'
 
 export default function NavBtn({ route,
   subRoute,
@@ -13,7 +12,8 @@ export default function NavBtn({ route,
   icn,
   highlightSelector,
   styleOverride }) {
-  const { formType, formID, fieldKey, element, '*': rightBar } = useParams()
+  const { formType, formID, '*': rightBarUrl } = useParams()
+  const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 
   const dataTestId = `${subRoute ? `${subRoute}-` : ''}${route}-nav`
   const dataTestFocusId = `${subRoute ? `${subRoute}-` : ''}${route}-nav-focus`

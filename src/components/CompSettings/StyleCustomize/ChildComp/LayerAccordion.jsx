@@ -27,7 +27,8 @@ export default function LayerAccordion({ className,
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
-  const { element, '*': rightBar } = useParams()
+  const { '*': rightBarUrl } = useParams()
+  const [rightBar, element] = rightBarUrl.split('/')
 
   const dataTestId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc`
   const dataTestFocusId = `${tag ? `${tag}-` : ''}${lowerCaseAllAndReplaceSpaceToHipen(title)}-acc-focus`

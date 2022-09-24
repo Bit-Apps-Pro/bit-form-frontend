@@ -35,12 +35,11 @@ import SpaceControl from './SpaceControl'
  */
 export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const { css } = useFela()
-  const { fieldKey, '*': rightBarUrl } = useParams()
+  const { '*': rightBarUrl } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const rightBar = rightBarUrl.split('/')[0]
-  const element = rightBarUrl.split('/')[1]
+  const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 
   const fldStyleObj = styles?.fields?.[fieldKey]
   const elementKey = getActualElementKey(element)
