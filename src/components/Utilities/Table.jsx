@@ -441,11 +441,11 @@ function Table(props) {
               }
             }}
             options={[
-              { label: 10, value: 10 },
-              { label: 20, value: 20 },
-              { label: 30, value: 30 },
-              { label: 40, value: 40 },
-              { label: 50, value: 50 },
+              { label: 'Showing 10', value: 10 },
+              { label: 'Showing 20', value: 20 },
+              { label: 'Showing 30', value: 30 },
+              { label: 'Showing 40', value: 40 },
+              { label: 'Showing 50', value: 50 },
             ]}
           />
 

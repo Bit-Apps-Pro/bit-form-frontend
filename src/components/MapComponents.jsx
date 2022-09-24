@@ -41,7 +41,7 @@ mul: multiple
 
 function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages }) {
   const styles = useRecoilValue($styles)
-  // console.log(styles)
+
   switch (atts?.typ) {
     case 'text':
     case 'number':
@@ -107,7 +107,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     default:
       break
   }
-  return <div>Loading</div>
+  return <div>Loading...</div>
 }
 
 export default memo(MapComponents)

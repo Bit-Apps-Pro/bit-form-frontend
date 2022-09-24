@@ -178,7 +178,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
             data-testid="icns-mdl-srch-inp"
             title="Search Images"
             aria-label="Search Images"
-            placeholder="Search Unsplash Image etc..."
+            placeholder="e.g. Abstract, Nature, People, etc."
             id="search-icon"
             type="search"
             name="searchIcn"
@@ -230,7 +230,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
       </Scrollbars>
       <button data-testid="icn-dwnld-n-sav" type="button" disabled={!selectUrl} className={css(s.saveBtn, s.btnPosition)} onClick={saveImage}>
         <span className={css(ut.mr1, { dy: 'flex' })}><CPTIcn size="20" /></span>
-        save
+        Save
         {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
       </button>
     </div>

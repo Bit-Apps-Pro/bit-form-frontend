@@ -176,7 +176,12 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
             onShow={() => setResponsiveMenu(true)}
             onHide={() => setResponsiveMenu(false)}
           >
-            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`} type="button"><EllipsisIcon size="38" /></button>
+            <button
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`}
+              type="button"
+            >
+              <EllipsisIcon size="38" />
+            </button>
             <BreakpointSizeControl />
           </Downmenu>
 
