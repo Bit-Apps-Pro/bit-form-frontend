@@ -55,19 +55,18 @@ export default function onBlurHandler(event) {
 
   oninputCondsForTargetField.forEach((workflow, workflowIndx) => {
     const { conditions } = workflow
-    for (let condIndx = 0; condIndx < conditions.length; condIndx += 1) {
+    const { length } = conditions
+    let logicStatus = false
+    let condIndx = 0
+    for (condIndx = 0; condIndx < length; condIndx += 1) {
       const condition = conditions[condIndx]
-      let logicStatus = false
       if (['if', 'else-if'].includes(condition.cond_type)) {
         const { logics } = condition
         logicStatus = checkLogic(logics, fieldValues, props)
-        if (logicStatus) {
-          condsStatus.push({ workflowIndx, condIndx, logicStatus: logicStatus ? 1 : 0 })
-          break
-        }
+        if (logicStatus) break
       }
-      condsStatus.push({ workflowIndx, condIndx, logicStatus: logicStatus ? 1 : 0 })
     }
+    condsStatus.push({ workflowIndx, condIndx, logicStatus })
   })
 
   // Actions Part
@@ -85,7 +84,8 @@ export default function onBlurHandler(event) {
       }
       if (!alreadySetActions[actionDetail.field].includes(actionDetail.action)) {
         alreadySetActions[actionDetail.field].push(actionDetail.action)
-        setActions(actionDetail, fldKey, props, fieldValues)
+        const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}}`]: { value, type: 'text', multiple: false } }), {})
+        setActions(actionDetail, fldKey, props, { ...fieldValues, ...smartFields })
       }
     })
   })
