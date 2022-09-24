@@ -1868,7 +1868,7 @@ arrow:after,
       place-content: center;
    }
    .f-rob {font-family: "Roboto",sans-serif}
-    .f-mon {font-family:"Outfit", sans-serif !important; } 
+   .f-mon {font-family:"Outfit", sans-serif !important; } 
    .wdt-200 {width: 200px !important;}
    .curp{cursor:pointer}
    .us-n {
