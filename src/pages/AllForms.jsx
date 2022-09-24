@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { lazy, memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import loadable from '@loadable/component'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -24,7 +25,7 @@ import { dateTimeFormatter } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
-const Welcome = lazy(() => import('./Welcome'))
+const Welcome = loadable(() => import('./Welcome'), { fallback: <div>Loading...</div> })
 
 function AllFroms() {
   const [modal, setModal] = useState(false)

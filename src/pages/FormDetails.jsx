@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
 import produce from 'immer'
-import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Route, Routes, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -26,14 +26,13 @@ import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
-import FormSettings from './FormSettings'
 
-// eslint-disable-next-line import/no-cycle
-const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
+const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
+const FormSettings = loadable(() => import('./FormSettings'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 function FormDetails() {
   let componentMounted = true
@@ -394,15 +393,14 @@ function FormDetails() {
             page="responses"
             formType
             formID
-            render={
-              !isLoading ? (
-                <FormEntries
-                  allResp={allResponse}
-                  setAllResp={setAllResponse}
-                  integrations={integrations}
-                />
-              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
-            }
+            render={(
+              <FormEntries
+                isLoading={isLoading}
+                allResp={allResponse}
+                setAllResp={setAllResponse}
+                integrations={integrations}
+              />
+            )}
           />
           <RouteByParams page="builder" formType formID render={<FormBuilderHOC isLoading={isLoading} />} />
           <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />

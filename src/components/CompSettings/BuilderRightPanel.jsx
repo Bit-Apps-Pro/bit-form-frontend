@@ -1,3 +1,4 @@
+import loadable from '@loadable/component'
 import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -7,17 +8,20 @@ import { $builderRightPanelScroll, $selectedFieldId, $unsplashMdl } from '../../
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
-import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
-import ThemeCustomize from '../style-new/ThemeCustomize'
+import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
+import StyleCustomizeLoader from '../Loaders/StyleCustomizeLoader'
 import ThemeGallary from '../style-new/ThemeGallary'
 import Modal from '../Utilities/Modal'
-import FieldSettings from './FieldSettings'
 import FieldsList from './FieldsList'
-import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
-import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
-import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
+
+const DropdownStyleEditors = loadable(() => import('./StyleCustomize/DropdownStyleEditors'), { fallback: <StyleCustomizeLoader /> })
+const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEditor'), { fallback: <StyleCustomizeLoader /> })
+const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fallback: <StyleCustomizeLoader /> })
+const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
+const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
+const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()

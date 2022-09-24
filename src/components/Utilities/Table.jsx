@@ -18,13 +18,13 @@ import SortIcn from '../../Icons/SortIcn'
 import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
-import TableLoader2 from '../Loaders/TableLoader2'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
 import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import ut from '../../styles/2.utilities'
 import Select from './Select'
+import TableLoader from '../Loaders/TableLoader'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -360,7 +360,7 @@ function Table(props) {
                 </div>
               ))}
             </div>
-            {props.loading ? <TableLoader2 /> : (
+            {props.loading ? <TableLoader /> : (
               <div className="tbody" {...getTableBodyProps()}>
                 {page.map(row => {
                   prepareRow(row)

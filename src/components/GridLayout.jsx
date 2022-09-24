@@ -7,6 +7,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import { memo, useContext, useEffect, useRef, useState } from 'react'
+import { memo, useContext, useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -51,8 +52,8 @@ import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
-import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
+import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
@@ -61,6 +62,7 @@ import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefa
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
+const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
 const BUILDER_PADDING = { all: 5 }
 const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
@@ -676,10 +678,21 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                           formID,
                           navigateToFieldSettings,
                           navigateToStyle,
-                          handleContextMenu,
-                          resizingFld,
-                        }}
-                      />
+                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                        <FieldBlockWrapper
+                          {...{
+                            layoutItem,
+                            removeLayoutItem,
+                            cloneLayoutItem,
+                            fields,
+                            formID,
+                            navigateToFieldSettings,
+                            navigateToStyle,
+                            handleContextMenu,
+                            resizingFld,
+                          }}
+                        />
+                      </Suspense>
                     </div>
                   ))}
                 </ResponsiveReactGridLayout>
@@ -696,8 +709,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                     >
-                      <FieldBlockWrapper
-                        {...{
                           layoutItem,
                           removeLayoutItem,
                           cloneLayoutItem,
@@ -705,9 +716,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                           formID,
                           navigateToFieldSettings,
                           navigateToStyle,
-                          resizingFld,
-                        }}
-                      />
+                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                        <FieldBlockWrapper
+                          {...{
+                            layoutItem,
+                            removeLayoutItem,
+                            cloneLayoutItem,
+                            fields,
+                            formID,
+                            navigateToFieldSettings,
+                            navigateToStyle,
+                            resizingFld,
+                          }}
+                        />
+                      </Suspense>
                     </div>
                   ))}
                 </div>

@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+import { useSetRecoilState } from 'recoil'
+import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -25,6 +27,13 @@ export default function FieldBlockWrapper({ layoutItem,
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
   }
+
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
+
+  useEffect(() => {
+    setBuilderHookState(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
+  }, [])
+
   return (
     <>
       {(resizingFld.fieldKey === layoutItem.i) && <span className="resize-txt">{`w: ${resizingFld.w || layoutItem.w}, x: ${resizingFld.x || layoutItem.x}`}</span>}

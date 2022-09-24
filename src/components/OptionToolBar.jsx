@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
+import loadable from '@loadable/component'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -30,6 +31,8 @@ import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
+const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
+
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]

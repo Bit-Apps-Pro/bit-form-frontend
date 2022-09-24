@@ -6,17 +6,14 @@
 
 import { createRenderer } from 'fela'
 import customProperty from 'fela-plugin-custom-property'
-import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RendererProvider } from 'react-fela'
 import { RecoilRoot } from 'recoil'
 import RecoilNexus from 'recoil-nexus'
 import multipleSelectors from 'fela-plugin-multiple-selectors'
-import Loader from './components/Loaders/Loader'
 import customProperties from './styles/1.customProperties'
 import AppSettingsProvider from './Utils/AppSettingsContext'
-
-const App = lazy(() => import('./App'))
+import App from './App'
 
 const renderer = createRenderer({
   plugins: [
@@ -57,11 +54,9 @@ root.render(
   <RecoilRoot>
     <RecoilNexus />
     <AppSettingsProvider>
-      <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
-        <RendererProvider renderer={renderer}>
-          <App />
-        </RendererProvider>
-      </Suspense>
+      <RendererProvider renderer={renderer}>
+        <App />
+      </RendererProvider>
     </AppSettingsProvider>
   </RecoilRoot>,
 )
