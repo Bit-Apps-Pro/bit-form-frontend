@@ -446,7 +446,6 @@ export default function StyleLayers() {
                 </>
               )}
               {fldData.typ === 'phone-number' && (
-                // TODO: Phone number field
                 <>
                   <NavBtn
                     subRoute={fldKey}
@@ -555,7 +554,6 @@ export default function StyleLayers() {
                 </>
               )}
               {fldData.typ === 'country' && (
-                // TODO: Country field
                 <>
                   <NavBtn
                     subRoute={fldKey}

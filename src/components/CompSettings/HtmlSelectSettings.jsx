@@ -23,6 +23,7 @@ import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function HtmlSelectSettings() {
   const bits = useRecoilValue($bits)
@@ -50,15 +51,15 @@ export default function HtmlSelectSettings() {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
-
-      <FieldSettingsDivider />
-
       <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <AdminLabelSettings />
+
+      <FieldSettingsDivider />
+
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 
@@ -66,17 +67,10 @@ export default function HtmlSelectSettings() {
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <HelperTxtSettings />
 
-      <FieldSettingsDivider />
 
-      <UniqFieldSettings
-        type="entryUnique"
-        title="Validate as Entry Unique"
-        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        isUnique="show"
-      />
+
       <FieldSettingsDivider />
 
       <RequiredSettings />
@@ -102,6 +96,16 @@ export default function HtmlSelectSettings() {
         </button>
       </div>
       <FieldSettingsDivider />
+
+      <UniqFieldSettings
+        type="entryUnique"
+        title="Validate as Entry Unique"
+        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        isUnique="show"
+      />
+      <FieldSettingsDivider />
+
       <Modal
         md
         autoHeight

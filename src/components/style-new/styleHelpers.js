@@ -484,7 +484,7 @@ const filterUnusedStyles = (styles) => {
 
         case 'radio':
         case 'check':
-          if (!fld.valid.otherOptReq) deleteStyles(draftStyle, styleClasses.otherOptions, fldkey)
+          if (!fld.addOtherOpt) deleteStyles(draftStyle, styleClasses.otherOptions, fldkey)
           break
 
         default:

@@ -35,7 +35,7 @@ const FieldStyle = {
     ':hover': { bc: 'hsl(210deg 100% 98%)' },
   },
 
-  placeholder: { dy: 'block', m: '0 5px' },
+  placeholder: { dy: 'block', m: '0 4px' },
 
   input: {
     fs: 14,

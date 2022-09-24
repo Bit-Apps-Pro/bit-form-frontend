@@ -29,6 +29,7 @@ import UniqFieldSettings from './CompSettingsUtils/UniqFieldSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -231,11 +232,16 @@ function RadioCheckSettings() {
           />
         </div>
       </SimpleAccordion> */}
+
+      <SubTitleSettings />
+
+      <FieldSettingsDivider />
+
       <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <SubTitleSettings />
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 
@@ -250,26 +256,6 @@ function RadioCheckSettings() {
       <FieldDisabledSettings />
 
       <FieldSettingsDivider /> */}
-
-      <SimpleAccordion
-        id="nam-stng"
-        title={__('Name')}
-        className={css(FieldStyle.fieldSection)}
-        open
-      >
-        <div className={css(FieldStyle.placeholder)}>
-          <input
-            data-testid="nam-stng-inp"
-            aria-label="Name for this Field"
-            placeholder="Type field name here..."
-            className={css(FieldStyle.input)}
-            value={fieldName}
-            onChange={handleFieldName}
-          />
-        </div>
-      </SimpleAccordion>
-
-      <FieldSettingsDivider />
 
       {/* <SimpleAccordion
         id="rqrd-stng"
@@ -442,15 +428,6 @@ function RadioCheckSettings() {
           </>
         )
       }
-      <UniqFieldSettings
-        type="userUnique"
-        title="Validate as User Unique"
-        tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        isUnique="show"
-      />
-
-      <FieldSettingsDivider />
 
       <OtherOptionSettings id={`${fldKey}-other-stng`} />
 
@@ -502,6 +479,17 @@ function RadioCheckSettings() {
         </button>
       </div>
       <FieldSettingsDivider />
+
+      <UniqFieldSettings
+        type="userUnique"
+        title="Validate as User Unique"
+        tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        isUnique="show"
+      />
+
+      <FieldSettingsDivider />
+
       <Modal
         md
         autoHeight

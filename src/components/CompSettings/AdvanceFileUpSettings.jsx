@@ -110,11 +110,11 @@ function AdvanceFileUpSettings() {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
+      <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <SubTitleSettings />
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
@@ -137,10 +137,6 @@ function AdvanceFileUpSettings() {
           </select>
         </div>
       </SimpleAccordion>
-
-      <FieldSettingsDivider />
-
-      <FieldNameSettings />
 
       <FieldSettingsDivider />
       <SimpleAccordion

@@ -840,22 +840,22 @@ export default DropdownField
 //   }
 // })
 
-// TODO set menu size - done
-// TODO hide browser default search cross button - done
-// TODO hide search cross button when search value empty - done
-// TODO style scrollbar - done
-// TODO option tabindex prblm - done
-// TODO set variables for redundent this.#select - done
-// TODO place selected country image placeholder when empty - done
-// TODO catchable classname - done
+// set menu size - done
+// hide browser default search cross button - done
+// hide search cross button when search value empty - done
+// style scrollbar - done
+// option tabindex prblm - done
+// set variables for redundent this.#select - done
+// place selected country image placeholder when empty - done
+// catchable classname - done
 
-// TODO virtual list remove - done
-// TODO render options from php-html - done
-// TODO search field will be configurable
-// TODO there will be multiple option-list by ul, config will have propery name activeList, it can also be empty - done
-// TODO setconfig property
+// virtual list remove - done
+// render options from php-html - done
+// search field will be configurable
+// there will be multiple option-list by ul, config will have propery name activeList, it can also be empty - done
+// setconfig property
 
-// TODO native select
+// native select
 
 // multiple select = select on close default vabe false hoi jabe. r single er khetre default vabe true thakbe
 // active list set korte parbe, tobe seta jekono ekta.

@@ -62,20 +62,17 @@ export default class AdvanceFileUpload {
     this.#filePondRef = create(this.#configSetting)
     this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
 
-    // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
     if (this.#uploadFileToServer) {
       const uri = new URL(this.#ajaxURL)
       uri.searchParams.append('action', 'bitforms_file_store')
       uri.searchParams.append('_ajax_nonce', this.#nonce)
 
-      // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
       const removeFile = new URL(this.#ajaxURL)
       removeFile.searchParams.append('action', 'bitforms_file_remove')
       removeFile.searchParams.append('_ajax_nonce', this.#nonce)
       removeFile.searchParams.append('form_id', this.#formID)
 
       setOptions({
-        // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
         server: {
           process: (fieldName, file, metadata, load, error, progress, abort) => {
             const formData = new FormData()

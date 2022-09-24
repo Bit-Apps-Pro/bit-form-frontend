@@ -20,9 +20,6 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
 import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, unitConverter } from './styleHelpers'
 
-// TODO fix shadow value changing ,
-// TODO check empty value
-// TODO check all use cases  empty/null/undefined values
 function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()

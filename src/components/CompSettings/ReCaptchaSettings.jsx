@@ -17,6 +17,7 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function ReCaptchaSettings() {
   const { css } = useFela()
@@ -54,6 +55,10 @@ export default function ReCaptchaSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
+
+      <SizeAndPosition />
+
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         id="thm-stng"

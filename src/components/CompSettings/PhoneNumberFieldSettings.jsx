@@ -30,6 +30,7 @@ import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 const PhoneNumberFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
@@ -128,19 +129,19 @@ const PhoneNumberFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
-
-      <FieldSettingsDivider />
-
       <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <SizeAndPosition />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 
