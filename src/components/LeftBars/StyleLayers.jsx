@@ -373,11 +373,11 @@ export default function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
-                    route="opt-search-wrp"
+                    route="option-search-wrp"
                     label="Option Search Wrapper"
                     offset="2.5"
-                    highlightSelector={`[data-dev-opt-search-wrp="${fldKey}"]`}
-                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-search-wrp')}
+                    highlightSelector={`[data-dev-option-search-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-search-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
