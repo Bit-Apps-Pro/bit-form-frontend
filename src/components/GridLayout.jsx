@@ -45,6 +45,7 @@ import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
@@ -65,8 +66,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
-  const [layouts, setLayouts] = useRecoilState($layouts)
-  const [rootLayouts, setRootLayouts] = useState(layouts)
+  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const draggingField = useRecoilValue($draggingField)
