@@ -20,18 +20,18 @@ import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import BuilderSettings from './BuilderSettings'
-import CustomCodeEditor from './CompSettings/CustomCodeEditor'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
 import FormBuilderHistory from './FormBuilderHistory'
+import CustomCodeEditorLoader from './Loaders/CustomCodeEditorLoader'
 import { removeUnuseStylesAndUpdateState } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
-export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
 const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
 
+export default function OptionToolBar({ setResponsiveView, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
@@ -45,7 +45,23 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
   const selectedFldId = useRecoilValue($selectedFieldId)
   const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
   const navigate = useNavigate()
+  const [defaultRightPanel, setDefaultRightPanel] = useState('fld-settings')
   const path = `/form/builder/${formType}/${formID}`
+
+  useEffect(() => {
+    if (rightBar.match(/fields-list|field-settings/)) {
+      if (flags.styleMode || flags.inspectMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
+      }
+      setDefaultRightPanel('fld-settings')
+    }
+    if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
+      if (!flags.styleMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
+      }
+      setDefaultRightPanel('theme-customize')
+    }
+  }, [rightBar])
 
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
@@ -84,21 +100,6 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
 
   const inspectModeButtonHandler = () => {
     setFlags(prvFlags => ({ ...prvFlags, inspectMode: !prvFlags.inspectMode }))
-  }
-
-  const handleRightPanelDefaultActive = () => {
-    if (rightBar.match(/fields-list|field-settings/)) {
-      if (flags.styleMode || flags.inspectMode) {
-        setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
-      }
-      return 'fld-settings'
-    }
-    if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
-      if (!flags.styleMode) {
-        setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
-      }
-      return 'theme-customize'
-    }
   }
 
   const handleColorSchemeSwitch = () => {
@@ -223,7 +224,7 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
               width={180}
               show={['icn']}
               tipPlace="bottom"
-              defaultActive={handleRightPanelDefaultActive()}
+              defaultActive={defaultRightPanel}
               options={[
                 { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
                 { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },
