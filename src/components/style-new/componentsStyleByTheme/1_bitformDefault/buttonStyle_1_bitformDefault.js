@@ -1,4 +1,4 @@
-import inputWrapperClasses from './inputWrapperClasses'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
