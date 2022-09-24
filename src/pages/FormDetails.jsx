@@ -3,7 +3,7 @@ import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { Route, Routes, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
@@ -150,9 +150,6 @@ function FormDetails() {
 
     // TODO: reset all states of style, themeVars & themeColors
   }
-  const a = useParams()
-  const setNewFormInitialStates = () => {
-    console.log('=====', a, formType, newFormId)
 
     const { name,
       fields,

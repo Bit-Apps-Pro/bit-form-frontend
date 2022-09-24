@@ -95,28 +95,25 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <>
-          {/* <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> */}
-          <OptionMenu title="Actions" w={150} h={164}>
-            <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
-              <EditIcn size={18} />
-              &nbsp;
-              Edit
-            </Link>
-            <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
-              <CopyIcn size={18} />
-              &nbsp;Duplicate
-            </button>
-            <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
-              <DownloadIcon size={18} />
-              &nbsp;Export
-            </button>
-            <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
-              <TrashIcn size={16} />
-              &nbsp;Delete
-            </button>
-          </OptionMenu>
-        </>
+        <OptionMenu title="Actions" w={150} h={164}>
+          <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
+            <EditIcn size={18} />
+            &nbsp;
+            Edit
+          </Link>
+          <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
+            <CopyIcn size={18} />
+            &nbsp;Duplicate
+          </button>
+          <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
+            <DownloadIcon size={18} />
+            &nbsp;Export
+          </button>
+          <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
+            <TrashIcn size={16} />
+            &nbsp;Delete
+          </button>
+        </OptionMenu>
       ),
     })
     setCols([...ncols])

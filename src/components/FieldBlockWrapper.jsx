@@ -70,12 +70,11 @@ export default function FieldBlockWrapper({ layoutItem,
           removeLayoutItem={removeLayoutItem}
           fieldId={layoutItem.i}
         />
-        {/* <Downmenu> */}
+
         <button
           data-close
           type="button"
           className="g-c us-n no-drg blk-wrp-btn blk-wrp-down-btn"
-          // unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}
           title={__('More Options')}

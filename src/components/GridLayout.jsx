@@ -59,9 +59,6 @@ import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './st
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
-// user will create form in desktop and it will ok for all device
-// user may check all breakpoint is that ok ?
-// user may chnage size and pos in different breakpoint
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
 const BUILDER_PADDING = { all: 5 }
@@ -631,7 +628,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
               {!styleMode ? (
                 <ResponsiveReactGridLayout
-                  // style={{ background: 'purple' }}
                   width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"

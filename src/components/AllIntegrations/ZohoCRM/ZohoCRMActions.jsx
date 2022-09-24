@@ -408,7 +408,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                   <ReactSortable list={crmConf.actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
                     {crmConf.actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
-                        {/* <span className="btcd-icn btcd-mnu mr-2" /> */}
                         <span className="mr-2">
                           <MenuIcon />
                         </span>
@@ -432,7 +431,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                   <ReactSortable list={crmConf.relatedlists[tab - 1].actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
                     {crmConf.relatedlists[tab - 1].actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
-                        {/* <span className="btcd-icn btcd-mnu mr-2" /> */}
                         <span className="mr-2">
                           <MenuIcon size="30" />
                         </span>

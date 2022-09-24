@@ -144,38 +144,6 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
           )}
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
-          {/* <Tip msg="Small Screen View">
-            <button
-              data-testid="bp-sm"
-              onClick={() => setResponsiveView('sm')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`}
-              type="button"
-            >
-              <MobileIcon size={23} />
-            </button>
-          </Tip>
-          <Tip msg="Medium Screen View">
-            <button
-              data-testid="bp-md"
-              onClick={() => setResponsiveView('md')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'md' && 'active'}`}
-              type="button"
-            >
-              <TabletIcon size={22} />
-
-            </button>
-          </Tip>
-          <Tip msg="Large Screen View">
-            <button
-              data-testid="bp-lg"
-              onClick={() => setResponsiveView('lg')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`}
-              type="button"
-            >
-              <LaptopIcn size={29} stroke={1.6} />
-            </button>
-          </Tip> */}
-
           <StyleSegmentControl
             width={130}
             wideTab
@@ -230,24 +198,6 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
           <div className={css(OptionToolBarStyle.border_right)} />
 
           <div className={css([ut.flxc])}>
-            {/* <Tip msg="Fields Settings">
-              <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
-                activeClassName="active"
-                to={`/form/builder/${formType}/${formID}/fields-list`}
-              >
-                <EditIcn size="21" />
-              </NavLink>
-            </Tip>
-            <Tip msg="Theme Customization">
-              <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
-                activeClassName="active"
-                to={`/form/builder/${formType}/${formID}/themes`}
-              >
-                <BrushIcn size="20" />
-              </NavLink>
-            </Tip> */}
             <Tip msg="Custom Styling">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
@@ -281,17 +231,7 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
               ]}
               onChange={handleRightPanel}
               wideTab
-            // className={css(ut.mr1)}
             />
-
-            {/* <Tip msg="Style render">
-              <SingleToggle
-                name="styleMood"
-                isChecked={flags.styleMode}
-                action={styleModeHandler}
-                id="style-mode"
-              />
-            </Tip> */}
           </div>
         </div>
       </div>
@@ -321,7 +261,6 @@ const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'
         <Grow open={settingsModalTab === 'Builder Settings'}><BuilderSettings /></Grow>
         <Grow open={settingsModalTab === 'Custom Code'}><CustomCodeEditor /></Grow>
       </Modal>
-      <div className="theme-section" />
     </div>
   )
 }

@@ -161,7 +161,6 @@ function CustomCodeEditor() {
           />
         </div>
         <div className={css(ut.flxc)}>
-          {/* <span>add snippets</span> */}
           <Downmenu place="bottom-end">
             <button
               data-testid="titl-mor-opt-btn"
