@@ -111,7 +111,7 @@
     "build-storybook": "build-storybook -s public",
     "del-modules": "npkill",
     "build-pkg": "turbo run build",
-    "hot": "cross-env APP_ENV=development vite --force"
+    "hot": "vite --force",
   },
   "husky": {
     "hooks": {
@@ -158,7 +158,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "cross-env": "^7.0.3",
     "css-loader": "6.7.1",
     "cypress": "^10.6.0",
     "eslint": "8.16.0",
