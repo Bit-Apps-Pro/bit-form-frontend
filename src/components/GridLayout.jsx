@@ -669,15 +669,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                       data-testid={`${layoutItem.i}-fld-blk`}
                     >
-                      <FieldBlockWrapper
-                        {...{
-                          layoutItem,
-                          removeLayoutItem,
-                          cloneLayoutItem,
-                          fields,
-                          formID,
-                          navigateToFieldSettings,
-                          navigateToStyle,
                       <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
                         <FieldBlockWrapper
                           {...{
@@ -709,13 +700,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                     >
-                          layoutItem,
-                          removeLayoutItem,
-                          cloneLayoutItem,
-                          fields,
-                          formID,
-                          navigateToFieldSettings,
-                          navigateToStyle,
                       <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
                         <FieldBlockWrapper
                           {...{
