@@ -8,16 +8,14 @@ import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
-  const { '*': rightBar } = useParams()
+  const { '*': rightBarUrl } = useParams()
   const breakpoint = useRecoilValue($breakpoint)
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
   const { styleMode } = flages
-  const rightParams = rightBar.split('/')
-  const element = rightParams[1]
-  const urlFldKey = rightParams[2]
-  const showAllErrorMsg = styleMode && rightParams[0] === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)
-  const showOnlyThisFldErrMsg = styleMode && rightParams[0] === 'field-theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0) && urlFldKey === fieldKey
+  const [rightBar, element, urlFldKey] = rightBarUrl.split('/')
+  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)
+  const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0) && urlFldKey === fieldKey
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
