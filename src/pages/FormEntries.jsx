@@ -20,14 +20,14 @@ import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
-function FormEntries({ allResp, setAllResp }) {
+function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
   )
   const allLabels = useRecoilValue($fieldLabels)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
-  const [isloading, setisloading] = useState(false)
+  const [isloading, setisloading] = useState(isFetching)
   const { formID } = useParams()
   const fetchIdRef = useRef(0)
   const [pageCount, setPageCount] = useState(0)
