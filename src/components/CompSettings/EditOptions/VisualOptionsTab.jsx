@@ -199,7 +199,7 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
             <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
               <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
                 <button data-testid={`srtble-itm-add-optn-grp-${optIndx}`} type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
-                  <span className={css(optionStyle.addbtnside)}><CloseIcn size="16" stroke="2" /></span>
+                  <span className={css(optionStyle.addbtnside)}><CloseIcn size="13" stroke="2" /></span>
                 </button>
               </Tip>
               <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
@@ -209,7 +209,7 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
               </Tip>
               <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
                 <button data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`} type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
-                  <TrashIcn size="23" />
+                  <TrashIcn size="16" />
                 </button>
               </Tip>
             </div>
@@ -392,6 +392,7 @@ const optionStyle = {
   action: {
     dy: 'none',
     pb: 5,
+    mt: 5,
     '&.active': { flx: 'align-center' },
     '&:hover': {
       flx: 'align-center',

@@ -16,6 +16,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
+import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -504,8 +505,8 @@ function TextFieldSettings() {
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <button data-testid="sgsn-stng-btn" onClick={openOptionModal} className={css(app.btn)} type="button">
-                    &nbsp;
-                    {__('Edit suggestions')}
+                    {__('Add/Edit Suggestions')}
+                    <span className={css(FieldStyle.addBtnSide)}><CloseIcn size="13" stroke="2" /></span>
                   </button>
                 </div>
               </SimpleAccordion>
@@ -528,7 +529,7 @@ function TextFieldSettings() {
                   <MultiSelect
                     data-testid="ato-cmplt-slct"
                     defaultValue={ac}
-                    className={`${css(FieldStyle.multiselectInput)}`}
+                    className={`${css(FieldStyle.multiselectInput)} `}
                     placeholder="Select one"
                     options={autofillList}
                     onChange={val => seAutoComplete(val)}
