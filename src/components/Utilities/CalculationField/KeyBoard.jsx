@@ -12,7 +12,7 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 function KeyBoard({ clickAction }) {
   const fields = useRecoilValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)
-  const keyList = [{ type: 'back', content: <BackIcn size="18" /> },
+  const keyList = [{ id: 25, type: 'back', content: <BackIcn size="18" /> },
     { id: 6, type: 'operator', content: '(' },
     { id: 7, type: 'operator', content: ')' },
     { id: 8, type: 'empty', content: '' },

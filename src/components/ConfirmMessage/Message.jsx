@@ -34,6 +34,8 @@ function Message({ id, msgItem }) {
   const [closeIconColorType, setCloseIconColorType] = useState('default')
 
   const [activePeperties, setActiveProperties] = useState('background')
+  const [controller, setController] = useState('All')
+  const { msgType, position, animation, autoHide, duration, styles } = msgItem?.config || {}
 
   const handleActiveProperties = ({ target: { name } }) => {
     setActiveProperties(name)
@@ -124,9 +126,9 @@ function Message({ id, msgItem }) {
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
-  let values = msgItem?.config?.styles?.padding?.trim().split(' ')
+  let values = styles?.padding?.trim().split(' ')
   const handleValues = ({ value: val, unit, id: index }) => {
-    values = msgItem?.config?.styles?.padding?.trim().split(' ')
+    values = styles?.padding?.trim().split(' ')
     const preUnit = getStrFromStr(values[index] || 'px')
     const convertvalue = unitConverter(unit, val, preUnit)
 
@@ -151,39 +153,11 @@ function Message({ id, msgItem }) {
     { label: 'Individual', icn: <BoxIcon stroke="1.7" size="15" />, show: ['icn'], tip: 'Individual Side' },
   ]
 
-  const [controller, setController] = useState('All')
-
-  const positions = {
-    snackbar: ['top-left',
-      'top-center',
-      'top-right',
-      'bottom-left',
-      'bottom-center',
-      'bottom-right'],
-    modal: [
-      'top-center',
-      'center-center',
-      'bottom-center'],
-  }
-  const animations = {
-    snackbar: ['fade',
-      'scale',
-      'slide-up',
-      'slide-down',
-      'slide-left',
-      'slide-right'],
-    modal: [
-      'fade',
-      'scale',
-      'slide-up',
-      'slide-down'],
-  }
-
-  const styles = {
+  const msgStyles = {
     msgContainer: {
       m: 'auto',
 
-      w: msgItem.config?.styles?.width,
+      w: styles?.width,
       h: 'auto',
     },
     msgBackground: {
@@ -193,24 +167,24 @@ function Message({ id, msgItem }) {
       bd: 'rgba(0, 0, 0, 0.0)',
     },
     msgContent: {
-      bd: msgItem.config?.styles?.background,
-      cr: msgItem.config?.styles?.color,
-      p: msgItem.config?.styles?.padding,
-      b: `${msgItem.config?.styles?.borderWidth} ${msgItem.config?.styles?.borderType} ${msgItem.config?.styles?.borderColor}`,
-      brs: msgItem.config?.styles?.borderRadius,
+      bd: styles?.background,
+      cr: styles?.color,
+      p: styles?.padding,
+      b: `${styles?.borderWidth} ${styles?.borderType} ${styles?.borderColor}`,
+      brs: styles?.borderRadius,
       w: '100%',
       m: 'auto',
       pn: 'relative',
       wb: 'break-all',
-      bs: objectArrayToStyleStringGenarator(msgItem?.config?.styles?.boxShadow || []),
+      bs: objectArrayToStyleStringGenarator(styles?.boxShadow || []),
     },
     close: {
-      cr: msgItem.config?.styles?.closeIconColor,
-      bd: msgItem.config?.styles?.closeBackground,
+      cr: styles?.closeIconColor,
+      bd: styles?.closeBackground,
       pn: 'absolute',
       rt: '7px',
-      ...msgItem?.config?.msgType === 'modal' && { tp: '7px' },
-      ...msgItem?.config?.msgType === 'snackbar' && { tp: '50%', tm: 'translateY(-50%)' },
+      ...msgType === 'modal' && { tp: '7px' },
+      ...msgType === 'snackbar' && { tp: '50%', tm: 'translateY(-50%)' },
       h: '25px',
       w: '25px',
       b: 'none',
@@ -220,11 +194,11 @@ function Message({ id, msgItem }) {
       g: 'center',
       cur: 'pointer',
       ':hover': {
-        cr: msgItem.config?.styles?.closeIconHover,
-        bd: msgItem.config?.styles?.closeHover,
+        cr: styles?.closeIconHover,
+        bd: styles?.closeHover,
       },
       ':focus': {
-        cr: msgItem.config?.styles?.closeIconHover,
+        cr: styles?.closeIconHover,
         cur: 'pointer',
       },
     },
@@ -233,103 +207,6 @@ function Message({ id, msgItem }) {
       h: '15px',
       // 'stroke-width': 2,
     },
-    styleButton: {
-      oe: 'none',
-      p: '10px 10px',
-      fs: '14px',
-      fw: '600',
-      b: 'none',
-      bd: 'none',
-      brs: 8,
-      w: 'auto',
-      h: 33,
-      flxi: 'center',
-      mr: 2,
-      zx: 1,
-      ow: 'hidden',
-      curp: 1,
-      pn: 'relative',
-      cr: 'var(--b-54-12)',
-      ':disabled': { oy: 0.4, cur: 'not-allowed' },
-      ':focus:not(:focus-visible)': { bs: 'none' },
-      ':hover:is(:not(:disabled),:not(.active))': { cr: 'var(--b-53-13)' },
-      ':focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
-      '&.active': {
-        bd: 'var(--b-79-96)',
-        cr: 'var(--b-50)',
-      },
-      '::before': {
-        ct: '""',
-        zx: -1,
-        pn: 'absolute',
-        size: 0,
-        // tp: '50%',
-        // lt: '50%',
-        // brs: 8,
-        // tm: 'translate(-50%,-50%)',
-        tn: '400ms border, opacity 300ms',
-        oy: 0,
-        b: '0px solid var(--white-0-81-32)',
-      },
-      ':hover::before': { b: '60px solid var(--white-0-81-32)', oy: 1 },
-      ':disabled::before': { dy: 'none' },
-    },
-    input: {
-      h: '30px !important',
-      fs: '12px !important',
-      fw: 600,
-      bd: '#f0f0f1 !important',
-      brs: '8px !important',
-      b: 'none !important',
-      ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
-    },
-    selectInput: {
-      h: '30px !important',
-      fs: '12px !important',
-      fw: 600,
-      bc: '#f0f0f1 !important',
-      brs: '8px !important',
-      b: 'none !important',
-      ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
-    },
-    colorInput: {
-      w: 30,
-      p: 0,
-      brs: '8px !important',
-      '-webkit-appearance': 'none',
-      '::-webkit-color-swatch-wrapper': { p: 0 },
-      '::-webkit-color-swatch': {
-        b: '1px solid #afafaf',
-        brs: '8px !important',
-      },
-      '::-moz-color-swatch': {
-        b: '1px solid #afafaf',
-        brs: '8px !important',
-      },
-      '::-moz-focus-inner': {
-        b: '1px solid #afafaf',
-        brs: '8px !important',
-      },
-    },
-    segmentcontainer: {
-      flx: 'align-center',
-      jc: 'flex-end',
-      flxp: 'wrap',
-      mt: 10,
-      w: 220,
-    },
-    segmentWrapper: {
-      w: 255,
-      p: '0px 20px',
-    },
-    titlecontainer: { flx: 'center-between' },
-    title: { fs: 12, fw: 500 },
-    label: {
-      fs: '12px',
-      fw: '500',
-    },
-    backgrounLabel: { w: 195 },
-    valueLabel: { fs: '12px' },
   }
 
   return (
@@ -341,48 +218,49 @@ function Message({ id, msgItem }) {
             <div className={css({ flx: 'align-center', cg: 5 })}>
               <span className={css({ w: 130 })}>{__('Message Styles')}</span>
               <select
-                className={css(styles.selectInput)}
+                className={css(uiStyles.selectInput)}
                 name="animation"
                 value={allConf.type.successMsg[id]?.config?.animation}
                 onChange={handleMsgAnimation}
               >
                 <option value="custom-style">Custom Style</option>
               </select>
-              <button type="button" className={css(styles.input, { curp: 1 })} title="Edit styles" onClick={() => setModal({ show: true })}>
+              <button type="button" className={css(uiStyles.input, { curp: 1 })} title="Edit styles" onClick={() => setModal({ show: true })}>
                 <span><EditIcn size="20" /></span>
               </button>
             </div>
           </div>
           <div>
             <span className={css({ w: 130 })}>{__('Message Type')}</span>
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgItem?.config?.msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
+            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
+            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
+            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'sticky'} title={<small className="txt-dp"><b>Sticky</b></small>} value="sticky" />
           </div>
           <div className={css({ flx: 1, cg: 5 })}>
             <div className={css({ flx: 'align-center' })}>
               <span className={css({ fs: 15, w: 80 })}>Animation</span>
               <select
-                className={css(styles.selectInput)}
+                className={css(uiStyles.selectInput)}
                 name="animation"
-                value={msgItem?.config?.animation}
+                value={animation}
                 onChange={handleMsgAnimation}
               >
                 {
-                  animations[msgItem.config?.msgType]?.map(value => <option value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
+                  animations[msgItem.config?.msgType]?.map((value, indx) => <option key={`opt-key${indx}`} value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                 }
               </select>
             </div>
-            {(msgItem?.config?.msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(msgItem?.config?.animation)) && (
+            {((msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(animation)) && msgType !== 'sticky') && (
               <div className={css({ flx: 'align-center' })}>
                 <span className={css({ fs: 15, w: 65 })}>Position</span>
                 <select
-                  className={css(styles.selectInput)}
+                  className={css(uiStyles.selectInput)}
                   name="position"
-                  value={msgItem?.config?.position}
+                  value={position}
                   onChange={handlePositionChange}
                 >
                   {
-                    positions[msgItem?.config?.msgType]?.map(value => <option value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
+                    (positions[msgType][animation] || positions[msgType])?.map(value => <option value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                   }
                 </select>
               </div>
@@ -394,7 +272,7 @@ function Message({ id, msgItem }) {
             {allConf.type.successMsg[id]?.config?.autoHide && (
               <div className={css({ flx: 'align-center' })}>
                 <span className={css({ fs: 15, w: 70 })}>Duration</span>
-                <input placeholder="Duration" className={css(styles.input, { w: 50 })} type="number" value={msgItem?.config?.duration} onChange={handleDelay} />
+                <input placeholder="Duration" className={css(uiStyles.input, { w: 50 })} type="number" value={duration} onChange={handleDelay} />
                 <small>Sec</small>
               </div>
             )}
@@ -404,6 +282,12 @@ function Message({ id, msgItem }) {
           </div>
         </div>
       </div>
+      <TinyMCE
+        id={`conf-${id}`}
+        formFields={fieldsArr}
+        value={msgItem?.msg}
+        onChangeHandler={val => handleMsg(val, id)}
+      />
       <SliderModal
         title="Confirmation Style"
         show={modal.show}
@@ -412,14 +296,14 @@ function Message({ id, msgItem }) {
       >
         <div className="confirmation-style">
           <div className={`style-preview ${css({ h: '250px', p: '40px 20px', ow: 'auto', bd: '#E8E8E8' })}`}>
-            <div className={`${css(styles.msgContainer)}`}>
-              <div className={`${css(styles.msgBackground)}`}>
-                <div className={`${css(styles.msgContent)}`}>
+            <div className={`${css(msgStyles.msgContainer)}`}>
+              <div className={`${css(msgStyles.msgBackground)}`}>
+                <div className={`${css(msgStyles.msgContent)}`}>
                   <button
-                    className={`${css(styles.close)}`}
+                    className={`${css(msgStyles.close)}`}
                     type="button"
                   >
-                    <svg className={`${css(styles.closeIcon)}`} viewBox="0 0 30 30">
+                    <svg className={`${css(msgStyles.closeIcon)}`} viewBox="0 0 30 30">
                       <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="4" y1="3.88" x2="26" y2="26.12" />
                       <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
                     </svg>
@@ -431,19 +315,19 @@ function Message({ id, msgItem }) {
           </div>
           <div className={css({ h: '210px', bd: 'white', bt: '1px solid #abaaaa' })}>
             <div className={css({ p: '10px 20px' })}>
-              <button type="button" name="background" className={`${css(styles.styleButton)} ${activePeperties === 'background' && 'active'}`} onClick={handleActiveProperties}>
+              <button type="button" name="background" className={`${css(uiStyles.styleButton)} ${activePeperties === 'background' && 'active'}`} onClick={handleActiveProperties}>
                 Background
               </button>
-              <button type="button" name="border" className={`${css(styles.styleButton)} ${activePeperties === 'border' && 'active'}`} onClick={handleActiveProperties}>
+              <button type="button" name="border" className={`${css(uiStyles.styleButton)} ${activePeperties === 'border' && 'active'}`} onClick={handleActiveProperties}>
                 Border
               </button>
-              <button type="button" name="shadow" className={`${css(styles.styleButton)} ${activePeperties === 'shadow' && 'active'}`} onClick={handleActiveProperties}>
+              <button type="button" name="shadow" className={`${css(uiStyles.styleButton)} ${activePeperties === 'shadow' && 'active'}`} onClick={handleActiveProperties}>
                 Shadow
               </button>
-              <button type="button" name="width" className={`${css(styles.styleButton)} ${activePeperties === 'width' && 'active'}`} onClick={handleActiveProperties}>
+              <button type="button" name="width" className={`${css(uiStyles.styleButton)} ${activePeperties === 'width' && 'active'}`} onClick={handleActiveProperties}>
                 Width
               </button>
-              <button type="button" name="padding" className={`${css(styles.styleButton)} ${activePeperties === 'padding' && 'active'}`} onClick={handleActiveProperties}>
+              <button type="button" name="padding" className={`${css(uiStyles.styleButton)} ${activePeperties === 'padding' && 'active'}`} onClick={handleActiveProperties}>
                 Padding
               </button>
             </div>
@@ -451,42 +335,42 @@ function Message({ id, msgItem }) {
               {activePeperties === 'background' && (
                 <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px', rg: 5 })}>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.label, styles.backgrounLabel)}>Message Background Color</span>
-                    <input type="color" name="background" className={css({ ml: 88 }, styles.input, styles.colorInput)} value={msgItem.config?.styles?.background} onChange={handleConfirmationStyle} />
-                    <input type="text" name="background" className={css({ w: 165 }, styles.input)} value={msgItem.config?.styles?.background} onChange={handleConfirmationStyle} />
+                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Background Color</span>
+                    <input type="color" name="background" className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)} value={styles?.background} onChange={handleConfirmationStyle} />
+                    <input type="text" name="background" className={css({ w: 165 }, uiStyles.input)} value={styles?.background} onChange={handleConfirmationStyle} />
                   </div>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.label, styles.backgrounLabel)}>Message Text Color</span>
-                    <input type="color" name="color" className={css({ ml: 88 }, styles.input, styles.colorInput)} value={msgItem.config?.styles?.color} onChange={handleConfirmationStyle} />
-                    <input type="text" name="color" className={css({ w: 165 }, styles.input)} value={msgItem.config?.styles?.color} onChange={handleConfirmationStyle} />
+                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Text Color</span>
+                    <input type="color" name="color" className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)} value={styles?.color} onChange={handleConfirmationStyle} />
+                    <input type="text" name="color" className={css({ w: 165 }, uiStyles.input)} value={styles?.color} onChange={handleConfirmationStyle} />
                   </div>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.label, styles.backgrounLabel)}>Close Button Background Color</span>
-                    <select name="closeColorType" className={css({ w: 80 }, styles.selectInput)} value={closeColorType} onChange={handleColorTypeChange}>
+                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close Button Background Color</span>
+                    <select name="closeColorType" className={css({ w: 80 }, uiStyles.selectInput)} value={closeColorType} onChange={handleColorTypeChange}>
                       <option value="default">Default</option>
                       <option value="hover">Hover</option>
                     </select>
-                    <input type="color" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css(styles.input, styles.colorInput)} value={closeColorType === 'default' ? msgItem.config?.styles?.closeBackground : msgItem.config?.styles?.closeHover} onChange={handleConfirmationStyle} />
-                    <input type="text" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css({ w: 165 }, styles.input)} value={closeColorType === 'default' ? msgItem.config?.styles?.closeBackground : msgItem.config?.styles?.closeHover} onChange={handleConfirmationStyle} />
+                    <input type="color" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css(uiStyles.input, uiStyles.colorInput)} value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover} onChange={handleConfirmationStyle} />
+                    <input type="text" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css({ w: 165 }, uiStyles.input)} value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover} onChange={handleConfirmationStyle} />
                   </div>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.label, styles.backgrounLabel)}>Close icon color</span>
-                    <select name="closeIconColorType" className={css({ w: 80 }, styles.selectInput)} value={closeIconColorType} onChange={handleColorTypeChange}>
+                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close icon color</span>
+                    <select name="closeIconColorType" className={css({ w: 80 }, uiStyles.selectInput)} value={closeIconColorType} onChange={handleColorTypeChange}>
                       <option value="default">Default</option>
                       <option value="hover">Hover</option>
                     </select>
                     <input
                       type="color"
                       name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
-                      className={css(styles.input, styles.colorInput)}
-                      value={closeIconColorType === 'default' ? msgItem.config?.styles?.closeIconColor : msgItem.config?.styles?.closeIconHover}
+                      className={css(uiStyles.input, uiStyles.colorInput)}
+                      value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
                       onChange={handleConfirmationStyle}
                     />
                     <input
                       type="text"
                       name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
-                      className={css({ w: 165 }, styles.input)}
-                      value={closeIconColorType === 'default' ? msgItem.config?.styles?.closeIconColor : msgItem.config?.styles?.closeIconHover}
+                      className={css({ w: 165 }, uiStyles.input)}
+                      value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
                       onChange={handleConfirmationStyle}
                     />
                   </div>
@@ -496,16 +380,16 @@ function Message({ id, msgItem }) {
               {activePeperties === 'border' && (
                 <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
                   <div className={css({ flx: 'align-center' })}>
-                    <span className={css(styles.valueLabel, { ml: 102 })}>Color</span>
-                    <span className={css(styles.valueLabel, { ml: 124 })}>Thickness</span>
-                    <span className={css(styles.valueLabel, { ml: 30 })}>Type</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 102 })}>Color</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 124 })}>Thickness</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 30 })}>Type</span>
                   </div>
                   <div className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
-                    <span className={css({ w: 55 }, styles.label)}>Border</span>
-                    <input type="color" name="borderColor" className={css(styles.input, styles.colorInput)} value={msgItem.config?.styles?.borderColor} onChange={handleConfirmationStyle} />
-                    <input type="text" name="borderColor" className={css({ w: 150 }, styles.input)} value={msgItem.config?.styles?.borderColor} onChange={handleConfirmationStyle} />
-                    <input type="text" name="borderWidth" className={css({ w: 80 }, styles.input)} value={msgItem.config?.styles?.borderWidth} onChange={handleConfirmationStyle} />
-                    <select name="borderType" className={css({ w: 80 }, styles.selectInput)} value={msgItem.config?.styles?.borderType} onChange={handleConfirmationStyle}>
+                    <span className={css({ w: 55 }, uiStyles.label)}>Border</span>
+                    <input type="color" name="borderColor" className={css(uiStyles.input, uiStyles.colorInput)} value={styles?.borderColor} onChange={handleConfirmationStyle} />
+                    <input type="text" name="borderColor" className={css({ w: 150 }, uiStyles.input)} value={styles?.borderColor} onChange={handleConfirmationStyle} />
+                    <input type="text" name="borderWidth" className={css({ w: 80 }, uiStyles.input)} value={styles?.borderWidth} onChange={handleConfirmationStyle} />
+                    <select name="borderType" className={css({ w: 80 }, uiStyles.selectInput)} value={styles?.borderType} onChange={handleConfirmationStyle}>
                       <option value="none">None</option>
                       <option value="hidden">Hidden</option>
                       <option value="dotten">Dotted</option>
@@ -521,33 +405,33 @@ function Message({ id, msgItem }) {
                     </select>
                   </div>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css({ w: 55 }, styles.label)}>Radius</span>
-                    <input type="text" name="borderRadius" className={css({ w: 80 }, styles.input)} value={msgItem.config?.styles?.borderRadius} onChange={handleConfirmationStyle} />
+                    <span className={css({ w: 55 }, uiStyles.label)}>Radius</span>
+                    <input type="text" name="borderRadius" className={css({ w: 80 }, uiStyles.input)} value={styles?.borderRadius} onChange={handleConfirmationStyle} />
                   </div>
                 </div>
               )}
               {activePeperties === 'shadow' && (
                 <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.valueLabel, { ml: 48 })}>Color</span>
-                    <span className={css(styles.valueLabel, { ml: 92 })}>X</span>
-                    <span className={css(styles.valueLabel, { ml: 45 })}>Y</span>
-                    <span className={css(styles.valueLabel, { ml: 42 })}>Blur</span>
-                    <span className={css(styles.valueLabel, { ml: 25 })}>Spread</span>
-                    <span className={css(styles.valueLabel, { ml: 12 })}>Inset</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 48 })}>Color</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 92 })}>X</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 45 })}>Y</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 42 })}>Blur</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 25 })}>Spread</span>
+                    <span className={css(uiStyles.valueLabel, { ml: 12 })}>Inset</span>
                   </div>
                   <div className={css({ flx: 'space-between' })}>
                     <div className={css({ h: 110, ow: 'auto', px: 5, pt: 2, w: '100%' })}>
-                      {msgItem.config?.styles?.boxShadow?.map((shadow, index) => (
+                      {styles?.boxShadow?.map((shadow, index) => (
                         <div className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
-                          <input type="color" name="color" className={css(styles.input, styles.colorInput)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="color" className={css({ w: 120 }, styles.input)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="x" className={css({ w: 50 }, styles.input)} value={shadow.x} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="y" className={css({ w: 50 }, styles.input)} value={shadow.y} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="blur" className={css({ w: 50 }, styles.input)} value={shadow.blur} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="spread" className={css({ w: 50 }, styles.input)} value={shadow.spread} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="color" name="color" className={css(uiStyles.input, uiStyles.colorInput)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="text" name="color" className={css({ w: 120 }, uiStyles.input)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="text" name="x" className={css({ w: 50 }, uiStyles.input)} value={shadow.x} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="text" name="y" className={css({ w: 50 }, uiStyles.input)} value={shadow.y} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="text" name="blur" className={css({ w: 50 }, uiStyles.input)} value={shadow.blur} onChange={(e) => handleConfirmationShadow(e, index)} />
+                          <input type="text" name="spread" className={css({ w: 50 }, uiStyles.input)} value={shadow.spread} onChange={(e) => handleConfirmationShadow(e, index)} />
 
-                          <select name="inset" className={css({ w: 72 }, styles.selectInput)} value={shadow.inset} onChange={(e) => handleConfirmationShadow(e, index)}>
+                          <select name="inset" className={css({ w: 72 }, uiStyles.selectInput)} value={shadow.inset} onChange={(e) => handleConfirmationShadow(e, index)}>
                             <option value="">Outset</option>
                             <option value="inset">Inset</option>
                           </select>
@@ -568,16 +452,16 @@ function Message({ id, msgItem }) {
               {activePeperties === 'width' && (
                 <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
                   <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(styles.label, { w: 55 })}>Width</span>
-                    <input type="text" name="width" className={css({ w: '100px' }, styles.input)} value={msgItem.config?.styles?.width} onChange={handleConfirmationStyle} />
+                    <span className={css(uiStyles.label, { w: 55 })}>Width</span>
+                    <input type="text" name="width" className={css({ w: '100px' }, uiStyles.input)} value={styles?.width} onChange={handleConfirmationStyle} />
                   </div>
                 </div>
               )}
               {activePeperties === 'padding'
                 && (
-                  <div className={css(styles.segmentWrapper)}>
-                    <div className={css(styles.titlecontainer)}>
-                      <span className={css(styles.title)}>Padding</span>
+                  <div className={css(uiStyles.segmentWrapper)}>
+                    <div className={css(uiStyles.titlecontainer)}>
+                      <span className={css(uiStyles.title)}>Padding</span>
                       <StyleSegmentControl
                         square
                         defaultActive="All"
@@ -590,7 +474,7 @@ function Message({ id, msgItem }) {
                         noShadow
                       />
                     </div>
-                    <div className={css(styles.segmentcontainer)}>
+                    <div className={css(uiStyles.segmentcontainer)}>
                       <Grow open={controller === 'All'}>
                         <div className={css({ p: 2 })}>
                           <SizeControl
@@ -671,23 +555,150 @@ function Message({ id, msgItem }) {
         msgId={msgItem.id || id}
         active={msgActive}
         setActive={setMsgActive}
-        msgType={msgItem?.config?.msgType || 'snackbar'}
-        position={msgItem?.config?.position || 'top-center'}
-        animation={msgItem?.config?.animation || 'fade'}
-        autoHide={msgItem?.config?.autoHide || false}
-        duration={msgItem?.config?.duration || 1}
+        msgType={msgType || 'snackbar'}
+        position={position || 'top-center'}
+        animation={animation || 'fade'}
+        autoHide={autoHide || false}
+        duration={duration || 1}
         message={msgItem?.msg}
-        confirmationStyles={msgItem?.config?.styles || ''}
-      />
-
-      <TinyMCE
-        id={`conf-${id}`}
-        formFields={fieldsArr}
-        value={msgItem?.msg}
-        onChangeHandler={val => handleMsg(val, id)}
+        confirmationStyles={styles || ''}
       />
     </>
   )
 }
 
 export default memo(Message)
+
+const positions = {
+  snackbar: ['top-left',
+    'top-center',
+    'top-right',
+    'bottom-left',
+    'bottom-center',
+    'bottom-right'],
+  modal: {
+    'slide-up': [
+      'center-center',
+      'bottom-center'],
+    'slide-down': [
+      'top-center',
+      'center-center'],
+  },
+}
+const animations = {
+  snackbar: ['fade',
+    'scale',
+    'slide-up',
+    'slide-down',
+    'slide-left',
+    'slide-right'],
+  modal: [
+    'fade',
+    'scale',
+    'slide-up',
+    'slide-down'],
+  sticky: [
+    'fade',
+    'scale'],
+}
+
+const uiStyles = {
+
+  styleButton: {
+    oe: 'none',
+    p: '10px 10px',
+    fs: '14px',
+    fw: '600',
+    b: 'none',
+    bd: 'none',
+    brs: 8,
+    w: 'auto',
+    h: 33,
+    flxi: 'center',
+    mr: 2,
+    zx: 1,
+    ow: 'hidden',
+    curp: 1,
+    pn: 'relative',
+    cr: 'var(--b-54-12)',
+    ':disabled': { oy: 0.4, cur: 'not-allowed' },
+    ':focus:not(:focus-visible)': { bs: 'none' },
+    ':hover:is(:not(:disabled),:not(.active))': { cr: 'var(--b-53-13)' },
+    ':focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
+    '&.active': {
+      bd: 'var(--b-79-96)',
+      cr: 'var(--b-50)',
+    },
+    '::before': {
+      ct: '""',
+      zx: -1,
+      pn: 'absolute',
+      size: 0,
+      // tp: '50%',
+      // lt: '50%',
+      // brs: 8,
+      // tm: 'translate(-50%,-50%)',
+      tn: '400ms border, opacity 300ms',
+      oy: 0,
+      b: '0px solid var(--white-0-81-32)',
+    },
+    ':hover::before': { b: '60px solid var(--white-0-81-32)', oy: 1 },
+    ':disabled::before': { dy: 'none' },
+  },
+  input: {
+    h: '30px !important',
+    fs: '12px !important',
+    fw: 600,
+    bd: '#f0f0f1 !important',
+    brs: '8px !important',
+    b: 'none !important',
+    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
+  },
+  selectInput: {
+    h: '30px !important',
+    fs: '12px !important',
+    fw: 600,
+    bc: '#f0f0f1 !important',
+    brs: '8px !important',
+    b: 'none !important',
+    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
+  },
+  colorInput: {
+    w: 30,
+    p: 0,
+    brs: '8px !important',
+    '-webkit-appearance': 'none',
+    '::-webkit-color-swatch-wrapper': { p: 0 },
+    '::-webkit-color-swatch': {
+      b: '1px solid #afafaf',
+      brs: '8px !important',
+    },
+    '::-moz-color-swatch': {
+      b: '1px solid #afafaf',
+      brs: '8px !important',
+    },
+    '::-moz-focus-inner': {
+      b: '1px solid #afafaf',
+      brs: '8px !important',
+    },
+  },
+  segmentcontainer: {
+    flx: 'align-center',
+    jc: 'flex-end',
+    flxp: 'wrap',
+    mt: 10,
+    w: 220,
+  },
+  segmentWrapper: {
+    w: 255,
+    p: '0px 20px',
+  },
+  titlecontainer: { flx: 'center-between' },
+  title: { fs: 12, fw: 500 },
+  label: {
+    fs: '12px',
+    fw: '500',
+  },
+  backgrounLabel: { w: 195 },
+  valueLabel: { fs: '12px' },
+}

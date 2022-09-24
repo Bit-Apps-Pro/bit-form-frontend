@@ -22,8 +22,8 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
   const fields = useRecoilValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)
   const [expressions, setExpressions] = useImmer(() => initialExpression(value, fieldArr))
-  const [isCaretAdded, setIsCaretAdded] = useState(false)
   const [caretPosition, setCaretPosition] = useImmer(expressions.length)
+  const [keyboardActive, setKeyboardActive] = useState(false)
   const expRef = useRef(null)
   const enableCalculator = expressions.length > 0
 
@@ -31,6 +31,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     let val = ''
     let funParam = 0
     let parnthasis = 0
+    !keyboardActive && setExpressions(preExp => preExp.filter(exp => exp?.type !== 'caret'))
     expressions.map(exp => {
       if (exp.type === 'field') {
         if (exp.dataObj.isFunction) {
@@ -53,6 +54,10 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     onChange(val)
   }
 
+  const onFocusInAction = () => {
+    !keyboardActive && setExpressions(preExp => { preExp.splice(caretPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } }) })
+  }
+
   const inputKeyPressAction = (event) => {
     const { key } = event
     const newPosition = event.target.selectionEnd
@@ -65,15 +70,17 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     event.preventDefault && event.preventDefault()
     if ((key === 'ArrowUp' || key === 'Home') && caretPosition > 0) {
       setExpressions(oldExp => {
-        oldExp.splice(caretPosition, 1)
+        oldExp = oldExp.filter(exp => exp.type !== 'caret')
         oldExp.unshift({ id: 0, type: 'caret', dataObj: { content: '' } })
+        return oldExp
       })
       setCaretPosition(oldPosition => oldPosition = 0)
     } else if ((key === 'ArrowDown' || key === 'End') && caretPosition < expressions.length - 1) {
       const newCaretPos = expressions.length - 1
       setExpressions(oldExp => {
-        oldExp.splice(caretPosition, 1)
+        oldExp = oldExp.filter(exp => exp.type !== 'caret')
         oldExp.push({ id: 0, type: 'caret', dataObj: { content: '' } })
+        return oldExp
       })
       setCaretPosition(oldPosition => oldPosition = newCaretPos)
     } else if (key === 'ArrowLeft' && caretPosition > 0) {
@@ -131,15 +138,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     if (side === 'straight') {
       if (caretPosition !== newPosition) {
         setExpressions(oldExpression => {
-          if (newPosition === oldExpression.length) {
-            oldExpression.splice(caretPosition, 1)
-            newPosition = oldExpression.length
-          } else if (caretPosition < newPosition) {
-            newPosition -= 1
-            oldExpression.splice(caretPosition, 1)
-          } else {
-            oldExpression.splice(caretPosition, 1)
-          }
+          oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
           oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
           return oldExpression
         })
@@ -148,16 +147,18 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     } else if (side === 'before' && caretPosition !== newPosition - 1) {
       if (caretPosition < newPosition) newPosition -= 1
       setExpressions(oldExpression => {
-        oldExpression.splice(caretPosition, 1)
+        oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
         oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+        return oldExpression
       })
       setCaretPosition(oldPosition => oldPosition = newPosition)
     } else if (side === 'after' && caretPosition !== newPosition + 1) {
       newPosition += 1
       if (caretPosition < newPosition) newPosition -= 1
       setExpressions(oldExpression => {
-        oldExpression.splice(caretPosition, 1)
+        oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
         oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+        return oldExpression
       })
       setCaretPosition(oldPosition => oldPosition = newPosition)
     }
@@ -197,7 +198,7 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
           }
         }
         if (i === expFieldChild.length) {
-          moveCaret(i, 'straight')
+          moveCaret(i - 1, 'straight')
         }
       }
     } else {
@@ -218,11 +219,6 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         }
       }
     }
-
-    if (!isCaretAdded) {
-      setIsCaretAdded(true)
-      setExpressions(oldState => [...oldState, { id: 0, type: 'caret', dataObj: { content: '' } }])
-    }
   }
 
   /* Click Action For keyboard button/Field click */
@@ -230,7 +226,6 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
     if (btnType === 'clear') {
       setExpressions([])
       setCaretPosition(0)
-      setIsCaretAdded(false)
       onChange('')
       return
     }
@@ -259,15 +254,15 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }, { id: id + 1, type: 'operator', dataObj: { content: '(' } }], oldExpression.slice(caretPosition, caretPosition + 1), [{ id: id + 2, type: 'operator', dataObj: { content: ')' } }], oldExpression.slice(caretPosition + 1))
         return oldExpression
       })
-
       setCaretPosition(oldPosition => oldPosition += 2)
     } else {
       setExpressions(oldExpression => oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }], oldExpression.slice(caretPosition)))
 
       setCaretPosition(oldPosition => oldPosition += 1)
     }
-    expRef.current?.focus()
+    setTimeout(() => expRef.current?.focus(), 0)
   }
+
   return (
     <div className={css(style.wrp)}>
       {
@@ -278,16 +273,19 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
             ref={expRef}
             onClick={fieldClickAction}
             onKeyDown={keyPressAction}
+            onFocus={onFocusInAction}
             onBlur={onFocusOutAction}
             tabIndex={0}
           >
             {
               // eslint-disable-next-line react/no-array-index-key
               expressions.map((expElemnet, index) => (
-                <span key={`sp-${index}`} className={`${css(style[expElemnet.type])} ${expElemnet.dataObj.isFunction ? css(style.function) : ''}`}>
-                  {expElemnet.dataObj.label || expElemnet.dataObj.content}
-                  {expElemnet.type === 'caret' && (<span className="caret" />)}
-                </span>
+                expElemnet && (
+                  <span key={`sp-${index}`} className={`${css(style[expElemnet.type])} ${expElemnet.dataObj.isFunction ? css(style.function) : ''}`}>
+                    {expElemnet.dataObj.label || expElemnet.dataObj.content}
+                    {expElemnet.type === 'caret' && (<span className="caret" />)}
+                  </span>
+                )
               ))
             }
           </div>
@@ -313,10 +311,12 @@ function CalculatorField({ label, onChange, value, disabled, type, textarea, cla
         theme="light"
         maxWidth="520px"
         onShow={() => {
+          setKeyboardActive(true)
           expRef.current?.focus()
         }}
         onHidden={() => {
-
+          setKeyboardActive(false)
+          expRef.current !== document.activeElement && setExpressions(preExp => preExp.filter(exp => exp?.type !== 'caret'))
         }}
         // hideOnClick="false"
         p="5px"

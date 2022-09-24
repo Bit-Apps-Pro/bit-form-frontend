@@ -425,6 +425,9 @@ export default class BitCurrencyField {
       this.#setAttribute(this.#currencyInputElm, 'data-num-value', newUnformattedValue)
       this.#handleCurrencyInputBlur()
     }
+    if (typeof bit_conditionals !== 'undefined') {
+      bit_conditionals({ target: this.#currencyHiddenInputElm })
+    }
   }
 
   #handleCurrencyInput(e) {
