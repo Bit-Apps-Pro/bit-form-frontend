@@ -11,6 +11,8 @@ import 'ace-builds/src-min-noconflict/theme-tomorrow'
 import 'ace-builds/src-min-noconflict/theme-twilight'
 // extensions
 import 'ace-builds/src-min-noconflict/ext-language_tools'
+import 'ace-builds/src-min-noconflict/ext-emmet'
+import 'ace-builds/src-min-noconflict/ext-searchbox'
 
 // both extension occur error in build time
 // import 'ace-builds/src-min-noconflict/ext-beautify'
@@ -282,12 +284,12 @@ const options = {
   enableEmmet: true,
   enableMultiselect: true,
   highlightSelectedWord: true,
-  fontSize: 16,
+  fontSize: 15,
   useSoftTabs: true,
   showPrintMargin: true,
   showGutter: true,
   highlightActiveLine: true,
-  wrapEnabled: false,
+  // wrapEnabled: false,
 }
 
 export default CustomCodeEditor
