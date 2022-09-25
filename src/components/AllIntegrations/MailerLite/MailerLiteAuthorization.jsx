@@ -4,6 +4,8 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
 import { useState } from 'react'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo}) {
   const [isAuthorized, setisAuthorized] = useState(false)
