@@ -39,7 +39,7 @@ req: required
 mul: multiple
 */
 
-function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages }) {
+function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages, resizingFld }) {
   const styles = useRecoilValue($styles)
 
   switch (atts?.typ) {
@@ -93,7 +93,7 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'title':
       return <TitleField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'image':
-      return <Image fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+      return <Image fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} resizingFld={resizingFld} />
     case 'divider':
       return <Divider fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'currency':

@@ -19,7 +19,7 @@ function ImageSettings() {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const [icnMdl, setIcnMdl] = useState('')
+  const [icnMdl, setIcnMdl] = useState(false)
 
   const removeImage = (name) => {
     if (fieldData[name]) {
