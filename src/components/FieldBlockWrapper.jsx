@@ -80,12 +80,13 @@ export default function FieldBlockWrapper({ layoutItem,
         fields={fields}
         layoutItem={layoutItem}
         formID={formID}
+        resizingFld={resizingFld}
       />
     </>
   )
 }
 
-const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
+const ComponentsByTheme = ({ layoutItem, formID, fields, resizingFld }) => {
   const { reCaptchaV2 } = useContext(AppSettings)
 
   const componentProps = deepCopy(fields[layoutItem.i])
@@ -97,5 +98,5 @@ const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
-  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
+  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} resizingFld={resizingFld} />
 }
