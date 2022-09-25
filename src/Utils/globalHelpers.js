@@ -1,6 +1,7 @@
 import { getRecoil } from 'recoil-nexus'
 import merge from 'deepmerge-alt'
 import { diff } from 'deep-object-diff'
+import { stringify, parse } from 'jcof'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
@@ -259,4 +260,9 @@ export function getObjectDiff(...args) {
     }
   }
   return diffObj
+}
+
+export const JCOF = {
+  stringify,
+  parse,
 }
