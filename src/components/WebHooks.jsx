@@ -134,8 +134,11 @@ function WebHooks({ removeIntegration }) {
     const confirmation = deepCopy(allConf)
     bitsFetch({ hookDetails: confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
-        if ((response.data.response).length === 0)
+        if ((response.data.response).length === 0) {
+          testResponseRef.current[webHookId].innerHTML = __('No response from the server')
+        } else {
           testResponseRef.current[webHookId].innerHTML = `<pre>${parseWebhookResponse(response.data.response)}</pre>`
+        }
         setSnackbar({ show: true, msg: __(response.data.msg) })
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
