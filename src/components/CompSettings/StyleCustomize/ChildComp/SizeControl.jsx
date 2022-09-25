@@ -16,6 +16,7 @@ export default function SizeControl({ label, className, width, customStyle, opti
           <ul className={`${css(sizeControlStyle.valueList)} value-list`}>
             {preDefinedValues?.map(opt => (
               <li
+                key={opt}
                 role="option"
                 aria-selected={opt}
                 onClick={() => definedValueHandler(opt)}

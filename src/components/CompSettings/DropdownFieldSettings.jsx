@@ -301,8 +301,6 @@ export default function DropdownFieldSettings() {
 
       <FieldSettingsDivider />
 
-
-
       <FieldHideSettings />
 
       <FieldSettingsDivider />
@@ -319,7 +317,7 @@ export default function DropdownFieldSettings() {
             const listName = Object.keys(listObj)
             return (
               <>
-                <div key={`list-name-${index * 5 + 1}`} className={css(ut.flxcb)}>
+                <div key={`list-name-${index}`} className={css(ut.flxcb)}>
                   <input
                     data-testid={`lst-name-inp-${index}`}
                     type="text"
