@@ -125,7 +125,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
         // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
         singleSelect={!attr.mul}
         customValue={attr.customOpt}
-        options={() => getOptions()}
+        options={getOptions()}
         onChange={onChangeHandler}
         defaultValue={value}
       />
