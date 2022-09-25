@@ -7,8 +7,7 @@ const FieldStyle = {
     brs: 8,
     fw: 600,
   },
-  addBtnSide: { tm: 'rotate(45deg)' },
-
+  addBtnSide: { ml: 5, mt: 5, tm: 'rotate(45deg)' },
   logoLabel: {
     flx: 'center-between',
     ml: '0px !important',
