@@ -1,4 +1,4 @@
-function Button({ className, type, onClick, icn, children, style }) {
+function Button({ className, type, onClick, icn, disabled, children, style }) {
   return (
     <button
       style={style}
@@ -7,6 +7,7 @@ function Button({ className, type, onClick, icn, children, style }) {
       type={type || 'button'}
       onClick={onClick}
       aria-label="btcd-button"
+      disabled={disabled}
     >
       {children}
     </button>
