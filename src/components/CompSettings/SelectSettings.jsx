@@ -148,7 +148,7 @@ export default function SelectSettings() {
     const updateVal = e.target.value
     const tmp = { ...options[i] }
     tmp.label = updateVal
-    tmp.value = updateVal.replace(',', '_')
+    tmp.value = updateVal.replace(/,/g, '_')
     fieldData.opt[i] = tmp
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }

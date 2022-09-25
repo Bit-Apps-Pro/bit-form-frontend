@@ -123,6 +123,7 @@ function RadioCheckSettings() {
   function setOptLbl(e, i) {
     const tmp = { ...options[i] }
     tmp.lbl = e.target.value
+    tmp.val = tmp.lbl.replace(/,/g, '_')
     options[i] = tmp
     fieldData.opt = options
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
