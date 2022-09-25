@@ -1,23 +1,33 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import CloseIcn from '../../../Icons/CloseIcn'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
+import TrashIcn from '../../../Icons/TrashIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
-import Button from '../../Utilities/Button'
 import LoaderSm from '../../Loaders/LoaderSm'
-import TrashIcn from '../../../Icons/TrashIcn'
+import Button from '../../Utilities/Button'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
   const getUrlParams = url => url?.match(/(\?|&)([^=]+)=([^&]+|)/gi)
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']
+  const testResponseRef = useRef(null)
+
+  const parseWebhookResponse = response => {
+    try {
+      return JSON.stringify(response, null, 2)
+    } catch (e) {
+      return response
+    }
+  }
 
   const testWebHook = (webHooksDetaila) => {
     setIsLoading(true)
     bitsFetch({ hookDetails: webHooksDetaila }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
-        setSnackbar({ show: true, msg: `${response.data}` })
+        testResponseRef.current.innerHTML = `<pre>${parseWebhookResponse(response.data.response)}</pre>`
+        setSnackbar({ show: true, msg: __(response.data.msg) })
         setIsLoading(false)
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
@@ -109,12 +119,16 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           </div>
         </div>
         {!isInfo && (
-          <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-blue">
+          <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-blue" disabled={isLoading}>
             {__('Test Webhook', 'bitform')}
             {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
           </Button>
         )}
         <br />
+        <div className="wh-resp-box">
+          <div className="f-m wh-resp-box-title">{__('Response:', 'bitform')}</div>
+          <div className="wh-resp-box-content" ref={testResponseRef}>Test Webhook to see the response.</div>
+        </div>
         <br />
         <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
         <div className="btcd-param-t-wrp mt-1">
