@@ -1026,23 +1026,23 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'file-wrpr': {
+    'files-list .file-wrpr': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'file-preview': {
+    'files-list .file-preview': {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
-    'file-title': {
+    'files-list .file-title': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'file-size': {
+    'files-list .file-size': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'cross-btn': {
+    'files-list .cross-btn': {
       states: ['hover'],
       properties: { ...buttonCssProps },
     },
@@ -1139,7 +1139,7 @@ const editorConfig = {
         transition: '',
       },
     },
-    'opt-search-wrp': {
+    'option-search-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1227,7 +1227,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    option: {
+    'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1244,7 +1244,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-lbl-wrp': {
+    'option-list .opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1261,7 +1261,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-icn': {
+    'option-list .opt-icn': {
       states: [],
       properties: {
         border: {
@@ -1279,7 +1279,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    'opt-lbl': {
+    'option-list .opt-lbl': {
       states: [],
       properties: {
         border: {
@@ -1300,7 +1300,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'opt-suffix': {
+    'option-list .opt-suffix': {
       states: [],
       properties: {
         border: {
@@ -1479,7 +1479,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    option: {
+    'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1496,7 +1496,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-lbl-wrp': {
+    'option-list .opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1517,7 +1517,7 @@ const editorConfig = {
         transition: '',
       },
     },
-    'opt-icn': {
+    'option-list .opt-icn': {
       states: [],
       properties: {
         border: {
@@ -1535,7 +1535,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    'opt-lbl': {
+    'option-list .opt-lbl': {
       states: [],
       properties: {
         border: {
@@ -1556,7 +1556,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'opt-prefix': {
+    'option-list .opt-prefix': {
       states: [],
       properties: {
         border: {
@@ -1854,7 +1854,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    option: {
+    'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1871,7 +1871,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-lbl-wrp': {
+    'option-list .opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -1888,7 +1888,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-icn': {
+    'option-list .opt-icn': {
       states: ['hover'],
       properties: {
         border: {
@@ -1906,7 +1906,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    'opt-lbl': {
+    'option-list .opt-lbl': {
       states: ['hover'],
       properties: {
         border: {
@@ -2087,7 +2087,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    option: {
+    'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -2104,7 +2104,7 @@ const editorConfig = {
         'box-shadow': '',
       },
     },
-    'opt-lbl-wrp': {
+    'option-list .opt-lbl-wrp': {
       states: ['hover', 'focus'],
       properties: {
         border: {
@@ -2125,7 +2125,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'opt-icn': {
+    'option-list .opt-icn': {
       states: ['hover'],
       properties: {
         border: {
@@ -2143,7 +2143,7 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
-    'opt-lbl': {
+    'option-list .opt-lbl': {
       states: ['hover'],
       properties: {
         border: {

@@ -1,6 +1,6 @@
 import produce from 'immer'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 import LogicBlock from './LogicBlock'
 import LogicChip from './LogicChip'
@@ -9,6 +9,7 @@ import { accessToNested } from './WorkflowHelpers'
 export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const fields = useRecoilValue($fields)
 
   const addLogic = (typ, path = '', isGroup = 0) => {
     const logicData = [typ]
@@ -196,6 +197,12 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
+  const isSmartTagNeeded = (logics, indx) => {
+    if (lgcGrp.action_type !== 'oninput') return true
+    const fldExistsInLogic = logics.findIndex(lgc => lgc.field && (lgc.field in fields))
+    return fldExistsInLogic >= 0 && fldExistsInLogic !== indx
+  }
+
   return (
     condGrp?.logics?.map((logic, ind) => (
       <span key={`logic-${ind + 44}`}>
@@ -214,6 +221,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
             lgcInd={ind}
             value={logic.val}
             actionType={lgcGrp?.action_type}
+            smartTagAllowed={isSmartTagNeeded(condGrp.logics, ind)}
           />
         )}
         {typeof logic === 'string' && (
@@ -239,6 +247,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                     subLgcInd={subInd}
                     value={subLogic.val}
                     actionType={lgcGrp?.action_type}
+                    smartTagAllowed={isSmartTagNeeded(logic, subInd)}
                   />
                 )}
                 {typeof subLogic === 'string' && (
@@ -269,6 +278,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                             subSubLgcInd={subSubLgcInd}
                             value={subSubLogic.val}
                             actionType={lgcGrp?.action_type}
+                            smartTagAllowed={isSmartTagNeeded(subLogic, subSubLgcInd)}
                           />
                         )}
                         {typeof subSubLogic === 'string' && (

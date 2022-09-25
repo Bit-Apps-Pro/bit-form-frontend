@@ -34,7 +34,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       fldConstructor.destroy()
     }
 
-    const { options, inputFormatOptions, valueFormatOptions, customAttributes, customClasses } = fieldData
+    const { options, inputFormatOptions, valueFormatOptions } = fieldData
 
     const configOptions = {
       fieldKey,
@@ -124,7 +124,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                     />
                   </div>
                 )}
-                <div className={`${fieldKey}-dpd-down-btn dpd-down-btn`}>
+                <div className={`${fieldKey}-dpd-down-btn`}>
                   <svg
                     width="15"
                     height="15"
@@ -145,7 +145,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 data-testid={`${fieldKey}-crncy-amnt-inp`}
                 aria-label="Currency Input"
                 type="text"
-                className={`${fieldKey}-currency-amount-input currency-amount-input`}
+                className={`${fieldKey}-currency-amount-input`}
                 tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />
               {selectedCurrencyClearable && (
@@ -176,9 +176,9 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
             <div className={`${fieldKey}-option-wrp`}>
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div
-                  data-dev-opt-search-wrp={fieldKey}
-                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'opt-search-wrp')}`}
-                  {...getCustomAttributes(fieldKey, 'opt-search-wrp')}
+                  data-dev-option-search-wrp={fieldKey}
+                  className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'option-search-wrp')}`}
+                  {...getCustomAttributes(fieldKey, 'option-search-wrp')}
                 >
                   <input
                     data-testid={`${fieldKey}-opt-srch-inp`}

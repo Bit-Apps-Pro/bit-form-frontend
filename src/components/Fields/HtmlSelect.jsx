@@ -52,7 +52,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                       <option
                         data-dev-slct-optn={fieldKey}
                         className={`${fieldKey}-slct-optn ${getCustomClsName(fieldKey, 'slct-optn')}`}
-                        key={opt2.val}
+                        key={opt2.val || opt2.lbl}
                         value={opt2.val}
                         selected={opt2.check}
                         {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}
@@ -66,7 +66,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                 <option
                   data-dev-slct-optn={fieldKey}
                   className={`${fieldKey}-slct-optn ${getCustomClsName(fieldKey, 'slct-optn')}`}
-                  key={opt.val}
+                  key={opt.val || opt.lbl}
                   value={opt.val}
                   selected={opt.check}
                   {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}

@@ -265,15 +265,19 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                           data-dev-option={fieldKey}
                           data-index={dataIndex++}
                           data-value="create-opt"
-                          className={`${fieldKey}-option ${fieldKey}-create-opt`}
+                          className="option create-opt"
                           role="option"
                           aria-selected="false"
                           tabIndex="-1"
                           {...getCustomAttributes(fieldKey, 'option')}
                           style={{ display: 'none' }}
                         >
-                          <span className={`${fieldKey}-opt-lbl-wrp`}>
-                            <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>Create: </span>
+                          <span
+                            data-dev-opt-lbl-wrp={fieldKey}
+                            className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
+                            {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
+                          >
+                            <span data-dev-opt-lbl={fieldKey} className="opt-lbl">Create: </span>
                           </span>
                           <span className="opt-prefix" />
                         </li>
@@ -286,10 +290,10 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                     key={`option-grp-ttl-${9 * Math.random()}`}
                                     data-testid={`${fieldKey}-opt-${dataIndex}`}
                                     data-index={dataIndex++}
-                                    className={`${fieldKey}-option ${fieldKey}-opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
+                                    className={`option opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
                                     {...getCustomAttributes(fieldKey, 'opt-group-title')}
                                   >
-                                    <span className={`${fieldKey}-opt-lbl`}>{opt.title}</span>
+                                    <span className="opt-lbl">{opt.title}</span>
                                   </li>
                                   {opt.childs.map(opt2 => (
                                     <li
@@ -298,22 +302,26 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                       data-dev-option={fieldKey}
                                       data-index={dataIndex++}
                                       data-value={opt2.val || opt2.lbl}
-                                      className={`${fieldKey}-option ${fieldKey}-opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`}
+                                      className={`option opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`}
                                       role="option"
                                       aria-selected="false"
                                       tabIndex="-1"
                                       {...getCustomAttributes(fieldKey, 'option')}
                                     >
-                                      <span className={`${fieldKey}-opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`} {...getCustomAttributes(fieldKey, 'opty-lbl-wrp')}>
+                                      <span
+                                        data-dev-opt-lbl-wrp={fieldKey}
+                                        className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
+                                        {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
+                                      >
                                         {optionIcon && (
                                           <img
-                                            className={`${fieldKey}-opt-icn`}
+                                            className="opt-icn"
                                             src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
                                             alt="BD"
                                             loading="lazy"
                                           />
                                         )}
-                                        <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>{opt2.lbl}</span>
+                                        <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt2.lbl}</span>
                                       </span>
                                       <span className="opt-prefix" />
                                     </li>
@@ -327,22 +335,26 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                 data-dev-option={fieldKey}
                                 data-index={dataIndex++}
                                 data-value={opt.val || opt.lbl}
-                                className={`${fieldKey}-option`}
+                                className="option"
                                 role="option"
                                 aria-selected="false"
                                 tabIndex="-1"
                                 {...getCustomAttributes(fieldKey, 'option')}
                               >
-                                <span className={`${fieldKey}-opt-lbl-wrp`}>
+                                <span
+                                  data-dev-opt-lbl-wrp={fieldKey}
+                                  className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
+                                  {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
+                                >
                                   {optionIcon && (
                                     <img
-                                      className={`${fieldKey}-opt-icn ${getCustomClsName(fieldKey, 'opt-icn')}`}
+                                      className={`opt-icn ${getCustomClsName(fieldKey, 'opt-icn')}`}
                                       src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
                                       alt="BD"
                                       loading="lazy"
                                     />
                                   )}
-                                  <span data-dev-opt-lbl={fieldKey} className={`${fieldKey}-opt-lbl`}>{opt.lbl}</span>
+                                  <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt.lbl}</span>
                                 </span>
                                 <span className="opt-prefix" />
                               </li>

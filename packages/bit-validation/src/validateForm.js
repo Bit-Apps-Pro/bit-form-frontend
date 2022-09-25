@@ -50,7 +50,7 @@ export default function validateForm({ form, input }) {
     else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
     else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
-    if ((fldType === 'check' || fldType === 'radio') && customOptionValidation !== 'undefined') customOptionValidation(fldValue, fldData)
+    if ((fldType === 'check' || fldType === 'radio') && typeof customOptionValidation !== 'undefined') customOptionValidation(fldValue, fldData)
     if (fldData?.valid?.regexr) {
       errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
       if (errKey) {
@@ -109,7 +109,7 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       errFld.parentElement.style.marginTop = '9px'
       errFld.parentElement.style.height = 'auto'
-      errFld.parentElement.style.removeProperty('display');
+      errFld.parentElement.style.removeProperty('display')
       scrollToFld(fldKey)
     } else {
       errFld.innerHTML = ''

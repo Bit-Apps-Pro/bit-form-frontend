@@ -90,7 +90,6 @@ export default class BitDropdownField {
     this.#addEvent(this.#dropdownFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
     // this.#config.defaultValue && this.setSelectedOption(this.#config.defaultValue)
-
     this.#initOptionsList()
 
     if (this.#config.dropdownIcn) {
@@ -137,6 +136,9 @@ export default class BitDropdownField {
     if (oldVal !== newVal) {
       this.setSelectedOption(newVal)
     }
+    if (typeof bit_conditionals !== 'undefined') {
+      bit_conditionals({ target: this.#dropdownHiddenInputElm })
+    }
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -155,7 +157,7 @@ export default class BitDropdownField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`${this.#activeOptionList()} .${this.fieldKey}-option[data-index="${index}"]`)
+    return this.#select(`${this.#activeOptionList()} .option[data-index="${index}"]`)
   }
 
   #handleKeyboardNavigation(e) {
@@ -172,7 +174,7 @@ export default class BitDropdownField {
         if (activeEl === this.#searchInputElm) {
           nextIndex = this.#findNotDisabledOptIndex(-1, 'next')
           nextElm = this.#selectOptElmByIndex(nextIndex)
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+        } else if (activeEl.classList.contains('option')) {
           nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           nextElm = this.#selectOptElmByIndex(nextIndex)
         }
@@ -186,7 +188,7 @@ export default class BitDropdownField {
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+        } else if (activeEl.classList.contains('option')) {
           const prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous')
           const prevElm = this.#selectOptElmByIndex(prevIndex)
           if (prevElm) {
@@ -229,15 +231,15 @@ export default class BitDropdownField {
   }
 
   #generateOptionsObjFromHtml() {
-    const allOptionsElms = Array.from(this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option`))
+    const allOptionsElms = Array.from(this.#selectAll(`${this.#activeOptionList()} .option`))
     const generateOptObjFromElm = opt => {
       const obj = {}
-      const lblElm = opt.querySelector(`.${this.fieldKey}-opt-lbl`)
+      const lblElm = opt.querySelector('.opt-lbl')
       const { value } = opt.dataset
       obj.lbl = lblElm.textContent
       if (value) obj.val = value
       if (this.#containsClass(opt, 'disabled-opt')) obj.disabled = true
-      const imgElm = opt.querySelector(`.${this.fieldKey}-opt-icn`)
+      const imgElm = opt.querySelector('.opt-icn')
       if (this.#config.dropdownIcn && imgElm?.src) {
         obj.img = imgElm.src
       }
@@ -258,14 +260,14 @@ export default class BitDropdownField {
       const opt = allOptionsElms[optIndex]
       let obj = {}
       let groupIndex = null
-      if (opt.classList.contains(`${this.fieldKey}-opt-group-title`)) {
+      if (opt.classList.contains('opt-group-title')) {
         obj = generateOptObjFromElm(opt)
         obj.type = 'group'
         arr.push(obj)
         groupIndex = optIndex
         for (let childIndex = optIndex + 1; childIndex < length; childIndex += 1) {
           const child = allOptionsElms[childIndex]
-          if (child.classList.contains(`${this.fieldKey}-opt-group-child`)) {
+          if (child.classList.contains('opt-group-child')) {
             const childObj = generateOptObjFromElm(child)
             childObj.groupIndex = groupIndex
             optIndex = childIndex
@@ -379,7 +381,7 @@ export default class BitDropdownField {
   #handleOptionValue(e) {
     const optElm = e.currentTarget
     const val = optElm.dataset.value
-    if (this.#config.allowCustomOption && optElm.classList.contains(`${this.fieldKey}-create-opt`)) {
+    if (this.#config.allowCustomOption && optElm.classList.contains('create-opt')) {
       this.#addCustomOption(val)
     }
     if (this.#config.multipleSelect) {
@@ -402,7 +404,7 @@ export default class BitDropdownField {
     this.#reRenderVirtualOptions()
     this.setSelectedOption(this.#selectedOptValue)
     setTimeout(() => {
-      const selectedOpt = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-option[data-value="${val}"]`)
+      const selectedOpt = this.#select(`${this.#activeOptionList()} .option[data-value="${val}"]`)
       selectedOpt.focus()
     }, 0)
   }
@@ -412,13 +414,14 @@ export default class BitDropdownField {
   }
 
   #getCurrentActiveOptions() {
-    return this.#selectAll(`${this.#activeOptionList()} .${this.fieldKey}-option:not(.${this.fieldKey}-opt-group-title):not(.${this.fieldKey}-create-opt)`)
+    return this.#selectAll(`${this.#activeOptionList()} .option:not(.opt-group-title):not(.create-opt)`)
   }
 
   #addOnClickOptionsEvent() {
     const allOptionElms = this.#getCurrentActiveOptions()
-
-    for (const optionElm of allOptionElms) {
+    const elmLength = allOptionElms.length
+    for (let i = 0; i < elmLength; i += 1) {
+      const optionElm = allOptionElms[i]
       this.#addEvent(optionElm, 'click', e => { this.#handleOptionValue(e) })
       this.#addEvent(optionElm, 'keyup', e => { e.key === 'Enter' && this.#handleOptionValue(e) })
     }
@@ -427,8 +430,9 @@ export default class BitDropdownField {
   #toggleTabIndexOfOptions() {
     const allOptionElms = this.#getCurrentActiveOptions()
     const isMenuOpen = this.#isMenuOpen()
-
-    for (const optionElm of allOptionElms) {
+    const elmLength = allOptionElms.length
+    for (let i = 0; i < elmLength; i += 1) {
+      const optionElm = allOptionElms[i]
       if (isMenuOpen) {
         this.#setTabIndex(optionElm, 0)
       } else {
@@ -463,13 +467,13 @@ export default class BitDropdownField {
 
       if (opt.i === 'not-found') {
         this.#setTextContent(li, opt.lbl)
-        this.#setClassName(li, `${this.fieldKey}-opt-not-found`)
+        this.#setClassName(li, 'opt-not-found')
         this.#optionListElm.appendChild(li)
         return
       }
-      this.#setClassName(li, `${this.fieldKey}-option`)
+      this.#setClassName(li, 'option')
       const lblimgbox = this.#createElm('span')
-      this.#setClassName(lblimgbox, `${this.fieldKey}-opt-lbl-wrp`)
+      this.#setClassName(lblimgbox, 'opt-lbl-wrp')
       if ('opt-lbl-wrp' in this.#config.classNames) {
         const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
         if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
@@ -481,7 +485,7 @@ export default class BitDropdownField {
       }
       if (this.#config.optionIcon) {
         const img = this.#createElm('img')
-        this.#setClassName(img, `${this.fieldKey}-opt-icn`)
+        this.#setClassName(img, 'opt-icn')
         // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         if ('opt-icn' in this.#config.classNames) {
           const optIcnCls = this.#config.classNames['opt-icn']
@@ -497,7 +501,7 @@ export default class BitDropdownField {
         lblimgbox.append(img)
       }
       const lbl = this.#createElm('span')
-      this.#setClassName(lbl, `${this.fieldKey}-opt-lbl`)
+      this.#setClassName(lbl, 'opt-lbl')
       if ('opt-lbl' in this.#config.classNames) {
         const optLblCls = this.#config.classNames['opt-lbl']
         if (optLblCls) this.#setClassName(lbl, optLblCls)
@@ -534,12 +538,10 @@ export default class BitDropdownField {
         this.#setAttribute(li, 'aria-selected', false)
       }
 
-      this.#optionListElm.appendChild(li)
-
       if (opt.type === 'group') {
-        this.#setClassName(li, `${this.fieldKey}-opt-group-title`)
+        this.#setClassName(li, 'opt-group-title')
       } else {
-        if ('groupIndex' in opt) this.#setClassName(li, `${this.fieldKey}-opt-group-child`)
+        if ('groupIndex' in opt) this.#setClassName(li, 'opt-group-child')
         this.#setAttribute(li, 'data-index', i)
         this.#setAttribute(li, 'data-value', opt.val)
         this.#setAttribute(li, 'role', 'option')
@@ -553,6 +555,8 @@ export default class BitDropdownField {
           this.#addEvent(li, 'keyup', e => { e.key === 'Enter' && this.#handleOptionValue(e) })
         }
       }
+
+      this.#optionListElm.appendChild(li)
     }
   }
 
@@ -649,18 +653,18 @@ export default class BitDropdownField {
       this.#options = this.#config.options
       if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
       if (this.allowCustomOption) {
-        this.#customOption = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-create-opt`)
+        this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
         this.#customOption.style.display = 'none'
         this.#options = this.#options.concat(this.#customOptions)
       }
     }
 
     this.#reRenderVirtualOptions()
-    this.#customOption = this.#select(`${this.#activeOptionList()} .${this.fieldKey}-create-opt`)
+    this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
     if (isExist && this.allowCustomOption) this.#customOption.style.display = 'none'
     else if (this.allowCustomOption && value.trim()) {
       this.#customOption.style.display = 'block'
-      const createOptLbl = this.#customOption.querySelector(`.${this.fieldKey}-opt-lbl`)
+      const createOptLbl = this.#customOption.querySelector('.opt-lbl')
       createOptLbl.innerText = `Create: ${value}`
       this.#setAttribute(this.#customOption, 'data-value', value)
       // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
@@ -677,7 +681,7 @@ export default class BitDropdownField {
   }
 
   #isMenuOpen() {
-    return this.#containsClass(this.#dropdownFieldWrapper, `${this.fieldKey}-menu-open`)
+    return this.#containsClass(this.#dropdownFieldWrapper, 'menu-open')
   }
 
   #openDropdownAsPerWindowSpace() {
@@ -699,7 +703,7 @@ export default class BitDropdownField {
     this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
     if (open) {
       this.#openDropdownAsPerWindowSpace()
-      this.#dropdownFieldWrapper.classList.add(`${this.fieldKey}-menu-open`)
+      this.#dropdownFieldWrapper.classList.add('menu-open')
       this.#addEvent(this.#document, 'click', e => this.#handleOutsideClick(e))
       this.#setTabIndex(this.#searchInputElm, 0)
       this.#setTabIndex(this.#clearSearchBtnElm, 0)
@@ -708,7 +712,7 @@ export default class BitDropdownField {
       this.#setAttribute(this.#searchInputElm, 'aria-hidden', false)
       this.#reRenderVirtualOptions()
     } else {
-      this.#dropdownFieldWrapper.classList.remove(`${this.fieldKey}-menu-open`)
+      this.#dropdownFieldWrapper.classList.remove('menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
       this.searchOptions('')
       this.#setTabIndex(this.#searchInputElm, -1)

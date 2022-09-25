@@ -87,8 +87,6 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
   //   const { name, form } = e.target
   //   validateForm({ input: { name, form, value: value.length ? value : '' } })
   // }
-
-  // TODO remove unsed code
   // input ~ label
 
   return (

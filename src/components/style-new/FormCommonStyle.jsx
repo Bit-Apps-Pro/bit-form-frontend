@@ -2,8 +2,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import BackgroundControl from './BackgroundControl'
@@ -14,6 +15,7 @@ import editorConfig from './NewStyleEditorConfig'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
+import { getValueFromStateVar } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
@@ -24,6 +26,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const elemn = `.${element}-${formID}`
   const formWrpStylesObj = styles.form[elemn]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
+  const themeColors = useRecoilValue($themeColors)
 
   const addableCssProps = Object
     .keys(editorConfig[element].properties)
@@ -95,7 +98,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
           <SimpleColorPicker
             title="Background Color"
             subtitle={`${componentTitle} Background Color`}
-            value={formWrpStylesObj?.['background-color']}
+            value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background-color'])}
             modalId={`${element}-cnr-bdc`}
             stateObjName="styles"
             propertyPath={objPaths.paths?.['background-color']}
@@ -112,7 +115,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
           <BackgroundControl
             title="Background"
             subtitle={`${componentTitle} Background`}
-            value={formWrpStylesObj?.['background-image']}
+            value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background'])}
             modalId={`${element}-cnr-bd`}
             stateObjName="styles"
             objectPaths={objPaths}
@@ -127,7 +130,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
           <SimpleColorPicker
             title="Color"
             subtitle={`${componentTitle} Color`}
-            value={formWrpStylesObj?.color}
+            value={getValueFromStateVar(themeColors, formWrpStylesObj?.color)}
             modalId={`${element}-cnr-clr`}
             stateObjName="styles"
             propertyPath={objPaths.paths.color}

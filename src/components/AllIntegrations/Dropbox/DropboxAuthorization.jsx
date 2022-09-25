@@ -34,7 +34,11 @@ export default function DropboxAuthorization({ formID, dropboxConf, setDropboxCo
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+      <TutorialLink
+        title={tutorialLinks.dropbox.title}
+        youTubeLink={tutorialLinks.dropbox.link}
+      />
+      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dropboxConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
       <small className="d-blk mt-3">

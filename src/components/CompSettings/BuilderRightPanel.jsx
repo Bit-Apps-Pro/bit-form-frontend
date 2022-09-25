@@ -26,7 +26,7 @@ const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <Fie
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()
   const { formID, '*': rightPanel } = useParams()
-  const [rightBar, fieldKey] = rightPanel.split('/')
+  const [rightBar, , fieldKey] = rightPanel.split('/')
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)

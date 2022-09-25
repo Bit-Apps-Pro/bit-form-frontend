@@ -49,6 +49,7 @@ import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -399,11 +400,15 @@ function TextFieldSettings() {
 
         <FieldSettingsDivider />
 
+        <SubTitleSettings />
+
+        <FieldSettingsDivider />
+
         <AdminLabelSettings />
 
         <FieldSettingsDivider />
 
-        <SubTitleSettings />
+        <SizeAndPosition />
 
         <FieldSettingsDivider />
 
@@ -434,6 +439,10 @@ function TextFieldSettings() {
 
           </div>
         </SimpleAccordion>
+
+        <FieldSettingsDivider />
+
+        <PlaceholderSettings />
 
         <FieldSettingsDivider />
 
@@ -529,16 +538,8 @@ function TextFieldSettings() {
               </SimpleAccordion>
 
               <FieldSettingsDivider />
-
-              <PlaceholderSettings />
-
-              <FieldSettingsDivider />
             </>
           )}
-
-        <FieldNameSettings />
-
-        <FieldSettingsDivider />
         {
           fieldData.typ === 'text' && (
             <>
@@ -688,21 +689,6 @@ function TextFieldSettings() {
             </>
           )
         } */}
-
-        {
-          fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
-            <>
-              <UniqFieldSettings
-                type="entryUnique"
-                title="Validate as Unique Entry"
-                tipTitle={tippyHelperMsg.uniqueEntry}
-                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-                isUnique="show"
-              />
-              <FieldSettingsDivider />
-            </>
-          )
-        }
 
         {
           fieldData.typ === 'number' && (
@@ -859,6 +845,20 @@ function TextFieldSettings() {
             )
           }
         </div>
+        {
+          fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
+            <>
+              <UniqFieldSettings
+                type="entryUnique"
+                title="Validate as Unique Entry"
+                tipTitle={tippyHelperMsg.uniqueEntry}
+                className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+                isUnique="show"
+              />
+              <FieldSettingsDivider />
+            </>
+          )
+        }
       </div>
 
       <Modal

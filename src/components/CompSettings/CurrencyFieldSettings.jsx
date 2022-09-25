@@ -26,6 +26,7 @@ import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 const CurrencyFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
@@ -107,19 +108,19 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <AdminLabelSettings />
-
-      <FieldSettingsDivider />
-
       <SubTitleSettings />
 
       <FieldSettingsDivider />
 
-      <HelperTxtSettings />
+      <AdminLabelSettings />
 
       <FieldSettingsDivider />
 
-      <FieldNameSettings />
+      <SizeAndPosition />
+
+      <FieldSettingsDivider />
+
+      <HelperTxtSettings />
 
       <FieldSettingsDivider />
 

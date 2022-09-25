@@ -12,6 +12,7 @@ import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function ImageSettings() {
   const { css } = useFela()
@@ -36,7 +37,8 @@ function ImageSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
-
+      <SizeAndPosition />
+      <FieldSettingsDivider />
       <FieldIconSettings
         classNames={css(style.section)}
         labelClass={css(style.logoLabel)}

@@ -8,6 +8,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import SingleToggle from '../../Utilities/SingleToggle'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import ErrorMessageSettings from './ErrorMessageSettings'
@@ -29,6 +30,7 @@ export default function OtherOptionSettings() {
       if (!fieldData.err.otherOptReq) fieldData.err.otherOptReq = {}
       fieldData.err.otherOptReq.dflt = '<p>Custom Option Required</p>'
       fieldData.err.otherOptReq.show = true
+      addDefaultStyleClasses(fldKey, 'otherOptions')
     } else {
       fieldData.valid.otherOptReq = false
       delete fieldData.addOtherOpt

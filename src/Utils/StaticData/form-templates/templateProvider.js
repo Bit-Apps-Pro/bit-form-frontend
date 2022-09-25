@@ -1,4 +1,5 @@
 import confirmMsgCssStyles from '../../../components/ConfirmMessage/confirmMsgCssStyles'
+import { msgDefaultConfig } from '../../../components/style-new/styleHelpers'
 import themeProvider from '../../../components/style-new/themes/0_themeProvider'
 
 import { mergeNestedObj } from '../../globalHelpers'
@@ -49,28 +50,8 @@ export default function templateProvider(templateSlug, formId) {
 }
 
 function defaultConfirmations(formID) {
-  const msgType = 'snackbar'
-  const position = 'bottom-right'
-  const animation = 'fade'
-  const autoHide = true
-  const duration = 5
-  const styles = {
-    width: '300px',
-    padding: '5px 35px 5px 20px',
-    color: '#000000',
-    background: '#fafafa',
-    borderWidth: '1px',
-    borderType: 'solid',
-    borderColor: 'gray',
-    borderRadius: '10px',
-    boxShadow: [{ x: '0px', y: '27px', blur: '30px', spread: '', color: 'rgb(0 0 0 / 18%)', inset: '' },
-      { x: '0px', y: '5.2px', blur: '9.4px', spread: '5px', color: 'rgb(0 0 0 / 6%)', inset: '' },
-      { x: '0px', y: '11.1px', blur: '14px', spread: '', color: 'rgb(0 0 0 / 14%)', inset: '' }],
-    closeBackground: '#48484829',
-    closeHover: '#dfdfdf',
-    closeIconColor: '#5a5a5a',
-    closeIconHover: '#000',
-  }
+  const { msgType, position, animation, autoHide, duration, styles } = msgDefaultConfig
+
   return {
     type: {
       successMsg: [{

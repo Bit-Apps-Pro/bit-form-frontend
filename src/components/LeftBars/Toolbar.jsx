@@ -134,9 +134,9 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Select'),
         mul: false,
         opt: [
-          { lbl: 'Option 1', val: 'Option 1' },
-          { lbl: 'Option 2', val: 'Option 2' },
-          { lbl: 'Option 3', val: 'Option 3' },
+          { lbl: 'Option 1' },
+          { lbl: 'Option 2' },
+          { lbl: 'Option 3' },
         ],
         ph: 'Select a option...',
         phHide: false,

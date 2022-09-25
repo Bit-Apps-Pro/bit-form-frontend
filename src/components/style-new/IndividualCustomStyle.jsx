@@ -51,7 +51,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
 
-  const elementKey = getActualElementKey(elmKey)
+  const elementKey = getActualElementKey(elmKey, fieldObj.typ)
 
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
@@ -164,6 +164,12 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'inp-wrp .filepond--file': 'File',
     'inp-wrp .filepond--drop-label': 'Drop Label',
     'inp-wrp .filepond--label-action': 'Label Action',
+    'option-list .option': 'Option',
+    'option-list .opt-lbl-wrp': 'Option Label Container',
+    'option-list .opt-icn': 'Option Icon',
+    'option-list .opt-lbl': 'Option Label',
+    'option-list .opt-suffix': 'Option Suffix',
+    'option-list .opt-prefix': 'Option Prefix',
   }
 
   const fldTitle = getTitle[elementKey]
@@ -921,7 +927,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
                 className={css({ w: 130 })}
                 inputHandler={({ unit, value }) => spacingHandler({ unit, value }, 'font-size', fldFSUnit, state)}
                 sizeHandler={({ unitKey, unitValue }) => spacingHandler({ unit: unitKey, value: unitValue }, 'font-size', fldFSUnit, state)}
-                preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
+                // preDefinedValues={['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger', 'inherit', 'initial', 'revert', 'revert-layer', 'unset']}
                 definedValueHandler={value => preDefinedValueHandler(value, 'font-size', state)}
                 value={fldFSValue || 12}
                 unit={fldFSUnit || 'px'}
