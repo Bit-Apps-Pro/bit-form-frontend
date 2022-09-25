@@ -13,12 +13,12 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         display: 'inline-block',
       },
 
-      [`.readonly .${fk}-file-input-wrpr`]: {
+      [`.${fk}-fld-wrp.readonly .${fk}-file-input-wrpr`]: {
         opacity: '.7',
         cursor: 'not-allowed',
         'pointer-events': 'none',
       },
-      [`.disabled .${fk}-file-input-wrpr`]: {
+      [`.${fk}-fld-wrp.disabled .${fk}-file-input-wrpr`]: {
         opacity: '.5',
         cursor: 'not-allowed',
         'pointer-events': 'none',
