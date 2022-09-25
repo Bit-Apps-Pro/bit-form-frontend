@@ -5,15 +5,18 @@ export default function RenderCssInPortal() {
   const styled = { div([str]) { return str } }
 
   useEffect(() => {
-    document
-      .getElementById('bit-grid-layout')
-      ?.contentWindow
-      ?.document
-      .head
-      .appendChild(
-        document.importNode(select('#bf-font'))
-        || document.createElement('div'),
-      )
+    const font1 = select('#bf-font-0-css')
+    const font2 = select('#bf-font-1-css')
+
+    if (font1 && font2) {
+      document
+        .getElementById('bit-grid-layout')
+        ?.contentWindow
+        ?.document
+        .head
+        .appendChild(document.importNode(font1))
+        .appendChild(document.importNode(font2))
+    }
   }, [])
 
   const filepondCSS = styled.div`
@@ -1547,8 +1550,6 @@ arrow:after,
 
 .loader{
   background: rgb(255, 255, 255);
-  width:200px;
-  height: 70px;
   background-image: linear-gradient(90deg, #e9e9e9 0px, #f7f7f7 30px, #ebebeb 60px);
   background-size: 200%;
   animation: skeleton .6s infinite ease-out;
