@@ -352,8 +352,8 @@ export function arrDiff(arr1, arr2) {
     .filter(x => !arr2.includes(x))
     .concat(arr2.filter(x => !arr1.includes(x)))
 }
-export const addableCssPropsObj = (fieldType, elementKey = 'fld-wrp') => editorConfig[fieldType][elementKey].properties
-export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => Object.keys(editorConfig[fieldType][elementKey].properties)
+export const addableCssPropsObj = (fieldType, elementKey = 'fld-wrp') => editorConfig[fieldType][elementKey]?.properties
+export const addableCssPropsByField = (fieldType, elementKey = 'fld-wrp') => Object.keys(editorConfig[fieldType][elementKey]?.properties || {})
 
 export const styleClasses = {
   logo: ['logo'],
@@ -394,7 +394,7 @@ export const styleClasses = {
   showFileList: ['files-list', 'file-wrpr', 'cross-btn', 'cross-btn:hover'],
   showFilePreview: ['file-preview'],
   showFileSize: ['file-size'],
-  otherOptions: ['other-inp-wrp', 'other-inp', 'other-inp:focus', 'other-inp:hover']
+  otherOptions: ['other-inp-wrp', 'other-inp', 'other-inp:focus', 'other-inp:hover'],
 }
 
 export const iconElementLabel = {
@@ -936,7 +936,7 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'file-details': 'files-list .file-details',
     'file-title': 'files-list .file-title',
     'file-size': 'files-list .file-size',
-    'cross-btn': 'files-list .cross-btn'
+    'cross-btn': 'files-list .cross-btn',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
