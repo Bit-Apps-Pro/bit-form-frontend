@@ -7,8 +7,7 @@ import {
   $builderHookStates,
   $colorScheme,
   $fields,
-  $layouts,
-  $selectedFieldId
+  $layouts
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
@@ -51,7 +50,6 @@ export default function FormBuilderHistory() {
   const setThemeVars = useSetRecoilState($themeVars)
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const rowVirtualizer = useRef(null)
   const { active, histories } = builderHistory
 

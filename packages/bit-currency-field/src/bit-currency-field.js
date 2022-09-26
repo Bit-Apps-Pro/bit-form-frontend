@@ -45,10 +45,12 @@ export default class BitCurrencyField {
     inputFormatOptions: {
       formatter: 'browser',
       showCurrencySymbol: true,
+      decimalSeparator: '.',
     },
     valueFormatOptions: {
       formatter: 'browser',
       showCurrencySymbol: true,
+      decimalSeparator: '.',
     },
     attributes: {},
     classNames: {},
@@ -131,7 +133,6 @@ export default class BitCurrencyField {
   #handleCurrencyInputBlur() {
     this.#setAttribute(this.#currencyInputElm, 'type', 'text')
     const numValue = Number(this.#currencyInputElm.dataset.numValue)
-    console.log('numvalue', numValue)
 
     if (!numValue || Number.isNaN(numValue)) {
       this.#currencyInputElm.value = ''

@@ -194,7 +194,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'select',
-        lbl: __('Drop-Down'),
+        lbl: __('Drop Down'),
         mul: false,
         phHide: true,
         ph: 'Select a Option',
@@ -290,7 +290,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'advanced-file-up',
-        lbl: __('File Upload'),
+        lbl: __('Advanced File Upload'),
         upBtnTxt: 'Attach File',
         valid: {},
         config: {
@@ -327,7 +327,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'country',
-        lbl: __('Select Country'),
+        lbl: __('Country Field'),
         mul: false,
         phHide: true,
         ph: 'Select a Country',

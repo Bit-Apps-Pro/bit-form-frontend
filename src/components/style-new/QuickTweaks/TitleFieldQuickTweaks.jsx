@@ -4,6 +4,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../../GlobalStates/StylesState'
+import DirectionIcn from '../../../Icons/DirectionIcn'
 import TxtAlignCntrIcn from '../../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../../Icons/TxtAlignRightIcn'
@@ -56,16 +57,16 @@ export default function TitleFieldQuickTweaks() {
           defaultActive={position}
         />
       </ThemeStylePropertyBlock>
-      <ThemeStylePropertyBlock label="Flex Direction">
+      <ThemeStylePropertyBlock label="Layout Direction">
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
           className={css(style.segment)}
           options={[
-            { icn: <TxtAlignLeftIcn size="17" />, label: 'column', tip: 'Vertical' },
-            { icn: <TxtAlignCntrIcn size="17" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
-            { icn: <TxtAlignRightIcn size="17" />, label: 'row', tip: 'Horizontal' },
-            { icn: <TxtAlignRightIcn size="17" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
+            { icn: <DirectionIcn size="17" dir="down" />, label: 'column', tip: 'Vertical' },
+            { icn: <DirectionIcn size="17" dir="up" />, label: 'column-reverse', tip: 'Vertical  Reverse' },
+            { icn: <DirectionIcn size="17" dir="right" />, label: 'row', tip: 'Horizontal' },
+            { icn: <DirectionIcn size="17" dir="left" />, label: 'row-reverse', tip: 'Horizontal Reverse' },
           ]}
           onChange={val => flexDirectionHandle(val, 'flex-direction')}
           defaultActive={flex}
