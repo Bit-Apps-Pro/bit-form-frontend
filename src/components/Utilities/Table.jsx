@@ -9,7 +9,6 @@ import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import ChevronLeftDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'
 import CopyIcn from '../../Icons/CopyIcn'
 import EyeOffIcon from '../../Icons/EyeOffIcon'
@@ -18,13 +17,12 @@ import SortIcn from '../../Icons/SortIcn'
 import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
-import TableLoader2 from '../Loaders/TableLoader2'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
 import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
-import ut from '../../styles/2.utilities'
 import Select from './Select'
+import TableLoader from '../Loaders/TableLoader'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -360,7 +358,7 @@ function Table(props) {
                 </div>
               ))}
             </div>
-            {props.loading ? <TableLoader2 /> : (
+            {props.loading ? <TableLoader /> : (
               <div className="tbody" {...getTableBodyProps()}>
                 {page.map(row => {
                   prepareRow(row)
@@ -432,6 +430,7 @@ function Table(props) {
 
           <Select
             size="sm"
+            w={170}
             value={pageSize}
             onChange={e => {
               setPageSize(Number(e.target.value))
@@ -440,11 +439,11 @@ function Table(props) {
               }
             }}
             options={[
-              { label: 10, value: 10 },
-              { label: 20, value: 20 },
-              { label: 30, value: 30 },
-              { label: 40, value: 40 },
-              { label: 50, value: 50 },
+              { label: 'Showing 10', value: 10 },
+              { label: 'Showing 20', value: 20 },
+              { label: 'Showing 30', value: 30 },
+              { label: 'Showing 40', value: 40 },
+              { label: 'Showing 50', value: 50 },
             ]}
           />
 

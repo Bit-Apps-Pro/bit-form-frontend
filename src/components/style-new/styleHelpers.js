@@ -376,8 +376,8 @@ export const styleClasses = {
   hlpTxt: ['hlp-txt'],
   hlpPreIcn: ['hlp-txt-pre-i'],
   hlpSufIcn: ['hlp-txt-suf-i'],
-  prefixIcn: ['pre-i'],
-  suffixIcn: ['suf-i'],
+  prefixIcn: ['pre-i', 'fld:focus ~ .$fk-pre-i'],
+  suffixIcn: ['suf-i', 'fld:focus ~ .$fk-suf-i'],
   fileSelectStatus: ['file-select-status'],
   maxSizeLbl: ['max-size-lbl'],
   fileWpr: ['file-wrpr'],
@@ -420,7 +420,10 @@ export const iconElementLabel = {
 }
 
 const deleteStyles = (obj, clsArr, fk) => {
-  clsArr && clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+  clsArr && clsArr.forEach(cls => {
+    const replaceWithFk = cls.replace(/\$fk/gi, fk)
+    delete obj.fields?.[fk]?.classes?.[`.${fk}-${replaceWithFk}`]
+  })
 }
 const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
@@ -535,7 +538,8 @@ const breakpointAndColorScheme = {
 
 const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle }) => {
   styleClasses[element].forEach(cls => {
-    const clsNam = `.${fk}-${cls}`
+    const replaceWithFk = cls.replace(/\$fk/gi, fk)
+    const clsNam = `.${fk}-${replaceWithFk}`
     const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
     if (!fieldStyle[clsNam]) return
     assignNestedObj(drftAllStyles, path, fieldStyle[clsNam])
@@ -772,8 +776,8 @@ export const setIconFilterValue = (iconType, fldKey) => {
   }
 }
 
-export const isStyleExist = (styles, fieldKey, classKey) => {
-  if (styles.fields[fieldKey].classes[`.${fieldKey}-${classKey}`]) return true
+export const isStyleExist = (styles, fieldKey, classKeys) => {
+  if (styles.fields[fieldKey].classes[`.${fieldKey}-${classKeys[0]}`]) return true
   return false
 }
 

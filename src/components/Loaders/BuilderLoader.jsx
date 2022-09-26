@@ -11,15 +11,9 @@ const BuilderLoader = () => {
           <div title="Loading..." className={`loader ${css({ w: 89, h: 16 })}`} />
           <div title="Loading..." className={`loader ${css({ w: 16, h: 16, brs: 16 })}`} />
         </div>
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
-        <div title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
+        {Array(9).fill(0).map((_, i) => (
+          <div key={`bl=${i + 3}`} title="Loading..." className={`loader ${css({ w: 143, h: 30, brs: 8 }, ut.mb2)}`} />
+        ))}
       </div>
       <div className={css({ w: '65%' })}>
         <div title="Loading..." className={css(ut.flxcb, ut.mb2)}>

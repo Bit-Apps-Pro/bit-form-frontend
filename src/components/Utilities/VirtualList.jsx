@@ -33,6 +33,7 @@ export default function VirtualList({ virtualizerRef, itemCount, itemSizes, over
           width: '100%',
           position: 'relative',
           overflow: 'hidden',
+          minHeight: virtualizerRef.current.getVirtualItems().length && '70px',
         }}
       >
         {virtualizerRef.current.getVirtualItems().map(({ index, size, start }) => (

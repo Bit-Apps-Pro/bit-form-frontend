@@ -163,7 +163,7 @@ function Workflow({ formID }) {
           >
             <div className="workflow-grp d-flx mt-2">
               <Accordions
-                customTitle={<DragHandle className="mr-1" />}
+                customTitle={<DragHandle className="workflow-drg-handle mr-1 flx" />}
                 title={`${lgcGrp.title}`}
                 header={(
                   <small className="f-right txt-dp mr-4">

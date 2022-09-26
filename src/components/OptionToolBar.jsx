@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-import { useState } from 'react'
+import loadable from '@loadable/component'
+import { useState, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -20,16 +20,18 @@ import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import BuilderSettings from './BuilderSettings'
-import CustomCodeEditor from './CompSettings/CustomCodeEditor'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
 import FormBuilderHistory from './FormBuilderHistory'
+import CustomCodeEditorLoader from './Loaders/CustomCodeEditorLoader'
 import { removeUnuseStylesAndUpdateState } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
-export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
+const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
+
+export default function OptionToolBar({ setResponsiveView, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
@@ -43,7 +45,23 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const selectedFldId = useRecoilValue($selectedFieldId)
   const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
   const navigate = useNavigate()
+  const [defaultRightPanel, setDefaultRightPanel] = useState('fld-settings')
   const path = `/form/builder/${formType}/${formID}`
+
+  useEffect(() => {
+    if (rightBar.match(/fields-list|field-settings/)) {
+      if (flags.styleMode || flags.inspectMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
+      }
+      setDefaultRightPanel('fld-settings')
+    }
+    if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
+      if (!flags.styleMode) {
+        setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
+      }
+      setDefaultRightPanel('theme-customize')
+    }
+  }, [rightBar])
 
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
@@ -82,21 +100,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
 
   const inspectModeButtonHandler = () => {
     setFlags(prvFlags => ({ ...prvFlags, inspectMode: !prvFlags.inspectMode }))
-  }
-
-  const handleRightPanelDefaultActive = () => {
-    if (rightBar.match(/fields-list|field-settings/)) {
-      if (flags.styleMode || flags.inspectMode) {
-        setFlags(prvFlags => ({ ...prvFlags, styleMode: false, inspectMode: false }))
-      }
-      return 'fld-settings'
-    }
-    if (rightBar.match(/themes|style|field-theme-customize|theme-customize/)) {
-      if (!flags.styleMode) {
-        setFlags(prvFlags => ({ ...prvFlags, styleMode: true }))
-      }
-      return 'theme-customize'
-    }
   }
 
   const handleColorSchemeSwitch = () => {
@@ -141,38 +144,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           )}
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
-          {/* <Tip msg="Small Screen View">
-            <button
-              data-testid="bp-sm"
-              onClick={() => setResponsiveView('sm')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`}
-              type="button"
-            >
-              <MobileIcon size={23} />
-            </button>
-          </Tip>
-          <Tip msg="Medium Screen View">
-            <button
-              data-testid="bp-md"
-              onClick={() => setResponsiveView('md')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'md' && 'active'}`}
-              type="button"
-            >
-              <TabletIcon size={22} />
-
-            </button>
-          </Tip>
-          <Tip msg="Large Screen View">
-            <button
-              data-testid="bp-lg"
-              onClick={() => setResponsiveView('lg')}
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`}
-              type="button"
-            >
-              <LaptopIcn size={29} stroke={1.6} />
-            </button>
-          </Tip> */}
-
           <StyleSegmentControl
             width={130}
             wideTab
@@ -205,7 +176,12 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             onShow={() => setResponsiveMenu(true)}
             onHide={() => setResponsiveMenu(false)}
           >
-            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`} type="button"><EllipsisIcon size="38" /></button>
+            <button
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`}
+              type="button"
+            >
+              <EllipsisIcon size="38" />
+            </button>
             <BreakpointSizeControl />
           </Downmenu>
 
@@ -226,25 +202,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
 
           <div className={css(OptionToolBarStyle.border_right)} />
 
-          <div className={css([ut.flxc])}>
-            {/* <Tip msg="Fields Settings">
-              <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
-                activeClassName="active"
-                to={`/form/builder/${formType}/${formID}/fields-list`}
-              >
-                <EditIcn size="21" />
-              </NavLink>
-            </Tip>
-            <Tip msg="Theme Customization">
-              <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
-                activeClassName="active"
-                to={`/form/builder/${formType}/${formID}/themes`}
-              >
-                <BrushIcn size="20" />
-              </NavLink>
-            </Tip> */}
+          <div className={css(ut.flxc)}>
             <Tip msg="Custom Styling">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
@@ -271,24 +229,14 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               width={180}
               show={['icn']}
               tipPlace="bottom"
-              defaultActive={handleRightPanelDefaultActive()}
+              defaultActive={defaultRightPanel}
               options={[
                 { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
                 { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },
               ]}
               onChange={handleRightPanel}
               wideTab
-            // className={css(ut.mr1)}
             />
-
-            {/* <Tip msg="Style render">
-              <SingleToggle
-                name="styleMood"
-                isChecked={flags.styleMode}
-                action={styleModeHandler}
-                id="style-mode"
-              />
-            </Tip> */}
           </div>
         </div>
       </div>
@@ -318,7 +266,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
         <Grow open={settingsModalTab === 'Builder Settings'}><BuilderSettings /></Grow>
         <Grow open={settingsModalTab === 'Custom Code'}><CustomCodeEditor /></Grow>
       </Modal>
-      <div className="theme-section" />
     </div>
   )
 }

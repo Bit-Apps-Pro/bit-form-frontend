@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
 import produce from 'immer'
-import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { Route, Routes, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
@@ -25,15 +25,12 @@ import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
-import FormSettings from './FormSettings'
 
-// eslint-disable-next-line import/no-cycle
-const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
+const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
-
-export const FormSaveContext = createContext(null)
-export const ShowProModalContext = createContext(null)
+const FormSettings = loadable(() => import('./FormSettings'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 function FormDetails() {
   let componentMounted = true
@@ -151,10 +148,8 @@ function FormDetails() {
 
     // TODO: reset all states of style, themeVars & themeColors
   }
-  const a = useParams()
-  const setNewFormInitialStates = () => {
-    console.log('=====', a, formType, newFormId)
 
+  const setNewFormInitialStates = () => {
     const { name,
       fields,
       layouts,
@@ -229,7 +224,7 @@ function FormDetails() {
     onMount()
     return () => {
       componentMounted = false
-      onUnmount()
+      // onUnmount() // disable for now because its causing hot reload prblm
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -394,17 +389,16 @@ function FormDetails() {
             page="responses"
             formType
             formID
-            render={
-              !isLoading ? (
-                <FormEntries
-                  allResp={allResponse}
-                  setAllResp={setAllResponse}
-                  integrations={integrations}
-                />
-              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
-            }
+            render={(
+              <FormEntries
+                isLoading={isLoading}
+                allResp={allResponse}
+                setAllResp={setAllResponse}
+                integrations={integrations}
+              />
+            )}
           />
-          <RouteByParams page="builder" formType formID render={<FormBuilderHOC isLoading={isLoading} />} />
+          <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
           <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />
           {/* <Routes> */}
           {/* <Route path=":rightBar/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}

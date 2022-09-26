@@ -1,20 +1,33 @@
-import ContentLoader from 'react-content-loader'
+import { useFela } from 'react-fela'
 
 export default function IntegLoader() {
+  const { css } = useFela()
   return (
-    <ContentLoader
-      speed={0.5}
-      width={800}
-      height={270}
-      viewBox="0 0 800 270"
-      backgroundColor="#f7f7f7"
-      foregroundColor="#ecebeb"
-    >
-      <rect x="0" y="8" rx="5" ry="5" width="153" height="32" />
-      <rect x="1" y="64" rx="16" ry="16" width="166" height="200" />
-      <rect x="184" y="64" rx="16" ry="16" width="166" height="200" />
-      <rect x="366" y="62" rx="16" ry="16" width="166" height="200" />
-      <rect x="549" y="62" rx="16" ry="16" width="166" height="200" />
-    </ContentLoader>
+    <div className={css(cs.wrp)}>
+      <div className={`${css(cs.titl)} loader`} />
+      <div className={`${css(cs.t_wrp)} flx`}>
+        {Array(4).fill(0).map((_, i) => (
+          <div key={`tb-${i + 3}`} className={`${css(cs.mnu)} loader`} />
+        ))}
+      </div>
+    </div>
   )
+}
+const cs = {
+  wrp: {
+    mx: 10,
+    my: 10,
+  },
+  titl: {
+    w: 170,
+    h: 28,
+    brs: 6,
+  },
+  t_wrp: { my: 20 },
+  mnu: {
+    h: 145,
+    w: 240,
+    brs: 8,
+    mr: 10,
+  },
 }

@@ -15,10 +15,9 @@ const style = {
     mr: 20,
   },
   integPlus: {
-    fs: 100,
-    ta: 'center',
+    flx: 'center',
     curp: 1,
-    lh: 1.3,
+    h: 125,
     cr: 'var(--b-49-79)',
     ':hover': { cr: 'var(--blue)' },
   },

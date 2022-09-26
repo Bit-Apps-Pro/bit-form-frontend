@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
+import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
@@ -290,7 +291,7 @@ function Integrations() {
                 </Modal>
 
                 <div role="button" className={css(style.itegCard)} tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
-                  <div className={css(style.integPlus)}>+</div>
+                  <div className={css(style.integPlus)}><PlusIcn size={80} /></div>
                 </div>
 
                 {integrations.map((inte, i) => (

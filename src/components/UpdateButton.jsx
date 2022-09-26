@@ -5,8 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  $additionalSettings,
+import { $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
   $builderHookStates,
@@ -27,8 +26,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows
-} from '../GlobalStates/GlobalStates'
+  $workflows } from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -228,7 +226,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const allThemeColors = {
       lightThemeColors,
       darkThemeColors,
-    } 
+    }
     const allThemeVars = {
       lgLightThemeVars,
       lgDarkThemeVars,

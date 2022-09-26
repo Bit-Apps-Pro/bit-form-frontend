@@ -11,8 +11,13 @@ import 'ace-builds/src-min-noconflict/theme-tomorrow'
 import 'ace-builds/src-min-noconflict/theme-twilight'
 // extensions
 import 'ace-builds/src-min-noconflict/ext-language_tools'
-import 'ace-builds/src-noconflict/ext-beautify'
-import 'ace-builds/webpack-resolver'
+import 'ace-builds/src-min-noconflict/ext-emmet'
+import 'ace-builds/src-min-noconflict/ext-searchbox'
+
+// both extension occur error in build time
+// import 'ace-builds/src-min-noconflict/ext-beautify'
+// import 'ace-builds/webpack-resolver'
+
 import { useEffect, useRef, useState } from 'react'
 import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
@@ -120,7 +125,7 @@ function CustomCodeEditor() {
     value: customCodes[editorTab] || '',
     onChange: (newValue) => { handleEditorValue(newValue) },
     height: '330px',
-    width: '99%',
+    width: '100%',
     placeholder: 'Write your code here...',
     setOptions: editorOptions,
     ref: addToRefs,
@@ -161,7 +166,6 @@ function CustomCodeEditor() {
           />
         </div>
         <div className={css(ut.flxc)}>
-          {/* <span>add snippets</span> */}
           <Downmenu place="bottom-end">
             <button
               data-testid="titl-mor-opt-btn"
@@ -221,7 +225,7 @@ function CustomCodeEditor() {
       </Grow>
       <div className={css(ut.flxb, ut.mt1, { jc: 'between' })}>
         <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
-          <CheckBoxMini title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
+          <CheckBoxMini className={css(ut.mr2)} title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
           {enableEditor === 'on' && (
             <>
               <Select
@@ -261,7 +265,6 @@ const style = {
     fw: 800,
     px: 15,
     py: 8,
-    mr: 8,
     cr: 'var(--white-100)',
     ':hover': { bd: 'var(--b-36)' },
   },
@@ -280,12 +283,12 @@ const options = {
   enableEmmet: true,
   enableMultiselect: true,
   highlightSelectedWord: true,
-  fontSize: 16,
+  fontSize: 15,
   useSoftTabs: true,
   showPrintMargin: true,
   showGutter: true,
   highlightActiveLine: true,
-  wrapEnabled: false,
+  // wrapEnabled: false,
 }
 
 export default CustomCodeEditor

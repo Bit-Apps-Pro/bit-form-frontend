@@ -1,38 +1,41 @@
+import loadable from '@loadable/component'
 import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderRightPanelScroll, $selectedFieldId, $unsplashMdl } from '../../GlobalStates/GlobalStates'
+import { $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
-import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
-import ThemeCustomize from '../style-new/ThemeCustomize'
+import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
+import StyleCustomizeLoader from '../Loaders/StyleCustomizeLoader'
 import ThemeGallary from '../style-new/ThemeGallary'
 import Modal from '../Utilities/Modal'
-import FieldSettings from './FieldSettings'
 import FieldsList from './FieldsList'
-import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
-import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
-import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
+
+const DropdownStyleEditors = loadable(() => import('./StyleCustomize/DropdownStyleEditors'), { fallback: <StyleCustomizeLoader /> })
+const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEditor'), { fallback: <StyleCustomizeLoader /> })
+const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fallback: <StyleCustomizeLoader /> })
+const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
+const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
+const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()
   const { formID, '*': rightPanel } = useParams()
-  const [rightBar, , fieldKey] = rightPanel.split('/')
+  const rightBar = rightPanel.split('/')[0]
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
 
   useEffect(() => {
-    setSelectedFieldId(fieldKey)
+    // setSelectedFieldId(fieldKey)
     const settingsScroll = select('.settings')?.firstChild?.firstChild
     if (settingsScroll && settingsScroll.scrollTop > 0) settingsScroll.scrollTop = 0
-  }, [fieldKey, rightBar])
+  }, [rightBar])
 
   const onSettingScroll = ({ target: { scrollTop } }) => (scrollTop > 20 ? setScrollTop(true) : setScrollTop(false))
 
