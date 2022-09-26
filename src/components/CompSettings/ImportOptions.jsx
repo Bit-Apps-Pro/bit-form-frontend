@@ -18,6 +18,10 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
+
+  const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt.value.replace(/,/g, '_') }))
+
+
   const generateNewOptions = () => {
     if (!isPro) return []
     const { dataSrc } = importOpts
@@ -61,7 +65,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
   }
 
   const handleImport = () => {
-    const opts = generateNewOptions()
+    const opts = replaceAllValsCommas(generateNewOptions())
 
     if (importOpts?.dataSrc === 'user') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'terms') fieldData.customType = importOpts?.fieldObject
