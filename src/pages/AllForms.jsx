@@ -250,7 +250,7 @@ function AllFroms() {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Forms', 'bitform')}</h2>
-            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">{__('Create From', 'bitform')}</button>
+            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">{__('Create Form', 'bitform')}</button>
           </div>
           <div className="forms">
             <Table
