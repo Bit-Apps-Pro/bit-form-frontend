@@ -7,7 +7,7 @@ const FieldStyle = {
     brs: 8,
     fw: 600,
   },
-
+  addBtnSide: { ml: 5, mt: 5, tm: 'rotate(45deg)' },
   logoLabel: {
     flx: 'center-between',
     ml: '0px !important',
@@ -63,16 +63,27 @@ const FieldStyle = {
     fw: 500,
     mt: 10,
     '& .msl': {
-      h: '35px!important',
-      '& .msl-input': { p: 1 },
+      h: '32px!important',
+      bd: 'var(--b-79-96) !important',
+      b: 0,
+      '&.msl-active-up': {
+        'border-bottom-left-radius': 0,
+        'border-bottom-right-radius': 0,
+        'border-top-left-radius': '8px',
+        'border-top-right-radius': '8px',
+      },
+      '& .msl-input': { p: 3, cr: '#2c3338' },
     },
-    '&.msl-vars': { w: '99% !important' },
+    '&.msl-vars': { w: '99% !important', '--font-size': '14px' },
     '&.msl-wrp > .msl-options': {
       pn: 'relative !important',
       'border-top-left-radius': 0,
       'border-top-right-radius': 0,
+      '& div > .msl-option': {
+        p: '4px 4px',
+      }
     },
-    '&.msl-wrp > .msl-active-up': {
+    '& > .msl-wrp > .msl-active-up': {
       brs: 8,
       bblr: '0 !important',
       bbrr: '0 !important',

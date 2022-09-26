@@ -209,10 +209,10 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
 
-      [`.${fk}-opt-search-input::-webkit-search-decoration,
-    .${fk}-opt-search-input::-webkit-search-cancel-button,
-    .${fk}-opt-search-input::-webkit-search-results-button,
-    .${fk}-opt-search-input::-webkit-search-results-decoration`]: { display: 'none' },
+      [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
+      [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
+      [`.${fk}-opt-search-input::-webkit-search-results-button`]: { display: 'none' },
+      [`.${fk}-opt-search-input::-webkit-search-results-decoration`]: { display: 'none' },
 
       [`.${fk}-search-clear-btn`]: {
         display: 'none',
