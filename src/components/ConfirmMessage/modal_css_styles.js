@@ -62,14 +62,14 @@ export default function modalCssStyles(formID, msgId, position, animation, paddi
 
     },
 
-    [`.active .msg-content-${msgId}`]: {
+    [`.msg-container-${msgId}.active .msg-content-${msgId}`]: {
       ...animation === 'fade' && fade(position).activeMsgContent,
       ...animation === 'scale' && scale(position).activeMsgContent,
       ...animation === 'slide-down' && modalSlide(position, 'down').activeMsgContent,
       ...animation === 'slide-up' && modalSlide(position, 'up').activeMsgContent,
 
     },
-    [`.deactive .msg-content-${msgId}`]: {
+    [`.msg-container-${msgId}.deactive .msg-content-${msgId}`]: {
       ...animation === 'fade' && fade(position).deactiveMsgContent,
       ...animation === 'scale' && scale(position).deactiveMsgContent,
       ...animation === 'slide-down' && modalSlide(position, 'down').deactiveMsgContent,

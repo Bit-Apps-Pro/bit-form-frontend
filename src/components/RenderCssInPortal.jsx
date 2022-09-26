@@ -1367,7 +1367,7 @@ export default function RenderCssInPortal() {
 }
 
 .tippy-box[data-theme~=light-border][data-placement^=top]>.tippy-svg-arrow>svg {
-  top: 16px
+  top: 0px
 }
 
 .tippy-box[data-theme~=light-border][data-placement^=top]>.tippy-svg-arrow:after {
