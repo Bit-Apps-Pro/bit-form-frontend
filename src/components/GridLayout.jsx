@@ -6,14 +6,13 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import { memo, useContext, useEffect, useRef, useState } from 'react'
+import { memo, useContext, useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import {
-  $additionalSettings,
+import { $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -23,15 +22,12 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId
-} from '../GlobalStates/GlobalStates'
+  $uniqueFieldId } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import {
-  addNewItemInLayout,
+import { addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
@@ -44,23 +40,21 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
-} from '../Utils/FormBuilderHelper'
+  removeFormUpdateError } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
-import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
+import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
-// user will create form in desktop and it will ok for all device
-// user may check all breakpoint is that ok ?
-// user may chnage size and pos in different breakpoint
+const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
 const BUILDER_PADDING = { all: 5 }
 const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
@@ -72,8 +66,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
-  const [layouts, setLayouts] = useRecoilState($layouts)
-  const [rootLayouts, setRootLayouts] = useState(layouts)
+  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const draggingField = useRecoilValue($draggingField)
@@ -629,7 +623,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
               {!styleMode ? (
                 <ResponsiveReactGridLayout
-                  // style={{ background: 'purple' }}
                   width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
@@ -667,19 +660,21 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                       data-testid={`${layoutItem.i}-fld-blk`}
                     >
-                      <FieldBlockWrapper
-                        {...{
-                          layoutItem,
-                          removeLayoutItem,
-                          cloneLayoutItem,
-                          fields,
-                          formID,
-                          navigateToFieldSettings,
-                          navigateToStyle,
-                          handleContextMenu,
-                          resizingFld,
-                        }}
-                      />
+                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                        <FieldBlockWrapper
+                          {...{
+                            layoutItem,
+                            removeLayoutItem,
+                            cloneLayoutItem,
+                            fields,
+                            formID,
+                            navigateToFieldSettings,
+                            navigateToStyle,
+                            handleContextMenu,
+                            resizingFld,
+                          }}
+                        />
+                      </Suspense>
                     </div>
                   ))}
                 </ResponsiveReactGridLayout>
@@ -696,18 +691,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                     >
-                      <FieldBlockWrapper
-                        {...{
-                          layoutItem,
-                          removeLayoutItem,
-                          cloneLayoutItem,
-                          fields,
-                          formID,
-                          navigateToFieldSettings,
-                          navigateToStyle,
-                          resizingFld,
-                        }}
-                      />
+                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                        <FieldBlockWrapper
+                          {...{
+                            layoutItem,
+                            removeLayoutItem,
+                            cloneLayoutItem,
+                            fields,
+                            formID,
+                            navigateToFieldSettings,
+                            navigateToStyle,
+                            resizingFld,
+                          }}
+                        />
+                      </Suspense>
                     </div>
                   ))}
                 </div>

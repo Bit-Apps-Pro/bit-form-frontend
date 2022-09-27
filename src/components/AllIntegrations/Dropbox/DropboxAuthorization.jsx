@@ -2,7 +2,9 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
 
 export default function DropboxAuthorization({ formID, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
@@ -38,7 +40,7 @@ export default function DropboxAuthorization({ formID, dropboxConf, setDropboxCo
         title={tutorialLinks.dropbox.title}
         youTubeLink={tutorialLinks.dropbox.link}
       />
-      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dropboxConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
       <small className="d-blk mt-3">

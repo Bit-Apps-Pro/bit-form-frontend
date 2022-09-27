@@ -22,9 +22,9 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
     <>
       <br />
       <br />
-      <b className="wdt-200 d-in-b">{__('Actions:', 'bit-integrations')}</b>
+      <b className="wdt-200 d-in-b">{__('Actions:')}</b>
       <select onChange={handleInput} name="mainAction" value={sendFoxConf.mainAction} className="btcd-paper-inp w-5">
-        <option value="">{__('Select Actions', 'bit-integrations')}</option>
+        <option value="">{__('Select Actions')}</option>
         {
           sendFoxConf.allActions && sendFoxConf.allActions.map(({ key, label }) => (
             <option key={key} value={key}>
@@ -46,17 +46,17 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
         />
       )}
 
-      { sendFoxConf.mainAction === '1' && (
+      {sendFoxConf.mainAction === '1' && (
         <>
 
-          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+          <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-            <div className="txt-dp"><b>{__('SendFox List Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('SendFox List Fields')}</b></div>
           </div>
 
-          { sendFoxConf?.field_map_list.map((itm, i) => (
+          {sendFoxConf?.field_map_list.map((itm, i) => (
             <SendFoxListFieldMap
               key={`rp-m-${i + 9}`}
               i={i}
@@ -71,10 +71,10 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
       )}
 
       {/* create Conatact */}
-      { sendFoxConf.mainAction === '2' && (
+      {sendFoxConf.mainAction === '2' && (
         <>
           <div className="d-flx">
-            <b className="wdt-200 d-in-b mt-3 mt-i-3">{__('All List:', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b mt-3 mt-i-3">{__('All List:')}</b>
             <MultiSelect
               options={organizedList}
               className="btcd-paper-drpdwn w-5"
@@ -82,15 +82,15 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
               onChange={val => onListHandler(val)}
               customValue
             />
-            <button onClick={() => fetchAllList(sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh SendFox List', 'bit-integrations')}'`, height: '35px' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button onClick={() => fetchAllList(sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh SendFox List')}'`, height: '35px' }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           <br />
 
-          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+          <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-            <div className="txt-dp"><b>{__('SendFox Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('SendFox Fields')}</b></div>
           </div>
 
           {sendFoxConf?.listId && sendFoxConf?.field_map.map((itm, i) => (
@@ -106,21 +106,21 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
           ))}
           <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sendFoxConf.field_map.length, sendFoxConf, setSendFoxConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
         </>
-      ) }
+      )}
 
       {/* unsubscribe */}
 
-      { sendFoxConf.mainAction === '3' && (
+      {sendFoxConf.mainAction === '3' && (
         <>
 
-          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+          <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-            <div className="txt-dp"><b>{__('SendFox Unsubscribe Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+            <div className="txt-dp"><b>{__('SendFox Unsubscribe Fields')}</b></div>
           </div>
 
-          { sendFoxConf?.field_map_unsubscribe.map((itm, i) => (
+          {sendFoxConf?.field_map_unsubscribe.map((itm, i) => (
             <SendFoxUnsubscribeFieldMap
               key={`rp-m-${i + 9}`}
               i={i}

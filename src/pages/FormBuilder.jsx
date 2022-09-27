@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
+import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
+import { createRef, useCallback, useEffect, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -9,10 +10,8 @@ import useSWR from 'swr'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
-import GridLayout from '../components/GridLayout'
-import StyleLayers from '../components/LeftBars/StyleLayers'
-import ToolBar from '../components/LeftBars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import ToolbarLoader from '../components/Loaders/ToolbarLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
@@ -28,6 +27,12 @@ import css2json from '../Utils/css2json'
 import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
+import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
+import { JCOF } from '../Utils/globalHelpers'
+
+const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
+const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
+const GridLayout = loadable(() => import('../components/GridLayout'), { fallback: <GridLayoutLoader /> })
 
 const styleReducer = (v1Styles, action) => {
   if (action.brkPoint === 'lg') {
@@ -53,15 +58,15 @@ const styleReducer = (v1Styles, action) => {
   return v1Styles
 }
 
-const LEFT_BAR_WIDTH = 180
-const RIGHT_BAR_WIDTH = 300
+const LEFT_MENU_WIDTH = 180
+const RIGHT_MENU_WIDTH = 300
 const SPLIT_BAR = 8
-const BUILDER_WIDTH = window.innerWidth - LEFT_BAR_WIDTH - RIGHT_BAR_WIDTH - (SPLIT_BAR * 2)
+const BUILDER_WIDTH = window.innerWidth - LEFT_MENU_WIDTH - RIGHT_MENU_WIDTH - (SPLIT_BAR * 2)
 
-const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
+const FormBuilder = ({ isLoading }) => {
   const newFormId = useRecoilValue($newFormId)
+  const { element, fieldKey, formType, formID: pramsFormId } = useParams()
   const isNewForm = formType !== 'edit'
-  const { element, fieldKey } = useParams()
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
@@ -113,9 +118,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
     if (isV2Form && !isNewForm) {
       const { themeVars, themeColors, style: oldAllStyles } = oldStyles
-      setAllThemeColors(themeColors)
-      setAllThemeVars(themeVars)
-      setAllStyles(oldAllStyles)
+      setAllThemeColors(JCOF.parse(themeColors))
+      setAllThemeVars(JCOF.parse(themeVars))
+      setAllStyles(JCOF.parse(oldAllStyles))
 
       setSavedStylesAndVars({
         allThemeColors: themeColors,
@@ -158,7 +163,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   useEffect(() => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : LEFT_BAR_WIDTH
+    const leftBarWidth = toolbarOff ? 50 : LEFT_MENU_WIDTH
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -285,7 +290,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : LEFT_BAR_WIDTH
+    const leftBarWidth = toolbarOff ? 50 : LEFT_MENU_WIDTH
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -354,7 +359,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       >
         <Section
           className="tool-sec"
-          defaultSize={showToolBar ? 0 : LEFT_BAR_WIDTH}
+          defaultSize={showToolBar ? 0 : LEFT_MENU_WIDTH}
         >
           {styleMode ? <StyleLayers /> : (
             <ToolBar
@@ -396,7 +401,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
         <Bar className="bar bar-r" />
 
-        <Section id="settings-menu" defaultSize={RIGHT_BAR_WIDTH} minSize={100}>
+        <Section id="settings-menu" defaultSize={RIGHT_MENU_WIDTH} minSize={100}>
           <BuilderRightPanel
             brkPoint={brkPoint}
             style={styleProvider()}
@@ -420,9 +425,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       </ConfirmModal>
     </>
   )
-})
-
-export default function FormBuilderHOC({ isLoading }) {
-  const { formType, formID } = useParams()
-  return <FormBuilder {...{ formType, formID, isLoading }} />
 }
+
+export default FormBuilder

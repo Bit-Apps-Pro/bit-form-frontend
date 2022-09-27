@@ -5,15 +5,18 @@ export default function RenderCssInPortal() {
   const styled = { div([str]) { return str } }
 
   useEffect(() => {
-    document
-      .getElementById('bit-grid-layout')
-      ?.contentWindow
-      ?.document
-      .head
-      .appendChild(
-        document.importNode(select('#bf-font'))
-        || document.createElement('div'),
-      )
+    const font1 = select('#bf-font-0-css')
+    const font2 = select('#bf-font-1-css')
+
+    if (font1 && font2) {
+      document
+        .getElementById('bit-grid-layout')
+        ?.contentWindow
+        ?.document
+        .head
+        .appendChild(document.importNode(font1))
+        .appendChild(document.importNode(font2))
+    }
   }, [])
 
   const filepondCSS = styled.div`
@@ -1367,7 +1370,7 @@ export default function RenderCssInPortal() {
 }
 
 .tippy-box[data-theme~=light-border][data-placement^=top]>.tippy-svg-arrow>svg {
-  top: 16px
+  top: 0px
 }
 
 .tippy-box[data-theme~=light-border][data-placement^=top]>.tippy-svg-arrow:after {
@@ -1544,7 +1547,22 @@ arrow:after,
  .layout {
     overflow: visible;
  }
- 
+
+.loader{
+  background: rgb(255, 255, 255);
+  background-image: linear-gradient(90deg, #e9e9e9 0px, #f7f7f7 30px, #ebebeb 60px);
+  background-size: 200%;
+  animation: skeleton .6s infinite ease-out;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: calc(100%);
+  }
+  60%, 100% {
+    background-position: -100%;
+  }
+}
  
  .itm-focus {
     outline: 3px solid var(--b-50);
@@ -1851,7 +1869,7 @@ arrow:after,
       place-content: center;
    }
    .f-rob {font-family: "Roboto",sans-serif}
-    .f-mon {font-family:"Outfit", sans-serif !important; } 
+   .f-mon {font-family:"Outfit", sans-serif !important; } 
    .wdt-200 {width: 200px !important;}
    .curp{cursor:pointer}
    .us-n {
@@ -1903,7 +1921,6 @@ arrow:after,
     background-image: radial-gradient(#458ff7 0.5px, #fff 0.5px);
     background-size: 10px 10px;
     font-family: var(--g-font-family)
-  /* background-color: var(--white-100); */
 }
 /* hide default scrollbar in custom scrollbar */
 .layout-wrapper > div > div::-webkit-scrollbar {

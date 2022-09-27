@@ -1,6 +1,7 @@
 import { getRecoil } from 'recoil-nexus'
 import merge from 'deepmerge-alt'
 import { diff } from 'deep-object-diff'
+import { stringify, parse } from 'jcof'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
@@ -76,7 +77,7 @@ export const removeScript = (id, scriptInGrid = false) => {
 }
 
 export const select = (selector) => document.querySelector(selector)
-export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelector(selector)
+export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentDocument.querySelector(selector)
 export const selectAllInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelectorAll(selector)
 
 export function escapeHTMLEntity(string) {
@@ -259,4 +260,9 @@ export function getObjectDiff(...args) {
     }
   }
   return diffObj
+}
+
+export const JCOF = {
+  stringify,
+  parse,
 }

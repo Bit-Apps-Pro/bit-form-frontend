@@ -11,6 +11,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
+import DirectionIcn from '../../Icons/DirectionIcn'
 import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
@@ -36,7 +37,6 @@ import SmartTags from './SmartTags'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import DirectionIcn from '../../Icons/DirectionIcn'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function TitleSettings() {
@@ -194,6 +194,72 @@ function TitleSettings() {
           subtitle={fieldData.typ}
           fieldKey={fieldKey}
         />
+
+        <SimpleAccordion
+          id="titl-stng"
+          title={__('Title')}
+          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+          switching
+          tip="By disabling this option, the field title will be hidden"
+          tipProps={{ width: 250, icnSize: 17 }}
+          toggleAction={hideTitle}
+          toggleChecked={!fieldData?.titleHide}
+          open={!fieldData?.titleHide}
+          disable={fieldData?.titleHide}
+        >
+          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
+            <div className={css(style.title)}>
+              <label className={css(ut.fw500)}>Text</label>
+              <Downmenu>
+                <button
+                  data-testid="titl-mor-opt-btn"
+                  data-close
+                  type="button"
+                  className={css(style.btn)}
+                  unselectable="on"
+                  draggable="false"
+                  style={{ cursor: 'pointer' }}
+                  title={__('More Options')}
+                >
+                  <BdrDottedIcn size="16" />
+                </button>
+                <SmartTags fieldName="title" />
+              </Downmenu>
+            </div>
+            <AutoResizeInput
+              id="titl"
+              placeholder="Type title text here..."
+              name="title"
+              value={fieldData?.title}
+              changeAction={handleTitle}
+            />
+          </div>
+          <div className={css(ut.flxcb, ut.mt1)}>
+            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
+            <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
+              <select data-testid="titl-tag-slct" className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
+                {tagOptions.map((opt, index) => <option key={`opt-title-${index * 4}`} value={opt.value}>{opt.title}</option>)}
+              </select>
+            </div>
+          </div>
+          <FieldIconSettings
+            label="Leading Icon"
+            iconSrc={fieldData?.titlePreIcn}
+            styleRoute="title-pre-i"
+            setIcon={() => setIconModel('titlePreIcn')}
+            removeIcon={() => removeIcon('titlePreIcn')}
+          />
+          <FieldIconSettings
+            label="Trailing Icon"
+            iconSrc={fieldData?.titleSufIcn}
+            styleRoute="title-suf-i"
+            setIcon={() => setIconModel('titleSufIcn')}
+            removeIcon={() => removeIcon('titleSufIcn')}
+          />
+        </SimpleAccordion>
+
+        <FieldSettingsDivider />
+
         <SimpleAccordion
           id="sub-titl-stng"
           title={__('Sub Title')}
@@ -274,73 +340,6 @@ function TitleSettings() {
           setIcon={() => setIconModel('logo')}
           removeIcon={() => removeImage('logo')}
         />
-        <FieldSettingsDivider />
-        <SimpleAccordion
-          id="titl-stng"
-          title={__('Title')}
-          className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-          switching
-          tip="By disabling this option, the field title will be hidden"
-          tipProps={{ width: 250, icnSize: 17 }}
-          toggleAction={hideTitle}
-          toggleChecked={!fieldData?.titleHide}
-          open={!fieldData?.titleHide}
-          disable={fieldData?.titleHide}
-        >
-          <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
-            <div className={css(style.title)}>
-              <label className={css(ut.fw500)}>Text</label>
-              <Downmenu>
-                <button
-                  data-testid="titl-mor-opt-btn"
-                  data-close
-                  type="button"
-                  className={css(style.btn)}
-                  unselectable="on"
-                  draggable="false"
-                  style={{ cursor: 'pointer' }}
-                  title={__('More Options')}
-                >
-                  <BdrDottedIcn size="16" />
-                </button>
-                <SmartTags fieldName="title" />
-              </Downmenu>
-            </div>
-            <AutoResizeInput
-              id="titl"
-              placeholder="Type title text here..."
-              name="title"
-              value={fieldData?.title}
-              changeAction={handleTitle}
-            />
-          </div>
-          <div className={css(ut.flxcb, ut.mt1)}>
-            <span className={css(ut.fw500, ut.ml2)}>HTML Tag</span>
-            <div className={css(ut.flxcb, ut.mr2, ut.w3)}>
-              <select data-testid="titl-tag-slct" className={css(style.select)} value={fieldData?.titleTag} onChange={(e) => inputHandler(e.target.value, 'titleTag')}>
-                {tagOptions.map((opt, index) => <option key={`opt-title-${index * 4}`} value={opt.value}>{opt.title}</option>)}
-              </select>
-            </div>
-          </div>
-          <FieldIconSettings
-            label="Leading Icon"
-            iconSrc={fieldData?.titlePreIcn}
-            styleRoute="title-pre-i"
-            setIcon={() => setIconModel('titlePreIcn')}
-            removeIcon={() => removeIcon('titlePreIcn')}
-          />
-          <FieldIconSettings
-            label="Trailing Icon"
-            iconSrc={fieldData?.titleSufIcn}
-            styleRoute="title-suf-i"
-            setIcon={() => setIconModel('titleSufIcn')}
-            removeIcon={() => removeIcon('titleSufIcn')}
-          />
-        </SimpleAccordion>
-
-        <FieldSettingsDivider />
-
-
 
         <FieldSettingsDivider />
         <div className={css(style.section, style.main)}>

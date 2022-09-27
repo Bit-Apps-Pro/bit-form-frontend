@@ -40,7 +40,7 @@ export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteC
         title={tutorialLinks.mailerlite.title}
         youTubeLink={tutorialLinks.mailerlite.link}
       />
-      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
       <small className="d-blk mt-3">

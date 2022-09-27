@@ -1,6 +1,6 @@
 /* eslint-disable-next-line no-undef */
 // import { withQuicklink } from 'quicklink/dist/react/hoc'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
+import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
@@ -52,7 +53,6 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import app from '../styles/app.style'
 import style from '../styles/integrations.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
@@ -73,7 +73,7 @@ function Integrations() {
   const [snack, setSnackbar] = useState({ show: false })
   // const { path, url } = useRouteMatch()
   const location = useLocation()
-  const allIntegURL = location.pathname
+  const allIntegURL = useRef(location.pathname).current
   const navigate = useNavigate()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
@@ -290,7 +290,7 @@ function Integrations() {
                 </Modal>
 
                 <div role="button" className={css(style.itegCard)} tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
-                  <div className={css(style.integPlus)}>+</div>
+                  <div className={css(style.integPlus)}><PlusIcn size={80} /></div>
                 </div>
 
                 {integrations.map((inte, i) => (

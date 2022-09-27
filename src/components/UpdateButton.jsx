@@ -5,8 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  $additionalSettings,
+import { $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
   $builderHookStates,
@@ -27,8 +26,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows
-} from '../GlobalStates/GlobalStates'
+  $workflows } from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -36,7 +34,7 @@ import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { prepareLayout } from '../Utils/FormBuilderHelper'
-import { select, selectInGrid } from '../Utils/globalHelpers'
+import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
@@ -228,7 +226,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const allThemeColors = {
       lightThemeColors,
       darkThemeColors,
-    } 
+    }
     const allThemeVars = {
       lgLightThemeVars,
       lgDarkThemeVars,
@@ -274,9 +272,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       // themeColors: isStyleNotLoaded ? undefined : allThemeColors,
       // themeVars: isStyleNotLoaded ? undefined : allThemeVars,
       // atomicClassMap: isStyleNotLoaded ? undefined : atomicClassMap,
-      ...(!isStyleNotLoaded && { style: allStyles }),
-      ...(!isStyleNotLoaded && { themeColors: allThemeColors }),
-      ...(!isStyleNotLoaded && { themeVars: allThemeVars }),
+      ...(!isStyleNotLoaded && { style: JCOF.stringify(allStyles) }),
+      ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
+      ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
       ...(!isStyleNotLoaded && { atomicClassMap }),
       breakpointSize,
       customCodes,

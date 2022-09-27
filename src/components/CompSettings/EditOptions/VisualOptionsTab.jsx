@@ -376,7 +376,7 @@ const optionStyle = {
   addbtnside: { dy: 'inline-block', tm: 'rotate(45deg)' },
   add_btn: { ml: 19, p: 5 },
   drag: {
-    cr: 'var(--white-0-50)',
+    cr: 'var(--white-0-13)',
     dy: 'inline-block',
     w: 25,
     h: 25,

@@ -1,25 +1,28 @@
+import loadable from '@loadable/component'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import AdvanceFileUpSettings from './AdvanceFileUpSettings'
-import ButtonSettings from './ButtonSettings'
-import CountryFieldSettings from './CountryFieldSettings'
-import CurrencyFieldSettings from './CurrencyFieldSettings'
-import DecisionBoxSettings from './DecisionBoxSettings'
-import DividerSettings from './DividerSettings'
-import DropdownFieldSettings from './DropdownFieldSettings'
-import FileUploadSettings from './FileUploadSettings'
-import HtmlFieldSettings from './HtmlFieldSettings'
-import HtmlSelectSettings from './HtmlSelectSettings'
-import ImageSettings from './ImageSettings'
-import PaypalFieldSettings from './PaypalFieldSettings'
-import PhoneNumberFieldSettings from './PhoneNumberFieldSettings'
-import RadioCheckSettings from './RadioCheckSettings'
-import RazorpayFieldSettings from './RazorpayFieldSettings'
-import ReCaptchaSettings from './ReCaptchaSettings'
-import TextFieldSettings from './TextFieldSettings'
-import TitleSettings from './TitleSettings'
+import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
+
+const AdvanceFileUpSettings = loadable(() => import('./AdvanceFileUpSettings'), { fallback: <FieldSettingsLoader /> })
+const ButtonSettings = loadable(() => import('./ButtonSettings'), { fallback: <FieldSettingsLoader /> })
+const CountryFieldSettings = loadable(() => import('./CountryFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const CurrencyFieldSettings = loadable(() => import('./CurrencyFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const DecisionBoxSettings = loadable(() => import('./DecisionBoxSettings'), { fallback: <FieldSettingsLoader /> })
+const DividerSettings = loadable(() => import('./DividerSettings'), { fallback: <FieldSettingsLoader /> })
+const DropdownFieldSettings = loadable(() => import('./DropdownFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const FileUploadSettings = loadable(() => import('./FileUploadSettings'), { fallback: <FieldSettingsLoader /> })
+const HtmlFieldSettings = loadable(() => import('./HtmlFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const HtmlSelectSettings = loadable(() => import('./HtmlSelectSettings'), { fallback: <FieldSettingsLoader /> })
+const ImageSettings = loadable(() => import('./ImageSettings'), { fallback: <FieldSettingsLoader /> })
+const PaypalFieldSettings = loadable(() => import('./PaypalFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const PhoneNumberFieldSettings = loadable(() => import('./PhoneNumberFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const RadioCheckSettings = loadable(() => import('./RadioCheckSettings'), { fallback: <FieldSettingsLoader /> })
+const RazorpayFieldSettings = loadable(() => import('./RazorpayFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const ReCaptchaSettings = loadable(() => import('./ReCaptchaSettings'), { fallback: <FieldSettingsLoader /> })
+const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
   const { fieldKey } = useParams()

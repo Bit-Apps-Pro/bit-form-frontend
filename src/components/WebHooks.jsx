@@ -26,6 +26,13 @@ function WebHooks({ removeIntegration }) {
   const fieldsArr = useRecoilValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
+  const testResponseRef = useRef([])
+
+  const addToRefs = el => {
+    if (el && !testResponseRef.current.includes(el)) {
+      testResponseRef.current.push(el)
+    }
+  }
 
   const handleHookTitle = (e, idx) => {
     const confirmation = deepCopy(allConf)
@@ -116,13 +123,26 @@ function WebHooks({ removeIntegration }) {
     setConfMdl({ ...confMdl })
   }
 
+  const parseWebhookResponse = response => {
+    try {
+      return JSON.stringify(response, null, 2)
+    } catch (e) {
+      return response
+    }
+  }
+
   const testWebhook = webHookId => {
     setIsLoading(true)
     const confirmation = deepCopy(allConf)
     bitsFetch({ hookDetails: confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
-        setSnackbar({ show: true, msg: `${response.data}` })
         setIsLoading(false)
+        if ((response.data.response).length === 0) {
+          testResponseRef.current[webHookId].innerHTML = __('No response from the server')
+        } else {
+          testResponseRef.current[webHookId].innerHTML = `<pre>${parseWebhookResponse(response.data.response)}</pre>`
+        }
+        setSnackbar({ show: true, msg: __(response.data.msg) })
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
         setSnackbar({ show: true, msg: `${msg}. ${__('please try again')}` })
@@ -209,6 +229,10 @@ function WebHooks({ removeIntegration }) {
                 <ExternalLinkIcn size={18} className="ml-1" />
               </Button>
               <br />
+              <div className="wh-resp-box">
+                <div className="f-m wh-resp-box-title">{__('Response:')}</div>
+                <div className="wh-resp-box-content" ref={addToRefs}> Test Webhook to see the response.</div>
+              </div>
               <br />
               <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
               <div className="btcd-param-t-wrp mt-1">

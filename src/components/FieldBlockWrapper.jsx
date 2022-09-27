@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+import { useSetRecoilState } from 'recoil'
+import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -25,6 +27,13 @@ export default function FieldBlockWrapper({ layoutItem,
     e.stopPropagation()
     navigateToStyle(layoutItem.i)
   }
+
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
+
+  useEffect(() => {
+    setBuilderHookState(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
+  }, [])
+
   return (
     <>
       {(resizingFld.fieldKey === layoutItem.i) && <span className="resize-txt">{`w: ${resizingFld.w || layoutItem.w}, x: ${resizingFld.x || layoutItem.x}`}</span>}
@@ -61,12 +70,11 @@ export default function FieldBlockWrapper({ layoutItem,
           removeLayoutItem={removeLayoutItem}
           fieldId={layoutItem.i}
         />
-        {/* <Downmenu> */}
+
         <button
           data-close
           type="button"
           className="g-c us-n no-drg blk-wrp-btn blk-wrp-down-btn"
-          // unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}
           title={__('More Options')}
@@ -80,12 +88,13 @@ export default function FieldBlockWrapper({ layoutItem,
         fields={fields}
         layoutItem={layoutItem}
         formID={formID}
+        resizingFld={resizingFld}
       />
     </>
   )
 }
 
-const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
+const ComponentsByTheme = ({ layoutItem, formID, fields, resizingFld }) => {
   const { reCaptchaV2 } = useContext(AppSettings)
 
   const componentProps = deepCopy(fields[layoutItem.i])
@@ -97,5 +106,5 @@ const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
-  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
+  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} resizingFld={resizingFld} />
 }

@@ -23,6 +23,10 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
   const { fieldKey: fldKey } = useParams()
   const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fldKey])
+
+  const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt.value.replace(/,/g, '_') }))
+
+
   const generateNewOptions = () => {
     if (!isPro) return []
     const { dataSrc } = importOpts
@@ -66,7 +70,7 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
   }
 
   const handleImport = () => {
-    const opts = generateNewOptions()
+    const opts = replaceAllValsCommas(generateNewOptions())
 
     if (importOpts?.dataSrc === 'user') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'terms') fieldData.customType = importOpts?.fieldObject

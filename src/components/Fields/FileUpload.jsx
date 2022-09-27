@@ -143,7 +143,6 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   className={`${fieldKey}-file-upload-input ${getCustomClsName(fieldKey, 'file-upload-input')}`}
                   id={fieldKey}
                   name="file-upload"
-                  fieldData
                   {...'req' in fieldData.valid && { required: fieldData.valid.req }}
                   {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
                   {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}

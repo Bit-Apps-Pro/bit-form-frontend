@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import BackIcn from '../../../Icons/BackIcn'
@@ -16,11 +16,22 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']
   const { css } = useFela()
+  const testResponseRef = useRef(null)
+
+  const parseWebhookResponse = response => {
+    try {
+      return JSON.stringify(response, null, 2)
+    } catch (e) {
+      return response
+    }
+  }
+
   const testWebHook = (webHooksDetaila) => {
     setIsLoading(true)
     bitsFetch({ hookDetails: webHooksDetaila }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
-        setSnackbar({ show: true, msg: `${response.data}` })
+        testResponseRef.current.innerHTML = `<pre>${parseWebhookResponse(response.data.response)}</pre>`
+        setSnackbar({ show: true, msg: __(response.data.msg) })
         setIsLoading(false)
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
@@ -89,7 +100,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           <div className="f-m">{__('Integration name')}</div>
           <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
         </div>
-      </div>
+      </div >
       <div className="flx flx-start">
         <div className="w-7">
           <div className="f-m">{__('Link:')}</div>
@@ -146,20 +157,32 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           )}
         </div>
       </div>
-      {!isInfo && (
-        <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={css(app.btn, app.btn_blue_otln)}>
-          {__('Test Webhook')}
-          {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
-          <ExternalLinkIcn size={18} className="ml-1" />
-        </Button>
-      )}
+      {
+        !isInfo && (
+          <>
+            <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={css(app.btn, app.btn_blue_otln)}>
+              {__('Test Webhook')}
+              {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
+              <ExternalLinkIcn size={18} className="ml-1" />
+            </Button>
+            <br />
+            <div className="wh-resp-box">
+              <div className="f-m wh-resp-box-title">{__('Response:')}</div>
+              <div className="wh-resp-box-content" ref={testResponseRef}>Test Webhook to see the response.</div>
+            </div>
+            <br />
+          </>
+        )
+      }
       {(!isInfo && create) && <br />}
-      {create && (
-        <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
-          {__('Next')}
-          <BackIcn className="ml-1 rev-icn" />
-        </button>
-      )}
-    </div>
+      {
+        create && (
+          <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
+            {__('Next')}
+            <BackIcn className="ml-1 rev-icn" />
+          </button>
+        )
+      }
+    </div >
   )
 }

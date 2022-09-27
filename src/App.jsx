@@ -1,43 +1,28 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-console */
-/* eslint-disable react/jsx-one-expression-per-line */
-
 import loadable from '@loadable/component'
-import { lazy, Suspense, useEffect } from 'react'
-import { useFela } from 'react-fela'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
 import logo from '../logo.svg'
 import Loader from './components/Loaders/Loader'
-import TableLoader from './components/Loaders/TableLoader'
-import './resource/icons/style.css'
-import './resource/sass/app.scss'
-import './resource/sass/global.scss'
-import ut from './styles/2.utilities'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import { __ } from './Utils/i18nwrap'
+import AllForms from './pages/AllForms'
 
 const loaderStyle = { height: '90vh' }
-const AllForms = loadable(() => import('./pages/AllForms'), { fallback: <TableLoader /> })
 const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
 const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <BuilderLoader /> })
-const Error404 = lazy(() => import('./pages/Error404'))
+const Error404 = loadable(() => import('./pages/Error404'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
+
+const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
+document.querySelector('#wpbody').style.backgroundColor = backgroundColor
 
 export default function App() {
-  const { css } = useFela()
-
   useEffect(() => {
     removeUnwantedCSS()
-    // checkProVersionForUpdates(bits)
   }, [])
 
-  const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
-  document.querySelector('#wpbody').style.backgroundColor = backgroundColor
-
   return (
-    <Suspense fallback={(<Loader className={css([ut['g-c'], loaderStyle])} />)}>
+    <>
       <Toaster
         position="bottom-right"
         containerStyle={{ inset: '-25px 30px 20px -10px' }}
@@ -53,7 +38,6 @@ export default function App() {
         }}
       />
       <HashRouter>
-        {/* <Router basename={typeof bits !== 'undefined' ? bits.baseURL + '/' : '/'}> */}
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
@@ -73,9 +57,7 @@ export default function App() {
 
                 <NavLink
                   to="/app-settings"
-                  // to="/app-settings"
                   className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                // isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
                   {__('App Settings')}
                 </NavLink>
@@ -86,45 +68,14 @@ export default function App() {
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
-              {/* <Route path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey" element={<FormDetails />} /> */}
-              {/* <Route path="/form/:page/:formType/:formID/:rightBar/:element" element={<FormDetails />} /> */}
-              {/* <Route path="/form/:page/:formType/:formID/:rightBar/*" element={<FormDetails />} /> */}
-              {/* <Route path="/form/:page/:formType/:formID/:rightBar" element={<FormDetails />} /> */}
-              {/* <Route path="/form/:page/:formType/:formID" element={<FormDetails />} /> */}
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
               <Route path="*" element={<Error404 />} />
-              {/* <Route
-                path="/form/:page/:formType/:formID/:rightBar/:element/:fieldKey"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <FormDetails />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/form/:page/:formType/:formID/:rightBar/:element"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <FormDetails />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/form/:page/:formType/:formID/:rightBar"
-                element={(
-                  <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                    <FormDetails />
-                  </Suspense>
-                )}
-              /> */}
-
             </Routes>
           </div>
         </div>
-        {/* </Router> */}
       </HashRouter>
-    </Suspense>
+    </>
   )
 }
 

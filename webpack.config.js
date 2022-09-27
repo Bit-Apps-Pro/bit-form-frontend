@@ -182,10 +182,10 @@ module.exports = (env, argv) => {
       ...(!production ? [] : [
         new CopyPlugin({
           patterns: [
-            {
-              from: path.resolve(__dirname, 'public/wp_index.html'),
-              to: path.resolve(__dirname, '../views/view-root.php'),
-            },
+            // {
+            //   from: path.resolve(__dirname, 'public/wp_index.html'),
+            //   to: path.resolve(__dirname, '../views/view-root.php'),
+            // },
             {
               from: path.resolve(__dirname, 'manifest.json'),
               to: path.resolve(__dirname, '../assets/js/manifest.json'),

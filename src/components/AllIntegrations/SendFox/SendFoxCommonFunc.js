@@ -41,11 +41,11 @@ export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnack
         }
         setSendFoxConf({ ...newConf })
         setIsLoading(false)
-        toast.success(__('Lists fetched successfully', 'bit-integrations'))
+        toast.success(__('Lists fetched successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Lists fetch failed. please try again', 'bit-integrations'))
+      toast.error(__('Lists fetch failed. please try again'))
     })
 
     .catch(() => setIsLoading(false))
@@ -53,7 +53,7 @@ export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnack
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
   if (!confTmp.access_token) {
-    setError({ access_token: !confTmp.access_token ? __('Access Token can\'t be empty', 'bit-integrations') : '' })
+    setError({ access_token: !confTmp.access_token ? __('Access Token can\'t be empty') : '' })
     return
   }
   setError({})
@@ -68,11 +68,11 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         setConf(newConf)
         setisAuthorized(true)
         setIsLoading(false)
-        toast.success(__('Authorized successfully', 'bit-integrations'))
+        toast.success(__('Authorized successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Authorized failed', 'bit-integrations'))
+      toast.error(__('Authorized failed'))
     })
 }
 

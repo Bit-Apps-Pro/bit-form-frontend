@@ -62,7 +62,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Text'),
       keywords: 'Text',
       icn: <TextIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'text',
         lbl: __('Text Field'),
@@ -78,7 +78,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Multiline Text'),
       keywords: 'Multline Text',
       icn: <TextareaIcn size="23" />,
-      pos: { h: 50, w: 60, i: 'shadow_block' },
+      pos: { h: 100, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text'),
@@ -94,7 +94,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Email'),
       keywords: 'Email',
       icn: <MailIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'email',
         lbl: __('Email Field'),
@@ -111,7 +111,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Number'),
       keywords: 'Number',
       icn: <NumberIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'number',
         lbl: __('Number Field'),
@@ -127,7 +127,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Select'),
       keywords: 'Select',
       icn: <ChevronDownIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       tip: 'Select',
       elm: {
         typ: 'html-select',
@@ -150,7 +150,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Radio Button'),
       keywords: 'Radio button, button',
       icn: <RadioIcn size="23" />,
-      pos: { h: 70, w: 60, i: 'shadow_block' },
+      pos: { h: 140, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'radio',
         lbl: __('Radio'),
@@ -171,7 +171,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Checkbox'),
       keywords: 'Check Box',
       icn: <CheckBoxIcn w="23" />,
-      pos: { h: 70, w: 60, i: 'shadow_block' },
+      pos: { h: 140, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'check',
         lbl: __('Check Boxs'),
@@ -191,10 +191,10 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Dropdown'),
       keywords: 'Dropdown',
       icn: <DropDownIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'select',
-        lbl: __('Drop-Down'),
+        lbl: __('Drop Down'),
         mul: false,
         phHide: true,
         ph: 'Select a Option',
@@ -239,7 +239,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('File Upload'),
       keywords: 'File Upload',
       icn: <FileUploadIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minW: 20 },
+      pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'file-up',
         lbl: __('File Upload'),
@@ -287,10 +287,10 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Advance File Upload'),
       keywords: 'Advanced File Upload',
       icn: <AdvanceFileUpIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minW: 20 },
+      pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'advanced-file-up',
-        lbl: __('File Upload'),
+        lbl: __('Advanced File Upload'),
         upBtnTxt: 'Attach File',
         valid: {},
         config: {
@@ -324,10 +324,10 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Country'),
       keywords: 'Country',
       icn: <FlagIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'country',
-        lbl: __('Select Country'),
+        lbl: __('Country Field'),
         mul: false,
         phHide: true,
         ph: 'Select a Country',
@@ -345,6 +345,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         options: countries,
         valid: {},
+        err: {},
         customClasses: {},
         customAttributes: {},
       },
@@ -353,7 +354,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Currency'),
       keywords: 'Currency, Currency Field, Amount',
       icn: <CurrencyIcn size={20} />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'currency',
         lbl: __('Currency Field'),
@@ -372,7 +373,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           selectedCurrencyClearable: true,
           searchClearable: true,
           optionFlagImage: true,
-          defaultValue: '',
+          defaultCurrencyKey: '',
           showSearchPh: true,
           searchPlaceholder: 'Search for countries',
           noCurrencyFoundText: 'No Currency Found',
@@ -388,7 +389,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Phone Number'),
       keywords: 'Phone number, Number',
       icn: <PhoneNumberIcn size={20} />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'phone-number',
         lbl: __('Phone Number'),
@@ -397,7 +398,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           selectedCountryClearable: true,
           searchClearable: true,
           optionFlagImage: true,
-          defaultValue: '',
+          defaultCountryKey: '',
           showSearchPh: true,
           searchPlaceholder: 'Search for countries',
           noCountryFoundText: 'No Country Found',
@@ -415,7 +416,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('User Name'),
       keywords: 'User Name, text',
       icn: <UserIcn size="22" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'username',
         lbl: __('User Name'),
@@ -431,7 +432,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Password'),
       keywords: 'Password',
       icn: <PasswordIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'password',
         lbl: __('Password Field'),
@@ -447,7 +448,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Date'),
       keywords: 'Date',
       icn: <DateIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'date',
         lbl: __('Date Input'),
@@ -461,7 +462,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Time'),
       keywords: 'Time',
       icn: <TimeIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'time',
         lbl: __('Time Input'),
@@ -475,7 +476,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Date-Time'),
       keywords: 'Date-Time, Date, Time',
       icn: <DateTimeIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'datetime-local',
         lbl: __('Date-Time Input'),
@@ -489,7 +490,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Week'),
       keywords: 'Week, Date',
       icn: <WeekIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'week',
         lbl: __('Week Input'),
@@ -503,7 +504,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Month'),
       keywords: 'Month, Date',
       icn: <MonthIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'month',
         lbl: __('Month Input'),
@@ -517,7 +518,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('URL'),
       keywords: 'URL',
       icn: <UrlIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'url',
         attr: {
@@ -538,7 +539,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Color Picker'),
       keywords: 'Color Picker',
       icn: <ColorPickerIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'color',
         lbl: __('Color Picker'),
@@ -552,7 +553,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Decision Box'),
       keywords: 'Decision box, GDPR',
       icn: <DecisionBoxIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box'),
@@ -571,7 +572,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('reCaptcha v2'),
       keywords: 'ReCaptcha v2',
       icn: <ReCaptchaIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minW: 20 },
+      pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
@@ -586,7 +587,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'Button',
       keywords: 'Button',
       icn: <BtnIcn size="23" />,
-      pos: { h: 30, w: 60, i: 'shadow_block' },
+      pos: { h: 60, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'button',
         btnTyp: 'button',
@@ -606,7 +607,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Paypal'),
       keywords: 'Paypal, payment',
       icn: <PaypalIcn w="23" />,
-      pos: { h: 100, w: 60, i: 'shadow_block', minW: 20 },
+      pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'paypal',
         currency: 'USD',
@@ -624,7 +625,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Razorpay'),
       keywords: 'Razorpay, payment',
       icn: <RazorPayIcn w="17" h="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minW: 20 },
+      pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'razorpay',
         lbl: __('Razorpay'),
@@ -659,7 +660,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Title'),
       keywords: 'title',
       icn: <TitleIcn w="23" />,
-      pos: { h: 24, w: 60, i: 'shadow_block' },
+      pos: { h: 48, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'title',
         titleImg: '',
@@ -679,7 +680,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Image'),
       keywords: 'image',
       icn: <ImgFldIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'image',
         valid: {},
@@ -693,7 +694,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Divider'),
       keywords: 'divider',
       icn: <DividerIcn w="23" />,
-      pos: { h: 20, w: 60, i: 'shadow_block' },
+      pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'divider',
         valid: {},
@@ -707,7 +708,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'HTML',
       keywords: 'HTML',
       icn: <CodeSnippetIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block' },
+      pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'html',
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
@@ -719,7 +720,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     /* {
       name: 'Blank Block',
       icn: blank,
-      pos: { h: 40, w: 30, i: 'shadow_block' },
+      pos: { h: 80, w: 30, i: 'shadow_block' },
       elm: {
         typ: 'blank',
       },
@@ -867,7 +868,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         <Scrollbars
           onScroll={onScrollHandler}
           autoHide
-          style={{ maxWidth: 400 }}
+          style={{ maxWidth: 800 }}
         >
           <div className={css(Toolbars.tool_bar)}>
             {toolsArray().map(tool => (

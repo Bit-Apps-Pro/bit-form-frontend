@@ -178,7 +178,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
             data-testid="icns-mdl-srch-inp"
             title="Search Images"
             aria-label="Search Images"
-            placeholder="Search Unsplash Image etc..."
+            placeholder="e.g. Abstract, Nature, People, etc."
             id="search-icon"
             type="search"
             name="searchIcn"
@@ -206,7 +206,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
             ))}
           </div>
         )}
-        <div className={css(ut.flxc, ut.mt2, s.icon)}>
+        <div className={css(ut.mt2, s.imgWrp)}>
           {images.map((item) => (
             <button
               type="button"
@@ -230,7 +230,7 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
       </Scrollbars>
       <button data-testid="icn-dwnld-n-sav" type="button" disabled={!selectUrl} className={css(s.saveBtn, s.btnPosition)} onClick={saveImage}>
         <span className={css(ut.mr1, { dy: 'flex' })}><CPTIcn size="20" /></span>
-        save
+        Save
         {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
       </button>
     </div>
@@ -238,28 +238,16 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
 }
 
 const s = {
-  scrollBar: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
-  loadingPlaceholder: { w: 150, h: 100, brs: 8, lh: 2, my: 3, mx: 5, dy: 'inline-block' },
-  downloadedBtnWrapper: {
-    pn: 'relative',
+  // scrollBar: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
+  loadingPlaceholder: {
+    w: 150,
+    h: 100,
+    brs: 8,
+    lh: 2,
+    my: 3,
+    mx: 5,
     dy: 'inline-block',
-    '&:hover > .trash':
-      { flx: 'align-center' },
   },
-  delBtn: {
-    pn: 'absolute',
-    bd: '#ffa1a1',
-    b: 'none',
-    brs: 20,
-    h: 20,
-    dy: 'none',
-    w: 20,
-    curp: 1,
-    rt: -3,
-    tp: -3,
-    ':hover': { bd: '#ff7d7d' },
-  },
-  icon: { dy: 'inline-block' },
   chip: {
     bd: 'var(--b-100-48-1)',
     b: 'none',
@@ -271,27 +259,32 @@ const s = {
     tn: 'background .3s',
     ':hover': { bd: 'var(--b-90)' },
   },
-  active: {
-    b: '3px solid var(--b-50)',
-    cr: 'var(--white-100) !important',
-  },
+  active: { oe: '4px solid var(--blue)' },
   collectionActive: {
     bd: 'var(--b-50) !important',
     cr: 'var(--white-100) !important',
   },
+  imgWrp: {
+    dy: 'flex',
+    flxp: 'wrap',
+    jc: 'center',
+    w: '100%',
+  },
   imageBtn: {
-    p: '4px',
-    mnw: 90,
-    h: 125,
-    dy: 'inline-grid',
-    placeContent: 'center',
-    bd: 'transparent',
+    p: 0,
+    mxh: 200,
+    dy: 'block',
+    bd: 'none',
     b: 'none',
+    m: 5,
     brs: 8,
     curp: 1,
-    ':hover': { bd: 'var(--white-0-95)' },
+    ':hover': { oe: '4px solid var(--blue)' },
   },
-  img: { h: 110 },
+  img: {
+    brs: 8,
+    h: 200,
+  },
   searchBar: {
     pn: 'relative',
     zx: 99,
@@ -303,22 +296,6 @@ const s = {
     mr: 5,
     tn: 'width .2s',
     w: '100%',
-  },
-  upBtn: {
-    b: '1px solid var(--b-38-89)',
-    w: '80%',
-    bd: 'var(--b-36-96)',
-    fs: 20,
-    mx: 'auto',
-    h: 100,
-    flx: 'center',
-    fd: 'column',
-    brs: 20,
-    mt: 10,
-    cr: 'var(--b-54-31)',
-    curp: 1,
-    ':hover': { bd: 'var(--b-50-95)' },
-    ':focus-visible': { focusShadow: 1 },
   },
   search_icn: {
     pn: 'absolute',
@@ -337,7 +314,7 @@ const s = {
     oe: 'none',
     b: '1px solid var(--white-0-75) !important',
     brs: '20px !important',
-    pl: '30px !important',
+    pl: '35px !important',
     pr: '5px !important',
     pb: '5px !important',
     pt: '5px !important',

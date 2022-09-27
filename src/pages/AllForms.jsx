@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { lazy, memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import loadable from '@loadable/component'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -24,7 +25,7 @@ import { dateTimeFormatter } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
-const Welcome = lazy(() => import('./Welcome'))
+const Welcome = loadable(() => import('./Welcome'), { fallback: <div>Loading...</div> })
 
 function AllFroms() {
   const [modal, setModal] = useState(false)
@@ -94,28 +95,25 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <>
-          {/* <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> */}
-          <OptionMenu title="Actions" w={150} h={164}>
-            <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
-              <EditIcn size={18} />
-              &nbsp;
-              Edit
-            </Link>
-            <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
-              <CopyIcn size={18} />
-              &nbsp;Duplicate
-            </button>
-            <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
-              <DownloadIcon size={18} />
-              &nbsp;Export
-            </button>
-            <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
-              <TrashIcn size={16} />
-              &nbsp;Delete
-            </button>
-          </OptionMenu>
-        </>
+        <OptionMenu title="Actions" w={150} h={164}>
+          <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
+            <EditIcn size={18} />
+            &nbsp;
+            Edit
+          </Link>
+          <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
+            <CopyIcn size={18} />
+            &nbsp;Duplicate
+          </button>
+          <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
+            <DownloadIcon size={18} />
+            &nbsp;Export
+          </button>
+          <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
+            <TrashIcn size={16} />
+            &nbsp;Delete
+          </button>
+        </OptionMenu>
       ),
     })
     setCols([...ncols])
@@ -195,7 +193,7 @@ function AllFroms() {
 
     toast.promise(loadDuplicate, {
       success: msg => msg,
-      error: __('Error Occured', 'bit-form'),
+      error: __('Error Occured'),
       loading: __('duplicate...'),
     })
   }
