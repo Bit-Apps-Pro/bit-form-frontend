@@ -76,8 +76,6 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
     if (!window.observeElm) {
       window.observeElm = observeElm
     }
-    const alreadyChecked = options.find(opt => opt.check)
-    if (alreadyChecked) configOptions.defaultValue = alreadyChecked.i
     countryFieldRef.current = new BitCountryField(fldElm, configOptions)
   }, [fieldData])
 

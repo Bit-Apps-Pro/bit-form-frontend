@@ -20,7 +20,6 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -87,7 +86,11 @@ const PhoneNumberFieldSettings = () => {
   }
 
   const handleOptions = newOpts => {
-    const allFields = produce(fields, draft => { draft[fldKey].options = newOpts })
+    const checkedOpt = newOpts.find(opt => opt.check)
+    const allFields = produce(fields, draft => {
+      draft[fldKey].options = newOpts
+      draft[fldKey].config.defaultCountryKey = checkedOpt ? checkedOpt.i : ''
+    })
     setFields(allFields)
     addToBuilderHistory({ event: `Modify Options List: ${fieldData.lbl || fldKey}`, type: 'options_modify', state: { fields: allFields, fldKey } })
   }

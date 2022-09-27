@@ -59,7 +59,11 @@ const CurrencyFieldSettings = () => {
   }
 
   const handleOptions = newOpts => {
-    const allFields = produce(fields, draft => { draft[fldKey].options = newOpts })
+    const checkedOpt = newOpts.find(opt => opt.check)
+    const allFields = produce(fields, draft => {
+      draft[fldKey].options = newOpts
+      draft[fldKey].config.defaultCurrencyKey = checkedOpt ? checkedOpt.i : ''
+    })
     setFields(allFields)
     addToBuilderHistory({ event: `Modify Options List: ${fieldData.lbl || fldKey}`, type: 'options_modify', state: { fields: allFields, fldKey } })
   }

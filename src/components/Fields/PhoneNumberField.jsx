@@ -22,7 +22,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     optionFlagImage,
     detectCountryByIp,
     detectCountryByGeo,
-    defaultValue,
+    defaultCountryKey,
     searchPlaceholder,
     noCountryFoundText,
     inputFormat,
@@ -46,7 +46,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       optionFlagImage,
       detectCountryByIp,
       detectCountryByGeo,
-      defaultValue,
+      defaultCountryKey,
       searchPlaceholder,
       noCountryFoundText,
       placeholderImage,
@@ -78,8 +78,6 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     if (!window.observeElm) {
       window.observeElm = observeElm
     }
-    const alreadyChecked = options.find(opt => opt.check)
-    if (alreadyChecked) configOptions.defaultCountryKey = alreadyChecked.i
     phoneNumberFieldRef.current = new BitPhoneNumberField(fldElm, configOptions)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldData])
