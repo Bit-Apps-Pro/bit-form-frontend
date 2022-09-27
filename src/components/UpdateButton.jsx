@@ -34,7 +34,7 @@ import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { prepareLayout } from '../Utils/FormBuilderHelper'
-import { select, selectInGrid } from '../Utils/globalHelpers'
+import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
@@ -272,10 +272,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       // themeColors: isStyleNotLoaded ? undefined : allThemeColors,
       // themeVars: isStyleNotLoaded ? undefined : allThemeVars,
       // atomicClassMap: isStyleNotLoaded ? undefined : atomicClassMap,
-      ...(!isStyleNotLoaded && { style: allStyles }),
-      ...(!isStyleNotLoaded && { themeColors: allThemeColors }),
-      ...(!isStyleNotLoaded && { themeVars: allThemeVars }),
-      ...(!isStyleNotLoaded && { atomicClassMap }),
+      ...(!isStyleNotLoaded && { style: JCOF.stringify(allStyles) }),
+      ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
+      ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
+      ...(!isStyleNotLoaded && { atomicClassMap: JCOF.stringify(atomicClassMap) }),
       breakpointSize,
       customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
