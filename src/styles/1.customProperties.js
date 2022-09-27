@@ -55,6 +55,7 @@ const customProperties = {
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   ff: $ => ({ fontFamily: Number.isInteger($) ? `${$}px` : $ }),
+  fts: $ => ({ fontStyle: Number.isInteger($) ? `${$}px` : $ }),
   lh: $ => ({ lineHeight: $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
@@ -144,6 +145,7 @@ const customProperties = {
 
   zx: $ => ({ zIndex: $ }),
   ct: $ => ({ content: $ }),
+  bxs: $ => ({ boxSizing: $ }),
 
   focusShadow: () => ({ boxShadow: '0 0 0 2px var(--b-50) !important' }),
   focusOutline: () => ({ tn: 'outline .2s', outline: '3px solid var(--b-50)!important', outlineOffset: '3px' }),

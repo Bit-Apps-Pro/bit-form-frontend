@@ -1,6 +1,6 @@
 /* eslint-disable-next-line no-undef */
 // import { withQuicklink } from 'quicklink/dist/react/hoc'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -53,7 +53,6 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import app from '../styles/app.style'
 import style from '../styles/integrations.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
@@ -74,7 +73,7 @@ function Integrations() {
   const [snack, setSnackbar] = useState({ show: false })
   // const { path, url } = useRouteMatch()
   const location = useLocation()
-  const allIntegURL = location.pathname
+  const allIntegURL = useRef(location.pathname).current
   const navigate = useNavigate()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)

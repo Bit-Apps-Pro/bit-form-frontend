@@ -1,7 +1,7 @@
 import { useFela } from 'react-fela'
 import app from '../../styles/app.style'
 
-function Button({ className, type, onClick, icn, disabled, children, style }) {
+function Button({ id, className, type, onClick, icn, disabled, children, style }) {
   const { css } = useFela()
   return (
     <button
