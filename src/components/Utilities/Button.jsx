@@ -1,7 +1,7 @@
 import { useFela } from 'react-fela'
 import app from '../../styles/app.style'
 
-function Button({ id, className, type, onClick, icn, children, style }) {
+function Button({ className, type, onClick, icn, disabled, children, style }) {
   const { css } = useFela()
   return (
     <button
@@ -12,6 +12,7 @@ function Button({ id, className, type, onClick, icn, children, style }) {
       type={type || 'button'}
       onClick={onClick}
       aria-label="btcd-button"
+      disabled={disabled}
     >
       {children}
     </button>
