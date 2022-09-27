@@ -23,7 +23,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         display: 'grid',
         'grid-template-columns': '1fr',
         width: '100%',
-        'grid-row-gap': '10px',
+        'grid-row-gap': '5px',
         'column-gap': '10px',
       },
       // checkbox wrapper

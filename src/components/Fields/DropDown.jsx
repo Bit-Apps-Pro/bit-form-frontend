@@ -331,6 +331,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               )
                             } return (
                               <li
+                                key={`opt-${indx}`}
                                 data-testid={`${fieldKey}-opt-${dataIndex}`}
                                 data-dev-option={fieldKey}
                                 data-index={dataIndex++}

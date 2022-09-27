@@ -28,11 +28,12 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
-import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
+import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
-  const { formType, formID, fieldKey, element } = useParams()
+  const { formType, formID, '*': rightParams } = useParams()
+  const [, element, fieldKey] = rightParams.split('/')
   const styles = useRecoilValue($styles)
 
   if (!styles?.fields?.[fieldKey]) { console.error('no style object found according to this field'); return <>No Field</> }

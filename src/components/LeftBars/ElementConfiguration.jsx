@@ -99,7 +99,7 @@ export default function ElementConfiguration({ fldKey }) {
           </>
         )}
       {
-        (fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn || fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn)
+        ((fieldObj.lbl || fieldObj.lblPreIcn || fieldObj.lblSufIcn || fieldObj.subtitle || fieldObj.subTlePreIcn || fieldObj.subTleSufIcn) && fieldObj.typ !== 'title')
         && (
           <NavBtn
             cssSelector={`.${fldKey}-${styleClasses.lbl[0]}`}

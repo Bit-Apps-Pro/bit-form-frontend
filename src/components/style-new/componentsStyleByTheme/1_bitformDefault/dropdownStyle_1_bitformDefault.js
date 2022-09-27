@@ -31,9 +31,9 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         transition: 'box-shadow .3s',
       },
 
-      [`.${fk}-dpd-fld-wrp:hover:not(.menu-open,.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
+      [`.${fk}-dpd-fld-wrp:hover:not(.menu-open):not(.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
 
-      [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open,.disabled)`]: {
+      [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open):not(.disabled)`]: {
         'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
         'border-color': 'var(--global-accent-color) !important',
       },
