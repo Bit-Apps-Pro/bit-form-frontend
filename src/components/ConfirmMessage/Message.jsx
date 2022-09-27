@@ -234,7 +234,7 @@ function Message({ id, msgItem }) {
             <span className={css({ w: 130 })}>{__('Message Type')}</span>
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'sticky'} title={<small className="txt-dp"><b>Sticky</b></small>} value="sticky" />
+            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'below'} title={<small className="txt-dp"><b>Below of Form</b></small>} value="below" />
           </div>
           <div className={css({ flx: 1, cg: 5 })}>
             <div className={css({ flx: 'align-center' })}>
@@ -250,7 +250,7 @@ function Message({ id, msgItem }) {
                 }
               </select>
             </div>
-            {((msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(animation)) && msgType !== 'sticky') && (
+            {((msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(animation)) && msgType !== 'below') && (
               <div className={css({ flx: 'align-center' })}>
                 <span className={css({ fs: 15, w: 65 })}>Position</span>
                 <select
@@ -597,7 +597,7 @@ const animations = {
     'scale',
     'slide-up',
     'slide-down'],
-  sticky: [
+  below: [
     'fade',
     'scale'],
 }
