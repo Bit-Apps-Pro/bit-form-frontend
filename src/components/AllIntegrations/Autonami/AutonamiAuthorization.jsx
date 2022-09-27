@@ -47,7 +47,7 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
           title={tutorialLinks.autonami.title}
           youTubeLink={tutorialLinks.autonami.link}
         />
-        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
         <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="name" value={autonamiConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (

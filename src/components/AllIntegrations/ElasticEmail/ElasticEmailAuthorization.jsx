@@ -61,7 +61,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
         youTubeLink={tutorialLinks.elasticemail.link}
       />
 
-      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
       <div className="mt-3"><b>{__('API Key:')}</b></div>

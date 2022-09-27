@@ -230,8 +230,8 @@ function WebHooks({ removeIntegration }) {
               </Button>
               <br />
               <div className="wh-resp-box">
-                <div className="f-m wh-resp-box-title">{__('Response:', 'bitform')}</div>
-                <div className="wh-resp-box-content" ref={addToRefs}>Test Webhook to see the response.</div>
+                <div className="f-m wh-resp-box-title">{__('Response:')}</div>
+                <div className="wh-resp-box-content" ref={addToRefs}> Test Webhook to see the response.</div>
               </div>
               <br />
               <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
