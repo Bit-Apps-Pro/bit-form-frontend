@@ -167,7 +167,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
             </Button>
             <br />
             <div className="wh-resp-box">
-              <div className="f-m wh-resp-box-title">{__('Response:', 'bitform')}</div>
+              <div className="f-m wh-resp-box-title">{__('Response:')}</div>
               <div className="wh-resp-box-content" ref={testResponseRef}>Test Webhook to see the response.</div>
             </div>
             <br />

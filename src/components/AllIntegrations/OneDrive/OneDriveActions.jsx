@@ -108,10 +108,7 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
           className="mt-4 mr-2"
           value="delete_from_wp"
           title={__('Delete File From Wordpress')}
-          subTitle={__(
-            'Delete file from Wordpress after upload in OneDrive',
-            'bitform',
-          )}
+          subTitle={__('Delete file from Wordpress after upload in OneDrive')}
         />
       </div>
 
