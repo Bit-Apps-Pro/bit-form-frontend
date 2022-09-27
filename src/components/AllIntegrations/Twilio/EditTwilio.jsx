@@ -17,7 +17,7 @@ function EditTwilio({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const saveConfig = () => {
     if (!checkMappedFields(twilioConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, twilioConf, history, id, 1)
@@ -28,14 +28,14 @@ function EditTwilio({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
         <input
           className="btcd-paper-inp w-5"
           onChange={e => handleInput(e, twilioConf, setTwilioConf)}
           name="name"
           value={twilioConf.name}
           type="text"
-          placeholder={__('Integration Name...', 'bit-integrations')}
+          placeholder={__('Integration Name...')}
         />
       </div>
       <br />

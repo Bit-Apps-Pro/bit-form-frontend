@@ -29,13 +29,13 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
           <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
                 formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
               }
             </optgroup>
-            <option value="custom">{__('Custom...', 'bit-integrations')}</option>
+            <option value="custom">{__('Custom...')}</option>
             <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
               {isPro && SmartTagField?.map(f => (
                 <option key={`ff-gh-${f.name}`} value={f.name}>
@@ -46,10 +46,10 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
 
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleMetaCustomValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customMetaFormValue} placeholder={__('Custom Value', 'bit-integrations')} />}
+          {field.formField === 'custom' && <MtInput onChange={e => handleMetaCustomValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customMetaFormValue} placeholder={__('Custom Value')} />}
 
           <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="GroundhoggMetaMapField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.GroundhoggMetaMapField || '')} onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
                 <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -63,9 +63,9 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
                 ))
               )
             }
-            <option value="custom">{__('Custom...', 'bit-integrations')}</option>
+            <option value="custom">{__('Custom...')}</option>
           </select>
-          {field.GroundhoggMetaMapField === 'custom' && <MtInput onChange={e => handleMetaCustomFieldValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Groundhogg Value', 'bit-integrations')} className="mr-2" type="text" value={field.customMetaGroundValue} placeholder={__('Custom Groundhogg Value', 'bit-integrations')} />}
+          {field.GroundhoggMetaMapField === 'custom' && <MtInput onChange={e => handleMetaCustomFieldValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Groundhogg Value')} className="mr-2" type="text" value={field.customMetaGroundValue} placeholder={__('Custom Groundhogg Value')} />}
         </div>
         {
           i >= requiredFlds.length && (

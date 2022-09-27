@@ -28,20 +28,20 @@ export default function SendFoxAuthorization({ formID, sendFoxConf, setSendFoxCo
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
       <small className="d-blk mt-3">
-        {__('To Get Client Auth token, Please Visit', 'bit-integrations')}
+        {__('To Get Client Auth token, Please Visit')}
         &nbsp;
-        <a className="btcd-link" href="https://sendfox.com/account/oauth" target="_blank" rel="noreferrer">{__('SendFox Access Token', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://sendfox.com/account/oauth" target="_blank" rel="noreferrer">{__('SendFox Access Token')}</a>
       </small>
 
-      <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bit-integrations')}</b></div>
+      <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
       <CopyText value={redirectLocation || `${window.location.href}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} setSnackbar={setSnackbar} />
 
-      <div className="mt-3"><b>{__('Access Token:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="access_token" value={sendFoxConf.access_token} type="text" placeholder={__('Access Token...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Access Token:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="access_token" value={sendFoxConf.access_token} type="text" placeholder={__('Access Token...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.access_token}</div>
 
       {!isInfo && (
@@ -59,12 +59,12 @@ export default function SendFoxAuthorization({ formID, sendFoxConf, setSendFoxCo
             type="button"
             disabled={isAuthorized || isLoading}
           >
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bit-integrations')}
+            {__('Next')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </>

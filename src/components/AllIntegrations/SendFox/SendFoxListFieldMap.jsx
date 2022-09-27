@@ -30,13 +30,13 @@ export default function SendFoxListFieldMap({ i, formFields, field, sendFoxConf,
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
           <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleListFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
                 formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
               }
             </optgroup>
-            <option value="custom">{__('Custom...', 'bit-integrations')}</option>
+            <option value="custom">{__('Custom...')}</option>
             <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
               {isPro && SmartTagField?.map(f => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -47,10 +47,10 @@ export default function SendFoxListFieldMap({ i, formFields, field, sendFoxConf,
 
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleListCustomValue(e, i, sendFoxConf, setSendFoxConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} />}
+          {field.formField === 'custom' && <MtInput onChange={e => handleListCustomValue(e, i, sendFoxConf, setSendFoxConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
           <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="sendFoxListFormField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.sendFoxListFormField || '')} onChange={(ev) => handleListFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
                 <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
