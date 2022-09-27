@@ -275,7 +275,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(!isStyleNotLoaded && { style: JCOF.stringify(allStyles) }),
       ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
       ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
-      ...(!isStyleNotLoaded && { atomicClassMap: JCOF.stringify(atomicClassMap) }),
+      ...(!isStyleNotLoaded && { atomicClassMap }),
       breakpointSize,
       customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
