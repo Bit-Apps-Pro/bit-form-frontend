@@ -16,7 +16,7 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
           <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
 
@@ -27,7 +27,7 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
                 ))
               }
             </optgroup>
-            <option value="custom">{__('Custom...', 'bit-integrations')}</option>
+            <option value="custom">{__('Custom...')}</option>
             <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
               {isPro && SmartTagField?.map(f => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -38,10 +38,10 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
 
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, twilioConf, setTwilioConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} />}
+          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, twilioConf, setTwilioConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
           <select className="btcd-paper-inp" disabled name="twilioField" value={field.twilioField} onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            <option value="">{__('Select Field')}</option>
             {
               twilioConf?.twilioFields.map(({ key, label }) => (
                 <option key={key} value={key}>

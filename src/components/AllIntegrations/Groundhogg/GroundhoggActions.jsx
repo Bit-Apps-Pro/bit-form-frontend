@@ -58,20 +58,20 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
   return (
     <div className="pos-rel d-flx w-8">
       <TitleModal action={openReminderMdl}>
-        <TableCheckBox checked={groundhoggConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tag')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Add Tags', 'bit-integrations')} subTitle={__('Add Contact Tag', 'bit-integrations')} />
+        <TableCheckBox checked={groundhoggConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tag')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Add Tags')} subTitle={__('Add Contact Tag')} />
       </TitleModal>
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
+        btnTxt={__('Ok')}
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}
+        title={__('Tags')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
+        <div className="mt-2">{__('Select tag')}</div>
         {isLoading
           ? (
             <Loader style={{
@@ -92,7 +92,7 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
                 onChange={val => onSelectHandler(val)}
                 customValue
               />
-              <button onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)} className="icn-btn sh-sm ml-2 mr-4 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)} className="icn-btn sh-sm ml-2 mr-4 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
 

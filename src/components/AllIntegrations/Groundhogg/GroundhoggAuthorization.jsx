@@ -36,16 +36,16 @@ export default function GroundhoggAuthorization({ formID, groundhoggConf, setGro
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={groundhoggConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={groundhoggConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
-      <div className="mt-3"><b>{__('Your Domain Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="domainName" value={groundhoggConf.domainName} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Your Domain Name:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="domainName" value={groundhoggConf.domainName} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
 
-      <div className="mt-3"><b>{__('Public Key:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="public_key" value={groundhoggConf.public_key} type="text" placeholder={__('Public Key...', 'bit-integrations')} disabled={isInfo} />
-      <div className="mt-3"><b>{__('Token:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="token" value={groundhoggConf.token} type="text" placeholder={__('Token...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Public Key:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="public_key" value={groundhoggConf.public_key} type="text" placeholder={__('Public Key...')} disabled={isInfo} />
+      <div className="mt-3"><b>{__('Token:')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="token" value={groundhoggConf.token} type="text" placeholder={__('Token...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
@@ -64,12 +64,12 @@ export default function GroundhoggAuthorization({ formID, groundhoggConf, setGro
             type="button"
             disabled={isAuthorized || isLoading}
           >
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bit-integrations')}
+            {__('Next')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
         </>

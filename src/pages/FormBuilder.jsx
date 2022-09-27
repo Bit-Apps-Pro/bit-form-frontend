@@ -28,6 +28,7 @@ import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLates
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
+import { JCOF } from '../Utils/globalHelpers'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -117,9 +118,9 @@ const FormBuilder = ({ isLoading }) => {
 
     if (isV2Form && !isNewForm) {
       const { themeVars, themeColors, style: oldAllStyles } = oldStyles
-      setAllThemeColors(themeColors)
-      setAllThemeVars(themeVars)
-      setAllStyles(oldAllStyles)
+      setAllThemeColors(JCOF.parse(themeColors))
+      setAllThemeVars(JCOF.parse(themeVars))
+      setAllStyles(JCOF.parse(oldAllStyles))
 
       setSavedStylesAndVars({
         allThemeColors: themeColors,

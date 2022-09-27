@@ -106,7 +106,7 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bit-integrations')}
+          {__('Next')}
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

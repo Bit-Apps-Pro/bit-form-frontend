@@ -112,7 +112,7 @@ function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
           disabled={isDisabled(sendFoxConf)}
         >
-          {__('Next', 'bit-integrations')}
+          {__('Next')}
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

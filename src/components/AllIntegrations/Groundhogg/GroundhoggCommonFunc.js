@@ -44,15 +44,15 @@ export const checkMetaMappedFields = (groundhoggConf) => {
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
   if (!confTmp.public_key) {
-    setError({ public_key: !confTmp.public_key ? __('Public Key can\'t be empty', 'bit-integrations') : '' })
+    setError({ public_key: !confTmp.public_key ? __('Public Key can\'t be empty') : '' })
     return
   }
   if (!confTmp.token) {
-    setError({ token: !confTmp.token ? __('token can\'t be empty', 'bit-integrations') : '' })
+    setError({ token: !confTmp.token ? __('token can\'t be empty') : '' })
     return
   }
   if (!confTmp.domainName) {
-    setError({ domainName: !confTmp.domainName ? __('Domain Name can\'t be empty', 'bit-integrations') : '' })
+    setError({ domainName: !confTmp.domainName ? __('Domain Name can\'t be empty') : '' })
     return
   }
   setError({})
@@ -67,11 +67,11 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         setConf(newConf)
         setisAuthorized(true)
         setIsLoading(false)
-        toast.success(__('Authorization Successful', 'bit-integrations'))
+        toast.success(__('Authorization Successful'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Authorization Failed', 'bit-integrations'))
+      toast.error(__('Authorization Failed'))
     })
 }
 
@@ -92,11 +92,11 @@ export const fetchAllTags = (formID, groundhoggConf, setGroundhoggConf, setIsLoa
         }
         setGroundhoggConf({ ...newConf })
         setIsLoading(false)
-        toast.success(__('Groundhogg all tag fetched successfully', 'bit-integrations'))
+        toast.success(__('Groundhogg all tag fetched successfully'))
         return
       }
       setIsLoading(false)
-      toast.error(__('Failed to fetch groundhoggtag', 'bit-integrations'))
+      toast.error(__('Failed to fetch groundhoggtag'))
     })
     .catch(() => setIsLoading(false))
 }
