@@ -52,7 +52,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
           {subtitle !== undefined && <small>{subtitle}</small>}
         </div>
         {toggle && (
-          <SingleToggle2 action={action} checked={checked} className="flx" />)}
+          <SingleToggle2 action={action} checked={checked || undefined} className="flx" />)}
         <Button icn>
           <ChevronDownIcn size="20" rotate={!!tgl} />
         </Button>

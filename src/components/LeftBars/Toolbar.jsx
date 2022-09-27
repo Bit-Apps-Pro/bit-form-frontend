@@ -823,18 +823,41 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             className={css(Toolbars.search_field)}
           />
           {!!searchData.length && (
-            <span title="clear" className={css(Toolbars.clear_icn)} role="button" tabIndex="-1" onClick={clearSearch} onKeyPress={clearSearch}>&nbsp;</span>
+            <span
+              title="clear"
+              className={css(Toolbars.clear_icn)}
+              role="button"
+              tabIndex="-1"
+              onClick={clearSearch}
+              onKeyPress={clearSearch}
+            >
+              &nbsp;
+            </span>
           )}
 
           <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
 
-          {!searchData.length && (<div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "Ctrl+/" to focus search'}>Ctrl+/</div>)}
+          {!searchData.length && (
+            <div
+              className={`${css(Toolbars.shortcut)} shortcut`}
+              title={'Press "Ctrl+/" to focus search'}
+            >
+              Ctrl+/
+            </div>
+          )}
         </div>
         {!focusSearch
           && (
-            <button title="Sort by ascending order" data-testid="tlbr-sort-btn" className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
+            <button
+              title="Sort by ascending order"
+              data-testid="tlbr-sort-btn"
+              className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`}
+              type="button"
+              onClick={sortingField}
+              aria-label="Sort Fields"
+            >
               <AtoZSortIcn size="20" />
             </button>
           )}
