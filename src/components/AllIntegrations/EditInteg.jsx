@@ -8,6 +8,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import app from '../../styles/app.style'
 import ChevronLeft from '../../Icons/ChevronLeft'
+import customInputControlStyle from '../../styles/customInputControl.style'
 
 const EditZohoAnalytics = lazy(() => import('./ZohoAnalytics/EditZohoAnalytics'))
 const EditZohoBigin = lazy(() => import('./ZohoBigin/EditZohoBigin'))
@@ -60,7 +61,7 @@ export default function EditInteg({ allIntegURL }) {
   const formFields = useRecoilValue($fieldsArr)
   const { css } = useFela()
 
-  const IntegType = () => {
+  const renderIntegByType = () => {
     switch (integrations[id].type) {
       case 'Zoho CRM':
         return <EditZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
@@ -151,7 +152,7 @@ export default function EditInteg({ allIntegURL }) {
       default:
         break
     }
-    return ''
+    return null
   }
 
   return (
@@ -167,7 +168,7 @@ export default function EditInteg({ allIntegURL }) {
         </div>
       </div>
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
-        <IntegType />
+        {renderIntegByType()}
       </Suspense>
     </div>
   )

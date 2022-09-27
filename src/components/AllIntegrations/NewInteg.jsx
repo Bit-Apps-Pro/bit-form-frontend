@@ -60,7 +60,7 @@ export default function NewInteg({ allIntegURL }) {
   const formFields = useRecoilValue($fieldsArr)
   const { css } = useFela()
 
-  const NewIntegs = () => {
+  const renderIntegByName = () => {
     switch (integUrlName) {
       case 'Zoho CRM':
         return <ZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
@@ -149,8 +149,9 @@ export default function NewInteg({ allIntegURL }) {
       case 'Twilio':
         return <Twilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
-        return <></>
+        break
     }
+    return null
   }
 
   return (
@@ -167,7 +168,7 @@ export default function NewInteg({ allIntegURL }) {
       </div>
 
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
-        <NewIntegs />
+        {renderIntegByName()}
       </Suspense>
     </div>
   )
