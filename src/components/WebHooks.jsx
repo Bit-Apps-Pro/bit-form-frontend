@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo, useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -223,18 +223,7 @@ function WebHooks({ removeIntegration }) {
                   </select>
                 </div>
               </div>
-              <Button onClick={() => testWebhook(i)} className={css(app.btn, app.btn_blue_otln)}>
-                {__('Test Webhook')}
-                {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
-                <ExternalLinkIcn size={18} className="ml-1" />
-              </Button>
-              <br />
-              <div className="wh-resp-box">
-                <div className="f-m wh-resp-box-title">{__('Response:')}</div>
-                <div className="wh-resp-box-content" ref={addToRefs}> Test Webhook to see the response.</div>
-              </div>
-              <br />
-              <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
+              <div className="f-m mt-2">{__('Add Url Parameter: (optional)')}</div>
               <div className="btcd-param-t-wrp mt-1">
                 <div className="btcd-param-t">
                   <div className="tr">
@@ -266,6 +255,17 @@ function WebHooks({ removeIntegration }) {
                   <Button onClick={() => addParam(i)} className="add-pram" icn><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button>
                 </div>
               </div>
+              <Button onClick={() => testWebhook(i)} className={css(app.btn, app.btn_blue_otln)}>
+                {__('Test Webhook')}
+                {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
+                <ExternalLinkIcn size={18} className="ml-1" />
+              </Button>
+              <br />
+              <div className="wh-resp-box">
+                <div className="f-m wh-resp-box-title">{__('Response:')}</div>
+                <div className="wh-resp-box-content" ref={addToRefs}> Test Webhook to see the response.</div>
+              </div>
+              <br />
             </Accordions>
             <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><TrashIcn size={16} /></Button>
           </div>
