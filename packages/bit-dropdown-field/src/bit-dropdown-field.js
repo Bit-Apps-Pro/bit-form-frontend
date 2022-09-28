@@ -37,7 +37,7 @@ export default class BitDropdownField {
 
   #config = {
     separator: '\n',
-    selectedOptImage: true,
+    selectedOptImage: false,
     dropdownIcn: '',
     selectedOptClearable: true,
     searchClearable: true,
@@ -46,7 +46,7 @@ export default class BitDropdownField {
     placeholder: 'Select an option',
     searchPlaceholder: 'Search option',
     maxHeight: 370,
-    closeOnSelect: true,
+    closeOnSelect: false,
     options: [],
     attributes: {},
     classNames: {},
@@ -92,8 +92,8 @@ export default class BitDropdownField {
     this.#initOptionsList()
     this.#config.defaultValue && this.setSelectedOption(this.#config.defaultValue)
 
-    if (this.#config.dropdownIcn) {
-      this.#selectedOptImgElm.src = this.#config.dropdownIcn
+    if (this.#config.selectedOptImage) {
+      this.#selectedOptImgElm.src = this.#placeholderImage
     }
 
     if (this.#config.searchClearable) {
@@ -107,10 +107,10 @@ export default class BitDropdownField {
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
 
     this.allowCustomOption = this.#config.allowCustomOption
-    if (this.allowCustomOption) {
-      // this.#customOption = this.#select(`.${this.fieldKey}-create-opt`)
-      // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
-    }
+    // if (this.allowCustomOption) {
+    // this.#customOption = this.#select(`.${this.fieldKey}-create-opt`)
+    // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
+    // }
 
     observeElm(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
@@ -240,7 +240,7 @@ export default class BitDropdownField {
       if (value) obj.val = value
       if (this.#containsClass(opt, 'disabled-opt')) obj.disabled = true
       const imgElm = opt.querySelector('.opt-icn')
-      if (this.#config.dropdownIcn && imgElm?.src) {
+      if (this.#config.selectedOptImage && imgElm?.src) {
         obj.img = imgElm.src
       }
       const { attributes } = opt
@@ -325,14 +325,14 @@ export default class BitDropdownField {
     if (this.#config.selectedOptImage) {
       if (this.#config.multipleSelect) {
         if (valueArr.length > 1) {
-          this.#selectedOptImgElm.src = this.#config.selectedOptImgSrc
+          this.#selectedOptImgElm.src = this.#placeholderImage
         } else if (valueArr.length === 1) {
-          this.#selectedOptImgElm.src = selectedItem.img
+          this.#selectedOptImgElm.src = selectedItem.img || this.#placeholderImage
         } else {
           this.#selectedOptImgElm.src = this.#placeholderImage
         }
       } else {
-        this.#selectedOptImgElm.src = selectedItem.img
+        this.#selectedOptImgElm.src = selectedItem.img || this.#placeholderImage
       }
     }
 
@@ -445,12 +445,11 @@ export default class BitDropdownField {
     elm?.setAttribute?.(name, value)
   }
 
-  #setCustomAttr(element, obj) {
-    const optObjKey = Object.keys(obj)
-    const optLen = optObjKey.length
+  #setCustomAttr(element, objArr) {
+    const optLen = objArr.length
     if (optLen) {
       for (let i = 0; i < optLen; i += 1) {
-        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+        this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
   }

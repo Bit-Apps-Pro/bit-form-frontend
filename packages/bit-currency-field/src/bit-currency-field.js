@@ -472,11 +472,11 @@ export default class BitCurrencyField {
     elm?.setAttribute?.(name, value)
   }
 
-  #setCustomAttr(element, objs) {
-    const optLen = objs.length
+  #setCustomAttr(element, objArr) {
+    const optLen = objArr.length
     if (optLen) {
       for (let i = 0; i < optLen; i += 1) {
-        this.#setAttribute(element, objs[i].key, objs[i].value)
+        this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
   }
