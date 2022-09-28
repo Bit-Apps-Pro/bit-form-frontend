@@ -193,7 +193,7 @@ function AllFroms() {
 
     toast.promise(loadDuplicate, {
       success: msg => msg,
-      error: __('Error Occured', 'bit-form'),
+      error: __('Error Occured'),
       loading: __('duplicate...'),
     })
   }

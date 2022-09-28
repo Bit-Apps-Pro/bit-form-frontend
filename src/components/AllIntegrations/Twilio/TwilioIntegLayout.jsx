@@ -6,11 +6,11 @@ export default function TwilioIntegLayout({ formFields, handleInput, twilioConf,
   return (
     <>
       <br />
-      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+      <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-        <div className="txt-dp"><b>{__('Twilio Fields', 'bit-integrations')}</b></div>
+        <div className="txt-dp"><b>{__('Form Fields')}</b></div>
+        <div className="txt-dp"><b>{__('Twilio Fields')}</b></div>
       </div>
 
       {twilioConf?.field_map.map((itm, i) => (

@@ -20,7 +20,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     selectedCurrencyClearable,
     searchClearable,
     optionFlagImage,
-    defaultValue,
+    defaultCurrencyKey,
     searchPlaceholder,
     noCurrencyFoundText } = fieldData.config
 
@@ -44,7 +44,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       selectedCurrencyClearable,
       searchClearable,
       optionFlagImage,
-      defaultValue,
+      defaultCurrencyKey,
       searchPlaceholder,
       noCurrencyFoundText,
       options,
@@ -74,8 +74,6 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     if (!window.observeElm) {
       window.observeElm = observeElm
     }
-    const alreadyChecked = options.find(opt => opt.check)
-    if (alreadyChecked) configOptions.defaultCurrencyKey = alreadyChecked.i
     currencyFieldRef.current = new BitCurrencyField(fldElm, configOptions)
   }, [fieldData])
 

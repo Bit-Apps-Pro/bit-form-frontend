@@ -89,8 +89,8 @@ export default class BitDropdownField {
 
     this.#addEvent(this.#dropdownFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
-    // this.#config.defaultValue && this.setSelectedOption(this.#config.defaultValue)
     this.#initOptionsList()
+    this.#config.defaultValue && this.setSelectedOption(this.#config.defaultValue)
 
     if (this.#config.dropdownIcn) {
       this.#selectedOptImgElm.src = this.#config.dropdownIcn

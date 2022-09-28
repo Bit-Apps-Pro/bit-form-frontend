@@ -1,11 +1,14 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -18,6 +21,7 @@ import EmailNotification from '../../WPAuth/EmailNotification'
 import RedirectEmailVerified from '../../WPAuth/Registration/RedirectEmailVerified'
 
 export default function DoubleOptin() {
+  const { css } = useFela()
   const [tem, setTem] = useState(
     {
       sub: 'Confirm the submission',
@@ -173,18 +177,35 @@ export default function DoubleOptin() {
                 </div> */}
 
                 <div className="flx">
-                  <SingleToggle2 name="auto_unconfirmed_deleted" action={(e) => toggleHandle(e, 'auto_unconfirmed_deleted')} checked={'auto_unconfirmed_deleted' in tem} className="flx" />
-
+                  <SingleToggle2
+                    name="auto_unconfirmed_deleted"
+                    action={(e) => toggleHandle(e, 'auto_unconfirmed_deleted')}
+                    checked={'auto_unconfirmed_deleted' in tem}
+                    className="flx"
+                  />
                   <label htmlFor="auto_unconfirmed_deleted">
                     {__('Delete the unconfirmed entries from responses after days: ')}
                   </label>
                   &nbsp;
-                  <input onChange={handleInput} name="day" value={tem?.day || 1} disabled={!tem.auto_unconfirmed_deleted} className="btcd-paper-inp mr-2 wdt-100" placeholder="1" type="number" min="1" />
-
+                  <input
+                    onChange={handleInput}
+                    name="day"
+                    value={tem?.day || 1}
+                    disabled={!tem.auto_unconfirmed_deleted}
+                    className="btcd-paper-inp mr-2 wdt-100"
+                    placeholder="1"
+                    type="number"
+                    min="1"
+                  />
                 </div>
 
                 <div className="mt-2 flx">
-                  <SingleToggle2 name="disable_loggin_user" action={(e) => toggleHandle(e, 'disable_loggin_user')} checked={'disable_loggin_user' in tem} className="flx" />
+                  <SingleToggle2
+                    name="disable_loggin_user"
+                    action={(e) => toggleHandle(e, 'disable_loggin_user')}
+                    checked={'disable_loggin_user' in tem}
+                    className="flx"
+                  />
                   <label htmlFor="disable_loggin_user">
                     {__('Disable double opt-in confirmation for logged in users.')}
                   </label>
@@ -197,11 +218,20 @@ export default function DoubleOptin() {
                   </div>
                 </div> */}
                 <div className="mt-4 flx">
-                  <SingleToggle2 name="dflt_temp" action={(e) => toggleHandle(e, 'dflt_temp')} checked={!!tem?.dflt_temp} className="flx" />
+                  <SingleToggle2
+                    name="dflt_temp"
+                    action={(e) => toggleHandle(e, 'dflt_temp')}
+                    checked={!!tem?.dflt_temp}
+                    className="flx"
+                  />
                   <label htmlFor="dflt_temp">
                     {__('Configure default confirmation email template')}
                   </label>
-                  <Cooltip className="ml-1" icnSize={14} width={600}>
+                  <Cooltip
+                    className="ml-1"
+                    icnSize={14}
+                    width={600}
+                  >
                     {__('By disabling this option, you can configure the double opt-in confirmation email from Conditional Logics manually.')}
                   </Cooltip>
                 </div>
@@ -210,12 +240,18 @@ export default function DoubleOptin() {
                     <div className="w-5 mt-4">
                       <b>Email</b>
                       <br />
-                      <select className="btcd-paper-inp mt-1 w-9" name="fldkey" value={tem?.fldkey} onChange={handleInput}>
-                        <option selected disabled>{__('Select Email Field')}</option>
+                      <select
+                        className="btcd-paper-inp mt-1 w-9"
+                        name="fldkey"
+                        value={tem?.fldkey}
+                        defaultValue="empty"
+                        onChange={handleInput}
+                      >
+                        <option disabled value="empty">{__('Select Email Field')}</option>
                         {
                           formFields?.filter(fld => (fld.type === 'email')).map(header => (
                             <option key={`${header.key}-1`} value={header.key}>
-                              {`${header.name}`}
+                              {header.name}
                             </option>
                           ))
                         }
@@ -223,28 +259,41 @@ export default function DoubleOptin() {
 
                     </div>
                     <div className="flx">
-                      <div>
-                        <button type="button" className="btn" onClick={() => setDfltTamMdl(true)}>
-                          <EditIcn size={18} />
-                          &nbsp;
-                          {__('Customize Email template')}
-                        </button>
-                        <EmailNotification
-                          dataConf={tem}
-                          setDataConf={setTem}
-                          showMdl={dfltTampMdl}
-                          setshowMdl={setDfltTamMdl}
-                          title="Customize Email template"
-                        />
-                      </div>
+                      <button
+                        type="button"
+                        className={css(app.btn)}
+                        onClick={() => setDfltTamMdl(true)}
+                      >
+                        <EditIcn size={18} />
+                        &nbsp;
+                        {__('Customize Email template')}
+                      </button>
+                      <EmailNotification
+                        dataConf={tem}
+                        setDataConf={setTem}
+                        showMdl={dfltTampMdl}
+                        setshowMdl={setDfltTamMdl}
+                        title="Customize Email template"
+                      />
                       {tem?.dflt_temp && (
                         <div className="ml-2">
-                          <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
+                          <button
+                            type="button"
+                            className={css(app.btn)}
+                            onClick={() => setCustomRedirectMdl(true)}
+                          >
                             <EditIcn size={18} />
                             &nbsp;
                             {__('Edit verification messages')}
                           </button>
-                          <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Edit verification messages" />
+                          <RedirectEmailVerified
+                            dataConf={tem}
+                            setDataConf={setTem}
+                            showMdl={customRedirectMdl}
+                            setCustomRedirectMdl={setCustomRedirectMdl}
+                            pages={allPages}
+                            title="Edit verification messages"
+                          />
                         </div>
                       )}
                     </div>
@@ -267,7 +316,14 @@ export default function DoubleOptin() {
                         &nbsp;
                         {__('Edit verification messages')}
                       </button>
-                      <RedirectEmailVerified dataConf={tem} setDataConf={setTem} showMdl={customRedirectMdl} setCustomRedirectMdl={setCustomRedirectMdl} pages={allPages} title="Show after verification" />
+                      <RedirectEmailVerified
+                        dataConf={tem}
+                        setDataConf={setTem}
+                        showMdl={customRedirectMdl}
+                        setCustomRedirectMdl={setCustomRedirectMdl}
+                        pages={allPages}
+                        title="Show after verification"
+                      />
                     </div>
                   </>
                 )}
@@ -282,7 +338,7 @@ export default function DoubleOptin() {
                 type="button"
                 id="secondary-update-btn"
                 onClick={saveSettings}
-                className="btn btcd-btn-lg blue flx"
+                className={`${css(app.btn)} btcd-btn-lg blue flx`}
                 disabled={isLoading}
               >
                 {__('Save ')}

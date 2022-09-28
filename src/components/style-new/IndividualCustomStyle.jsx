@@ -51,7 +51,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const { css } = useFela()
   const [stateController, setStateController] = useState('')
 
-  const elementKey = getActualElementKey(elmKey, fieldObj.typ)
+  const elementKey = getActualElementKey(elmKey, fieldObj?.typ)
 
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
@@ -209,7 +209,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const fldZIndexHandler = (value) => updateHandler(value, '', '', 'z-index')
 
   const addDynamicCssProps = (property, state = '') => {
-    const configProperty = editorConfig[fieldType][elementKey].properties[property]
+    const configProperty = editorConfig?.[fieldType]?.[elementKey]?.properties[property]
     if (typeof configProperty === 'object') {
       Object.keys(configProperty).map(prop => {
         if (configProperty[prop]) {
@@ -311,7 +311,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const options = [
     { label: 'Default', icn: 'Default', show: ['icn'], tip: 'Default Style' },
   ]
-  const { states } = editorConfig[fieldType][elementKey]
+  const { states } = editorConfig[fieldType][elementKey] || {}
   states?.map(state => {
     const stateLabel = state ? ucFirst(state) : 'Default'
     options.push({ label: stateLabel, icn: stateLabel, show: ['icn'], tip: `${stateLabel} Style` })
@@ -1159,7 +1159,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         </div>
       </Grow>
       {
-        states.map((state, i) => (
+        states?.map((state, i) => (
           // eslint-disable-next-line react/no-array-index-key
           <Grow overflw="" key={`grow-${i}`} open={stateController.toLowerCase() === state}>
             <div className={css(cls.space)}>

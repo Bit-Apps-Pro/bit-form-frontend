@@ -70,6 +70,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-width'] = ''
           drftStyle['--inp-wrp-width'] = ''
           drftStyle['--lbl-wrp-sa'] = ''
+          drftStyle['--fld-wrp-width'] = ''
         }))
         setOpenVarPos(false)
         reCalculateFldHeights()
@@ -80,6 +81,7 @@ export default function LabelControlMenu() {
           drftStyle['--fld-wrp-fdir'] = ''
           drftStyle['--lbl-wrp-width'] ||= '40%'
           drftStyle['--inp-wrp-width'] = '100%'
+          drftStyle['--fld-wrp-width'] = '100%'
         }))
         setOpenVarPos(true)
         reCalculateFldHeights()
@@ -90,6 +92,7 @@ export default function LabelControlMenu() {
           drftStyle['--fld-wrp-fdir'] = 'row-reverse'
           drftStyle['--lbl-wrp-width'] ||= '40%'
           drftStyle['--inp-wrp-width'] = '60%'
+          drftStyle['--fld-wrp-width'] = '100%'
         }))
         setOpenVarPos(true)
         reCalculateFldHeights()

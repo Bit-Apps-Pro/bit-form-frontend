@@ -19,7 +19,8 @@ export default function StyleLayers() {
   const styles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
   const navigate = useNavigate()
-  const { formID, formType, fieldKey } = useParams()
+  const { formID, formType, '*': rightBar } = useParams()
+  const fieldKey = rightBar.split('/')[2]
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
   const styleHandler = (route, fldKey = null, fldData = null) => {

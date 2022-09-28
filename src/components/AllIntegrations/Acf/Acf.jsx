@@ -108,7 +108,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         youTubeLink={tutorialLinks.acf.link}
       />
 
-      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
 
       <div className="mt-3 flx">

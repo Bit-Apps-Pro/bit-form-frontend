@@ -7,7 +7,7 @@ export default function snackbarFade(position) {
       },
       ...position === 'top-center' && {
         left: '50%',
-        'margin-left': '-200px',
+        transform: 'translateX(-50%)',
         top: '30px',
       },
       ...position === 'top-right' && {
@@ -20,7 +20,7 @@ export default function snackbarFade(position) {
       },
       ...position === 'bottom-center' && {
         left: '50%',
-        'margin-left': '-200px',
+        transform: 'translateX(-50%)',
         bottom: '30px',
       },
       ...position === 'bottom-right' && {

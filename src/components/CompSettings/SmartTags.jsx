@@ -28,7 +28,7 @@ function SmartTags({ fieldName }) {
           <h4 style={{ margin: 0 }}>Form Fields</h4>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha|title)$/)
             && (
-              <li className={css(style.li)}>
+              <li key={f.key} className={css(style.li)}>
                 <button
                   type="button"
                   className={`${css(style.button)} btnHover`}

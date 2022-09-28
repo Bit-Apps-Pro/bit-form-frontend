@@ -4,32 +4,32 @@ import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { roundArrow } from 'tippy.js'
-import 'tippy.js/dist/tippy.css'
-import 'tippy.js/dist/svg-arrow.css'
-import 'tippy.js/themes/light-border.css'
 import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
+import 'tippy.js/dist/svg-arrow.css'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/themes/light-border.css'
 
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { $fieldsArr, $reportId, $reports, $bits, $reportSelector } from '../../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $reportId, $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
+import EditIcn from '../../Icons/EditIcn'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
 import OutlineDeleteIcn from '../../Icons/OutlineDeleteIcn'
-import OutlineEditIcn from '../../Icons/OutlineEditIcn'
 import PlusIcn from '../../Icons/PlusIcn'
 import RefreshIcn from '../../Icons/RefreshIcn'
 import SearchIcn from '../../Icons/SearchIcn'
+import ut from '../../styles/2.utilities'
+import tableStyle from '../../styles/table.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import LoaderSm from '../Loaders/LoaderSm'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import Modal from '../Utilities/Modal'
-import ConditionalLogic from './ConditionalLogic'
-import LoaderSm from '../Loaders/LoaderSm'
 import SnackMsg from '../Utilities/SnackMsg'
-import EditIcn from '../../Icons/EditIcn'
-import tableStyle from '../../styles/table.style'
 import Tip from '../Utilities/Tip'
+import ConditionalLogic from './ConditionalLogic'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -268,14 +268,19 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             interactive="true"
             placement="bottom"
             appendTo="parent"
-            className="report-tippy-box"
+            className={css(reportSearch.reportTippyBox)}
             content={(
-              <div style={{ height: 250 }}>
-                <div className="ml-1 mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
-                <div className="report-search mb-3">
+              <div style={{ height: 250, padding: 5 }}>
+                <div className="mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
+                <div className={css(reportSearch.reportBox, ut.mb2)}>
                   <span><SearchIcn size="16" /></span>
-                  <input aria-label="Search reports" type="text" placeholder="Search filters" onChange={searchReport} className="dpdw-input-box" />
-
+                  <input
+                    aria-label="Search reports"
+                    type="text"
+                    placeholder="Search filters"
+                    onChange={searchReport}
+                    className={css(reportSearch.dpdwInputBox)}
+                  />
                 </div>
                 {availableReports.length === 0 && (
                   <div style={{ color: '#000' }}>No matching report found</div>
@@ -283,19 +288,38 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                 <Scrollbars style={{ height: '70%' }} autoHide>
                   <div>
                     {availableReports?.map((report, indx) => (
-                      <div key={`fld-condition-${indx * 5}`} className={`mt-1  report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}>
-                        <button type="button" className="report-content-btn-item" disabled={report.value === currentReport?.id} title={report?.label} onClick={() => handleInput(report.value)}>
+                      <div
+                        key={`fld-condition-${indx * 5}`}
+                        className={`report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}
+                      >
+                        <button
+                          type="button"
+                          className="report-content-btn-item"
+                          disabled={report.value === currentReport?.id}
+                          title={report?.label}
+                          onClick={() => handleInput(report.value)}
+                        >
                           {report?.label?.length > 14 ? (
                             `${report?.label?.slice(0, 14)}...`
                           ) : (report?.label)}
                         </button>
                         {(report.isDefault.toString() === '0') && (
                           <div className="show_tippy_action">
-                            <button className="icn-btn sm" title="Edit" onClick={() => editCurrentReport(report.value)} type="button">
+                            <button
+                              className="icn-btn sm"
+                              title="Edit"
+                              onClick={() => editCurrentReport(report.value)}
+                              type="button"
+                            >
                               <EditIcn size={17} />
                             </button>
                             {report.value !== currentReport?.id && (
-                              <button className="icn-btn sm" title="Delete" onClick={() => deleteReportAlert(report.value)} type="button">
+                              <button
+                                className="icn-btn sm"
+                                title="Delete"
+                                onClick={() => deleteReportAlert(report.value)}
+                                type="button"
+                              >
                                 <OutlineDeleteIcn size={12} />
                               </button>
                             )}
@@ -313,14 +337,35 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             </button>
           </Tippy>
 
-          <Modal md show={showMdl} setModal={setshowMdl} title="Report" style={{ overflow: 'auto' }} onCloseMdl={onCloseMdl}>
+          <Modal
+            md
+            show={showMdl}
+            setModal={setshowMdl}
+            title="Report"
+            style={{ overflow: 'auto' }}
+            onCloseMdl={onCloseMdl}
+          >
             <>
               <div className="flx mt-4">
-                <label htmlFor="Name">Name</label>
-                <input aria-label="Report name" type="text" name="report_name" value={reports[reportIndex]?.details?.report_name || ''} onChange={reportHandler} placeholder="Please enter report name" className="ml-2 btcd-paper-inp w-6" />
+                <label htmlFor="name">Name</label>
+                <input
+                  id="name"
+                  aria-label="Report name"
+                  type="text"
+                  name="report_name"
+                  value={reports[reportIndex]?.details?.report_name || ''}
+                  onChange={reportHandler}
+                  placeholder="Please enter report name"
+                  className="ml-2 btcd-paper-inp w-6"
+                />
               </div>
               <div className="mt-4">
-                <ConditionalLogic formFields={formFields} dataConf={reports} setDataConf={setReports} reportInd={reportIndex || 0} />
+                <ConditionalLogic
+                  formFields={formFields}
+                  dataConf={reports}
+                  setDataConf={setReports}
+                  reportInd={reportIndex || 0}
+                />
               </div>
               <div className="mt-2 f-left">
                 <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
@@ -354,11 +399,53 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
               {proModal.msg}
             </h4>
             <div className="txt-center">
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
+              <a
+                href="https://www.bitapps.pro/bit-form"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button>
+              </a>
             </div>
           </Modal>
         </div>
       </div>
     </>
   )
+}
+const reportSearch = {
+  reportTippyBox: {
+    bm: '7px',
+    bds: '8px !important',
+    mnw: '241px !important',
+  },
+  reportBox: {
+    pn: 'relative',
+    '& span': {
+      clr: 'hsla(0, 0%, 50%, 100%)',
+      pn: 'absolute !important',
+      tp: 7,
+      lt: 6,
+      ':foucs': { bcr: 'var(--b-92-62) !important' },
+    },
+  },
+  dpdwInputBox: {
+    bxs: 'border-box',
+    b: '1px solid #E6E6E6!important',
+    brs: '8px!important',
+    p: '3px 0 3px 24px!important',
+    ff: 'Montserrat',
+    fts: 'normal',
+    fw: 500,
+    fs: 12,
+    lh: 15,
+    w: '100%',
+    mnh: 'auto!important',
+    oe: 'none!important',
+    tn: '0.1s all ease',
+    '&:focus': {
+      '& ~ span svg': { cr: 'var(--b-50)' },
+      focusShadow: 1,
+    },
+  },
 }

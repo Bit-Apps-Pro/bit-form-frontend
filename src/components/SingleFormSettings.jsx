@@ -536,7 +536,7 @@ export default function SingleFormSettings() {
         cls="w-6 mt-3"
         toggle
         action={(e) => setAccordingEnable(e, 'empty_submission', 'Empty Submission')}
-        checked={additionalSetting?.enabled?.empty_submission}
+        checked={additionalSetting?.enabled?.empty_submission || undefined}
       >
         <div className="mb-2 ml-2">
           <b>Error message</b>

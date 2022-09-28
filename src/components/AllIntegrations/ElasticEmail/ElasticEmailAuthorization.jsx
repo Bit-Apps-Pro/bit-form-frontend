@@ -4,9 +4,11 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { getAllList } from './ElasticEmailCommonFunc'
+
 
 export default function ElasticEmailAuthorization({ elasticEmailConf, setElasticEmailConf, step, setstep, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -59,7 +61,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
         youTubeLink={tutorialLinks.elasticemail.link}
       />
 
-      <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name:')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
       <div className="mt-3"><b>{__('API Key:')}</b></div>
