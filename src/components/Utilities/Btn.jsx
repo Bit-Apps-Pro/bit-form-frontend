@@ -1,13 +1,21 @@
 import { useFela } from 'react-fela'
 
 export default function Btn({ children,
-  className, size = 'md', varient = 'default', width = 'auto', gap, shadow, onClick }) {
+  className,
+  size = 'md',
+  varient = 'default',
+  width = 'auto',
+  gap,
+  shadow,
+  disabled,
+  onClick }) {
   const { css } = useFela()
   const shado = shadow === true ? 'shadow' : shadow
   return (
     <button
       style={{ width, gap }}
       type="button"
+      disabled={disabled}
       className={`${css([btnStyle.btn, btnStyle[size], btnStyle[varient], btnStyle[shado]])} ${shadow && css(btnStyle.shadow)} ${className}`}
       onClick={onClick}
     >
@@ -20,6 +28,7 @@ const btnStyle = {
     fw: 700,
     b: 'none',
     brs: 8,
+    bd: 'transparent',
     cur: 'pointer',
     oe: 'none',
     flx: 'center',
@@ -102,4 +111,5 @@ const btnStyle = {
     ':focus': { bs: '0 0 0 0.2rem hsla(0, 100%, 50%, 0.548)' },
   },
   shadow: { bs: '0 2px 4px -2px hsla(0, 0%, 0%, 40%)  ' },
+  rounded: { brs: '50%', p: '8px 14px' },
 }
