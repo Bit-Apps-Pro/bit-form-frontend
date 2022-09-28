@@ -11,10 +11,32 @@ export default function atomicStyleGenarate(sortedLayout) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
-  const ignoreWithFallbackValues = {}
-  const invalidPropValue = {}
-  const atomizeCssConfig = {
-    classPrefix: atomicClassPrefix,
+  const ignoreWithFallbackValues = {
+    position: 'unset',
+    right: 'unset',
+    left: 'unset',
+    'justify-content': 'initial',
+    'border-style': 'medium',
+    'border-width': '0',
+    'background-color': 'transparent',
+    'border-radius': '0',
+    border: 'medium none',
+    'box-shadow': 'none',
+    margin: '0',
+    padding: '0',
+    'text-align': 'init',
+    color: 'inherit',
+    display: 'block',
+    'flex-direction': 'row',
+    'align-self': 'auto',
+    width: 'auto',
+  }
+  const invalidPropValue = {
+    'border-color': 'none',
+    'background-color': 'none',
+  }
+  const atomizeCssConfig = { classPrefix: atomicClassPrefix }
+  const cssFilterConfig = {
     ignoreWithFallbackValues,
     invalidPropValue,
   }
@@ -61,6 +83,10 @@ export default function atomicStyleGenarate(sortedLayout) {
   const lightThemeColors = themeColorsLight
   const darkThemeColors = getOneLvlObjDiff(lightThemeColors, themeColorsDark)
 
+  console.log('====', flatenStyleObj(stylesLgLight))
+  console.log('====', lightThemeColors)
+  console.log('====', themeVarsLgLight)
+
   const lgLightThemeVars = themeVarsLgLight
   const lgDarkThemeVars = getOneLvlObjDiff(lgLightThemeVars, themeVarsLgDark)
   const mdLightThemeVars = getOneLvlObjDiff(lgLightThemeVars, themeVarsMdLight)
@@ -79,42 +105,42 @@ export default function atomicStyleGenarate(sortedLayout) {
   const allLgLightVars = { ...lgLightThemeVars, ...lightThemeColors }
   const allLgLightStyles = flatenStyleObj(lgLightStyles)
   const normalizedAllLgLightVars = expressAndCleanCssVars(allLgLightVars)
-  const normalizedAllLgLightStyles = optimizeAndDefineCssClassProps(allLgLightStyles, normalizedAllLgLightVars)
+  const normalizedAllLgLightStyles = optimizeAndDefineCssClassProps(allLgLightStyles, normalizedAllLgLightVars, cssFilterConfig)
   const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap } = atomizeCss(normalizedAllLgLightStyles, atomizeCssConfig)
 
   // generate lg dark styles merged
   const allLgDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allLgDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles))
   const normalizedAllLgDarkVars = expressAndCleanCssVars(allLgDarkVars)
-  const normalizedAllLgDarkStyles = optimizeAndDefineCssClassProps(allLgDarkStyles, normalizedAllLgDarkVars)
+  const normalizedAllLgDarkStyles = optimizeAndDefineCssClassProps(allLgDarkStyles, normalizedAllLgDarkVars, cssFilterConfig)
   const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap } = atomizeCss(normalizedAllLgDarkStyles, atomizeCssConfig)
 
   // generate md light styles merged
   const allMdLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...lightThemeColors }
   const allMdLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles))
   const normalizedAllMdLightVars = expressAndCleanCssVars(allMdLightVars)
-  const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars)
+  const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars, cssFilterConfig)
   const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap } = atomizeCss(normalizedAllMdLightStyles, atomizeCssConfig)
 
   // generate md dark styles merged
   const allMdDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allMdDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles))
   const normalizedAllMdDarkVars = expressAndCleanCssVars(allMdDarkVars)
-  const normalizedAllMdDarkStyles = optimizeAndDefineCssClassProps(allMdDarkStyles, normalizedAllMdDarkVars)
+  const normalizedAllMdDarkStyles = optimizeAndDefineCssClassProps(allMdDarkStyles, normalizedAllMdDarkVars, cssFilterConfig)
   const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap } = atomizeCss(normalizedAllMdDarkStyles, atomizeCssConfig)
 
   // generate sm light styles merged
   const allSmLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...smLightThemeVars, ...lightThemeColors }
   const allSmLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles, smLightStyles))
   const normalizedAllSmLightVars = expressAndCleanCssVars(allSmLightVars)
-  const normalizedAllSmLightStyles = optimizeAndDefineCssClassProps(allSmLightStyles, normalizedAllSmLightVars)
+  const normalizedAllSmLightStyles = optimizeAndDefineCssClassProps(allSmLightStyles, normalizedAllSmLightVars, cssFilterConfig)
   const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap } = atomizeCss(normalizedAllSmLightStyles, atomizeCssConfig)
 
   // generate sm dark styles merged
   const allSmDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...smDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allSmDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles, smDarkStyles))
   const normalizedAllSmDarkVars = expressAndCleanCssVars(allSmDarkVars)
-  const normalizedAllSmDarkStyles = optimizeAndDefineCssClassProps(allSmDarkStyles, normalizedAllSmDarkVars)
+  const normalizedAllSmDarkStyles = optimizeAndDefineCssClassProps(allSmDarkStyles, normalizedAllSmDarkVars, cssFilterConfig)
   const { atomicClasses: smDarkAtomicStyles, classMaps: smDarkAtomicClassMap } = atomizeCss(normalizedAllSmDarkStyles, atomizeCssConfig)
 
   // get only changes between main style object and (dark, mobo devices)
@@ -349,7 +375,7 @@ export function generateLayoutStyle(layouts) {
     const sm_g_r_e = Math.round(smFld.y !== 1 ? smFld.h + (smFld.y + 1) : 1)
     const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
-    // const sm_g_c_span = sm_g_c_e - sm_g_c_s   
+    // const sm_g_c_span = sm_g_c_e - sm_g_c_s
     const sm_min_height = `${smFld.h}px;`
 
     smLayoutStyleText += `.${smClsName}{`
