@@ -18,7 +18,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { assignNestedObj, deleteNestedObj } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
@@ -222,36 +222,44 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const customClsNamHandler = (e) => {
     const { value } = e.target
-    setFields(prvFld => produce(prvFld, drftFld => {
+    const allFields = produce(fields, drftFld => {
       drftFld[fieldKey].customClasses[element] = value
-    }))
+    })
+    setFields(allFields)
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Custom Class Modify', '', { fields: getLatestState('fields') }))
   }
 
   const addCustomAttribute = () => {
-    setFields(prvFld => produce(prvFld, drftFld => {
-      const preAttr = prvFld[fieldKey].customAttributes[element]
+    const allFields = produce(fields, drftFld => {
+      const preAttr = fields[fieldKey].customAttributes[element]
       if (preAttr) {
         drftFld[fieldKey].customAttributes[element] = [...preAttr, { key: '', value: '' }]
       } else {
         drftFld[fieldKey].customAttributes[element] = [{ key: '', value: '' }]
       }
-    }))
+    })
+    setFields(allFields)
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Add Attribute to', '', { fields: getLatestState('fields') }))
   }
 
   const attributeHandler = (e, index) => {
     const { name, value } = e.target
-    setFields(prvFld => produce(prvFld, drftFld => {
+    const allFields = produce(fields, drftFld => {
       drftFld[fieldKey].customAttributes[element][index][name] = value
-    }))
+    })
+    setFields(allFields)
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Modify Attribute', '', { fields: getLatestState('fields') }))
   }
 
   const deleteCustomAttribute = (index) => {
-    setFields(prvFld => produce(prvFld, drftFld => {
-      const prvAttbut = prvFld[fieldKey].customAttributes[element]
+    const allFields = produce(fields, drftFld => {
+      const prvAttbut = fields[fieldKey].customAttributes[element]
       const newAttbut = [...prvAttbut]
       newAttbut.splice(index, 1)
       drftFld[fieldKey].customAttributes[element] = newAttbut
-    }))
+    })
+    setFields(allFields)
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Delete Attribute', '', { fields: getLatestState('fields') }))
   }
 
   const renderIndividualCustomStyleComp = () => {
