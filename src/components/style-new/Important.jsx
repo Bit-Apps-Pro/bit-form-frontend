@@ -3,9 +3,8 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import StarIcn from '../../Icons/StarIcn'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
-import { getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function Important({ paths = {}, propertyPath, className, id }) {
   const [styles, setStyles] = useRecoilState($styles)

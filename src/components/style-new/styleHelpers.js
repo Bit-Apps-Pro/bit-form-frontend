@@ -8,7 +8,6 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
@@ -28,6 +27,23 @@ import selectStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefa
 import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
+
+export const assignNestedObj = (obj, keyPath, value) => {
+  const paths = keyPath?.split('->') || []
+  if (paths.length === 1) {
+    obj[paths[0]] = value
+    return
+  }
+  const lastKeyIndex = paths.length - 1
+  for (let i = 0; i < lastKeyIndex; i += 1) {
+    const key = paths[i]
+    if (!(key in obj)) {
+      obj[key] = {}
+    }
+    obj = obj[key]
+  }
+  obj[paths[lastKeyIndex]] = value
+}
 
 // eslint-disable-next-line import/prefer-default-export
 export const showDraggableModal = (e, setDraggableModal, props) => {

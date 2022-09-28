@@ -13,12 +13,12 @@ import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, unitConverter } from './styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()

@@ -13,14 +13,14 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsla2hsva, hslToHex, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
-import { getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 // stateObjName string ex: themeColor
 // objPath string ex: a->b->

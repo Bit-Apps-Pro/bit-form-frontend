@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
-import { getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)

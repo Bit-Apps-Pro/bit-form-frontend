@@ -7,10 +7,10 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
-import { getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
 export default function SpacingControl({ mainTitle, subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()

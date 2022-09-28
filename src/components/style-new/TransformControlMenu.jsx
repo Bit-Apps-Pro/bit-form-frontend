@@ -11,11 +11,11 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { ucFirst } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 
 function TransformControlMenu({ propertyPath, id }) {
   const title = 'Transform'

@@ -5,8 +5,9 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import sc from '../../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
+import { assignNestedObj } from '../styleHelpers'
 import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 
 export default function RazorpayFieldQuickTweaks() {

@@ -5,11 +5,11 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import SizeControl from '../../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleDropdown from '../../Utilities/SimpleDropdown'
-import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from '../styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from '../styleHelpers'
 import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 
 export default function PaypalFieldQuickTweaks() {
