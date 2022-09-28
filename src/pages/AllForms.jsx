@@ -290,7 +290,7 @@ function AllFroms() {
           <div>
             <Table
               className="f-table btcd-all-frm"
-              height={500}
+              height={525}
               columns={cols}
               data={allForms}
               rowSeletable
