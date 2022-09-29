@@ -98,7 +98,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const insptectModeTurnedOnRef = useRef(false)
   const location = useLocation()
 
-  useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
     const nl = fitAllLayoutItems(layouts)
