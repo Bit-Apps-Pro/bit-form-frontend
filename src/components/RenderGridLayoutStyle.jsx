@@ -2,6 +2,7 @@
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $layouts } from '../GlobalStates/GlobalStates'
 import { generateLayoutStyle } from '../Utils/atomicStyleGenarate'
+import { cols } from '../Utils/FormBuilderHelper'
 
 export default function RenderGridLayoutStyle() {
   const layouts = useRecoilValue($layouts)
@@ -10,9 +11,9 @@ export default function RenderGridLayoutStyle() {
 
   const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(layouts)
 
-  let colRepeat = 60
-  if (breakpoint === 'md') colRepeat = 40
-  if (breakpoint === 'sm') colRepeat = 20
+  let colRepeat = cols.lg
+  if (breakpoint === 'md') colRepeat = cols.md
+  if (breakpoint === 'sm') colRepeat = cols.sm
 
   const formStyle = `
   ._frm-g{

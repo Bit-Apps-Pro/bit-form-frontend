@@ -5,6 +5,7 @@ import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
 export default function atomicStyleGenarate(sortedLayout) {
@@ -82,10 +83,6 @@ export default function atomicStyleGenarate(sortedLayout) {
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
   const lightThemeColors = themeColorsLight
   const darkThemeColors = getOneLvlObjDiff(lightThemeColors, themeColorsDark)
-
-  console.log('====', flatenStyleObj(stylesLgLight))
-  console.log('====', lightThemeColors)
-  console.log('====', themeVarsLgLight)
 
   const lgLightThemeVars = themeVarsLgLight
   const lgDarkThemeVars = getOneLvlObjDiff(lgLightThemeVars, themeVarsLgDark)
@@ -181,7 +178,13 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightCombinedSelectors = combineSelectors(smLightAtomicStylesPostfixed)
   const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStylesPostfixed)
 
-  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(sortedLayout)
+  // keep all fields in lay.lg and remove same layout fields from md and sm in order to keep only different fields in md and sm
+  const simplyfiedLayout = {}
+  simplyfiedLayout.lg = sortedLayout.lg
+  simplyfiedLayout.md = getLayoutDiff(sortedLayout.lg, sortedLayout.md)
+  simplyfiedLayout.sm = getLayoutDiff(sortedLayout.md, sortedLayout.sm)
+
+  const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(simplyfiedLayout)
 
   // generate css text from objects and add dark mode prefix if need
   const mdLightCssText = objectToCssText(mdLightCombinedSelectors)?.trim()
@@ -198,17 +201,21 @@ export default function atomicStyleGenarate(sortedLayout) {
   cssText += lgLayoutStyleText
   cssText += objectToCssText(lgLightCombineSelectors)
 
-  cssText += `@media (max-width:${mdBreakpointSize}px){`
-  cssText += generateFormGridStyle('md', formId)
-  cssText += mdLayoutStyleText
-  if (mdLightCssText) cssText += mdLightCssText
-  cssText += '}'
+  if (mdLayoutStyleText || mdLightCssText) {
+    cssText += `@media (max-width:${mdBreakpointSize}px){`
+    // cssText += generateFormGridStyle('md', formId) // unused after make all cols 60
+    if (mdLayoutStyleText) cssText += mdLayoutStyleText
+    if (mdLightCssText) cssText += mdLightCssText
+    cssText += '}'
+  }
 
-  cssText += `@media (max-width:${smBreakpointSize}px){`
-  cssText += generateFormGridStyle('sm', formId)
-  cssText += smLayoutStyleText
-  if (smLightCssText) cssText += smLightCssText
-  cssText += '}'
+  if (smLayoutStyleText || smLightCssText) {
+    cssText += `@media (max-width:${smBreakpointSize}px){`
+    // cssText += generateFormGridStyle('sm', formId) // unused after make all cols 60
+    if (smLayoutStyleText) cssText += smLayoutStyleText
+    if (smLightCssText) cssText += smLightCssText
+    cssText += '}'
+  }
 
   if (lgPrefixedDarkCssText) cssText += lgPrefixedDarkCssText
   if (mdPrefixedDarkCssText) cssText += mdPrefixedDarkCssText
@@ -334,7 +341,7 @@ export function generateLayoutStyle(layouts) {
     const lg_g_c_e = Math.round((lgFld.x + 1) + lgFld.w)
     // const lg_g_r_span = lg_g_r_e - lg_g_r_s
     // const lg_g_c_span = lg_g_c_e - lg_g_c_s
-    const lg_min_height = `${lgFld.h}px;`
+    const lg_min_height = `${lgFld.h}px`
 
     lgLayoutStyleText += `.${lgClsName}{`
     lgLayoutStyleText += `grid-area:${lg_g_r_s}/${lg_g_c_s}/${lg_g_r_e}/${lg_g_c_e};`
@@ -344,7 +351,8 @@ export function generateLayoutStyle(layouts) {
     // lgLayoutStyleText += `-ms-grid-column-span:${lg_g_c_span};`
     lgLayoutStyleText += `min-height:${lg_min_height}`
     lgLayoutStyleText += '}'
-
+  }
+  for (let i = 0; i < layouts.md.length; i += 1) {
     // for medium screen
     const mdFld = layouts.md[i]
     const mdClsName = mdFld.i
@@ -355,7 +363,7 @@ export function generateLayoutStyle(layouts) {
     const md_g_c_e = Math.round((mdFld.x + 1) + mdFld.w)
     // const md_g_r_span = md_g_r_e - md_g_r_s
     // const md_g_c_span = md_g_c_e - md_g_c_s
-    const md_min_height = `${mdFld.h}px;`
+    const md_min_height = `${mdFld.h}px`
 
     mdLayoutStyleText += `.${mdClsName}{`
     mdLayoutStyleText += `grid-area:${md_g_r_s}/${md_g_c_s}/${md_g_r_e}/${md_g_c_e};`
@@ -365,7 +373,8 @@ export function generateLayoutStyle(layouts) {
     // mdLayoutStyleText += `-ms-grid-column-span:${md_g_c_span};`
     mdLayoutStyleText += `min-height:${md_min_height}`
     mdLayoutStyleText += '}'
-
+  }
+  for (let i = 0; i < layouts.sm.length; i += 1) {
     // for small screen
     const smFld = layouts.sm[i]
     const smClsName = smFld.i
@@ -376,7 +385,7 @@ export function generateLayoutStyle(layouts) {
     const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
     // const sm_g_c_span = sm_g_c_e - sm_g_c_s
-    const sm_min_height = `${smFld.h}px;`
+    const sm_min_height = `${smFld.h}px`
 
     smLayoutStyleText += `.${smClsName}{`
     smLayoutStyleText += `grid-area:${sm_g_r_s}/${sm_g_c_s}/${sm_g_r_e}/${sm_g_c_e};`
@@ -396,9 +405,9 @@ export function generateLayoutStyle(layouts) {
 }
 
 export function generateFormGridStyle(breakpoint, formId) {
-  let columnRepeat = 60
-  breakpoint === 'md' && (columnRepeat = 40)
-  breakpoint === 'sm' && (columnRepeat = 20)
+  const columnRepeat = 60
+  // breakpoint === 'md' && (columnRepeat = 40)
+  // breakpoint === 'sm' && (columnRepeat = 20)
   let style = '._frm-g'
   formId && (style += `-${formId}`)
   style += '{'

@@ -31,6 +31,7 @@ import { addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
+  cols,
   filterLayoutItem,
   filterNumber,
   fitAllLayoutItems,
@@ -78,7 +79,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const themeVars = useRecoilValue($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setTempStyles = useSetRecoilState($tempStyles)
-  const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)

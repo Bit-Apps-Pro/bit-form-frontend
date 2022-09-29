@@ -15,6 +15,11 @@ export default function templateProvider(templateSlug, formId) {
   }
 
   const { name, fields, layouts, conditions, confirmations, theme: themeSlug } = templateData
+
+  // merge default layouts
+  layouts.md = mergeNestedObj(layouts.lg, layouts.md)
+  layouts.sm = mergeNestedObj(layouts.lg, layouts.md,layouts.sm)
+
   const fldKeys = Object.keys(fields)
   const fieldsWithKey = {}
   const layoutsWithKey = { lg: [], md: [], sm: [] }

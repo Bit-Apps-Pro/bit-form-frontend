@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $builderHookStates, $layouts } from '../../../../GlobalStates/GlobalStates'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../ChildComp/SimpleAccordion'
 
 function SizeAndPosition() {
@@ -20,9 +20,9 @@ function SizeAndPosition() {
   const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
 
   const maxValue = {
-    lg: { w: 60, h: fieldSize.maxH || null, x: Math.abs(60 - fieldSize.w), y: maxY },
-    md: { w: 40, h: fieldSize.maxH || null, x: Math.abs(40 - fieldSize.w), y: maxY },
-    sm: { w: 20, h: fieldSize.maxH || null, x: Math.abs(20 - fieldSize.w), y: maxY },
+    lg: { w: cols.lg, h: fieldSize.maxH || null, x: Math.abs(cols.lg - fieldSize.w), y: maxY },
+    md: { w: cols.md, h: fieldSize.maxH || null, x: Math.abs(cols.md - fieldSize.w), y: maxY },
+    sm: { w: cols.sm, h: fieldSize.maxH || null, x: Math.abs(cols.sm - fieldSize.w), y: maxY },
   }
 
   const xHandler = (e) => {
