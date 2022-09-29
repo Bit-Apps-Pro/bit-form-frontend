@@ -99,19 +99,25 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
+  // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
-    const nl = fitAllLayoutItems(layouts)
-    const nl2 = compactResponsiveLayouts(nl, cols)
-
-    setLayouts(nl2)
-    setRootLayouts(nl2)
+    const fieldsCount = Object.keys(fields).length
+    const layoutLgFieldsCount = layouts.lg.length
+    if (fieldsCount === layoutLgFieldsCount) {
+      const nl = fitAllLayoutItems(layouts)
+      const nl2 = compactResponsiveLayouts(nl, cols)
+      if (!isLayoutSame(layouts, nl2)) {
+        setLayouts(nl2)
+        setRootLayouts(nl2)
+      }
+    }
 
     if (styleMode) {
       stopGridTransition.current = true
     } else {
       setTimeout(() => { stopGridTransition.current = false }, 1)
     }
-  }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
+  }, [styleMode, reCalculateFieldHeights, breakpoint, fields, layouts])
 
   useEffect(() => {
     if (fieldKey) {

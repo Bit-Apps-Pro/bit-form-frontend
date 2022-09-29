@@ -731,3 +731,82 @@ export function getLayoutDiff(lay1, lay2) {
   })
   return diff
 }
+
+
+// fast compare 2 layout object
+export function isLayoutSame(l1, l2) {
+  const l1LgLength = l1.lg.length
+  const l1MdLength = l1.md.length
+  const l1SmLength = l1.sm.length
+
+  if (l1LgLength !== l2.lg.length) return false
+  if (l1MdLength !== l2.md.length) return false
+  if (l1SmLength !== l2.sm.length) return false
+
+  // compare lg
+  for (let i = 0; i < l1LgLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.lg[i])
+    const l2ItemKeys = Object.keys(l2.lg[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.lg[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.lg[i][l1ItemKey])
+          !== JSON.stringify(l2.lg[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.lg[i][l1ItemKey] !== l2.lg[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+
+  // compare md
+  for (let i = 0; i < l1MdLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.md[i])
+    const l2ItemKeys = Object.keys(l2.md[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.md[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.md[i][l1ItemKey])
+          !== JSON.stringify(l2.md[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.md[i][l1ItemKey] !== l2.md[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+
+  // compare sm
+  for (let i = 0; i < l1LgLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.sm[i])
+    const l2ItemKeys = Object.keys(l2.sm[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.sm[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.sm[i][l1ItemKey])
+          !== JSON.stringify(l2.sm[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.sm[i][l1ItemKey] !== l2.sm[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+  return true
+}
