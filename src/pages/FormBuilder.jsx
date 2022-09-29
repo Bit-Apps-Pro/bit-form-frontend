@@ -2,7 +2,7 @@
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, useCallback, useEffect, useReducer, useState } from 'react'
+import { createRef, useCallback, useEffect, useReducer, useState, useDeferredValue } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -71,6 +71,7 @@ const FormBuilder = ({ isLoading }) => {
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
+  const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
@@ -79,7 +80,6 @@ const FormBuilder = ({ isLoading }) => {
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
   const [styleLoading, setStyleLoading] = useState(true)
-  const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
   const [showToolBar, setShowToolbar] = useState(false)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
@@ -319,20 +319,17 @@ const FormBuilder = ({ isLoading }) => {
   }, [conRef])
 
   const setGrWidth = (paneWidth) => {
-    clearTimeout(debounce)
-    setDebounce(setTimeout(() => {
-      setGridWidth(paneWidth)
-      const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
+    setGridWidth(paneWidth)
+    const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
-      const gw = Math.round(paneWidth - w) // inner left-right padding
-      if (gw <= 510) {
-        setbrkPoint('sm')
-      } else if (gw > 420 && gw <= 700) {
-        setbrkPoint('md')
-      } else if (gw > 700) {
-        setbrkPoint('lg')
-      }
-    }, styleMode ? 0 : 100))
+    const gw = Math.round(paneWidth - w) // inner left-right padding
+    if (gw <= 510) {
+      setbrkPoint('sm')
+    } else if (gw > 420 && gw <= 700) {
+      setbrkPoint('md')
+    } else if (gw > 700) {
+      setbrkPoint('lg')
+    }
   }
 
   const clsAlertMdl = () => {
@@ -387,7 +384,7 @@ const FormBuilder = ({ isLoading }) => {
               {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
               <GridLayout
                 style={styleProvider()}
-                gridWidth={gridWidth}
+                gridWidth={deferedGridWidth}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}
