@@ -104,7 +104,7 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       </div>
       <br />
       <br />
-      {(hubspotConf?.actionName === 'deal-create' || hubspotConf.actionName === 'ticket-create' ) && (
+      {(hubspotConf?.actionName === 'deal-create' || hubspotConf.actionName === 'ticket-create') && (
         <>
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Pipeline:')}</b>

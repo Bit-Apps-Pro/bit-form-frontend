@@ -2,7 +2,7 @@ import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
-import { defaultConds } from "../../Utils/StaticData/form-templates/templateProvider"
+import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
 import CheckBox from '../Utilities/CheckBox'
 
 export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {

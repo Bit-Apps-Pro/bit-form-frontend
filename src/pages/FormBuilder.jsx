@@ -94,7 +94,7 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   // eslint-disable-next-line no-console
-  console.log('render formbuilder')
+
   const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
 
   // useEffect(() => {

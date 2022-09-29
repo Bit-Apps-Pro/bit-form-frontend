@@ -20,7 +20,6 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import ErrorMessageSettings from './ErrorMessageSettings'
 
 export default function RequiredSettings({ asteriskIsAllow = true }) {
-  console.log('%cRander Required Setting', 'background:green;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])

@@ -15,7 +15,6 @@ import Modal from './Utilities/Modal'
 import TinyMCE from './Utilities/TinyMCE'
 
 function EmailTemplateNew() {
-  console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const formFields = useRecoilValue($fieldsArr)

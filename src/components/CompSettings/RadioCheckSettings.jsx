@@ -33,7 +33,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function RadioCheckSettings() {
-  console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const { css } = useFela()

@@ -8,8 +8,6 @@ import Button from './Button'
 import SingleToggle2 from './SingleToggle2'
 
 function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked }) {
-  console.log('%c $render Accordions', 'background:aquamarine;padding:3px;border-radius:5px;')
-
   const [tgl, setTgl] = useState(false)
   const [H, setH] = useState(0)
   const inp = useRef(null)

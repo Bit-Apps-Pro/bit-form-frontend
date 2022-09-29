@@ -62,7 +62,6 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
-  console.log('render gridlay')
   const { formType } = useParams()
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
@@ -274,7 +273,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const resizeHandles = getResizableHandles(fieldData.typ)
     if (resizeHandles) {
       newLayoutItem.resizeHandles = resizeHandles
-      console.log({ resizeHandles, newLayoutItem })
     }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     const newFields = { ...fields, [newBlk]: processedFieldData }

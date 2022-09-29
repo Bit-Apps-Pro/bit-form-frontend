@@ -11,7 +11,6 @@ import { __ } from '../../../Utils/i18nwrap'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function FieldNameSettings() {
-  console.log('%cRander Place Holder Setting', 'background:green;padding:3px;border-radius:5px;color:white')
   const location = useLocation()
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)

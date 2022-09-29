@@ -13,7 +13,6 @@ import { SmartTagField } from '../Utils/StaticData/SmartTagField'
 import TinyMCE from './Utilities/TinyMCE'
 
 function EmailTemplateEdit() {
-  console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
   const { formType, formID, id } = useParams()
   const navigate = useNavigate()
   const [mailTemp, setMailTem] = useRecoilState($mailTemplates)

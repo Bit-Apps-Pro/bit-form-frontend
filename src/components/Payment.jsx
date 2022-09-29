@@ -39,17 +39,15 @@ export default function Payment({ allIntegURL }) {
     setPaySetting(tmpSetting)
   }
 
-  const validation = () =>{
+  const validation = () => {
     let validation = false
     const tmpSetting = { ...paySetting }
-    if(type === 'Razorpay'){
-      if(!tmpSetting.apiKey || !tmpSetting.apiSecret || !tmpSetting.name){
-        validation=true
-      }
-    }else{
-      if(!tmpSetting.name || !tmpSetting.clientID){
+    if (type === 'Razorpay') {
+      if (!tmpSetting.apiKey || !tmpSetting.apiSecret || !tmpSetting.name) {
         validation = true
       }
+    } else if (!tmpSetting.name || !tmpSetting.clientID) {
+      validation = true
     }
 
     return validation
@@ -57,7 +55,7 @@ export default function Payment({ allIntegURL }) {
 
   const handleSubmit = () => {
     const tmpSetting = { ...paySetting }
-    if(validation()){
+    if (validation()) {
       setSnackbar({ show: true, msg: __('All fields are required') })
       return
     }
@@ -65,7 +63,6 @@ export default function Payment({ allIntegURL }) {
     bitsFetch({ paySetting }, 'bitforms_save_payment_setting')
       .then(res => {
         if (res !== undefined && res.success) {
-          
           if (res.data && res.data.id) {
             tmpSetting.id = res.data.id
           }

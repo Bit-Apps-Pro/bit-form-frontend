@@ -100,7 +100,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           <div className="f-m">{__('Integration name')}</div>
           <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
         </div>
-      </div >
+      </div>
       <div className="flx flx-start">
         <div className="w-7">
           <div className="f-m">{__('Link:')}</div>
@@ -183,6 +183,6 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           </button>
         )
       }
-    </div >
+    </div>
   )
 }

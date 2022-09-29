@@ -19,7 +19,6 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import AutoResizeInput from './AutoResizeInput'
 
 export default function HelperTxtSettings() {
-  console.log('%cRander Helper Text Setting', 'background:green;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
