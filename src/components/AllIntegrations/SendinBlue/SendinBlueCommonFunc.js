@@ -52,9 +52,7 @@ export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) 
       } else {
         setSnackbar({ show: true, msg: __('Templates failed. please try again') })
       }
-      // setIsLoading(false)
     })
-  // .catch(() => setIsLoading(false))
 }
 
 export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar) => {

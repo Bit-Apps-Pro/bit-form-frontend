@@ -7,7 +7,6 @@ import { generateMappedField } from './MailerLiteCommonFunc'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteConf, setMailerLiteConf }) {
-  console.log('formFields2', formFields)
   if (mailerLiteConf?.field_map?.length === 1 && field.mailerLiteFormField === '') {
     const newConf = { ...mailerLiteConf }
     const tmp = generateMappedField(newConf)
@@ -19,19 +18,20 @@ export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteCon
   const nonRequiredFlds = mailerLiteConf?.mailerLiteFields.filter(fld => fld.required === false) || []
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  console.log('mailerLiteConf', mailerLiteConf)
 
   return (
-    <div
-      className="flx mt-2 mb-2 btcbi-field-map"
-    >
+    <div className="flx mt-2 mb-2 btcbi-field-map">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, mailerLiteConf, setMailerLiteConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, mailerLiteConf, setMailerLiteConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
-
                 formFields?.map(f => (
                   <option key={`ff-rm-${f.key}`} value={f.key}>
                     {f.name}
@@ -47,12 +47,26 @@ export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteCon
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, mailerLiteConf, setMailerLiteConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && (
+            <MtInput
+              onChange={e => handleCustomValue(e, i, mailerLiteConf, setMailerLiteConf)}
+              label={__('Custom Value')}
+              className="mr-2"
+              type="text"
+              value={field.customValue}
+              placeholder={__('Custom Value')}
+            />
+          )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="mailerLiteFormField" value={i < requiredFlds ? (requiredFlds[i].label || '') : (field.mailerLiteFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, mailerLiteConf, setMailerLiteConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="mailerLiteFormField"
+            value={i < requiredFlds ? (requiredFlds[i].label || '') : (field.mailerLiteFormField || '')}
+            onChange={(ev) => handleFieldMapping(ev, i, mailerLiteConf, setMailerLiteConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
@@ -79,7 +93,12 @@ export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteCon
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(i, mailerLiteConf, setMailerLiteConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delFieldMap(i, mailerLiteConf, setMailerLiteConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

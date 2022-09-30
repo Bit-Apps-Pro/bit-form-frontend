@@ -3,9 +3,7 @@
 import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
-export default function AutonamiActions({ autonamiConf,
-  setAutonamiConf,
-  formFields }) {
+export default function AutonamiActions({ autonamiConf, setAutonamiConf, formFields }) {
   const actionHandler = (e, type) => {
     const newConf = { ...autonamiConf }
     if (type === 'exists') {

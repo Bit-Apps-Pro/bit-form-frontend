@@ -45,7 +45,12 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
   return (
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -64,7 +69,13 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" name="activeCampaignField" value={field.activeCampaignField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+        <select
+          className="btcd-paper-inp"
+          name="activeCampaignField"
+          value={field.activeCampaignField}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field')}</option>
           {isRequired ? activeCampaingConf?.default?.fields && Object.values(activeCampaingConf.default.fields).map(fld => (
             <option key={`${fld.fieldId}-1`} value={fld.fieldId}>
@@ -87,7 +98,12 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

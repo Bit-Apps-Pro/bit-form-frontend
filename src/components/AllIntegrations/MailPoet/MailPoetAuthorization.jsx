@@ -8,6 +8,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 
 export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -61,15 +63,16 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
             Please! First Install Mailpoet Plugins
           </div>
         )}
-        <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-          {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-          {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-        </button>
+        <AuthorizeBtn
+          handleAuthorize={handleAuthorize}
+          isAuthorized={isAuthorized}
+          isLoading={isLoading}
+        />
         <br />
-        <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-          {__('Next')}
-          <BackIcn className="ml-1 rev-icn" />
-        </button>
+        <NextBtn
+          nextPageHanlder={() => nextPage(2)}
+          disabled={!isAuthorized}
+        />
       </div>
     </>
   )

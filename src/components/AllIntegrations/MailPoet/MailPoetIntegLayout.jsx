@@ -27,7 +27,15 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
           options={mailPoetConf?.default?.newsletterList && Object.keys(mailPoetConf.default.newsletterList).map(newsletter => ({ label: mailPoetConf.default.newsletterList[newsletter].newsletterName, value: mailPoetConf.default.newsletterList[newsletter].newsletterId }))}
           onChange={val => lists(val)}
         />
-        <button onClick={() => lists(formID, mailPoetConf, setMailPoetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => lists(formID, mailPoetConf, setMailPoetConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh MailPoet List')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -61,7 +69,18 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
                 setMailPoetConf={setMailPoetConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(mailPoetConf.field_map.length, mailPoetConf, setMailPoetConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(mailPoetConf.field_map.length, mailPoetConf, setMailPoetConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
           </>

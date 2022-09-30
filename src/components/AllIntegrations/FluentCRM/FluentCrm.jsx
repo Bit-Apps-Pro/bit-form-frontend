@@ -3,8 +3,10 @@ import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -85,7 +87,7 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
         <br />
         <br />
         <br />
-        <button
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={!fluentCrmConf.list_id || fluentCrmConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -93,7 +95,15 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
+        <Btn
+          onClick={() => nextPage(3)}
+          disabled={!fluentCrmConf.list_id || fluentCrmConf.field_map.length < 1}
+          className={css(ut.ftRight)}
+        >
+          {__('Next')}
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
       </div>
 
       {/* STEP 3 */}

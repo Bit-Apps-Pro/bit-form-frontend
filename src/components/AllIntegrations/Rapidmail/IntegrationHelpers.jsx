@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-expressions */
-import { __ } from '../../../Utils/i18nwrap'
-
 export const addFieldMap = (i, confTmp, setConf) => {
   const newConf = { ...confTmp }
   newConf.field_map.splice(i, 0, {})
@@ -12,7 +9,6 @@ export const delFieldMap = (i, confTmp, setConf) => {
   if (newConf.field_map.length > 1) {
     newConf.field_map.splice(i, 1)
   }
-
   setConf({ ...newConf })
 }
 

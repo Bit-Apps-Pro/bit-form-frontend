@@ -28,7 +28,14 @@ function EditMailPoet({ formFields, setIntegration, integrations, allIntegURL })
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-6" onChange={e => handleInput(e, mailPoetConf, setMailPoetConf)} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-6"
+          onChange={e => handleInput(e, mailPoetConf, setMailPoetConf)}
+          name="name"
+          value={mailPoetConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <br />

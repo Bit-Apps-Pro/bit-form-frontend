@@ -18,7 +18,12 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -37,25 +42,28 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, acumbamailConf, setAcumbamailConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" name="acumbamailFormField" disabled={i < 1} value={field.acumbamailFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="acumbamailFormField"
+          disabled={i < 1}
+          value={field.acumbamailFormField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, acumbamailConf, setAcumbamailConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             isRequiredFld && requiredFlds && requiredFlds.map((listField, indx) => (
               (
                 <option key={`mchimp-${indx * 2}`} value={listField[0]}>
                   {listField[0]}
-
                 </option>
               )
             ))
           }
           {
             !isRequiredFld && nonRequiredFlds && nonRequiredFlds.map((listField, indx) => (
-              (
-                <option key={`mchimp-${indx * 2}`} value={listField[0]}>
-                  {listField[0]}
-                </option>
-              )
+              <option key={`mchimp-${indx * 2}`} value={listField[0]}>
+                {listField[0]}
+              </option>
             ))
           }
         </select>
@@ -71,7 +79,12 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i, acumbamailConf, setAcumbamailConf)} className="icn-btn sh-sm" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i, acumbamailConf, setAcumbamailConf)}
+              className="icn-btn sh-sm"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

@@ -46,7 +46,13 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
           </div>
         )}
         <b className="wdt-100 d-in-b">{__('Related List:')}</b>
-        <select onChange={handleInput} name="module" value={crmConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
+        <select
+          onChange={handleInput}
+          name="module"
+          value={crmConf?.relatedlists?.[tab - 1]?.module}
+          className="btcd-paper-inp w-7"
+          disabled={!crmConf.module}
+        >
           <option value="">{__('Select Related Module')}</option>
           {
             crmConf?.default?.relatedlists?.[crmConf.module] && Object.values(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
@@ -56,12 +62,26 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
             ))
           }
         </select>
-        <button onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Related Lists')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh CRM Related Lists')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
         <br />
         <br />
       </div>
       <b className="wdt-100 d-in-b">{__('Layout:')}</b>
-      <select onChange={handleInput} name="layout" value={crmConf?.relatedlists?.[tab - 1]?.layout} className="btcd-paper-inp w-7" disabled={!crmConf?.relatedlists?.[tab - 1]?.module}>
+      <select
+        onChange={handleInput}
+        name="layout"
+        value={crmConf?.relatedlists?.[tab - 1]?.layout}
+        className="btcd-paper-inp w-7"
+        disabled={!crmConf?.relatedlists?.[tab - 1]?.module}
+      >
         <option value="">{__('Select Layout')}</option>
         {
           crmConf?.default?.layouts?.[crmConf.relatedlists?.[tab - 1]?.module] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(layoutApiName => (
@@ -71,7 +91,15 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
           ))
         }
       </select>
-      <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       {
@@ -97,7 +125,18 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.relatedlists[tab - 1].field_map.length, crmConf, setCrmConf, false, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(crmConf.relatedlists[tab - 1].field_map.length, crmConf, setCrmConf, false, tab)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {crmConf.default?.layouts[crmConf.relatedlists[tab - 1].module]?.[crmConf.relatedlists[tab - 1].layout] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module][crmConf.relatedlists[tab - 1].layout].fileUploadFields).length !== 0 && (
@@ -122,14 +161,24 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
                     setSnackbar={setSnackbar}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.relatedlists[tab - 1].upload_field_map.length, crmConf, setCrmConf, true, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(crmConf.relatedlists[tab - 1].upload_field_map.length, crmConf, setCrmConf, true, tab)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
               </>
             )}
             <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
             <div className="btcd-hr mt-1" />
-
             <ZohoCRMActions
               formFields={formFields}
               crmConf={crmConf}
@@ -141,7 +190,6 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
           </>
         )
       }
-
     </>
   )
 }

@@ -90,8 +90,12 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       <br />
       <div className="flx">
         <b className="wdt-200 d-in-b">{__('Action:')}</b>
-
-        <select onChange={handleInputP} name="actionName" value={hubspotConf?.actionName} className="btcd-paper-inp w-5">
+        <select
+          onChange={handleInputP}
+          name="actionName"
+          value={hubspotConf?.actionName}
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Action')}</option>
           {
             action.map(({ label, value }) => (
@@ -104,12 +108,17 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       </div>
       <br />
       <br />
-      {(hubspotConf?.actionName === 'deal-create' || hubspotConf.actionName === 'ticket-create' ) && (
+      {(hubspotConf?.actionName === 'deal-create' || hubspotConf.actionName === 'ticket-create') && (
         <>
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Pipeline:')}</b>
 
-            <select onChange={handleInputP} name="pipeline" value={hubspotConf?.pipeline} className="btcd-paper-inp w-5">
+            <select
+              onChange={handleInputP}
+              name="pipeline"
+              value={hubspotConf?.pipeline}
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Pipeline')}</option>
               {hubspotConf?.default?.pipelines.map(({ pipelineId, pipelineName }) => (
                 <option key={pipelineId} value={pipelineId}>
@@ -122,8 +131,12 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
           <br />
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Stage:')}</b>
-
-            <select onChange={handleInput} name="stage" value={hubspotConf?.stage} className="btcd-paper-inp w-5">
+            <select
+              onChange={handleInput}
+              name="stage"
+              value={hubspotConf?.stage}
+              className="btcd-paper-inp w-5"
+            >
               <option value="">{__('Select Stage')}</option>
               {hubspotConf?.stageTmp?.[0]?.map(({ stageId, stageName }) => (
                 <option key={stageId} value={stageId}>
@@ -160,17 +173,29 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
           hubspotFields={getFields()}
         />
       ))}
-      <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(hubspotConf.field_map.length, hubspotConf, setHubspotConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div
+        className="txt-center mt-2"
+        style={{ marginRight: 85 }}
+      >
+        <button
+          onClick={() => addFieldMap(hubspotConf.field_map.length, hubspotConf, setHubspotConf, false)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <br />
       <br />
-      <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+      <div className="mt-4">
+        <b className="wdt-100">{__('Actions')}</b>
+      </div>
       <div className="btcd-hr mt-1" />
       <HubspotActions
         hubspotConf={hubspotConf}
         setHubspotConf={setHubspotConf}
         formFields={formFields}
       />
-
     </>
   )
 }

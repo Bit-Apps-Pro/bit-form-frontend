@@ -23,7 +23,14 @@ function EditActiveCampaign({ formFields, setIntegration, integrations, allInteg
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, activeCampaingConf, setActiveCampaingConf)} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, activeCampaingConf, setActiveCampaingConf)}
+          name="name"
+          value={activeCampaingConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <br />

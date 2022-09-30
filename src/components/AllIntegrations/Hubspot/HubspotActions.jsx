@@ -114,7 +114,15 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
                 customValue
                 singleSelect
               />
-              <button onClick={() => getAllOwners(hubspotConf, setHubspotConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Owners')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => getAllOwners(hubspotConf, setHubspotConf, setIsLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `${__('Refresh Owners')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
 
@@ -267,7 +275,15 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
                 customValue
                 singleSelect
               />
-              <button onClick={() => getAllCompany(hubspotConf, setHubspotConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh CRM Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => getAllCompany(hubspotConf, setHubspotConf, setIsLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `${__('Refresh CRM Tags')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
       </ConfirmModal>

@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -57,7 +56,12 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('Actions:')}</b>
-      <select onChange={handleInput} name="mainAction" value={groundhoggConf.mainAction} className="btcd-paper-inp w-5">
+      <select
+        onChange={handleInput}
+        name="mainAction"
+        value={groundhoggConf.mainAction}
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions')}</option>
         {
           groundhoggConf.allActions && groundhoggConf.allActions.map(({ key, label }) => (
@@ -71,7 +75,6 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
       <br />
       {groundhoggConf.mainAction === '2' && (
         <div className="d-flx">
-
           <b className="wdt-200 d-in-b mt-3 mt-i-3">{__('Email:')}</b>
           <MultiSelect
             options={allEmailFields.map((item) => ({ label: item.label, value: item.value }))}
@@ -94,7 +97,9 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
       <br />
       {groundhoggConf.mainAction === '1' && (
         <>
-          <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
+          <div className="mt-5">
+            <b className="wdt-100">{__('Field Map')}</b>
+          </div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
             <div className="txt-dp"><b>{__('Form Fields')}</b></div>
@@ -112,11 +117,22 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
               setSnackbar={setSnackbar}
             />
           ))}
-          <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(groundhoggConf.field_map.length, groundhoggConf, setGroundhoggConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
-          <TableCheckBox checked={groundhoggConf?.showMeta || false} onChange={(e) => actionHandler(e, 'showMeta')} className="wdt-200 mt-4 mr-2" value="showMeta" title={__('Add Meta field')} />
-
-          {/* <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(acumbamailConf.field_map.length, acumbamailConf, setAcumbamailConf)} className="icn-btn sh-sm" type="button">+</button></div> */}
-
+          <div className="txt-center mt-2" style={{ marginRight: 85 }}>
+            <button
+              onClick={() => addFieldMap(groundhoggConf.field_map.length, groundhoggConf, setGroundhoggConf, false)}
+              className="icn-btn sh-sm"
+              type="button"
+            >
+              +
+            </button>
+          </div>
+          <TableCheckBox
+            checked={groundhoggConf?.showMeta || false}
+            onChange={(e) => actionHandler(e, 'showMeta')}
+            className="wdt-200 mt-4 mr-2"
+            value="showMeta"
+            title={__('Add Meta field')}
+          />
         </>
       )}
       <br />
@@ -141,7 +157,22 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
         </>
       )}
 
-      {groundhoggConf.mainAction === '1' && groundhoggConf.showMeta && <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMetaFieldMap(groundhoggConf.field_map_meta.length, groundhoggConf, setGroundhoggConf, false)} className="icn-btn sh-sm" type="button">+</button></div>}
+      {groundhoggConf.mainAction === '1'
+        && groundhoggConf.showMeta
+        && (
+          <div
+            className="txt-center  mt-2"
+            style={{ marginRight: 85 }}
+          >
+            <button
+              onClick={() => addMetaFieldMap(groundhoggConf.field_map_meta.length, groundhoggConf, setGroundhoggConf, false)}
+              className="icn-btn sh-sm"
+              type="button"
+            >
+              +
+            </button>
+          </div>
+        )}
       {groundhoggConf.mainAction === '2' && (
         <div className="d-flx">
           <b className="wdt-200 d-in-b mt-3 mt-i-3">{__('All Tags:')}</b>
@@ -152,11 +183,18 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
             onChange={val => onSelectHandler(val)}
             customValue
           />
-          <button onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)} className="icn-btn sh-sm ml-2 mr-2 mt-1 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags')}'`, height: '35px' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button
+            onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)}
+            className="icn-btn sh-sm ml-2 mr-2 mt-1 tooltip"
+            style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags')}'`, height: '35px' }}
+            type="button"
+            disabled={isLoading}
+          >
+            &#x21BB;
+          </button>
         </div>
 
       )}
-
       <br />
       <br />
       {groundhoggConf.mainAction === '1' && (
@@ -170,7 +208,6 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
           />
         </>
       )}
-
     </>
   )
 }

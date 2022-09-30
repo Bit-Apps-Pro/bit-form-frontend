@@ -7,7 +7,7 @@ import SendinBlueActions from './SendinBlueActions'
 import { refreshLists, refreshSendinBlueHeader, refreshTemplate } from './SendinBlueCommonFunc'
 import SendinBlueFieldMap from './SendinBlueFieldMap'
 
-export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueConf, setSendinBlueConf, isLoading, setisLoading, setSnackbar, error, setError }) {
+export default function SendinBlueIntegLayout({ formFields, sendinBlueConf, setSendinBlueConf, isLoading, setisLoading, setSnackbar, error, setError }) {
   const lists = (val) => {
     const newConf = { ...sendinBlueConf }
     if (val) {
@@ -46,7 +46,15 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
           options={listOptions()}
           onChange={val => lists(val)}
         />
-        <button onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       <br />
       <br />
@@ -82,7 +90,18 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
                 setSendinBlueConf={setSendinBlueConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sendinBlueConf.field_map.length, sendinBlueConf, setSendinBlueConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(sendinBlueConf.field_map.length, sendinBlueConf, setSendinBlueConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {sendinBlueConf.actions?.double_optin && (
@@ -90,25 +109,52 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
                 <div className="flx">
                   <b className="wdt-150 d-in-b">{__('Template: ')}</b>
                   <div className="w-5">
-                    <select onChange={handleInput} name="templateId" value={sendinBlueConf?.templateId} className="btcd-paper-inp">
+                    <select
+                      onChange={handleInput}
+                      name="templateId"
+                      value={sendinBlueConf?.templateId}
+                      className="btcd-paper-inp"
+                    >
                       <option value="">{__('Select Template')}</option>
                       {sendinBlueConf?.default?.sblueTemplates && Object.values(sendinBlueConf.default.sblueTemplates).map((template) => (
-                        <option key={`sendinblue-${template.id + 2}`} value={template.id || sendinBlueConf.templateId}>
-                          {template.name}
+                        <option
+                          key={`sendinblue-${template.id + 2}`}
+                          value={template.id || sendinBlueConf.templateId}
+                        >
+                          {__(template.name)}
                         </option>
                       ))}
                     </select>
                     <div style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}>{error.templateId}</div>
                   </div>
-                  <button onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Templates')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button
+                    onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)}
+                    className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                    style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Templates')}'` }}
+                    type="button"
+                    disabled={isLoading}
+                  >
+                    &#x21BB;
+                  </button>
                 </div>
                 <br />
                 <br />
                 <div className="flx">
                   <b className="wdt-150 d-in-b">{__('RedirectionUrl:')}</b>
                   <div className="w-5">
-                    <input type="url" className="btcd-paper-inp" placeholder="Redirection URL" onChange={handleInput} value={sendinBlueConf?.redirectionUrl || ''} name="redirectionUrl" />
-                    <div style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}>{error.redirectionUrl}</div>
+                    <input
+                      type="url"
+                      className="btcd-paper-inp"
+                      placeholder="Redirection URL"
+                      onChange={handleInput}
+                      value={sendinBlueConf?.redirectionUrl || ''}
+                      name="redirectionUrl"
+                    />
+                    <div
+                      style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}
+                    >
+                      {error.redirectionUrl}
+                    </div>
                   </div>
                 </div>
                 <br />

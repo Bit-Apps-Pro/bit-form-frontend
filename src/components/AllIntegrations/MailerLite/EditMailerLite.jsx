@@ -29,10 +29,16 @@ function EditMailerLite({ formFields, setIntegration, integrations, allIntegURL 
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailerLiteConf, setMailerLiteConf)} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, mailerLiteConf, setMailerLiteConf)}
+          name="name"
+          value={mailerLiteConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <MailerLiteIntegLayout

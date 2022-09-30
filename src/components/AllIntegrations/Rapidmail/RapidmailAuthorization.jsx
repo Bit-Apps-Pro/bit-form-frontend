@@ -4,6 +4,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 import { getAllRecipient, handleAuthorize } from './RapidmailCommonFunc'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 
 export default function RapidmailAuthorization({ rapidmailConf,
   setRapidmailConf,
@@ -102,8 +104,9 @@ export default function RapidmailAuthorization({ rapidmailConf,
 
       {!isInfo && (
         <div>
-          <button
-            onClick={() => handleAuthorize(
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            handleAuthorize={() => handleAuthorize(
               rapidmailConf,
               setRapidmailConf,
               setError,
@@ -111,31 +114,13 @@ export default function RapidmailAuthorization({ rapidmailConf,
               setIsLoading,
               setSnackbar,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
-            type="button"
-            disabled={isAuthorized || isLoading}
-          >
-            {isAuthorized
-              ? __('Authorized ✔')
-              : __('Authorize')}
-            {isLoading && (
-              <LoaderSm
-                size="20"
-                clr="#022217"
-                className="ml-2"
-              />
-            )}
-          </button>
+            isLoading={isLoading}
+          />
           <br />
-          <button
-            onClick={nextPage}
-            className="btn f-right btcd-btn-lg green sh-sm flx"
-            type="button"
+          <NextBtn
+            nextPageHanlder={() => nextPage()}
             disabled={!isAuthorized}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </button>
+          />
         </div>
       )}
     </div>

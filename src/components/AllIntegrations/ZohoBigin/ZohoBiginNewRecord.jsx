@@ -47,7 +47,18 @@ export default function ZohoBiginNewRecord({ tab, settab, formID, formFields, bi
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(biginConf.field_map.length, biginConf, setBiginConf, false, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(biginConf.field_map.length, biginConf, setBiginConf, false, tab)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {Object.keys(biginConf.default?.moduleData?.[biginConf.module]?.fileUploadFields).length !== 0 && (
@@ -72,7 +83,18 @@ export default function ZohoBiginNewRecord({ tab, settab, formID, formFields, bi
                     setSnackbar={setSnackbar}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(biginConf.upload_field_map.length, biginConf, setBiginConf, true, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(biginConf.upload_field_map.length, biginConf, setBiginConf, true, tab)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
               </>

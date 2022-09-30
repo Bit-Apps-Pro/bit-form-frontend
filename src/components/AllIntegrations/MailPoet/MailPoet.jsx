@@ -8,6 +8,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import MailPoetAuthorization from './MailPoetAuthorization'
 import { checkMappedFields, refreshNewsLetter } from './MailPoetCommonFunc'
 import MailPoetIntegLayout from './MailPoetIntegLayout'
@@ -68,7 +69,10 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%`, minHeight: step === 2 && `${200}px` }}>
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && `${100}%`, minHeight: step === 2 && `${200}px` }}
+      >
         <MailPoetIntegLayout
           formID={formID}
           formFields={formFields}
@@ -79,7 +83,11 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
         <br />
         <br />
         <br />
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={mailPoetConf.lists === '' || mailPoetConf.field_map.length < 1}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={mailPoetConf.lists === '' || mailPoetConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -87,7 +95,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

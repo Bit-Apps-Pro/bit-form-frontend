@@ -1,9 +1,13 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -17,6 +21,7 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
   // const [snack, setSnackbar] = useState({ show: false })
   const fields = [
     { key: 'name', label: 'Name', required: false },
@@ -72,8 +77,10 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <GetgistIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, getgistConf, setGetgistConf, setIsLoading)}
@@ -83,7 +90,17 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
           setIsLoading={setIsLoading}
         />
 
-        <button
+        <Btn
+          onClick={() => nextPage(3)}
+          className={css(ut.ftRight)}
+          type="button"
+        >
+          {__('Next')}
+          &nbsp;
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
+
+        {/* <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
@@ -92,7 +109,7 @@ function Getgist({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

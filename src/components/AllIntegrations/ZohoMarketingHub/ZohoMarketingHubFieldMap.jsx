@@ -17,7 +17,12 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -35,9 +40,24 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, marketingHubConf, setMarketingHubConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i, marketingHubConf, setMarketingHubConf)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          disabled={!isNotRequired}
+          onChange={(ev) => handleFieldMapping(ev, i, marketingHubConf, setMarketingHubConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             isNotRequired
@@ -64,7 +84,12 @@ export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketi
       </button>
       {
         isNotRequired && (
-          <button onClick={() => delFieldMap(i, marketingHubConf, setMarketingHubConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <button
+            onClick={() => delFieldMap(i, marketingHubConf, setMarketingHubConf)}
+            className="icn-btn sh-sm ml-1"
+            type="button"
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         )

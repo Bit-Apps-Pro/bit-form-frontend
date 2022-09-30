@@ -44,8 +44,14 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
     <div
       className={isRequired ? 'mt-2 mr-1 flx w-9' : 'flx flx-around mt-2 mr-1'}
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-        <option value="">{__('Select Field')}</option>
+      <select
+        className="btcd-paper-inp mr-2"
+        name="formField"
+        value={field.formField || ''}
+        onChange={(ev) => handleFieldMapping(ev, i)}
+        defaultValue="0"
+      >
+        <option value="0">{__('Select Field')}</option>
         <optgroup label="Form Fields">
           {
             formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
@@ -61,10 +67,27 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
         </optgroup>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+      {field.formField === 'custom'
+        && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-      <select className="btcd-paper-inp" name="enChargeFields" value={field.enChargeFields} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
-        <option value="">{__('Select Field')}</option>
+      <select
+        className="btcd-paper-inp"
+        name="enChargeFields"
+        value={field.enChargeFields}
+        onChange={(ev) => handleFieldMapping(ev, i)}
+        disabled={isRequired}
+        defaultValue="0"
+      >
+        <option value="0">{__('Select Field')}</option>
         {isRequired ? enchargeConf?.default?.fields && Object.values(enchargeConf.default.fields).map(fld => (
           <option key={`${fld.fieldId}-1`} value={fld.fieldId}>
             {fld.fieldName}
@@ -85,7 +108,12 @@ export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, s
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

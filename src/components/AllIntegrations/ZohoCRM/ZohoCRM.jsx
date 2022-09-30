@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ZohoCRMAuthorization from './ZohoCRMAuthorization'
 import { checkMappedFields, handleInput } from './ZohoCRMCommonFunc'
 import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
@@ -20,7 +18,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
-  const { css } = useFela()
 
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
@@ -39,8 +36,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   useEffect(() => {
     window.opener && setGrantTokenResponse('zohoCRM')
   }, [])
-
-  console.log('crmConf', crmConf)
 
   const nextPage = (pageNo) => {
     if (!checkMappedFields(crmConf)) {
@@ -84,7 +79,11 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -92,7 +91,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

@@ -47,7 +47,12 @@ export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsC
       className="flx flx-around mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -64,9 +69,23 @@ export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsC
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <select
+          className="btcd-paper-inp"
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             Object.values(analyticsConf.default.tables.headers[analyticsConf.table]).map(header => (

@@ -14,7 +14,12 @@ export default function MailChimpFieldMap({ i, formFields, field, sheetConf, set
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -31,9 +36,23 @@ export default function MailChimpFieldMap({ i, formFields, field, sheetConf, set
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" name="mailChimpField" value={field.mailChimpField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="mailChimpField"
+          value={field.mailChimpField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             sheetConf.default?.fields?.[sheetConf.listId] && Object.values(sheetConf.default.fields[sheetConf.listId]).map((listField, indx) => (
@@ -51,7 +70,12 @@ export default function MailChimpFieldMap({ i, formFields, field, sheetConf, set
       >
         +
       </button>
-      <button onClick={() => delFieldMap(i, sheetConf, setSheetConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+      <button
+        onClick={() => delFieldMap(i, sheetConf, setSheetConf)}
+        className="icn-btn sh-sm ml-1"
+        type="button"
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ZohoProjectsAuthorization from './ZohoProjectsAuthorization'
 import { checkAllRequired, handleInput } from './ZohoProjectsCommonFunc'
 import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
@@ -19,7 +17,6 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const { css } = useFela()
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',
@@ -86,7 +83,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
           setSnackbar={setSnackbar}
         />
 
-        <button
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={projectsConf.portalId === '' || projectsConf.event === ''}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -94,7 +91,12 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
+
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={projectsConf.portalId === '' || projectsConf.event === ''}
+        />
 
       </div>
 

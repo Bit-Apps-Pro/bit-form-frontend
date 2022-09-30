@@ -29,7 +29,14 @@ function EditZohoBigin({ formFields, setIntegration, integrations, allIntegURL }
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx mt-3">
         <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, tab, biginConf, setBiginConf)} name="name" value={biginConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-7"
+          onChange={event => handleInput(event, tab, biginConf, setBiginConf)}
+          name="name"
+          value={biginConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <br />

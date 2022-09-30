@@ -1,12 +1,11 @@
-import { useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import { getAllList } from './ElasticEmailCommonFunc'
-import { addFieldMap } from './IntegrationHelpers'
-import ElasticEmailFieldMap from './ElasticEmailFieldMap'
 import ElasticEmailActions from './ElasticEmailActions'
+import { getAllList } from './ElasticEmailCommonFunc'
+import ElasticEmailFieldMap from './ElasticEmailFieldMap'
+import { addFieldMap } from './IntegrationHelpers'
 
-export default function ElasticEmailIntegLayout({ formFields, handleInput, elasticEmailConf, setElasticEmailConf, isLoading, setIsLoading, setSnackbar }) {
+export default function ElasticEmailIntegLayout({ formFields, elasticEmailConf, setElasticEmailConf, isLoading, setIsLoading, setSnackbar }) {
   const setLists = (val) => {
     const newConf = { ...elasticEmailConf }
     newConf.list_id = val ? val.split(',') : []
@@ -17,7 +16,6 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
       <br />
       <div className="flx">
         <b className="wdt-200 d-in-b">{__('Lists:')}</b>
-
         <MultiSelect
           defaultValue={elasticEmailConf.list_id}
           className="btcd-paper-drpdwn w-5"
@@ -25,7 +23,15 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
           onChange={val => setLists(val)}
         />
 
-        <button onClick={() => getAllList(elasticEmailConf, setElasticEmailConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Recipients')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => getAllList(elasticEmailConf, setElasticEmailConf, setIsLoading)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Fetch All Recipients')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       <br />
       <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
@@ -47,13 +53,16 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
         />
       ))}
       <div className="txt-center mt-2" style={{ marginRight: 85 }}>
-        <button onClick={() => addFieldMap(elasticEmailConf.field_map.length, elasticEmailConf, setElasticEmailConf, false)} className="icn-btn sh-sm" type="button">
+        <button
+          onClick={() => addFieldMap(elasticEmailConf.field_map.length, elasticEmailConf, setElasticEmailConf, false)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
           +
         </button>
       </div>
       <br />
       <br />
-
       {elasticEmailConf?.list_id && (
         <>
           <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
@@ -65,7 +74,6 @@ export default function ElasticEmailIntegLayout({ formFields, handleInput, elast
           />
         </>
       )}
-
     </>
   )
 }

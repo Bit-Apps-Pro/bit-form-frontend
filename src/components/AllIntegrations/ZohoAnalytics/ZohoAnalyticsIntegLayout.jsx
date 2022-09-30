@@ -9,7 +9,12 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('Workspace:')}</b>
-      <select onChange={handleInput} name="workspace" value={analyticsConf.workspace} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="workspace"
+        value={analyticsConf.workspace}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Workspace')}</option>
         {
           analyticsConf?.default?.workspaces && analyticsConf.default.workspaces.map(workspaceApiName => (
@@ -19,11 +24,24 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
           ))
         }
       </select>
-      <button onClick={() => refreshWorkspaces(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Analytics Workspaces')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshWorkspaces(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh Analytics Workspaces')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <b className="wdt-100 d-in-b">{__('Table:')}</b>
-      <select onChange={handleInput} name="table" value={analyticsConf.table} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="table"
+        value={analyticsConf.table}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Table')}</option>
         {
           analyticsConf?.default?.tables?.[analyticsConf.workspace] && analyticsConf.default.tables[analyticsConf.workspace].map(tableApiName => (
@@ -33,7 +51,15 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
           ))
         }
       </select>
-      <button onClick={() => refreshTables(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshTables(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <small style={{ color: 'red', marginLeft: 105 }}>{__("** Zoho Analytics doesn't support data INSERT / UPDATE in other integration table")}</small>
@@ -53,7 +79,15 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
           <>
             <div className="mt-4">
               <b className="wdt-100">{__('Map Fields')}</b>
-              <button onClick={() => refreshTableHeaders(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Analytics Table Headers')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshTableHeaders(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Analytics Table Headers')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
@@ -71,12 +105,22 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
                 setAnalyticsConf={setAnalyticsConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(analyticsConf.field_map.length, analyticsConf, setAnalyticsConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(analyticsConf.field_map.length, analyticsConf, setAnalyticsConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
             <div className="btcd-hr mt-1" />
-
             <ZohoAnalyticsActions
               analyticsConf={analyticsConf}
               setAnalyticsConf={setAnalyticsConf}

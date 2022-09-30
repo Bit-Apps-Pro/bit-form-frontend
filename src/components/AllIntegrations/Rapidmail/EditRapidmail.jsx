@@ -31,7 +31,14 @@ function EditRapidmail({ formFields, setIntegration, integrations, allIntegURL }
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, rapidmailConf, setRapidmailConf)} name="name" value={rapidmailConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, rapidmailConf, setRapidmailConf)}
+          name="name"
+          value={rapidmailConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
 
