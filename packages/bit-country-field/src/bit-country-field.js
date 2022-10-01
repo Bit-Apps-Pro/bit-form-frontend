@@ -367,12 +367,11 @@ export default class BitCountryField {
     this.virtualOptionList?.scrollToIndex(selectedIndex === -1 ? 0 : selectedIndex)
   }
 
-  #setCustomAttr(element, obj) {
-    const optObjKey = Object.keys(obj)
-    const optLen = optObjKey.length
+  #setCustomAttr(element, objArr) {
+    const optLen = objArr.length
     if (optLen) {
       for (let i = 0; i < optLen; i += 1) {
-        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+        this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
   }

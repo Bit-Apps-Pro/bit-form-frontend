@@ -86,6 +86,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-phone-inner-wrp`]: {
         display: 'flex',
         height: '100%', // unused css
+        position: 'relative',
       },
 
       [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': ' 0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
@@ -146,7 +147,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         margin: '0px 5px 0px 0px',
         'place-content': 'center',
         width: '16px',
-        height: '15px',
+        height: '16px',
         'border-radius': '50%',
         color: 'var(--global-font-color) !important',
       },

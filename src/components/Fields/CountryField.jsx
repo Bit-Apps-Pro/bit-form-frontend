@@ -217,8 +217,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                       {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                     >
                       <svg
-                        width="15"
-                        height="15"
+                        width="13"
+                        height="13"
                         role="img"
                         title="Cross icon"
                         viewBox="0 0 24 24"

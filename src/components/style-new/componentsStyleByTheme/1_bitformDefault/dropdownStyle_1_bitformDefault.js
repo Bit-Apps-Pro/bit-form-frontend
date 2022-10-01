@@ -124,6 +124,11 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-selected-opt-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
 
+      [`.${fk}-selected-opt-clear-btn:focus-visible`]: {
+        'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
+        outline: 'none',
+      },
+
       [`.${fk}-dpd-btn-wrp`]: {
         display: 'flex',
         'align-items': 'center',

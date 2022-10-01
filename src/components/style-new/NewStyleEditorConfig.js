@@ -1999,6 +1999,27 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-search-wrp': {
+      states: ['hover', 'focus'],
+      properties: {
+        border: {
+          'border-style': true,
+          'border-color': true,
+          'border-width': true,
+          'border-radius': true,
+        },
+        width: '',
+        margin: '',
+        padding: '',
+        'box-shadow': '',
+        height: '',
+        'background-color': '',
+        'font-size': '',
+        'font-style': '',
+        'font-weight': '',
+        transition: '',
+      },
+    },
     'opt-search-input': {
       states: ['hover', 'focus'],
       properties: {
