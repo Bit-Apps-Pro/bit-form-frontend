@@ -83,7 +83,7 @@ export default function EmailNotificationWorkflowAction({ lgcGrpInd,
           <label className="f-m f-5">
             {__('Email Template:')}
           </label>
-          <div className="mt-1"></div>
+          <div className="mt-1" />
           <select
             className="btcd-paper-inp w-7"
             onChange={e => setEmailSetting('id', e.target.value)}

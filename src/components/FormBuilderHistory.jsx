@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import {
-  $breakpoint,
+import { $breakpoint,
   $builderHistory,
   $builderHookStates,
   $colorScheme,
   $fields,
-  $layouts
-} from '../GlobalStates/GlobalStates'
+  $layouts } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'

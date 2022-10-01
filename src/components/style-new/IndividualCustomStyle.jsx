@@ -170,7 +170,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'option-list .opt-lbl': 'Option Label',
     'option-list .opt-suffix': 'Option Suffix',
     'option-list .opt-prefix': 'Option Prefix',
-    'divider': 'Divider',
+    divider: 'Divider',
   }
 
   const fldTitle = getTitle[elementKey]

@@ -349,7 +349,7 @@ export function generateLayoutStyle(layouts) {
     const sm_g_r_e = Math.round(smFld.y !== 1 ? smFld.h + (smFld.y + 1) : 1)
     const sm_g_c_e = Math.round((smFld.x + 1) + smFld.w)
     // const sm_g_r_span = sm_g_r_e - sm_g_r_s
-    // const sm_g_c_span = sm_g_c_e - sm_g_c_s   
+    // const sm_g_c_span = sm_g_c_e - sm_g_c_s
     const sm_min_height = `${smFld.h}px;`
 
     smLayoutStyleText += `.${smClsName}{`

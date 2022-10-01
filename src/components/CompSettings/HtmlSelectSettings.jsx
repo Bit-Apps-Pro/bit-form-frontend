@@ -69,8 +69,6 @@ export default function HtmlSelectSettings() {
 
       <HelperTxtSettings />
 
-
-
       <FieldSettingsDivider />
 
       <RequiredSettings />

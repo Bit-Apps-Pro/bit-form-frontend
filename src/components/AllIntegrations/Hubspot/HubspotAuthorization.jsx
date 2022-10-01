@@ -1,13 +1,9 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
 import Note from '../../Utilities/Note'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
@@ -17,7 +13,6 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { css } = useFela()
 
   const handleAuthorize = () => {
     const newConf = { ...hubspotConf }

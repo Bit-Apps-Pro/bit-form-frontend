@@ -364,7 +364,7 @@ export default function FileUploadSettings() {
         <div className={css(FieldStyle.placeholder)}>
           <SizeControl
             dataTestId="mxmm-upld-siz"
-            className={css(ut.w10, ut.mt2, ut.mb1, { bd: 'var(--b-79-96) !important', brs: '8px !important', p: 5, })}
+            className={css(ut.w10, ut.mt2, ut.mb1, { bd: 'var(--b-79-96) !important', brs: '8px !important', p: 5 })}
             inputHandler={({ unit, value }) => maxSizeHandler(unit, value)}
             sizeHandler={({ unitKey, unitValue }) => maxSizeHandler(unitKey, unitValue)}
             value={maxSize}

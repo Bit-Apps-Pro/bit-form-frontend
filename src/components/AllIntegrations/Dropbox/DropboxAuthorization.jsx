@@ -150,7 +150,6 @@ export default function DropboxAuthorization({ formID, dropboxConf, setDropboxCo
             <BackIcn className="ml-1 rev-icn" />
           </Btn>
 
-
         </>
       )}
     </div>

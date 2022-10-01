@@ -79,9 +79,7 @@ const FieldStyle = {
       pn: 'relative !important',
       'border-top-left-radius': 0,
       'border-top-right-radius': 0,
-      '& div > .msl-option': {
-        p: '4px 4px',
-      }
+      '& div > .msl-option': { p: '4px 4px' },
     },
     '& > .msl-wrp > .msl-active-up': {
       brs: 8,

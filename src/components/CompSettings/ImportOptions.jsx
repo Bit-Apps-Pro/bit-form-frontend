@@ -26,7 +26,6 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
 
   const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt.value.replace(/,/g, '_') }))
 
-
   const generateNewOptions = () => {
     if (!isPro) return []
     const { dataSrc } = importOpts
