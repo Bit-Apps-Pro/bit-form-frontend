@@ -40,14 +40,6 @@ export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFi
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
 
-// export const $reportSelector = selector({
-//   key: '$reportSelector',
-//   get: ({ get }) => get($reports)[get($reportId)],
-//   set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
-//     const id = get($reportId)
-//     draft[id] = newReport
-//   })),
-// })
 export const $reportSelector = selector({
   key: '$reportSelector',
   get: ({ get }) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
