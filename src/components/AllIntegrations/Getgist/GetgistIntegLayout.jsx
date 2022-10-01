@@ -32,8 +32,14 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('User Type:')}</b>
-      <select onChange={handleInput} name="user_type" value={getgistConf?.user_type} className="btcd-paper-inp w-5">
-        <option value="">{__('Select User Type')}</option>
+      <select
+        onChange={handleInput}
+        name="user_type"
+        value={getgistConf?.user_type}
+        className="btcd-paper-inp w-5"
+        defaultValue="0"
+      >
+        <option selected disabled value="0">{__('Select User Type')}</option>
         {
           contactTypes.map(({ key, label }) => (
             <option key={key} value={key}>
@@ -60,10 +66,20 @@ export default function GetgistIntegLayout({ formFields, getgistConf, setGetgist
           setGetgistConf={setGetgistConf}
         />
       ))}
-      <div className="txt-center mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(getgistConf.field_map.length, getgistConf, setGetgistConf)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div
+        className="txt-center mt-2"
+        style={{ marginRight: 85 }}
+      >
+        <button
+          onClick={() => addFieldMap(getgistConf.field_map.length, getgistConf, setGetgistConf)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <br />
       <br />
-
       {getgistConf?.user_type && (
         <>
           <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>

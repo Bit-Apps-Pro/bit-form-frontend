@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ZohoMarketingHubAuthorization from './ZohoMarketingHubAuthorization'
 import { checkMappedFields, handleInput, refreshLists, setGrantTokenResponse } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
@@ -16,7 +14,6 @@ import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
 function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
-  const { css } = useFela()
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -56,7 +53,9 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center w-9 mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ZohoMarketingHubAuthorization
@@ -83,7 +82,12 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={marketingHubConf.list === '' || marketingHubConf.table === '' || marketingHubConf.field_map.length < 1}
+        />
+
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={marketingHubConf.list === '' || marketingHubConf.table === '' || marketingHubConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -91,8 +95,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
-
+        </button> */}
       </div>
 
       {/* STEP 3 */}

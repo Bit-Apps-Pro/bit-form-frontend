@@ -163,8 +163,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   {...getCustomAttributes(fieldKey, 'input-clear-btn')}
                 >
                   <svg
-                    width="13"
-                    height="13"
+                    width="15"
+                    height="15"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -225,8 +225,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                         {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                       >
                         <svg
-                          width="16"
-                          height="16"
+                          width="13"
+                          height="13"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"

@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
-import LoaderSm from '../../Loaders/LoaderSm'
-import Note from '../../Utilities/Note'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { handleAuthorize } from './TwilioCommonFunc'
 
 export default function TwilioAuthorization({ twilioConf,
@@ -109,35 +108,25 @@ export default function TwilioAuthorization({ twilioConf,
       <div style={{ color: 'red' }}>{error.from_num}</div>
 
       {!isInfo && (
-        <div>
-          <button
-            onClick={() => handleAuthorize(twilioConf, setTwilioConf, setError, setisAuthorized, setIsLoading, setSnackbar)}
-            className="btn btcd-btn-lg green sh-sm flx"
-            type="button"
-            disabled={isAuthorized || isLoading}
-          >
-            {isAuthorized
-              ? __('Authorized ✔')
-              : __('Authorize')}
-            {isLoading && (
-              <LoaderSm
-                size="20"
-                clr="#022217"
-                className="ml-2"
-              />
+        <>
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+            handleAuthorize={() => handleAuthorize(
+              twilioConf,
+              setTwilioConf,
+              setError,
+              setisAuthorized,
+              setIsLoading,
+              setSnackbar,
             )}
-          </button>
+          />
           <br />
-          <button
-            onClick={nextPage}
-            className="btn f-right btcd-btn-lg green sh-sm flx"
-            type="button"
+          <NextBtn
+            nextPageHanlder={() => nextPage()}
             disabled={!isAuthorized}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </button>
-        </div>
+          />
+        </>
       )}
     </div>
   )

@@ -9,7 +9,12 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('Module:')}</b>
-      <select onChange={handleInput} name="module" value={wcConf.module} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="module"
+        value={wcConf.module}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Module')}</option>
         <option value="customer">Customer</option>
         <option value="product">Product</option>
@@ -31,7 +36,15 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
           <>
             <div className="mt-4">
               <b className="wdt-100">{__('Map Fields')}</b>
-              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
@@ -50,7 +63,13 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
               />
             ))}
             <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
-              <button onClick={() => addFieldMap(wcConf.field_map.length, wcConf, setWcConf)} className="icn-btn sh-sm" type="button">+</button>
+              <button
+                onClick={() => addFieldMap(wcConf.field_map.length, wcConf, setWcConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
             </div>
           </>
         )}
@@ -60,7 +79,15 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
           <>
             <div className="mt-4">
               <b className="wdt-100">{__('Map File Upload Fields')}</b>
-              <button onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshFields(wcConf, setWcConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
@@ -80,7 +107,13 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
               />
             ))}
             <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
-              <button onClick={() => addFieldMap(wcConf.field_map.length, wcConf, setWcConf, true)} className="icn-btn sh-sm" type="button">+</button>
+              <button
+                onClick={() => addFieldMap(wcConf.field_map.length, wcConf, setWcConf, true)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
             </div>
           </>
         )}

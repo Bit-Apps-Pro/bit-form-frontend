@@ -44,11 +44,13 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
   }
 
   return (
-    <div
-      className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}
-    >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
-
+    <div className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}>
+      <select
+        className="btcd-paper-inp mr-2"
+        name="formField"
+        value={field.formField || ''}
+        onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}
+      >
         <option value="">{__('Select Field')}</option>
         <optgroup label="Form Fields">
           {
@@ -68,9 +70,24 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
         </optgroup>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+      {field.formField === 'custom' && (
+        <MtInput
+          onChange={e => handleCustomValue(e, i)}
+          label={__('Custom Value')}
+          className="mr-2"
+          type="text"
+          value={field.customValue}
+          placeholder={__('Custom Value')}
+        />
+      )}
 
-      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
+      <select
+        className="btcd-paper-inp"
+        name="zohoFormField"
+        value={field.zohoFormField || ''}
+        disabled={!isNotRequired}
+        onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}
+      >
         <option value="">{__('Select Field')}</option>
         {
           isNotRequired
@@ -96,7 +113,12 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
       </button>
       {
         isNotRequired && (
-          <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <button
+            onClick={() => delFieldMap(i)}
+            className="icn-btn sh-sm ml-1"
+            type="button"
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         )

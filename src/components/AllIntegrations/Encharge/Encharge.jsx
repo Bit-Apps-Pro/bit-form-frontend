@@ -4,8 +4,10 @@ import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -70,17 +72,16 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
           enchargeConf={enchargeConf}
           setEnchargeConf={setEnchargeConf}
         />
-        <button
+        <Btn
+          varient="success"
           onClick={() => nextPage(3)}
           disabled={enchargeConf.field_map.length < 1}
-          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
-          type="button"
+          className={css(ut.ftRight)}
         >
           {__('Next')}
-          {' '}
           &nbsp;
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </Btn>
 
       </div>
 

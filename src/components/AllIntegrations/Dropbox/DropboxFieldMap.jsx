@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap, delFieldMap } from './IntegrationHelpers'
@@ -13,7 +14,12 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
     <div className="flx mt-2 mr-1">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               formFields?.filter(fld => fld.type === 'file-up').map(f => (
@@ -24,12 +30,17 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
             }
           </select>
 
-          <select className="btcd-paper-inp" name="dropboxFormField" value={field.dropboxFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <select
+            className="btcd-paper-inp"
+            name="dropboxFormField"
+            value={field.dropboxFormField}
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Folder')}</option>
             {
-              sortByField(dropboxConf.foldersList, 'lower_path', 'ASC').map(({ name, lower_path }) => (
-                <option key={lower_path} value={lower_path}>
-                  {lower_path.substring(1).split('/').map(f => f.replace('/', '>')).join(' > ')}
+              sortByField(dropboxConf.foldersList, 'lowerPath', 'ASC').map(({ name, lowerPath }) => (
+                <option key={lowerPath} value={lowerPath}>
+                  {lowerPath.substring(1).split('/').map(f => f.replace('/', '>')).join(' > ')}
                 </option>
               ))
             }
@@ -42,8 +53,13 @@ export default function DropboxFieldMap({ i, formFields, field, dropboxConf, set
         >
           +
         </button>
-        <button onClick={() => delFieldMap(i, dropboxConf, setDropboxConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-          <span className="btcd-icn icn-trash-2" />
+        <button
+          onClick={() => delFieldMap(i, dropboxConf, setDropboxConf)}
+          className="icn-btn sh-sm ml-1"
+          type="button"
+          aria-label="btn"
+        >
+          <TrashIcn />
         </button>
       </div>
     </div>

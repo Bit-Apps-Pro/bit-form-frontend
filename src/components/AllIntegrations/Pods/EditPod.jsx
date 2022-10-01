@@ -8,6 +8,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { postFields } from '../../../Utils/StaticData/postField'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import SaveIntergrationBrn from '../SaveIntergrationBrn'
 import PodsFieldMap from './FieldMap'
 import { addFieldMap, checkMappedPodFields, checkMappedPostFields } from './PodHelperFunction'
 
@@ -81,10 +82,22 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <input
+        className="btcd-paper-inp w-5 mt-1"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        name="name"
+        value={data.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
 
       <div className="mt-3"><b>{__('Post Type')}</b></div>
-      <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} value={data?.post_type} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_type"
+        onChange={(e) => getPodsField(e.target.name, e.target.value)}
+        value={data?.post_type}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
           <option key={`pod-${key * 2}`} value={type.name}>{type.label}</option>
@@ -92,7 +105,12 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3"><b>{__('Post Status')}</b></div>
-      <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_status} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        value={data?.post_status}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
@@ -103,14 +121,24 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       </select>
 
       <div className="mt-3"><b>{__('Comment Status')}</b></div>
-      <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.comment_status} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="comment_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        value={data?.comment_status}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
 
       <div className="mt-3"><b>{__('Author')}</b></div>
-      <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_author} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_author"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        value={data?.post_author}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
           <option key={`pod-${key * 2}`} value={user.ID}>{user.display_name}</option>
@@ -190,14 +218,15 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
           +
         </button>
       </div>
-      <button
+      {/* <button
         className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >
         {__('Save')}
         {' '}
-      </button>
+      </button> */}
+      <SaveIntergrationBrn onClick={() => saveConfig()} />
     </div>
   )
 }

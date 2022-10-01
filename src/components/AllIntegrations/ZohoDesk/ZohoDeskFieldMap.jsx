@@ -16,7 +16,12 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -33,9 +38,24 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i, deskConf, setDeskConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={ev => handleCustomValue(ev, i, deskConf, setDeskConf)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          disabled={!isNotRequired}
+          onChange={(ev) => handleFieldMapping(ev, i, deskConf, setDeskConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             deskConf.default?.fields?.[orgId]?.fields && Object.values(deskConf.default.fields[orgId].fields).map(ticketField => (
@@ -65,7 +85,12 @@ export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDe
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i, deskConf, setDeskConf)} className="icn-btn sh-sm" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i, deskConf, setDeskConf)}
+              className="icn-btn sh-sm"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

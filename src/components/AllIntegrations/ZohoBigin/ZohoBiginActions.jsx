@@ -1,12 +1,13 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
+import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import Loader from '../../Loaders/Loader'
 import { refreshTags, refreshUsers } from './ZohoBiginCommonFunc'
 
 export default function ZohoBiginActions({ tab, formID, formFields, biginConf, setBiginConf, setSnackbar }) {
@@ -69,17 +70,54 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
         {biginConf?.relatedlists?.[tab - 1]?.module !== 'Notes'
           && (
             <>
-              <TableCheckBox onChange={(e) => actionHandler(true, 'workflow', e.target.checked)} checked={tab === 0 ? 'workflow' in biginConf.actions : 'workflow' in biginConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title={__('Workflow')} subTitle={__('Trigger workflows in Zoho Bigin.')} />
-              <TableCheckBox onChange={(e) => actionHandler(true, 'approval', e.target.checked)} checked={tab === 0 ? 'approval' in biginConf.actions : 'approval' in biginConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Approval" title={__('Approval')} subTitle={__('Send entries to approval list in Zoho Bigin.')} />
+              <TableCheckBox
+                onChange={(e) => actionHandler(true, 'workflow', e.target.checked)}
+                checked={tab === 0 ? 'workflow' in biginConf.actions : 'workflow' in biginConf.relatedlists?.[tab - 1]?.actions}
+                className="wdt-200 mt-4 mr-2"
+                value="Workflow"
+                title={__('Workflow')}
+                subTitle={__('Trigger workflows in Zoho Bigin.')}
+              />
+              <TableCheckBox
+                onChange={(e) => actionHandler(true, 'approval', e.target.checked)}
+                checked={tab === 0 ? 'approval' in biginConf.actions : 'approval' in biginConf.relatedlists?.[tab - 1]?.actions}
+                className="wdt-200 mt-4 mr-2"
+                value="Approval"
+                title={__('Approval')}
+                subTitle={__('Send entries to approval list in Zoho Bigin.')}
+              />
               {(tab === 0 && !['Calls', 'Events', 'Tasks'].includes(biginConf.module)) && (
-                <TableCheckBox onChange={() => setNotesMdl(true)} checked={'note' in biginConf.actions && ('title' in biginConf.actions?.note || 'content' in biginConf.actions?.note)} className="wdt-200 mt-4 mr-2" value="notes" title={__('Add a Note')} subTitle={__('Add a note from bitform to pushed to Zoho Bigin.')} />
+                <TableCheckBox
+                  onChange={() => setNotesMdl(true)}
+                  checked={'note' in biginConf.actions && ('title' in biginConf.actions?.note || 'content' in biginConf.actions?.note)}
+                  className="wdt-200 mt-4 mr-2"
+                  value="notes"
+                  title={__('Add a Note')}
+                  subTitle={__('Add a note from bitform to pushed to Zoho Bigin.')}
+                />
               )}
             </>
           )}
         {/* <TableCheckBox onChange={() => setrecOwnerMdl(true)} checked={tab === 0 ? 'owner' in biginConf.actions : 'owner' in biginConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="recordOwner"title={__('Record Owner')} subTitle={__('Set owner of current record')} /> */}
         {/* eslint-disable-next-line max-len */}
-        {['Contacts', 'Accounts', 'Products'].includes(module) && <TableCheckBox onChange={() => setActionMdl({ show: 'photo' })} checked={tab === 0 ? 'photo' in biginConf.actions : 'photo' in biginConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Photo')} subTitle={`Add a photo to ${module} in Zoho Bigin.`} />}
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={tab === 0 ? 'attachments' in biginConf.actions : 'attachments' in biginConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachment')} subTitle={__('Add attachments from BitForm to Zoho Bigin.')} />
+        {['Contacts', 'Accounts', 'Products'].includes(module) && (
+          <TableCheckBox
+            onChange={() => setActionMdl({ show: 'photo' })}
+            checked={tab === 0 ? 'photo' in biginConf.actions : 'photo' in biginConf.relatedlists[tab - 1].actions}
+            className="wdt-200 mt-4 mr-2"
+            value="Attachment"
+            title={__('Upload Photo')}
+            subTitle={`Add a photo to ${module} in Zoho Bigin.`}
+          />
+        )}
+        <TableCheckBox
+          onChange={() => setActionMdl({ show: 'attachments' })}
+          checked={tab === 0 ? 'attachments' in biginConf.actions : 'attachments' in biginConf.relatedlists[tab - 1].actions}
+          className="wdt-200 mt-4 mr-2"
+          value="Attachment"
+          title={__('Attachment')}
+          subTitle={__('Add attachments from BitForm to Zoho Bigin.')}
+        />
         {/* <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in biginConf.actions : 'tag_rec' in biginConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Tag_Records"title={__('Tag Records')} subTitle={__('Add a tag to records pushed to Zoho Bigin.')} /> */}
       </div>
 
@@ -155,7 +193,15 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
                 onChange={(val) => actionHandler(val, 'owner')}
                 customValue
               />
-              <button onClick={() => refreshUsers(formID, biginConf, setBiginConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshUsers(formID, biginConf, setBiginConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': '"Refresh Users"' }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
       </ConfirmModal>
@@ -226,13 +272,27 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
               : (
                 <>
                   <div className="mt-2 mb-1">{__('Note Title')}</div>
-                  <input type="text" className="btcd-paper-inp" placeholder={__('Note Title')} onChange={e => handleNoteAction('title', e.target.value)} value={tab === 0 ? (biginConf.actions?.note?.title || '') : (biginConf.relatedlists[tab - 1].actions?.note?.title || '')} />
+                  <input
+                    type="text"
+                    className="btcd-paper-inp"
+                    placeholder={__('Note Title')}
+                    onChange={e => handleNoteAction('title', e.target.value)}
+                    value={tab === 0 ? (biginConf.actions?.note?.title || '') : (biginConf.relatedlists[tab - 1].actions?.note?.title || '')}
+                  />
                   <div className="mt-2 mb-1">{__('Note Content')}</div>
-                  <select className="btcd-paper-inp w-5" onChange={e => handleNoteAction('field', e.target.value)}>
+                  <select
+                    className="btcd-paper-inp w-5"
+                    onChange={e => handleNoteAction('field', e.target.value)}
+                  >
                     <option value="">{__('Field')}</option>
                     {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                   </select>
-                  <textarea rows="5" className="btcd-paper-inp mt-2" onChange={e => handleNoteAction('content', e.target.value)} value={tab === 0 ? (biginConf.actions?.note?.content || '') : (biginConf.relatedlists[tab - 1].actions?.note?.content || '')} />
+                  <textarea
+                    rows="5"
+                    className="btcd-paper-inp mt-2"
+                    onChange={e => handleNoteAction('content', e.target.value)}
+                    value={tab === 0 ? (biginConf.actions?.note?.content || '') : (biginConf.relatedlists[tab - 1].actions?.note?.content || '')}
+                  />
                 </>
               )}
           </ConfirmModal>

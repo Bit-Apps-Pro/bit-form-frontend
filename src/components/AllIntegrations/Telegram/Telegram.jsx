@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import TelegramAuthorization from './TelegramAuthorization'
 import TelegramIntegLayout from './TelegramIntegLayout'
 
@@ -70,7 +69,7 @@ export default function Telegram({ formFields, setIntegration, integrations, all
         />
         <br />
         <br />
-        <button
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={telegramConf.chat_id === ''}
           className="btn f-right btcd-btn-lg green sh-sm flx"
@@ -78,7 +77,11 @@ export default function Telegram({ formFields, setIntegration, integrations, all
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={telegramConf.chat_id === ''}
+        />
       </div>
 
       {/* STEP 3 */}

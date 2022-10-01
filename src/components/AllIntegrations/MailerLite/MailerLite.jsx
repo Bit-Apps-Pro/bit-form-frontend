@@ -9,6 +9,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import MailerLiteAuthorization from './MailerLiteAuthorization'
 import { checkMappedFields, handleInput } from './MailerLiteCommonFunc'
 import MailerLiteIntegLayout from './MailerLiteIntegLayout'
@@ -72,7 +73,10 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overintegrations: 'visible' }) }}>
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overintegrations: 'visible' }) }}
+      >
 
         <MailerLiteIntegLayout
           formFields={formFields}
@@ -84,7 +88,11 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPage={() => nextPage(3)}
+        />
+
+        {/* <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
@@ -93,7 +101,7 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

@@ -15,7 +15,14 @@ export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, 
       <br />
       <div className="flx">
         <b className="wdt-200 d-in-b">{__('Tags:')}</b>
-        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="tags" value={enchargeConf.tags || ''} type="text" placeholder={__('tag-1, tag-2')} />
+        <input
+          className="btcd-paper-inp w-5 mt-1"
+          onChange={handleInput}
+          name="tags"
+          value={enchargeConf.tags || ''}
+          type="text"
+          placeholder={__('tag-1, tag-2')}
+        />
         <Cooltip width={250} icnSize={17} className="ml-2">
           <div className="txt-body">
             Tags separate with comma
@@ -44,7 +51,18 @@ export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, 
                 setEnchargeConf={setEnchargeConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(enchargeConf.field_map.length, enchargeConf, setEnchargeConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(enchargeConf.field_map.length, enchargeConf, setEnchargeConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
           </>

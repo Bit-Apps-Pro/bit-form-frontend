@@ -27,7 +27,12 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
   return (
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -45,7 +50,13 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
           </optgroup>
         </select>
 
-        <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
+        <select
+          className="btcd-paper-inp"
+          name={fldName}
+          value={field[fldName] || ''}
+          onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field')}</option>
           {
             podFields?.map(header => (
@@ -77,13 +88,17 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delFieldMap(propName, i, dataConf, setDataConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <TrashIcn />
               </button>
             </>
           )
       }
-
     </div>
   )
 }

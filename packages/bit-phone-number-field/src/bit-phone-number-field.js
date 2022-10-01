@@ -424,12 +424,11 @@ export default class BitPhoneNumberField {
     elm?.setAttribute?.(name, value)
   }
 
-  #setCustomAttr(element, obj) {
-    const optObjKey = Object.keys(obj)
-    const optLen = optObjKey.length
+  #setCustomAttr(element, objArr) {
+    const optLen = objArr.length
     if (optLen) {
       for (let i = 0; i < optLen; i += 1) {
-        this.#setAttribute(element, optObjKey[i], obj[optObjKey[i]])
+        this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
   }
@@ -502,6 +501,10 @@ export default class BitPhoneNumberField {
         lblimgbox.append(img, lbl)
         const prefix = this.#createElm('span')
         this.#setClassName(prefix, 'opt-prefix')
+        if ('opt-prefix' in this.#config.classNames) {
+          const optPrefixCls = this.#config.classNames['opt-prefix']
+          if (optPrefixCls) this.#setClassName(prefix, optPrefixCls)
+        }
         this.#setTextContent(prefix, opt.code)
         // this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
         if ('opt-prefix' in this.#config.attributes) {

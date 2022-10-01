@@ -594,6 +594,7 @@ export const generateHistoryData = (element, fieldKey, path, changedValue, state
 }
 
 export const getLatestState = (stateName) => {
+  if (stateName === 'fields') return getRecoil($fields)
   if (stateName === 'styles') return getRecoil($styles)
   if (stateName === 'themeVars') return getRecoil($themeVars)
   if (stateName === 'themeColors') return getRecoil($themeColors)

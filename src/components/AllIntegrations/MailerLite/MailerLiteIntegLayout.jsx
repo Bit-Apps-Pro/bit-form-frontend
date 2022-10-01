@@ -12,11 +12,18 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
   return (
     <>
       <br />
-
       <div className="mt-5">
         <b className="wdt-100">
           {__('Field Map')}
-          <button onClick={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'refreshFields')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button
+            onClick={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'refreshFields')}
+            className="icn-btn sh-sm ml-2 mr-2 tooltip"
+            style={{ '--tooltip-txt': '"Refresh Fields"' }}
+            type="button"
+            disabled={isLoading}
+          >
+            &#x21BB;
+          </button>
         </b>
       </div>
       <br />
@@ -48,20 +55,26 @@ export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setM
           setSnackbar={setSnackbar}
         />
       ))}
-      <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(mailerLiteConf.field_map.length, mailerLiteConf, setMailerLiteConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div className="txt-center btcbi-field-map-button mt-2">
+        <button
+          onClick={() => addFieldMap(mailerLiteConf.field_map.length, mailerLiteConf, setMailerLiteConf, false)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <br />
       <br />
-
-      <>
-        <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
-        <div className="btcd-hr mt-1" />
-        <MailerLiteActions
-          mailerLiteConf={mailerLiteConf}
-          setMailerLiteConf={setMailerLiteConf}
-          formFields={formFields}
-        />
-      </>
-
+      <div className="mt-4">
+        <b className="wdt-100">{__('Actions')}</b>
+      </div>
+      <div className="btcd-hr mt-1" />
+      <MailerLiteActions
+        mailerLiteConf={mailerLiteConf}
+        setMailerLiteConf={setMailerLiteConf}
+        formFields={formFields}
+      />
     </>
   )
 }

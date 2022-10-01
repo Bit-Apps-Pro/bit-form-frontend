@@ -14,11 +14,14 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
   const isNotRequired = field.zohoFormField === '' || biginConf.default.moduleData?.[module]?.required?.indexOf(field.zohoFormField) === -1
 
   return (
-    <div
-      className="flx mt-2 mr-1"
-    >
+    <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -28,7 +31,6 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
           {!uploadFields && (
             <>
               <option value="custom">{__('Custom...')}</option>
-
               <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
                 {isPro && SmartTagField?.map(f => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -43,7 +45,13 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, biginConf, setBiginConf, tab)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
+        <select
+          className="btcd-paper-inp"
+          disabled={!isNotRequired}
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             biginConf.default.moduleData?.[module]?.fields && Object.values(biginConf.default.moduleData[module].fields).map(fieldApiName => (
@@ -73,7 +81,12 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i, biginConf, setBiginConf, uploadFields, tab)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i, biginConf, setBiginConf, uploadFields, tab)}
+              className="icn-btn sh-sm ml-1"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

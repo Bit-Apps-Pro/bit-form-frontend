@@ -30,7 +30,12 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
     <>
       <br />
       <b className="wdt-150 d-in-b">{__('Audience List:')}</b>
-      <select onChange={handleInput} name="listId" value={sheetConf.listId} className="btcd-paper-inp w-6">
+      <select
+        onChange={handleInput}
+        name="listId"
+        value={sheetConf.listId}
+        className="btcd-paper-inp w-6"
+      >
         <option value="">{__('Select Audience List')}</option>
         {
           sheetConf?.default?.audiencelist && Object.keys(sheetConf.default.audiencelist).map(audiencelistName => (
@@ -40,7 +45,15 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
           ))
         }
       </select>
-      <button onClick={() => refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Audience list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Audience list"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <div className="d-flx">
@@ -51,7 +64,15 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
           options={sheetConf?.default?.audienceTags && Object.keys(sheetConf.default.audienceTags).map(tag => ({ label: sheetConf.default.audienceTags[tag].tagName, value: sheetConf.default.audienceTags[tag].tagName }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshTags(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -85,7 +106,18 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
                 setSheetConf={setSheetConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sheetConf.field_map.length, sheetConf, setSheetConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(sheetConf.field_map.length, sheetConf, setSheetConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {sheetConf.actions?.address && (
@@ -109,7 +141,18 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
                     addressField={address}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addAddressFieldMap(sheetConf.address_field.length, sheetConf, setSheetConf)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addAddressFieldMap(sheetConf.address_field.length, sheetConf, setSheetConf)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
               </>
             )}
             <br />

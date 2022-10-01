@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
@@ -24,12 +25,15 @@ export default function GroundhoggFieldMap({ i, formFields, field, groundhoggCon
   const { isPro } = bits
 
   return (
-    <div
-      className="flx mt-2 mb-2 btcbi-field-map"
-    >
+    <div className="flx mt-2 mb-2 btcbi-field-map">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -47,9 +51,24 @@ export default function GroundhoggFieldMap({ i, formFields, field, groundhoggCon
 
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && (
+            <MtInput
+              onChange={e => handleCustomValue(e, i, groundhoggConf, setGroundhoggConf)}
+              label={__('Custom Value')}
+              className="mr-2"
+              type="text"
+              value={field.customValue}
+              placeholder={__('Custom Value')}
+            />
+          )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="GroundhoggMapField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.GroundhoggMapField || '')} onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="GroundhoggMapField"
+            value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.GroundhoggMapField || '')}
+            onChange={(ev) => handleFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
@@ -76,7 +95,12 @@ export default function GroundhoggFieldMap({ i, formFields, field, groundhoggCon
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(i, groundhoggConf, setGroundhoggConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delFieldMap(i, groundhoggConf, setGroundhoggConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="button"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

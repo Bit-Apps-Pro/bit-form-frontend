@@ -10,7 +10,12 @@ export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, d
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('Portal:')}</b>
-      <select onChange={handleInput} name="orgId" value={deskConf.orgId} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="orgId"
+        value={deskConf.orgId}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Portal')}</option>
         {
           deskConf?.default?.organizations && Object.values(deskConf.default.organizations).map(organization => (
@@ -20,11 +25,24 @@ export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, d
           ))
         }
       </select>
-      <button onClick={() => refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Desk Portals')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh Desk Portals')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <b className="wdt-100 d-in-b">{__('Department:')}</b>
-      <select onChange={handleInput} name="department" value={deskConf.department} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="department"
+        value={deskConf.department}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Department')}</option>
         {
           deskConf?.default?.departments?.[deskConf.orgId] && Object.values(deskConf.default.departments[deskConf.orgId]).map(department => (
@@ -34,7 +52,15 @@ export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, d
           ))
         }
       </select>
-      <button onClick={() => refreshDepartments(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Desk Departments')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshDepartments(formID, deskConf, setDeskConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh Desk Departments')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       {isLoading && (
@@ -52,7 +78,15 @@ export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, d
         <>
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields')}</b>
-            <button onClick={() => refreshFields(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Desk Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => refreshFields(formID, deskConf, setDeskConf, setisLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Desk Fields')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr mt-1" />
           {deskConf.default?.fields?.[deskConf?.orgId]
@@ -73,7 +107,18 @@ export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, d
                     setDeskConf={setDeskConf}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(deskConf.field_map.length, deskConf, setDeskConf)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(deskConf.field_map.length, deskConf, setDeskConf)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
                 <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>

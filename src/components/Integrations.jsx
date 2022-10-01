@@ -71,11 +71,10 @@ function Integrations() {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
-  // const { path, url } = useRouteMatch()
   const location = useLocation()
-  const allIntegURL = useRef(location.pathname).current
   const navigate = useNavigate()
   const { formID } = useParams()
+  const allIntegURL = useRef(location.pathname).current
   const bits = useRecoilValue($bits)
   const { isPro, proInfo } = bits
   const { css } = useFela()

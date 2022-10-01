@@ -7,6 +7,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import SendFoxAuthorization from './SendFoxAuthorization'
 import { handleInput, isDisabled } from './SendFoxCommonFunc'
 import SendFoxIntegLayout from './SendFoxIntegLayout'
@@ -94,8 +95,10 @@ function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <SendFoxIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar, formID)}
@@ -106,7 +109,11 @@ function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage()}
+          disabled={isDisabled(sendFoxConf)}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
@@ -116,7 +123,7 @@ function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree

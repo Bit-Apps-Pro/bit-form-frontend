@@ -1,9 +1,8 @@
 import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
-import { sprintf, __ } from '../../../Utils/i18nwrap'
+import { __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (e, sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar, formID) => {
+export const handleInput = (e, sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar) => {
   const newConf = { ...sendFoxConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -18,14 +17,16 @@ export const handleInput = (e, sendFoxConf, setSendFoxConf, setIsLoading, setSna
 }
 
 export const checkAddressFieldMapRequired = sendFoxConf => {
-  const requiredFleld = sendFoxConf?.address_field ? sendFoxConf.default?.fields.filter(field => !field.formField && field.acumbamailFormField && field.required) : []
+  const requiredFleld = sendFoxConf?.address_field
+    ? sendFoxConf.default?.fields
+      .filter(field => !field.formField && field.acumbamailFormField && field.required) : []
   if (requiredFleld.length > 0) {
     return false
   }
   return true
 }
 
-export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar) => {
+export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading) => {
   setIsLoading(true)
   const requestParams = { access_token: sendFoxConf.access_token }
 
@@ -51,7 +52,7 @@ export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnack
     .catch(() => setIsLoading(false))
 }
 
-export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
+export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading) => {
   if (!confTmp.access_token) {
     setError({ access_token: !confTmp.access_token ? __('Access Token can\'t be empty') : '' })
     return
@@ -83,13 +84,13 @@ export const generateMappedField = (sendFoxConf) => {
 
 export const checkMappedFields = sendFoxConf => {
   const canNotSave = sendFoxConf.field_map ? sendFoxConf.field_map.find(f => !f.formField || !f.sendFoxFormField) : false
-  if (canNotSave) {
-    return false
-  }
-  const mappedFields = sendFoxConf?.field_map ? sendFoxConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.sendFoxFormField && sendFoxConf?.default?.allFields?.[sendFoxConf.listId]?.required.indexOf(mappedField.sendFoxFormField) !== -1)) : []
-  if (mappedFields.length > 0) {
-    return false
-  }
+  if (canNotSave) return false
+
+  const mappedFields = sendFoxConf?.field_map
+    ? sendFoxConf.field_map
+      .filter(mappedField => (!mappedField.formField && mappedField.sendFoxFormField && sendFoxConf?.default?.allFields?.[sendFoxConf.listId]?.required.indexOf(mappedField.sendFoxFormField) !== -1))
+    : []
+  if (mappedFields.length > 0) return false
 
   return true
 }
@@ -103,10 +104,7 @@ export const generateListMappedField = (sendFoxConf) => {
 
 export const checkMappedListFields = sendFoxConf => {
   const mappedFields = sendFoxConf?.field_map_list ? sendFoxConf.field_map_list.filter(mappedField => (!mappedField.formField && mappedField.sendFoxListFormField && sendFoxConf?.default?.allFields?.[sendFoxConf.listId]?.required.indexOf(mappedField.sendFoxListFormField) !== -1)) : []
-  if (mappedFields.length > 0) {
-    return false
-  }
-
+  if (mappedFields.length > 0) return false
   return true
 }
 
@@ -117,10 +115,7 @@ export const generateunsubscribeMappedField = (sendFoxConf) => {
 
 export const checkMappedSubscribeFields = sendFoxConf => {
   const mappedFields = sendFoxConf?.field_map_unsubscribe ? sendFoxConf.field_map_unsubscribe.filter(mappedField => (!mappedField.formField && mappedField.sendFoxUnsubscribeFormField && sendFoxConf?.default?.allFields?.[sendFoxConf.listId]?.required.indexOf(mappedField.sendFoxUnsubscribeFormField) !== -1)) : []
-  if (mappedFields.length > 0) {
-    return false
-  }
-
+  if (mappedFields.length > 0) return false
   return true
 }
 

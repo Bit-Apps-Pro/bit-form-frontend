@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -52,7 +53,12 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
     <div style={{ width: 875 }}>
       <div className="flx">
         <b style={{ width: 100 }}>{__('Type:')}</b>
-        <select onChange={(e) => handleInput(e.target.value, 'mailType')} className="btcd-paper-inp" style={{ width: 150 }} value={mailConf.mailType}>
+        <select
+          onChange={(e) => handleInput(e.target.value, 'mailType')}
+          className="btcd-paper-inp"
+          style={{ width: 150 }}
+          value={mailConf.mailType}
+        >
           <option value="">{__('Select type')}</option>
           <option value="send">{__('Send Email')}</option>
           <option value="draft">{__('Save as Draft')}</option>
@@ -97,7 +103,13 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
 
       <div className="mt-2 flx">
         <b style={{ width: 100 }}>{__('Subject:')}</b>
-        <input type="text" onChange={(e) => handleInput(e.target.value, 'subject')} className="btcd-paper-inp w-7" placeholder={__('Email Subject Here')} value={mailConf.subject || ''} />
+        <input
+          type="text"
+          onChange={(e) => handleInput(e.target.value, 'subject')}
+          className="btcd-paper-inp w-7"
+          placeholder={__('Email Subject Here')}
+          value={mailConf.subject || ''}
+        />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
           <option value="">{__('Add form field')}</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}

@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -16,6 +20,7 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
+  const { css } = useFela()
 
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
@@ -91,7 +96,9 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center w-9 mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <GroundhoggAuthorization
@@ -106,8 +113,10 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <GroundhoggIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, groundhoggConf, setGroundhoggConf, formID, setIsLoading, setSnackbar)}
@@ -118,6 +127,17 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
+        <Btn
+          varient="success"
+          onClick={() => nextPage(3)}
+          disabled={(groundhoggConf.mainAction === '2' ? isDisabled : (!((groundhoggConf.field_map?.length >= 1)))) || isLoading}
+          className={css(ut.mt3, { ml: 3 })}
+        >
+          {__('Next')}
+          &nbsp;
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
+        {/*
         <button
           onClick={() => nextPage(3)}
           disabled={(groundhoggConf.mainAction === '2' ? isDisabled : (!((groundhoggConf.field_map?.length >= 1)))) || isLoading}
@@ -128,7 +148,7 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree
