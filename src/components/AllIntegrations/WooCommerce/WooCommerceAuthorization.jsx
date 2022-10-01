@@ -79,7 +79,7 @@ export default function WooCommerceAuthorization({ wcConf, setWcConf, step, setS
 
         {!isAuthorized && (
           <Btn
-            varient="success"
+            variant="success"
             onClick={authorizeHandler}
             className={css(ut.mt3, ut.mb3, { ml: 3 })}
           >

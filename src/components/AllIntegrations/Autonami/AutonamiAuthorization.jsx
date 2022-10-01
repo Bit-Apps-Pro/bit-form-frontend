@@ -73,7 +73,7 @@ export default function AutonamiAuthorization({ autonamiConf, setAutonamiConf, s
         )}
         <br />
         <Btn
-          varient="success"
+          variant="success"
           onClick={handleAuthorize}
           disabled={isAuthorized}
           className={css(ut.mt3, { ml: 2 })}
@@ -83,7 +83,7 @@ export default function AutonamiAuthorization({ autonamiConf, setAutonamiConf, s
         </Btn>
         <br />
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => nextPage(2)}
           className={css(ut.ftRight)}
           disabled={!isAuthorized}

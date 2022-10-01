@@ -735,23 +735,23 @@ export default function ShowIcon() {
     },
     {
       key: 'Box icon top',
-      icon: <BoxIcon size={20} varient="top" />,
-      com: '<BoxIcon size={18} varient="top"  />',
+      icon: <BoxIcon size={20} variant="top" />,
+      com: '<BoxIcon size={18} variant="top"  />',
     },
     {
       key: 'Box icon bottom',
-      icon: <BoxIcon size={20} varient="bottom" />,
-      com: '<BoxIcon size={18} varient="bottom"  />',
+      icon: <BoxIcon size={20} variant="bottom" />,
+      com: '<BoxIcon size={18} variant="bottom"  />',
     },
     {
       key: 'Box icon left',
-      icon: <BoxIcon size={20} varient="left" />,
-      com: '<BoxIcon size={18} varient="left"  />',
+      icon: <BoxIcon size={20} variant="left" />,
+      com: '<BoxIcon size={18} variant="left"  />',
     },
     {
       key: 'Box icon right',
-      icon: <BoxIcon size={20} varient="right" />,
-      com: '<BoxIcon size={18} varient="right"  />',
+      icon: <BoxIcon size={20} variant="right" />,
+      com: '<BoxIcon size={18} variant="right"  />',
     },
     {
       key: 'Light Icon',

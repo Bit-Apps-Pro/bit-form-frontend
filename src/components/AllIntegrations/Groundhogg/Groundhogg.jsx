@@ -128,7 +128,7 @@ function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => nextPage(3)}
           disabled={(groundhoggConf.mainAction === '2' ? isDisabled : (!((groundhoggConf.field_map?.length >= 1)))) || isLoading}
           className={css(ut.mt3, { ml: 3 })}

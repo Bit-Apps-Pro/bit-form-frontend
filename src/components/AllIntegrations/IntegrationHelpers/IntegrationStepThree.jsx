@@ -37,7 +37,7 @@ export default function IntegrationStepThree({ step, saveConfig, edit, disabled 
             &nbsp;✔
           </button> */}
           <Btn
-            varient="success"
+            variant="success"
             onClick={saveConfig}
             disabled={disabled}
           >

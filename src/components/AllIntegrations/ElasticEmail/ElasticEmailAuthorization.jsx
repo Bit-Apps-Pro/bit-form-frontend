@@ -117,7 +117,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
       {!isInfo && (
         <>
           <Btn
-            varient="success"
+            variant="success"
             onClick={handleAuthorize}
             disabled={isAuthorized || isLoading}
             className={css(ut.mt3)}
@@ -127,7 +127,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
           </Btn>
           <br />
           <Btn
-            varient="success"
+            variant="success"
             onClick={() => nextPage(2)}
             disabled={!isAuthorized}
             className={css(ut.ftRight)}

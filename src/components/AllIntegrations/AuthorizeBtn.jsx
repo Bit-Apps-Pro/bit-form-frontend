@@ -8,7 +8,7 @@ export default function AuthorizeBtn({ isAuthorized, isLoading, handleAuthorize 
   const { css } = useFela()
   return (
     <Btn
-      varient="success"
+      variant="success"
       onClick={handleAuthorize}
       disabled={isAuthorized || isLoading}
       className={css(ut.mt3, { ml: 3 })}

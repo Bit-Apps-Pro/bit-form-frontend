@@ -3,7 +3,7 @@ import { useFela } from 'react-fela'
 export default function Btn({ children,
   className,
   size = 'md',
-  varient = 'default',
+  variant = 'default',
   width = 'auto',
   gap,
   shadow,
@@ -16,7 +16,7 @@ export default function Btn({ children,
       style={{ width, gap }}
       type="button"
       disabled={disabled}
-      className={`${css([btnStyle.btn, btnStyle[size], btnStyle[varient], btnStyle[shado]])} ${shadow && css(btnStyle.shadow)} ${className}`}
+      className={`${css([btnStyle.btn, btnStyle[size], btnStyle[variant], btnStyle[shado]])} ${shadow && css(btnStyle.shadow)} ${className}`}
       onClick={onClick}
     >
       {children}
