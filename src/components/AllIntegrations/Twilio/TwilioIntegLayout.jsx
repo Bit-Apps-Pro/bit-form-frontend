@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import TwilioFieldMap from './TwilioFieldMap'
 
-export default function TwilioIntegLayout({ formFields, handleInput, twilioConf, setTwilioConf, isLoading, setIsLoading, setSnackbar }) {
+export default function TwilioIntegLayout({ formFields, twilioConf, setTwilioConf, setSnackbar }) {
   return (
     <>
       <br />
@@ -25,7 +24,6 @@ export default function TwilioIntegLayout({ formFields, handleInput, twilioConf,
         />
       ))}
       <br />
-
     </>
   )
 }

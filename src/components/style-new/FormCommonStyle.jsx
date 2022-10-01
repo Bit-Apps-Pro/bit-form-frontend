@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -15,7 +15,7 @@ import editorConfig from './NewStyleEditorConfig'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { getValueFromStateVar } from './styleHelpers'
+import { assignNestedObj, getValueFromStateVar } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TransitionControl from './TransitionControl'
 
@@ -115,7 +115,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
           <BackgroundControl
             title="Background"
             subtitle={`${componentTitle} Background`}
-            value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background'])}
+            value={getValueFromStateVar(themeColors, formWrpStylesObj?.background)}
             modalId={`${element}-cnr-bd`}
             stateObjName="styles"
             objectPaths={objPaths}

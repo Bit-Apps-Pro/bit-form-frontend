@@ -3,11 +3,11 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import TwilioAuthorization from './TwilioAuthorization'
 import { checkMappedFields, handleInput } from './TwilioCommonFunc'
 import TwilioIntegLayout from './TwilioIntegLayout'
@@ -101,7 +101,10 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
@@ -110,7 +113,7 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

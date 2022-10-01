@@ -5,10 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
+import NextBtn from '../NextBtn'
 import MailChimpAuthorization from './MailChimpAuthorization'
 import { checkAddressFieldMapRequired, checkMappedFields, handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
@@ -85,7 +87,12 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
           setisLoading={setisLoading}
           setSnackbar={setSnackbar}
         />
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={!sheetConf.listId || sheetConf.field_map.length < 1}
+        />
+
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={!sheetConf.listId || sheetConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -93,7 +100,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
 
       </div>
 

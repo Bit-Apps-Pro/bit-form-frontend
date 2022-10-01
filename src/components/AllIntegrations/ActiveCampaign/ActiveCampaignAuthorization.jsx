@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import app from '../../../styles/app.style'
+import ut from '../../../styles/2.utilities'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
+import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
 
@@ -67,15 +68,42 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3 wdt-200"><b>{__('Integration Name:')}</b></div>
-        <input aria-label="Integration name" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <input
+          aria-label="Integration name"
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="name"
+          value={activeCampaingConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+          disabled={isInfo}
+        />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
         <div className="mt-3 wdt-200"><b>{__('Access API URL:')}</b></div>
-        <input aria-label="Access API URL" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={activeCampaingConf.api_url} type="text" placeholder={__('Access API URL...')} disabled={isInfo} />
+        <input
+          aria-label="Access API URL"
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="api_url"
+          value={activeCampaingConf.api_url}
+          type="text"
+          placeholder={__('Access API URL...')}
+          disabled={isInfo}
+        />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
 
         <div className="mt-3 wdt-200"><b>{__('Access API Key:')}</b></div>
-        <input aria-label="Access API Key" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={activeCampaingConf.api_key} type="text" placeholder={__('Access API Key...')} disabled={isInfo} />
+        <input
+          aria-label="Access API Key"
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="api_key"
+          value={activeCampaingConf.api_key}
+          type="text"
+          placeholder={__('Access API Key...')}
+          disabled={isInfo}
+        />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -94,15 +122,25 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
         )}
         {!isInfo && (
           <>
-            <button onClick={handleAuthorize} className={`${css(app.btn)}btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
+            <Btn
+              varient="success"
+              onClick={handleAuthorize}
+              disabled={isAuthorized}
+              className={css(ut.mt2, ut.ml1)}
+            >
               {isAuthorized ? __('Authorized ✔') : __('Authorize')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-            </button>
+            </Btn>
             <br />
-            <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
+            <Btn
+              varient="success"
+              onClick={() => nextPage(2)}
+              disabled={!isAuthorized}
+              className={css(ut.ftRight)}
+            >
               {__('Next')}
               <BackIcn className="ml-1 rev-icn" />
-            </button>
+            </Btn>
           </>
         )}
       </div>

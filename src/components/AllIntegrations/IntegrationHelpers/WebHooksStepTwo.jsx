@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 
 export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
   const { css } = useFela()
@@ -8,18 +9,43 @@ export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
     edit
       ? (
         <div className="txt-center w-9 mt-3">
-          <button id="secondary-update-btn" onClick={saveConfig} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={disabled}>
+          <Btn
+            varient="success"
+            onClick={saveConfig}
+            disabled={disabled}
+          >
             {__('Save')}
-          </button>
+          </Btn>
+          {/* <button
+            id="secondary-update-btn"
+            onClick={saveConfig}
+            className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`}
+            type="button"
+            disabled={disabled}
+          >
+            {__('Save')}
+          </button> */}
         </div>
       )
       : (
         <div className="txt-center" style={{ marginLeft: 210 }}>
           <h2 className="ml-3">{__('Successfully Integrated')}</h2>
-          <button id="secondary-update-btn" onClick={saveConfig} className={`${css(app.btn)} btcd-btn-lg green sh-sm`} type="button">
+          <Btn
+            varient="success"
+            onClick={saveConfig}
+          >
+            {__('Finish & Save ')}
+            &nbsp;✔
+          </Btn>
+          {/* <button
+            id="secondary-update-btn"
+            onClick={saveConfig}
+            className={`${css(app.btn)} btcd-btn-lg green sh-sm`}
+            type="button"
+          >
             {__('Finish & Save ')}
             ✔
-          </button>
+          </button> */}
         </div>
       )
   )

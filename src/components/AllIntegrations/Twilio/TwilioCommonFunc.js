@@ -1,7 +1,6 @@
 /* eslint-disable no-else-return */
-import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, twilioConf, setTwilioConf, setIsLoading, setSnackbar, isNew, error, setError) => {
   const newConf = { ...twilioConf }

@@ -9,6 +9,7 @@ import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import Btn from '../../Utilities/Btn'
 import Button from '../../Utilities/Button'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
@@ -98,25 +99,52 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
       <div className="flx ">
         <div className="w-7 mr-2 mb-4 mt-2">
           <div className="f-m">{__('Integration name')}</div>
-          <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
+          <input
+            name="name"
+            onChange={e => handleInput(e, webHooks, setWebHooks)}
+            className="btcd-paper-inp mt-1"
+            type="text"
+            value={webHooks.name}
+            disabled={isInfo}
+          />
         </div>
-      </div >
+      </div>
       <div className="flx flx-start">
         <div className="w-7">
           <div className="f-m">{__('Link:')}</div>
-          <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
+          <input
+            name="url"
+            onChange={e => handleInput(e, webHooks, setWebHooks)}
+            className="btcd-paper-inp mt-1"
+            type="text"
+            value={webHooks.url}
+            disabled={isInfo}
+          />
           {webHooks?.apiConsole && (
             <small className="d-blk mt-2">
               {__('To got Webhook , Please Visit')}
               {' '}
-              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`)}</a>
+              <a
+                className="btcd-link"
+                href={webHooks.apiConsole}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {__(`${webHooks.type} Dashboard`)}
+              </a>
             </small>
           )}
         </div>
 
         <div className="w-3 px-1">
           <div className="f-m">{__('Method:')}</div>
-          <select name="method" onChange={e => handleInput(e, webHooks, setWebHooks)} defaultValue={webHooks.method} className="btcd-paper-inp mt-1" disabled={isInfo}>
+          <select
+            name="method"
+            onChange={e => handleInput(e, webHooks, setWebHooks)}
+            defaultValue={webHooks.method}
+            className="btcd-paper-inp mt-1"
+            disabled={isInfo}
+          >
             {method.map((itm, indx) => (<option key={`method-${indx * 2}`} value={itm}>{itm}</option>))}
           </select>
         </div>
@@ -133,14 +161,31 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url)?.map((itm, childindx) => (
             <div className="tr" key={`fu-1${childindx * 3}`}>
               <div className="td">
-                <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[0].substr(1)} disabled={isInfo} />
+                <input
+                  className="btcd-paper-inp p-i-sm"
+                  onChange={e => handleParam('key', e.target.value, itm, webHooks, setWebHooks)}
+                  type="text"
+                  value={itm.split('=')[0].substr(1)}
+                  disabled={isInfo}
+                />
               </div>
               <div className="td">
-                <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[1]} disabled={isInfo} />
+                <input
+                  className="btcd-paper-inp p-i-sm"
+                  onChange={e => handleParam('val', e.target.value, itm, webHooks, setWebHooks)}
+                  type="text"
+                  value={itm.split('=')[1]}
+                  disabled={isInfo}
+                />
               </div>
               {!isInfo && (
                 <div className="flx p-atn">
-                  <Button onClick={() => delParam(itm, webHooks, setWebHooks)} icn><TrashIcn size={16} /></Button>
+                  <Button
+                    onClick={() => delParam(itm, webHooks, setWebHooks)}
+                    icn
+                  >
+                    <TrashIcn size={16} />
+                  </Button>
                   <MultiSelect
                     options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                     className="btcd-paper-drpdwn wdt-200 ml-2"
@@ -153,14 +198,23 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
             </div>
           ))}
           {!isInfo && (
-            <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
+            <Button
+              onClick={() => addParam(webHooks, setWebHooks)}
+              className="add-pram"
+              icn
+            >
+              <CloseIcn size="14" className="icn-rotate-45" />
+            </Button>
           )}
         </div>
       </div>
       {
         !isInfo && (
           <>
-            <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={css(app.btn, app.btn_blue_otln)}>
+            <Button
+              onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)}
+              className={css(app.btn, app.btn_blue_otln)}
+            >
               {__('Test Webhook')}
               {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
               <ExternalLinkIcn size={18} className="ml-1" />
@@ -168,7 +222,12 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
             <br />
             <div className="wh-resp-box">
               <div className="f-m wh-resp-box-title">{__('Response:')}</div>
-              <div className="wh-resp-box-content" ref={testResponseRef}>Test Webhook to see the response.</div>
+              <div
+                className="wh-resp-box-content"
+                ref={testResponseRef}
+              >
+                Test Webhook to see the response.
+              </div>
             </div>
             <br />
           </>
@@ -177,12 +236,26 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
       {(!isInfo && create) && <br />}
       {
         create && (
-          <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </button>
+          <>
+            {/* <button
+              onClick={() => nextPage()}
+              className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`}
+              type="button"
+            >
+              {__('Next')}
+              <BackIcn className="ml-1 rev-icn" />
+            </button> */}
+            <Btn
+              varient="success"
+              onClick={() => nextPage()}
+              type="button"
+            >
+              {__('Next')}
+              <BackIcn className="ml-1 rev-icn" />
+            </Btn>
+          </>
         )
       }
-    </div >
+    </div>
   )
 }

@@ -11,7 +11,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import { $fields, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import TagifyComp from '../CompSettings/TagifyComp'
 
-function ActionBlock({ action,lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
+function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
   const setWorkflows = useSetRecoilState($workflows)
   const fields = useRecoilValue($fields)
   const formFields = useRecoilValue($fieldsArr)
@@ -106,7 +106,7 @@ function ActionBlock({ action,lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionTy
       >
         <option value="">{__('Select One')}</option>
         {(!isNotButtonField && lgcGrp.action_type === 'oninput') && (
-            <option value="click">{__('Click')}</option>
+          <option value="click">{__('Click')}</option>
         )}
         {(isNotFileUpField && isNotButtonField && isNotValidateAction)
               && <option value="value">{__('Value')}</option>}

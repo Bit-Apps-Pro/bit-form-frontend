@@ -6,6 +6,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TutorialLink from '../../Utilities/TutorialLink'
@@ -108,8 +109,15 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         youTubeLink={tutorialLinks.acf.link}
       />
 
-      <div className="mt-3"><b>{__('Integration Name')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input
+        className="btcd-paper-inp w-5 mt-1"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        name="name"
+        value={data.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
 
       <div className="mt-3 flx">
         <b>{__('Post Type')}</b>
@@ -127,12 +135,19 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           onChange={(e) => getCustomFields(e.target.name, e.target.value)}
           className="btcd-paper-inp w-5 mt-1"
         >
-          <option disabled selected>Select Post Type</option>
+          <option disabled value="0" selected>Select Post Type</option>
           {postTypes.map((postType, key) => (
             <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types')}'` }} type="button">&#x21BB;</button>
+        <button
+          onClick={() => refreshPostTypes(postTypes, setPostTypes)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Post Types')}'` }}
+          type="button"
+        >
+          &#x21BB;
+        </button>
       </div>
 
       <div className="mt-3">
@@ -150,7 +165,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         className="btcd-paper-inp w-5 mt-2"
       >
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled value="0" selected>{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="auto-draft">Auto-Draft</option>
@@ -174,7 +189,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           onChange={(e) => handleInput(e.target.name, e.target.value)}
           className="btcd-paper-inp w-5 mt-2"
         >
-          <option disabled selected>{__('Select Author')}</option>
+          <option disabled value="0" selected>{__('Select Author')}</option>
           <option value="logged_in_user">Logged In User</option>
           {users.map((user, key) => (
             <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
@@ -184,15 +199,15 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
 
       <div className="mt-3">
         <b>{__('Comment Status')}</b>
-
       </div>
+
       <select
         name="comment_status"
         defaultValue="0"
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         className="btcd-paper-inp w-5 mt-2"
       >
-        <option disabled selected>{__('Select Status')}</option>
+        <option disabled value="0" selected>{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
@@ -217,7 +232,18 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           customFields={postFields}
         />
       ))}
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div
+        className="txt-center  mt-2"
+        style={{ marginRight: 85 }}
+      >
+        <button
+          onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <div>
         <p className="p-1 f-m">
           <strong>Note</strong>
@@ -229,7 +255,14 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         <div>
           <div className="mt-3 mb-1">
             <b>{__('ACF fields Mapping')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshAcfFields(data, setAcfFields, setAcfFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -254,14 +287,31 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
             />
           ))
         }
-
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_map', data.acf_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('acf_map', data.acf_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
       <div>
         <div>
           <div className="mt-3 mb-1">
             <b>{__('ACF File Upload Fields Map')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshAcfFields(data, setAcfFields, setAcfFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -287,18 +337,20 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_file_map', data.acf_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('acf_file_map', data.acf_file_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
-      <button
-        id="secondary-update-btn"
-        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
-        type="button"
-        onClick={() => saveConfig()}
-      >
-        {__('Save')}
-        {' '}
-      </button>
-
+      <Btn varient="success" shadow onClick={() => saveConfig()}>{__('Save')}</Btn>
     </div>
   )
 }

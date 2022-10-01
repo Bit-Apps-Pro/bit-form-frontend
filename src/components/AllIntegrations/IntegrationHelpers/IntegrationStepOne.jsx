@@ -6,6 +6,8 @@ import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
   const { css } = useFela()
@@ -13,12 +15,27 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
   const { siteURL } = bits
 
   return (
-    <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+    <div
+      className="btcd-stp-page"
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}
+    >
       <div className="mt-3"><b>{__('Integration Name:')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={confTmp.name} type="text" placeholder={__('Integration Name...')} />
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="name"
+        value={confTmp.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
 
       <div className="mt-3"><b>{__('Data Center:')}</b></div>
-      <select onChange={handleInput} name="dataCenter" value={confTmp.dataCenter} className="btcd-paper-inp w-9 mt-1">
+      <select
+        onChange={handleInput}
+        name="dataCenter"
+        value={confTmp.dataCenter}
+        className="btcd-paper-inp w-9 mt-1"
+      >
         <option value="">{__('--Select a data center--')}</option>
         <option value="com">zoho.com</option>
         <option value="eu">zoho.eu</option>
@@ -37,28 +54,50 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit')}
         {' '}
-        <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">{__('Zoho API Console')}</a>
+        <a
+          className="btcd-link"
+          href="https://api-console.zoho.com/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Zoho API Console')}
+        </a>
       </small>
 
       <div className="mt-3"><b>{__('Client id:')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientId" value={confTmp.clientId} type="text" placeholder={__('Client id...')} />
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="clientId"
+        value={confTmp.clientId}
+        type="text"
+        placeholder={__('Client id...')}
+      />
       <div style={{ color: 'red' }}>{error.clientId}</div>
 
       <div className="mt-3"><b>{__('Client secret:')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientSecret" value={confTmp.clientSecret} type="text" placeholder={__('Client secret...')} />
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="clientSecret"
+        value={confTmp.clientSecret}
+        type="text"
+        placeholder={__('Client secret...')}
+      />
       <div style={{ color: 'red' }}>{error.clientSecret}</div>
 
       {children}
 
-      <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
-        {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-        {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-      </button>
+      <AuthorizeBtn
+        handleAuthorize={handleAuthorize}
+        isLoading={isLoading}
+        isAuthorized={isAuthorized}
+      />
       <br />
-      <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
-        {__('Next')}
-        <BackIcn className="ml-1 rev-icn" />
-      </button>
+      <NextBtn
+        nextPageHanlder={() => nextPage(2)}
+        disabled={!isAuthorized}
+      />
     </div>
   )
 }

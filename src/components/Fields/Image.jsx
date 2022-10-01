@@ -4,10 +4,10 @@ import { useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
+import { assignNestedObj } from '../style-new/styleHelpers'
 
 function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const wrap = useRef()

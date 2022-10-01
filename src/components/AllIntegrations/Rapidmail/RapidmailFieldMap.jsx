@@ -25,7 +25,12 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -51,7 +56,13 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, rapidmailConf, setRapidmailConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="rapidmailFormField" value={i < requiredFlds ? (requiredFlds[i].label || '') : (field.rapidmailFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}>
+        <select
+          className="btcd-paper-inp"
+          disabled={i < requiredFlds.length}
+          name="rapidmailFormField"
+          value={i < requiredFlds ? (requiredFlds[i].label || '') : (field.rapidmailFormField || '')}
+          onChange={(ev) => handleFieldMapping(ev, i, rapidmailConf, setRapidmailConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             i < requiredFlds.length ? (
@@ -78,7 +89,12 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i, rapidmailConf, setRapidmailConf)} className="icn-btn sh-sm" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i, rapidmailConf, setRapidmailConf)}
+              className="icn-btn sh-sm"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

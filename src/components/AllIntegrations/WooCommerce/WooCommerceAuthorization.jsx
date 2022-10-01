@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import app from '../../../styles/app.style'
+import ut from '../../../styles/2.utilities'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
+import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import NextBtn from '../NextBtn'
 
-export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
+export default function WooCommerceAuthorization({ wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -51,7 +52,14 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         <div className="mt-3">
           <b>{__('Integration Name:')}</b>
         </div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wcConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="name"
+          value={wcConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
 
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -70,16 +78,20 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         )}
 
         {!isAuthorized && (
-          <button onClick={authorizeHandler} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button">
+          <Btn
+            varient="success"
+            onClick={authorizeHandler}
+            className={css(ut.mt3, ut.mb3, { ml: 3 })}
+          >
             {__('Connect')}
-          </button>
+          </Btn>
         )}
 
         {isAuthorized && (
-          <button onClick={() => setStep(2)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button" disabled={!isAuthorized}>
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </button>
+          <NextBtn
+            nextPageHanlder={() => setStep(2)}
+            disabled={!isAuthorized}
+          />
         )}
       </div>
     </>

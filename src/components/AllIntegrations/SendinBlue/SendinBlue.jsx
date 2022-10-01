@@ -10,6 +10,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import SendinBlueAuthorization from './SendinBlueAuthorization'
 import { checkMappedFields } from './SendinBlueCommonFunc'
 import SendinBlueIntegLayout from './SendinBlueIntegLayout'
@@ -83,7 +84,11 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
           error={error}
           setError={setError}
         />
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={sendinBlueConf.field_map.length < 1}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={sendinBlueConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -91,8 +96,7 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
-
+        </button> */}
       </div>
 
       {/* STEP 3 */}

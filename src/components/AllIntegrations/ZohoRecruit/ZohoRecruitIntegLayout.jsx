@@ -34,7 +34,13 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
     <>
       <br />
       <b className="wdt-100 d-in-b">Module:</b>
-      <select onChange={handleInput} name="module" value={recruitConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
+      <select
+        onChange={handleInput}
+        name="module"
+        value={recruitConf.module}
+        className="btcd-paper-inp w-7"
+        disabled={tab === 1}
+      >
         <option value="">{__('Select Module')}</option>
         {
           recruitConf.default && recruitConf.default.modules && Object.keys(recruitConf.default.modules).map(moduleApiName => (
@@ -44,7 +50,17 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
           ))
         }
       </select>
-      {tab === 0 && <button onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
+      {tab === 0 && (
+        <button
+          onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
+      )}
       <br />
       <Tabs
         selectedTabClassName="s-t-l-active"
@@ -59,10 +75,26 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
                 {__('Related List #')}
                 {indx + 1}
               </Tab>
-              <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>
+              <button
+                onClick={() => removeRelatedTab(indx)}
+                className="icn-btn"
+                aria-label="delete-relatedlist"
+                type="button"
+              >
+                <CloseIcn size="14" />
+              </button>
             </>
           ))}
-          {recruitConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>}
+          {recruitConf.relatedlists.length < 3 && (
+            <button
+              onClick={addNewRelatedTab}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Add More Related List"' }}
+              type="button"
+            >
+              +
+            </button>
+          )}
         </TabList>
         <div className="btcd-hr" />
         <TabPanel>

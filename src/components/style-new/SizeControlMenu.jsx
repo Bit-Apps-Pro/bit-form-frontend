@@ -7,10 +7,10 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import { getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 
 export default function SizeControlMenu({ objectPaths }) {
   const { css } = useFela()

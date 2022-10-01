@@ -28,7 +28,12 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
     >
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -43,12 +48,26 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleMetaCustomValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customMetaFormValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && (
+            <MtInput
+              onChange={e => handleMetaCustomValue(e, i, groundhoggConf, setGroundhoggConf)}
+              label={__('Custom Value')}
+              className="mr-2"
+              type="text"
+              value={field.customMetaFormValue}
+              placeholder={__('Custom Value')}
+            />
+          )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="GroundhoggMetaMapField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.GroundhoggMetaMapField || '')} onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="GroundhoggMetaMapField"
+            value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.GroundhoggMetaMapField || '')}
+            onChange={(ev) => handleMetaFieldMapping(ev, i, groundhoggConf, setGroundhoggConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
@@ -65,7 +84,16 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
             }
             <option value="custom">{__('Custom...')}</option>
           </select>
-          {field.GroundhoggMetaMapField === 'custom' && <MtInput onChange={e => handleMetaCustomFieldValue(e, i, groundhoggConf, setGroundhoggConf)} label={__('Custom Groundhogg Value')} className="mr-2" type="text" value={field.customMetaGroundValue} placeholder={__('Custom Groundhogg Value')} />}
+          {field.GroundhoggMetaMapField === 'custom' && (
+            <MtInput
+              onChange={e => handleMetaCustomFieldValue(e, i, groundhoggConf, setGroundhoggConf)}
+              label={__('Custom Groundhogg Value')}
+              className="mr-2"
+              type="text"
+              value={field.customMetaGroundValue}
+              placeholder={__('Custom Groundhogg Value')}
+            />
+          )}
         </div>
         {
           i >= requiredFlds.length && (
@@ -77,7 +105,12 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
               >
                 +
               </button>
-              <button onClick={() => delMetaFieldMap(i, groundhoggConf, setGroundhoggConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delMetaFieldMap(i, groundhoggConf, setGroundhoggConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

@@ -6,6 +6,7 @@ import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
+import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -90,7 +91,14 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="mt-3"><b>{__('Integration Name ')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <input
+        className="btcd-paper-inp w-5 mt-1"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        name="name"
+        value={data.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
 
       <div className="mt-3 flx">
         <b>{__('Post Type')}</b>
@@ -102,7 +110,12 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} value={data.post_type} className="btcd-paper-inp w-5 mt-1">
+        <select
+          name="post_type"
+          onChange={(e) => getCustomFields(e.target.name, e.target.value)}
+          value={data.post_type}
+          className="btcd-paper-inp w-5 mt-1"
+        >
           <option disabled selected>Select Post Type</option>
           {postTypes.map((postType, key) => (
             <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
@@ -120,7 +133,12 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </Cooltip>
       </div>
-      <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_status} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="post_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        value={data.post_status}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="auto-draft">Auto-Draft</option>
@@ -138,7 +156,12 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_author} className="btcd-paper-inp w-5 mt-2">
+        <select
+          name="post_author"
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
+          value={data.post_author}
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>{__('Select Author')}</option>
           {users.map((user, key) => (
             <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
@@ -147,7 +170,12 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
 
       <div className="mt-3"><b>{__('Comment Status')}</b></div>
-      <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.comment_status} className="btcd-paper-inp w-5 mt-1">
+      <select
+        name="comment_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        value={data.comment_status}
+        className="btcd-paper-inp w-5 mt-1"
+      >
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
@@ -173,7 +201,18 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           customFields={postFields}
         />
       ))}
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data?.post_map?.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div
+        className="txt-center  mt-2"
+        style={{ marginRight: 85 }}
+      >
+        <button
+          onClick={() => addFieldMap('post_map', data?.post_map?.length, data, setData)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <div>
         <p className="p-1 f-m">
           <strong>Note</strong>
@@ -186,7 +225,14 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         <div>
           <div className="mt-3 mb-1">
             <b>{__('ACF fields Mapping')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -212,14 +258,32 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_map', data.acf_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('acf_map', data.acf_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <div>
         <div>
           <div className="mt-3 mb-1">
             <b>{__('ACF File Upload Fields Map')}</b>
-            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh ACF fields')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -245,20 +309,30 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_file_map', data.acf_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('acf_file_map', data.acf_file_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
 
-      <button
+      {/* <button
         className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >
         {__('Save')}
         {' '}
-      </button>
-
+      </button> */}
+      <Btn varient="success" shadow onClick={() => saveConfig()}>{__('Save')}</Btn>
     </div>
-
   )
 }
 

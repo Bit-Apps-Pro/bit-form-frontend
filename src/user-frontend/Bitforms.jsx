@@ -73,7 +73,7 @@ export default function Bitforms(props) {
           if (data?.success !== undefined) {
             const { nonceValid, nonce } = data?.data
             if (!nonceValid) {
-              let currentNonce = form.querySelector('input[name="bitforms_token"]')
+              const currentNonce = form.querySelector('input[name="bitforms_token"]')
               currentNonce.value = nonce
             }
           }

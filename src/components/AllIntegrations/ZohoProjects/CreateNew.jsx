@@ -27,9 +27,27 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
               {__('Create')}
               {` ${event}`}
             </b>
-            <button onClick={() => refreshFields(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar, event)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => refreshFields(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar, event)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Fields')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
-          {projectsConf.event !== event && <button onClick={removeSubEvent} className="icn-btn sh-sm ml-2 mr-2" type="button" aria-label="delete"><TrashIcn /></button>}
+          {projectsConf.event !== event
+            && (
+              <button
+                onClick={removeSubEvent}
+                className="icn-btn sh-sm ml-2 mr-2"
+                type="button"
+                aria-label="delete"
+              >
+                <TrashIcn />
+              </button>
+            )}
         </div>
       </div>
       <div className="btcd-hr mt-1" />
@@ -51,7 +69,18 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
       ))}
 
       {!allFieldsMapped && (
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(projectsConf.field_map[event].length, projectsConf, setProjectsConf, event)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap(projectsConf.field_map[event].length, projectsConf, setProjectsConf, event)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       )}
       <br />
       <br />

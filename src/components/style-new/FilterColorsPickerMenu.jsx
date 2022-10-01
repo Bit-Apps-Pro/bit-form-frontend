@@ -12,9 +12,9 @@ import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { hsva2hsla } from './colorHelpers'
-import { getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 // stateObjName string ex: themeColor
 // objPath string ex: a->b->

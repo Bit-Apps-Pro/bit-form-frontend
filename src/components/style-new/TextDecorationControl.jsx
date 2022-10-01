@@ -7,10 +7,9 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import ColorPreview from './ColorPreview'
 import Important from './Important'
-import { getObjByKey, getValueByObjPath, showDraggableModal } from './styleHelpers'
+import { assignNestedObj, getObjByKey, getValueByObjPath, showDraggableModal } from './styleHelpers'
 
 export default function TextDecorationControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()

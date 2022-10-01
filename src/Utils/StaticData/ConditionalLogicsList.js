@@ -15,7 +15,7 @@ const conditionalLogicsList = {
   },
   null: {
     label: __('Is Null'),
-    notFields: ['button','user'],
+    notFields: ['button', 'user'],
   },
   not_null: {
     label: __('Is Not Null'),
@@ -51,11 +51,11 @@ const conditionalLogicsList = {
   },
   start_with: {
     label: __('Start With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week','user'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week', 'user'],
   },
   end_with: {
     label: __('End With'),
-    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week','user'],
+    notFields: ['button', 'color', 'url', 'password', 'email', 'date', 'time', 'datetime-local', 'month', 'week', 'user'],
   },
   between: {
     label: __('Between'),

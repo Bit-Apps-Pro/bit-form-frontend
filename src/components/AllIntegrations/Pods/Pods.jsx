@@ -10,6 +10,7 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import SaveIntergrationBrn from '../SaveIntergrationBrn'
 import PodsFieldMap from './FieldMap'
 import { addFieldMap, checkMappedPodFields, checkMappedPostFields } from './PodHelperFunction'
 
@@ -242,7 +243,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         </div>
       </div>
 
-      <button
+      {/* <button
         id="secondary-update-btn"
         className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
@@ -251,8 +252,9 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       >
         {__('Save')}
         {' '}
-      </button>
+      </button> */}
 
+      <SaveIntergrationBrn onClick={() => saveConfig()} />
     </div>
   )
 }

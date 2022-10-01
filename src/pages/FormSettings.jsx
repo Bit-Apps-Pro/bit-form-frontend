@@ -21,7 +21,6 @@ const SingleFormSettings = lazy(() => import('../components/SingleFormSettings')
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
 
 function FormSettings({ setProModal }) {
-  console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
   // const { path } = useMatch()
   const path = ''
   const { formType, formID } = useParams()

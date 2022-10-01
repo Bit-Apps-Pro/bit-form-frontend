@@ -6,9 +6,9 @@ import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import Important from './Important'
-import { getValueByObjPath, showDraggableModal } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath, showDraggableModal } from './styleHelpers'
 
 export default function SizeControler({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()

@@ -8,6 +8,7 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import OneDriveAuthorization from './OneDriveAuthorization'
 import OneDriveIntegLayout from './OneDriveIntegLayout'
 
@@ -76,7 +77,11 @@ function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => setStep(3)}
+          disabled={!oneDriveConf.actions.attachments || !oneDriveConf.folder}
+        />
+        {/* <button
           onClick={() => setStep(3)}
           disabled={!oneDriveConf.actions.attachments || !oneDriveConf.folder}
           className="btn f-right btcd-btn-lg green sh-sm flx"
@@ -85,7 +90,7 @@ function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {
           {__('Next')}
           {' '}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
       </div>
       <IntegrationStepThree
         step={step}

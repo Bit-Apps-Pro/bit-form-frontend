@@ -58,7 +58,14 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
   return (
     <div className="pos-rel d-flx w-8">
       <TitleModal action={openReminderMdl}>
-        <TableCheckBox checked={groundhoggConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tag')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Add Tags')} subTitle={__('Add Contact Tag')} />
+        <TableCheckBox
+          checked={groundhoggConf?.actions?.tags || false}
+          onChange={(e) => actionHandler(e, 'tag')}
+          className="wdt-200 mt-4 mr-2"
+          value="tags"
+          title={__('Add Tags')}
+          subTitle={__('Add Contact Tag')}
+        />
       </TitleModal>
       <ConfirmModal
         className="custom-conf-mdl"
@@ -92,12 +99,18 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
                 onChange={val => onSelectHandler(val)}
                 customValue
               />
-              <button onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)} className="icn-btn sh-sm ml-2 mr-4 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => fetchAllTags(null, groundhoggConf, setGroundhoggConf, setIsLoading, null)}
+                className="icn-btn sh-sm ml-2 mr-4 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Groundhogg Tags')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
-
       </ConfirmModal>
-
     </div>
   )
 }

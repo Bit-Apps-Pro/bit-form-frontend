@@ -12,7 +12,7 @@ const tutorialLinks = {
     link: 'https://www.youtube.com/watch?v=BKPC_qpN3Ck&ab_channel=BitApps',
   },
   autonami: {
-    title: 'How to Setup Acumbamail integration',
+    title: 'How to Setup Autonami integration',
     link: 'https://www.youtube.com/watch?v=yp1CVdfVITw&ab_channel=BitApps',
   },
   dropbox: {

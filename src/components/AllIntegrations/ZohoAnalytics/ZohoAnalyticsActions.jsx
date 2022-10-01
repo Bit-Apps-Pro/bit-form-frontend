@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
 
 import { useEffect, useState } from 'react'
@@ -140,10 +141,24 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openUpdateModal}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in analyticsConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row', 'bitofrm')} subTitle={__('Control how the row gets updated.')} />
+          <TableCheckBox
+            onChange={(e) => actionHandler(e, 'update')}
+            checked={'update' in analyticsConf?.actions}
+            className="wdt-200 mt-4 mr-2"
+            value="Upsert_Record"
+            title={__('Update Row', 'bitofrm')}
+            subTitle={__('Control how the row gets updated.')}
+          />
         </TitleModal>
 
-        <TableCheckBox checked={analyticsConf?.actions?.share?.email || false} onChange={() => setActionMdl({ show: 'share' })} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Table', 'bitofrm')} subTitle={__('Share Table with users pushed to Zoho Analytics.')} />
+        <TableCheckBox
+          checked={analyticsConf?.actions?.share?.email || false}
+          onChange={() => setActionMdl({ show: 'share' })}
+          className="wdt-200 mt-4 mr-2"
+          value="user_share"
+          title={__('Share Table', 'bitofrm')}
+          subTitle={__('Share Table with users pushed to Zoho Analytics.')}
+        />
       </div>
 
       <Modal
@@ -175,8 +190,20 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
               <div className="font-w-m mt-3">{__('Update Preferance')}</div>
               <small>insert new row if the above criteria doesn&apos;t met?</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row" title={__('No')} />
+                <CheckBox
+                  onChange={() => setUpdateSettings(true, 'insert')}
+                  radio
+                  checked={analyticsConf.actions.update?.insert}
+                  name="up-row"
+                  title={__('Yes')}
+                />
+                <CheckBox
+                  onChange={() => setUpdateSettings(false, 'insert')}
+                  radio
+                  checked={!analyticsConf.actions.update?.insert}
+                  name="up-row"
+                  title={__('No')}
+                />
               </div>
             </>
           )}

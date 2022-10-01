@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 

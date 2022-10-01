@@ -17,7 +17,12 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
     <div className="flx mt-2 mr-1">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -37,7 +42,12 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
             </optgroup>
           </select>
 
-          <select className="btcd-paper-inp" name="OneDriveFormField" value={field.OneDriveFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <select
+            className="btcd-paper-inp"
+            name="OneDriveFormField"
+            value={field.OneDriveFormField}
+            onChange={(ev) => handleFieldMapping(ev, i)}
+          >
             <option value="">{__('Select Folder')}</option>
             {
               sortByField(oneDriveConf.foldersList, 'name', 'ASC').map(({ name, id }) => (
@@ -48,7 +58,6 @@ export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, s
             }
           </select>
         </div>
-
       </div>
     </div>
   )

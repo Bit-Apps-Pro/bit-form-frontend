@@ -11,6 +11,8 @@ import { selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
 
+export const cols = { lg: 60, md: 60, sm: 60 }
+
 /**
  * sort a layout array by x and y axis
  * @param {array} layoutArr layout array [{x:0,y:1,...}, {x:0,y:2,...}, ]
@@ -283,18 +285,18 @@ export function sortLayoutItemsByRowCol(layout) {
 //     console.log('drft', draftLay.lg, draftLay.md, draftLay.sm)
 //   })
 // }
-export function produceNewLayouts(layouts, breakpointArr, cols) {
+export function produceNewLayouts(layouts, breakpointArr, gridCols) {
   const lays = deepCopy(layouts)
   lays.lg = sortLayoutItemsByRowCol(lays.lg)
   const minFieldW = lays.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
   if (breakpointArr.includes('lg')) {
-    lays.lg = convertLayout(lays.lg, cols.lg, minFieldW)
+    lays.lg = convertLayout(lays.lg, gridCols.lg, minFieldW)
   }
   if (breakpointArr.includes('md')) {
-    lays.md = convertLayout(lays.lg, cols.md, minFieldW)
+    lays.md = convertLayout(lays.lg, gridCols.md, minFieldW)
   }
   if (breakpointArr.includes('sm')) {
-    lays.sm = convertLayout(lays.lg, cols.sm, minFieldW)
+    lays.sm = convertLayout(lays.lg, gridCols.sm, minFieldW)
   }
   return lays
 }
@@ -312,7 +314,7 @@ export function produceNewLayouts(layouts, breakpointArr, cols) {
 //   })
 // }
 
-export function layoutOrderSortedByLg(lay, cols) {
+export function layoutOrderSortedByLg(lay, gridCols) {
   const tmpLay = deepCopy(lay)
   const newLay = { lg: [], md: [], sm: [] }
 
@@ -321,14 +323,13 @@ export function layoutOrderSortedByLg(lay, cols) {
   newLay.sm = sortLayoutByLg(tmpLay.sm, newLay.lg)
   const minFieldWidthSm = tmpLay.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
   const minFieldWidthMd = tmpLay.md.reduce((prv, cur) => (prv < cur ? prv : cur))
-  newLay.md = convertLayout(newLay.md, cols.md, minFieldWidthMd)
-  newLay.sm = convertLayout(newLay.sm, cols.sm, minFieldWidthSm)
+  newLay.md = convertLayout(newLay.md, gridCols.md, minFieldWidthMd)
+  newLay.sm = convertLayout(newLay.sm, gridCols.sm, minFieldWidthSm)
 
   return newLay
 }
 
 export function prepareLayout(lays, respectLGLayoutOrder) {
-  const cols = { lg: 60, md: 40, sm: 20 }
   let layouts = compactResponsiveLayouts(lays, cols)
 
   // if all layout length not same then produce new layout
@@ -420,8 +421,6 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
 
   setRecoil($updateBtn, newUpdateBtn)
 }
-
-export const cols = { lg: 60, md: 40, sm: 20 }
 
 export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(layouts, drftLay => {
   let minFieldW = 55
@@ -527,23 +526,6 @@ export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
   }
 
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
-}
-
-export const assignNestedObj = (obj, keyPath, value) => {
-  const paths = keyPath?.split('->') || []
-  if (paths.length === 1) {
-    obj[paths[0]] = value
-    return
-  }
-  const lastKeyIndex = paths.length - 1
-  for (let i = 0; i < lastKeyIndex; i += 1) {
-    const key = paths[i]
-    if (!(key in obj)) {
-      obj[key] = {}
-    }
-    obj = obj[key]
-  }
-  obj[paths[lastKeyIndex]] = value
 }
 
 export const deleteNestedObj = (obj, keyPath) => {
@@ -726,4 +708,106 @@ export const setRequired = (e, callBack) => {
   const req = e.target.checked ? 'on' : 'off'
   addToBuilderHistory({ event: `Field required ${req}: ${fieldData.adminLbl || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })
   callBack && callBack()
+}
+
+/**
+ * find different field between 2 layout
+ * @param lay1 layout Object
+ * @param lay2 layout Object
+ * @returns layout object which is different from lay1
+ *  */
+export function getLayoutDiff(lay1, lay2) {
+  const diff = lay2.filter((l2) => {
+    const l1Item = lay1.find((l1) => l2.i === l1.i)
+    if (l1Item) {
+      if (
+        l1Item.w !== l2.w
+        || l1Item.h !== l2.h
+        || l1Item.x !== l2.x
+        || l1Item.y !== l2.y
+      ) {
+        return true
+      }
+    }
+  })
+  return diff
+}
+
+
+// fast compare 2 layout object
+export function isLayoutSame(l1, l2) {
+  const l1LgLength = l1.lg.length
+  const l1MdLength = l1.md.length
+  const l1SmLength = l1.sm.length
+
+  if (l1LgLength !== l2.lg.length) return false
+  if (l1MdLength !== l2.md.length) return false
+  if (l1SmLength !== l2.sm.length) return false
+
+  // compare lg
+  for (let i = 0; i < l1LgLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.lg[i])
+    const l2ItemKeys = Object.keys(l2.lg[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.lg[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.lg[i][l1ItemKey])
+          !== JSON.stringify(l2.lg[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.lg[i][l1ItemKey] !== l2.lg[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+
+  // compare md
+  for (let i = 0; i < l1MdLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.md[i])
+    const l2ItemKeys = Object.keys(l2.md[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.md[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.md[i][l1ItemKey])
+          !== JSON.stringify(l2.md[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.md[i][l1ItemKey] !== l2.md[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+
+  // compare sm
+  for (let i = 0; i < l1LgLength; i += 1) {
+    const l1ItemKeys = Object.keys(l1.sm[i])
+    const l2ItemKeys = Object.keys(l2.sm[i])
+    const l1ItemKeysLength = l1ItemKeys.length
+    if (l1ItemKeysLength !== l2ItemKeys.length) return false
+
+    for (let j = 0; j < l1ItemKeysLength; j += 1) {
+      const l1ItemKey = l1ItemKeys[j]
+      if (Array.isArray(l1.sm[i][l1ItemKey])) {
+        if (
+          JSON.stringify(l1.sm[i][l1ItemKey])
+          !== JSON.stringify(l2.sm[i][l1ItemKey])
+        ) {
+          return false
+        }
+      } else if (l1.sm[i][l1ItemKey] !== l2.sm[i][l1ItemKey]) {
+        return false
+      }
+    }
+  }
+  return true
 }

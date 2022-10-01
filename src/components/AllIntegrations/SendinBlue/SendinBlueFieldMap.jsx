@@ -42,10 +42,13 @@ export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueCon
   }
 
   return (
-    <div
-      className={isRequired ? 'mt-2 mr-1 flx w-9' : 'flx flx-around mt-2 mr-1'}
-    >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+    <div className={isRequired ? 'mt-2 mr-1 flx w-9' : 'flx flx-around mt-2 mr-1'}>
+      <select
+        className="btcd-paper-inp mr-2"
+        name="formField"
+        value={field.formField || ''}
+        onChange={(ev) => handleFieldMapping(ev, i)}
+      >
         <option value="">{__('Select Field')}</option>
         <optgroup label="Form Fields">
           {
@@ -62,9 +65,24 @@ export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueCon
         </optgroup>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+      {field.formField === 'custom' && (
+        <MtInput
+          onChange={e => handleCustomValue(e, i)}
+          label={__('Custom Value')}
+          className="mr-2"
+          type="text"
+          value={field.customValue}
+          placeholder={__('Custom Value')}
+        />
+      )}
 
-      <select className="btcd-paper-inp" name="sendinBlueField" value={field.sendinBlueField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+      <select
+        className="btcd-paper-inp"
+        name="sendinBlueField"
+        value={field.sendinBlueField}
+        onChange={(ev) => handleFieldMapping(ev, i)}
+        disabled={isRequired}
+      >
         <option value="">{__('Select Field')}</option>
         {isRequired ? sendinBlueConf?.default?.fields && Object.values(sendinBlueConf.default.fields).map(fld => (
           <option key={`${fld.fieldId}-1`} value={fld.fieldId}>
@@ -86,7 +104,12 @@ export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueCon
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

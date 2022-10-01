@@ -31,7 +31,10 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
         youTubeLink={tutorialLinks.integrately.link}
       />
       {/* STEP 1 */}
-      <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      <div
+        className="btcd-stp-page"
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}
+      >
         <WebHooksIntegration
           formID={formID}
           formFields={formFields}
@@ -45,7 +48,10 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
       </div>
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, minHeight: step === 2 && `${900}px` }}>
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, minHeight: step === 2 && `${900}px` }}
+      >
         <WebHooksStepTwo
           step={step}
           saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, integrately, history)}

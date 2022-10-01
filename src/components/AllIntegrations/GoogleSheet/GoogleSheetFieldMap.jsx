@@ -15,7 +15,12 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -34,7 +39,12 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" name="googleSheetField" value={field.googleSheetField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="googleSheetField"
+          value={field.googleSheetField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             sheetConf.default?.headers?.[sheetConf.spreadsheetId]?.[sheetConf.worksheetName]?.[sheetConf.headerRow] && Object.values(sheetConf.default.headers[sheetConf.spreadsheetId][sheetConf.worksheetName][sheetConf.headerRow]).map((header, indx) => (
@@ -52,7 +62,12 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
       >
         +
       </button>
-      <button onClick={() => delFieldMap(i, sheetConf, setSheetConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+      <button
+        onClick={() => delFieldMap(i, sheetConf, setSheetConf)}
+        className="icn-btn sh-sm ml-1"
+        type="button"
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

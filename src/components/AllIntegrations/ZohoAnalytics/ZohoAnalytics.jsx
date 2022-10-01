@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
-import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ZohoAnalyticsAuthorization from './ZohoAnalyticsAuthorization'
 import { handleInput, setGrantTokenResponse } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
@@ -15,7 +12,6 @@ import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 export default function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
-  const { css } = useFela()
   const [isLoading, setisLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -73,7 +69,12 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage()}
+          disabled={analyticsConf.workspace === '' || analyticsConf.table === '' || analyticsConf.field_map.length < 1}
+        />
+
+        {/* <button
           onClick={nextPage}
           disabled={analyticsConf.workspace === '' || analyticsConf.table === '' || analyticsConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -81,7 +82,7 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
       </div>
 
       {/* STEP 3 */}

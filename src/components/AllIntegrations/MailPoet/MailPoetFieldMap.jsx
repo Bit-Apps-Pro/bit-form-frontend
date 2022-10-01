@@ -45,7 +45,12 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -63,9 +68,24 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" name="mailPoetField" value={field.mailPoetField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+        <select
+          className="btcd-paper-inp"
+          name="mailPoetField"
+          value={field.mailPoetField}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+          disabled={isRequired}
+        >
           <option value="">{__('Select Field')}</option>
           {isRequired ? mailPoetConf?.default?.fields && Object.values(mailPoetConf.default.fields).map(fld => (
             <option key={`${fld.id}-1`} value={fld.id}>
@@ -88,7 +108,12 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

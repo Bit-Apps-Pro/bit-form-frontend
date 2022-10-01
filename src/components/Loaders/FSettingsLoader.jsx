@@ -23,9 +23,7 @@ const cs = {
     h: 28,
     brs: 6,
   },
-  t_wrp: {
-    my: 10,
-  },
+  t_wrp: { my: 10 },
   mnu: {
     h: 50,
     w: '70%',

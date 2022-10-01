@@ -3,8 +3,10 @@ import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
@@ -55,7 +57,9 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center w-9 mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <GoogleSheetAuthorization
@@ -83,7 +87,15 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
           setSnackbar={setSnackbar}
         />
         {/* {console.log(sheetConf.spreadsheetId, sheetConf.worksheetName, sheetConf.field_map)} */}
-        <button
+        <Btn
+          onClick={() => nextPage(3)}
+          disabled={!sheetConf.spreadsheetId || !sheetConf.worksheetName || sheetConf.field_map.length < 1}
+          className={css(ut.ftRight)}
+        >
+          {__('Next')}
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={!sheetConf.spreadsheetId || !sheetConf.worksheetName || sheetConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -91,7 +103,7 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
 
       </div>
 

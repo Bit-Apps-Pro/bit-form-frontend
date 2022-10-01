@@ -10,7 +10,12 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
     <>
       <br />
       <b className="wdt-150 d-in-b">{__('Workbook:')}</b>
-      <select onChange={handleInput} name="workbook" value={sheetConf.workbook} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="workbook"
+        value={sheetConf.workbook}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Workbook')}</option>
         {
           sheetConf?.default?.workbooks && Object.keys(sheetConf.default.workbooks).map(workbookApiName => (
@@ -20,11 +25,24 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
           ))
         }
       </select>
-      <button onClick={() => refreshWorkbooks(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Sheet Workbooks"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshWorkbooks(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Sheet Workbooks"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <b className="wdt-150 d-in-b">Worksheet:</b>
-      <select onChange={handleInput} name="worksheet" value={sheetConf.worksheet} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="worksheet"
+        value={sheetConf.worksheet}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Worksheet')}</option>
         {
           sheetConf?.default?.worksheets?.[sheetConf.workbook] && sheetConf.default.worksheets[sheetConf.workbook].map(worksheetApiName => (
@@ -34,14 +52,44 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
           ))
         }
       </select>
-      <button onClick={() => refreshWorksheets(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Sheet Worksheets"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshWorksheets(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Sheet Worksheets"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <b className="wdt-150 d-in-b">{__('Header Row:')}</b>
-      <input type="number" min="1" className="btcd-paper-inp w-4" placeholder="Header Row" onChange={handleInput} value={sheetConf.headerRow} name="headerRow" />
-      <button onClick={() => refreshWorksheetHeaders(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Worksheet Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <input
+        type="number"
+        min="1"
+        className="btcd-paper-inp w-4"
+        placeholder="Header Row"
+        onChange={handleInput}
+        value={sheetConf.headerRow}
+        name="headerRow"
+      />
+      <button
+        onClick={() => refreshWorksheetHeaders(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Worksheet Headers"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+
+      </button>
       <br />
-      <small className="mt-3 d-blk" style={{ marginLeft: 155, lineHeight: 1.8 }}>{__('By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.')}</small>
+      <small
+        className="mt-3 d-blk"
+        style={{ marginLeft: 155, lineHeight: 1.8 }}
+      >
+        {__('By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.')}
+      </small>
       <br />
 
       {isLoading && (
@@ -76,10 +124,20 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
                 setSheetConf={setSheetConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sheetConf.field_map.length, sheetConf, setSheetConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(sheetConf.field_map.length, sheetConf, setSheetConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
-
           </>
         )}
       {sheetConf.workbook && (

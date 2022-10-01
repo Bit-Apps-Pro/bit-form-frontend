@@ -8,7 +8,13 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('Module:')}</b>
-      <select onChange={handleInput} name="module" value={biginConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
+      <select
+        onChange={handleInput}
+        name="module"
+        value={biginConf.module}
+        className="btcd-paper-inp w-7"
+        disabled={tab === 1}
+      >
         <option value="">{__('Select Module')}</option>
         {
           biginConf.default && biginConf.default.modules && Object.values(biginConf.default.modules).map(module => (
@@ -18,7 +24,17 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
           ))
         }
       </select>
-      {tab === 0 && <button onClick={() => refreshModules(formID, biginConf, setBiginConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Bigin Modules')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>}
+      {tab === 0 && (
+        <button
+          onClick={() => refreshModules(formID, biginConf, setBiginConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Bigin Modules')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
+      )}
       <br />
       <Tabs
         selectedTabClassName="s-t-l-active"

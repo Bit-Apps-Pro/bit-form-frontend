@@ -2,7 +2,7 @@
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, useCallback, useEffect, useReducer, useState } from 'react'
+import { createRef, useCallback, useEffect, useReducer, useState, useDeferredValue } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -16,7 +16,9 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
-import { $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId } from '../GlobalStates/GlobalStates'
+import {
+  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
+} from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -24,7 +26,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
@@ -71,6 +73,7 @@ const FormBuilder = ({ isLoading }) => {
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
+  const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
@@ -79,7 +82,6 @@ const FormBuilder = ({ isLoading }) => {
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
   const [styleLoading, setStyleLoading] = useState(true)
-  const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
   const [showToolBar, setShowToolbar] = useState(false)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
@@ -94,7 +96,7 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   // eslint-disable-next-line no-console
-  console.log('render formbuilder')
+
   const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
 
   // useEffect(() => {
@@ -116,7 +118,10 @@ const FormBuilder = ({ isLoading }) => {
       isV2Form = false
     }
 
-    if (isV2Form && !isNewForm) {
+    if (!isObjectEmpty(styles)) {
+      setStyleLoading(false)
+    }
+    if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
       const { themeVars, themeColors, style: oldAllStyles } = oldStyles
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
@@ -319,20 +324,17 @@ const FormBuilder = ({ isLoading }) => {
   }, [conRef])
 
   const setGrWidth = (paneWidth) => {
-    clearTimeout(debounce)
-    setDebounce(setTimeout(() => {
-      setGridWidth(paneWidth)
-      const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
+    setGridWidth(paneWidth)
+    const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
-      const gw = Math.round(paneWidth - w) // inner left-right padding
-      if (gw <= 510) {
-        setbrkPoint('sm')
-      } else if (gw > 420 && gw <= 700) {
-        setbrkPoint('md')
-      } else if (gw > 700) {
-        setbrkPoint('lg')
-      }
-    }, styleMode ? 0 : 100))
+    const gw = Math.round(paneWidth - w) // inner left-right padding
+    if (gw <= 510) {
+      setbrkPoint('sm')
+    } else if (gw > 420 && gw <= 700) {
+      setbrkPoint('md')
+    } else if (gw > 700) {
+      setbrkPoint('lg')
+    }
   }
 
   const clsAlertMdl = () => {
@@ -387,7 +389,7 @@ const FormBuilder = ({ isLoading }) => {
               {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
               <GridLayout
                 style={styleProvider()}
-                gridWidth={gridWidth}
+                gridWidth={deferedGridWidth}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}

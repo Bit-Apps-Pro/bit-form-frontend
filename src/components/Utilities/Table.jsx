@@ -79,7 +79,6 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 }
 
 function Table(props) {
-  console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData, refreshResp, report, rightHeader, leftHeader } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)

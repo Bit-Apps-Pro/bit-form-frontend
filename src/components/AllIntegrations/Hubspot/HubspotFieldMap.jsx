@@ -21,12 +21,15 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
   const { isPro } = bits
 
   return (
-    <div
-      className="flx mt-2 mb-2 bits-field-map"
-    >
+    <div className="flx mt-2 mb-2 bits-field-map">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -46,12 +49,27 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, hubspotConf, setHubspotConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom'
+            && (
+              <MtInput
+                onChange={e => handleCustomValue(e, i, hubspotConf, setHubspotConf)}
+                label={__('Custom Value')}
+                className="mr-2"
+                type="text"
+                value={field.customValue}
+                placeholder={__('Custom Value')}
+              />
+            )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="hubspotField" value={i < requiredFlds?.length ? (requiredFlds[i].key || '') : (field.hubspotField || '')} onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="hubspotField"
+            value={i < requiredFlds?.length ? (requiredFlds[i].key || '') : (field.hubspotField || '')}
+            onChange={(ev) => handleFieldMapping(ev, i, hubspotConf, setHubspotConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
@@ -78,7 +96,12 @@ export default function HubspotFieldMap({ i, formFields, field, hubspotConf, set
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(i, hubspotConf, setHubspotConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delFieldMap(i, hubspotConf, setHubspotConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

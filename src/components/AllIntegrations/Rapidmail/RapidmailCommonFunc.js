@@ -1,7 +1,7 @@
 /* eslint-disable no-else-return */
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (
   e,
@@ -57,7 +57,6 @@ export const getAllRecipient = (
     error: __('Error Occurred'),
     loading: __('Loading Recipientslist...'),
   })
-  // .catch(() => setIsLoading(false))
 }
 
 export const generateMappedField = (rapidmailConf) => {

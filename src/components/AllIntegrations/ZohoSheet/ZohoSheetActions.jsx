@@ -1,13 +1,14 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
 
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import InfoIcn from '../../../Icons/InfoIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
-import TableCheckBox from '../../Utilities/TableCheckBox'
 import Modal from '../../Utilities/Modal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import TitleModal from '../../Utilities/TitleModal'
-import InfoIcn from '../../../Icons/InfoIcn'
 
 export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)
@@ -91,11 +92,25 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
       <div className="d-flx flx-wrp">
         {sheetConf.default?.worksheets?.headers?.[sheetConf.worksheet]?.[sheetConf.headerRow] && (
           <TitleModal action={openUpdateModal}>
-            <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in sheetConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Row')} subTitle={__('Control how the row gets updated.')} />
+            <TableCheckBox
+              onChange={(e) => actionHandler(e, 'update')}
+              checked={'update' in sheetConf?.actions}
+              className="wdt-200 mt-4 mr-2"
+              value="Upsert_Record"
+              title={__('Update Row')}
+              subTitle={__('Control how the row gets updated.')}
+            />
           </TitleModal>
         )}
 
-        <TableCheckBox onChange={openShareModal} checked={sheetConf?.actions?.share?.find(userShare => userShare.email) || false} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Share Workbook')} subTitle={__('Share workbook with users pushed to Zoho Sheet.')} />
+        <TableCheckBox
+          onChange={openShareModal}
+          checked={sheetConf?.actions?.share?.find(userShare => userShare.email) || false}
+          className="wdt-200 mt-4 mr-2"
+          value="user_share"
+          title={__('Share Workbook')}
+          subTitle={__('Share workbook with users pushed to Zoho Sheet.')}
+        />
       </div>
 
       <Modal
@@ -117,22 +132,55 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
                 <br />
                 <small>Here Month and Amount are Zoho Sheet&apos;s worksheet header name</small>
                 {' '}
-                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"', fontSize: 15 }}>
+                <span
+                  className="icn-btn ml-2 tooltip"
+                  style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"', fontSize: 15 }}
+                >
                   <InfoIcn size="15" />
                 </span>
-                <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={sheetConf.actions?.update?.criteria} />
+                <textarea
+                  name=""
+                  rows="5"
+                  className="btcd-paper-inp mt-1"
+                  onChange={e => setUpdateSettings(e.target.value, 'criteria')}
+                  value={sheetConf.actions?.update?.criteria}
+                />
               </div>
 
               <div className="font-w-m mt-3">{__('Update Preferance')}</div>
               <small>{__('update row for first match only?')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'firstMatch')} radio checked={sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'firstMatch')} radio checked={!sheetConf.actions.update?.firstMatch} name="firstMatch" title={__('No')} />
+                <CheckBox
+                  onChange={() => setUpdateSettings(true, 'firstMatch')}
+                  radio
+                  checked={sheetConf.actions.update?.firstMatch}
+                  name="firstMatch"
+                  title={__('Yes')}
+                />
+                <CheckBox
+                  onChange={() => setUpdateSettings(false, 'firstMatch')}
+                  radio
+                  checked={!sheetConf.actions.update?.firstMatch}
+                  name="firstMatch"
+                  title={__('No')}
+                />
               </div>
               <small>{__('insert new row if the above criteria doesn\'t met?')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={sheetConf.actions.update?.insert} name="up-row" title={__('Yes')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!sheetConf.actions.update?.insert} name="up-row" title={__('No')} />
+                <CheckBox
+                  onChange={() => setUpdateSettings(true, 'insert')}
+                  radio
+                  checked={sheetConf.actions.update?.insert}
+                  name="up-row"
+                  title={__('Yes')}
+                />
+                <CheckBox
+                  onChange={() => setUpdateSettings(false, 'insert')}
+                  radio
+                  checked={!sheetConf.actions.update?.insert}
+                  name="up-row"
+                  title={__('No')}
+                />
               </div>
             </>
           )}
@@ -156,12 +204,16 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
                 options={getUsers()}
                 customValue
               />
-              <input className="btcd-paper-inp w-3" type="text" value={user.accessLabel} readOnly />
+              <input
+                className="btcd-paper-inp w-3"
+                type="text"
+                value={user.accessLabel}
+                readOnly
+              />
             </div>
           ))}
         </div>
       </Modal>
-
     </div>
   )
 }

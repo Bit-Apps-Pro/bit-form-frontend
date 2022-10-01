@@ -14,13 +14,22 @@ function EditEncharge({ formFields, setIntegration, integrations, allIntegURL })
 
   const [enchargeConf, setEnchargeConf] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, enchargeConf, setEnchargeConf)} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, enchargeConf, setEnchargeConf)}
+          name="name"
+          value={enchargeConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
+
       <br />
       <br />
 
