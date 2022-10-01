@@ -910,12 +910,26 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               </select>
             </div>
             {['monthly', 'yearly'].includes(projectsConf.actions[event]?.recurrence_string?.recurring_frequency)
-              && (<CheckBox
-                onChange={(e) => handleRecurrence(e.target.value, 'set_previous_business_day', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.set_previous_business_day || false} value="true" title={__('Set to previous business day')} />)}
+              && (
+                <CheckBox
+                  onChange={(e) => handleRecurrence(e.target.value, 'set_previous_business_day', e.target.checked)}
+                  checked={projectsConf.actions[event]?.recurrence_string?.set_previous_business_day || false}
+                  value="true"
+                  title={__('Set to previous business day')}
+                />
+              )}
             <CheckBox
-              onChange={(e) => handleRecurrence(e.target.value, 'is_comments_recurred', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.is_comments_recurred || false} value="true" title={__('Retain comments for subsequent recurrences')} />
+              onChange={(e) => handleRecurrence(e.target.value, 'is_comments_recurred', e.target.checked)}
+              checked={projectsConf.actions[event]?.recurrence_string?.is_comments_recurred || false}
+              value="true"
+              title={__('Retain comments for subsequent recurrences')}
+            />
             <CheckBox
-              onChange={(e) => handleRecurrence(e.target.value, 'recurrence_type', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.recurrence_type || false} value="after_current_task_completed" title={__('Create next recurrence after the close of current task.')} />
+              onChange={(e) => handleRecurrence(e.target.value, 'recurrence_type', e.target.checked)}
+              checked={projectsConf.actions[event]?.recurrence_string?.recurrence_type || false}
+              value="after_current_task_completed"
+              title={__('Create next recurrence after the close of current task.')}
+            />
           </ConfirmModal>
         )
       }
@@ -1017,27 +1031,68 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 options={getTags()}
                 onChange={(val) => actionHandler(val, 'tags')}
               />
-              <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': '"Refresh Tags"' }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
             <hr />
             <small>{__('Custom Tags')}</small>
             {projectsConf?.actions?.[event]?.customTags?.length > 0 && projectsConf.actions[event].customTags.map((tag, i) => (
               <div key={`tg=${i + 79}`} className="flx flx-between mt-2 mb-2">
-                <input type="text" className="btcd-paper-inp" onChange={(e) => handleCustomTag('value', i, 'name', e.target.value)} value={tag.name} />
-                <select className="btcd-paper-inp w-3" value={tag.field} onChange={(e) => handleCustomTag('value', i, 'field', e.target.value)}>
+                <input
+                  type="text"
+                  className="btcd-paper-inp"
+                  onChange={(e) => handleCustomTag('value', i, 'name', e.target.value)}
+                  value={tag.name}
+                />
+                <select
+                  className="btcd-paper-inp w-3"
+                  value={tag.field}
+                  onChange={(e) => handleCustomTag('value', i, 'field', e.target.value)}
+                >
                   <option value="">{__('Field')}</option>
                   {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                 </select>
-                <select className="btcd-paper-inp w-3" style={{ backgroundColor: `${tag.color.replace('bg', '#')}` }} value={tag.color} onChange={(e) => handleCustomTag('value', i, 'color', e.target.value)}>
+                <select
+                  className="btcd-paper-inp w-3"
+                  style={{ backgroundColor: `${tag.color.replace('bg', '#')}` }}
+                  value={tag.color}
+                  onChange={(e) => handleCustomTag('value', i, 'color', e.target.value)}
+                >
                   <option value="">Color</option>
                   {['0dd3d3', 'e2b910', '7f78e0', 'f28840', 'd359aa', '83b727', 'b58a61', 'ffac14', '48b7b4', 'f56b62', '728099', '609100', '0d6fb7', '0995ba', '15a8e2', 'ff5acd', '898985', '3b92ff', 'ac57f2', '895a59'].map(tagColor => (
-                    <option key={tagColor} value={`bg${tagColor}`} style={{ backgroundColor: `#${tagColor}` }} aria-label="color" />
+                    <option
+                      key={tagColor}
+                      value={`bg${tagColor}`}
+                      style={{ backgroundColor: `#${tagColor}` }}
+                      aria-label="color"
+                    />
                   ))}
                 </select>
-                <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><TrashIcn /></button>
+                <button
+                  onClick={() => handleCustomTag('remove', i)}
+                  className="icn-btn ml-2"
+                  aria-label="delete"
+                  type="button"
+                >
+                  <TrashIcn />
+                </button>
               </div>
             ))}
-            <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': `'${__('Add Custom Tag', 'nitform')}'` }} type="button">+</button>
+            <button
+              onClick={() => handleCustomTag('add')}
+              className="icn-btn ml-2 mr-2 sh-sm tooltip"
+              style={{ '--tooltip-txt': `'${__('Add Custom Tag', 'nitform')}'` }}
+              type="button"
+            >
+              +
+            </button>
           </>
         )}
       </ConfirmModal>

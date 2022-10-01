@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
-import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ZohoSheetAuthorization from './ZohoSheetAuthorization'
 import { handleInput } from './ZohoSheetCommonFunc'
 import ZohoSheetIntegLayout from './ZohoSheetIntegLayout'
 
 function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
-  const { css } = useFela()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
@@ -77,7 +73,11 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={sheetConf.workbook === '' || sheetConf.worksheet === '' || sheetConf.field_map.length < 1}
+        />
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={sheetConf.workbook === '' || sheetConf.worksheet === '' || sheetConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -85,7 +85,7 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </button> */}
 
       </div>
 

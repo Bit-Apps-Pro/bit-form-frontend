@@ -27,7 +27,14 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
 
       <div className="flx mt-3">
         <b className="wdt-100 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, workDriveConf, setWorkDriveConf)} name="name" value={workDriveConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-7"
+          onChange={e => handleInput(e, workDriveConf, setWorkDriveConf)}
+          name="name"
+          value={workDriveConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
       <br />

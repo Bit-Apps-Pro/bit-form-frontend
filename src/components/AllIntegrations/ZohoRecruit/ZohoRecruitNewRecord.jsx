@@ -47,7 +47,18 @@ export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, 
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(recruitConf.field_map.length, recruitConf, setRecruitConf, false, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(recruitConf.field_map.length, recruitConf, setRecruitConf, false, tab)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {Object.keys(recruitConf.default?.moduleData?.[recruitConf.module]?.fileUploadFields).length !== 0 && (
@@ -72,7 +83,18 @@ export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, 
                     setSnackbar={setSnackbar}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(recruitConf.upload_field_map.length, recruitConf, setRecruitConf, true, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(recruitConf.upload_field_map.length, recruitConf, setRecruitConf, true, tab)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
               </>

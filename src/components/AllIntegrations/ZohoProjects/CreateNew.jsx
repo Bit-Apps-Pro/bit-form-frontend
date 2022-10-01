@@ -37,7 +37,17 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
               &#x21BB;
             </button>
           </div>
-          {projectsConf.event !== event && <button onClick={removeSubEvent} className="icn-btn sh-sm ml-2 mr-2" type="button" aria-label="delete"><TrashIcn /></button>}
+          {projectsConf.event !== event
+            && (
+              <button
+                onClick={removeSubEvent}
+                className="icn-btn sh-sm ml-2 mr-2"
+                type="button"
+                aria-label="delete"
+              >
+                <TrashIcn />
+              </button>
+            )}
         </div>
       </div>
       <div className="btcd-hr mt-1" />

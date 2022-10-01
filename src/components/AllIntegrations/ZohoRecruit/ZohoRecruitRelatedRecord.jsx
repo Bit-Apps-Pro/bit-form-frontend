@@ -17,7 +17,13 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
     <>
       <br />
       <b className="wdt-100 d-in-b">Related List:</b>
-      <select onChange={handleInput} name="module" value={recruitConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!recruitConf.module}>
+      <select
+        onChange={handleInput}
+        name="module"
+        value={recruitConf?.relatedlists?.[tab - 1]?.module}
+        className="btcd-paper-inp w-7"
+        disabled={!recruitConf.module}
+      >
         <option value="">{__('Select Related Module')}</option>
         {
           recruitConf?.default.relatedlists?.[recruitConf.module] && Object.values(recruitConf.default.relatedlists[recruitConf.module]).map(relatedlistApiName => (
@@ -27,7 +33,15 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
           ))
         }
       </select>
-      <button onClick={() => refreshRelatedList(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Recruit Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshRelatedList(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Recruit Related Lists"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       {isLoading && (
@@ -61,7 +75,18 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
                 tab={tab}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(recruitConf.relatedlists[tab - 1].field_map.length, recruitConf, setRecruitConf, false, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(recruitConf.relatedlists[tab - 1].field_map.length, recruitConf, setRecruitConf, false, tab)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {Object.keys(recruitConf.default?.moduleData?.[recruitConf.relatedlists[tab - 1].module]?.fileUploadFields).length !== 0 && (
@@ -85,7 +110,18 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
                     tab={tab}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(recruitConf.relatedlists[tab - 1].upload_field_map.length, recruitConf, setRecruitConf, true, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(recruitConf.relatedlists[tab - 1].upload_field_map.length, recruitConf, setRecruitConf, true, tab)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
               </>

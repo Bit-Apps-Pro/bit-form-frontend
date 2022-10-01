@@ -1,12 +1,13 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
 import Modal from '../../Utilities/Modal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import TitleModal from '../../Utilities/TitleModal'
 import { refreshUsers } from './ZohoWorkDriveCommonFunc'
 
@@ -140,9 +141,23 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openCreateFolderMdl}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'create_folder')} checked={'create_folder' in workDriveConf?.actions} className="wdt-200 mt-4 mr-2" value="Create_Folder" title={__('Create New Folder')} subTitle={__('Create a new folder in the selected folder')} />
+          <TableCheckBox
+            onChange={(e) => actionHandler(e, 'create_folder')}
+            checked={'create_folder' in workDriveConf?.actions}
+            className="wdt-200 mt-4 mr-2"
+            value="Create_Folder"
+            title={__('Create New Folder')}
+            subTitle={__('Create a new folder in the selected folder')}
+          />
         </TitleModal>
-        <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in workDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files')} subTitle={__('Add attachments from BitForm to Zoho Workdrive folder.')} />
+        <TableCheckBox
+          onChange={openUploadFileMdl}
+          checked={'attachments' in workDriveConf.actions}
+          className="wdt-200 mt-4 mr-2"
+          value="Attachment"
+          title={__('Upload Files')}
+          subTitle={__('Add attachments from BitForm to Zoho Workdrive folder.')}
+        />
       </div>
 
       <Modal
@@ -162,8 +177,21 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
             <option value="">{__('Select Field')}</option>
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
           </select>
-          <input type="text" className="btcd-paper-inp mt-2 w-9" value={workDriveConf.actions?.create_folder?.name} onChange={e => setCreateFolderSettings(e, 'name')} placeholder="New Folder Name" />
-          <TableCheckBox onChange={(e) => setCreateFolderSettings(e, 'suffix')} checked={workDriveConf?.actions?.create_folder?.suffix} className="wd-100 mt-4 mr-2" value="Add_Suffix" title={__('Add Random Number')} subTitle="Zoho doesn't support duplicate folder name, if you want to make it uniquely you can add random number after the folder name." />
+          <input
+            type="text"
+            className="btcd-paper-inp mt-2 w-9"
+            value={workDriveConf.actions?.create_folder?.name}
+            onChange={e => setCreateFolderSettings(e, 'name')}
+            placeholder="New Folder Name"
+          />
+          <TableCheckBox
+            onChange={(e) => setCreateFolderSettings(e, 'suffix')}
+            checked={workDriveConf?.actions?.create_folder?.suffix}
+            className="wd-100 mt-4 mr-2"
+            value="Add_Suffix"
+            title={__('Add Random Number')}
+            subTitle="Zoho doesn't support duplicate folder name, if you want to make it uniquely you can add random number after the folder name."
+          />
 
           {workDriveConf.default?.teamFolders?.[workDriveConf.team]?.[folder]?.type === 'private'
             && (
@@ -171,7 +199,15 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                 <div className="btcd-hr mt-2" />
                 <div className="flx mt-2">
                   <div>{__('Share with users: (optional)')}</div>
-                  <button onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Team Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button
+                    onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)}
+                    className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                    style={{ '--tooltip-txt': '"Refresh Team Users"' }}
+                    type="button"
+                    disabled={isLoading}
+                  >
+                    &#x21BB;
+                  </button>
                 </div>
                 {isLoading
                   && (
@@ -194,11 +230,22 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                         onChange={(val) => handleShareSetting(i, 'email', val, 'folder')}
                         options={users}
                       />
-                      <input type="text" value={permission.accessLabel} className="btcd-paper-inp w-2" readOnly />
+                      <input
+                        type="text"
+                        value={permission.accessLabel}
+                        className="btcd-paper-inp w-2"
+                        readOnly
+                      />
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'folder')} checked={workDriveConf?.actions?.share?.folder?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail')} />
+                <TableCheckBox
+                  onChange={(e) => actionHandler(e, 'mail', 'folder')}
+                  checked={workDriveConf?.actions?.share?.folder?.mail === 'true' || false}
+                  className="wd-100 mt-4 mr-2"
+                  value="true"
+                  title={__('Send Notification Mail')}
+                />
               </>
             )}
         </div>
@@ -225,7 +272,15 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                 <div className="btcd-hr mt-2" />
                 <div className="flx mt-2">
                   <div>Share with users: (optional)</div>
-                  <button onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Team Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button
+                    onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)}
+                    className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                    style={{ '--tooltip-txt': '"Refresh Team Users"' }}
+                    type="button"
+                    disabled={isLoading}
+                  >
+                    &#x21BB;
+                  </button>
                 </div>
                 {isLoading
                   && (
@@ -247,16 +302,26 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                         onChange={(val) => handleShareSetting(i, 'email', val, 'file')}
                         options={users}
                       />
-                      <input type="text" value={permission.accessLabel} className="btcd-paper-inp w-3" readOnly />
+                      <input
+                        type="text"
+                        value={permission.accessLabel}
+                        className="btcd-paper-inp w-3"
+                        readOnly
+                      />
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'file')} checked={workDriveConf?.actions?.share?.file?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title={__('Send Notification Mail')} />
+                <TableCheckBox
+                  onChange={(e) => actionHandler(e, 'mail', 'file')}
+                  checked={workDriveConf?.actions?.share?.file?.mail === 'true' || false}
+                  className="wd-100 mt-4 mr-2"
+                  value="true"
+                  title={__('Send Notification Mail')}
+                />
               </>
             )}
         </div>
       </Modal>
-
     </div>
   )
 }
