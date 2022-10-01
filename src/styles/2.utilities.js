@@ -50,6 +50,8 @@ const ut = {
   flxc: { flx: 'align-center' },
   flxClm: { dy: 'flex', fd: 'column' },
 
+  ftRight: { ft: 'right' },
+
   cp: { cur: 'pointer' },
   // margin
   ma: { m: 'auto' },

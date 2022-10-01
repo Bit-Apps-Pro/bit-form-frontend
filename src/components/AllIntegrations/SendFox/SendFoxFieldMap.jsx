@@ -24,12 +24,15 @@ export default function SendFoxFieldMap({ i, formFields, field, sendFoxConf, set
   const { isPro } = bits
 
   return (
-    <div
-      className="flx mt-2 mb-2 btcbi-field-map"
-    >
+    <div className="flx mt-2 mb-2 btcbi-field-map">
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -44,22 +47,37 @@ export default function SendFoxFieldMap({ i, formFields, field, sendFoxConf, set
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, sendFoxConf, setSendFoxConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom'
+            && (
+              <MtInput
+                onChange={e => handleCustomValue(e, i, sendFoxConf, setSendFoxConf)}
+                label={__('Custom Value')}
+                className="mr-2"
+                type="text"
+                value={field.customValue}
+                placeholder={__('Custom Value')}
+              />
+            )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="sendFoxFormField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.sendFoxFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="sendFoxFormField"
+            value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.sendFoxFormField || '')}
+            onChange={(ev) => handleFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
                 <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
-                  {requiredFlds[i].label}
+                  {__(requiredFlds[i].label)}
                 </option>
               ) : (
                 nonRequiredFlds.map(({ key, label }) => (
                   <option key={key} value={key}>
-                    {label}
+                    {__(label)}
                   </option>
                 ))
               )
@@ -76,7 +94,12 @@ export default function SendFoxFieldMap({ i, formFields, field, sendFoxConf, set
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(i, sendFoxConf, setSendFoxConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delFieldMap(i, sendFoxConf, setSendFoxConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

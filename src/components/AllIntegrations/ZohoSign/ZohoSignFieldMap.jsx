@@ -12,7 +12,12 @@ export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSi
   return (
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
@@ -31,7 +36,12 @@ export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSi
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, signConf, setSignConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
+        <select
+          className="btcd-paper-inp"
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             Object.values(signConf.default.tables.headers[signConf.table]).map(header => (
@@ -49,7 +59,12 @@ export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSi
       >
         +
       </button>
-      <button onClick={() => delFieldMap(i, signConf, setSignConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+      <button
+        onClick={() => delFieldMap(i, signConf, setSignConf)}
+        className="icn-btn sh-sm ml-1"
+        type="button"
+        aria-label="btn"
+      >
         <TrashIcn />
       </button>
     </div>

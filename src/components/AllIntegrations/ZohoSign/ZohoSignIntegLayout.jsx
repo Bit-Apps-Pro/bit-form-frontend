@@ -85,25 +85,62 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
       )}
       <div className="flx">
         <b className="wdt-100">{__('Templates:')}</b>
-        <select className="btcd-paper-inp w-4" onChange={(e) => handleInput(e, signConf, setSignConf, formID, setisLoading, setSnackbar)} name="template" value={signConf.template}>
+        <select
+          className="btcd-paper-inp w-4"
+          onChange={(e) => handleInput(e, signConf, setSignConf, formID, setisLoading, setSnackbar)}
+          name="template"
+          value={signConf.template}
+        >
           <option value="">{__('Select Template')}</option>
           {signConf?.default?.templates && Object.values(signConf.default.templates).map(template => <option key={template.templateId} value={template.templateId}>{template.templateName}</option>)}
         </select>
-        <button onClick={() => refreshTemplates(formID, signConf, setSignConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sign Templates')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshTemplates(formID, signConf, setSignConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Sign Templates')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       <br />
       <br />
       <b className="wdt-100">{__('Recipients:')}</b>
-      <button onClick={() => refreshTemplateDetails(formID, signConf, setSignConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Template Details')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshTemplateDetails(formID, signConf, setSignConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh Template Details')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       {signConf?.templateActions?.map((action, i) => (
         <div key={action.role}>
           <div className="flx mt-2">
-            <input type="text" value={i + 1} readOnly className="btcd-paper-inp mr-1" style={{ width: 40 }} />
-            <input className="btcd-paper-inp w-3" type="text" value={action.role} readOnly />
+            <input
+              type="text"
+              value={i + 1}
+              readOnly
+              className="btcd-paper-inp mr-1"
+              style={{ width: 40 }}
+            />
+            <input
+              className="btcd-paper-inp w-3"
+              type="text"
+              value={action.role}
+              readOnly
+            />
           </div>
           {action.action_type === 'INPERSONSIGN' && (
             <div className="flx mt-2" style={{ marginLeft: 45 }}>
-              <input type="text" value="Signer" readOnly className="btcd-paper-inp mr-1 mt-4 w-1" />
+              <input
+                type="text"
+                value="Signer"
+                readOnly
+                className="btcd-paper-inp mr-1 mt-4 w-1"
+              />
 
               <div className="mr-2 w-4">
                 <div className="mb-1">{__('In Person Email (Optional)')}</div>
@@ -132,7 +169,14 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
             </div>
           )}
           <div className="flx mt-2" style={{ marginLeft: 45 }}>
-            {action.action_type === 'INPERSONSIGN' && <input type="text" value="Host" readOnly className="btcd-paper-inp mr-1 mt-4 w-1" />}
+            {action.action_type === 'INPERSONSIGN' && (
+              <input
+                type="text"
+                value="Host"
+                readOnly
+                className="btcd-paper-inp mr-1 mt-4 w-1"
+              />
+            )}
             <div className="mr-2 w-3">
               <div className="mb-1">{__('Recipient Email')}</div>
               <MultiSelect
@@ -160,7 +204,11 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
             <div className="mr-2 w-1">
               <div className="mb-1">{__('Language')}</div>
-              <select onChange={e => handleAction(i, 'language', e.target.value)} className="btcd-paper-inp" value={action.language}>
+              <select
+                onChange={e => handleAction(i, 'language', e.target.value)}
+                className="btcd-paper-inp"
+                value={action.language}
+              >
                 <option value="en">English</option>
                 <option value="fr">French</option>
                 <option value="de">German</option>
@@ -176,9 +224,22 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
             <div className="mr-1 w-2">
               <div className="mb-1">{__('Role')}</div>
-              <input type="text" value={action.action_type} readOnly className="btcd-paper-inp" />
+              <input
+                type="text"
+                value={action.action_type}
+                readOnly
+                className="btcd-paper-inp"
+              />
             </div>
-            <button onClick={() => openPrivateMsgMdl(i)} className="icn-btn mr-1 mt-3 tooltip" style={{ '--tooltip-txt': `'${__('Private Note')}'` }} aria-label="Private Message" type="button"><MailOpenIcn size="21" /></button>
+            <button
+              onClick={() => openPrivateMsgMdl(i)}
+              className="icn-btn mr-1 mt-3 tooltip"
+              style={{ '--tooltip-txt': `'${__('Private Note')}'` }}
+              aria-label="Private Message"
+              type="button"
+            >
+              <MailOpenIcn size="21" />
+            </button>
           </div>
         </div>
       ))}
@@ -209,11 +270,19 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
         title={__('Private Note')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <select className="btcd-paper-inp w-5" onChange={e => privateMsgField(e.target.value)}>
+        <select
+          className="btcd-paper-inp w-5"
+          onChange={e => privateMsgField(e.target.value)}
+        >
           <option value="">{__('Field')}</option>
           {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
         </select>
-        <textarea rows="5" className="btcd-paper-inp mt-2" onChange={e => handleAction(actionMdl.indx, 'private_notes', e.target.value)} value={signConf.templateActions?.[actionMdl.indx]?.private_notes} />
+        <textarea
+          rows="5"
+          className="btcd-paper-inp mt-2"
+          onChange={e => handleAction(actionMdl.indx, 'private_notes', e.target.value)}
+          value={signConf.templateActions?.[actionMdl.indx]?.private_notes}
+        />
       </ConfirmModal>
     </>
   )

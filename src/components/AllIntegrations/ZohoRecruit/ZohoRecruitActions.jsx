@@ -1,10 +1,11 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
+import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import Loader from '../../Loaders/Loader'
 import { refreshNoteTypes } from './ZohoRecruitCommonFunc'
 
 export default function ZohoRecruitActions({ tab, formID, formFields, recruitConf, setRecruitConf, setSnackbar }) {
@@ -96,17 +97,52 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
         {recruitConf?.relatedlists?.[tab - 1]?.module !== 'Notes'
           && (
             <>
-              <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in recruitConf.actions : 'workflow' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title={__('Workflow')} subTitle={__('Trigger workflows in Zoho Recruit.')} />
-              <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Approval" title={__('Approval')} subTitle={__('Send entries to approval list in Zoho Recruit')} />
+              <TableCheckBox
+                onChange={(e) => actionHandler(e, 'workflow')}
+                checked={tab === 0 ? 'workflow' in recruitConf.actions : 'workflow' in recruitConf.relatedlists?.[tab - 1]?.actions}
+                className="wdt-200 mt-4 mr-2"
+                value="Workflow"
+                title={__('Workflow')}
+                subTitle={__('Trigger workflows in Zoho Recruit.')}
+              />
+              <TableCheckBox
+                onChange={(e) => actionHandler(e, 'approval')}
+                checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlists?.[tab - 1]?.actions}
+                className="wdt-200 mt-4 mr-2"
+                value="Approval"
+                title={__('Approval')}
+                subTitle={__('Send entries to approval list in Zoho Recruit')}
+              />
               {(tab === 0 && !['Calls', 'Events', 'Tasks'].includes(recruitConf.module)) && (
                 <>
-                  <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={'upsert' in recruitConf.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Upsert Record')} subTitle={__('A record gets updated if the email already exists, else a new record will be created.')} />
-                  <TableCheckBox onChange={openNotesMdl} checked={'note' in recruitConf.actions && 'type' in recruitConf.actions?.note} className="wdt-200 mt-4 mr-2" value="notes" title={__('Add a Note')} subTitle={__('Add a note from bitform to pushed to Zoho Recruit.')} />
+                  <TableCheckBox
+                    onChange={(e) => actionHandler(e, 'upsert')}
+                    checked={'upsert' in recruitConf.actions}
+                    className="wdt-200 mt-4 mr-2"
+                    value="Upsert_Record"
+                    title={__('Upsert Record')}
+                    subTitle={__('A record gets updated if the email already exists, else a new record will be created.')}
+                  />
+                  <TableCheckBox
+                    onChange={openNotesMdl}
+                    checked={'note' in recruitConf.actions && 'type' in recruitConf.actions?.note}
+                    className="wdt-200 mt-4 mr-2"
+                    value="notes"
+                    title={__('Add a Note')}
+                    subTitle={__('Add a note from bitform to pushed to Zoho Recruit.')}
+                  />
                 </>
               )}
             </>
           )}
-        <TableCheckBox onChange={() => setrecOwnerMdl(true)} checked={tab === 0 ? 'recordOwner' in recruitConf.actions : 'recordOwner' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="recordOwner" title={__('Record Owner')} subTitle={__('Set owner of current record')} />
+        <TableCheckBox
+          onChange={() => setrecOwnerMdl(true)}
+          checked={tab === 0 ? 'recordOwner' in recruitConf.actions : 'recordOwner' in recruitConf.relatedlists?.[tab - 1]?.actions}
+          className="wdt-200 mt-4 mr-2"
+          value="recordOwner"
+          title={__('Record Owner')}
+          subTitle={__('Set owner of current record')}
+        />
       </div>
       <ConfirmModal
         className="custom-conf-mdl"
@@ -121,9 +157,15 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Owner ID')}</div>
         <div className="flx flx-between">
-          <input onChange={e => actionHandler(e.target.value, 'recordOwner')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? (recruitConf?.actions?.recordOwner || '') : (recruitConf.relatedlists?.[tab - 1]?.actions?.recordOwner || '')} placeholder={__('Enter Owner ID')} />
+          <input
+            onChange={e => actionHandler(e.target.value, 'recordOwner')}
+            className="btcd-paper-inp mt-2"
+            type="number"
+            min="0"
+            value={tab === 0 ? (recruitConf?.actions?.recordOwner || '') : (recruitConf.relatedlists?.[tab - 1]?.actions?.recordOwner || '')}
+            placeholder={__('Enter Owner ID')}
+          />
         </div>
-
       </ConfirmModal>
 
       {tab === 0
@@ -154,18 +196,38 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
               : (
                 <>
                   <div className="flx">
-                    <select className="btcd-paper-inp" onChange={e => handleNoteAction('type', e.target.value)} value={recruitConf.actions?.note?.type || ''}>
+                    <select
+                      className="btcd-paper-inp"
+                      onChange={e => handleNoteAction('type', e.target.value)}
+                      value={recruitConf.actions?.note?.type || ''}
+                    >
                       <option value="">{__('Select Note Type')}</option>
                       {recruitConf?.default?.noteTypes && Object.values(recruitConf.default.noteTypes).map(noteTypes => <option key={noteTypes.noteTypeId} value={`${noteTypes.noteTypeId}__${noteTypes.noteTypeName}`}>{noteTypes.noteTypeName}</option>)}
                     </select>
-                    <button onClick={() => refreshNoteTypes(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Note Types"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                    <button
+                      onClick={() => refreshNoteTypes(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)}
+                      className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                      style={{ '--tooltip-txt': '"Refresh Note Types"' }}
+                      type="button"
+                      disabled={isLoading}
+                    >
+                      &#x21BB;
+                    </button>
                   </div>
                   <div className="mt-2 mb-1">{__('Note Content')}</div>
-                  <select className="btcd-paper-inp w-5" onChange={e => handleNoteAction('field', e.target.value)}>
+                  <select
+                    className="btcd-paper-inp w-5"
+                    onChange={e => handleNoteAction('field', e.target.value)}
+                  >
                     <option value="">{__('Field')}</option>
                     {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                   </select>
-                  <textarea rows="5" className="btcd-paper-inp mt-2" onChange={e => handleNoteAction('content', e.target.value)} value={recruitConf.actions?.note?.content || ''} />
+                  <textarea
+                    rows="5"
+                    className="btcd-paper-inp mt-2"
+                    onChange={e => handleNoteAction('content', e.target.value)}
+                    value={recruitConf.actions?.note?.content || ''}
+                  />
                 </>
               )}
           </ConfirmModal>

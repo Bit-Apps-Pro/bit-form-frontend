@@ -59,11 +59,32 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <TableCheckBox onChange={openRecOwnerModal} checked={'ticket_owner' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Ticket_Owner" title={__('Ticket Owner')} subTitle={__('Add a owner to ticket pushed to Zoho Desk.')} />
+          <TableCheckBox
+            onChange={openRecOwnerModal}
+            checked={'ticket_owner' in deskConf.actions}
+            className="wdt-200 mt-4 mr-2"
+            value="Ticket_Owner"
+            title={__('Ticket Owner')}
+            subTitle={__('Add a owner to ticket pushed to Zoho Desk.')}
+          />
           {!deskConf.actions.ticket_owner && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{__('ticket owner is required')}</small>}
         </div>
-        <TableCheckBox onChange={openProductModal} checked={'product' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Product_Name" title={__('Product Name')} subTitle={__('Add a product to ticket pushed to Zoho Desk.')} />
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments')} subTitle={__('Add attachments from BitForm to ticket pushed to Zoho Desk.')} />
+        <TableCheckBox
+          onChange={openProductModal}
+          checked={'product' in deskConf.actions}
+          className="wdt-200 mt-4 mr-2"
+          value="Product_Name"
+          title={__('Product Name')}
+          subTitle={__('Add a product to ticket pushed to Zoho Desk.')}
+        />
+        <TableCheckBox
+          onChange={() => setActionMdl({ show: 'attachments' })}
+          checked={'attachments' in deskConf.actions}
+          className="wdt-200 mt-4 mr-2"
+          value="Attachment"
+          title={__('Attachments')}
+          subTitle={__('Add attachments from BitForm to ticket pushed to Zoho Desk.')}
+        />
       </div>
 
       <ConfirmModal
@@ -97,7 +118,15 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
                 <option value="">{__('Select Owner')}</option>
                 {deskConf.default?.owners?.[deskConf.orgId]?.map(owner => <option key={owner.ownerId} value={owner.ownerId}>{owner.ownerName}</option>)}
               </select>
-              <button onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
       </ConfirmModal>
@@ -132,7 +161,16 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
               <option value="">{__('Select Product')}</option>
               {deskConf.default?.products?.[deskConf.department]?.map(product => <option key={product.productId} value={product.productId}>{product.productName}</option>)}
             </select>
-            <button onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Products"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Refresh Products"' }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+
+            </button>
           </div>
         )}
       </ConfirmModal>

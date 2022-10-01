@@ -29,7 +29,12 @@ export default function SendFoxUnsubscribeFieldMap({ i, formFields, field, sendF
     >
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -44,12 +49,26 @@ export default function SendFoxUnsubscribeFieldMap({ i, formFields, field, sendF
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleUnsubscribeCustomValue(e, i, sendFoxConf, setSendFoxConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && (
+            <MtInput
+              onChange={e => handleUnsubscribeCustomValue(e, i, sendFoxConf, setSendFoxConf)}
+              label={__('Custom Value')}
+              className="mr-2"
+              type="text"
+              value={field.customValue}
+              placeholder={__('Custom Value')}
+            />
+          )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="sendFoxUnsubscribeFormField" value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.sendFoxUnsubscribeFormField || '')} onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled={i < requiredFlds.length}
+            name="sendFoxUnsubscribeFormField"
+            value={i < requiredFlds.length ? (requiredFlds[i].key || '') : (field.sendFoxUnsubscribeFormField || '')}
+            onChange={(ev) => handleUnsubscribeFieldMapping(ev, i, sendFoxConf, setSendFoxConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               i < requiredFlds.length ? (
@@ -76,7 +95,12 @@ export default function SendFoxUnsubscribeFieldMap({ i, formFields, field, sendF
               >
                 +
               </button>
-              <button onClick={() => delListFieldMap(i, sendFoxConf, setSendFoxConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button
+                onClick={() => delListFieldMap(i, sendFoxConf, setSendFoxConf)}
+                className="icn-btn sh-sm ml-1"
+                type="button"
+                aria-label="btn"
+              >
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

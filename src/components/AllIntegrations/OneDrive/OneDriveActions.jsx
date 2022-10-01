@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import TableCheckBox from '../../Utilities/TableCheckBox'
-import Loader from '../../Loaders/Loader'
-import Modal from '../../Utilities/Modal'
 import ConfirmModal from '../../Utilities/ConfirmModal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFields, formID, setSnackbar }) {
   const folder = oneDriveConf.folderMap ? oneDriveConf.folderMap[0] : oneDriveConf.folder
@@ -33,10 +31,6 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
     }
 
     setOneDriveConf({ ...newConf })
-  }
-
-  const clsActionMdl = () => {
-    setActionMdl({ show: false })
   }
 
   const openUploadFileMdl = () => {
@@ -69,13 +63,26 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
   }
 
   const getFileUpFields = () => formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.lbl, value: itm.key }))
-  console.log('checked', !oneDriveConf.actions.attachments)
 
   return (
     <div className="pos-rel d-flx w-5">
       <div className="pos-rel d-flx flx-col w-8">
-        <TableCheckBox onChange={openUploadFileMdl} checked={'attachments' in oneDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Upload Files', 'bit-integration-pro')} subTitle={__('Add attachments from Bit-integration-pro to OneDrive folder.', 'bit-integration-pro')} />
-        {!oneDriveConf.actions.attachments && <small style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}>{__('This action is required.')}</small>}
+        <TableCheckBox
+          onChange={openUploadFileMdl}
+          checked={'attachments' in oneDriveConf.actions}
+          className="wdt-200 mt-4 mr-2"
+          value="Attachment"
+          title={__('Upload Files', 'bit-integration-pro')}
+          subTitle={__('Add attachments from Bit-integration-pro to OneDrive folder.', 'bit-integration-pro')}
+        />
+        {!oneDriveConf.actions.attachments
+          && (
+            <small
+              style={{ marginLeft: 30, marginTop: 10, color: 'red', fontWeight: 'bold' }}
+            >
+              {__('This action is required.')}
+            </small>
+          )}
       </div>
 
       <ConfirmModal
@@ -97,7 +104,6 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
             onChange={(val) => actionHandler(val, 'attachments')}
             height={300}
           />
-
         </div>
       </ConfirmModal>
 
@@ -111,7 +117,6 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
           subTitle={__('Delete file from Wordpress after upload in OneDrive')}
         />
       </div>
-
     </div>
   )
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
+import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
@@ -50,7 +51,14 @@ export default function ElasticEmailActions({ elasticEmailConf, setElasticEmailC
 
     <div className="pos-rel d-flx w-8">
       {/* <TableCheckBox checked={elasticEmailConf.actions?.sendActivation || false} onChange={(e) => actionHandler(e, 'sendActivation')} className="wdt-200 mt-4 mr-2" value="sendActivation" title={__('Send Activation Email')} subTitle={__('Add Send Activation Email')} /> */}
-      <TableCheckBox checked={elasticEmailConf?.actions?.status || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status')} subTitle={__('Add Status to contact')} />
+      <TableCheckBox
+        checked={elasticEmailConf?.actions?.status || false}
+        onChange={(e) => actionHandler(e, 'status')}
+        className="wdt-200 mt-4 mr-2"
+        value="status"
+        title={__('Status')}
+        subTitle={__('Add Status to contact')}
+      />
 
       <ConfirmModal
         className="custom-conf-mdl"
@@ -87,7 +95,6 @@ export default function ElasticEmailActions({ elasticEmailConf, setElasticEmailC
             </div>
           )}
       </ConfirmModal>
-
     </div>
   )
 }

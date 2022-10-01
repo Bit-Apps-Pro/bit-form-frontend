@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
+import ut from '../../../styles/2.utilities'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
+import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
 
@@ -61,13 +63,32 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         title={tutorialLinks.encharge.title}
         youTubeLink={tutorialLinks.encharge.link}
       />
-      <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      <div
+        className="btcd-stp-page"
+        style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}
+      >
         <div className="mt-3"><b>{__('Integration Name:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <input
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="name"
+          value={enchargeConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+          disabled={isInfo}
+        />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
         <div className="mt-3"><b>{__('API Key:')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('API key')} disabled={isInfo} />
+        <input
+          className="btcd-paper-inp w-6 mt-1"
+          onChange={handleInput}
+          name="api_key"
+          value={enchargeConf.api_key}
+          type="text"
+          placeholder={__('API key')}
+          disabled={isInfo}
+        />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         <small className="d-blk mt-5">
           {__('To get API , Please Visit')}
@@ -91,15 +112,23 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         )}
         {!isInfo && (
           <>
-            <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
+            <Btn
+              onClick={handleAuthorize}
+              className={css(ut.mt3)}
+              disabled={isAuthorized}
+            >
               {isAuthorized ? __('Authorized ✔') : __('Authorize')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-            </button>
+            </Btn>
             <br />
-            <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
+            <Btn
+              onClick={() => nextPage(2)}
+              className={css(ut.ftRight)}
+              disabled={!isAuthorized}
+            >
               {__('Next')}
               <BackIcn className="ml-1 rev-icn" />
-            </button>
+            </Btn>
           </>
         )}
       </div>

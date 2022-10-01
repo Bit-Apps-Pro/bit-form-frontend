@@ -320,10 +320,10 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
             <Grow open={controller === 'classes'}>
               <div className={css(ut.m10)}>
-                <label>Add Custom Class Name</label>
+                <label className={css({ fs: 14 })}>Custom Class Name</label>
                 <AutoResizeInput
                   ariaLabel="Custom Class Name"
-                  placeholder="Class1 Class2"
+                  placeholder="e.g. class1 class2 class3"
                   value={customClsName?.[element] || ''}
                   changeAction={customClsNamHandler}
                   rows="3"
@@ -331,19 +331,21 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                 />
               </div>
               <div className={css(ut.m10)}>
-                <span>Add Custom Attributes</span>
-                <div className={css(cls.customAttrContainer)}>
-                  <div className={css({ w: '40%' })}>
-                    <span>Key</span>
-                  </div>
-                  <div className={css({ w: '40%' })}>
-                    <span>Value</span>
+                <span className={css({ fs: 14 })}>Custom Attributes</span>
+                <div className={css({ w: '80%', ml: 18 })}>
+                  <div className={css(cls.customAttrContainer)}>
+                    <div className={css({ w: '50%' })}>
+                      <span className={css({ fs: 13 })}>Key</span>
+                    </div>
+                    <div className={css({ w: '50%' })}>
+                      <span className={css({ fs: 13 })}>Value</span>
+                    </div>
                   </div>
                 </div>
                 {fields[fieldKey]?.customAttributes?.[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
                   <div
                     key={`custon-attribute-${indx + 1}`}
-                    className={css(cls.customAttrItem, ut.mx10, ut.mt1)}
+                    className={css(cls.customAttrItem, ut.mx10)}
                   >
                     <div className={css({ w: '40%' })}>
                       <input
@@ -381,23 +383,20 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                     </button>
                   </div>
                 ))}
-                <div className={css({ flx: 'center' })}>
-                  <button
-                    className={css(cls.addBtn, cls.addBtnHover)}
-                    type="button"
-                    aria-label="Add Custom Attribute"
-                    onClick={addCustomAttribute}
-                    data-testid={`${fieldKey}-${element}-attbut-add`}
-                  >
-                    <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
-                  </button>
-                </div>
+
+                <button
+                  className={css(cls.addBtn, cls.position, cls.addBtnHover)}
+                  type="button"
+                  aria-label="Add Custom Attribute"
+                  onClick={addCustomAttribute}
+                  data-testid={`${fieldKey}-${element}-attbut-add`}
+                >
+                  <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
+                </button>
               </div>
             </Grow>
           </>
         )}
-
-        {/* {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)} */}
       </div>
     </div>
   )
@@ -455,9 +454,14 @@ const cls = {
     bd: 'var(--b-23-95)',
     fw: 500,
   },
-  customAttrContainer: { flx: 'center-between', mx: 15, mt: 5 },
+  customAttrContainer: { flx: 'center-between', mt: 5, ta: 'center' },
   customAttrItem: { flx: 'center' },
   pair: { fs: 20, mt: 5, mx: 5 },
+  position: {
+    pn: 'absolute',
+    bottom: -'20px',
+    left: '42%',
+  },
   addBtn: {
     se: 25,
     b: 'none',

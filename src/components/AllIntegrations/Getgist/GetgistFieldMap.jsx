@@ -48,19 +48,24 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
   const requiredFlds = getgistConf?.gistFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = getgistConf?.gistFields.filter(fld => fld.required === false) || []
   return (
-    <div
-      className="flx mt-2 mr-1"
-    >
+    <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-          <option value="">{__('Select Field')}</option>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i)}
+          defaultValue="0"
+        >
+          <option disabled selected value="0">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {
-              formFields.map(f => f.type !== 'file' && <option key={`ff-getgist-${f.key}`} value={f.key}>{f.name}</option>)
+              formFields.map(f => f.type !== 'file' && (
+                <option key={`ff-getgist-${f.key}`} value={f.key}>{f.name}</option>
+              ))
             }
           </optgroup>
           <option value="custom">{__('Custom...')}</option>
-
           <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
             {isPro && SmartTagField?.map(f => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
@@ -71,10 +76,26 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
 
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+        {field.formField === 'custom' && (
+          <MtInput
+            onChange={e => handleCustomValue(e, i)}
+            label={__('Custom Value')}
+            className="mr-2"
+            type="text"
+            value={field.customValue}
+            placeholder={__('Custom Value')}
+          />
+        )}
 
-        <select className="btcd-paper-inp" disabled={i < requiredFlds.length} name="getgistFormField" value={i < requiredFlds.length ? (requiredFlds[i]?.key || '') : (field.getgistFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, getgistConf, setGetgistConf)}>
-          <option value="">{__('Select Field')}</option>
+        <select
+          className="btcd-paper-inp"
+          disabled={i < requiredFlds.length}
+          name="getgistFormField"
+          value={i < requiredFlds.length ? (requiredFlds[i]?.key || '') : (field.getgistFormField || '')}
+          onChange={(ev) => handleFieldMapping(ev, i, getgistConf, setGetgistConf)}
+          defaultValue="0"
+        >
+          <option disabled value="0">{__('Select Field')}</option>
           {
             i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -89,7 +110,6 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
             )
           }
         </select>
-
       </div>
       {
         i >= requiredFlds?.length && (
@@ -101,7 +121,12 @@ export default function GetgistFieldMap({ i, formFields, field, getgistConf, set
             >
               +
             </button>
-            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>

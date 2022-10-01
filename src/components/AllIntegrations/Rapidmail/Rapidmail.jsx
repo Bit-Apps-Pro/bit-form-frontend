@@ -8,6 +8,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import RapidmailAuthorization from './RapidmailAuthorization'
 import { checkMappedFields, handleInput } from './RapidmailCommonFunc'
 import RapidmailIntegLayout from './RapidmailIntegLayout'
@@ -55,7 +56,6 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
   }
   const nextPage = (pageNo) => {
     if (!checkMappedFields(rapidmailConf)) {
-      // setSnackbar({ show: true, msg: __('Please map mandatory fields') })
       toast.error('Please map mandatory fields')
       return
     }
@@ -93,7 +93,7 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        <button
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={!rapidmailConf?.recipient_id}
           className="btn f-right btcd-btn-lg green sh-sm flx"
@@ -103,7 +103,12 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
+
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
+          disabled={!rapidmailConf?.recipient_id}
+        />
       </div>
 
       {/* STEP 3 */}

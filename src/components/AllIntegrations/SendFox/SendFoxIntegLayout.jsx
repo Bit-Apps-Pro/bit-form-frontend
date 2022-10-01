@@ -23,7 +23,12 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
       <br />
       <br />
       <b className="wdt-200 d-in-b">{__('Actions:')}</b>
-      <select onChange={handleInput} name="mainAction" value={sendFoxConf.mainAction} className="btcd-paper-inp w-5">
+      <select
+        onChange={handleInput}
+        name="mainAction"
+        value={sendFoxConf.mainAction}
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions')}</option>
         {
           sendFoxConf.allActions && sendFoxConf.allActions.map(({ key, label }) => (
@@ -82,7 +87,15 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
               onChange={val => onListHandler(val)}
               customValue
             />
-            <button onClick={() => fetchAllList(sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh SendFox List')}'`, height: '35px' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => fetchAllList(sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh SendFox List')}'`, height: '35px' }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
           <br />
 
@@ -104,15 +117,23 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
               setSnackbar={setSnackbar}
             />
           ))}
-          <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sendFoxConf.field_map.length, sendFoxConf, setSendFoxConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+          <div
+            className="txt-center  mt-2"
+            style={{ marginRight: 85 }}
+          >
+            <button
+              onClick={() => addFieldMap(sendFoxConf.field_map.length, sendFoxConf, setSendFoxConf, false)}
+              className="icn-btn sh-sm"
+              type="button"
+            >
+              +
+            </button>
+          </div>
         </>
       )}
 
-      {/* unsubscribe */}
-
       {sendFoxConf.mainAction === '3' && (
         <>
-
           <div className="mt-5"><b className="wdt-100">{__('Field Map')}</b></div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
@@ -133,9 +154,7 @@ export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxCon
           ))}
         </>
       )}
-
       <br />
-
     </>
   )
 }

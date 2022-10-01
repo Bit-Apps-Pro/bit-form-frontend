@@ -8,7 +8,12 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('List:')}</b>
-      <select onChange={event => handleInput(event)} name="list" value={campaignsConf.list} className="btcd-paper-inp w-7">
+      <select
+        onChange={event => handleInput(event)}
+        name="list"
+        value={campaignsConf.list}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select List')}</option>
         {
           campaignsConf?.default?.lists && Object.values(campaignsConf.default.lists).map(listApiName => (
@@ -18,7 +23,15 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
           ))
         }
       </select>
-      <button onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Campaigns Lists')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh Campaigns Lists')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       {isLoading && (
@@ -36,7 +49,15 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
         <>
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields')}</b>
-            <button onClick={() => refreshContactFields(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Campaigns Contact Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => refreshContactFields(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Campaigns Contact Fields')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr mt-1" />
           {campaignsConf.default?.fields?.[campaignsConf.list]
@@ -57,7 +78,18 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
                     setCampaignsConf={setCampaignsConf}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(campaignsConf.field_map.length, campaignsConf, setCampaignsConf)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(campaignsConf.field_map.length, campaignsConf, setCampaignsConf)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
               </>
             )}
         </>

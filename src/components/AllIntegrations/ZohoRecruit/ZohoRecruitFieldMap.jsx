@@ -25,11 +25,14 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
       className="flx mt-2 mr-1"
     >
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}>
-
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
-
             {
               uploadFields ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>) : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
             }
@@ -51,7 +54,13 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
 
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, recruitConf, setRecruitConf, tab)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}>
+        <select
+          className="btcd-paper-inp"
+          disabled={!isNotRequired}
+          name="zohoFormField"
+          value={field.zohoFormField || ''}
+          onChange={(ev) => handleFieldMapping(ev, i, recruitConf, setRecruitConf, uploadFields, tab)}
+        >
           <option value="">{__('Select Field')}</option>
           {
             uploadFields
@@ -95,7 +104,12 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
       </button>
       {
         isNotRequired && (
-          <button onClick={() => delFieldMap(i, recruitConf, setRecruitConf, uploadFields, tab)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <button
+            onClick={() => delFieldMap(i, recruitConf, setRecruitConf, uploadFields, tab)}
+            className="icn-btn sh-sm ml-1"
+            type="button"
+            aria-label="btn"
+          >
             <TrashIcn />
           </button>
         )

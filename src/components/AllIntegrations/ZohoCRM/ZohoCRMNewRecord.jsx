@@ -32,7 +32,12 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
       <br />
       <br />
       <b className="wdt-100 d-in-b">{__('Layout:')}</b>
-      <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
+      <select
+        onChange={handleInput}
+        name="layout"
+        value={crmConf.layout}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Layout')}</option>
         {
           crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
@@ -42,7 +47,15 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
           ))
         }
       </select>
-      <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Layouts')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh CRM Layouts')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
 
@@ -68,7 +81,18 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.field_map.length, crmConf, setCrmConf, false, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(crmConf.field_map.length, crmConf, setCrmConf, false, tab)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
@@ -106,7 +130,18 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                     setSnackbar={setSnackbar}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.upload_field_map.length, crmConf, setCrmConf, true, tab)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(crmConf.upload_field_map.length, crmConf, setCrmConf, true, tab)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
                 <br />
                 <br />
               </div>

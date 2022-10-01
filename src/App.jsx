@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
 import logo from '../logo.svg'
-import Loader from './components/Loaders/Loader'
 import BuilderLoader from './components/Loaders/BuilderLoader'
-import { __ } from './Utils/i18nwrap'
+import Loader from './components/Loaders/Loader'
 import AllForms from './pages/AllForms'
+import { __ } from './Utils/i18nwrap'
 
 const loaderStyle = { height: '90vh' }
 const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
@@ -56,7 +56,8 @@ export default function App() {
                 </NavLink>
 
                 <NavLink
-                  to="/app-settings"
+                  to="/app-settings/recaptcha"
+                  // to="/app-settings"
                   className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                 >
                   {__('App Settings')}

@@ -10,6 +10,7 @@ import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import SaveIntergrationBrn from '../SaveIntergrationBrn'
 import FieldMap from './FieldMap'
 import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
 
@@ -108,7 +109,14 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         youTubeLink={tutorialLinks.metaBox.link}
       />
       <div className="mt-3"><b>{__('Integration Name')}</b></div>
-      <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...')} />
+      <input
+        className="btcd-paper-inp w-5 mt-1"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        name="name"
+        value={data.name}
+        type="text"
+        placeholder={__('Integration Name...')}
+      />
 
       <div className="mt-3 flx">
         <b>{__('Post Type')}</b>
@@ -120,13 +128,24 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
+        <select
+          name="post_type"
+          onChange={(e) => getCustomFields(e.target.name, e.target.value)}
+          className="btcd-paper-inp w-5 mt-1"
+        >
           <option disabled selected>Select Post Type</option>
           {postTypes.map((postType, i) => (
             <option key={`pt-${i * 7}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types')}'` }} type="button">&#x21BB;</button>
+        <button
+          onClick={() => refreshPostTypes(postTypes, setPostTypes)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Post Types')}'` }}
+          type="button"
+        >
+          &#x21BB;
+        </button>
       </div>
 
       <div className="mt-3">
@@ -138,7 +157,11 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </Cooltip>
       </div>
-      <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+      <select
+        name="post_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-2"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
@@ -157,7 +180,11 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         </Cooltip>
       </div>
       <div>
-        <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+        <select
+          name="post_author"
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
+          className="btcd-paper-inp w-5 mt-2"
+        >
           <option disabled selected>{__('Select Author')}</option>
           <option value="logged_in_user">Logged In User</option>
           {users.map((user, i) => (
@@ -170,7 +197,11 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         <b>{__('Comment Status')}</b>
 
       </div>
-      <select name="comment_status" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
+      <select
+        name="comment_status"
+        onChange={(e) => handleInput(e.target.name, e.target.value)}
+        className="btcd-paper-inp w-5 mt-2"
+      >
         <option disabled selected>{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
@@ -196,7 +227,18 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
           customFields={postFields}
         />
       ))}
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      <div
+        className="txt-center  mt-2"
+        style={{ marginRight: 85 }}
+      >
+        <button
+          onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
+      </div>
       <div>
         <p className="p-1 f-m">
           <strong>Note</strong>
@@ -209,7 +251,14 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         <div>
           <div className="mt-3 mb-1">
             <b>{__('Metabox Fields Mapping')}</b>
-            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -234,15 +283,32 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
             />
           ))
         }
-
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('metabox_map', data.metabox_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('metabox_map', data.metabox_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <div>
         <div>
           <div className="mt-3 mb-1">
             <b>{__('Metabox File Upload Fields Map')}</b>
-            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }} type="button">&#x21BB;</button>
+            <button
+              onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh MetaBox List')}'` }}
+              type="button"
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -268,18 +334,20 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('metabox_file_map', data.metabox_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div
+          className="txt-center  mt-2"
+          style={{ marginRight: 85 }}
+        >
+          <button
+            onClick={() => addFieldMap('metabox_file_map', data.metabox_file_map.length, data, setData)}
+            className="icn-btn sh-sm"
+            type="button"
+          >
+            +
+          </button>
+        </div>
       </div>
-      <button
-        id="secondary-update-btn"
-        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
-        type="button"
-        onClick={() => saveConfig()}
-      >
-        {__('Save')}
-        {' '}
-      </button>
-
+      <SaveIntergrationBrn onClick={() => saveConfig()} />
     </div>
   )
 }

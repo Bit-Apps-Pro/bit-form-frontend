@@ -98,6 +98,7 @@ const customProperties = {
   ws: $ => ({ whiteSpace: $ }),
   wb: $ => ({ wordBreak: $ }),
   oy: $ => ({ opacity: $ }),
+  ft: $ => ({ float: $ }),
 
   // width and height same
   se: ($) => ({

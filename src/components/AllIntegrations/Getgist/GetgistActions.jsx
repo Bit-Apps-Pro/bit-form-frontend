@@ -2,18 +2,16 @@
 
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { getAllTags } from './GetgistCommonFunc'
 
-export default function GetgistActions({ getgistConf, setGetgistConf, formFields }) {
-  console.log('test')
+export default function GetgistActions({ getgistConf, setGetgistConf }) {
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-  const [snack, setSnackbar] = useState({ show: false })
   const actionHandler = (e, type) => {
     const newConf = { ...getgistConf }
     if (e.target.checked) {
@@ -35,13 +33,18 @@ export default function GetgistActions({ getgistConf, setGetgistConf, formFields
     const newConf = { ...getgistConf }
     newConf[type] = val
     setGetgistConf({ ...newConf })
-    console.log('newConf', newConf)
   }
 
   return (
-
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={getgistConf?.actions?.tags || false} onChange={(e) => actionHandler(e, 'tags')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Tags')} subTitle={__('Add tags to contact')} />
+      <TableCheckBox
+        checked={getgistConf?.actions?.tags || false}
+        onChange={(e) => actionHandler(e, 'tags')}
+        className="wdt-200 mt-4 mr-2"
+        value="tags"
+        title={__('Tags')}
+        subTitle={__('Add tags to contact')}
+      />
 
       <ConfirmModal
         className="custom-conf-mdl"
@@ -72,14 +75,19 @@ export default function GetgistActions({ getgistConf, setGetgistConf, formFields
                 defaultValue={getgistConf?.tags}
                 options={getgistConf.default?.tags?.map(list => ({ label: list.tagName, value: list.tagName.toString() }))}
                 onChange={val => setChanges(val, 'tags')}
-              // singleSelect
               />
-              <button onClick={() => getAllTags(getgistConf, setGetgistConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => getAllTags(getgistConf, setGetgistConf, setIsLoading)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `${__('Refresh Tags')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           )}
-
       </ConfirmModal>
-
     </div>
   )
 }

@@ -7,7 +7,7 @@ import TinyMCE from '../../Utilities/TinyMCE'
 import TelegramActions from './TelegramActions'
 import { refreshGetUpdates } from './TelegramCommonFunc'
 
-export default function TelegramIntegLayout({ formID, formFields, telegramConf, setTelegramConf, isLoading, setisLoading, setSnackbar }) {
+export default function TelegramIntegLayout({ formFields, telegramConf, setTelegramConf, isLoading, setisLoading, setSnackbar }) {
   const handleInput = e => {
     const newConf = { ...telegramConf }
     newConf[e.target.name] = e.target.value
@@ -33,7 +33,12 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
       <br />
       <div className="flx">
         <b className="wdt-150 d-in-b">{__('Chat List: ')}</b>
-        <select onChange={handleInput} name="chat_id" value={telegramConf.chat_id} className="btcd-paper-inp w-5">
+        <select
+          onChange={handleInput}
+          name="chat_id"
+          value={telegramConf.chat_id}
+          className="btcd-paper-inp w-5"
+        >
           <option value="">{__('Select Chat List')}</option>
           {
             telegramConf?.default?.telegramChatLists && Object.keys(telegramConf.default.telegramChatLists).map(chatListname => (
@@ -43,7 +48,15 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
             ))
           }
         </select>
-        <button onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Telegram List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Telegram List')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       {isLoading && (
         <Loader style={{
@@ -60,8 +73,22 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
           <>
             <div className="flx mt-4">
               <b className="wdt-150 d-in-b">{__('Parse Mode: ')}</b>
-              <CheckBox radio onChange={e => changeActionRun(e)} name="HTML" title={<small className="txt-dp">{__('HTML')}</small>} checked={telegramConf.parse_mode === 'HTML'} value="HTML" />
-              <CheckBox radio onChange={e => changeActionRun(e)} name="MarkdownV2" title={<small className="txt-dp">{__('Markdown v2')}</small>} checked={telegramConf.parse_mode === 'MarkdownV2'} value="MarkdownV2" />
+              <CheckBox
+                radio
+                onChange={e => changeActionRun(e)}
+                name="HTML"
+                title={<small className="txt-dp">{__('HTML')}</small>}
+                checked={telegramConf.parse_mode === 'HTML'}
+                value="HTML"
+              />
+              <CheckBox
+                radio
+                onChange={e => changeActionRun(e)}
+                name="MarkdownV2"
+                title={<small className="txt-dp">{__('Markdown v2')}</small>}
+                checked={telegramConf.parse_mode === 'MarkdownV2'}
+                value="MarkdownV2"
+              />
             </div>
             <div className="flx mt-4">
               <b className="wdt-150 d-in-b">{__('Messages: ')}</b>
@@ -75,7 +102,13 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
                 />
               ) : (
                 <>
-                  <textarea className="w-7" onChange={handleInput} name="body" rows="5" value={telegramConf.body} />
+                  <textarea
+                    className="w-7"
+                    onChange={handleInput}
+                    name="body"
+                    rows="5"
+                    value={telegramConf.body}
+                  />
                   <MultiSelect
                     options={formFields.filter(f => (f.type !== 'file-up')).map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                     className="btcd-paper-drpdwn wdt-200 ml-2"

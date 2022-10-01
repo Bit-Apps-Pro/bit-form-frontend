@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { __ } from '../../../Utils/i18nwrap'
-
+// maybe unused file
 export const addFieldMap = (i, confTmp, setConf) => {
   const newConf = { ...confTmp }
   newConf.field_map.splice(i, 0, {})

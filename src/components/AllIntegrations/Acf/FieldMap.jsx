@@ -37,7 +37,12 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
   return (
     <div className="flx mt-2 mr-1">
       <div className="flx integ-fld-wrp">
-        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}>
+        <select
+          className="btcd-paper-inp mr-2"
+          name="formField"
+          value={field.formField || ''}
+          onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}
+        >
           <option value="">{__('Select Field')}</option>
           <optgroup label="Form Fields">
             {type === 'post' ? (
@@ -66,8 +71,15 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
         </select>
         {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
 
-        <select className="btcd-paper-inp" name={fldName} value={field[fldName] || ''} onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)} disabled={isRequired}>
-          <option value="">{__('Select Field')}</option>
+        <select
+          className="btcd-paper-inp"
+          name={fldName}
+          value={field[fldName] || ''}
+          onChange={(ev) => handleFieldMapping(propName, ev, i, dataConf, setDataConf)}
+          disabled={isRequired}
+          defaultValue="0"
+        >
+          <option value="0">{__('Select Field')}</option>
           {
             customFields?.map(header => (
               <option key={`${header.key}-1`} value={header.key}>
@@ -76,7 +88,6 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
             ))
           }
         </select>
-
       </div>
 
       {!isRequired
@@ -89,12 +100,16 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
             >
               +
             </button>
-            <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+            <button
+              onClick={() => delFieldMap(propName, i, dataConf, setDataConf)}
+              className="icn-btn sh-sm ml-1"
+              type="button"
+              aria-label="btn"
+            >
               <TrashIcn />
             </button>
           </>
         )}
-
     </div>
   )
 }

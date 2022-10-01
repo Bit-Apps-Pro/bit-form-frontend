@@ -31,7 +31,14 @@ function EditElasticEmail({ formFields, setIntegration, integrations, allIntegUR
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, elasticEmailConf, setElasticEmailConf)} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={e => handleInput(e, elasticEmailConf, setElasticEmailConf)}
+          name="name"
+          value={elasticEmailConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+        />
       </div>
       <br />
 

@@ -41,7 +41,13 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('List:')}</b>
-      <select value={activeCampaingConf?.listId} name="listId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
+      <select
+        value={activeCampaingConf?.listId}
+        name="listId"
+        id=""
+        className="btcd-paper-inp w-5"
+        onChange={handleInput}
+      >
         <option value="">{__('Select List')}</option>
         {
           activeCampaingConf?.default?.activeCampaignLists && Object.keys(activeCampaingConf.default.activeCampaignLists).map(listname => (
@@ -51,7 +57,16 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           ))
         }
       </select>
-      <button onClick={() => refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Activecapmaign list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh Activecapmaign list"' }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+
+      </button>
       <br />
       <br />
       <div className="d-flx">
@@ -62,7 +77,16 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           options={activeCampaingConf?.default?.activeCampaignTags && Object.keys(activeCampaingConf.default.activeCampaignTags).map(tag => ({ label: activeCampaingConf.default.activeCampaignTags[tag].tagName, value: activeCampaingConf.default.activeCampaignTags[tag].tagId }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+
+        </button>
       </div>
       <br />
       {isLoading && (
@@ -78,7 +102,15 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
 
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields')}</b>
-        <button onClick={() => refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Field')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button
+          onClick={() => refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Field')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       {
         (activeCampaingConf?.listId || activeCampaingConf?.default?.fields) && (
@@ -99,7 +131,18 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
                 setActiveCampaingConf={setActiveCampaingConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(activeCampaingConf.field_map.length, activeCampaingConf, setActiveCampaingConf)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div
+              className="txt-center  mt-2"
+              style={{ marginRight: 85 }}
+            >
+              <button
+                onClick={() => addFieldMap(activeCampaingConf.field_map.length, activeCampaingConf, setActiveCampaingConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
             <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
@@ -111,7 +154,6 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           </>
         )
       }
-
     </>
   )
 }

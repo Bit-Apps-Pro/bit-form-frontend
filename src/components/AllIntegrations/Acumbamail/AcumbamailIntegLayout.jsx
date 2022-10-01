@@ -9,7 +9,12 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
     <>
       <br />
       <b className="wdt-200 d-in-b">{__('Actions:')}</b>
-      <select onChange={handleInput} name="mainAction" value={acumbamailConf.mainAction} className="btcd-paper-inp w-5">
+      <select
+        onChange={handleInput}
+        name="mainAction"
+        value={acumbamailConf.mainAction}
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select Actions')}</option>
         {
           acumbamailConf.allActions && acumbamailConf.allActions.map(({ key, label }) => (
@@ -22,7 +27,12 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
       <br />
       <br />
       <b className="wdt-200 d-in-b">{__('All List:')}</b>
-      <select onChange={handleInput} name="listId" value={acumbamailConf.listId} className="btcd-paper-inp w-5">
+      <select
+        onChange={handleInput}
+        name="listId"
+        value={acumbamailConf.listId}
+        className="btcd-paper-inp w-5"
+      >
         <option value="">{__('Select List')}</option>
         {
           acumbamailConf?.default?.allLists && Object.entries(acumbamailConf.default.allLists).map((item) => (
@@ -32,7 +42,15 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
           ))
         }
       </select>
-      <button onClick={() => fetchAllList(acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch Subscriber List')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => fetchAllList(acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Fetch Subscriber List')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       {isLoading && (
         <Loader style={{
@@ -46,8 +64,15 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
       )}
       <div className="mt-5">
         <b className="wdt-100">{__('Field Map')}</b>
-        <button onClick={() => refreshFields(null, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-
+        <button
+          onClick={() => refreshFields(null, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Acumbamail Fields')}'` }}
+          type="button"
+          disabled={isLoading}
+        >
+          &#x21BB;
+        </button>
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
@@ -57,7 +82,6 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
       {acumbamailConf.default?.allFields
         && (
           <>
-
             {acumbamailConf.field_map.map((itm, i) => (
               <AcumbamailFieldMap
                 key={`acumba-m-${i + 9}`}
@@ -68,15 +92,20 @@ export default function AcumbamailIntegLayout({ formFields, handleInput, acumbam
                 setAcumbamailConf={setAcumbamailConf}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(acumbamailConf.field_map.length, acumbamailConf, setAcumbamailConf)} className="icn-btn sh-sm" type="button">+</button></div>
-
+            <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
+              <button
+                onClick={() => addFieldMap(acumbamailConf.field_map.length, acumbamailConf, setAcumbamailConf)}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
             <br />
             <br />
           </>
         )}
-
       <br />
-
     </>
   )
 }

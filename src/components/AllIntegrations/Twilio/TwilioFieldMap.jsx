@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
-import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTwilioConf }) {
   const bits = useRecoilValue($bits)
@@ -15,7 +15,12 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
     >
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}>
+          <select
+            className="btcd-paper-inp mr-2"
+            name="formField"
+            value={field.formField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}
+          >
             <option value="">{__('Select Field')}</option>
             <optgroup label="Form Fields">
               {
@@ -35,12 +40,26 @@ export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTw
                 </option>
               ))}
             </optgroup>
-
           </select>
 
-          {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, twilioConf, setTwilioConf)} label={__('Custom Value')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value')} />}
+          {field.formField === 'custom' && (
+            <MtInput
+              onChange={e => handleCustomValue(e, i, twilioConf, setTwilioConf)}
+              label={__('Custom Value')}
+              className="mr-2"
+              type="text"
+              value={field.customValue}
+              placeholder={__('Custom Value')}
+            />
+          )}
 
-          <select className="btcd-paper-inp" disabled name="twilioField" value={field.twilioField} onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}>
+          <select
+            className="btcd-paper-inp"
+            disabled
+            name="twilioField"
+            value={field.twilioField}
+            onChange={(ev) => handleFieldMapping(ev, i, twilioConf, setTwilioConf)}
+          >
             <option value="">{__('Select Field')}</option>
             {
               twilioConf?.twilioFields.map(({ key, label }) => (

@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -16,6 +20,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
 
   const [dropboxConf, setDropboxConf] = useState({
     name: 'Dropbox Integration',
@@ -58,7 +63,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
         style={{
           ...(step === 2 && {
             width: 900,
-            height: `${100}%`,
+            height: `${150}%`,
             overintegrations: 'visible',
           }),
         }}
@@ -72,7 +77,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
           setIsLoading={setIsLoading}
         />
 
-        <button
+        {/* <button
           onClick={() => setStep(3)}
           disabled={dropboxConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
@@ -82,7 +87,16 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
           {' '}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+        </button> */}
+        <Btn
+          varient="success"
+          onClick={() => setStep(3)}
+          disabled={dropboxConf.field_map.length < 1}
+          className={css(ut.ftRight)}
+        >
+          {__('Next')}
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
       </div>
 
       {/* STEP 3 */}

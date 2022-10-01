@@ -1,7 +1,12 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import ut from '../../../styles/2.utilities'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -13,6 +18,7 @@ import AcumbamailIntegLayout from './AcumbamailIntegLayout'
 function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
+  const { css } = useFela()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -76,8 +82,10 @@ function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}
+      >
         <AcumbamailIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, acumbamailConf, setAcumbamailConf, setIsLoading, setSnackbar, formID)}
@@ -87,18 +95,15 @@ function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
-
-        <button
+        <Btn
+          varient="success"
           onClick={() => nextPage(3)}
           disabled={!acumbamailConf.mainAction || !checkMappedFields(acumbamailConf)}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
-          type="button"
+          className={css(ut.ftRight)}
         >
           {__('Next')}
-          {' '}
-          &nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree

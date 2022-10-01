@@ -6,6 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
+import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -77,7 +78,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
-        <button
+        {/* <button
           onClick={() => nextPage(3)}
           disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
           className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
@@ -87,8 +88,16 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           {' '}
           &nbsp;
           <BackIcn className="ml-1 rev-icn" />
-        </button>
-
+        </button> */}
+        <Btn
+          varient="success"
+          onClick={() => nextPage(3)}
+          disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
+        >
+          {__('Next')}
+          &nbsp;
+          <BackIcn className="ml-1 rev-icn" />
+        </Btn>
       </div>
 
       {/* STEP 3 */}

@@ -9,7 +9,14 @@ export default function DropboxIntegLayout({ formID, formFields, dropboxConf, se
     <>
       <div className="mt-5">
         <b className="wdt-100">{__('Field Map')}</b>
-        <button onClick={() => getAllDropboxFolders(formID, dropboxConf, setDropboxConf)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Dropbox Folders')}'` }} type="button">&#x21BB;</button>
+        <button
+          onClick={() => getAllDropboxFolders(formID, dropboxConf, setDropboxConf)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Fetch All Dropbox Folders')}'` }}
+          type="button"
+        >
+          &#x21BB;
+        </button>
       </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-1">
@@ -28,11 +35,19 @@ export default function DropboxIntegLayout({ formID, formFields, dropboxConf, se
         />
       ))}
       <div className="txt-center  mt-2" style={{ marginRight: 85 }}>
-        <button onClick={() => addFieldMap(dropboxConf.field_map.length, dropboxConf, setDropboxConf, false)} className="icn-btn sh-sm" type="button">+</button>
+        <button
+          onClick={() => addFieldMap(dropboxConf.field_map.length, dropboxConf, setDropboxConf, false)}
+          className="icn-btn sh-sm"
+          type="button"
+        >
+          +
+        </button>
       </div>
       <br />
       <br />
-      <div className="mt-4"><b className="wdt-100">{__('Actions')}</b></div>
+      <div className="mt-4">
+        <b className="wdt-100">{__('Actions')}</b>
+      </div>
       <div className="btcd-hr mt-1" />
       <DropboxActions
         dropboxConf={dropboxConf}

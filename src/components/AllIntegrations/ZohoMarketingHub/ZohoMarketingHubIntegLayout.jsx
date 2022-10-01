@@ -9,7 +9,12 @@ export default function ZohoMarketingHubIntegLayout({ formID, formFields, handle
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('List:')}</b>
-      <select onChange={event => handleInput(event)} name="list" value={marketingHubConf.list} className="btcd-paper-inp w-7">
+      <select
+        onChange={event => handleInput(event)}
+        name="list"
+        value={marketingHubConf.list}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select List')}</option>
         {
           marketingHubConf?.default?.lists && Object.values(marketingHubConf.default.lists).map(listApiName => (
@@ -37,7 +42,15 @@ export default function ZohoMarketingHubIntegLayout({ formID, formFields, handle
         <>
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields')}</b>
-            <button onClick={() => refreshContactFields(formID, marketingHubConf, setMarketingHubConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MarketingHub Contact Fields')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button
+              onClick={() => refreshContactFields(formID, marketingHubConf, setMarketingHubConf, setisLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh MarketingHub Contact Fields')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr mt-1" />
           {marketingHubConf.default?.fields?.[marketingHubConf.list]
@@ -58,7 +71,18 @@ export default function ZohoMarketingHubIntegLayout({ formID, formFields, handle
                     setMarketingHubConf={setMarketingHubConf}
                   />
                 ))}
-                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(marketingHubConf.field_map.length, marketingHubConf, setMarketingHubConf)} className="icn-btn sh-sm" type="button">+</button></div>
+                <div
+                  className="txt-center  mt-2"
+                  style={{ marginRight: 85 }}
+                >
+                  <button
+                    onClick={() => addFieldMap(marketingHubConf.field_map.length, marketingHubConf, setMarketingHubConf)}
+                    className="icn-btn sh-sm"
+                    type="button"
+                  >
+                    +
+                  </button>
+                </div>
               </>
             )}
         </>

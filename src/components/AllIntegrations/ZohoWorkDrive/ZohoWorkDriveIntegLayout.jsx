@@ -8,7 +8,12 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
     <>
       <br />
       <b className="wdt-100 d-in-b">{__('Team:')}</b>
-      <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar)} name="team" value={workDriveConf.team} className="btcd-paper-inp w-7">
+      <select
+        onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar)}
+        name="team"
+        value={workDriveConf.team}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Team')}</option>
         {
           workDriveConf?.default?.teams && Object.values(workDriveConf.default.teams).map(teamApi => (
@@ -18,11 +23,24 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           ))
         }
       </select>
-      <button onClick={() => refreshTeams(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Teams')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshTeams(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Teams')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       <br />
       <b className="wdt-100 d-in-b">Folder:</b>
-      <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, 0)} name="folder" value={workDriveConf.folderMap[0] || workDriveConf.folder} className="btcd-paper-inp w-7">
+      <select
+        onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, 0)}
+        name="folder"
+        value={workDriveConf.folderMap[0] || workDriveConf.folder}
+        className="btcd-paper-inp w-7"
+      >
         <option value="">{__('Select Folder')}</option>
         {
           workDriveConf?.default?.teamFolders?.[workDriveConf.team] && Object.values(workDriveConf.default.teamFolders[workDriveConf.team]).map(teamFolderApi => (
@@ -32,7 +50,15 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           ))
         }
       </select>
-      <button onClick={() => refreshTeamFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Team Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button
+        onClick={() => refreshTeamFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': `'${__('Refresh WorkDrive Team Folders')}'` }}
+        type="button"
+        disabled={isLoading}
+      >
+        &#x21BB;
+      </button>
       <br />
       {workDriveConf.folderMap.map((folder, i) => (
         <div key={folder}>
@@ -43,7 +69,12 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
               <div className="sub-tree" />
             </div>
             <div className="flx sub-folder w-7">
-              <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, i + 1)} name="folder" value={workDriveConf.folderMap[i + 1] || workDriveConf.folder} className="btcd-paper-inp">
+              <select
+                onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, i + 1)}
+                name="folder"
+                value={workDriveConf.folderMap[i + 1] || workDriveConf.folder}
+                className="btcd-paper-inp"
+              >
                 <option value={workDriveConf.folderMap[i]}>/ root</option>
                 {
                   workDriveConf?.default?.folders?.[folder] && workDriveConf.default.folders[folder].map(folderApi => (
@@ -53,7 +84,15 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
                   ))
                 }
               </select>
-              <button onClick={() => refreshSubFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar, i)} className="d-non icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sub Folders')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button
+                onClick={() => refreshSubFolders(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar, i)}
+                className="d-non icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Sub Folders')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
             </div>
           </div>
         </div>

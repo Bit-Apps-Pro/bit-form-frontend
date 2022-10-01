@@ -1,18 +1,23 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import app from '../../../styles/app.style'
+import Btn from '../../Utilities/Btn'
+import ut from '../../../styles/2.utilities'
 
 export default function AutonamiAuthorization({ formID, autonamiConf, setAutonamiConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
-  const [error, setError] = useState({ integrationName: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isMounted, setIsMounted] = useState(true)
+  const { css } = useFela()
+  const [error, setError] = useState({ integrationName: '' })
   useEffect(() => () => {
     setIsMounted(false)
   }, [])
@@ -47,8 +52,18 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
           title={tutorialLinks.autonami.title}
           youTubeLink={tutorialLinks.autonami.link}
         />
-        <div className="mt-3"><b>{__('Integration Name:')}</b></div>
-        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="name" value={autonamiConf.name} type="text" placeholder={__('Integration Name...')} disabled={isInfo} />
+        <div className="mt-3">
+          <b>{__('Integration Name:', 'bitform')}</b>
+        </div>
+        <input
+          className="btcd-paper-inp w-5 mt-1"
+          onChange={handleInput}
+          name="name"
+          value={autonamiConf.name}
+          type="text"
+          placeholder={__('Integration Name...')}
+          disabled={isInfo}
+        />
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-4" style={{ color: 'red' }}>
@@ -58,15 +73,26 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
             Please! First Install or Active Autonami Pro Plugin
           </div>
         )}
-        <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+        <br />
+        <Btn
+          varient="success"
+          onClick={handleAuthorize}
+          disabled={isAuthorized}
+          className={css(ut.mt3, { ml: 2 })}
+        >
           {isAuthorized ? __('Connected ✔') : __('Connect to Autonami')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-        </button>
+        </Btn>
         <br />
-        <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+        <Btn
+          varient="success"
+          onClick={() => nextPage(2)}
+          className={css(ut.ftRight)}
+          disabled={!isAuthorized}
+        >
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
-        </button>
+        </Btn>
       </div>
     </>
   )
