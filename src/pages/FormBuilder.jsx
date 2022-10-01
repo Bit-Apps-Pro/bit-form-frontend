@@ -116,7 +116,10 @@ const FormBuilder = ({ isLoading }) => {
       isV2Form = false
     }
 
-    if (isV2Form && !isNewForm) {
+    if (!isObjectEmpty(styles)) {
+      setStyleLoading(false)
+    }
+    if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
       const { themeVars, themeColors, style: oldAllStyles } = oldStyles
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
