@@ -1,4 +1,11 @@
 /* eslint-disable no-nested-ternary */
+
+import { resetRecoil } from "recoil-nexus"
+import { $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $reportId, $reports, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows } from "../GlobalStates/GlobalStates"
+import { $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from "../GlobalStates/StylesState"
+import { $darkThemeColors, $lightThemeColors } from "../GlobalStates/ThemeColorsState"
+import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from "../GlobalStates/ThemeVarsState"
+
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
@@ -478,3 +485,53 @@ export const compareBetweenVersions = (ver1, ver2) => {
 }
 
 export const isFirefox = () => navigator.userAgent.includes('Firefox')
+
+export const resetRecoilStates = () => {
+  resetRecoil($additionalSettings)
+  resetRecoil($breakpoint)
+  resetRecoil($breakpointSize)
+  resetRecoil($builderHistory)
+  resetRecoil($builderHelperStates)
+  resetRecoil($builderHookStates)
+  resetRecoil($builderRightPanelScroll)
+  resetRecoil($builderSettings)
+  resetRecoil($confirmations)
+  resetRecoil($colorScheme)
+  resetRecoil($customCodes)
+  resetRecoil($draggingField)
+  resetRecoil($deletedFldKey)
+  resetRecoil($draggableModal)
+  resetRecoil($formId)
+  resetRecoil($formInfo)
+  resetRecoil($fieldLabels)
+  resetRecoil($fields)
+  resetRecoil($flags)
+  resetRecoil($integrations)
+  resetRecoil($isNewThemeStyleLoaded)
+  resetRecoil($layouts)
+  resetRecoil($mailTemplates)
+  resetRecoil($reports)
+  resetRecoil($reportId)
+  resetRecoil($selectedFieldId)
+  resetRecoil($updateBtn)
+  resetRecoil($unsplashMdl)
+  resetRecoil($unsplashImgUrl)
+  resetRecoil($workflows)
+
+  resetRecoil($lightThemeColors)
+  resetRecoil($darkThemeColors)
+
+  resetRecoil($stylesLgLight)
+  resetRecoil($stylesLgDark)
+  resetRecoil($stylesMdLight)
+  resetRecoil($stylesMdDark)
+  resetRecoil($stylesSmLight)
+  resetRecoil($stylesSmDark)
+
+  resetRecoil($themeVarsLgLight)
+  resetRecoil($themeVarsLgDark)
+  resetRecoil($themeVarsMdLight)
+  resetRecoil($themeVarsMdDark)
+  resetRecoil($themeVarsSmLight)
+  resetRecoil($themeVarsSmDark)
+}
