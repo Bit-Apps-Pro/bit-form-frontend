@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import { useNavigate } from 'react-router-dom'
-import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import SaveIntergrationBrn from '../SaveIntergrationBrn'
 import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshAcfFields, refreshPostTypes } from './AcfHelperFunction'
 import FieldMap from './FieldMap'
 
@@ -21,7 +19,6 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const [acfFields, setAcfFields] = useState([])
   const [acfFileFields, setAcfFileFields] = useState([])
-  const { css } = useFela()
 
   const [data, setData] = useState({
     name: 'CPT/Post Creation With ACF',
@@ -350,7 +347,9 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           </button>
         </div>
       </div>
-      <Btn varient="success" shadow onClick={() => saveConfig()}>{__('Save')}</Btn>
+      <SaveIntergrationBrn
+        onClick={() => saveConfig()}
+      />
     </div>
   )
 }
