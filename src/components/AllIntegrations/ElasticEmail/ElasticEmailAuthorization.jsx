@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import ut from '../../../styles/2.utilities'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -109,9 +110,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
 
       {(showAuthMsg && !isAuthorized && !isLoading) && (
         <div className="flx mt-5" style={{ color: 'red' }}>
-          <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-            &times;
-          </span>
+          <CloseIcn size="30" />
           Sorry, API key is invalid
         </div>
       )}

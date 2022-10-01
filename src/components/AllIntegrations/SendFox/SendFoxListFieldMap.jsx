@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
@@ -92,7 +93,7 @@ export default function SendFoxListFieldMap({ i, formFields, field, sendFoxConf,
                 type="button"
                 aria-label="btn"
               >
-                <span className="btcd-icn icn-trash-2" />
+                <TrashIcn size="15" />
               </button>
             </>
           )

@@ -5,6 +5,7 @@ import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from 
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { generateMappedField } from './ElasticEmailCommonFunc'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import TrashIcn from '../../../Icons/TrashIcn'
 
 export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmailConf, setElasticEmailConf }) {
   if (elasticEmailConf?.field_map?.length === 1 && field.elasticEmailField === '') {
@@ -96,6 +97,7 @@ export default function ElasticEmailFieldMap({ i, formFields, field, elasticEmai
                 aria-label="btn"
               >
                 <span className="btcd-icn icn-trash-2" />
+                <TrashIcn size="15" />
               </button>
             </>
           )

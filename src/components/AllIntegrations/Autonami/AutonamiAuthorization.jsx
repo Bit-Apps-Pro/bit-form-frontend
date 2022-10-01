@@ -1,17 +1,17 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
-import TutorialLink from '../../Utilities/TutorialLink'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import app from '../../../styles/app.style'
-import Btn from '../../Utilities/Btn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import ut from '../../../styles/2.utilities'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import Btn from '../../Utilities/Btn'
+import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function AutonamiAuthorization({ formID, autonamiConf, setAutonamiConf, step, nextPage, setSnackbar, isInfo }) {
+export default function AutonamiAuthorization({ autonamiConf, setAutonamiConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -67,9 +67,7 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-4" style={{ color: 'red' }}>
-            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-              &times;
-            </span>
+            <CloseIcn size="30" />
             Please! First Install or Active Autonami Pro Plugin
           </div>
         )}

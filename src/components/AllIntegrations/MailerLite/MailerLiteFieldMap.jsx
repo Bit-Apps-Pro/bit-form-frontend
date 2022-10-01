@@ -5,6 +5,7 @@ import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from 
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { generateMappedField } from './MailerLiteCommonFunc'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import TrashIcn from '../../../Icons/TrashIcn'
 
 export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteConf, setMailerLiteConf }) {
   if (mailerLiteConf?.field_map?.length === 1 && field.mailerLiteFormField === '') {
@@ -99,7 +100,7 @@ export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteCon
                 type="button"
                 aria-label="btn"
               >
-                <span className="btcd-icn icn-trash-2" />
+                <TrashIcn size="15" />
               </button>
             </>
           )
