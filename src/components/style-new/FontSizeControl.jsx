@@ -6,10 +6,10 @@ import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import ResetStyle from './ResetStyle'
-import { getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
 
 export default function FontSizeControl({ stateObjName, propertyPath, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)

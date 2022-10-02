@@ -281,6 +281,10 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         outline: 'none',
       },
 
+      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      },
+
       [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
 
       [`.${fk}-option-list .opt-group-title`]: {

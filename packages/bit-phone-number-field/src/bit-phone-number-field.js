@@ -44,6 +44,7 @@ export default class BitPhoneNumberField {
     searchCountryPlaceholder: 'Search Country',
     noCountryFoundText: 'No Country Found',
     searchClearable: true,
+    defaultCountryKey: '',
     attributes: {},
     classNames: {},
   }
@@ -94,6 +95,7 @@ export default class BitPhoneNumberField {
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
+    this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
     observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
@@ -104,6 +106,8 @@ export default class BitPhoneNumberField {
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
 
     this.#generateOptions()
+
+    if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
     if (this.#config.searchClearable) {
       this.#searchInputElm.style.paddingRight = '25px'
@@ -162,8 +166,8 @@ export default class BitPhoneNumberField {
       if (e.key === 'ArrowDown' || (!e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#select(`.${this.fieldKey}-option:not(.${this.fieldKey}-disabled-opt)`)
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+          focussableEl = this.#select('.option:not(.disabled-opt)')
+        } else if (activeEl.classList.contains('option')) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
           if (nextElm) {
@@ -308,6 +312,10 @@ export default class BitPhoneNumberField {
     }
   }
 
+  #handlePhoneInputBlur() {
+    if (this.value.length > 3) this.#phoneInputElm.value = this.value
+  }
+
   #handlePhoneInput(e) {
     const { value } = e.target
     if (value) {
@@ -438,7 +446,7 @@ export default class BitPhoneNumberField {
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
       height: this.#config.maxHeight,
       rowCount: this.#options.length,
-      rowHeight: 31,
+      rowHeight: 35.6,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]
@@ -572,6 +580,7 @@ export default class BitPhoneNumberField {
   }
 
   setSelectedCountryItem(countryKey) {
+    this.value = ''
     this.#selectedCountryCode = countryKey
     if (!this.#selectedCountryCode) {
       this.#clearSelectedCountry()

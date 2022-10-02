@@ -16,7 +16,7 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import bgImgControlStyle from '../../styles/backgroundControl.style'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import ImageUploadInput from '../CompSettings/StyleCustomize/ChildComp/ImageUploadInput'
@@ -27,7 +27,7 @@ import Tip from '../Utilities/Tip'
 import { hsla2hsva, hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 import SimpleGradientColorPicker from './SimpleGradientColorPicker'
-import { getObjByKey, getValueByObjPath, styleToGradientObj } from './styleHelpers'
+import { assignNestedObj, getObjByKey, getValueByObjPath, styleToGradientObj } from './styleHelpers'
 
 function BackgroundControlMenu({ stateObjName,
   propertyPath,

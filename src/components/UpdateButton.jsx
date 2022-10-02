@@ -56,7 +56,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { formName } = formInfo
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
-  const builderHelperStates = useSetRecoilState($builderHelperStates)
+  const builderHelperStates = useRecoilValue($builderHelperStates)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)

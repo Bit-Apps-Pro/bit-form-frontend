@@ -8,9 +8,8 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
-import { getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ stateObjName, propertyPath, id }) {
   // const { lightThemeColors: tmpLightThemeColors,

@@ -1,36 +1,30 @@
 module.exports = {
   root: true,
-  env: {
-    browser: true,
+  env: { browser: true,
     es2021: true,
-    commonjs: true,
-  },
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+    commonjs: true },
+  globals: { Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly' },
   parser: '@babel/eslint-parser',
   parserOptions: {
     requireConfigFile: false,
     ecmaFeatures: { jsx: true },
     ecmaVersion: 8,
     sourceType: 'module',
-    babelOptions: {
-      presets: [
-        [
-          '@babel/preset-env',
-          { targets: { browsers: ['Chrome >= 88'] }, loose: true },
-        ],
-        ['@babel/preset-react', { runtime: 'automatic' }],
+    babelOptions: { presets: [
+      [
+        '@babel/preset-env',
+        { targets: { browsers: ['Chrome >= 88'] }, loose: true },
       ],
-      plugins: [
-        '@babel/plugin-transform-runtime',
-        ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
-        ['@babel/plugin-proposal-class-properties', { loose: true }],
-        ['@babel/plugin-proposal-private-methods', { loose: true }],
-        // "@babel/plugin-transform-regenerator",
-      ],
-    },
+      ['@babel/preset-react', { runtime: 'automatic' }],
+    ],
+    plugins: [
+      '@babel/plugin-transform-runtime',
+      ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-private-methods', { loose: true }],
+      // "@babel/plugin-transform-regenerator",
+    ] },
   },
   extends: [
     'eslint:recommended',
@@ -61,12 +55,12 @@ module.exports = {
     'object-curly-newline': [
       'error',
       {
-        ImportDeclaration: 'never',
-        ExportDeclaration: 'never',
-        ObjectPattern: { multiline: false },
-        // consistent: true,
-        // minProperties: 5,
-        ObjectExpression: { multiline: true },
+        // ImportDeclaration: 'never',
+        // ExportDeclaration: 'never',
+        // ObjectPattern: { multiline: false },
+        consistent: true,
+        minProperties: 7,
+        // ObjectExpression: { multiline: true },
       },
     ],
     'array-callback-return': 'off',

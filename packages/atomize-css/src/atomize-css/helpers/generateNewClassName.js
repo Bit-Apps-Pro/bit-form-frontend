@@ -1,39 +1,59 @@
-function getNewPattern(idx, str) {
-  const newChar = String.fromCharCode(str.charCodeAt(idx) + 1)
-  const strPrefix = str.substring(0, idx)
-  const strSuffix = Array(str.substring(idx + 1, str.length).length)
-    .fill('a')
-    .join('')
-  return strPrefix + newChar + strSuffix
+function asciiArr2Str(asciiArr) {
+  return asciiArr.map((asciiCode) => String.fromCharCode(asciiCode)).join('')
+}
+function isAll122inArr(arr) {
+  return arr.every((i) => i === 122)
+}
+function increasePreviousAsciiValueAndGetPos(asciiArr) {
+  const arr = asciiArr
+  let foundPosition = false
+  for (let i = 0; i < arr.length; i += 1) {
+    if (foundPosition) {
+      arr[i] = 64
+    }
+    if (arr[i] < 122 && !foundPosition) {
+      if (arr[i] === 90) {
+        arr[i] = 97
+      } else {
+        arr[i] += 1
+      }
+      foundPosition = true
+    }
+  }
+  return arr
 }
 
 export default function* generateCssClassName() {
-  let x = 'a'
-  let i = 0
+  let c = 0
+  let asciiArr = [65]
+  let pointer = 0
 
-  while (true) {
-    const charCode = String.fromCharCode(97 + i)
-    x = x.substring(0, x.length - 1) + charCode
-    yield x
+  for (let i = 0; i < 53; i += 1) {
+    c += 1
 
-    i += 1
-    if (i === 26) {
+    yield asciiArr2Str(asciiArr)
+    // console.log(i, asciiArr2Str(asciiArr), asciiArr);
+
+    if (isAll122inArr(asciiArr)) {
+      asciiArr = Array(asciiArr.length + 1).fill(65)
+      asciiArr[asciiArr.length - 1] = 64
+      pointer = asciiArr.length - 1
       i = 0
+    }
 
-      if (x.length > 1) {
-        for (let k = 0; k < x.length; k += 1) {
-          if (x[k] < 'z') {
-            x = getNewPattern(k, x)
-            break
-          }
-        }
-      }
+    if (asciiArr[pointer] === 122) {
+      asciiArr = increasePreviousAsciiValueAndGetPos(asciiArr)
+      pointer = asciiArr.length - 1
+      i = 0
+    }
+    asciiArr[pointer] += 1
 
-      if (x.split('').every((itm) => itm === 'z')) {
-        x = Array(x.length + 1)
-          .fill('a')
-          .join('')
-      }
+    if (asciiArr[pointer] == 91) {
+      asciiArr[pointer] = 97
+    }
+
+    if (c === 200) {
+      return
     }
   }
 }

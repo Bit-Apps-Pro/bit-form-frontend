@@ -34,7 +34,7 @@ export default class BitCurrencyField {
   #assetsURL = ''
 
   #config = {
-    maxHeight: 370,
+    maxHeight: 325,
     searchCurrencyPlaceholder: 'Search Currency',
     noCurrencyFoundText: 'No Currency Found',
     selectedCurrencyClearable: true,
@@ -97,8 +97,8 @@ export default class BitCurrencyField {
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
-    this.#addEvent(this.#currencyInputElm, 'focus', e => { this.#handleCurrencyInputFocus() })
-    this.#addEvent(this.#currencyInputElm, 'blur', e => { this.#handleCurrencyInputBlur() })
+    this.#addEvent(this.#currencyInputElm, 'focus', () => { this.#handleCurrencyInputFocus() })
+    this.#addEvent(this.#currencyInputElm, 'blur', () => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
 
     observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
@@ -153,6 +153,7 @@ export default class BitCurrencyField {
     const { defaultCurrencyKey } = this.#config
     const { formatter, roundToClosestInteger, showCurrencySymbol, currencyPosition, symbolPosition } = formatOptions
     const currency = selected?.i || defaultCurrencyKey
+    if (!currency) return numValue
 
     if (roundToClosestInteger) {
       numValue = this.#roundNumbers(numValue)
@@ -295,9 +296,8 @@ export default class BitCurrencyField {
   }
 
   #handleDefaultCurrencyInputValue() {
-    if (this.#currencyInputElm.value) {
-      this.#triggerEvent(this.#currencyInputElm, 'input')
-    }
+    if (!this.#currencyHiddenInputElm.value) return
+    this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
   }
 
   #handleKeyboardNavigation(e) {
@@ -379,6 +379,7 @@ export default class BitCurrencyField {
 
   #handleClearCurrencyInput() {
     this.#currencyInputElm.value = ''
+    this.value = ''
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
     this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
     this.#triggerEvent(this.#currencyInputElm, 'input')
@@ -416,7 +417,7 @@ export default class BitCurrencyField {
   #handleHiddenInputValueChange(oldVal, newVal) {
     const searchedCurrencyCode = this.#detectCurrencyCodeByInputValue(newVal)
     const validCurrencyCode = this.#config.options.find(item => item.i === searchedCurrencyCode)
-    if (((searchedCurrencyCode && validCurrencyCode) || !searchedCurrencyCode) && oldVal !== newVal) {
+    if (((searchedCurrencyCode && validCurrencyCode) || (!searchedCurrencyCode && this.#config.defaultCurrencyKey)) && oldVal !== newVal) {
       this.setSelectedCurrencyItem(searchedCurrencyCode || this.#config.defaultCurrencyKey)
       const { decimalSeparator } = this.#config.valueFormatOptions
       const [numberPart, decimalPart] = newVal.split(decimalSeparator)
@@ -437,7 +438,7 @@ export default class BitCurrencyField {
     if ((numValue < minValue) || (numValue > maxValue)) {
       return false
     }
-    this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue)
+    this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue || '')
     if (this.#config.selectedCurrencyClearable) {
       if (numValue) {
         this.#clearCurrencyInputElm.style.display = 'grid'
@@ -486,7 +487,7 @@ export default class BitCurrencyField {
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
       height: this.#config.maxHeight,
       rowCount: this.#options.length,
-      rowHeight: 31,
+      rowHeight: 35.6,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]

@@ -36,7 +36,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function FileUploadSettings() {
-  console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const selectedFieldId = useRecoilValue($selectedFieldId)

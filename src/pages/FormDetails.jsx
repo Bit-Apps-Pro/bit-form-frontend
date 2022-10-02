@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
@@ -14,7 +14,9 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $builderHistory, $builderSettings, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows } from '../GlobalStates/GlobalStates'
+import {
+  $additionalSettings, $builderHistory, $builderSettings, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
+} from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -23,7 +25,7 @@ import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
-import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
+import { bitDecipher, hideWpMenu, resetRecoilStates, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
@@ -53,20 +55,6 @@ function FormDetails() {
   const setAdditional = useSetRecoilState($additionalSettings)
   const [integrations, setIntegration] = useRecoilState($integrations)
   const setConfirmations = useSetRecoilState($confirmations)
-  const resetFieldLabels = useResetRecoilState($fieldLabels)
-  const resetFields = useResetRecoilState($fields)
-  const resetFormInfo = useResetRecoilState($formInfo)
-  const resetReports = useResetRecoilState($reports)
-  const resetLayouts = useResetRecoilState($layouts)
-  const resetMailTemplates = useResetRecoilState($mailTemplates)
-  const resetAdditionalSettings = useResetRecoilState($additionalSettings)
-  const resetWorkflows = useResetRecoilState($workflows)
-  const resetIntegrations = useResetRecoilState($integrations)
-  const resetConfirmations = useResetRecoilState($confirmations)
-  const resetUpdateBtn = useResetRecoilState($updateBtn)
-  const resetCustomCodes = useResetRecoilState($customCodes)
-  const resetBuilderHistory = useResetRecoilState($builderHistory)
-  const resetReportId = useResetRecoilState($reportId)
   const setReportId = useSetRecoilState($reportId)
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderSettings = useSetRecoilState($builderSettings)
@@ -130,34 +118,17 @@ function FormDetails() {
   //   }
   // }
 
-  const resetAllState = () => {
-    resetFieldLabels()
-    resetFields()
-    resetReports()
-    resetLayouts()
-    resetMailTemplates()
-    resetAdditionalSettings()
-    resetWorkflows()
-    resetIntegrations()
-    resetConfirmations()
-    resetUpdateBtn()
-    resetFormInfo()
-    resetCustomCodes()
-    resetReportId()
-    resetBuilderHistory()
-
-    // TODO: reset all states of style, themeVars & themeColors
-  }
-
   const setNewFormInitialStates = () => {
-    const { name,
+    const {
+      name,
       fields,
       layouts,
       confirmations,
       conditions,
       allThemeColors,
       allThemeVars,
-      allStyles } = templateProvider(formType, newFormId)
+      allStyles,
+    } = templateProvider(formType, newFormId)
 
     setFormInfo({ formName: name })
     setFields(fields)
@@ -217,14 +188,14 @@ function FormDetails() {
   const onUnmount = () => {
     showWpMenu()
     setFulScn(false)
-    resetAllState()
+    resetRecoilStates()
   }
 
   useEffect(() => {
     onMount()
     return () => {
       componentMounted = false
-      // onUnmount() // disable for now because its causing hot reload prblm
+      onUnmount() // disable for now because its causing hot reload prblm
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

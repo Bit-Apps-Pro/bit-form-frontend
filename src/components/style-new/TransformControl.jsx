@@ -10,11 +10,11 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
-import { showDraggableModal } from './styleHelpers'
+import { assignNestedObj, showDraggableModal } from './styleHelpers'
 
 export default function TransformControl({ title,
   stateObjName,

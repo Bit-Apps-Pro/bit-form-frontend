@@ -301,6 +301,10 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         outline: 'none',
       },
 
+      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      },
+
       [`.${fk}-option-list .option.selected-opt`]: {
         // color: ' hsla(0, 0%, 100%, 100%)',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
@@ -333,6 +337,13 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-option-list .opt-prefix`]: { 'font-size': 'calc(var(--fld-fs) - 40%)' },
 
       [`.${fk}-phone-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
+
+      [`.${fk}-option-list .disabled-opt`]: {
+        'pointer-events': 'none',
+        cursor: 'not-allowed',
+        color: 'hsla(0, 0%, 33%, 100%) !important',
+        opacity: '0.5',
+      },
     }
   }
   return {}

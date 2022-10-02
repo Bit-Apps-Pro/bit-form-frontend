@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-eval */
 import { Allotment } from 'allotment'
+import sortJson from 'sort-json'
 import './App.css'
 import 'allotment/dist/style.css'
 import { useState } from 'react'
@@ -26,29 +28,48 @@ function App() {
   const [styleObj, setStyleObj] = useState('')
   const [styleText, setStyleText] = useState('')
   const [styleClassMap, setStyleClassMap] = useState('')
+  const [atomicCssCombined, setAtomicCssCombined] = useState('')
 
   const generateAtomicStyle = () => {
     console.clear()
-    const normalizedCssVars = expressAndCleanCssVars(eval(`(${cssVars || '{}'})`))
-    const normalizedCssClassesAndValues = optimizeAndDefineCssClassProps(eval(`(${styleObj || '{}'})`), normalizedCssVars, {
+    const normalizedCssVars = expressAndCleanCssVars(cssVars)
+    const normalizedCssClassesAndValues = optimizeAndDefineCssClassProps(styleObj, normalizedCssVars, {
       ignoreWithFallbackValues: {
         position: 'unset',
         right: 'unset',
         left: 'unset',
         'justify-content': 'initial',
+        'border-style': 'medium',
+        'border-width': '0',
+        'background-color': 'transparent',
+        'border-radius': '0',
+        border: 'medium none',
+        'box-shadow': 'none',
+        margin: '0',
+        padding: '0',
+        'text-align': 'init',
+        color: 'inherit',
+        display: 'block',
+        'flex-direction': 'row',
+        'align-self': 'auto',
+        width: 'auto',
       },
     })
 
-    console.log(JSON.parse(styleObj))
-    console.log(normalizedCssClassesAndValues)
     const { atomicClasses, classMaps } = atomizeCss(normalizedCssClassesAndValues, {})
     const optimizedAtomicSelectors = combineSelectors(atomicClasses)
     const styleTxt = objectToCssText(optimizedAtomicSelectors)
-    console.log('style clas count', Object.keys(eval(`(${styleObj || '{}'})`)).length, 'atomic count', Object.keys(classMaps).length)
-    // setStyleText(styleText)
+    const atomicClassesCom = extractCssFromAtomicClasses(atomicClasses, classMaps)
+    setAtomicCssCombined(atomicClassesCom)
     setStyleText(cssbeautify(styleTxt), beautifyConfig)
-    setStyleClassMap(beautify((classMaps), null, 2, 100))
-    // setStyleClassMap(cssbeautify(`.a{display:flex}.b{background-color:#fff}.c{padding:10px}.d{margin:0}.e{position:relative}.f{box-shadow:none}.g{border:none}.h{border-width:0}.i{border-radius:0}.bw,.j.fld-hide:after{position:absolute}.k.fld-hide:after{top:0}.l.fld-hide:after{left:0}.m.fld-hide:after{content:""}.n.fld-hide:after,.y{width:100%}.o.fld-hide:after{height:100%}.p.fld-hide:after{background-color:#0003}.q{font-weight:700}.r{align-items:center}.cn.readonly,.s:disabled{cursor:not-allowed}.cn.readonly,.t:disabled{pointer-events:none}.u{width:20px}.v{height:20px}.w{display:block}.x{flex-direction:row}.z{align-self:auto}.aa{padding:0}.ab{background-color:none}.ac{color:inherit}.ad{font-size:1rem}.ae{color:red}.af{line-height:12px}.ag{font-size:12px}.ah{padding:3px 0}.ai{font-weight:500}.aj{font-weight:400}.ak{margin:0 5px 0 0}.al{border-radius:8px}.am{filter:invert(8%) sepia(8%) saturate(13%) hue-rotate(349deg) brightness(94%) contrast(84%)}.an{margin:5px}.ao{background-color:#f9c3c3}.ap{color:#961d1d}.aq{text-align:init}.ar{padding:5px}.as{margin:1px}.at{box-shadow:0 2px 8px 0 #636363}.au{border:solid #c8a7a7}.av{border-width:1px}.aw{display:inline-block!important}.ax{direction:inherit!important}.ay{font-family:inherit}.az{width:100%!important}.ba{outline:none!important}.bb,.bo:disabled,.bs:read-only{background-color:#fff!important}.bc{border:solid #ababab!important}.bd{border-radius:11px!important}.be{border-width:1px!important}.bf{font-size:1rem!important}.bg{color:#242424!important}.bh{padding:10px 40px!important}.bi{line-height:1.4!important}.bj{height:40px}.bk:focus{box-shadow:0 0 0 3px #0062ff4d!important}.bl:focus,.bm:hover{border-color:#0062ff!important}.bn:disabled,.br:read-only{cursor:default}.bp:disabled,.bt:read-only{color:#8a8a8a!important}.bq:disabled,.bu:read-only{border-color:#dedede!important}.bv::placeholder{color:#24242466!important}.bx{left:3px}.by{top:50%}.bz{padding:7px}.ca{transform:translateY(-50%)}.cb{width:40px}.cc{right:3px}.cd{width:15px}.ce{height:15px}.cf{align-items:start;flex-direction:column}.cg{background-color:#0083f5;border:none;border-radius:5px;box-shadow:2px 2px 4px -2px #0006;color:#fff;cursor:pointer;font-family:1rem;font-size:16px;justify-content:center;line-height:1;margin:10px 0;outline:none;padding:11px 20px}.ch:disabled{opacity:.5}.ci{margin:0 5px 0 0}.cj{margin:0 0 0 5px}.ck{resize:vertical}.cl{filter:invert(15%) sepia(92%) saturate(2882%) hue-rotate(351deg) brightness(81%) contrast(88%)}.cm{min-height:40px;padding:10px 8px!important}.cn.readonly{color:#545454}.cn.readonly,.co:disabled{background-color:#f0f0f04d!important}.co:disabled{border-color:#7575754d!important;color:#545454!important}.cp{margin-right:5px}.cq{margin-left:5px}`), beautifyConfig)
+    setStyleClassMap(classMaps)
+  }
+
+  const handleStyleObjChange = (value) => {
+    setStyleObj(JSON.parse(value))
+  }
+  const handleCssVarsChange = (value) => {
+    setCssVars(JSON.parse(value))
   }
 
   return (
@@ -62,23 +83,23 @@ function App() {
             <Allotment.Pane preferredSize={300}>
               <div><b>CSS Variables object</b></div>
               <ReactCodeMirror
-                value={cssVars}
+                value={sortAndBeautifyJson(cssVars)}
                 height="90%"
                 width="97%"
                 theme={dracula}
                 extensions={[javascript()]}
-                onChange={val => setCssVars(val)}
+                onChange={handleCssVarsChange}
               />
             </Allotment.Pane>
             <Allotment.Pane>
               <div><b>Style object</b></div>
               <ReactCodeMirror
-                value={styleObj}
+                value={sortAndBeautifyJson(styleObj)}
                 height="90%"
                 width="97%"
                 theme={dracula}
                 extensions={[javascript()]}
-                onChange={val => setStyleObj(val)}
+                onChange={handleStyleObjChange}
               />
             </Allotment.Pane>
           </Allotment>
@@ -104,7 +125,7 @@ function App() {
             <Allotment.Pane>
               <div><b>Style class maps</b></div>
               <ReactCodeMirror
-                value={styleClassMap}
+                value={beautify(styleClassMap, null, 2, 100)}
                 height="90%"
                 width="97%"
                 theme={dracula}
@@ -115,10 +136,75 @@ function App() {
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
-
       </Allotment>
+      <br />
+      <div><b>Atomic Style combined</b></div>
+      <ReactCodeMirror
+        value={sortAndBeautifyJson(atomicCssCombined)}
+        height="90%"
+        width="97%"
+        theme={dracula}
+        readOnly
+        // onChange={val => setStyleObj(val)}
+        extensions={[javascript()]}
+      />
     </div>
   )
 }
 
 export default App
+
+function sortAndBeautifyJson(obj) {
+  if (!obj) return obj
+  const o = typeof obj === 'string' ? JSON.parse(obj) : obj
+  const sorted = sortJson(o)
+  const j = JSON.stringify(sorted, null, 2)
+  return j
+}
+
+function combineStylesFromAtomicClasses(atomicClasses, classes) {
+  let declarations = {}
+  const pseudoDeclarations = {}
+  classes.forEach((cls) => {
+    for (const className in atomicClasses) {
+      if (Object.prototype.hasOwnProperty.call(atomicClasses, className)) {
+        const aClsDeclarations = atomicClasses[className]
+        const splitedClassAndPseudo = className.split(/[^A-z]/g)
+        const mainClassName = splitedClassAndPseudo[1]
+
+        if (mainClassName === cls && splitedClassAndPseudo.length === 2) {
+          declarations = { ...declarations, ...aClsDeclarations }
+        }
+        if (mainClassName === cls && splitedClassAndPseudo.length > 2) {
+          const pseudoClass = className.replace(new RegExp(`^.${cls}`), '')
+          pseudoDeclarations[pseudoClass] = { ...pseudoDeclarations[pseudoClass], aClsDeclarations }
+        }
+      }
+    }
+  })
+  // console.log({ declarations, pseudoDeclarations })
+  return { declarations, pseudoDeclarations }
+}
+
+function extractCssFromAtomicClasses(atomicClasses, classMap) {
+  let extractStyles = {}
+  for (const className in classMap) {
+    if (Object.prototype.hasOwnProperty.call(classMap, className)) {
+      const atomicClassList = classMap[className]
+      const { declarations, pseudoDeclarations } = combineStylesFromAtomicClasses(atomicClasses, atomicClassList)
+      const prefixedPseudo = {}
+      for (const pseudo in pseudoDeclarations) {
+        if (Object.prototype.hasOwnProperty.call(pseudoDeclarations, pseudo)) {
+          prefixedPseudo[className + pseudo] = pseudoDeclarations[pseudo]
+        }
+      }
+      extractStyles = {
+        ...extractStyles,
+        [className]: declarations,
+        ...prefixedPseudo,
+      }
+    }
+  }
+
+  return extractStyles
+}

@@ -53,7 +53,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function TextFieldSettings() {
-  console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const bits = useRecoilValue($bits)
   const { fieldKey: fldKey } = useParams()
 

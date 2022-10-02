@@ -2,17 +2,18 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-console */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import { memo, useContext, useEffect, useRef, useState, lazy, Suspense } from 'react'
+import {
+  memo, useContext, useEffect, useRef, useState, lazy, Suspense,
+} from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -22,25 +23,30 @@ import { $additionalSettings,
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId } from '../GlobalStates/GlobalStates'
+  $uniqueFieldId,
+} from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout,
+import {
+  addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
   checkFieldsExtraAttr,
+  cols,
   filterLayoutItem,
   filterNumber,
   fitAllLayoutItems,
   fitSpecificLayoutItem,
   getLatestState,
   getResizableHandles,
+  isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError } from '../Utils/FormBuilderHelper'
+  removeFormUpdateError,
+} from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
@@ -61,7 +67,6 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
-  console.log('render gridlay')
   const { formType } = useParams()
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
@@ -78,7 +83,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const themeVars = useRecoilValue($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setTempStyles = useSetRecoilState($tempStyles)
-  const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
@@ -98,21 +102,27 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const insptectModeTurnedOnRef = useRef(false)
   const location = useLocation()
 
-  useEffect(() => { setRootLayouts(layouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
+  // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
-    const nl = fitAllLayoutItems(layouts)
-    const nl2 = compactResponsiveLayouts(nl, cols)
-
-    setLayouts(nl2)
-    setRootLayouts(nl2)
+    const fieldsCount = Object.keys(fields).length
+    const layoutLgFieldsCount = layouts.lg.length
+    if (fieldsCount === layoutLgFieldsCount) {
+      const nl = fitAllLayoutItems(layouts)
+      const nl2 = compactResponsiveLayouts(nl, cols)
+      if (!isLayoutSame(layouts, nl2)) {
+        setLayouts(nl2)
+        setRootLayouts(nl2)
+      }
+    }
 
     if (styleMode) {
       stopGridTransition.current = true
     } else {
       setTimeout(() => { stopGridTransition.current = false }, 1)
     }
-  }, [styleMode, reCalculateFieldHeights, breakpoint, fields])
+  }, [styleMode, reCalculateFieldHeights, breakpoint, fields, layouts])
 
   useEffect(() => {
     if (fieldKey) {
@@ -270,11 +280,12 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (y !== 0) { y -= 1 }
     const newBlk = `b${formID}-${uniqueFieldId}`
     processedFieldData = { ...processedFieldData, fieldName: newBlk }
-    const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
+    const newLayoutItem = {
+      i: newBlk, x, y, w, h, minH, maxH, minW,
+    }
     const resizeHandles = getResizableHandles(fieldData.typ)
     if (resizeHandles) {
       newLayoutItem.resizeHandles = resizeHandles
-      console.log({ resizeHandles, newLayoutItem })
     }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     const newFields = { ...fields, [newBlk]: processedFieldData }
@@ -386,7 +397,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     // add to history
     const event = `${generateFieldLblForHistory(fldData)} cloned`
     const type = 'clone_fld'
-    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles') }
+    const state = {
+      fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles'),
+    }
     addToBuilderHistory({ event, type, state })
 
     resetContextMenu()
@@ -494,7 +507,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const navigateToStyle = fldKey => {
-    // navigate.replace(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`)
     navigate(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`, { replace: true })
     resetContextMenu()
   }
@@ -575,6 +587,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
   }, [inspectMode])
 
+  // TODO: rubel redundent sort layout function
   // sort the fields in the order of their position based on the y and x coordinates
   const sortLayoutsBasedOnXY = () => {
     const lays = deepCopy(layouts[breakpoint])
@@ -611,7 +624,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       id="layout-wrapper"
       onDragOver={e => e.preventDefault()}
       onDragEnter={e => e.preventDefault()}
-      onClick={() => resetContextMenu()}
+      onClick={resetContextMenu}
     >
       {stopGridTransition.current && <style>{'.layout *{transition:none!important}'}</style>}
       {styleMode && <RenderGridLayoutStyle />}

@@ -9,18 +9,17 @@ import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../../Icons/TxtAlignRightIcn'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory, assignNestedObj, setRequired } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, setRequired } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
-import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, assignNestedObj } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import ErrorMessageSettings from './ErrorMessageSettings'
 
 export default function RequiredSettings({ asteriskIsAllow = true }) {
-  console.log('%cRander Required Setting', 'background:green;padding:3px;border-radius:5px;color:white')
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])

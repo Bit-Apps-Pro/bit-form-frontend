@@ -7,9 +7,9 @@ import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../GlobalStates/ThemeVarsState'
 import ut from '../../../styles/2.utilities'
 import sc from '../../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory, assignNestedObj, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
 import SizeControl from '../../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import { getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from '../styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from '../styleHelpers'
 import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 
 export default function ButtonQuickTweaks() {
