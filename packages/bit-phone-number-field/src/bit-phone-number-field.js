@@ -19,6 +19,8 @@ export default class BitPhoneNumberField {
 
   #selectedCountryCode = null
 
+  #searchWrpElm = null
+
   #searchInputElm = null
 
   #phoneInnerWrp = null
@@ -28,6 +30,8 @@ export default class BitPhoneNumberField {
   #clearSearchBtnElm = null
 
   #optionListElm = null
+
+  #initialOptElm = null
 
   #options = []
 
@@ -84,11 +88,15 @@ export default class BitPhoneNumberField {
     this.#phoneHiddenInputElm = this.#select(`.${this.fieldKey}-phone-hidden-input`)
     this.#clearPhoneInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`) || {}
+    this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
+    this.#initialOptElm = this.#select('.option')
+    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
+    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#phoneNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
@@ -173,11 +181,11 @@ export default class BitPhoneNumberField {
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#options.length) {
-            this.virtualOptionList?.scrollToIndex(nextIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(nextIndex)
             setTimeout(() => {
               const nextElm2 = this.#selectOptElmByIndex(nextIndex)
               if (nextElm2) nextElm2.focus()
-            }, 0)
+            }, 50)
           }
         }
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
@@ -187,17 +195,17 @@ export default class BitPhoneNumberField {
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+        } else if (activeEl.classList.contains('option')) {
           const prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous')
           const prevElm = this.#selectOptElmByIndex(prevIndex)
           if (prevElm) {
             focussableEl = prevElm
           } else if (prevIndex > 0) {
-            this.virtualOptionList?.scrollToIndex(prevIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(prevIndex)
             setTimeout(() => {
               const prevElm2 = this.#selectOptElmByIndex(prevIndex)
               if (prevElm2) prevElm2.focus()
-            }, 0)
+            }, 50)
           } else if (!prevElm) {
             focussableEl = this.#searchInputElm
           }
@@ -239,7 +247,7 @@ export default class BitPhoneNumberField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`.${this.fieldKey}-option-list .${this.fieldKey}-option[data-index="${index}"]`)
+    return this.#select(`.${this.fieldKey}-option-list .option[data-index="${index}"]`)
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -444,9 +452,9 @@ export default class BitPhoneNumberField {
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
-      height: this.#config.maxHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#options.length,
-      rowHeight: 35.6,
+      rowHeight: this.rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]
@@ -606,7 +614,7 @@ export default class BitPhoneNumberField {
 
   #handleSearchInput(e) {
     if (e.key === 'Enter' && this.#options.length) {
-      const optKey = this.#select(`.${this.fieldKey}-option`)?.dataset.key
+      const optKey = this.#select('.option')?.dataset.key
       this.setSelectedCountryItem(optKey)
       this.searchOptions('')
     } else {

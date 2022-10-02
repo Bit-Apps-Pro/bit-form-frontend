@@ -294,7 +294,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         opacity: '.7',
       },
 
-      [`.${fk}-option-list .opt-group-child`]: { 'padding-left': '15px' },
+      [`.${fk}-option-list .opt-group-child`]: { 'padding-left': '15px !important' },
 
       [`.${fk}-option-list .selected-opt`]: {
         // color: 'white',
