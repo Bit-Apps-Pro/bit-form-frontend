@@ -103,13 +103,12 @@ export default class BitPhoneNumberField {
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
+    this.#handleDefaultPhoneInputValue()
+
     this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
-    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
-    if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
-
-    this.#handleDefaultPhoneInputValue()
+    if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
 
@@ -125,6 +124,8 @@ export default class BitPhoneNumberField {
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
     this.#placeholderImage = this.#config.placeholderImage ? this.#config.placeholderImage : this.#placeholderImage
+
+    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
@@ -135,9 +136,9 @@ export default class BitPhoneNumberField {
   }
 
   #handleDefaultPhoneInputValue() {
-    if (this.#phoneInputElm.value) {
-      this.#triggerEvent(this.#phoneInputElm, 'input')
-    }
+    if (!this.#phoneHiddenInputElm.value) return
+    this.#handleHiddenInputValueChange('', this.#phoneHiddenInputElm.value)
+    if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'grid'
   }
 
   #detectCountryCodeFromIpAddress() {
@@ -313,7 +314,6 @@ export default class BitPhoneNumberField {
     const searchedCountryCode = this.#detectCountryCodeByInputValue(newVal)
     if (searchedCountryCode && oldVal !== newVal) {
       this.#handlePhoneValue(this.#unformatPhoneNumber(newVal))
-      // this.#triggerEvent(this.#phoneInputElm, 'input')
     }
     if (typeof bit_conditionals !== 'undefined') {
       bit_conditionals({ target: this.#phoneHiddenInputElm })
@@ -359,9 +359,10 @@ export default class BitPhoneNumberField {
 
       if (valueFormat) {
         const unformattedPhoneNumber = this.#unformatPhoneNumber(value)
-        this.value = this.#formatPhoneNumber(code, unformattedPhoneNumber, valueFormat)
+        const formattedValue = this.#formatPhoneNumber(code, unformattedPhoneNumber, valueFormat)
+        this.#setAttribute(this.#phoneHiddenInputElm, 'value', formattedValue)
       } else {
-        this.value = formattedInputValue
+        this.#setAttribute(this.#phoneHiddenInputElm, 'value', value)
       }
 
       this.#phoneInputElm.value = formattedInputValue
@@ -600,7 +601,7 @@ export default class BitPhoneNumberField {
     this.#selectedCountryImgElm.src = `${this.#assetsURL}/${selectedItem.img}`
     this.#setNewCountryCodeWithInputValue(selectedItem.code)
     this.setMenu({ open: false })
-    this.#phoneInputElm.focus()
+    if (this.#countrySelectedFromList) this.#phoneInputElm.focus()
   }
 
   #reRenderVirtualOptions() {
