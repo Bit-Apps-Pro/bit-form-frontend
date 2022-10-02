@@ -31,7 +31,7 @@ import Tip from './Utilities/Tip'
 
 const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
 
-export default function OptionToolBar({ setResponsiveView, showToolBar, toggleToolBar }) {
+export default function OptionToolBar({ showToolBar, setShowToolbar }) {
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
@@ -47,6 +47,7 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
   const navigate = useNavigate()
   const [defaultRightPanel, setDefaultRightPanel] = useState('fld-settings')
   const path = `/form/builder/${formType}/${formID}`
+  const setBreakpoint = useSetRecoilState($breakpoint)
 
   useEffect(() => {
     if (rightBar.match(/fields-list|field-settings/)) {
@@ -65,7 +66,9 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
 
   const styleModeButtonHandler = () => {
     setFlags(prvFlags => {
-      if (prvFlags.styleMode || showToolBar) toggleToolBar()
+      if (!prvFlags.styleMode) setShowToolbar(true)
+      if (prvFlags.styleMode && showToolBar) setShowToolbar(false)
+      if (prvFlags.styleMode && !showToolBar) setShowToolbar(true)
       return { ...prvFlags, styleMode: true, inspectMode: false }
     })
     if (selectedFldId) {
@@ -78,7 +81,9 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
 
   const formFieldButtonHandler = () => {
     setFlags(prvFlags => {
-      if (!prvFlags.styleMode || showToolBar) toggleToolBar()
+      if (!prvFlags.styleMode) setShowToolbar(true)
+      if (!prvFlags.styleMode && showToolBar) setShowToolbar(false)
+      if (!prvFlags.styleMode && !showToolBar) setShowToolbar(true)
       return { ...prvFlags, styleMode: false, inspectMode: false }
     })
     if (selectedFldId) {
@@ -115,7 +120,7 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
               data-testid="field-mode"
               onClick={formFieldButtonHandler}
               type="button"
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2])} ${(!flags.styleMode && !showToolBar) && 'active'}`}
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2])} ${(!flags.styleMode && showToolBar) && 'active'}`}
             >
               <AddIcon size="22" />
             </button>
@@ -125,7 +130,7 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
               data-testid="style-mode"
               onClick={styleModeButtonHandler}
               type="button"
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}
+              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && showToolBar) && 'active'}`}
             >
               <LayerIcon size="22" />
             </button>
@@ -150,7 +155,7 @@ export default function OptionToolBar({ setResponsiveView, showToolBar, toggleTo
             show={['icn']}
             tipPlace="bottom"
             defaultActive={breakpoint}
-            onChange={setResponsiveView}
+            onChange={setBreakpoint}
             className={css(ut.mr2)}
             options={[
               {
