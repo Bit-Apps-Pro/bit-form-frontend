@@ -1,13 +1,38 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
+import produce from 'immer'
 import { useEffect, useRef, useState } from 'react'
+import { useSetRecoilState } from 'recoil'
+import { $styles } from '../../GlobalStates/StylesState'
 import validateForm from '../../user-frontend/validation'
 import { getCustomAttributes, getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+import { assignNestedObj } from '../style-new/styleHelpers'
 
-export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses }) {
+export default function TextArea({
+  fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses, resizingFld,
+}) {
   const [value, setvalue] = useState(attr.val)
+  const areaRef = useRef(null)
+  const tempResize = useRef({ resize: false })
+  const setStyles = useSetRecoilState($styles)
+
+  const firstChild = areaRef.current?.parentElement?.parentElement.children[0].clientHeight
+  const parent = areaRef.current?.parentElement?.parentElement.parentElement.clientHeight
+
+  if (resizingFld.fieldKey === fieldKey) {
+    tempResize.current.resize = true
+  }
+  if (tempResize.current.resize && !resizingFld.fieldKey) {
+    tempResize.current.resize = false
+    const fieldHeight = Number(parent) - Number(firstChild)
+    const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('height'), `${fieldHeight}px`)
+    }))
+  }
+
   const textAreaRef = useRef(null)
   useEffect(() => {
     if (attr.val !== undefined && !attr.userinput) {
@@ -56,6 +81,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
         fieldData={attr}
       >
         <div
+          ref={areaRef}
           data-testid={`${fieldKey}-inp-fld-wrp`}
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
