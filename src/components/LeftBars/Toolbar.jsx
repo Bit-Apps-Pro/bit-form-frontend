@@ -56,6 +56,7 @@ function Toolbar({ setNewData }) {
   const [sortedTools, setSortedTools] = useState([])
   const [isSorted, setIsSorted] = useState(false)
   const [isScroll, setIsScroll] = useState(false)
+  const searchInput = useRef(null)
 
   const tools = [
     {
@@ -778,19 +779,12 @@ function Toolbar({ setNewData }) {
     else setIsScroll(false)
   }
 
-  //   box-shadow: 0 2px 8px -2px black;
-  //   position: relative;
-  //   z-index: 99;
-  // }
-
   const toolsArray = () => {
     if (!searchData.length && !sortedTools.length) return tools
     if (!sortedTools.length && searchData) return searchData
     if (!searchData.length && sortedTools) return sortedTools
     return []
   }
-
-  const searchInput = useRef(null)
 
   const clearSearch = () => {
     searchInput.current.value = ''
