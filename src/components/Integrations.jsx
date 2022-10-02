@@ -1,6 +1,6 @@
 /* eslint-disable-next-line no-undef */
 // import { withQuicklink } from 'quicklink/dist/react/hoc'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -258,7 +258,14 @@ function Integrations() {
                   style={{ width: 1000 }}
                 >
                   <div className=" btcd-inte-wrp txt-center">
-                    <input aria-label="Search Ingegration" type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
+                    <input
+                      aria-label="Search Ingegration"
+                      type="search"
+                      className="btcd-paper-inp w-5 mt-3"
+                      onChange={searchInteg}
+                      placeholder="Search Integrations..."
+                      style={{ height: 37 }}
+                    />
                     <div className="flx flx-center flx-wrp pb-3">
                       {availableIntegs.map((inte, i) => (
                         <div
@@ -288,7 +295,13 @@ function Integrations() {
                   </div>
                 </Modal>
 
-                <div role="button" className={css(style.itegCard)} tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
+                <div
+                  role="button"
+                  className={css(style.itegCard)}
+                  tabIndex="0"
+                  onClick={() => setShowMdl(true)}
+                  onKeyPress={() => setShowMdl(true)}
+                >
                   <div className={css(style.integPlus)}><PlusIcn size={80} /></div>
                 </div>
 
@@ -298,31 +311,45 @@ function Integrations() {
                       {getLogo(inte.type)}
                     </Link>
                     <div className="py-1" title={`${inte.name} | ${inte.type}`}>
-                      <Link to={`${allIntegURL}/info/${i}`} className={css(style.integTitle)}>
+                      <Link
+                        to={`${allIntegURL}/info/${i}`}
+                        className={css(style.integTitle)}
+                      >
                         {inte.name}
                       </Link>
                       <small className={css(style.integSubtitle)}>{inte.type}</small>
                     </div>
                     <div className={`${css(style.actionWrp)} action-wrp`}>
                       <Tip msg={__('Delete')}>
-                        <button className={`${css(style.actionBtn)}`} onClick={() => inteDelConf(i)} type="button">
+                        <button
+                          className={`${css(style.actionBtn)}`}
+                          onClick={() => inteDelConf(i)}
+                          type="button"
+                        >
                           <TrashIcn size={18} />
                         </button>
                       </Tip>
                       <Tip msg={__('Clone')}>
-                        <button className={`${css(style.actionBtn)}`} onClick={() => inteCloneConf(i)} type="button">
+                        <button
+                          className={`${css(style.actionBtn)}`}
+                          onClick={() => inteCloneConf(i)}
+                          type="button"
+                        >
                           <CopyIcn stroke={2.5} size="18" />
                         </button>
                       </Tip>
                       {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                         <Tip msg={__('Edit')}>
-                          <Link to={`${allIntegURL}/edit/${i}`} className={`${css(style.actionBtn)}`} type="button">
+                          <Link
+                            to={`${allIntegURL}/edit/${i}`}
+                            className={`${css(style.actionBtn)}`}
+                            type="button"
+                          >
                             <EditIcn size={19} />
                           </Link>
                         </Tip>
                       )}
                     </div>
-
                   </div>
                 ))}
               </div>

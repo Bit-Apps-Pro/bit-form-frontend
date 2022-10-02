@@ -4,15 +4,18 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
 import app from '../styles/app.style'
+import style from '../styles/integrations.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
+import Tip from './Utilities/Tip'
 
 export default function PaymentSettings({ setSnackbar }) {
   const bits = useRecoilValue($bits)
@@ -41,7 +44,7 @@ export default function PaymentSettings({ setSnackbar }) {
           <img
             src={pays[i].logo}
             alt={type}
-            className="p-0"
+            className={css(style.integLogo)}
           />
         )
       }
@@ -96,7 +99,7 @@ export default function PaymentSettings({ setSnackbar }) {
       />
       <h2>{__('Payment Settings')}</h2>
       <div className="btcd-hr" />
-      <div className="flx flx-wrp pos-rel">
+      <div className="flx flx-wrp pos-rel mt-2">
         {!isPro && (
           <div className="pro-blur flx w-10" style={{ top: 5, left: -10 }}>
             <div className="pro">
@@ -150,38 +153,46 @@ export default function PaymentSettings({ setSnackbar }) {
 
         <div
           role="button"
-          className="btcd-inte-card  flx flx-center add-inte mr-4 mt-3"
+          className={css(style.itegCard)}
           tabIndex="0"
           onClick={() => setShowMdl(true)}
           onKeyPress={() => setShowMdl(true)}
         >
-          <div>+</div>
+          <div className={css(style.integPlus)}>
+            <PlusIcn size={80} />
+          </div>
         </div>
 
         {payments?.map((pay, i) => (
-          <div role="button" className="btcd-inte-card  mr-4 mt-3 inte-edit" key={`inte-${i + 3}`}>
+          <div role="button" className={css(style.itegCard)} key={`pay-${i + 3}`}>
             {getLogo(pay.type)}
-            <div className="btcd-inte-atn txt-center">
-              <Link
-                to={`${pathname}/${pay.type}/${i}`}
-                className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`}
-                style={{ '--tooltip-txt': `'${__('Edit')}'` }}
-                type="button"
-              >
-                <EditIcn size="15" />
-              </Link>
-              <button
-                className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`}
-                style={{ '--tooltip-txt': `'${__('Delete')}'` }}
-                onClick={() => payDelConf(i)}
-                type="button"
-              >
-                <TrashIcn />
-              </button>
+            <div className="py-1" title={`${pay.name} | ${pay.type}`}>
+              <div className={css(style.integTitle)}>
+                {pay.name}
+              </div>
+              <small className={css(style.integSubtitle)}>
+                {pay.type}
+              </small>
             </div>
-            <div className="txt-center body py-1" title={`${pay.name} | ${pay.type}`}>
-              <div className="int-name">{pay.name}</div>
-              <small className="int-type">{pay.type}</small>
+            <div className={`${css(style.actionWrp)} action-wrp`}>
+              <Tip msg={__('Edit')}>
+                <Link
+                  to={`${pathname}/${pay.type}/${i}`}
+                  className={`${css(style.actionBtn)}`}
+                  type="button"
+                >
+                  <EditIcn size={19} />
+                </Link>
+              </Tip>
+              <Tip msg={__('Delete')}>
+                <button
+                  className={`${css(style.actionBtn)}`}
+                  onClick={() => payDelConf(i)}
+                  type="button"
+                >
+                  <TrashIcn size={18} />
+                </button>
+              </Tip>
             </div>
           </div>
         ))}
