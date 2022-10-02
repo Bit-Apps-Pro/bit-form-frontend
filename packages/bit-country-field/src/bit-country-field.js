@@ -128,7 +128,7 @@ export default class BitCountryField {
 
     this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
-    this.#defaultValue && this.setSelectedCountryItem(this.#defaultValue)
+    this.#defaultValue && this.#setDefaultValue()
     this.#setCountryNameFromURL()
 
     this.#addEventListenersToElm()
@@ -157,6 +157,16 @@ export default class BitCountryField {
     }
 
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+  }
+
+  #setDefaultValue() {
+    const countryObj = this.#initialOptions.find(c => {
+      const searchVal = this.#defaultValue
+      const keyFound = c.i === searchVal
+      if (!keyFound) return c.val ? (c.val === searchVal) : (c.lbl === searchVal)
+      return true
+    })
+    this.setSelectedCountryItem(countryObj.i)
   }
 
   #setCountryNameFromURL() {

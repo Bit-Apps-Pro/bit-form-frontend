@@ -38,7 +38,7 @@ export default class BitCurrencyField {
   #assetsURL = ''
 
   #config = {
-    maxHeight: 370,
+    maxHeight: 325,
     searchCurrencyPlaceholder: 'Search Currency',
     noCurrencyFoundText: 'No Currency Found',
     selectedCurrencyClearable: true,
@@ -105,8 +105,8 @@ export default class BitCurrencyField {
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
-    this.#addEvent(this.#currencyInputElm, 'focus', e => { this.#handleCurrencyInputFocus() })
-    this.#addEvent(this.#currencyInputElm, 'blur', e => { this.#handleCurrencyInputBlur() })
+    this.#addEvent(this.#currencyInputElm, 'focus', () => { this.#handleCurrencyInputFocus() })
+    this.#addEvent(this.#currencyInputElm, 'blur', () => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
 
     observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
@@ -161,6 +161,7 @@ export default class BitCurrencyField {
     const { defaultCurrencyKey } = this.#config
     const { formatter, roundToClosestInteger, showCurrencySymbol, currencyPosition, symbolPosition } = formatOptions
     const currency = selected?.i || defaultCurrencyKey
+    if (!currency) return numValue
 
     if (roundToClosestInteger) {
       numValue = this.#roundNumbers(numValue)
@@ -303,9 +304,8 @@ export default class BitCurrencyField {
   }
 
   #handleDefaultCurrencyInputValue() {
-    if (this.#currencyInputElm.value) {
-      this.#triggerEvent(this.#currencyInputElm, 'input')
-    }
+    if (!this.#currencyHiddenInputElm.value) return
+    this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
   }
 
   #handleKeyboardNavigation(e) {
@@ -425,7 +425,7 @@ export default class BitCurrencyField {
   #handleHiddenInputValueChange(oldVal, newVal) {
     const searchedCurrencyCode = this.#detectCurrencyCodeByInputValue(newVal)
     const validCurrencyCode = this.#config.options.find(item => item.i === searchedCurrencyCode)
-    if (((searchedCurrencyCode && validCurrencyCode) || !searchedCurrencyCode) && oldVal !== newVal) {
+    if (((searchedCurrencyCode && validCurrencyCode) || (!searchedCurrencyCode && this.#config.defaultCurrencyKey)) && oldVal !== newVal) {
       this.setSelectedCurrencyItem(searchedCurrencyCode || this.#config.defaultCurrencyKey)
       const { decimalSeparator } = this.#config.valueFormatOptions
       const [numberPart, decimalPart] = newVal.split(decimalSeparator)
