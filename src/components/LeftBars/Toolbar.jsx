@@ -49,7 +49,7 @@ import { searchKey } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 import Tools from './Tools'
 
-function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
+function Toolbar({ setNewData }) {
   const { css } = useFela()
   const [searchData, setSearchData] = useState([])
   const [focusSearch, setfocusSearch] = useState(false)
@@ -805,7 +805,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   }
 
   return (
-    <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
+    <div className={css(Toolbars.toolbar_wrp)}>
       <div className={css(ut.flxc, { mb: 5 }, isScroll && Toolbars.searchBar)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%', marginTop: '2px' }}>
           <input
@@ -892,7 +892,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </div>
         </Scrollbars>
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      ), [tolbarSiz, searchData, isSorted, sortedTools])}
+      ), [searchData, isSorted, sortedTools])}
     </div>
   )
 }

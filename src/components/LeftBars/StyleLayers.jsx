@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
+import { memo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
@@ -14,7 +15,7 @@ import { isFieldOverrideStyles, isLabelOverrideStyles } from '../style-new/style
 import ElementConfiguration from './ElementConfiguration'
 import NavBtn from './NavBtn'
 
-export default function StyleLayers() {
+function StyleLayers() {
   const { css } = useFela()
   const styles = useRecoilValue($styles)
   const fields = useRecoilValue($fields)
@@ -772,6 +773,8 @@ export default function StyleLayers() {
     </div>
   )
 }
+
+export default memo(StyleLayers)
 
 const s = {
   con: {
