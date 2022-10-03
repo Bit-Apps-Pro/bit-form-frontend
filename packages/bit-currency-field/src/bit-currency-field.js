@@ -309,6 +309,7 @@ export default class BitCurrencyField {
   #handleDefaultCurrencyInputValue() {
     if (!this.#currencyHiddenInputElm.value) return
     this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
+    if (this.#config.selectedCurrencyClearable) this.#clearCurrencyInputElm.style.display = 'grid'
   }
 
   #handleKeyboardNavigation(e) {
