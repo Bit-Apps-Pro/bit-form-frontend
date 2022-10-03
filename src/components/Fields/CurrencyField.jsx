@@ -51,7 +51,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       noCurrencyFoundText,
       options,
       assetsURL: `${bits.assetsURL}/../static/currencies/`,
-      document: document.getElementById('bit-grid-layout').document,
+      document: document.getElementById('bit-grid-layout').contentDocument,
       window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),
@@ -142,6 +142,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 </div>
               </div>
               <input
+                data-dev-currency-amount-input={fieldKey}
                 data-testid={`${fieldKey}-crncy-amnt-inp`}
                 aria-label="Currency Input"
                 type="text"

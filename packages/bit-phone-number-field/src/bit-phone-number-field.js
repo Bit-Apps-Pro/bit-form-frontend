@@ -192,7 +192,7 @@ export default class BitPhoneNumberField {
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#dropdownWrapperElm
+          focussableEl = this.#phoneInputElm
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
@@ -225,6 +225,7 @@ export default class BitPhoneNumberField {
         this.setSelectedCountryItem(searchedOption.i)
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
       const selectedCountryIndex = this.#getSelectedCountryIndex()
       const direction = (e.key === 'ArrowDown') ? 'next' : 'previous'
       const optIndex = this.#findNotDisabledOptIndex(selectedCountryIndex, direction)
@@ -267,9 +268,8 @@ export default class BitPhoneNumberField {
   }
 
   #handleOutsideClick(event) {
-    if (event.target.contains(this.#phoneNumberFieldWrapper)) {
-      this.setMenu({ open: false })
-    }
+    if (this.#phoneNumberFieldWrapper.contains(event.target)) return
+    this.setMenu({ open: false })
   }
 
   #generateCountryCodesFromOptions() {
@@ -705,7 +705,7 @@ export default class BitPhoneNumberField {
   }
 
   set value(val) {
-    this.#phoneHiddenInputElm.value = val
+    this.#phoneHiddenInputElm.value = val || ''
   }
 
   get value() {

@@ -55,7 +55,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       noCountryFoundText,
       options,
       assetsURL: `${bits.assetsURL}/../static/countries/`,
-      document: document.getElementById('bit-grid-layout').document,
+      document: document.getElementById('bit-grid-layout').contentDocument,
       window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),

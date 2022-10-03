@@ -10,7 +10,9 @@ import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid 
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
-function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder }) {
+function DropDown({
+  fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder,
+}) {
   const dropdownWrapElmRef = useRef(null)
   const dropdownFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
@@ -28,7 +30,9 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       fldConstructor.destroy()
     }
 
-    const { selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect } = fieldData.config
+    const {
+      selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect,
+    } = fieldData.config
 
     const configOptions = {
       fieldKey,
@@ -44,6 +48,8 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       selectedOptImgSrc,
       closeOnSelect,
       activeList,
+      document: document.getElementById('bit-grid-layout').contentDocument,
+      window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
         'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
@@ -250,7 +256,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                     let dataIndex = 0
                     return (
                       <ul
-                        key={`list-option-${index * 2}`}
+                        key={`list-option-${index + 1}`}
                         className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')} ${activeList === index ? 'active-list' : ''}`}
                         aria-hidden="true"
                         aria-label="Option List"
@@ -288,7 +294,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               return (
                                 <>
                                   <li
-                                    key={`option-grp-ttl-${indx * 4}`}
+                                    key={`option-grp-ttl-${(index + 1) * (indx + 1)}`}
                                     data-testid={`${fieldKey}-opt-${dataIndex}`}
                                     data-index={dataIndex++}
                                     className={`option opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
@@ -298,7 +304,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                                   </li>
                                   {opt.childs.map((opt2, indx2) => (
                                     <li
-                                      key={`opt-grp-child-${indx2 + 9}`}
+                                      key={`opt-grp-child-${(index + 1) * (indx + 1) * (indx2 + 1)}`}
                                       data-testid={`${fieldKey}-opt-${dataIndex}`}
                                       data-dev-option={fieldKey}
                                       data-index={dataIndex++}
@@ -332,7 +338,7 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
                               )
                             } return (
                               <li
-                                key={`option-${indx + 5}`}
+                                key={`option-${(index + 1) * (indx + 1)}`}
                                 data-testid={`${fieldKey}-opt-${dataIndex}`}
                                 data-dev-option={fieldKey}
                                 data-index={dataIndex++}

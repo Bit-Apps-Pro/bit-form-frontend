@@ -211,6 +211,7 @@ export default class BitDropdownField {
         this.setSelectedOption(searchedOption.val)
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
       const selectedCountryIndex = this.#getSelectedOptionIndex()
       const direction = (e.key === 'ArrowDown') ? 'next' : 'previous'
       const optIndex = this.#findNotDisabledOptIndex(selectedCountryIndex, direction)

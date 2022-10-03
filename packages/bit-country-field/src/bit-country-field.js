@@ -271,6 +271,7 @@ export default class BitCountryField {
         this.setSelectedCountryItem(searchedOption.i)
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
       const selectedCountryIndex = this.#getSelectedCountryIndex()
       const direction = (e.key === 'ArrowDown') ? 'next' : 'previous'
       const optIndex = this.#findNotDisabledOptIndex(selectedCountryIndex, direction)

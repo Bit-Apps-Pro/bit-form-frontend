@@ -29,6 +29,8 @@ export default class BitCurrencyField {
 
   #initialOptElm = null
 
+  #currencySelectedFromList = false
+
   #options = []
 
   #document
@@ -38,7 +40,7 @@ export default class BitCurrencyField {
   #assetsURL = ''
 
   #config = {
-    maxHeight: 325,
+    maxHeight: 370,
     searchCurrencyPlaceholder: 'Search Currency',
     noCurrencyFoundText: 'No Currency Found',
     selectedCurrencyClearable: true,
@@ -144,6 +146,7 @@ export default class BitCurrencyField {
 
     if (!numValue || Number.isNaN(numValue)) {
       this.#currencyInputElm.value = ''
+      this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
       return
     }
 
@@ -336,7 +339,7 @@ export default class BitCurrencyField {
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#dropdownWrapperElm
+          focussableEl = this.#currencyInputElm
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
@@ -369,6 +372,7 @@ export default class BitCurrencyField {
         this.setSelectedCurrencyItem(searchedOption.i)
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
       const selectedCurrencyIndex = this.#getSelectedCurrencyIndex()
       const direction = (e.key === 'ArrowDown') ? 'next' : 'previous'
       const optIndex = this.#findNotDisabledOptIndex(selectedCurrencyIndex, direction)
@@ -387,7 +391,7 @@ export default class BitCurrencyField {
 
   #handleClearCurrencyInput() {
     this.#currencyInputElm.value = ''
-    this.value = ''
+    this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
     this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
     this.#triggerEvent(this.#currencyInputElm, 'input')
@@ -413,9 +417,8 @@ export default class BitCurrencyField {
   }
 
   #handleOutsideClick(event) {
-    if (event.target.contains(this.#currencyNumberFieldWrapper)) {
-      this.setMenu({ open: false })
-    }
+    if (this.#currencyNumberFieldWrapper.contains(event.target)) return
+    this.setMenu({ open: false })
   }
 
   #detectCurrencyCodeByInputValue(value) {
@@ -577,10 +580,12 @@ export default class BitCurrencyField {
         this.#setAttribute(li, 'aria-setsize', this.#options.length)
 
         this.#addEvent(li, 'click', e => {
+          this.#currencySelectedFromList = true
           this.setSelectedCurrencyItem(e.currentTarget.dataset.key)
         })
         this.#addEvent(li, 'keyup', e => {
           if (e.key === 'Enter') {
+            this.#currencySelectedFromList = true
             this.setSelectedCurrencyItem(e.currentTarget.dataset.key)
           }
         })
@@ -607,7 +612,7 @@ export default class BitCurrencyField {
     if (this.#config.selectedFlagImage) {
       this.#selectedCurrencyImgElm.src = this.#placeholderImage
     }
-    this.value = ''
+    this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
     this.#reRenderVirtualOptions()
   }
 
@@ -622,6 +627,10 @@ export default class BitCurrencyField {
     if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${this.#assetsURL}${selectedItem.img}`
     this.setMenu({ open: false })
     this.#handleCurrencyInputBlur()
+    if (this.#currencySelectedFromList) {
+      !this.value && this.#currencyInputElm.focus()
+      this.#currencySelectedFromList = false
+    }
   }
 
   #reRenderVirtualOptions() {
@@ -725,7 +734,7 @@ export default class BitCurrencyField {
   }
 
   set value(val) {
-    this.#currencyHiddenInputElm.value = val
+    this.#currencyHiddenInputElm.value = val || ''
   }
 
   get value() {
@@ -740,7 +749,7 @@ export default class BitCurrencyField {
 
   destroy() {
     this.#optionListElm.innerHTML = ''
-    this.value = ''
+    this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
     this.#detachAllEvents()
   }
 
