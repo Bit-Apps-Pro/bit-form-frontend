@@ -3,7 +3,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import { refreshModules } from './ZohoBiginCommonFunc'
 import ZohoBiginNewRecord from './ZohoBiginNewRecord'
 
-export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, handleInput, biginConf, setBiginConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoBiginIntegLayout({
+  tab, settab, formID, formFields, handleInput, biginConf, setBiginConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

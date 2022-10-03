@@ -5,7 +5,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings,
+import {
+  $additionalSettings,
   $breakpointSize,
   $builderHelperStates,
   $builderHookStates,
@@ -26,7 +27,8 @@ import { $additionalSettings,
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows } from '../GlobalStates/GlobalStates'
+  $workflows,
+} from '../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -206,7 +208,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
 
-    const { atomicCssText,
+    const {
+      atomicCssText,
       atomicClassMap,
       lightThemeColors,
       darkThemeColors,
@@ -221,7 +224,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdLightStyles,
       mdDarkStyles,
       smLightStyles,
-      smDarkStyles } = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
+      smDarkStyles,
+    } = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
 
     const allThemeColors = {
       lightThemeColors,

@@ -52,7 +52,9 @@ class Razorpay {
   }
 
   #displayRazorpay = () => {
-    const { currency, amount, amountType, amountFld, name, description, theme, prefill, modal, notes } = this.#config.options
+    const {
+      currency, amount, amountType, amountFld, name, description, theme, prefill, modal, notes,
+    } = this.#config.options
     const { confirm_close } = modal
 
     const totalAmount = Number(amountType === 'fixed' ? amount : this.#getDynamicValue(amountFld)) * 100

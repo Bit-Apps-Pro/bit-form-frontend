@@ -4,7 +4,9 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
 
-export default function EmailNotification({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
+export default function EmailNotification({
+  dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title,
+}) {
   const data = type ? dataConf[type] : dataConf
   const temBody = data?.body ? data?.body : tamplate
 

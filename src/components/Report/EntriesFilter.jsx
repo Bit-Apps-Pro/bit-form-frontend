@@ -30,7 +30,9 @@ export default function EntriesFilter({ fetchData }) {
     }
 
     const { pageIndex, pageSize, sortBy, filters, globalFilter, conditions } = currentReport.details
-    fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter, conditions, entriesFilterByDate })
+    fetchData({
+      pageIndex, pageSize, sortBy, filters, globalFilter, conditions, entriesFilterByDate,
+    })
   }
   console.log('data', data)
 

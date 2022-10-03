@@ -5,7 +5,9 @@ import ZohoRecruitRelatedRecord from './ZohoRecruitRelatedRecord'
 import { refreshModules } from './ZohoRecruitCommonFunc'
 import CloseIcn from '../../../Icons/CloseIcn'
 
-export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields, handleInput, recruitConf, setRecruitConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoRecruitIntegLayout({
+  tab, settab, formID, formFields, handleInput, recruitConf, setRecruitConf, isLoading, setisLoading, setSnackbar,
+}) {
   const addNewRelatedTab = () => {
     const newConf = { ...recruitConf }
 

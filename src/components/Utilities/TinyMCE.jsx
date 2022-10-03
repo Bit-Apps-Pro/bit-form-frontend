@@ -5,7 +5,9 @@ import { loadScript } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
-export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
+export default function TinyMCE({
+  formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins,
+}) {
   const [loaded, setLoaded] = useState(0)
   useEffect(() => { loadTinyMceScript() }, [])
 

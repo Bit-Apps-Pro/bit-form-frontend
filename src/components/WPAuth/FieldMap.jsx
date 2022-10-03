@@ -2,7 +2,9 @@ import { __ } from '../../Utils/i18nwrap'
 import MtInput from '../Utilities/MtInput'
 import { handleFieldMapping } from './HelperFunction'
 
-export default function FieldMap({ i, type, formFields, field, dataConf, setDataConf, customFields }) {
+export default function FieldMap({
+  i, type, formFields, field, dataConf, setDataConf, customFields,
+}) {
   const fldType = {
     login: {
       propName: 'login_map',

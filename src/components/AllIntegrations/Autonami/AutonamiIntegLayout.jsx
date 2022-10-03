@@ -7,7 +7,9 @@ import AutonamiActions from './AutonamiActions'
 import { refreshAutonamiListsAndTags, getAutonamiFields } from './AutonamiCommonFunc'
 import AutonamiFieldMap from './AutonamiFieldMap'
 
-export default function AutonamiIntegLayout({ formID, formFields, autonamiConf, setAutonamiConf, isLoading, setIsLoading, setSnackbar }) {
+export default function AutonamiIntegLayout({
+  formID, formFields, autonamiConf, setAutonamiConf, isLoading, setIsLoading, setSnackbar,
+}) {
   const setTags = (val) => {
     const newConf = { ...autonamiConf }
     newConf.tags = val ? val.split(',') : []

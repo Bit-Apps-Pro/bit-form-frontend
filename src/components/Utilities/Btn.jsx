@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 
-export default function Btn({ children,
+export default function Btn({
+  children,
   className,
   size = 'md',
   variant = 'default',
@@ -8,7 +9,8 @@ export default function Btn({ children,
   gap,
   shadow,
   disabled,
-  onClick }) {
+  onClick,
+}) {
   const { css } = useFela()
   const shado = shadow === true ? 'shadow' : shadow
   return (

@@ -29,7 +29,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       fldConstructor.destroy()
     }
 
-    const { selectedFlagImage,
+    const {
+      selectedFlagImage,
       selectedCountryClearable,
       searchClearable,
       optionFlagImage,
@@ -37,7 +38,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       detectCountryByGeo,
       defaultValue,
       searchPlaceholder,
-      noCountryFoundText } = fieldData.config
+      noCountryFoundText,
+    } = fieldData.config
 
     const configOptions = {
       fieldKey,

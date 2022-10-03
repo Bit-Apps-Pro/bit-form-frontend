@@ -1,6 +1,8 @@
 import { useFela } from 'react-fela'
 
-export default function Input({ w, value, onChange, type, placeholder, name, disabled, className, onBlur }) {
+export default function Input({
+  w, value, onChange, type, placeholder, name, disabled, className, onBlur,
+}) {
   const { css } = useFela()
 
   const cls = {

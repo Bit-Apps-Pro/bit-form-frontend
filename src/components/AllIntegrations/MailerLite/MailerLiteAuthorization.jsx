@@ -9,7 +9,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
 
-export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo }) {
+export default function MailerLiteAuthorization({
+  mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
 

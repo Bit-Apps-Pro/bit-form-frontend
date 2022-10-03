@@ -17,7 +17,8 @@ import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { assignNestedObj, showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker({ title,
+export default function SimpleColorPicker({
+  title,
   stateObjName,
   propertyPath,
   subtitle,
@@ -30,7 +31,8 @@ export default function SimpleColorPicker({ title,
   allowImportant,
   hslaPaths,
   fldKey,
-  canSetVariable }) {
+  canSetVariable,
+}) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const setStyles = useSetRecoilState($styles)
@@ -116,7 +118,9 @@ export default function SimpleColorPicker({ title,
           title={colorStr || `Add ${title}`}
         >
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey, canSetVariable })}
+            onClick={e => showDraggableModal(e, setDraggableModal, {
+              component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey, canSetVariable,
+            })}
             type="button"
             className={css(c.pickrBtn)}
             data-testid={`${modalId}-modal-btn`}

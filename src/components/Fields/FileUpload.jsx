@@ -25,7 +25,9 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       fldConstructor.destroy()
     }
 
-    const { multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow, accept, minFile, maxFile } = fieldData.config
+    const {
+      multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow, accept, minFile, maxFile,
+    } = fieldData.config
 
     const configOptions = {
       fieldKey,

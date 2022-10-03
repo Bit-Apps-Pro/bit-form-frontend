@@ -6,7 +6,9 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, biginConf, setBiginConf, tab }) {
+export default function ZohoBiginFieldMap({
+  i, uploadFields, formFields, field, biginConf, setBiginConf, tab,
+}) {
   const module = tab === 0 ? biginConf.module : biginConf.relatedlists?.[tab - 1]?.module
 
   const bits = useRecoilValue($bits)

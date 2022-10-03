@@ -16,7 +16,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const bits = useRecoilValue($bits)
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCountryClearable,
     searchClearable,
     optionFlagImage,
@@ -26,7 +27,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     searchPlaceholder,
     noCountryFoundText,
     inputFormat,
-    valueFormat } = fieldData.config
+    valueFormat,
+  } = fieldData.config
 
   useEffect(() => {
     if (!phoneNumberWrapElmRef?.current) {

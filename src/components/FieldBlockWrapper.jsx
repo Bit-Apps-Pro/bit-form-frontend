@@ -14,7 +14,8 @@ import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
 import MapComponents_old from './MapComponents_old'
 
-export default function FieldBlockWrapper({ layoutItem,
+export default function FieldBlockWrapper({
+  layoutItem,
   removeLayoutItem,
   cloneLayoutItem,
   fields,
@@ -22,7 +23,8 @@ export default function FieldBlockWrapper({ layoutItem,
   navigateToFieldSettings,
   navigateToStyle,
   handleContextMenu,
-  resizingFld }) {
+  resizingFld,
+}) {
   const styleNavigation = e => {
     e.stopPropagation()
     navigateToStyle(layoutItem.i)

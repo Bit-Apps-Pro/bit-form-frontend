@@ -39,7 +39,9 @@ req: required
 mul: multiple
 */
 
-function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages, resizingFld }) {
+function MapComponents({
+  atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages, resizingFld,
+}) {
   const styles = useRecoilValue($styles)
 
   switch (atts?.typ) {

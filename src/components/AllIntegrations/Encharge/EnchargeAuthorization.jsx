@@ -12,7 +12,9 @@ import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
 
-export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
+export default function EnchargeAuthorization({
+  formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)

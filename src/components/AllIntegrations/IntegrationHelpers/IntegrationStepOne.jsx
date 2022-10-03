@@ -9,7 +9,9 @@ import CopyText from '../../Utilities/CopyText'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 
-export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
+export default function IntegrationStepOne({
+  step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children,
+}) {
   const { css } = useFela()
   const bits = useRecoilValue($bits)
   const { siteURL } = bits

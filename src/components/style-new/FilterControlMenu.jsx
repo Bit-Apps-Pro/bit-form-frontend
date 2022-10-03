@@ -10,7 +10,9 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CssPropertyList from './CssPropertyList'
-import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, unitConverter } from './styleHelpers'
+import {
+  getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, unitConverter,
+} from './styleHelpers'
 
 export default function FilterControlMenu({ title = 'Filters', objectPaths, id }) {
   const { css } = useFela()

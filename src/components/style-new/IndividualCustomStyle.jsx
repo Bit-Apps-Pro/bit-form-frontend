@@ -36,7 +36,9 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
-import { addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
+import {
+  addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter,
+} from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'
 import TransformControl from './TransformControl'

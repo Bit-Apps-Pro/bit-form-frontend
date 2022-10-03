@@ -22,7 +22,9 @@ import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ className, id, type, title, tipTitle, defaultMsg, allowIcons = true }) {
+export default function ErrorMessageSettings({
+  className, id, type, title, tipTitle, defaultMsg, allowIcons = true,
+}) {
   const [errorModal, setErrorModal] = useState(false)
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)

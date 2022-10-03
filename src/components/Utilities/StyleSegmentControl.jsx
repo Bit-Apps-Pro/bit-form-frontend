@@ -4,7 +4,8 @@ import { __ } from '../../Utils/i18nwrap'
 import { lowerCaseAllAndReplaceSpaceToHipen } from '../style-new/styleHelpers'
 import Tip from './Tip'
 
-export default function StyleSegmentControl({ defaultActive,
+export default function StyleSegmentControl({
+  defaultActive,
   className,
   options,
   size = 100,
@@ -16,7 +17,8 @@ export default function StyleSegmentControl({ defaultActive,
   activeShow,
   noShadow,
   defaultItmWidth,
-  wideTab }) {
+  wideTab,
+}) {
   const { css } = useFela()
   const baseSize = Number(size)
   const floor = (number) => (Math.floor(baseSize / number))

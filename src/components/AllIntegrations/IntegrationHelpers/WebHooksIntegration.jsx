@@ -12,7 +12,9 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Btn from '../../Utilities/Btn'
 import Button from '../../Utilities/Button'
 
-export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
+export default function WebHooksLayouts({
+  formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo,
+}) {
   const getUrlParams = url => url?.match(/(\?|&)([^=]+)=([^&]+|)/gi)
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']

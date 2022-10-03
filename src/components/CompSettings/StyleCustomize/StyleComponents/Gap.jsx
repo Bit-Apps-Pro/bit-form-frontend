@@ -11,7 +11,9 @@ const spreadIn2Val = value => {
   return value
 }
 
-export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
+export default function Gap({
+  style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID,
+}) {
   let gridGap = style[`._frm-g-${formID}`]?.gap || '0px 0px'
   gridGap = spreadIn2Val(gridGap)
 

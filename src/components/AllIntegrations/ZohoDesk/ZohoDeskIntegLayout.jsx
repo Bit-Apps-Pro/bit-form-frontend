@@ -5,7 +5,9 @@ import ZohoDeskActions from './ZohoDeskActions'
 import { refreshDepartments, refreshFields, refreshOrganizations } from './ZohoDeskCommonFunc'
 import ZohoDeskFieldMap from './ZohoDeskFieldMap'
 
-export default function ZohoDeskIntegLayout({ formID, formFields, handleInput, deskConf, setDeskConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoDeskIntegLayout({
+  formID, formFields, handleInput, deskConf, setDeskConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

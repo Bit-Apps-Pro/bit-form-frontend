@@ -22,7 +22,9 @@ const DragHandle = SortableHandle(({ className }) => (
   <span className={`handle ${className}`}><DragIcn size={14} /></span>
 ))
 
-const SortableItem = SortableElement(({ value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault }) => {
+const SortableItem = SortableElement(({
+  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault,
+}) => {
   const { css } = useFela()
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
@@ -221,7 +223,9 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
   )
 })
 
-export default function VisualOptionsTab({ optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup }) {
+export default function VisualOptionsTab({
+  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup,
+}) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
 

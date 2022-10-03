@@ -50,10 +50,12 @@ export default function DropdownFieldSettings() {
   const { optionsList } = fieldData
   const listLength = optionsList.length
 
-  const { selectedOptImage, selectedOptClearable, searchClearable,
+  const {
+    selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
     showSearchPh,
-    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList } = fieldData.config
+    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList,
+  } = fieldData.config
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val

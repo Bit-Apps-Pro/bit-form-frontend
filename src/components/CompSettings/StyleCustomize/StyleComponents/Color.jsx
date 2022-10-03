@@ -14,7 +14,9 @@ const setPlceholderPseudo = (browserPrefix, cls) => {
   return `${clss.join(`:${browserPrefix}placeholder,`)}:${browserPrefix}placeholder`
 }
 
-export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
+export default function Color({
+  style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID,
+}) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
   const clr = style?.[pcls]?.color || style?.[cls]?.color
   const placeholderClr = style?.[setPlceholderPseudo(':', pcls)]?.color || style?.[setPlceholderPseudo(':', cls)]?.color

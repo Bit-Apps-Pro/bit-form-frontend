@@ -7,7 +7,9 @@ import ZohoRecruitActions from './ZohoRecruitActions'
 import { handleTabChange } from './ZohoRecruitCommonFunc'
 import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
 
-export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, recruitConf, setRecruitConf, isLoading, setSnackbar }) {
+export default function ZohoRecruitNewRecord({
+  tab, settab, formID, formFields, recruitConf, setRecruitConf, isLoading, setSnackbar,
+}) {
   useEffect(() => {
     handleTabChange(0, settab)
     // eslint-disable-next-line react-hooks/exhaustive-deps

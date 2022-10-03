@@ -4,7 +4,9 @@ import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 
-function CustomFileUpload({ accept, onChange, name, multiple = false, iconShow, title = 'Choose/Drop your file', fileUploadStyle = { w: '100%', H: '50' } }) {
+function CustomFileUpload({
+  accept, onChange, name, multiple = false, iconShow, title = 'Choose/Drop your file', fileUploadStyle = { w: '100%', H: '50' },
+}) {
   const { css } = useFela()
 
   const fileInpue = useRef(null)

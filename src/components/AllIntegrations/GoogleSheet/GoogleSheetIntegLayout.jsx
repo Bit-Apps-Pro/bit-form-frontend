@@ -4,7 +4,9 @@ import { addFieldMap } from '../IntegrationHelpers/GoogleIntegrationHelpers'
 import { refreshSpreadsheets, refreshWorksheetHeaders, refreshWorksheets } from './GoogleSheetCommonFunc'
 import GoogleSheetFieldMap from './GoogleSheetFieldMap'
 
-export default function GoogleSheetIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar }) {
+export default function GoogleSheetIntegLayout({
+  formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar,
+}) {
   // console.log('sheetConf', sheetConf)
   return (
     <>

@@ -3,7 +3,9 @@ import app from '../../styles/app.style'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from './Modal'
 
-function ConfirmModal({ close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning }) {
+function ConfirmModal({
+  close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning,
+}) {
   const { css } = useFela()
   return (
     <Modal

@@ -16,13 +16,15 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const bits = useRecoilValue($bits)
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCurrencyClearable,
     searchClearable,
     optionFlagImage,
     defaultCurrencyKey,
     searchPlaceholder,
-    noCurrencyFoundText } = fieldData.config
+    noCurrencyFoundText,
+  } = fieldData.config
 
   useEffect(() => {
     if (!currencyWrapElmRef?.current) {

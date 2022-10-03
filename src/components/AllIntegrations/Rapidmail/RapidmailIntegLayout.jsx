@@ -4,7 +4,9 @@ import RapidmailActions from './RapidmailActions'
 import { getAllRecipient } from './RapidmailCommonFunc'
 import RapidmailFieldMap from './RapidmailFieldMap'
 
-export default function RapidmailIntegLayout({ formFields, handleInput, rapidmailConf, setRapidmailConf, isLoading, setIsLoading, setSnackbar }) {
+export default function RapidmailIntegLayout({
+  formFields, handleInput, rapidmailConf, setRapidmailConf, isLoading, setIsLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

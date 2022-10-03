@@ -6,7 +6,9 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import GetgistActions from './GetgistActions'
 import GetgistFieldMap from './GetgistFieldMap'
 
-export default function GetgistIntegLayout({ formFields, getgistConf, setGetgistConf, isLoading, setIsLoading, error, setError }) {
+export default function GetgistIntegLayout({
+  formFields, getgistConf, setGetgistConf, isLoading, setIsLoading, error, setError,
+}) {
   const contactTypes = [
     { key: 'User', label: 'User' },
     { key: 'Lead', label: 'Lead' },

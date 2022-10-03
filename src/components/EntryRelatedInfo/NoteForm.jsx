@@ -7,7 +7,9 @@ import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import TinyMCE from '../Utilities/TinyMCE'
 
-export default function NoteForm({ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }) {
+export default function NoteForm({
+  formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData,
+}) {
   const editMode = Boolean(data.noteID)
   const { css } = useFela()
   const [isLoading, setIsLoading] = useState(false)

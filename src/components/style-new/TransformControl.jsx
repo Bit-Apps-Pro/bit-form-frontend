@@ -16,7 +16,8 @@ import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { assignNestedObj, showDraggableModal } from './styleHelpers'
 
-export default function TransformControl({ title,
+export default function TransformControl({
+  title,
   stateObjName,
   propertyPath,
   subtitle,
@@ -27,7 +28,8 @@ export default function TransformControl({ title,
   deleteable,
   delPropertyHandler,
   allowImportant,
-  fldKey }) {
+  fldKey,
+}) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const setStyles = useSetRecoilState($styles)
@@ -89,7 +91,9 @@ export default function TransformControl({ title,
         )}
         <div title={value || 'Configure'} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transform-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, {
+              component: 'transform-control', width: 250, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey,
+            })}
             type="button"
             className={css(c.pickrBtn)}
             data-testid={`${modalId}-modal-btn`}

@@ -8,7 +8,9 @@ import sc from '../../styles/commonStyleEditorStyle'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
+import {
+  getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter,
+} from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths, id }) {
   const { css } = useFela()

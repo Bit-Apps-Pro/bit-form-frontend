@@ -267,14 +267,16 @@ export function highlightElm(selector, selectType = 'element padding margin') {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
-    const { marginRight,
+    const {
+      marginRight,
       marginBottom,
       marginLeft,
       marginTop,
       paddingLeft,
       paddingRight,
       paddingTop,
-      paddingBottom } = getAbsoluteSize(elm)
+      paddingBottom,
+    } = getAbsoluteSize(elm)
     const { top, left, height, width } = elm.getBoundingClientRect()
 
     marginDiv.style.width = `${width + marginRight + marginLeft}px`

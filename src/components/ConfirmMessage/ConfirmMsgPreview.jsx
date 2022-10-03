@@ -9,7 +9,9 @@ import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 import confirmMsgCssStyles from './confirmMsgCssStyles'
 
-export default function ConfirmMsgPreview({ index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles }) {
+export default function ConfirmMsgPreview({
+  index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles,
+}) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)
   const { formID } = useParams()
   const setAllConf = useSetRecoilState($confirmations)

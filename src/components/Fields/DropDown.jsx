@@ -10,7 +10,9 @@ import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid 
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
-function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder }) {
+function DropDown({
+  fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder,
+}) {
   const dropdownWrapElmRef = useRef(null)
   const dropdownFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
@@ -28,7 +30,9 @@ function DropDown({ fieldKey, formID, styleClasses, attr, onBlurHandler, resetFi
       fldConstructor.destroy()
     }
 
-    const { selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect } = fieldData.config
+    const {
+      selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect,
+    } = fieldData.config
 
     const configOptions = {
       fieldKey,

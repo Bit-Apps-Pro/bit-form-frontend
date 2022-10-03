@@ -7,7 +7,9 @@ import SendinBlueActions from './SendinBlueActions'
 import { refreshLists, refreshSendinBlueHeader, refreshTemplate } from './SendinBlueCommonFunc'
 import SendinBlueFieldMap from './SendinBlueFieldMap'
 
-export default function SendinBlueIntegLayout({ formFields, sendinBlueConf, setSendinBlueConf, isLoading, setisLoading, setSnackbar, error, setError }) {
+export default function SendinBlueIntegLayout({
+  formFields, sendinBlueConf, setSendinBlueConf, isLoading, setisLoading, setSnackbar, error, setError,
+}) {
   const lists = (val) => {
     const newConf = { ...sendinBlueConf }
     if (val) {
