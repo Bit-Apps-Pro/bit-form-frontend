@@ -25,8 +25,8 @@ export default function TextArea({
   const labelWrpHeight = lblWrp?.offsetHeight
   const hlpTxt = inputFldWrp?.parentElement?.children[1]
   const hlpTxtHeight = hlpTxt?.offsetHeight || 0
-  const fld = inputFldWrp.children[0]
-  const parentHight = getNumFromStr(fldWrp?.parentElement.style.height) || 0
+  const fld = inputFldWrp?.children[0]
+  const parentHight = getNumFromStr(fldWrp?.parentElement?.style.height) || 0
   let height = ''
   const convertStrToNum = (str) => Number(getNumFromStr(str)) || 0
 
@@ -39,7 +39,7 @@ export default function TextArea({
     let lblWrpSpacing = {}
     if (attr.lbl && themeVars['--fld-wrp-dis'] === 'block') {
       lblWrpSpacing = window.getComputedStyle(lblWrp)
-      lblWrpSpacing.height = labelWrpHeight
+      lblWrpSpacing.clientHeight = labelWrpHeight
     }
     let hlpTxtSpacing = {}
     if (attr.helperTxt || attr.hlpPreIcn || attr.hlpSufIcn) {
@@ -47,7 +47,7 @@ export default function TextArea({
     }
 
     const removableSpace = (
-      Number(lblWrpSpacing?.height || 0)
+      Number(lblWrpSpacing?.clientHeight || 0)
       + Number(hlpTxtHeight || 0)
       + convertStrToNum(fldWrpPaddingTop)
       + convertStrToNum(fldWrapPaddingBottom)
