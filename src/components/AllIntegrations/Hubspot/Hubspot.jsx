@@ -104,7 +104,7 @@ function Hubspot({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => nextPage(3)}
           disabled={!hubspotConf?.actionName}
           className={css(ut.ftRight)}

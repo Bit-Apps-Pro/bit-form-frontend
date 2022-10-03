@@ -113,7 +113,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
         {!isInfo && (
           <>
             <Btn
-              varient="success"
+              variant="success"
               onClick={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)}
               className={css(ut.mt3, { ml: 3 })}
               disabled={isAuthorized}
@@ -125,7 +125,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
             <Btn
               onClick={() => nextPage(2)}
               className={css(ut.ftRight)}
-              varient="success"
+              variant="success"
               disabled={!isAuthorized}
             >
               {__('Next')}

@@ -1,18 +1,13 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { fetchAllList, handleAuthorize } from './AcumbamailCommonFunc'
 
-export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function AcumbamailAuthorization({ acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
-  const { css } = useFela()
   const [error, setError] = useState({ dataCenter: '', clientId: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -54,7 +49,15 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
       <small className="d-blk mt-3">
         {__('To Get Auth token, Please Visit')}
         &nbsp;
-        <a className="btcd-link" href="https://acumbamail.com/en/apidoc/" target="_blank" rel="noreferrer">{__('Acumbamail documentation')}</a>
+        <a
+          className="btcd-link"
+          href="https://acumbamail.com/en/apidoc/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Acumbamail documentation')}
+
+        </a>
       </small>
 
       <div className="mt-3"><b>{__('Auth Token:', 'bit-integrations')}</b></div>
@@ -71,10 +74,10 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
 
       {!isInfo && (
         <>
-          <Btn
-            varient="success"
-            className={css(ut.mt2)}
-            onClick={() => handleAuthorize(
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+            handleAuthorize={() => handleAuthorize(
               acumbamailConf,
               setAcumbamailConf,
               setError,
@@ -82,21 +85,12 @@ export default function AcumbamailAuthorization({ formID, acumbamailConf, setAcu
               setIsLoading,
               setSnackbar,
             )}
-            disabled={isAuthorized || isLoading}
-          >
-            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-            {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-          </Btn>
+          />
           <br />
-          <Btn
-            varient="success"
-            onClick={nextPage}
+          <NextBtn
+            nextPageHanlder={() => nextPage()}
             disabled={!isAuthorized}
-            className={css(ut.ftRight)}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </Btn>
+          />
         </>
       )}
     </div>

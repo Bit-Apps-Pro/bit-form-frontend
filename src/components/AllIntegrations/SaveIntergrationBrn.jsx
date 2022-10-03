@@ -4,7 +4,7 @@ import Btn from '../Utilities/Btn'
 export default function SaveIntergrationBrn({ onClick }) {
   return (
     <Btn
-      varient="success"
+      variant="success"
       onClick={onClick}
     >
       {__('Save')}

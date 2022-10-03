@@ -1,16 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
-import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import ActiveCampaignAuthorization from './ActiveCampaignAuthorization'
 import { checkMappedFields } from './ActiveCampaignCommonFunc'
 import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
@@ -21,7 +17,6 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const { css } = useFela()
   const [activeCampaingConf, setActiveCampaingConf] = useState({
     name: 'Active Campaign API',
     type: 'ActiveCampaign',
@@ -89,15 +84,10 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button> */}
-        <Btn
-          varient="success"
-          onClick={() => nextPage(3)}
+        <NextBtn
+          nextPage={() => nextPage(3)}
           disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
-        >
-          {__('Next')}
-          &nbsp;
-          <BackIcn className="ml-1 rev-icn" />
-        </Btn>
+        />
       </div>
 
       {/* STEP 3 */}

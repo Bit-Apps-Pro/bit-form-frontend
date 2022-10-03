@@ -29,7 +29,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       fldConstructor.destroy()
     }
 
-    const { selectedFlagImage,
+    const {
+      selectedFlagImage,
       selectedCountryClearable,
       searchClearable,
       optionFlagImage,
@@ -37,7 +38,8 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       detectCountryByGeo,
       defaultValue,
       searchPlaceholder,
-      noCountryFoundText } = fieldData.config
+      noCountryFoundText,
+    } = fieldData.config
 
     const configOptions = {
       fieldKey,
@@ -239,7 +241,16 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   tabIndex="-1"
                   role="listbox"
                   aria-label="country list"
-                />
+                >
+                  <li className="option">
+                    <span className="opt-prefix">Prefix</span>
+                    <span className="opt-lbl-wrp">
+                      <img className="opt-icn" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>" alt="Placeholder" />
+                      <span className="opt-lbl">Option</span>
+                    </span>
+                    <span className="opt-suffix">Suffix</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

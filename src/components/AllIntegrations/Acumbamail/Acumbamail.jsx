@@ -1,16 +1,11 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
-import app from '../../../styles/app.style'
-import { __ } from '../../../Utils/i18nwrap'
-import Btn from '../../Utilities/Btn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import NextBtn from '../NextBtn'
 import AcumbamailAuthorization from './AcumbamailAuthorization'
 import { checkMappedFields, handleInput } from './AcumbamailCommonFunc'
 import AcumbamailIntegLayout from './AcumbamailIntegLayout'
@@ -18,7 +13,6 @@ import AcumbamailIntegLayout from './AcumbamailIntegLayout'
 function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
-  const { css } = useFela()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -95,15 +89,11 @@ function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
-        <Btn
-          varient="success"
-          onClick={() => nextPage(3)}
+
+        <NextBtn
+          nextPageHanlder={() => nextPage(3)}
           disabled={!acumbamailConf.mainAction || !checkMappedFields(acumbamailConf)}
-          className={css(ut.ftRight)}
-        >
-          {__('Next')}
-          <BackIcn className="ml-1 rev-icn" />
-        </Btn>
+        />
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree

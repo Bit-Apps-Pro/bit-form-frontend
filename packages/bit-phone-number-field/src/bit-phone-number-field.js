@@ -19,6 +19,8 @@ export default class BitPhoneNumberField {
 
   #selectedCountryCode = null
 
+  #searchWrpElm = null
+
   #searchInputElm = null
 
   #phoneInnerWrp = null
@@ -28,6 +30,8 @@ export default class BitPhoneNumberField {
   #clearSearchBtnElm = null
 
   #optionListElm = null
+
+  #initialOptElm = null
 
   #options = []
 
@@ -44,6 +48,7 @@ export default class BitPhoneNumberField {
     searchCountryPlaceholder: 'Search Country',
     noCountryFoundText: 'No Country Found',
     searchClearable: true,
+    defaultCountryKey: '',
     attributes: {},
     classNames: {},
   }
@@ -83,27 +88,33 @@ export default class BitPhoneNumberField {
     this.#phoneHiddenInputElm = this.#select(`.${this.fieldKey}-phone-hidden-input`)
     this.#clearPhoneInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`) || {}
+    this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
+    this.#initialOptElm = this.#select('.option')
+    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
+    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#phoneNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
-    this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
-    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
-    if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
-    this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
-
     this.#handleDefaultPhoneInputValue()
+
+    this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
+    this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
+    this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
+    if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
 
     this.#generateOptions()
+
+    if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
     if (this.#config.searchClearable) {
       this.#searchInputElm.style.paddingRight = '25px'
@@ -113,6 +124,8 @@ export default class BitPhoneNumberField {
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
     this.#placeholderImage = this.#config.placeholderImage ? this.#config.placeholderImage : this.#placeholderImage
+
+    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
@@ -123,9 +136,9 @@ export default class BitPhoneNumberField {
   }
 
   #handleDefaultPhoneInputValue() {
-    if (this.#phoneInputElm.value) {
-      this.#triggerEvent(this.#phoneInputElm, 'input')
-    }
+    if (!this.#phoneHiddenInputElm.value) return
+    this.#handleHiddenInputValueChange('', this.#phoneHiddenInputElm.value)
+    if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'grid'
   }
 
   #detectCountryCodeFromIpAddress() {
@@ -162,18 +175,18 @@ export default class BitPhoneNumberField {
       if (e.key === 'ArrowDown' || (!e.shiftKey && e.key === 'Tab')) {
         e.preventDefault()
         if (activeEl === this.#searchInputElm) {
-          focussableEl = this.#select(`.${this.fieldKey}-option:not(.${this.fieldKey}-disabled-opt)`)
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+          focussableEl = this.#select('.option:not(.disabled-opt)')
+        } else if (activeEl.classList.contains('option')) {
           const nextIndex = this.#findNotDisabledOptIndex(activeIndex, 'next')
           const nextElm = this.#selectOptElmByIndex(nextIndex)
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#options.length) {
-            this.virtualOptionList?.scrollToIndex(nextIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(nextIndex)
             setTimeout(() => {
               const nextElm2 = this.#selectOptElmByIndex(nextIndex)
               if (nextElm2) nextElm2.focus()
-            }, 0)
+            }, 50)
           }
         }
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
@@ -183,17 +196,17 @@ export default class BitPhoneNumberField {
           if (this.#isMenuOpen()) {
             this.setMenu({ open: false })
           }
-        } else if (activeEl.classList.contains(`${this.fieldKey}-option`)) {
+        } else if (activeEl.classList.contains('option')) {
           const prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous')
           const prevElm = this.#selectOptElmByIndex(prevIndex)
           if (prevElm) {
             focussableEl = prevElm
           } else if (prevIndex > 0) {
-            this.virtualOptionList?.scrollToIndex(prevIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(prevIndex)
             setTimeout(() => {
               const prevElm2 = this.#selectOptElmByIndex(prevIndex)
               if (prevElm2) prevElm2.focus()
-            }, 0)
+            }, 50)
           } else if (!prevElm) {
             focussableEl = this.#searchInputElm
           }
@@ -235,7 +248,7 @@ export default class BitPhoneNumberField {
   }
 
   #selectOptElmByIndex(index) {
-    return this.#select(`.${this.fieldKey}-option-list .${this.fieldKey}-option[data-index="${index}"]`)
+    return this.#select(`.${this.fieldKey}-option-list .option[data-index="${index}"]`)
   }
 
   #findNotDisabledOptIndex(activeIndex = -1, direction) {
@@ -301,11 +314,14 @@ export default class BitPhoneNumberField {
     const searchedCountryCode = this.#detectCountryCodeByInputValue(newVal)
     if (searchedCountryCode && oldVal !== newVal) {
       this.#handlePhoneValue(this.#unformatPhoneNumber(newVal))
-      // this.#triggerEvent(this.#phoneInputElm, 'input')
     }
     if (typeof bit_conditionals !== 'undefined') {
       bit_conditionals({ target: this.#phoneHiddenInputElm })
     }
+  }
+
+  #handlePhoneInputBlur() {
+    if (this.value.length > 3) this.#phoneInputElm.value = this.value
   }
 
   #handlePhoneInput(e) {
@@ -343,9 +359,10 @@ export default class BitPhoneNumberField {
 
       if (valueFormat) {
         const unformattedPhoneNumber = this.#unformatPhoneNumber(value)
-        this.value = this.#formatPhoneNumber(code, unformattedPhoneNumber, valueFormat)
+        const formattedValue = this.#formatPhoneNumber(code, unformattedPhoneNumber, valueFormat)
+        this.#setAttribute(this.#phoneHiddenInputElm, 'value', formattedValue)
       } else {
-        this.value = formattedInputValue
+        this.#setAttribute(this.#phoneHiddenInputElm, 'value', value)
       }
 
       this.#phoneInputElm.value = formattedInputValue
@@ -436,9 +453,9 @@ export default class BitPhoneNumberField {
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
-      height: this.#config.maxHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#options.length,
-      rowHeight: 31,
+      rowHeight: this.rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]
@@ -572,6 +589,7 @@ export default class BitPhoneNumberField {
   }
 
   setSelectedCountryItem(countryKey) {
+    this.value = ''
     this.#selectedCountryCode = countryKey
     if (!this.#selectedCountryCode) {
       this.#clearSelectedCountry()
@@ -583,7 +601,7 @@ export default class BitPhoneNumberField {
     this.#selectedCountryImgElm.src = `${this.#assetsURL}/${selectedItem.img}`
     this.#setNewCountryCodeWithInputValue(selectedItem.code)
     this.setMenu({ open: false })
-    this.#phoneInputElm.focus()
+    if (this.#countrySelectedFromList) this.#phoneInputElm.focus()
   }
 
   #reRenderVirtualOptions() {
@@ -597,7 +615,7 @@ export default class BitPhoneNumberField {
 
   #handleSearchInput(e) {
     if (e.key === 'Enter' && this.#options.length) {
-      const optKey = this.#select(`.${this.fieldKey}-option`)?.dataset.key
+      const optKey = this.#select('.option')?.dataset.key
       this.setSelectedCountryItem(optKey)
       this.searchOptions('')
     } else {

@@ -101,7 +101,7 @@ export default function GroundhoggFieldMap({ i, formFields, field, groundhoggCon
                 type="button"
                 aria-label="button"
               >
-                <span className="btcd-icn icn-trash-2" />
+                <TrashIcn size="15" />
               </button>
             </>
           )

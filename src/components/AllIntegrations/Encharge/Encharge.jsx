@@ -73,7 +73,7 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
           setEnchargeConf={setEnchargeConf}
         />
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => nextPage(3)}
           disabled={enchargeConf.field_map.length < 1}
           className={css(ut.ftRight)}

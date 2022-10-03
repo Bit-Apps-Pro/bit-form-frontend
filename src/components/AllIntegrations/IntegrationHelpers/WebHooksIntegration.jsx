@@ -246,7 +246,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
               <BackIcn className="ml-1 rev-icn" />
             </button> */}
             <Btn
-              varient="success"
+              variant="success"
               onClick={() => nextPage()}
               type="button"
             >

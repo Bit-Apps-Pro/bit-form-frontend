@@ -13,6 +13,8 @@ export default class BitCountryField {
 
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
 
+  #searchWrpElm
+
   #searchInputElm
 
   #clearSearchBtnElm
@@ -20,6 +22,8 @@ export default class BitCountryField {
   #optionWrapperElm
 
   #optionListElm
+
+  #initialOptElm
 
   #selectedCountryCode = ''
 
@@ -113,14 +117,18 @@ export default class BitCountryField {
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
+    this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
+    this.#initialOptElm = this.#select('.option')
+    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
+    this.#initialOptElm?.remove()
 
     this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
-    this.#defaultValue && this.setSelectedCountryItem(this.#defaultValue)
+    this.#defaultValue && this.#setDefaultValue()
     this.#setCountryNameFromURL()
 
     this.#addEventListenersToElm()
@@ -149,6 +157,16 @@ export default class BitCountryField {
     }
 
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+  }
+
+  #setDefaultValue() {
+    const countryObj = this.#initialOptions.find(c => {
+      const searchVal = this.#defaultValue
+      const keyFound = c.i === searchVal
+      if (!keyFound) return c.val ? (c.val === searchVal) : (c.lbl === searchVal)
+      return true
+    })
+    this.setSelectedCountryItem(countryObj.i)
   }
 
   #setCountryNameFromURL() {
@@ -210,11 +228,11 @@ export default class BitCountryField {
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#listOptions.length) {
-            this.virtualOptionList?.scrollToIndex(nextIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(nextIndex)
             setTimeout(() => {
               const nextElm2 = this.#selectOptElmByIndex(nextIndex)
               if (nextElm2) nextElm2.focus()
-            }, 0)
+            }, 50)
           }
         }
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
@@ -230,11 +248,11 @@ export default class BitCountryField {
           if (prevElm) {
             focussableEl = prevElm
           } else if (prevIndex > 0) {
-            this.virtualOptionList?.scrollToIndex(prevIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(prevIndex)
             setTimeout(() => {
               const prevElm2 = this.#selectOptElmByIndex(prevIndex)
               if (prevElm2) prevElm2.focus()
-            }, 0)
+            }, 50)
           } else if (!prevElm) {
             focussableEl = this.#searchInputElm
           }
@@ -376,15 +394,12 @@ export default class BitCountryField {
     }
   }
 
-  #getRowHeight = () => 27
-
   #generateOptions() {
-    const height = this.#getRowHeight()
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
-      height: this.#maxHeight,
+      height: (this.#maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#listOptions.length,
-      rowHeight: height,
+      rowHeight: this.rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#listOptions[index]

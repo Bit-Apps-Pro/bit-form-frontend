@@ -15,6 +15,8 @@ export default class BitCurrencyField {
 
   #selectedCurrencyCode = null
 
+  #searchWrpElm = null
+
   #searchInputElm = null
 
   #currencyInnerWrp = null
@@ -25,6 +27,8 @@ export default class BitCurrencyField {
 
   #optionListElm = null
 
+  #initialOptElm = null
+
   #options = []
 
   #document
@@ -34,7 +38,7 @@ export default class BitCurrencyField {
   #assetsURL = ''
 
   #config = {
-    maxHeight: 370,
+    maxHeight: 325,
     searchCurrencyPlaceholder: 'Search Currency',
     noCurrencyFoundText: 'No Currency Found',
     selectedCurrencyClearable: true,
@@ -86,19 +90,23 @@ export default class BitCurrencyField {
     this.#currencyHiddenInputElm = this.#select(`.${this.fieldKey}-currency-hidden-input`)
     this.#clearCurrencyInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
     this.#selectedCurrencyImgElm = this.#select(`.${this.fieldKey}-selected-currency-img`)
+    this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
+    this.#initialOptElm = this.#select('.option')
+    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
+    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#currencyNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
     this.#addEvent(this.#dropdownWrapperElm, 'keyup', e => { this.#handleDropdownClick(e) })
 
-    this.#addEvent(this.#currencyInputElm, 'focus', e => { this.#handleCurrencyInputFocus() })
-    this.#addEvent(this.#currencyInputElm, 'blur', e => { this.#handleCurrencyInputBlur() })
+    this.#addEvent(this.#currencyInputElm, 'focus', () => { this.#handleCurrencyInputFocus() })
+    this.#addEvent(this.#currencyInputElm, 'blur', () => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
 
     observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
@@ -153,6 +161,7 @@ export default class BitCurrencyField {
     const { defaultCurrencyKey } = this.#config
     const { formatter, roundToClosestInteger, showCurrencySymbol, currencyPosition, symbolPosition } = formatOptions
     const currency = selected?.i || defaultCurrencyKey
+    if (!currency) return numValue
 
     if (roundToClosestInteger) {
       numValue = this.#roundNumbers(numValue)
@@ -295,9 +304,8 @@ export default class BitCurrencyField {
   }
 
   #handleDefaultCurrencyInputValue() {
-    if (this.#currencyInputElm.value) {
-      this.#triggerEvent(this.#currencyInputElm, 'input')
-    }
+    if (!this.#currencyHiddenInputElm.value) return
+    this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
   }
 
   #handleKeyboardNavigation(e) {
@@ -318,11 +326,11 @@ export default class BitCurrencyField {
           if (nextElm) {
             focussableEl = nextElm
           } else if ((nextIndex + 1) < this.#options.length) {
-            this.virtualOptionList?.scrollToIndex(nextIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(nextIndex)
             setTimeout(() => {
               const nextElm2 = this.#selectOptElmByIndex(nextIndex)
               if (nextElm2) nextElm2.focus()
-            }, 0)
+            }, 50)
           }
         }
       } else if (e.key === 'ArrowUp' || (e.shiftKey && e.key === 'Tab')) {
@@ -338,11 +346,11 @@ export default class BitCurrencyField {
           if (prevElm) {
             focussableEl = prevElm
           } else if (prevIndex > 0) {
-            this.virtualOptionList?.scrollToIndex(prevIndex, 'center')
+            this.virtualOptionList?.scrollToIndex(prevIndex)
             setTimeout(() => {
               const prevElm2 = this.#selectOptElmByIndex(prevIndex)
               if (prevElm2) prevElm2.focus()
-            }, 0)
+            }, 50)
           } else if (!prevElm) {
             focussableEl = this.#searchInputElm
           }
@@ -379,6 +387,7 @@ export default class BitCurrencyField {
 
   #handleClearCurrencyInput() {
     this.#currencyInputElm.value = ''
+    this.value = ''
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
     this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
     this.#triggerEvent(this.#currencyInputElm, 'input')
@@ -416,7 +425,7 @@ export default class BitCurrencyField {
   #handleHiddenInputValueChange(oldVal, newVal) {
     const searchedCurrencyCode = this.#detectCurrencyCodeByInputValue(newVal)
     const validCurrencyCode = this.#config.options.find(item => item.i === searchedCurrencyCode)
-    if (((searchedCurrencyCode && validCurrencyCode) || !searchedCurrencyCode) && oldVal !== newVal) {
+    if (((searchedCurrencyCode && validCurrencyCode) || (!searchedCurrencyCode && this.#config.defaultCurrencyKey)) && oldVal !== newVal) {
       this.setSelectedCurrencyItem(searchedCurrencyCode || this.#config.defaultCurrencyKey)
       const { decimalSeparator } = this.#config.valueFormatOptions
       const [numberPart, decimalPart] = newVal.split(decimalSeparator)
@@ -437,7 +446,7 @@ export default class BitCurrencyField {
     if ((numValue < minValue) || (numValue > maxValue)) {
       return false
     }
-    this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue)
+    this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue || '')
     if (this.#config.selectedCurrencyClearable) {
       if (numValue) {
         this.#clearCurrencyInputElm.style.display = 'grid'
@@ -484,9 +493,9 @@ export default class BitCurrencyField {
   #generateOptions() {
     const selectedIndex = this.#getSelectedCurrencyIndex()
     this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
-      height: this.#config.maxHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#options.length,
-      rowHeight: 31,
+      rowHeight: this.rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]
@@ -626,7 +635,7 @@ export default class BitCurrencyField {
 
   #handleSearchInput(e) {
     if (e.key === 'Enter' && this.#options.length) {
-      const optKey = this.#select(`.${this.fieldKey}option`)?.dataset.key
+      const optKey = this.#select('.option')?.dataset.key
       this.setSelectedCurrencyItem(optKey)
       this.searchOptions('')
     } else {

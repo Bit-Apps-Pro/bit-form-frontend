@@ -1,15 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
-import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import SaveIntergrationBrn from '../SaveIntergrationBrn'
 import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshAcfFields } from './AcfHelperFunction'
 import FieldMap from './FieldMap'
 
@@ -22,7 +20,6 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
   const [users, setUsers] = useState([])
   const [data, setData] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
-  const { css } = useFela()
 
   useEffect(() => {
     bitsFetch({}, 'bitforms_get_post_type').then((res) => {
@@ -331,7 +328,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         {__('Save')}
         {' '}
       </button> */}
-      <Btn varient="success" shadow onClick={() => saveConfig()}>{__('Save')}</Btn>
+      <SaveIntergrationBrn onClick={() => saveConfig()} />
     </div>
   )
 }

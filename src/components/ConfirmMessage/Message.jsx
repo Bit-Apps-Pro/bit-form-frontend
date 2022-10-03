@@ -497,7 +497,7 @@ function Message({ id, msgItem }) {
                             inputHandler={handleValues}
                             sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
                             id="0"
-                            label={<BoxIcon size="14" varient="top" />}
+                            label={<BoxIcon size="14" variant="top" />}
                             width="100px"
                             value={getNumFromStr(values[0]) || 0}
                             unit={getStrFromStr(values[0]) || 'px'}
@@ -509,7 +509,7 @@ function Message({ id, msgItem }) {
                             inputHandler={handleValues}
                             sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
                             id="1"
-                            label={<BoxIcon size="14" varient="right" />}
+                            label={<BoxIcon size="14" variant="right" />}
                             width="100px"
                             value={getNumFromStr(values[1]) || 0}
                             unit={getStrFromStr(values[1]) || 'px'}
@@ -521,7 +521,7 @@ function Message({ id, msgItem }) {
                             inputHandler={handleValues}
                             sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
                             id="2"
-                            label={<BoxIcon size="14" varient="bottom" />}
+                            label={<BoxIcon size="14" variant="bottom" />}
                             width="100px"
                             value={getNumFromStr(values[2]) || 0}
                             unit={getStrFromStr(values[2]) || 'px'}
@@ -533,7 +533,7 @@ function Message({ id, msgItem }) {
                             inputHandler={handleValues}
                             sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
                             id="3"
-                            label={<BoxIcon size="14" varient="left" />}
+                            label={<BoxIcon size="14" variant="left" />}
                             width="100px"
                             value={getNumFromStr(values[3]) || 0}
                             unit={getStrFromStr(values[3]) || 'px'}

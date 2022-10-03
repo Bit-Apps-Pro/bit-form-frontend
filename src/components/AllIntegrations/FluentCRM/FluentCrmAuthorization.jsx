@@ -80,7 +80,7 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
           </div>
         )}
         <Btn
-          varient="success"
+          variant="success"
           onClick={handleAuthorize}
           disabled={isAuthorized}
           className={css(ut.mt3, { ml: 3 })}
@@ -90,7 +90,7 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
         </Btn>
         <br />
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => nextPage(2)}
           className={css(ut.ftRight, ut.mt3)}
           disabled={!isAuthorized}

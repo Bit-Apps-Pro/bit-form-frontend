@@ -3,7 +3,7 @@ import { useFela } from 'react-fela'
 export default function Btn({ children,
   className,
   size = 'md',
-  varient = 'default',
+  variant = 'default',
   width = 'auto',
   gap,
   shadow,
@@ -16,7 +16,7 @@ export default function Btn({ children,
       style={{ width, gap }}
       type="button"
       disabled={disabled}
-      className={`${css([btnStyle.btn, btnStyle[size], btnStyle[varient], btnStyle[shado]])} ${shadow && css(btnStyle.shadow)} ${className}`}
+      className={`${css([btnStyle.btn, btnStyle[size], btnStyle[variant], btnStyle[shado]])} ${shadow && css(btnStyle.shadow)} ${className}`}
       onClick={onClick}
     >
       {children}
@@ -47,66 +47,66 @@ const btnStyle = {
     fs: '20px',
   },
   default: {
-    bd: 'hsl(211, 100 %, 50 %)',
-    clr: 'hsl(0, 0%, 100%)',
+    bd: 'hsl(211, 100%, 50%)',
+    cr: 'hsl(0, 0%, 100%)',
     ':hover': { bd: 'hsla(211, 100%, 50%, 0.802)' },
-    ':focus': { bs: '0 0 0 0.2rem rgb(0 123 255 / 50 %)' },
+    ':focus': { bs: '0 0 0 0.2rem rgb(0 123 255 / 50%)' },
   },
   secondary: {
-    clr: 'hsl(0, 0%, 100%)',
+    cr: 'hsl(0, 0%, 100%)',
     bd: 'hsl(208, 7%, 46%)',
     ':hover': { bd: 'hsla(207, 7%, 51%, 0.851)' },
     ':focus': { bs: '0 0 0 0.2rem hsla(210, 7%, 46%, 0.494)' },
   },
   success: {
     bd: 'hsla(160, 100%, 49%, 100%)',
-    clr: 'hsla(215, 63%, 18%, 67%)',
+    cr: 'hsla(215, 63%, 18%, 67%)',
     ':hover': { bd: 'hsla(160, 100%, 49%, 0.644)' },
     ':focus': { bs: '0 0 0 0.2rem hsla(160, 100%, 49%, 0.576)' },
   },
   danger: {
     bd: 'hsl(0, 100%, 50%)',
-    clr: 'hsl(0, 0%, 100%)',
+    cr: 'hsl(0, 0%, 100%)',
     ':hover': { bd: 'rgba(255, 0, 0, 0.802)' },
     ':focus': { bs: '0 0 0 0.2rem hsla(0, 100%, 50%, 0.548)' },
   },
   'default-outline': {
-    clr: 'hsl(211, 100%, 50%)',
+    cr: 'hsl(211, 100%, 50%)',
     bc: 'transparent',
     b: '1px solid hsl(211, 100%, 50 %)',
     ':hover': {
       bd: 'hsl(211, 100 %, 50 %)',
-      clr: 'hsl(0, 0 %, 100 %)',
+      cr: 'hsl(0, 0 %, 100 %)',
     },
-    ':focus': { bs: '0 0 0 0.2rem rgb(0 123 255 / 50 %)' },
+    ':focus': { bs: 'hsla(0, 0%, 0%, 40%) 0px 2px 4px -2px' },
   },
   'secondary-outline': {
-    clr: 'hsl(208, 7%, 46%)',
+    cr: 'hsl(208, 7%, 46%)',
     bc: 'transparent',
     b: '1px solid hsl(208, 7%, 46%)',
     ':hover': {
-      clr: 'hsl(0, 0%, 100%)',
+      cr: 'hsl(0, 0%, 100%)',
       bc: 'hsl(208, 7%, 46%)',
     },
     ':focus': { bs: '0 0 0 0.2rem hsla(210, 7%, 46%, 0.494)' },
   },
   'success-outline': {
-    clr: 'hsla(160, 100%, 49%, 100%)',
+    cr: 'hsla(160, 100%, 49%, 100%)',
     bc: 'transparent',
     b: '1px solid hsla(160, 100%, 49%, 100%)',
     ':hover': {
       bd: 'hsla(160, 100%, 49%, 100%)',
-      clr: 'hsla(215, 63%, 18%, 67%)',
+      cr: 'hsla(215, 63%, 18%, 67%)',
     },
     ':focus': { bs: '0 0 0 0.2rem hsla(160, 100%, 49%, 0.576)' },
   },
   'danger-outline': {
-    clr: 'hsl(0, 100%, 50%)',
+    cr: 'hsl(0, 100%, 50%)',
     bc: 'transparent',
     b: '1px solid hsl(0, 100%, 50%)',
     ':hover': {
       bd: 'hsl(0, 100%, 50%)',
-      clr: 'hsl(0, 0%, 100%)',
+      cr: 'hsl(0, 0%, 100%)',
     },
     ':focus': { bs: '0 0 0 0.2rem hsla(0, 100%, 50%, 0.548)' },
   },

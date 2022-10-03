@@ -16,13 +16,15 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const bits = useRecoilValue($bits)
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCurrencyClearable,
     searchClearable,
     optionFlagImage,
     defaultCurrencyKey,
     searchPlaceholder,
-    noCurrencyFoundText } = fieldData.config
+    noCurrencyFoundText,
+  } = fieldData.config
 
   useEffect(() => {
     if (!currencyWrapElmRef?.current) {
@@ -237,7 +239,16 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   tabIndex="-1"
                   role="listbox"
                   aria-label="currency list"
-                />
+                >
+                  <li className="option">
+                    <span className="opt-prefix">Prefix</span>
+                    <span className="opt-lbl-wrp">
+                      <img className="opt-icn" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>" alt="Placeholder" />
+                      <span className="opt-lbl">Option</span>
+                    </span>
+                    <span className="opt-suffix">Suffix</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

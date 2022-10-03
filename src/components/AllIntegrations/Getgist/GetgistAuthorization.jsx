@@ -1,18 +1,16 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
+import CloseIcn from '../../../Icons/CloseIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 
 export default function GetgistAuthorization({ getgistConf, setGetgistConf, step, setstep, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { css } = useFela()
 
   const handleAuthorize = () => {
     const newConf = { ...getgistConf }
@@ -99,33 +97,23 @@ export default function GetgistAuthorization({ getgistConf, setGetgistConf, step
 
       {(showAuthMsg && !isAuthorized && !isLoading) && (
         <div className="flx mt-5" style={{ color: 'red' }}>
-          <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-            &times;
-          </span>
+          <CloseIcn size="20" />
           Sorry, API key is invalid
         </div>
       )}
       {!isInfo && (
         <>
-          <Btn
-            varient="success"
-            onClick={handleAuthorize}
-            disabled={isAuthorized || isLoading}
-            className={css(ut.mt3, { ml: 3 })}
-          >
-            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-            {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-          </Btn>
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            handleAuthorize={handleAuthorize}
+            isLoading={isLoading}
+          />
+
           <br />
-          <Btn
-            varient="success"
-            onClick={() => nextPage(2)}
-            className={css(ut.ftRight)}
+          <NextBtn
+            nextPageHanlder={() => nextPage(2)}
             disabled={!isAuthorized}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </Btn>
+          />
         </>
       )}
     </div>

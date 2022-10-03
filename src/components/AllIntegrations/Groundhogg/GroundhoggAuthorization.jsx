@@ -89,7 +89,7 @@ export default function GroundhoggAuthorization({ formID, groundhoggConf, setGro
       {!isInfo && (
         <>
           <Btn
-            varient="success"
+            variant="success"
             onClick={() => handleAuthorize(
               groundhoggConf,
               setGroundhoggConf,
@@ -106,7 +106,7 @@ export default function GroundhoggAuthorization({ formID, groundhoggConf, setGro
           </Btn>
           <br />
           <Btn
-            varient="success"
+            variant="success"
             onClick={nextPage}
             className={css(ut.ftRight)}
             disabled={!isAuthorized}

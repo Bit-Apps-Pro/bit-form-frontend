@@ -10,7 +10,7 @@ export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
       ? (
         <div className="txt-center w-9 mt-3">
           <Btn
-            varient="success"
+            variant="success"
             onClick={saveConfig}
             disabled={disabled}
           >
@@ -31,7 +31,7 @@ export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
         <div className="txt-center" style={{ marginLeft: 210 }}>
           <h2 className="ml-3">{__('Successfully Integrated')}</h2>
           <Btn
-            varient="success"
+            variant="success"
             onClick={saveConfig}
           >
             {__('Finish & Save ')}

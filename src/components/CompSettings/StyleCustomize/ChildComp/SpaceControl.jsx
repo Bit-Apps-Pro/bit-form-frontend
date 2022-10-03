@@ -122,7 +122,7 @@ export default function SpaceControl({ value,
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="0"
-              label={<BoxIcon size="14" varient="top" className={css(s.blueTxt)} />}
+              label={<BoxIcon size="14" variant="top" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[0])}
               unit={sizeUnits(values[0])}
@@ -135,7 +135,7 @@ export default function SpaceControl({ value,
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="1"
-              label={<BoxIcon size="14" varient="right" className={css(s.blueTxt)} />}
+              label={<BoxIcon size="14" variant="right" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[1])}
               unit={sizeUnits(values[1])}
@@ -148,7 +148,7 @@ export default function SpaceControl({ value,
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="2"
-              label={<BoxIcon size="14" varient="bottom" className={css(s.blueTxt)} />}
+              label={<BoxIcon size="14" variant="bottom" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[2])}
               unit={sizeUnits(values[2])}
@@ -161,7 +161,7 @@ export default function SpaceControl({ value,
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="3"
-              label={<BoxIcon size="14" varient="left" className={css(s.blueTxt)} />}
+              label={<BoxIcon size="14" variant="left" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[3])}
               unit={sizeUnits(values[3])}

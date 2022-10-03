@@ -89,7 +89,7 @@ function Dropbox({ formFields, setIntegration, integrations, allIntegURL }) {
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button> */}
         <Btn
-          varient="success"
+          variant="success"
           onClick={() => setStep(3)}
           disabled={dropboxConf.field_map.length < 1}
           className={css(ut.ftRight)}

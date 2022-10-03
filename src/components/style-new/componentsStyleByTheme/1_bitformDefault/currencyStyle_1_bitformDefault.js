@@ -312,11 +312,15 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'align-items': 'center',
       },
 
-      [`.${fk}-option-list .option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
 
       [`.${fk}-option-list .option:focus-visible`]: {
         'box-shadow': '0 0 0 1.5px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
         outline: 'none',
+      },
+
+      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
       },
 
       [`.${fk}-option-list .selected-opt`]: {
@@ -353,6 +357,13 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-list .opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
 
       [`.${fk}-currency-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
+
+      [`.${fk}-option-list .disabled-opt`]: {
+        'pointer-events': 'none',
+        cursor: 'not-allowed',
+        color: 'hsla(0, 0%, 33%, 100%) !important',
+        opacity: '0.5',
+      },
     }
   }
   return {}

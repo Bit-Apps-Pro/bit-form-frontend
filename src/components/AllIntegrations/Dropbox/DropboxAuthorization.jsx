@@ -131,7 +131,7 @@ export default function DropboxAuthorization({ formID, dropboxConf, setDropboxCo
       {!isInfo && (
         <>
           <Btn
-            varient="success"
+            variant="success"
             onClick={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading)}
             disabled={isAuthorized}
             className={css(ut.mt3)}
@@ -142,14 +142,13 @@ export default function DropboxAuthorization({ formID, dropboxConf, setDropboxCo
           <br />
           <Btn
             onClick={nextPage}
-            varient="success"
+            variant="success"
             disabled={!isAuthorized}
             className={css(ut.ftRight)}
           >
             {__('Next')}
             <BackIcn className="ml-1 rev-icn" />
           </Btn>
-
 
         </>
       )}
