@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
+import EntriesFilter from '../components/Report/EntriesFilter'
 import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
@@ -554,12 +555,15 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
           hasAction
           rowClickable
           rightHeader={(
-            <ExportImportMenu
-              data={allResp}
-              cols={entryLabels}
-              formID={formID}
-              report={reports}
-            />
+            <>
+              <ExportImportMenu
+                data={allResp}
+                cols={entryLabels}
+                formID={formID}
+                report={reports}
+              />
+              <EntriesFilter fetchData={fetchData} />
+            </>
           )}
           leftHeader={(
             <FldEntriesByCondition
