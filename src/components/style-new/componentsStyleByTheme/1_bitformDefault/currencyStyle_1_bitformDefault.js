@@ -100,7 +100,10 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         outline: 'none', // unused css
       },
       [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
-      [`.${fk}-dpd-wrp:focus-visible`]: { 'box-shadow': '0 0 0 2px hsla(0, 100%, 50%, 100%) inset' },
+      [`.${fk}-dpd-wrp:focus-visible`]: {
+        'border-radius': '8px 0px 0px 8px',
+        'box-shadow': '0 0 0 2px hsla(0, 0%, 95%, 100%) inset',
+      },
 
       [`.${fk}-selected-currency-wrp`]: {
         display: 'flex',
