@@ -317,7 +317,6 @@ export default class BitDropdownField {
     if (!this.#selectedOptValue) {
       this.#clearSelectedOption()
     }
-    this.#reRenderVirtualOptions()
     if (!selectedItem) return
 
     this.#selectedOptLblElm = this.#select(`.${this.fieldKey}-selected-opt-lbl`)
@@ -401,7 +400,6 @@ export default class BitDropdownField {
       this.#selectedOptValue = val
     }
 
-    this.#reRenderVirtualOptions()
     this.setSelectedOption(this.#selectedOptValue)
     setTimeout(() => {
       const selectedOpt = this.#select(`${this.#activeOptionList()} .option[data-value="${val}"]`)
@@ -709,7 +707,6 @@ export default class BitDropdownField {
       this.#dropdownWrapperElm.setAttribute('aria-expanded', 'true')
       this.#setAttribute(this.#optionListElm, 'aria-hidden', false)
       this.#setAttribute(this.#searchInputElm, 'aria-hidden', false)
-      this.#reRenderVirtualOptions()
     } else {
       this.#dropdownFieldWrapper.classList.remove('menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
