@@ -2,50 +2,94 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
 import { useEffect, useRef, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import validateForm from '../../user-frontend/validation'
 import { getCustomAttributes, getCustomClsName, observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
-import { assignNestedObj } from '../style-new/styleHelpers'
+import { assignNestedObj, getNumFromStr } from '../style-new/styleHelpers'
 
 export default function TextArea({
   fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses, resizingFld,
 }) {
-  const [value, setvalue] = useState(attr.val)
+  const [value, setValue] = useState(attr.val)
   const areaRef = useRef(null)
   const tempResize = useRef({ resize: false })
   const setStyles = useSetRecoilState($styles)
-
-  const firstChild = areaRef.current?.parentElement?.parentElement.children[0].clientHeight
-  const parent = areaRef.current?.parentElement?.parentElement.parentElement.clientHeight
+  const themeVars = useRecoilValue($themeVars)
+  const inputFldWrp = areaRef.current
+  const fldWrp = inputFldWrp?.parentElement?.parentElement
+  const lblWrp = fldWrp?.children[0]
+  const labelWrpHeight = lblWrp?.offsetHeight
+  const hlpTxt = inputFldWrp?.parentElement?.children[1]
+  const hlpTxtHeight = hlpTxt?.offsetHeight || 0
+  const fld = inputFldWrp.children[0]
+  const parentHight = getNumFromStr(fldWrp?.parentElement.style.height) || 0
+  let height = ''
+  const convertStrToNum = (str) => Number(getNumFromStr(str)) || 0
 
   if (resizingFld.fieldKey === fieldKey) {
     tempResize.current.resize = true
+
+    const fldSpacing = window.getComputedStyle(fld)
+    const { paddingTop: fldWrpPaddingTop,
+      paddingBottom: fldWrapPaddingBottom } = window.getComputedStyle(fldWrp) || {}
+    let lblWrpSpacing = {}
+    if (attr.lbl && themeVars['--fld-wrp-dis'] === 'block') {
+      lblWrpSpacing = window.getComputedStyle(lblWrp)
+      lblWrpSpacing.height = labelWrpHeight
+    }
+    let hlpTxtSpacing = {}
+    if (attr.helperTxt || attr.hlpPreIcn || attr.hlpSufIcn) {
+      hlpTxtSpacing = window.getComputedStyle(hlpTxt)
+    }
+
+    const removableSpace = (
+      Number(lblWrpSpacing?.height || 0)
+      + Number(hlpTxtHeight || 0)
+      + convertStrToNum(fldWrpPaddingTop)
+      + convertStrToNum(fldWrapPaddingBottom)
+      + convertStrToNum(lblWrpSpacing?.marginTop)
+      + convertStrToNum(lblWrpSpacing?.marginBottom)
+      + convertStrToNum(lblWrpSpacing?.paddingTop)
+      + convertStrToNum(lblWrpSpacing?.paddingBottom)
+      + convertStrToNum(hlpTxtSpacing?.marginTop)
+      + convertStrToNum(hlpTxtSpacing?.marginBottom)
+      + convertStrToNum(hlpTxtSpacing?.paddingTop)
+      + convertStrToNum(hlpTxtSpacing?.paddingBottom)
+      + convertStrToNum(fldSpacing?.borderTopWidth)
+      + convertStrToNum(fldSpacing?.borderBottomWidth)
+      + convertStrToNum(fldSpacing?.marginTop)
+      + convertStrToNum(fldSpacing?.marginBottom)
+    )
+
+    const fieldHeight = Math.ceil(Number(parentHight) - removableSpace)
+    height = `${fieldHeight}px`
+    inputFldWrp.children[0].style.height = height
   }
   if (tempResize.current.resize && !resizingFld.fieldKey) {
     tempResize.current.resize = false
-    const fieldHeight = Number(parent) - Number(firstChild)
     const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, getPropertyPath('height'), `${fieldHeight}px`)
+      assignNestedObj(drftStyle, getPropertyPath('height'), height)
     }))
   }
 
   const textAreaRef = useRef(null)
   useEffect(() => {
     if (attr.val !== undefined && !attr.userinput) {
-      setvalue(attr.val)
+      setValue(attr.val)
     } else if (!attr.val && !attr.userinput) {
-      setvalue(attr.defaultValue || '')
+      setValue(attr.defaultValue || '')
     } else if (attr.conditional) {
-      setvalue(attr.val)
+      setValue(attr.val)
     }
   }, [attr.val, attr.defaultValue, attr.userinput, attr.conditional])
   useEffect(() => {
     if (resetFieldValue) {
-      setvalue('')
+      setValue('')
     }
   }, [resetFieldValue])
   useEffect(() => {
@@ -57,13 +101,13 @@ export default function TextArea({
   }, [value])
 
   const onChangeHandler = (event) => {
-    setvalue(event.target.value)
+    setValue(event.target.value)
   }
 
   useEffect(() => {
     const textFld = select(`#${fieldKey}`)
     if (textFld) {
-      observeElement(textFld, 'value', (oldVal, newVal) => setvalue(newVal))
+      observeElement(textFld, 'value', (oldVal, newVal) => setValue(newVal))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
