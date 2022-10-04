@@ -2,7 +2,7 @@
 /* eslint-disable no-plusplus */
 import BitDropdownField from 'bit-dropdown-field'
 import { observeElm } from 'bit-helpers'
-import { memo, useEffect, useRef } from 'react'
+import { Fragment, memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
@@ -292,9 +292,9 @@ function DropDown({
                           options.map((opt, indx) => {
                             if (opt.type) {
                               return (
-                                <>
+                                <Fragment key={`option-${indx + 1}`}>
                                   <li
-                                    key={`option-grp-ttl-${(index + 1) * (indx + 1)}`}
+                                    // key={`option-grp-ttl-${(index + 1) * (indx + 1)}`}
                                     data-testid={`${fieldKey}-opt-${dataIndex}`}
                                     data-index={dataIndex++}
                                     className={`option opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
@@ -334,7 +334,7 @@ function DropDown({
                                     </li>
                                   ))}
 
-                                </>
+                                </Fragment>
                               )
                             } return (
                               <li
