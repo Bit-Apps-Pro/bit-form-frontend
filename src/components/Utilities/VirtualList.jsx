@@ -27,7 +27,7 @@ export default function VirtualList({
     <div
       ref={setVirtualRowParentRef}
       className={className}
-      style={{ ...style, overflow: 'auto' }}
+      style={{ ...style, maxHeight: '70vh', overflow: 'auto' }}
     >
       <div
         style={{
