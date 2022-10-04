@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
@@ -38,11 +39,8 @@ export default function EditOptions({
     })
   }
 
-  console.log({ options })
-
   return (
     <div className={css(style.wrapper)}>
-
       <StyleSegmentControl
         options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
         onChange={lbl => handleSegment(lbl)}
@@ -80,9 +78,16 @@ export default function EditOptions({
           setEditOptionType={setEditOptionType}
         />
       )}
-
     </div>
   )
 }
 
-const style = { wrapper: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } } }
+const style = {
+  wrapper: {
+    scrollBehavior: 'auto !important',
+    mt: 10,
+    '& *': {
+      scrollBehavior: 'auto !important',
+    },
+  },
+}

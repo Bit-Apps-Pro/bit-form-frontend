@@ -1,16 +1,17 @@
 import { arrayMoveImmutable } from 'array-move'
 import produce from 'immer'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
 import DragIcn from '../../../Icons/DragIcn'
+import PlusIcn from '../../../Icons/PlusIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
 import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import Button from '../../Utilities/Button'
+import Btn from '../../Utilities/Btn'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Tip from '../../Utilities/Tip'
 import VirtualList from '../../Utilities/VirtualList'
@@ -156,7 +157,10 @@ const SortableItem = SortableElement(({
   }
 
   return (
-    <div data-testid={`sortable-itm-wrp-${optIndx}`} className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}>
+    <div
+      data-testid={`sortable-itm-wrp-${optIndx}`}
+      className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}
+    >
       {!isGroupEnd && (
         <div className={css(optionStyle.inputContainer)}>
           <div className="flx">
@@ -167,7 +171,12 @@ const SortableItem = SortableElement(({
               <span className={css(ut.flxc, ut.ml2, ut.mr2, optionStyle.grouptitle)}>
                 Group Title
               </span>
-              <input type="text" className={css(optionStyle.grouptitleinput)} onChange={setGroupTitle} value={value.groupLbl} />
+              <input
+                type="text"
+                className={css(optionStyle.grouptitleinput)}
+                onChange={setGroupTitle}
+                value={value.groupLbl}
+              />
             </div>
           )}
           {isGroupEnd && (
@@ -178,40 +187,79 @@ const SortableItem = SortableElement(({
 
           {!('type' in value) && (
             <>
-              <input type="text" value={value[lblKey]} onChange={e => setOpt(e, optIndx, lblKey)} width={140} className={css(optionStyle.input)} />
-              <input type="text" value={value[valKey]} onChange={e => setOpt(e, optIndx, valKey)} placeholder={`${value[lblKey]}`} width={140} className={css(optionStyle.input)} />
+              <input
+                type="text"
+                value={value[lblKey]}
+                onChange={e => setOpt(e, optIndx, lblKey)}
+                width={140}
+                className={css(optionStyle.input)}
+              />
+              <input
+                type="text"
+                value={value[valKey]}
+                onChange={e => setOpt(e, optIndx, valKey)}
+                placeholder={`${value[lblKey]}`}
+                width={140}
+                className={css(optionStyle.input)}
+              />
             </>
           )}
           {!isGroupStart && checkByDefault && (
             <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-              <Tip msg="Check by Default">
-                <TableCheckBox checked={value.check !== undefined} onChange={(e) => setCheck(e, optIndx)} className="" />
+              <Tip msg="Check by Default" place="bottom">
+                <TableCheckBox
+                  checked={value.check !== undefined}
+                  onChange={(e) => setCheck(e, optIndx)}
+                  className=""
+                />
               </Tip>
             </span>
           )}
           {type === 'check' && (
             <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-              <Tip msg="Required">
-                <TableCheckBox checked={value.req !== undefined} className="m-0 " onChange={(e) => setReq(e, optIndx)} />
+              <Tip msg="Required" place="bottom">
+                <TableCheckBox
+                  checked={value.req !== undefined}
+                  className="m-0 "
+                  onChange={(e) => setReq(e, optIndx)}
+                />
               </Tip>
             </span>
           )}
           <div className={`${css(optionStyle.action)} acc ${isGroupStart && 'group-acc'} ${value.req && 'active'}`}>
-
             <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
-              <Tip msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
-                <button data-testid={`srtble-itm-add-optn-grp-${optIndx}`} type="button" onClick={() => addOption(optIndx)} className={css(optionStyle.btn)}>
-                  <span className={css(optionStyle.addbtnside)}><CloseIcn size="13" stroke="2" /></span>
+              <Tip whiteSpaceNowrap className={css({ w: '100%', dy: 'inline-block' })} msg={`Add Option ${isGroupStart ? 'in Group' : ''}`} place="bottom">
+                <button
+                  data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
+                  type="button"
+                  onClick={() => addOption(optIndx)}
+                  className={css(optionStyle.btn)}
+                >
+                  <span
+                    className={css(optionStyle.addbtnside)}
+                  >
+                    <CloseIcn size="12" stroke="3" />
+                  </span>
                 </button>
               </Tip>
               <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`} type="button" onClick={() => cloneOption()} className={css(optionStyle.btn)}>
+                <button
+                  data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`}
+                  type="button"
+                  onClick={() => cloneOption()}
+                  className={css(optionStyle.btn)}
+                >
                   <CopyIcn size="16" stroke="2" />
                 </button>
               </Tip>
               <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`} type="button" onClick={() => rmvOption(optIndx)} className={css(optionStyle.btn)}>
-                  <TrashIcn size="16" />
+                <button
+                  data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
+                  type="button"
+                  onClick={() => rmvOption(optIndx)}
+                  className={css(optionStyle.btn)}
+                >
+                  <TrashIcn size="16" stroke="1.5" />
                 </button>
               </Tip>
             </div>
@@ -307,20 +355,48 @@ export default function VisualOptionsTab({
           itemSizes={option.length ? generateItemSize() : 0}
           scrollToIndex={scrolIndex}
           renderItem={index => (
-            <SortableItem key={`sortable-${option[index].id}`} index={index} optIndx={index} value={option[index]} type={type} option={option} setOption={setOption} lblKey={lblKey} valKey={valKey} setScrolIndex={setScrolIndex} optKey={optKey} checkByDefault={checkByDefault} />
+            <SortableItem
+              key={`sortable-${option[index].id}`}
+              index={index}
+              optIndx={index}
+              value={option[index]}
+              type={type}
+              option={option}
+              setOption={setOption}
+              lblKey={lblKey}
+              valKey={valKey}
+              setScrolIndex={setScrolIndex}
+              optKey={optKey}
+              checkByDefault={checkByDefault}
+            />
           )}
         />
       </SortContainer>
-      <div className="flx">
-        <Button data-testid="add-mor-opt-btn" id="add-mor" className={css(optionStyle.add_btn)} onClick={() => addOption()}>
-          {__('Add More +')}
-        </Button>
+      <div className={`flx ${css({ ml: 11, mt: 7 })}`}>
+        <Btn
+          size="sm"
+          dataTestId="add-mor-opt-btn"
+          id="add-more"
+          className={css(optionStyle.add_btn)}
+          onClick={() => addOption()}
+          gap="3px"
+        >
+          {__('Add More')}
+          <PlusIcn size="18" stroke="2" />
+        </Btn>
         {hasGroup && (
-          <Button data-testid="add-mor-grp-btn" id="add-grp" className={css(optionStyle.add_btn)} onClick={addGroup}>
-            {__('Add Group +')}
-          </Button>
+          <Btn
+            size="sm"
+            dataTestId="add-mor-grp-btn"
+            id="add-grp"
+            className={css(optionStyle.add_btn)}
+            onClick={addGroup}
+            gap="3px"
+          >
+            {__('Add Group')}
+            <PlusIcn size="18" stroke="2" />
+          </Btn>
         )}
-
       </div>
     </>
   )
