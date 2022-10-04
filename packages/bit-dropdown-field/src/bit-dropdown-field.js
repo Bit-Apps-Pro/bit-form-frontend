@@ -19,6 +19,8 @@ export default class BitDropdownField {
 
   #clearSearchBtnElm = null
 
+  #allowCustomOption = false
+
   #customOption = null
 
   #optionListElm = null
@@ -106,7 +108,7 @@ export default class BitDropdownField {
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
 
-    this.allowCustomOption = this.#config.allowCustomOption
+    this.#allowCustomOption = this.#config.allowCustomOption
     // if (this.allowCustomOption) {
     // this.#customOption = this.#select(`.${this.fieldKey}-create-opt`)
     // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
@@ -381,7 +383,7 @@ export default class BitDropdownField {
   #handleOptionValue(e) {
     const optElm = e.currentTarget
     const val = optElm.dataset.value
-    if (this.#config.allowCustomOption && optElm.classList.contains('create-opt')) {
+    if (this.#allowCustomOption && optElm.classList.contains('create-opt')) {
       this.#addCustomOption(val)
     }
     if (this.#config.multipleSelect) {
@@ -565,7 +567,7 @@ export default class BitDropdownField {
         this.setSelectedOption(optKey)
         this.searchOptions('')
       }
-      if (this.#config.allowCustomOption && this.#customOption.style.display !== 'none') {
+      if (this.#allowCustomOption && this.#customOption.style.display !== 'none') {
         const { value } = e.target
         this.#addCustomOption(value)
         if (this.#config.multipleSelect) {
@@ -645,12 +647,13 @@ export default class BitDropdownField {
       if (!filteredOptions.length) {
         filteredOptions = [{ i: 'not-found', lbl: 'No Option Found' }]
       }
-      this.#options = [this.#config.options[0], ...filteredOptions]
+      this.#options = this.#allowCustomOption ? [this.#config.options[0]] : []
+      this.#options.push(...filteredOptions)
       if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
     } else {
       this.#options = this.#config.options
       if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
-      if (this.allowCustomOption) {
+      if (this.#allowCustomOption) {
         this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
         this.#customOption.style.display = 'none'
         this.#options = this.#options.concat(this.#customOptions)
@@ -659,8 +662,8 @@ export default class BitDropdownField {
 
     this.#reRenderVirtualOptions()
     this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
-    if (isExist && this.allowCustomOption) this.#customOption.style.display = 'none'
-    else if (this.allowCustomOption && value.trim()) {
+    if (isExist && this.#allowCustomOption) this.#customOption.style.display = 'none'
+    else if (this.#allowCustomOption && value.trim()) {
       this.#customOption.style.display = 'block'
       const createOptLbl = this.#customOption.querySelector('.opt-lbl')
       createOptLbl.innerText = `Create: ${value}`
