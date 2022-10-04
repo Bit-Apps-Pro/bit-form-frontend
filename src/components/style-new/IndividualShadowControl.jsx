@@ -16,7 +16,8 @@ import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { assignNestedObj, showDraggableModal } from './styleHelpers'
 
-export default function IndividualShadowControl({ title,
+export default function IndividualShadowControl({
+  title,
   stateObjName,
   propertyPath,
   propertyArray,
@@ -30,7 +31,8 @@ export default function IndividualShadowControl({ title,
   delPropertyHandler,
   allowImportant,
   hslaPaths,
-  fldKey }) {
+  fldKey,
+}) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const setStyles = useSetRecoilState($styles)
@@ -98,7 +100,9 @@ export default function IndividualShadowControl({ title,
         )}
         <div title={getValue()} className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 250, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, {
+              component: 'individual-shadow-control', width: 250, subtitle, action: { type: modalType }, value, defaultValue, id: modalId, objectPaths, stateObjName, propertyPath, propertyArray, hslaPaths, fldKey,
+            })}
             type="button"
             className={css(c.pickrBtn)}
             data-testid={`${modalId}-modal-btn`}

@@ -10,7 +10,8 @@ import ut from '../../../../styles/2.utilities'
 import { highlightElm, lowerCaseAllAndReplaceSpaceToHipen, removeHighlight } from '../../../style-new/styleHelpers'
 import Cooltip from '../../../Utilities/Cooltip'
 
-export default function LayerAccordion({ className,
+export default function LayerAccordion({
+  className,
   route,
   title,
   children,
@@ -22,7 +23,8 @@ export default function LayerAccordion({ className,
   tag,
   highlightSelector,
   onClick,
-  styleOverride }) {
+  styleOverride,
+}) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 

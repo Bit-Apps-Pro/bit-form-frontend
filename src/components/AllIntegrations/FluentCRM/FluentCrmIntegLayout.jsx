@@ -6,7 +6,9 @@ import FluentCrmActions from './FluentCrmActions'
 import { refreshCrmList, refreshfluentCrmHeader } from './FluentCrmCommonFunc'
 import FluentCrmFieldMap from './FluentCrmFieldMap'
 
-export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf, setFluentCrmConf, isLoading, setisLoading, setSnackbar }) {
+export default function FluentCrmIntegLayout({
+  formID, formFields, fluentCrmConf, setFluentCrmConf, isLoading, setisLoading, setSnackbar,
+}) {
   const tags = (val) => {
     const newConf = { ...fluentCrmConf }
     if (val) {

@@ -1,7 +1,9 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useRef, useState } from 'react'
 
-export default function VirtualList({ virtualizerRef, itemCount, itemSizes, overScanCount = 3, renderItem, scrollToIndex, scrollToAlignment, className, style }) {
+export default function VirtualList({
+  virtualizerRef, itemCount, itemSizes, overScanCount = 3, renderItem, scrollToIndex, scrollToAlignment, className, style,
+}) {
   if (!virtualizerRef) {
     // eslint-disable-next-line no-param-reassign
     virtualizerRef = useRef(null)

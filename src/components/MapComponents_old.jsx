@@ -31,7 +31,9 @@ req: required
 mul: multiple
 */
 
-function MapComponents_old({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID }) {
+function MapComponents_old({
+  atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID,
+}) {
   switch (atts?.typ) {
     case 'text':
     case 'number':

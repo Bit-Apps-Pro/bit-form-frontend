@@ -10,7 +10,9 @@ import MtInput from '../Utilities/MtInput'
 import MtSelect from '../Utilities/MtSelect'
 import { disabledLogicType, getLogicOptionByFieldType, additionalFields } from './helper'
 
-function LogicBlock({ fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value, changeLogic, logicValue, changeValue, changeFormField }) {
+function LogicBlock({
+  fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value, changeLogic, logicValue, changeValue, changeFormField,
+}) {
   const fields = useRecoilValue($fields)
 
   const flds = useRecoilValue($fieldsArr)

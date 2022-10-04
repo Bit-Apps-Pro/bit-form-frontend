@@ -8,7 +8,9 @@ import HubspotFieldMap from './HubspotFieldMap'
 import { getAllPipelines } from './HubspotCommonFunc'
 import HubspotActions from './HubspotActions'
 
-export default function HubspotIntegLayout({ formFields, handleInput, hubspotConf, setHubspotConf, isLoading, setIsLoading, setSnackbar }) {
+export default function HubspotIntegLayout({
+  formFields, handleInput, hubspotConf, setHubspotConf, isLoading, setIsLoading, setSnackbar,
+}) {
   const contactFields = [
     { key: 'email', label: 'Email', required: true },
     { key: 'firstname', label: 'First Name', required: false },

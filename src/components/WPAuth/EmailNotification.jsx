@@ -1,10 +1,15 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
-import { flushSync } from 'react-dom'
+import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
+import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
 
-export default function EmailNotification({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
+export default function EmailNotification({
+  dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title,
+}) {
+  const { css } = useFela()
   const data = type ? dataConf[type] : dataConf
   const temBody = data?.body ? data?.body : tamplate
 
@@ -45,11 +50,21 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
       <>
         <div className="mt-3 flx">
           <b style={{ width: 100 }}>Subject:</b>
-          <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-9" placeholder="Email Subject Here" value={data?.sub} />
+          <input
+            onChange={handleInput}
+            name="sub"
+            type="text"
+            className="btcd-paper-inp w-9"
+            placeholder="Email Subject Here"
+            value={data?.sub}
+          />
         </div>
         <div className="mt-3">
           <b>{__('Body:')}</b>
-          <label htmlFor={`mail-tem-${data?.formID}`} className="mt-2 w-10">
+          <label
+            htmlFor={`mail-tem-${data?.formID}`}
+            className="mt-2 w-10"
+          >
             <TinyMCE
               id={`mail-tem-${data?.formID}`}
               value={temBody}
@@ -58,9 +73,9 @@ export default function EmailNotification({ dataConf, setDataConf, type, showMdl
             />
           </label>
         </div>
-        <div className="mt-2 f-right">
-          <button type="button" className="btn mr-2" onClick={cancelModal}>Cancel</button>
-          <button type="button" className="btn blue" onClick={() => setshowMdl(false)}>Save</button>
+        <div className="mt-2 f-right flx">
+          <Btn variant="danger" className={css({ mr: 5 })} onClick={cancelModal}>{__('Cancel')}</Btn>
+          <Btn onClick={() => setshowMdl(false)}>{__('Save')}</Btn>
         </div>
       </>
     </Modal>

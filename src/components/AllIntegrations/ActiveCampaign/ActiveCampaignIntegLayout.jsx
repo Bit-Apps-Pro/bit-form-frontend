@@ -8,7 +8,9 @@ import ActiveCampaignActions from './ActiveCampaignActions'
 import { refreshActiveCampaingHeader, refreshActiveCampaingList, refreshActiveCampaingTags } from './ActiveCampaignCommonFunc'
 import ActiveCampaignFieldMap from './ActiveCampaignFieldMap'
 
-export default function ActiveCampaignIntegLayout({ formID, formFields, activeCampaingConf, setActiveCampaingConf, isLoading, setIsLoading, setSnackbar }) {
+export default function ActiveCampaignIntegLayout({
+  formID, formFields, activeCampaingConf, setActiveCampaingConf, isLoading, setIsLoading, setSnackbar,
+}) {
   const setTags = (val) => {
     const newConf = { ...activeCampaingConf }
     if (val) {

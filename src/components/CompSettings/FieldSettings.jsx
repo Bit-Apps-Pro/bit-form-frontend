@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import loadable from '@loadable/component'
-import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -25,16 +27,19 @@ const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallba
 const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
-  const { fieldKey } = useParams()
+  const { fieldKey, formType, formID } = useParams()
   const fields = useRecoilValue($fields)
   const styles = useRecoilValue($styles)
-  const seletedFieldType = fields?.[fieldKey]?.typ
+  const selectedFieldType = fields?.[fieldKey]?.typ
+  const navigate = useNavigate()
 
-  if (!fieldKey || !seletedFieldType || !styles?.fields?.[fieldKey]?.classes) {
-    return <>Loading</>
-  }
+  useEffect(() => {
+    if (!fieldKey || !selectedFieldType || !styles?.fields?.[fieldKey]?.classes) {
+      return navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
+    }
+  }, [!fieldKey || !selectedFieldType || !styles?.fields?.[fieldKey]?.classes])
 
-  switch (seletedFieldType) {
+  switch (selectedFieldType) {
     case 'text':
     case 'username':
     case 'number':

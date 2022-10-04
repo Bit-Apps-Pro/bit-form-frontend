@@ -8,7 +8,9 @@ import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { assignNestedObj, getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, unitConverter } from '../../../style-new/styleHelpers'
+import {
+  assignNestedObj, getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, unitConverter,
+} from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SizeControl from './SizeControl'
 

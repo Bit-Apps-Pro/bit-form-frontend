@@ -41,7 +41,6 @@ function RadioCheckSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const options = deepCopy(fields[fldKey].opt)
   const adminLabel = fieldData.adminLbl || ''
-  const fieldName = fieldData.fieldName || fldKey
   const isRound = fieldData.round || false
   const optionCol = fieldData?.optionCol === undefined ? '' : fieldData?.optionCol
 
@@ -133,15 +132,6 @@ function RadioCheckSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } })
-  }
-
-  const handleFieldName = ({ target: { value } }) => {
-    if (value !== '') fieldData.fieldName = value
-    else fieldData.fieldName = fldKey
-
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } })
   }
 
   const handleOptions = newOpts => {
@@ -473,7 +463,12 @@ function RadioCheckSettings() {
       </SimpleAccordion> */}
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
+        <button
+          data-testid="edt-opt-stng"
+          onClick={openOptionModal}
+          className={css(app.btn, { my: 0 })}
+          type="button"
+        >
           &nbsp;
           {__('Edit Options')}
         </button>

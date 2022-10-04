@@ -24,21 +24,29 @@ const styleEditorConfig = {
   field: {
     color: { checkBoxColor: true, hover: true, focus: true, placeholder: true, important: true },
     background: { focus: true, hover: true, responsive: true, backdropFilter: true, important: true },
-    border: { focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true, important: true },
+    border: {
+      focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true, important: true,
+    },
     padding: { focus: true, responsive: true, important: true },
     margin: { focus: true, responsive: true, important: true },
     font: { size: true, important: true, lineHeight: true },
-    shadow: { focus: true, responsive: true, hover: true, type: true, color: true, style: true, important: true },
+    shadow: {
+      focus: true, responsive: true, hover: true, type: true, color: true, style: true, important: true,
+    },
     height: { important: true },
   },
   button: {
     color: { hover: true, focus: true, important: true },
     background: { focus: true, hover: true, responsive: true, backdropFilter: true, important: true },
-    border: { focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true, important: true },
+    border: {
+      focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true, important: true,
+    },
     padding: { focus: true, responsive: true, important: true },
     margin: { focus: true, responsive: true, important: true },
     font: { size: true, important: true, lineHeight: true },
-    shadow: { focus: true, responsive: true, hover: true, type: true, color: true, style: true, important: true },
+    shadow: {
+      focus: true, responsive: true, hover: true, type: true, color: true, style: true, important: true,
+    },
   },
   field_label: {
     color: { important: true },

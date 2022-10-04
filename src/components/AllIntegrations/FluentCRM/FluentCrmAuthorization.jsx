@@ -10,7 +10,9 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo }) {
+export default function FluentCrmAuthorization({
+  formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ integrationName: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)

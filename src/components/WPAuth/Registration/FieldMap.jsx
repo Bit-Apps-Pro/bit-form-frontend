@@ -4,7 +4,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './UserHelperFunction'
 
-export default function FieldMap({ i, type, formFields, field, userConf, setUserConf, customFields, setSnackbar, fieldType, authType }) {
+export default function FieldMap({
+  i, type, formFields, field, userConf, setUserConf, customFields, setSnackbar, fieldType, authType,
+}) {
   const fldType = {
     user: {
       propName: 'user_map',

@@ -1,4 +1,6 @@
-import { checkFieldsExtraAttr, convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByLg, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import {
+  checkFieldsExtraAttr, convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByLg, sortLayoutByXY,
+} from '../Utils/FormBuilderHelper'
 
 describe('▶ check get Empty X Position form given arr', () => {
   const maxCol = 6

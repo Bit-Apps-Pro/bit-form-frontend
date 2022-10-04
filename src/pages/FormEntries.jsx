@@ -324,7 +324,9 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     setshowRelatedInfoMdl(true)
   }
 
-  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter, conditions, entriesFilterByDate }) => {
+  const fetchData = useCallback(({
+    pageSize, pageIndex, sortBy, filters, globalFilter, conditions, entriesFilterByDate,
+  }) => {
     // eslint-disable-next-line no-plusplus
     if (refreshResp) {
       setRefreshResp(0)

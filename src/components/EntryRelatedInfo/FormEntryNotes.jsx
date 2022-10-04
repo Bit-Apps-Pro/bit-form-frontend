@@ -159,7 +159,9 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
         {showForm
           ? (
             <NoteForm
-              {...{ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }}
+              {...{
+                formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData,
+              }}
             />
           )
           : <button type="button" className={css(app.btn)} onClick={() => setShowForm(true)}>{__('create new note')}</button>}

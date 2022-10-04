@@ -44,7 +44,8 @@ const PhoneNumberFieldSettings = () => {
   const adminLabel = fieldData.adminLbl || ''
   const { placeholderImage, options } = fieldData
 
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCountryClearable,
     searchClearable,
     optionFlagImage,
@@ -54,7 +55,8 @@ const PhoneNumberFieldSettings = () => {
     searchPlaceholder,
     noCountryFoundText,
     inputFormat,
-    valueFormat } = fieldData.config
+    valueFormat,
+  } = fieldData.config
 
   const toggleSearchPlaceholder = (e) => {
     if (e.target.checked) {

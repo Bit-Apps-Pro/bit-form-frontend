@@ -14,6 +14,7 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { dblOptinTamplate } from '../../../Utils/StaticData/tamplate'
 import Loader from '../../Loaders/Loader'
+import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle2 from '../../Utilities/SingleToggle2'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -334,15 +335,12 @@ export default function DoubleOptin() {
                   The webhook, email notification & integrations will trigger after the responder confirms their Opt-In.
                 </p>
               </div>
-              <button
-                type="button"
-                id="secondary-update-btn"
+              <Btn
                 onClick={saveSettings}
-                className={`${css(app.btn)} btcd-btn-lg blue flx`}
                 disabled={isLoading}
               >
                 {__('Save ')}
-              </button>
+              </Btn>
             </div>
           )
       }

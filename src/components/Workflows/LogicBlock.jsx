@@ -14,7 +14,8 @@ import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtInput from '../Utilities/MtInput'
 import MtSelect from '../Utilities/MtSelect'
 
-function LogicBlock({ logic, fieldVal,
+function LogicBlock({
+  logic, fieldVal,
   delLogic,
   lgcInd,
   subLgcInd,
@@ -26,7 +27,8 @@ function LogicBlock({ logic, fieldVal,
   changeValue,
   changeSmartKey,
   changeFormField,
-  smartTagAllowed }) {
+  smartTagAllowed,
+}) {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
   const formFields = makeFieldsArrByLabel(fields, [])

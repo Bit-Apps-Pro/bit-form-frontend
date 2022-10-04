@@ -4,7 +4,9 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { fetchAllList, refreshFields } from './AcumbamailCommonFunc'
 import AcumbamailFieldMap from './AcumbamailFieldMap'
 
-export default function AcumbamailIntegLayout({ formFields, handleInput, acumbamailConf, setAcumbamailConf, isLoading, setIsLoading, setSnackbar }) {
+export default function AcumbamailIntegLayout({
+  formFields, handleInput, acumbamailConf, setAcumbamailConf, isLoading, setIsLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

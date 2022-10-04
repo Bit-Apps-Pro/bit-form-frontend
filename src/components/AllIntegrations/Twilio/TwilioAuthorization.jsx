@@ -5,14 +5,16 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleAuthorize } from './TwilioCommonFunc'
 
-export default function TwilioAuthorization({ twilioConf,
+export default function TwilioAuthorization({
+  twilioConf,
   setTwilioConf,
   step,
   setstep,
   isLoading,
   setIsLoading,
   setSnackbar,
-  isInfo }) {
+  isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ username: '', password: '' })
 

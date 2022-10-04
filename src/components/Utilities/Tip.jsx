@@ -11,7 +11,8 @@ import 'tippy.js/dist/backdrop.css'
 import 'tippy.js/animations/shift-away.css'
 import { useFela } from 'react-fela'
 
-export default function Tip({ className,
+export default function Tip({
+  className,
   children,
   width = 'auto',
   delay = 0,
@@ -20,7 +21,8 @@ export default function Tip({ className,
   place = 'bottom',
   felaStyle = {},
   whiteSpaceNowrap = false,
-  trigger = 'mouseenter' }) {
+  trigger = 'mouseenter',
+}) {
   const { css } = useFela()
   const style = { fw: 400, ff: '"Roboto", sans-serif', fs: 12, letterSpacing: '.3px', ...whiteSpaceNowrap && { whiteSpace: 'nowrap' } }
   return (

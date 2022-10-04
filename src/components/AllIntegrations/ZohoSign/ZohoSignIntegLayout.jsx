@@ -12,7 +12,9 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TinyMCE from '../../Utilities/TinyMCE'
 import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc'
 
-export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoSignIntegLayout({
+  formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar,
+}) {
   const fieldsArr = useRecoilValue($fieldsArr)
   const [actionMdl, setActionMdl] = useState({ show: false })
 

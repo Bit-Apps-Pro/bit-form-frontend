@@ -12,7 +12,9 @@ import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { assignNestedObj, getValueByObjPath, getValueFromStateVar, showDraggableModal } from './styleHelpers'
 
-export default function SpacingControl({ mainTitle, subtitle, action, value, objectPaths, id, allowImportant }) {
+export default function SpacingControl({
+  mainTitle, subtitle, action, value, objectPaths, id, allowImportant,
+}) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
@@ -72,7 +74,9 @@ export default function SpacingControl({ mainTitle, subtitle, action, value, obj
       )}
       <div title={getValue('Margin', 'Padding') || 'Configure'} className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id })}
+          onClick={e => showDraggableModal(e, setDraggableModal, {
+            component: 'space-control', mainTitle, subtitle, action, value, objectPaths, id,
+          })}
           type="button"
           className={css(c.pickrBtn)}
           data-testid={`${id}-modal-btn`}

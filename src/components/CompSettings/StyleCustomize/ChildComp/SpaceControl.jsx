@@ -9,14 +9,16 @@ import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import Grow from './Grow'
 import SizeControl from './SizeControl'
 
-export default function SpaceControl({ value,
+export default function SpaceControl({
+  value,
   unitOption,
   title,
   onChange = () => { },
   className,
   stateObjName,
   propertyPath,
-  width, dataTestId }) {
+  width, dataTestId,
+}) {
   const { css } = useFela()
 
   let values = (value?.replace(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')

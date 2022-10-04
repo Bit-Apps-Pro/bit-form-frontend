@@ -35,7 +35,8 @@ const SliderInput = ({ min, max, step, val, onChangeHandler, dataTestId }) => {
 }
 
 export default function CustomInputControl(
-  { width,
+  {
+    width,
     label,
     className,
     value,
@@ -48,7 +49,8 @@ export default function CustomInputControl(
     changeValueOnScroll = true,
     showArrow = true,
     placeholder,
-    hasTextMode, dataTestId },
+    hasTextMode, dataTestId,
+  },
 ) {
   const { css } = useFela()
   const [visible, setVisible] = useState(false)

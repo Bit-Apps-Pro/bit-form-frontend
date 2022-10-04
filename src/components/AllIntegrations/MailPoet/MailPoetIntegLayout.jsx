@@ -5,7 +5,9 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshMailpoetHeader } from './MailPoetCommonFunc'
 import MailPoetFieldMap from './MailPoetFieldMap'
 
-export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, setMailPoetConf, isLoading, setisLoading, setSnackbar }) {
+export default function MailPoetIntegLayout({
+  formID, formFields, mailPoetConf, setMailPoetConf, isLoading, setisLoading, setSnackbar,
+}) {
   const lists = (val) => {
     const newConf = { ...mailPoetConf }
     if (val) {

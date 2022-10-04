@@ -8,7 +8,9 @@ import ZohoCRMActions from './ZohoCRMActions'
 import { handleTabChange, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 
-export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoCRMRelatedRecord({
+  indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar,
+}) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
 

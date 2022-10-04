@@ -6,7 +6,9 @@ import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 
-export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend, handleFormValidationErrorMessages }) {
+export default function RazorPay({
+  fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend, handleFormValidationErrorMessages,
+}) {
   const appSettingsContext = useContext(AppSettings)
   const [clientID, setClientID] = useState('')
   const [amount, setAmount] = useState(attr.options.amount || 1)

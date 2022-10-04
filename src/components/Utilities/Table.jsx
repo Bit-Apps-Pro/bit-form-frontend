@@ -4,7 +4,9 @@ import { forwardRef, memo, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { ReactSortable } from 'react-sortablejs'
-import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
+import {
+  useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable,
+} from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
@@ -80,11 +82,14 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 
 function Table(props) {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const { columns, data, fetchData, refreshResp, report, rightHeader, leftHeader } = props
+  const {
+    columns, data, fetchData, refreshResp, report, rightHeader, leftHeader,
+  } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)
   const reportId = useRecoilValue($reportId)
 
-  const { getTableProps,
+  const {
+    getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
@@ -105,7 +110,8 @@ function Table(props) {
     allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
-    setColumnOrder } = useTable(
+    setColumnOrder,
+  } = useTable(
     {
       debug: true,
       fetchData,

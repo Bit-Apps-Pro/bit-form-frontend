@@ -9,7 +9,9 @@ import Range from './ChildComp/Range'
 import SimpleAccordion from './ChildComp/SimpleAccordion'
 import StyleEditor from './StyleEditor'
 
-export default function DropdownStyleEditors({ editorLabel, style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }) {
+export default function DropdownStyleEditors({
+  editorLabel, style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID,
+}) {
   const navigate = useNavigate()
   const goBackUrl = () => {
     if (navigate.location.pathname.match(/style\/fl\/.+/g)) return navigate.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')

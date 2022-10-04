@@ -6,7 +6,9 @@ import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 
 /* eslint-disable react/jsx-props-no-spreading */
-export default function Button({ fieldKey, attr: fieldData, styleClasses, buttonDisabled, handleReset, formID, data }) {
+export default function Button({
+  fieldKey, attr: fieldData, styleClasses, buttonDisabled, handleReset, formID, data,
+}) {
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false

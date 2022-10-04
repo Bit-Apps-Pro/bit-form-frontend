@@ -1,7 +1,9 @@
 import { useId } from 'react'
 
 /* eslint-disable react/jsx-props-no-spreading */
-export default function CheckBoxMini({ className, cls, id, name, refer, onChange, checked, value, title, disabled }) {
+export default function CheckBoxMini({
+  className, cls, id, name, refer, onChange, checked, value, title, disabled,
+}) {
   const checkId = id || useId()
   return (
     <div className={`form-check ${className}`}>

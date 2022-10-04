@@ -3,7 +3,9 @@ import TrashIcn from '../Icons/TrashIcn'
 import { __ } from '../Utils/i18nwrap'
 import Downmenu from './Utilities/Downmenu'
 
-const FieldDeleteButton = ({ placement, className, label, fieldId, removeLayoutItem, resetContextMenu, toggleSubMenu }) => {
+const FieldDeleteButton = ({
+  placement, className, label, fieldId, removeLayoutItem, resetContextMenu, toggleSubMenu,
+}) => {
   const removeLay = e => {
     e.stopPropagation()
     removeLayoutItem(fieldId)

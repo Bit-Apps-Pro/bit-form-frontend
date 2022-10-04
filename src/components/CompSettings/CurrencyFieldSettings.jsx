@@ -38,13 +38,15 @@ const CurrencyFieldSettings = () => {
   const adminLabel = fieldData.adminLbl || ''
   const { options } = fieldData
 
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCurrencyClearable,
     searchClearable,
     optionFlagImage,
     showSearchPh,
     searchPlaceholder,
-    noCurrencyFoundText } = fieldData.config
+    noCurrencyFoundText,
+  } = fieldData.config
 
   const { showCurrencySymbol,
     roundToClosestInteger,

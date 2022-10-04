@@ -186,7 +186,10 @@ function AllFroms() {
     const loadDuplicate = bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
-        setAllForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
+        setAllForms(allforms => formsReducer(allforms, { type: 'add',
+          data: {
+            formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at,
+          } }))
         return 'Form Duplicated Successfully.'
       }
     })

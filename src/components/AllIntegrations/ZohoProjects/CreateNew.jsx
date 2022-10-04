@@ -4,7 +4,9 @@ import ZohoProjectsActions from './ZohoProjectsActions'
 import { refreshFields } from './ZohoProjectsCommonFunc'
 import ZohoProjectsFieldMap, { addFieldMap } from './ZohoProjectsFieldMap'
 
-export default function CreateNew({ event, projectsConf, setProjectsConf, formID, formFields, isLoading, setisLoading, setSnackbar }) {
+export default function CreateNew({
+  event, projectsConf, setProjectsConf, formID, formFields, isLoading, setisLoading, setSnackbar,
+}) {
   let allFieldsMapped = ''
 
   if (projectsConf?.projectId && projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields) {

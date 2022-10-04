@@ -7,7 +7,9 @@ import MailChimpActions from './MailChimpActions'
 import { refreshAudience, refreshTags } from './MailChimpCommonFunc'
 import MailChimpFieldMap from './MailChimpFieldMap'
 
-export default function MailChimpIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar, a }) {
+export default function MailChimpIntegLayout({
+  formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar, a,
+}) {
   const address = [
     { tag: 'addr1', name: 'Address 1', required: true },
     { tag: 'addr2', name: 'Address 2', required: false },

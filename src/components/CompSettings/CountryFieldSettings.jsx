@@ -37,7 +37,8 @@ const CountryFieldSettings = () => {
   const adminLabel = fieldData.adminLbl || ''
   const { options } = fieldData
 
-  const { selectedFlagImage,
+  const {
+    selectedFlagImage,
     selectedCountryClearable,
     searchClearable,
     optionFlagImage,
@@ -45,7 +46,8 @@ const CountryFieldSettings = () => {
     detectCountryByGeo,
     showSearchPh,
     searchPlaceholder,
-    noCountryFoundText } = fieldData.config
+    noCountryFoundText,
+  } = fieldData.config
 
   const openOptionModal = () => {
     setOptionMdl(true)

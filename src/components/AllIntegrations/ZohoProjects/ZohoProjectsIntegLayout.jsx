@@ -6,7 +6,9 @@ import Loader from '../../Loaders/Loader'
 import CreateNew from './CreateNew'
 import { refreshPortals, refreshProjects, refreshMilestones, refreshTasklists, refreshTasks, regenerateMappedField } from './ZohoProjectsCommonFunc'
 
-export default function ZohoProjectsIntegLayout({ formID, formFields, handleInput, projectsConf, setProjectsConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoProjectsIntegLayout({
+  formID, formFields, handleInput, projectsConf, setProjectsConf, isLoading, setisLoading, setSnackbar,
+}) {
   const handleSubEventInput = (e) => {
     let newConf = { ...projectsConf }
     const subEventArr = []

@@ -17,7 +17,9 @@ import MtInput from '../MtInput'
 import KeyBoard from './KeyBoard'
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-function CalculatorField({ label, onChange, value, disabled, type, textarea, className }) {
+function CalculatorField({
+  label, onChange, value, disabled, type, textarea, className,
+}) {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)

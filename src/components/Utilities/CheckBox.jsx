@@ -1,7 +1,9 @@
 import { useId } from 'react'
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-export default function CheckBox({ id, className, disabled, checked, onChange, radio, name, title, value, sqr }) {
+export default function CheckBox({
+  id, className, disabled, checked, onChange, radio, name, title, value, sqr,
+}) {
   const inpName = name || useId()
   return (
     <label data-testid={`${id}-chk`} className={`btcd-ck-wrp ${className}`}>

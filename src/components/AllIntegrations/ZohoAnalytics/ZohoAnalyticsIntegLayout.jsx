@@ -4,7 +4,9 @@ import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 import { refreshTableHeaders, refreshTables, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsFieldMap, { addFieldMap } from './ZohoAnalyticsFieldMap'
 
-export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInput, analyticsConf, setAnalyticsConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoAnalyticsIntegLayout({
+  formID, formFields, handleInput, analyticsConf, setAnalyticsConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

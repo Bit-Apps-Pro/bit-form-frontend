@@ -7,7 +7,9 @@ import EditIcn from '../../Icons/EditIcn'
 import Button from './Button'
 import SingleToggle2 from './SingleToggle2'
 
-function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked }) {
+function Accordions({
+  title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked,
+}) {
   const [tgl, setTgl] = useState(false)
   const [H, setH] = useState(0)
   const inp = useRef(null)

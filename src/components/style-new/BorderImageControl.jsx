@@ -17,7 +17,8 @@ import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { assignNestedObj, showDraggableModal } from './styleHelpers'
 
-export default function BorderImageControl({ title,
+export default function BorderImageControl({
+  title,
   stateObjName,
   propertyPath,
   subtitle,
@@ -29,7 +30,8 @@ export default function BorderImageControl({ title,
   delPropertyHandler,
   allowImportant,
   hslaPaths,
-  fldKey }) {
+  fldKey,
+}) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const setStyles = useSetRecoilState($styles)
@@ -90,7 +92,9 @@ export default function BorderImageControl({ title,
         )}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-image', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, {
+              component: 'border-image', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey,
+            })}
             type="button"
             className={css(c.pickrBtn)}
             data-testid={`${modalId}-bdr-ctrl-btn`}

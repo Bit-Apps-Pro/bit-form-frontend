@@ -1,6 +1,8 @@
 import { useFela } from 'react-fela'
 
-export default function Select({ options = [], onChange, value, size = 'md', w, className, color = 'default' }) {
+export default function Select({
+  options = [], onChange, value, size = 'md', w, className, color = 'default',
+}) {
   const { css } = useFela()
 
   const cls = {

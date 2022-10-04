@@ -5,7 +5,9 @@ import ZohoSheetActions from './ZohoSheetActions'
 import { refreshWorkbooks, refreshWorksheetHeaders, refreshWorksheets } from './ZohoSheetCommonFunc'
 import ZohoSheetFieldMap from './ZohoSheetFieldMap'
 
-export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoSheetIntegLayout({
+  formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

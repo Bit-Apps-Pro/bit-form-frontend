@@ -7,7 +7,9 @@ import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
 
-export default function RedirectEmailVerified({ dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '' }) {
+export default function RedirectEmailVerified({
+  dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '',
+}) {
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target

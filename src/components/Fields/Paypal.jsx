@@ -8,7 +8,9 @@ import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 
-function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder, handleFormValidationErrorMessages }) {
+function Paypal({
+  fieldKey, formID, attr, contentID, resetFieldValue, isBuilder, handleFormValidationErrorMessages,
+}) {
   const appSettingsContext = useContext(AppSettings)
   const [clientID, setClientID] = useState('')
   const [render, setrender] = useState(false)

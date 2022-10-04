@@ -5,7 +5,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './PodHelperFunction'
 
-export default function PodsFieldMap({ i, type, formFields, field, dataConf, setDataConf, podFields }) {
+export default function PodsFieldMap({
+  i, type, formFields, field, dataConf, setDataConf, podFields,
+}) {
   const fldType = {
     pod: {
       propName: 'pod_map',

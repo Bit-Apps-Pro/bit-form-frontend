@@ -5,7 +5,9 @@ import ut from '../../../../styles/2.utilities'
 import Tip from '../../../Utilities/Tip'
 import IconStyleBtn from '../../IconStyleBtn'
 
-export default function FieldIconSettings({ classNames, labelClass, label, alt, iconSrc, styleRoute, setIcon, removeIcon }) {
+export default function FieldIconSettings({
+  classNames, labelClass, label, alt, iconSrc, styleRoute, setIcon, removeIcon,
+}) {
   const { css } = useFela()
   return (
     <div className={`${css(ut.flxcb)} ${classNames}`}>

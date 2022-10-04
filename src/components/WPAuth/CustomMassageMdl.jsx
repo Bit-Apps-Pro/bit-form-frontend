@@ -3,7 +3,9 @@ import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
 
-export default function CustomMassageMdl({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
+export default function CustomMassageMdl({
+  dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title,
+}) {
   const temBody = dataConf[type].acti_succ_msg ? dataConf[type].acti_succ_msg : tamplate
 
   const handleBody = value => {

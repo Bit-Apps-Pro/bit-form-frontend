@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-function DropDown({ options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue }) {
+function DropDown({
+  options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue,
+}) {
   const [val, setVal] = useState(value)
   useEffect(() => {
     setVal('')
