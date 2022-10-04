@@ -8,9 +8,9 @@ export default function SimpleDropdown({
   options, value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25, id,
 }) {
   let defaultVal = null
-  const selected = options.find(opt => opt.value === value)
+  const selected = options?.find(opt => opt.value === value)
   if (Number.isInteger(value)) {
-    defaultVal = options[value]
+    defaultVal = options?.[value]
   } else {
     defaultVal = selected || {}
   }
@@ -21,9 +21,9 @@ export default function SimpleDropdown({
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   useEffect(() => {
     if (Number.isInteger(value)) {
-      setSelectedItem(options[value])
+      setSelectedItem(options?.[value])
     } else {
-      const selected = options.find(opt => opt.value === value)
+      const selected = options?.find(opt => opt.value === value)
       setSelectedItem(selected || {})
     }
   }, [value])
@@ -111,7 +111,7 @@ export default function SimpleDropdown({
         >
           <ul className={css(simppleDpdStyle.options)} aria-hidden={!menu.open}>
             <div className={css(simppleDpdStyle.divider)} />
-            {options.map((itm, i) => (
+            {options && options.map((itm, i) => (
               <li key={`${itm.value}-${i * 9}`} className={css(simppleDpdStyle.option)}>
                 <button
                   type="button"

@@ -730,7 +730,7 @@ export const arrayToObject = (arr) => {
     console.warn('arrayToObject: arr is undefined', arr)
     return
   }
-  Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
+  return Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
 }
 
 export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
