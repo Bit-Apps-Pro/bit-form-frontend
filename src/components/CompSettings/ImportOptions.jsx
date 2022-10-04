@@ -24,7 +24,7 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
   const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fldKey])
 
-  const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt.value.replace(/,/g, '_') }))
+  const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt[valKey].replace(/,/g, '_') }))
 
   const generateNewOptions = () => {
     if (!isPro) return []
