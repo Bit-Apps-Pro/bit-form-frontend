@@ -38,7 +38,7 @@ export default class BitDropdownField {
   #window = {}
 
   #config = {
-    separator: '\n',
+    separator: ',',
     selectedOptImage: false,
     dropdownIcn: '',
     selectedOptClearable: true,
@@ -93,6 +93,7 @@ export default class BitDropdownField {
 
     this.#initOptionsList()
     this.#config.defaultValue && this.setSelectedOption(this.#config.defaultValue)
+    this.#setDefaultValue()
 
     if (this.#config.selectedOptImage) {
       this.#selectedOptImgElm.src = this.#placeholderImage
@@ -132,6 +133,12 @@ export default class BitDropdownField {
   #addEvent(selector, eventType, cb) {
     selector?.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
+  }
+
+  #setDefaultValue() {
+    if (!this.#dropdownHiddenInputElm.value) return
+    this.setSelectedOption(this.#dropdownHiddenInputElm.value)
+    this.#reRenderVirtualOptions()
   }
 
   #handleInputValueChange(oldVal, newVal) {
@@ -306,7 +313,8 @@ export default class BitDropdownField {
 
   setSelectedOption(values) {
     let selectedItem = null
-    const valueArr = values.split(this.#config.separator)
+    let valueArr = values.split(this.#config.separator)
+    valueArr = valueArr.filter(val => this.#searchOptionObjByVal(val))
     if (this.#config.multipleSelect) {
       if (valueArr.length === 1) {
         selectedItem = this.#searchOptionObjByVal(valueArr[0])
@@ -340,7 +348,7 @@ export default class BitDropdownField {
 
     this.#setTextContent(this.#selectedOptLblElm, selectedItem.lbl)
     if (this.#config.closeOnSelect) this.setMenu({ open: false })
-    this.value = values
+    this.#setAttribute(this.#dropdownHiddenInputElm, 'value', values)
     if (this.#config.selectedOptClearable) {
       this.#selectedOptClearBtnElm.style.display = 'grid'
       this.#addEvent(this.#selectedOptClearBtnElm, 'click', e => { this.#clearSelectedOption(e) })
