@@ -743,7 +743,7 @@ export const isValidURL = (string) => {
 }
 
 export const getValueFromStateVar = (stateObj, val) => {
-  if (val && val.match(/(var)/g)?.[0] === 'var') {
+  if (val?.match?.(/(var)/g)?.[0] === 'var') {
     const getVarProperty = val.replace(/\(|var|,.*|\)|(!important|\s)/gi, '')
     return stateObj[getVarProperty] || ''
   }
