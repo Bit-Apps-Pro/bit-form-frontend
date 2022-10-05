@@ -36,11 +36,8 @@ export default function EditOptions({ optionMdl, options, setOptions, type, lblK
     })
   }
 
-  console.log({ options })
-
   return (
     <div className={css(style.wrapper)}>
-
       <StyleSegmentControl
         options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
         onChange={lbl => handleSegment(lbl)}

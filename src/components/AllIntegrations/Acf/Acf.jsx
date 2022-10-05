@@ -132,7 +132,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           onChange={(e) => getCustomFields(e.target.name, e.target.value)}
           className="btcd-paper-inp w-5 mt-1"
         >
-          <option disabled value="0" selected>Select Post Type</option>
+          <option disabled value="0">Select Post Type</option>
           {postTypes.map((postType, key) => (
             <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
           ))}
@@ -162,7 +162,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         className="btcd-paper-inp w-5 mt-2"
       >
-        <option disabled value="0" selected>{__('Select Status')}</option>
+        <option disabled value="0">{__('Select Status')}</option>
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
         <option value="auto-draft">Auto-Draft</option>
@@ -186,7 +186,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
           onChange={(e) => handleInput(e.target.name, e.target.value)}
           className="btcd-paper-inp w-5 mt-2"
         >
-          <option disabled value="0" selected>{__('Select Author')}</option>
+          <option disabled value="0">{__('Select Author')}</option>
           <option value="logged_in_user">Logged In User</option>
           {users.map((user, key) => (
             <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
@@ -204,7 +204,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         onChange={(e) => handleInput(e.target.name, e.target.value)}
         className="btcd-paper-inp w-5 mt-2"
       >
-        <option disabled value="0" selected>{__('Select Status')}</option>
+        <option disabled value="0">{__('Select Status')}</option>
         <option value="open">Open</option>
         <option value="closed">Closed</option>
       </select>
