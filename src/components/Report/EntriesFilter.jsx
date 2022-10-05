@@ -9,6 +9,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { $reportSelector } from '../../GlobalStates/GlobalStates'
+import Btn from '../Utilities/Btn'
 
 export default function EntriesFilter({ fetchData }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -61,22 +62,35 @@ export default function EntriesFilter({ fetchData }) {
               endDatePlaceholder="End Date"
             />
             <div className="flx flx-between ml-1">
-              <button type="button" className="btn blue mt-0 ml-2" onClick={searchByDateBetween}>{__('Search')}</button>
-              <button type="button" className="btn blue mt-0" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</button>
-
+              <Btn size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
+              <Btn size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
             </div>
           </div>
         )}
       >
         {(data[0].startDate === '' || data[0].endDate === '') ? (
-          <button aria-label="Fitler" className="btn btn-date-range mb3 tooltip" style={{ '--tooltip-txt': `'${__('Filter')}'` }} type="button"><Calender size="16" /></button>
+          <button
+            aria-label="Fitler"
+            className="btn btn-date-range mb3 tooltip"
+            style={{ '--tooltip-txt': `'${__('Filter')}'` }}
+            type="button"
+          >
+            <Calender size="16" />
+          </button>
         ) : (
           <div className="btcd-custom-date-range white  mt-2">
             <span className="m-a">
               &nbsp;
               {`${dateTimeFormatter(data[0].startDate, 'Y-m-d')} - ${dateTimeFormatter(data[0].endDate, 'Y-m-d')}`}
             </span>
-            <button aria-label="Close" type="button" className="icn-btn" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}><CloseIcn size="12" /></button>
+            <button
+              aria-label="Close"
+              type="button"
+              className="icn-btn"
+              onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}
+            >
+              <CloseIcn size="12" />
+            </button>
           </div>
         )}
       </Tippy>

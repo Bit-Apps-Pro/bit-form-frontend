@@ -2617,7 +2617,7 @@ nav.top-nav {
   min-height: 70%;
   transition: transform 0.3s, border-radius 0.5s ease;
   box-shadow: 0 0 44px -20px var(--white-0-0-64);
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
 }
 
 .btc-mdl-trn-enter-done .auto-height {
@@ -5234,6 +5234,12 @@ _:-ms-fullscreen,
 
 .show_tippy_action {
   display: none;
+  &> .icn-btn {
+    margin-right: 2px;
+    &:hover {
+      background: hsl(147deg 10% 92%)!important;
+    }
+  }
 }
 
 .report-content-btn-item {
@@ -5254,16 +5260,23 @@ _:-ms-fullscreen,
 }
 
 .report-content-item {
+  transition: .2s all ease;
+  margin-bottom: 2px;
 
   //padding:5px;
-  &:hover>.show_tippy_action {
-    display: inline-flex !important;
+  // &:hover > .show_tippy_action {
+  //   display: inline-flex !important;
+  // }
+  &:hover {
+    background: var(--b-79-96);
+    border-radius: 8px;
   }
 
 }
 
 .report-dpdw-active {
-  background: #F2F2F2;
+  // background: #F2F2F2;
+  background:var(--b-79-96);
   border-radius: 8px;
   //padding: 0px;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
@@ -44,10 +45,24 @@ export default function RedirectEmailVerified({
     <div>
       <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, maxHeight: 600, display: 'block' }} className="o-a">
         <Scrollbars autoHide>
-          <div className="mr-2">
+          <div className="mr-2 mb-3">
             <div className="mt-2">
-              <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '0'} title={<small className="txt-dp"><b>Messgae</b></small>} value={0} />
-              <CheckBox radio name="custom_redirect" onChange={handleInput} checked={data?.custom_redirect?.toString() === '1'} title={<small className="txt-dp"><b>Redirect Page</b></small>} value={1} />
+              <CheckBox
+                radio
+                name="custom_redirect"
+                onChange={handleInput}
+                checked={data?.custom_redirect?.toString() === '0'}
+                title={<small className="txt-dp"><b>Messgae</b></small>}
+                value={0}
+              />
+              <CheckBox
+                radio
+                name="custom_redirect"
+                onChange={handleInput}
+                checked={data?.custom_redirect?.toString() === '1'}
+                title={<small className="txt-dp"><b>Redirect Page</b></small>}
+                value={1}
+              />
             </div>
             {data?.custom_redirect?.toString() === '1' && (
               <div className="mt-3 ml-2">
@@ -63,7 +78,12 @@ export default function RedirectEmailVerified({
                       </Cooltip>
                     </div>
 
-                    <select className="btcd-paper-inp mt-1" name="succ_url" value={data?.succ_url} onChange={handleInput}>
+                    <select
+                      className="btcd-paper-inp mt-1"
+                      name="succ_url"
+                      value={data?.succ_url}
+                      onChange={handleInput}
+                    >
                       <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -73,7 +93,14 @@ export default function RedirectEmailVerified({
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input placeholder="success page link" onChange={handleInput} name="succ_url" className="btcd-paper-inp mt-1" type="text" value={data?.succ_url} />
+                    <input
+                      placeholder="success page link"
+                      onChange={handleInput}
+                      name="succ_url"
+                      className="btcd-paper-inp mt-1"
+                      type="text"
+                      value={data?.succ_url}
+                    />
                   </div>
                 </div>
 
@@ -89,7 +116,12 @@ export default function RedirectEmailVerified({
                         </div>
                       </Cooltip>
                     </div>
-                    <select className="btcd-paper-inp mt-1" name="already_activated_url" value={data?.already_activated_url} onChange={handleInput}>
+                    <select
+                      className="btcd-paper-inp mt-1"
+                      name="already_activated_url"
+                      value={data?.already_activated_url}
+                      onChange={handleInput}
+                    >
                       <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -98,7 +130,14 @@ export default function RedirectEmailVerified({
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input placeholder="already  activated page link" onChange={handleInput} name="already_activated_url" className="btcd-paper-inp mt-1" type="text" value={data?.already_activated_url} />
+                    <input
+                      placeholder="already  activated page link"
+                      onChange={handleInput}
+                      name="already_activated_url"
+                      className="btcd-paper-inp mt-1"
+                      type="text"
+                      value={data?.already_activated_url}
+                    />
                   </div>
                 </div>
 
@@ -115,7 +154,12 @@ export default function RedirectEmailVerified({
                         </div>
                       </Cooltip>
                     </div>
-                    <select className="btcd-paper-inp mt-1" name="invalid_key_url" value={data?.invalid_key_url} onChange={handleInput}>
+                    <select
+                      className="btcd-paper-inp mt-1"
+                      name="invalid_key_url"
+                      value={data?.invalid_key_url}
+                      onChange={handleInput}
+                    >
                       <option value="">{__('Custom Link')}</option>
                       {pages && pages.map((urlDetail, ind) => (
                         <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -124,7 +168,14 @@ export default function RedirectEmailVerified({
                   </div>
                   <div className="w-5 ml-2">
                     <div className="f-m fw-500">Link</div>
-                    <input placeholder="invalid page link" onChange={handleInput} name="invalid_key_url" className="btcd-paper-inp mt-1" type="text" value={data?.invalid_key_url} />
+                    <input
+                      placeholder="invalid page link"
+                      onChange={handleInput}
+                      name="invalid_key_url"
+                      className="btcd-paper-inp mt-1"
+                      type="text"
+                      value={data?.invalid_key_url}
+                    />
                   </div>
                 </div>
               </div>
@@ -158,7 +209,6 @@ export default function RedirectEmailVerified({
                       // width="100%"
                       height="5px"
                       toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
-
                     />
                   </label>
                 </div>

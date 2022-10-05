@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -15,16 +16,17 @@ import { useFela } from 'react-fela'
 import { $bits, $fieldsArr, $reportId, $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
-import OutlineDeleteIcn from '../../Icons/OutlineDeleteIcn'
 import PlusIcn from '../../Icons/PlusIcn'
 import RefreshIcn from '../../Icons/RefreshIcn'
 import SearchIcn from '../../Icons/SearchIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import tableStyle from '../../styles/table.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import Btn from '../Utilities/Btn'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import Modal from '../Utilities/Modal'
 import SnackMsg from '../Utilities/SnackMsg'
@@ -151,7 +153,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const onCloseMdl = () => {
     setshowMdl(false)
     const tmpConf = deepCopy([...reports])
-    if (!tmpConf[reportIndex].id) {
+    if (!tmpConf[reportIndex]?.id) {
       tmpConf.splice(reportIndex, 1)
       setReports(tmpConf)
     }
@@ -270,7 +272,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             appendTo="parent"
             className={css(reportSearch.reportTippyBox)}
             content={(
-              <div style={{ height: 250, padding: 5 }}>
+              <div style={{ height: 250, padding: 3 }}>
                 <div className="mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
                 <div className={css(reportSearch.reportBox, ut.mb2)}>
                   <span><SearchIcn size="16" /></span>
@@ -311,7 +313,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                               onClick={() => editCurrentReport(report.value)}
                               type="button"
                             >
-                              <EditIcn size={17} />
+                              <EditIcn size="17" />
                             </button>
                             {report.value !== currentReport?.id && (
                               <button
@@ -320,7 +322,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                                 onClick={() => deleteReportAlert(report.value)}
                                 type="button"
                               >
-                                <OutlineDeleteIcn size={12} />
+                                <TrashIcn size="15" />
                               </button>
                             )}
                           </div>
@@ -366,12 +368,15 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                   setDataConf={setReports}
                   reportInd={reportIndex || 0}
                 />
-              </div>
-              <div className="mt-2 f-left">
-                <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
-                  Save
+                {/* </div>
+              <div className="mt-2 f-left"> */}
+                <Btn
+                  className={css(ut.ftRight, ut.mb3)}
+                  onClick={saveReport}
+                >
+                  {__('Save')}
                   {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
-                </button>
+                </Btn>
               </div>
             </>
           </Modal>

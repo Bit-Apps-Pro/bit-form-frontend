@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import ut from '../../styles/2.utilities'

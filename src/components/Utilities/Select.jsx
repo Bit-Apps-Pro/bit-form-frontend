@@ -30,7 +30,7 @@ export default function Select({
   }
 
   return (
-    <select className={css(cls.selectInput)} value={value} onChange={handleOnChange}>
+    <select className={`${css(cls.selectInput)} ${className}`} value={value} onChange={handleOnChange}>
       {options.map(option => (
         <option key={option.value} value={option.value}>{option.label}</option>
       ))}

@@ -95,10 +95,10 @@ export default function ListGroup({ options, action }) {
           {searchData.map(group => (
             <>
               {group.type === 'group-accordion' && (
-                <LayerAccordion key={group.name} title={group.name}>
+                <LayerAccordion key={`group-accordion-${group.name}`} title={group.name}>
                   <ul className={css(style.ul)}>
                     {'childs' in group && group.childs.map(option => (
-                      <li key={option.val} className={css(style.li)}>
+                      <li key={`childs-${option.val}`} className={css(style.li)}>
                         <button
                           type="button"
                           className={`${css(style.button)} btnHover`}
@@ -116,7 +116,7 @@ export default function ListGroup({ options, action }) {
                 <ul className={css(style.ul)}>
                   {group.type.match(/group-opts|group-title/) && (<h4 className={css(style.title)}>{group.name}</h4>)}
                   {'childs' in group && group.childs.map(option => (
-                    <li key={`-${option.val}`} className={css(style.li)}>
+                    <li key={`group-child-${option.val}`} className={css(style.li)}>
                       <button
                         type="button"
                         className={`${css(style.button)} btnHover`}
