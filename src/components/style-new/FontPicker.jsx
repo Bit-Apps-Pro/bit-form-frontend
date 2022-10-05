@@ -17,7 +17,7 @@ export default function FontPicker({ id }) {
       type="button"
       data-testid="font-picker"
     >
-      {font || 'Configure'}
+      {font === 'inherit' ? 'Inherit' : font || 'Configure'}
     </button>
   )
 }
