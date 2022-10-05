@@ -81,7 +81,7 @@ body {
 }
 
 #wpfooter{
-  display: none;
+  display: none!important;
 }
 #wpbody-content{
   padding-bottom: 0;
@@ -2058,23 +2058,28 @@ nav.top-nav {
   background: var(--white);
   border-radius: 8px;
 
+  
   &>.btcd-accr-btn {
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
     outline: none;
     padding: 8px;
     cursor: pointer;
 
     &>.icn-btn {
-      font-weight: bold;
-
       &:hover {
-        // background: rgba(0, 0, 0, 0.178);
         background: var(--white-0-0-17);
       }
     }
 
+    &.active{
+      border-radius: 8px 8px 0 0;
+      .icn-btn{
+        color : white;
+      }
+    } 
+  
+
     &:hover {
-      // background-color: #eaedff;
       background-color: var(--b-97);
 
       & .edit-icn {
@@ -2127,6 +2132,14 @@ nav.top-nav {
 
   & .edit-icn {
     display: none;
+    background: transparent;
+    height: 16px;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    &:hover{
+      color: var(--dp-blue)!important;
+    }
   }
 }
 
@@ -3017,7 +3030,7 @@ nav.top-nav {
     border-radius: 50px 0 0 50px;
     text-decoration: none;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 11px;
 
     &:focus {
       box-shadow: none;
