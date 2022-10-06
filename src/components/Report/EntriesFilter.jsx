@@ -1,14 +1,17 @@
 import Tippy from '@tippyjs/react'
 import { useState } from 'react'
+import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
-import { DateRange } from 'react-date-range'
+import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
-import Calender from '../../Icons/Calender'
+import { $reportSelector } from '../../GlobalStates/GlobalStates'
+import CalendarIcn from '../../Icons/CalendarIcn'
 import CloseIcn from '../../Icons/CloseIcn'
+import ut from '../../styles/2.utilities'
+import tableStyle from '../../styles/table.style'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { $reportSelector } from '../../GlobalStates/GlobalStates'
 import Btn from '../Utilities/Btn'
 
 export default function EntriesFilter({ fetchData }) {
@@ -20,6 +23,7 @@ export default function EntriesFilter({ fetchData }) {
       key: 'date',
     },
   ])
+  const { css } = useFela()
 
   const searchByDateBetween = () => {
     const { startDate, endDate } = data[0]
@@ -40,7 +44,7 @@ export default function EntriesFilter({ fetchData }) {
   return (
     <div className="flx mr-2">
       <Tippy
-        animation="scale"
+        animation="shift-away-extreme"
         arrow
         theme="light-border"
         trigger="click"
@@ -49,7 +53,7 @@ export default function EntriesFilter({ fetchData }) {
         appendTo="parent"
         className="tippy-box tippy-box-datepicker"
         content={(
-          <div style={{ maxHeight: '397px !important' }}>
+          <div style={{ minHeight: '200px !important' }}>
             <DateRange
               onChange={item => setData([item.date])}
               moveRangeOnFirstSelection={false}
@@ -61,7 +65,8 @@ export default function EntriesFilter({ fetchData }) {
               startDatePlaceholder="Start Date"
               endDatePlaceholder="End Date"
             />
-            <div className="flx flx-between ml-1">
+            {/* <div className="flx flx-between ml-1"> */}
+            <div className={css({ flx: 'center-between', pt: 8, pb: 6 })}>
               <Btn size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
               <Btn size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
             </div>
@@ -71,11 +76,12 @@ export default function EntriesFilter({ fetchData }) {
         {(data[0].startDate === '' || data[0].endDate === '') ? (
           <button
             aria-label="Fitler"
-            className="btn btn-date-range mb3 tooltip"
+            // className="btn btn-date-range mb3 tooltip"
+            className={css(tableStyle.tableActionBtn, ut.ml2)}
             style={{ '--tooltip-txt': `'${__('Filter')}'` }}
             type="button"
           >
-            <Calender size="16" />
+            <CalendarIcn size="16" />
           </button>
         ) : (
           <div className="btcd-custom-date-range white  mt-2">
