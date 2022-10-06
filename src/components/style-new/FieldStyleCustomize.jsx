@@ -8,7 +8,7 @@
 import { produce } from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderRightPanelScroll, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -36,8 +36,11 @@ export default function FieldStyleCustomizeHOC() {
   const { formType, formID, '*': rightParams } = useParams()
   const [, element, fieldKey] = rightParams.split('/')
   const styles = useRecoilValue($styles)
+  const navigator = useNavigate()
 
-  if (!styles?.fields?.[fieldKey]) { console.error('no style object found according to this field'); return <>No Field</> }
+  if (!styles?.fields?.[fieldKey]) {
+    return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
+  }
   return <FieldStyleCustomize {...{ formType, formID, fieldKey, element }} />
 }
 const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
@@ -329,7 +332,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
             <Grow open={controller === 'classes'}>
               <div className={css(ut.m10)}>
-                <label className={css({ fs: 14 })}>Custom Class Name</label>
+                <label className={css({ fs: 14, fw: 600 })}>Custom Class Name</label>
                 <AutoResizeInput
                   ariaLabel="Custom Class Name"
                   placeholder="e.g. class1 class2 class3"
@@ -340,14 +343,14 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                 />
               </div>
               <div className={css(ut.m10)}>
-                <span className={css({ fs: 14 })}>Custom Attributes</span>
+                <span className={css({ fs: 14, fw: 600 })}>Custom Attributes</span>
                 <div className={css({ w: '80%', ml: 18 })}>
                   <div className={css(cls.customAttrContainer)}>
                     <div className={css({ w: '50%' })}>
-                      <span className={css({ fs: 13 })}>Key</span>
+                      <span className={css({ fs: 13, fw: 500 })}>Key</span>
                     </div>
                     <div className={css({ w: '50%' })}>
-                      <span className={css({ fs: 13 })}>Value</span>
+                      <span className={css({ fs: 13, fw: 500 })}>Value</span>
                     </div>
                   </div>
                 </div>
@@ -392,16 +395,18 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                     </button>
                   </div>
                 ))}
+                <div className="plus-icn">
 
-                <button
-                  className={css(cls.addBtn, cls.position, cls.addBtnHover)}
-                  type="button"
-                  aria-label="Add Custom Attribute"
-                  onClick={addCustomAttribute}
-                  data-testid={`${fieldKey}-${element}-attbut-add`}
-                >
-                  <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
-                </button>
+                  <button
+                    className={css(cls.addBtn, cls.position, cls.addBtnHover)}
+                    type="button"
+                    aria-label="Add Custom Attribute"
+                    onClick={addCustomAttribute}
+                    data-testid={`${fieldKey}-${element}-attbut-add`}
+                  >
+                    <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
+                  </button>
+                </div>
               </div>
             </Grow>
           </>
