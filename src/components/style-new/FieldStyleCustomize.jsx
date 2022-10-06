@@ -395,10 +395,10 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                     </button>
                   </div>
                 ))}
-                <div className="plus-icn">
+                <div className={css(cls.addContainer)}>
 
                   <button
-                    className={css(cls.addBtn, cls.position, cls.addBtnHover)}
+                    className={css(cls.addBtn, cls.addBtnHover)}
                     type="button"
                     aria-label="Add Custom Attribute"
                     onClick={addCustomAttribute}
@@ -471,11 +471,6 @@ const cls = {
   customAttrContainer: { flx: 'center-between', mt: 5, ta: 'center' },
   customAttrItem: { flx: 'center' },
   pair: { fs: 20, mt: 5, mx: 5 },
-  position: {
-    pn: 'absolute',
-    bottom: -'20px',
-    left: '42%',
-  },
   addBtn: {
     se: 25,
     b: 'none',
@@ -489,4 +484,8 @@ const cls = {
   },
   addBtnHover: { ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' } },
   delBtnHover: { ':hover': { tm: 'scale(1.1)', cr: 'red' } },
+  addContainer: {
+    flx: 'center',
+    width: 'calc(100% - 30px)',
+  },
 }
