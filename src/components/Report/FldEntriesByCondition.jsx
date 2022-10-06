@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-multi-spaces */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
@@ -33,6 +34,7 @@ import SnackMsg from '../Utilities/SnackMsg'
 import Tip from '../Utilities/Tip'
 import ConditionalLogic from './ConditionalLogic'
 import SearchIcon from '../../Icons/SearchIcon'
+import FilterIcn from '../../Icons/FilterIcn'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -241,7 +243,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx">
-        <div className="flx btcd-custom-report-dpdw mr-2" style={{ height: 28 }}>
+        <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
+          <span
+            className="flx sm b-none pos-rel mr-1"
+          >
+            <FilterIcn size="16" stroke="2" />
+          </span>
           <div className="w-9">
             {currentReport?.details?.report_name?.length > 11 ? (
               `${currentReport.details.report_name?.slice(0, 11)}...`
@@ -250,12 +257,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             )}
           </div>
           <button
-            className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn)}`}
+            className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn, { pr: 0, cur: 'pointer' })}`}
             onClick={() => setRefreshResp(1)}
             type="button"
             style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
           >
-            <RefreshIcn size="15" />
+            <RefreshIcn size="20" />
           </button>
         </div>
         <div className="mr-2">
@@ -461,6 +468,7 @@ const reportSearch = {
     },
   },
   refreshBtn: {
+    cr: 'hsl(0deg 1% 29%)',
     '&:hover': { cr: 'var(--blue)', bd: 'var(--b-79-96)' },
   },
 }
