@@ -289,24 +289,49 @@ function Table(props) {
         <div className="btcd-t-actions">
           <div className="flx">
 
-            {props.columnHidable && <ColumnHide cols={props.columns} setCols={props.setTableCols} tableCol={columns} tableAllCols={allColumns} />}
+            {props.columnHidable && (
+              <ColumnHide
+                cols={props.columns}
+                setCols={props.setTableCols}
+                tableCol={columns}
+                tableAllCols={allColumns}
+              />
+            )}
             {leftHeader}
             {props.rowSeletable && selectedFlatRows.length > 0
               && (
                 <>
                   {'setBulkStatus' in props
                     && (
-                      <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
+                      <button
+                        onClick={showStModal}
+                        className="icn-btn btcd-icn-lg tooltip"
+                        style={{ '--tooltip-txt': '"Status"' }}
+                        aria-label="icon-btn"
+                        type="button"
+                      >
                         <ToggleLeftIcn size="22" stroke="2" />
                       </button>
                     )}
                   {'duplicateData' in props
                     && (
-                      <button onClick={showBulkDupMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Duplicate"' }} aria-label="icon-btn" type="button">
+                      <button
+                        onClick={showBulkDupMdl}
+                        className="icn-btn btcd-icn-lg tooltip"
+                        style={{ '--tooltip-txt': '"Duplicate"' }}
+                        aria-label="icon-btn"
+                        type="button"
+                      >
                         <CopyIcn w="15" />
                       </button>
                     )}
-                  <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
+                  <button
+                    onClick={showDelModal}
+                    className="icn-btn btcd-icn-lg tooltip"
+                    style={{ '--tooltip-txt': '"Delete"' }}
+                    aria-label="icon-btn"
+                    type="button"
+                  >
                     <TrashIcn size="21" />
                   </button>
                   <small className={css(cls.pill)}>
@@ -411,16 +436,40 @@ function Table(props) {
           )}
         </small>
         <div className="flx mr-2">
-          <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          <button
+            aria-label="Go first"
+            className="icn-btn"
+            type="button"
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+          >
             <ChevronDoubleIcn dir="left" />
           </button>
-          <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <button
+            aria-label="Back"
+            className="icn-btn"
+            type="button"
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
             <ChevronLeft />
           </button>
-          <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
+          <button
+            aria-label="Next"
+            className="icn-btn"
+            type="button"
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          >
             <ChevronRightIcon />
           </button>
-          <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          <button
+            aria-label="Last"
+            className="icn-btn"
+            type="button"
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
             <ChevronDoubleIcn dir="right" />
           </button>
 
@@ -451,10 +500,8 @@ function Table(props) {
               { label: 'Showing 50', value: 50 },
             ]}
           />
-
         </div>
       </div>
-
     </>
   )
 }

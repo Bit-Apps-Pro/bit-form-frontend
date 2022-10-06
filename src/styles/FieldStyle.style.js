@@ -64,15 +64,22 @@ const FieldStyle = {
     mt: 10,
     '& .msl': {
       h: '32px!important',
-      bd: 'var(--b-79-96) !important',
+      bd: 'var(--b-79-96)',
       b: 0,
       '&.msl-active-up': {
         'border-bottom-left-radius': 0,
         'border-bottom-right-radius': 0,
         'border-top-left-radius': '8px',
         'border-top-right-radius': '8px',
+        background: '#fff !important',
+
       },
       '& .msl-input': { p: 3, cr: '#2c3338' },
+    },
+    '& .msl-active-up~.msl-options': {
+      'max-height': '300px',
+      '-webkit-clip-path': 'inset(0px -10px 0 -10px)',
+      'clip-path': 'inset(0px -10px 0 -10px)',
     },
     '&.msl-vars': { w: '99% !important', '--font-size': '14px' },
     '&.msl-wrp > .msl-options': {

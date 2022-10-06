@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-multi-spaces */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -15,21 +17,24 @@ import { useFela } from 'react-fela'
 import { $bits, $fieldsArr, $reportId, $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
-import OutlineDeleteIcn from '../../Icons/OutlineDeleteIcn'
 import PlusIcn from '../../Icons/PlusIcn'
 import RefreshIcn from '../../Icons/RefreshIcn'
 import SearchIcn from '../../Icons/SearchIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import tableStyle from '../../styles/table.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import Btn from '../Utilities/Btn'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import Modal from '../Utilities/Modal'
 import SnackMsg from '../Utilities/SnackMsg'
 import Tip from '../Utilities/Tip'
 import ConditionalLogic from './ConditionalLogic'
+import SearchIcon from '../../Icons/SearchIcon'
+import FilterIcn from '../../Icons/FilterIcn'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -151,7 +156,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const onCloseMdl = () => {
     setshowMdl(false)
     const tmpConf = deepCopy([...reports])
-    if (!tmpConf[reportIndex].id) {
+    if (!tmpConf[reportIndex]?.id) {
       tmpConf.splice(reportIndex, 1)
       setReports(tmpConf)
     }
@@ -238,7 +243,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx">
-        <div className="flx btcd-custom-report-dpdw mr-2">
+        <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
+          <span
+            className="flx sm b-none pos-rel mr-1"
+          >
+            <FilterIcn size="16" stroke="2" />
+          </span>
           <div className="w-9">
             {currentReport?.details?.report_name?.length > 11 ? (
               `${currentReport.details.report_name?.slice(0, 11)}...`
@@ -246,8 +256,13 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
               currentReport?.details?.report_name
             )}
           </div>
-          <button className="sm b-none tooltip pos-rel" title="Refresh" onClick={() => setRefreshResp(1)} type="button" style={{ '--tooltip-txt': `'${__('Refresh')}'` }}>
-            <RefreshIcn size="15" />
+          <button
+            className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn, { pr: 0, cur: 'pointer' })}`}
+            onClick={() => setRefreshResp(1)}
+            type="button"
+            style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
+          >
+            <RefreshIcn size="20" />
           </button>
         </div>
         <div className="mr-2">
@@ -270,10 +285,10 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             appendTo="parent"
             className={css(reportSearch.reportTippyBox)}
             content={(
-              <div style={{ height: 250, padding: 5 }}>
-                <div className="mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
+              <div style={{ height: 250, padding: 3 }}>
+                <div className="mb-2" style={{ color: 'rgb(63, 63, 63)', fontWeight: 700 }}>Filters</div>
                 <div className={css(reportSearch.reportBox, ut.mb2)}>
-                  <span><SearchIcn size="16" /></span>
+                  <span><SearchIcon size="16" /></span>
                   <input
                     aria-label="Search reports"
                     type="text"
@@ -306,21 +321,22 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                         {(report.isDefault.toString() === '0') && (
                           <div className="show_tippy_action">
                             <button
-                              className="icn-btn sm"
+                              className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
                               title="Edit"
                               onClick={() => editCurrentReport(report.value)}
                               type="button"
                             >
-                              <EditIcn size={17} />
+                              <EditIcn size="17" />
                             </button>
                             {report.value !== currentReport?.id && (
                               <button
-                                className="icn-btn sm"
+                                // className="icn-btn sm"
+                                className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
                                 title="Delete"
                                 onClick={() => deleteReportAlert(report.value)}
                                 type="button"
                               >
-                                <OutlineDeleteIcn size={12} />
+                                <TrashIcn size="15" />
                               </button>
                             )}
                           </div>
@@ -366,12 +382,15 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                   setDataConf={setReports}
                   reportInd={reportIndex || 0}
                 />
-              </div>
-              <div className="mt-2 f-left">
-                <button type="button" className="btn-md btn blue f-right" onClick={saveReport}>
-                  Save
+                {/* </div>
+              <div className="mt-2 f-left"> */}
+                <Btn
+                  className={css(ut.ftRight, ut.mb3)}
+                  onClick={saveReport}
+                >
+                  {__('Save')}
                   {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
-                </button>
+                </Btn>
               </div>
             </>
           </Modal>
@@ -426,7 +445,7 @@ const reportSearch = {
       pn: 'absolute !important',
       tp: 7,
       lt: 6,
-      ':foucs': { bcr: 'var(--b-92-62) !important' },
+      // ':foucs': { bcr: 'var(--b-92-62) !important' },
     },
   },
   dpdwInputBox: {
@@ -443,9 +462,13 @@ const reportSearch = {
     mnh: 'auto!important',
     oe: 'none!important',
     tn: '0.1s all ease',
-    '&:focus': {
-      '& ~ span svg': { cr: 'var(--b-50)' },
+    ':focus': {
+      '& ~ span': { cr: 'var(--b-50)' },
       focusShadow: 1,
     },
+  },
+  refreshBtn: {
+    cr: 'hsl(0deg 1% 29%)',
+    '&:hover': { cr: 'var(--blue)', bd: 'var(--b-79-96)' },
   },
 }
