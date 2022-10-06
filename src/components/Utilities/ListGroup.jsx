@@ -1,9 +1,9 @@
-import { useFela } from 'react-fela'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
-import { useEffect, useRef, useState } from 'react'
+import { useFela } from 'react-fela'
 import SearchIcon from '../../Icons/SearchIcon'
-import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { deepCopy } from '../../Utils/Helpers'
+import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 
 const groupAllOptions = options => {
   // split all groups into separate arrays and if the options are not in a group then add them to a new group until the next group
@@ -93,7 +93,7 @@ export default function ListGroup({ options, action }) {
       <Scrollbars style={{ height: '92%' }} autoHide>
         <div className={css(style.groupList)}>
           {searchData.map(group => (
-            <>
+            <Fragment key={`group-acc-${group.name}`}>
               {group.type === 'group-accordion' && (
                 <LayerAccordion key={`group-accordion-${group.name}`} title={group.name}>
                   <ul className={css(style.ul)}>
@@ -132,7 +132,7 @@ export default function ListGroup({ options, action }) {
               {group.type === 'group-title' && (
                 <h4 className={css(style.title)}>{group.name}</h4>
               )}
-            </>
+            </Fragment>
           ))}
         </div>
       </Scrollbars>
