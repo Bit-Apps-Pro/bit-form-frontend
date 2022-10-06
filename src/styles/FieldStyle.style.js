@@ -72,11 +72,14 @@ const FieldStyle = {
         'border-top-left-radius': '8px',
         'border-top-right-radius': '8px',
         background: '#fff !important',
-        '~.msl-options': {
-          'max-height': '300px',
-        },
+
       },
       '& .msl-input': { p: 3, cr: '#2c3338' },
+    },
+    '& .msl-active-up~.msl-options': {
+      'max-height': '300px',
+      '-webkit-clip-path': 'inset(0px -10px 0 -10px)',
+      'clip-path': 'inset(0px -10px 0 -10px)',
     },
     '&.msl-vars': { w: '99% !important', '--font-size': '14px' },
     '&.msl-wrp > .msl-options': {
