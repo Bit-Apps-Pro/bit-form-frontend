@@ -32,6 +32,7 @@ import Modal from '../Utilities/Modal'
 import SnackMsg from '../Utilities/SnackMsg'
 import Tip from '../Utilities/Tip'
 import ConditionalLogic from './ConditionalLogic'
+import SearchIcon from '../../Icons/SearchIcon'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -240,7 +241,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx">
-        <div className="flx btcd-custom-report-dpdw mr-2">
+        <div className="flx btcd-custom-report-dpdw mr-2" style={{ height: 28 }}>
           <div className="w-9">
             {currentReport?.details?.report_name?.length > 11 ? (
               `${currentReport.details.report_name?.slice(0, 11)}...`
@@ -248,7 +249,12 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
               currentReport?.details?.report_name
             )}
           </div>
-          <button className="sm b-none tooltip pos-rel" title="Refresh" onClick={() => setRefreshResp(1)} type="button" style={{ '--tooltip-txt': `'${__('Refresh')}'` }}>
+          <button
+            className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn)}`}
+            onClick={() => setRefreshResp(1)}
+            type="button"
+            style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
+          >
             <RefreshIcn size="15" />
           </button>
         </div>
@@ -273,9 +279,9 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             className={css(reportSearch.reportTippyBox)}
             content={(
               <div style={{ height: 250, padding: 3 }}>
-                <div className="mb-2" style={{ color: '#rgb(63, 63, 63)' }}>Filters</div>
+                <div className="mb-2" style={{ color: 'rgb(63, 63, 63)', fontWeight: 700 }}>Filters</div>
                 <div className={css(reportSearch.reportBox, ut.mb2)}>
-                  <span><SearchIcn size="16" /></span>
+                  <span><SearchIcon size="16" /></span>
                   <input
                     aria-label="Search reports"
                     type="text"
@@ -308,7 +314,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                         {(report.isDefault.toString() === '0') && (
                           <div className="show_tippy_action">
                             <button
-                              className="icn-btn sm"
+                              className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
                               title="Edit"
                               onClick={() => editCurrentReport(report.value)}
                               type="button"
@@ -317,7 +323,8 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
                             </button>
                             {report.value !== currentReport?.id && (
                               <button
-                                className="icn-btn sm"
+                                // className="icn-btn sm"
+                                className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
                                 title="Delete"
                                 onClick={() => deleteReportAlert(report.value)}
                                 type="button"
@@ -431,7 +438,7 @@ const reportSearch = {
       pn: 'absolute !important',
       tp: 7,
       lt: 6,
-      ':foucs': { bcr: 'var(--b-92-62) !important' },
+      // ':foucs': { bcr: 'var(--b-92-62) !important' },
     },
   },
   dpdwInputBox: {
@@ -448,9 +455,12 @@ const reportSearch = {
     mnh: 'auto!important',
     oe: 'none!important',
     tn: '0.1s all ease',
-    '&:focus': {
-      '& ~ span svg': { cr: 'var(--b-50)' },
+    ':focus': {
+      '& ~ span': { cr: 'var(--b-50)' },
       focusShadow: 1,
     },
+  },
+  refreshBtn: {
+    '&:hover': { cr: 'var(--blue)', bd: 'var(--b-79-96)' },
   },
 }
