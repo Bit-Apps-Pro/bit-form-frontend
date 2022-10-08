@@ -36,7 +36,7 @@ export default function FieldReadOnlySettings({ cls }) {
       <SingleToggle
         id="rdonly-stng"
         tip={tippyHelperMsg.readonly}
-        title={__('Read only Field')}
+        title={__('Read-only')}
         action={setReadOnly}
         isChecked={isReadOnly}
       />

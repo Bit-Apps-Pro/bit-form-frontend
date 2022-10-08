@@ -39,7 +39,7 @@ export default function FieldHideSettings({ cls }) {
       <SingleToggle
         id="fld-hid-stng"
         tip={tippyHelperMsg.fieldHidden}
-        title={__('Hidden Field')}
+        title={__('Hidden')}
         action={setHidden}
         isChecked={isHidden}
       />
