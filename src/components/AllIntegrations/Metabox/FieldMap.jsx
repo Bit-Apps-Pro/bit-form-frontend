@@ -7,7 +7,9 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './MetaboxHelperFunction'
 
-export default function FieldMap({ i, type, formFields, field, dataConf, setDataConf, customFields, fieldType }) {
+export default function FieldMap({
+  i, type, formFields, field, dataConf, setDataConf, customFields, fieldType,
+}) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
 

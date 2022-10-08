@@ -1,4 +1,6 @@
-export default function SelectBox2({ title, value, action, name, options, className, cls }) {
+export default function SelectBox2({
+  title, value, action, name, options, className, cls,
+}) {
   return (
     <div className={`mt-3 setting-inp ${className}`}>
       <span>{title}</span>

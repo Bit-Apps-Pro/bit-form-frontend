@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
@@ -6,7 +7,9 @@ import ImportOptionsTab from './ImportOptionsTab'
 import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
 
-export default function EditOptions({ optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup }) {
+export default function EditOptions({
+  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup,
+}) {
   const optKey = useRef(1)
   const { css } = useFela()
   const [editOptionType, setEditOptionType] = useState('Visual')
@@ -75,9 +78,16 @@ export default function EditOptions({ optionMdl, options, setOptions, type, lblK
           setEditOptionType={setEditOptionType}
         />
       )}
-
     </div>
   )
 }
 
-const style = { wrapper: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } } }
+const style = {
+  wrapper: {
+    scrollBehavior: 'auto !important',
+    mt: 10,
+    '& *': {
+      scrollBehavior: 'auto !important',
+    },
+  },
+}

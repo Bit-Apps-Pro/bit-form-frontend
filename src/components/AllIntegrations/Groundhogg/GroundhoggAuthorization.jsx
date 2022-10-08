@@ -7,7 +7,9 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Btn from '../../Utilities/Btn'
 import { fetchAllTags, handleAuthorize } from './GroundhoggCommonFunc'
 
-export default function GroundhoggAuthorization({ formID, groundhoggConf, setGroundhoggConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function GroundhoggAuthorization({
+  formID, groundhoggConf, setGroundhoggConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const { css } = useFela()
   const [error, setError] = useState({ token: '', public_key: '', domainName: '' })

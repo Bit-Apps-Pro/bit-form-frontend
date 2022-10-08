@@ -7,7 +7,9 @@ import ZohoRecruitActions from './ZohoRecruitActions'
 import { handleTabChange, refreshRelatedList } from './ZohoRecruitCommonFunc'
 import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
 
-export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, formFields, recruitConf, setRecruitConf, handleInput, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoRecruitRelatedRecord({
+  indx, tab, settab, formID, formFields, recruitConf, setRecruitConf, handleInput, isLoading, setisLoading, setSnackbar,
+}) {
   useEffect(() => {
     handleTabChange(indx + 1, settab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps

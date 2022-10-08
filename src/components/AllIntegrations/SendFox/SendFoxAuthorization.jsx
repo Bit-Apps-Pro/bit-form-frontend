@@ -5,7 +5,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleAuthorize } from './SendFoxCommonFunc'
 
-export default function SendFoxAuthorization({ sendFoxConf, setSendFoxConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function SendFoxAuthorization({
+  sendFoxConf, setSendFoxConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '' })
   const nextPage = () => {

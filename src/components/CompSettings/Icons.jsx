@@ -444,7 +444,9 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
 const s = {
   scrollBar: { scrollBehavior: 'auto !important', '& *': { scrollBehavior: 'auto !important' } },
-  loadingPlaceholder: { w: 40, h: 40, brs: 8, lh: 2, my: 3, mx: 5, dy: 'inline-block' },
+  loadingPlaceholder: {
+    w: 40, h: 40, brs: 8, lh: 2, my: 3, mx: 5, dy: 'inline-block',
+  },
   downloadedBtnWrapper: {
     pn: 'relative',
     dy: 'inline-block',

@@ -4,14 +4,16 @@ import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHighlight } from '../style-new/styleHelpers'
 
-export default function NavBtn({ route,
+export default function NavBtn({
+  route,
   subRoute,
   cssSelector,
   label,
   offset = 1,
   icn,
   highlightSelector,
-  styleOverride }) {
+  styleOverride,
+}) {
   const { formType, formID, '*': rightBarUrl } = useParams()
   const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 

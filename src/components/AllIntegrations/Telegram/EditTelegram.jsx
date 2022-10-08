@@ -40,7 +40,6 @@ function EditTelegram({ formFields, setIntegration, integrations, allIntegURL })
         setisLoading={setisLoading}
         setSnackbar={setSnackbar}
       />
-
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, telegramConf, history, id, 1)}

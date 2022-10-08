@@ -3,7 +3,9 @@
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
-import { $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
+import {
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $selectedFieldId, $updateBtn,
+} from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -732,7 +734,6 @@ export function getLayoutDiff(lay1, lay2) {
   })
   return diff
 }
-
 
 // fast compare 2 layout object
 export function isLayoutSame(l1, l2) {

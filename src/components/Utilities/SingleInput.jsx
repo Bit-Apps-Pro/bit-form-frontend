@@ -1,4 +1,6 @@
-export default function SingleInput({ id, className, cls, width, title, inpType, action, value, placeholder, name, list, disabled }) {
+export default function SingleInput({
+  id, className, cls, width, title, inpType, action, value, placeholder, name, list, disabled,
+}) {
   return (
     <div className={`mt-3 setting-inp ${className}`} style={{ ...(width && { width }) }}>
       <span>{title}</span>

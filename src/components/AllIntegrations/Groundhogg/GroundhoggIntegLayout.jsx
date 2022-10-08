@@ -10,7 +10,9 @@ import GroundhoggFieldMap from './GroundhoggFieldMap'
 import GroundhoggMetaFieldMap from './GroundhoggMetaFieldMap'
 import { addMetaFieldMap } from './IntegrationHelpers'
 
-export default function GroundhoggIntegLayout({ formFields, handleInput, groundhoggConf, setGroundhoggConf, isLoading, setIsLoading, setSnackbar }) {
+export default function GroundhoggIntegLayout({
+  formFields, handleInput, groundhoggConf, setGroundhoggConf, isLoading, setIsLoading, setSnackbar,
+}) {
   const actionHandler = (e, type) => {
     const newConf = { ...groundhoggConf }
     if (type === 'showMeta') {

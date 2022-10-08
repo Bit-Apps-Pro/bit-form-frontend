@@ -6,7 +6,9 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, crmConf, setCrmConf, tab }) {
+export default function ZohoCRMFieldMap({
+  i, formFields, uploadFields, field, crmConf, setCrmConf, tab,
+}) {
   const module = tab === 0 ? crmConf.module : crmConf.relatedlists?.[tab - 1]?.module
   const layout = tab === 0 ? crmConf.layout : crmConf.relatedlists?.[tab - 1]?.layout
 

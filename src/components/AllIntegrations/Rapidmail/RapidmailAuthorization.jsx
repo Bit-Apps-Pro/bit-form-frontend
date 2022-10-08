@@ -7,14 +7,16 @@ import { getAllRecipient, handleAuthorize } from './RapidmailCommonFunc'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 
-export default function RapidmailAuthorization({ rapidmailConf,
+export default function RapidmailAuthorization({
+  rapidmailConf,
   setRapidmailConf,
   step,
   setstep,
   isLoading,
   setIsLoading,
   setSnackbar,
-  isInfo }) {
+  isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ username: '', password: '' })
 

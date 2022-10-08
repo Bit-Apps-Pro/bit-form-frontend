@@ -7,7 +7,9 @@ import SendFoxFieldMap from './SendFoxFieldMap'
 import SendFoxListFieldMap from './SendFoxListFieldMap'
 import SendFoxUnsubscribeFieldMap from './SendFoxUnsubscribeFieldMap'
 
-export default function SendFoxIntegLayout({ formFields, handleInput, sendFoxConf, setSendFoxConf, isLoading, setIsLoading, setSnackbar }) {
+export default function SendFoxIntegLayout({
+  formFields, handleInput, sendFoxConf, setSendFoxConf, isLoading, setIsLoading, setSnackbar,
+}) {
   const organizedList = (sendFoxConf?.default?.allLists || []).map(({ id, name }) => ({ label: name, value: `${id}` }))
   const onListHandler = (val) => {
     const newConf = { ...sendFoxConf }

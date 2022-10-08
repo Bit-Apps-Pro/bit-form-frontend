@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 
-export default function Btn({ children,
+export default function Btn({
+  children,
   className,
   size = 'md',
   variant = 'default',
@@ -8,11 +9,16 @@ export default function Btn({ children,
   gap,
   shadow,
   disabled,
-  onClick }) {
+  onClick,
+  dataTestId,
+  id,
+}) {
   const { css } = useFela()
   const shado = shadow === true ? 'shadow' : shadow
   return (
     <button
+      id={id}
+      data-testid={dataTestId}
       style={{ width, gap }}
       type="button"
       disabled={disabled}
@@ -72,17 +78,19 @@ const btnStyle = {
   },
   'default-outline': {
     cr: 'hsl(211, 100%, 50%)',
-    bc: 'transparent',
-    b: '1px solid hsl(211, 100%, 50 %)',
+    // bc: 'transparent',
+    bc: '#fff',
+    b: '1px solid hsl(211, 100%, 50%)',
     ':hover': {
-      bd: 'hsl(211, 100 %, 50 %)',
-      cr: 'hsl(0, 0 %, 100 %)',
+      bd: 'hsl(211, 100%, 50%)',
+      cr: 'hsl(0, 0%, 100%)',
     },
-    ':focus': { bs: 'hsla(0, 0%, 0%, 40%) 0px 2px 4px -2px' },
+    ':focus': { bs: '0 0 0 0.2rem hsla(211, 100%, 50%, 10%)' },
   },
   'secondary-outline': {
     cr: 'hsl(208, 7%, 46%)',
-    bc: 'transparent',
+    // bc: 'transparent',
+    bc: '#fff',
     b: '1px solid hsl(208, 7%, 46%)',
     ':hover': {
       cr: 'hsl(0, 0%, 100%)',
@@ -92,7 +100,8 @@ const btnStyle = {
   },
   'success-outline': {
     cr: 'hsla(160, 100%, 49%, 100%)',
-    bc: 'transparent',
+    // bc: 'transparent',
+    bc: '#fff',
     b: '1px solid hsla(160, 100%, 49%, 100%)',
     ':hover': {
       bd: 'hsla(160, 100%, 49%, 100%)',
@@ -102,7 +111,8 @@ const btnStyle = {
   },
   'danger-outline': {
     cr: 'hsl(0, 100%, 50%)',
-    bc: 'transparent',
+    // bc: 'transparent',
+    bc: '#fff',
     b: '1px solid hsl(0, 100%, 50%)',
     ':hover': {
       bd: 'hsl(0, 100%, 50%)',

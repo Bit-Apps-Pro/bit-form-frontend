@@ -9,7 +9,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
 
-export default function ZohoProjectsAuthorization({ formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function ZohoProjectsAuthorization({
+  formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)

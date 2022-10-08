@@ -8,7 +8,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { getAllOneDriveFolders, handleAuthorize } from './OneDriveCommonFunc'
 
-export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriveConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function OneDriveAuthorization({
+  flowID, oneDriveConf, setOneDriveConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const bits = useRecoilValue($bits)

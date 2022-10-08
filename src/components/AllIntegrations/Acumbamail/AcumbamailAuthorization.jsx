@@ -6,7 +6,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { fetchAllList, handleAuthorize } from './AcumbamailCommonFunc'
 
-export default function AcumbamailAuthorization({ acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo }) {
+export default function AcumbamailAuthorization({
+  acumbamailConf, setAcumbamailConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo,
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '' })
   const nextPage = () => {

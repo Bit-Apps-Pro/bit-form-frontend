@@ -4,7 +4,9 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshFields } from './WooCommerceCommonFunc'
 import WooCommerceFieldMap from './WooCommerceFieldMap'
 
-export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf, setWcConf, isLoading, setisLoading, setSnackbar }) {
+export default function WooCommerceIntegLayout({
+  formFields, handleInput, wcConf, setWcConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

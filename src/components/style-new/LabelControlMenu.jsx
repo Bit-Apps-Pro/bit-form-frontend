@@ -31,7 +31,8 @@ export default function LabelControlMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [openVarPos, setOpenVarPos] = useState(false)
 
-  const { '--fld-lbl-fs': fldLblFs,
+  const {
+    '--fld-lbl-fs': fldLblFs,
     '--sub-titl-fs': subTitleFs,
     '--hlp-txt-fs': heplrTxtFs,
     '--lbl-wrp-width': lblWidth,
@@ -40,7 +41,8 @@ export default function LabelControlMenu() {
     '--lbl-wrp-sa': lwSa,
     '--lbl-al': lblAl,
     '--sub-titl-al': stAl,
-    '--hlp-txt-al': htAl } = themeVars
+    '--hlp-txt-al': htAl,
+  } = themeVars
 
   const fldLblFsVal = getNumFromStr(fldLblFs)
   const fldLblFsUnit = getStrFromStr(fldLblFs)

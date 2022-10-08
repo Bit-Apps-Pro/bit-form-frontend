@@ -20,7 +20,9 @@ import selectStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitform
 import textStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
 
-export default function bitformDefaultTheme({ type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId }) {
+export default function bitformDefaultTheme({
+  type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
+}) {
   const lgLightFieldStyles = {}
   const lgDarkFieldStyles = {}
   const mdLightFieldStyles = {}

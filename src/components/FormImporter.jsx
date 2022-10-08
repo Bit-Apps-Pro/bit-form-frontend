@@ -102,7 +102,10 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
-        setForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
+        setForms(allforms => formsReducer(allforms, { type: 'add',
+          data: {
+            formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at,
+          } }))
         setSnackbar({ show: true, msg: data.message })
         setTempModal(false)
         setModal(false)

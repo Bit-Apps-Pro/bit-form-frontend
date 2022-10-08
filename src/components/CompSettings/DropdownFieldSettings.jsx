@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -50,10 +50,12 @@ export default function DropdownFieldSettings() {
   const { optionsList } = fieldData
   const listLength = optionsList.length
 
-  const { selectedOptImage, selectedOptClearable, searchClearable,
+  const {
+    selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
     showSearchPh,
-    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList } = fieldData.config
+    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList,
+  } = fieldData.config
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
@@ -326,8 +328,8 @@ export default function DropdownFieldSettings() {
           {optionsList.map((listObj, index) => {
             const listName = Object.keys(listObj)
             return (
-              <>
-                <div key={`list-name-${index}`} className={css(ut.flxcb)}>
+              <Fragment key={`list-name-${index + 1}`}>
+                <div className={css(ut.flxcb)}>
                   <input
                     data-testid={`lst-name-inp-${index}`}
                     type="text"
@@ -369,7 +371,7 @@ export default function DropdownFieldSettings() {
                   )}
                 </div>
                 {duplicateListName === index && <span className={css({ cr: 'red', ml: 5 })}>Duplicate List Name Not Allowed</span>}
-              </>
+              </Fragment>
             )
           })}
           <button

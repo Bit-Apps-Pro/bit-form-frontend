@@ -234,7 +234,7 @@ export default function ButtonSettings() {
             tip="By disabling this option, the button full width will be remove"
             title={__('Full Width')}
             action={setFulW}
-            isChecked={fulW}
+            isChecked={fulW || ''}
           />
         </div>
 

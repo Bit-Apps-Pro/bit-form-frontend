@@ -4,7 +4,9 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshContactFields, refreshLists } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubFieldMap from './ZohoMarketingHubFieldMap'
 
-export default function ZohoMarketingHubIntegLayout({ formID, formFields, handleInput, marketingHubConf, setMarketingHubConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoMarketingHubIntegLayout({
+  formID, formFields, handleInput, marketingHubConf, setMarketingHubConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

@@ -29,7 +29,9 @@ const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColor
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, defaultValue, objectPaths, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths }) => {
+const RenderComponent = ({
+  component, action, value, defaultValue, objectPaths, id, canSetVariable, stateObjName, propertyPath, propertyArray, fldKey, hslaPaths,
+}) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -85,7 +87,9 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable } = draggableModal
+  const {
+    show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable,
+  } = draggableModal
   const location = useLocation()
   const [pos, setPos] = useState('')
   const draggableRef = useRef(null)

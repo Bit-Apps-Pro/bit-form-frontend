@@ -4,7 +4,8 @@ import { __ } from '../../Utils/i18nwrap'
 import { lowerCaseAllAndReplaceSpaceToHipen } from '../style-new/styleHelpers'
 import Tip from './Tip'
 
-export default function StyleSegmentControl({ defaultActive,
+export default function StyleSegmentControl({
+  defaultActive,
   className,
   options,
   size = 100,
@@ -16,7 +17,8 @@ export default function StyleSegmentControl({ defaultActive,
   activeShow,
   noShadow,
   defaultItmWidth,
-  wideTab }) {
+  wideTab,
+}) {
   const { css } = useFela()
   const baseSize = Number(size)
   const floor = (number) => (Math.floor(baseSize / number))
@@ -168,7 +170,19 @@ export default function StyleSegmentControl({ defaultActive,
             </button>
           )
           if (item.tip) {
-            return <Tip key={`segment-option-${i * 100}`} className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={300}>{btn}</Tip>
+            return (
+              <Tip
+                key={`segment-option-${i * 100}`}
+                className={css({ w: '100%', dy: 'inline-block' })}
+                msg={item.tip}
+                place={tipPlace}
+                whiteSpaceNowrap
+                theme="light-border"
+                delay={300}
+              >
+                {btn}
+              </Tip>
+            )
           }
           return btn
         })}

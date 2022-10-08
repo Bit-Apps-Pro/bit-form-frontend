@@ -1,6 +1,8 @@
 import { useFela } from 'react-fela'
 
-export default function Select({ options = [], onChange, value, size = 'md', w, className, color = 'default' }) {
+export default function Select({
+  options = [], onChange, value, size = 'md', w, className, color = 'default',
+}) {
   const { css } = useFela()
 
   const cls = {
@@ -28,7 +30,7 @@ export default function Select({ options = [], onChange, value, size = 'md', w, 
   }
 
   return (
-    <select className={css(cls.selectInput)} value={value} onChange={handleOnChange}>
+    <select className={`${css(cls.selectInput)} ${className}`} value={value} onChange={handleOnChange}>
       {options.map(option => (
         <option key={option.value} value={option.value}>{option.label}</option>
       ))}

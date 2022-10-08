@@ -267,14 +267,16 @@ export function highlightElm(selector, selectType = 'element padding margin') {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
-    const { marginRight,
+    const {
+      marginRight,
       marginBottom,
       marginLeft,
       marginTop,
       paddingLeft,
       paddingRight,
       paddingTop,
-      paddingBottom } = getAbsoluteSize(elm)
+      paddingBottom,
+    } = getAbsoluteSize(elm)
     const { top, left, height, width } = elm.getBoundingClientRect()
 
     marginDiv.style.width = `${width + marginRight + marginLeft}px`
@@ -728,7 +730,7 @@ export const arrayToObject = (arr) => {
     console.warn('arrayToObject: arr is undefined', arr)
     return
   }
-  Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
+  return Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
 }
 
 export const isFieldOverrideStyles = (styles, fldKey) => styles?.fields?.[fldKey]?.overrideGlobalTheme?.length > 0
@@ -741,7 +743,7 @@ export const isValidURL = (string) => {
 }
 
 export const getValueFromStateVar = (stateObj, val) => {
-  if (val && val.match(/(var)/g)?.[0] === 'var') {
+  if (val?.match?.(/(var)/g)?.[0] === 'var') {
     const getVarProperty = val.replace(/\(|var|,.*|\)|(!important|\s)/gi, '')
     return stateObj[getVarProperty] || ''
   }

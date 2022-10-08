@@ -17,7 +17,9 @@ import Padding from './StyleComponents/Padding'
 import Shadow from './StyleComponents/Shadow'
 import { showDraggableModal } from '../../style-new/styleHelpers'
 
-function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
+function StyleEditor({
+  editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID,
+}) {
   const navigate = useNavigate()
 
   const setDraggableModal = useSetRecoilState($draggableModal)

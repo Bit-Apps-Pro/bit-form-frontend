@@ -45,7 +45,9 @@ export default function FileUploadSettings() {
   const [icnType, setIcnType] = useState('')
 
   const fieldData = deepCopy(fields[fldKey])
-  const { multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow } = fieldData.config
+  const {
+    multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow,
+  } = fieldData.config
   let { minFile, maxFile } = fieldData.config
   minFile = isNaN(minFile) ? 0 : Number(minFile)
   maxFile = isNaN(maxFile) ? 0 : Number(maxFile)

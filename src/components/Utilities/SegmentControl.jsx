@@ -3,7 +3,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 
-function SegmentControl({ defaultActive,
+function SegmentControl({
+  defaultActive,
   options,
   size = 100,
   component = 'a',
@@ -11,7 +12,8 @@ function SegmentControl({ defaultActive,
   variant = 'white',
   show,
   activeShow,
-  square }) {
+  square,
+}) {
   const { css } = useFela()
   const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))

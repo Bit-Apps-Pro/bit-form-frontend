@@ -7,7 +7,9 @@ import ZohoBiginActions from './ZohoBiginActions'
 import { handleTabChange, refreshRelatedList } from './ZohoBiginCommonFunc'
 import ZohoBiginFieldMap from './ZohoBiginFieldMap'
 
-export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, formFields, biginConf, setBiginConf, handleInput, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoBiginRelatedRecord({
+  indx, tab, settab, formID, formFields, biginConf, setBiginConf, handleInput, isLoading, setisLoading, setSnackbar,
+}) {
   useEffect(() => {
     handleTabChange(indx + 1, settab, biginConf, setBiginConf, formID, setisLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps

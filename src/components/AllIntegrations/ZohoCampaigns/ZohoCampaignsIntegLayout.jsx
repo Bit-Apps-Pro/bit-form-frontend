@@ -3,7 +3,9 @@ import Loader from '../../Loaders/Loader'
 import { refreshContactFields, refreshLists } from './ZohoCampaignsCommonFunc'
 import ZohoCampaignsFieldMap, { addFieldMap } from './ZohoCampaignsFieldMap'
 
-export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInput, campaignsConf, setCampaignsConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoCampaignsIntegLayout({
+  formID, formFields, handleInput, campaignsConf, setCampaignsConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

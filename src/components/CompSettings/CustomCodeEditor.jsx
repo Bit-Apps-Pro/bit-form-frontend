@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-no-useless-fragment */
 import 'ace-builds'
 // modes
@@ -223,9 +224,14 @@ function CustomCodeEditor() {
           </div>
         )}
       </Grow>
-      <div className={css(ut.flxb, ut.mt1, { jc: 'between' })}>
+      <div className={css(ut.flxb, ut.mt1, ut.mb1, { jc: 'between' })}>
         <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
-          <CheckBoxMini className={css(ut.mr2)} title="Editor Mode" checked={enableEditor === 'on'} onChange={editorHandler} />
+          <CheckBoxMini
+            className={css(ut.mr2)}
+            title="Editor Mode"
+            checked={enableEditor === 'on'}
+            onChange={editorHandler}
+          />
           {enableEditor === 'on' && (
             <>
               <Select
@@ -233,13 +239,24 @@ function CustomCodeEditor() {
                 value={theme}
                 options={themesList}
                 size="sm"
-                inputClass={css(style.selectInput)}
+                className={css({ w: 150 })}
               />
-              <CheckBoxMini className={css(ut.ml4)} title="Word Wrap" checked={editorOptions.wrap} onChange={() => setEditorOptions(oldOptions => ({ ...oldOptions, wrap: !oldOptions.wrap }))} />
+              <CheckBoxMini
+                className={css(ut.ml4)}
+                title="Word Wrap"
+                checked={editorOptions.wrap}
+                onChange={() => setEditorOptions(oldOptions => ({ ...oldOptions, wrap: !oldOptions.wrap }))}
+              />
             </>
           )}
         </div>
-        <button onClick={saveCode} type="button" className={css(ut.btn, style.saveBtn)}>Save</button>
+        <button
+          onClick={saveCode}
+          type="button"
+          className={css(ut.btn, style.saveBtn)}
+        >
+          Save
+        </button>
       </div>
     </div>
   )

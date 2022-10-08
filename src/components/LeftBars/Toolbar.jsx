@@ -644,9 +644,10 @@ function Toolbar({ setNewData }) {
         //   notes: {},
         // },
         options: {
-          name: 'Test Razorpay',
-          description: 'wowowowowowo',
-          amount: 200.00,
+          name: 'Razorpay',
+          description: '',
+          currency: 'INR',
+          amount: 0,
           amountType: 'fixed',
           theme: {},
           prefill: {},

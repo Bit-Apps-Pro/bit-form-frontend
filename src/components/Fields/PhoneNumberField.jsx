@@ -56,7 +56,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       inputFormat,
       valueFormat,
       assetsURL: `${bits.assetsURL}/../static/countries/`,
-      document: document.getElementById('bit-grid-layout').document,
+      document: document.getElementById('bit-grid-layout').contentDocument,
       window: document.getElementById('bit-grid-layout').contentWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),
@@ -106,7 +106,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
               {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
               {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
             />
-            <div className={`${fieldKey}-phone-inner-wrp`} tabIndex={fieldData.valid.disabled ? '-1' : '0'}>
+            <div className={`${fieldKey}-phone-inner-wrp`}>
               <div
                 data-testid={`${fieldKey}-dpd-wrp`}
                 className={`${fieldKey}-dpd-wrp`}

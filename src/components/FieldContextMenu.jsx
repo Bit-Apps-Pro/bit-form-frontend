@@ -27,7 +27,8 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
   return isContextMenu ? <div role="button" tabIndex="0" onClick={handleItemClick} onKeyPress={handleItemClick}>{children}</div> : children
 }
 
-export default function FieldContextMenu({ isContextMenu,
+export default function FieldContextMenu({
+  isContextMenu,
   isComponentVisible,
   contextMenu,
   setContextMenu,
@@ -37,7 +38,8 @@ export default function FieldContextMenu({ isContextMenu,
   navigateToStyle,
   className,
   cloneLayoutItem,
-  removeLayoutItem }) {
+  removeLayoutItem,
+}) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i

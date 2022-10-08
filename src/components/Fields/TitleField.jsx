@@ -6,7 +6,9 @@ import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 
 function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
-  const { logo, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag } = fieldData
+  const {
+    logo, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag,
+  } = fieldData
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false

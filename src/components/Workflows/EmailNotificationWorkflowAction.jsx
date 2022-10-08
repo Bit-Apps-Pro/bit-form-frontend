@@ -7,13 +7,15 @@ import DropDown from '../Utilities/DropDown'
 import { $bits, $fieldsArr, $mailTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 
-export default function EmailNotificationWorkflowAction({ lgcGrpInd,
+export default function EmailNotificationWorkflowAction({
+  lgcGrpInd,
   condGrpInd,
   actionKey,
   enableAction,
   checkKeyInArr,
   getValueFromArr,
-  title }) {
+  title,
+}) {
   const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const mailTem = useRecoilValue($mailTemplates)

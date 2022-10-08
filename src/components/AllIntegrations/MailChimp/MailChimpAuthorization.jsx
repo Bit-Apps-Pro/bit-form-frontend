@@ -13,7 +13,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleMailChimpAuthorize, refreshAudience } from './MailChimpCommonFunc'
 
-export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function MailChimpAuthorization({
+  formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)

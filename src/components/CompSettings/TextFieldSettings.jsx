@@ -27,6 +27,7 @@ import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { addDefaultStyleClasses, iconElementLabel, isStyleExist, paddingGenerator, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import Btn from '../Utilities/Btn'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -502,11 +503,19 @@ function TextFieldSettings() {
                 open={fieldData?.suggestionHide}
                 disable={!fieldData?.suggestionHide}
               >
-                <div className={css(FieldStyle.placeholder)}>
-                  <button data-testid="sgsn-stng-btn" onClick={openOptionModal} className={css(app.btn)} type="button">
+                <div className={css(FieldStyle.placeholder, ut.mb1)}>
+                  <Btn
+                    variant="default-outline"
+                    size="sm"
+                    className={css({ mt: 10 })}
+                    onClick={openOptionModal}
+                    dataTestId="sgsn-stng-btn"
+                  >
                     {__('Add/Edit Suggestions')}
-                    <span className={css(FieldStyle.addBtnSide)}><CloseIcn size="13" stroke="2" /></span>
-                  </button>
+                    <span className={css(style.plsIcn)}>
+                      <CloseIcn size="13" stroke="3" />
+                    </span>
+                  </Btn>
                 </div>
               </SimpleAccordion>
 
@@ -850,7 +859,7 @@ function TextFieldSettings() {
             <>
               <UniqFieldSettings
                 type="entryUnique"
-                title="Validate as Unique Entry"
+                title="Unique Entry"
                 tipTitle={tippyHelperMsg.uniqueEntry}
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 isUnique="show"
@@ -936,5 +945,8 @@ const style = {
       brs: 8,
     },
     fs: 11,
+  },
+  plsIcn: {
+    ml: 3, mt: 3, tm: 'rotate(45deg)',
   },
 }

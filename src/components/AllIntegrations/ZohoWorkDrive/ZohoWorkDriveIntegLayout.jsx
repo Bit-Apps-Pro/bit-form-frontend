@@ -3,7 +3,9 @@ import Loader from '../../Loaders/Loader'
 import ZohoWorkDriveActions from './ZohoWorkDriveActions'
 import { handleInput, refreshSubFolders, refreshTeamFolders, refreshTeams } from './ZohoWorkDriveCommonFunc'
 
-export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDriveConf, setWorkDriveConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoWorkDriveIntegLayout({
+  formID, formFields, workDriveConf, setWorkDriveConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

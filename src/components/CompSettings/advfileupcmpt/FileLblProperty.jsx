@@ -10,7 +10,9 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
 
-export default function FileLblProperty({ placeholder, type, title, inputType = 'text', max = '', min = '', coolTip = '' }) {
+export default function FileLblProperty({
+  placeholder, type, title, inputType = 'text', max = '', min = '', coolTip = '',
+}) {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)

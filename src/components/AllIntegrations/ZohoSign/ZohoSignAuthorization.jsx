@@ -9,7 +9,9 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleAuthorize, refreshTemplates } from './ZohoSignCommonFunc'
 
-export default function ZohoSingAuthorization({ formID, signConf, setSignConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
+export default function ZohoSingAuthorization({
+  formID, signConf, setSignConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
+}) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)

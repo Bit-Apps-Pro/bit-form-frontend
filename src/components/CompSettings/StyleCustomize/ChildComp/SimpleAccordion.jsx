@@ -12,7 +12,8 @@ import Cooltip from '../../../Utilities/Cooltip'
 import RenderHtml from '../../../Utilities/RenderHtml'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
-export default function SimpleAccordion({ className,
+export default function SimpleAccordion({
+  className,
   id,
   titleCls,
   title,
@@ -29,7 +30,8 @@ export default function SimpleAccordion({ className,
   disable,
   actionComponent,
   icnStrok = 2,
-  onClick }) {
+  onClick,
+}) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)

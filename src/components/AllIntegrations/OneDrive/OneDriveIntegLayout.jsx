@@ -4,7 +4,9 @@ import Loader from '../../Loaders/Loader'
 import OneDriveActions from './OneDriveActions'
 import { getAllOneDriveFolders, getSingleOneDriveFolders, handleInput } from './OneDriveCommonFunc'
 
-export default function OneDriveIntegLayout({ formID, formFields, oneDriveConf, setOneDriveConf, isLoading, setIsLoading, setSnackbar }) {
+export default function OneDriveIntegLayout({
+  formID, formFields, oneDriveConf, setOneDriveConf, isLoading, setIsLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

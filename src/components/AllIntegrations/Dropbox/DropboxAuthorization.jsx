@@ -12,7 +12,9 @@ import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
 
-export default function DropboxAuthorization({ formID, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
+export default function DropboxAuthorization({
+  formID, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo,
+}) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ apiKey: '', apiSecret: '' })
   const { css } = useFela()

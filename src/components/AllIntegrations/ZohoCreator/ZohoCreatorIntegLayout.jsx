@@ -5,7 +5,9 @@ import ZohoCreatorActions from './ZohoCreatorActions'
 import { refreshApplications, refreshFields, refreshForms } from './ZohoCreatorCommonFunc'
 import ZohoCreatorFieldMap from './ZohoCreatorFieldMap'
 
-export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput, creatorConf, setCreatorConf, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoCreatorIntegLayout({
+  formID, formFields, handleInput, creatorConf, setCreatorConf, isLoading, setisLoading, setSnackbar,
+}) {
   return (
     <>
       <br />

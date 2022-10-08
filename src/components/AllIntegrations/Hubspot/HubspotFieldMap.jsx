@@ -7,7 +7,9 @@ import MtInput from '../../Utilities/MtInput'
 import { generateMappedField } from './HubspotCommonFunc'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 
-export default function HubspotFieldMap({ i, formFields, field, hubspotConf, setHubspotConf, actionName, hubspotFields }) {
+export default function HubspotFieldMap({
+  i, formFields, field, hubspotConf, setHubspotConf, actionName, hubspotFields,
+}) {
   if (hubspotConf?.field_map?.length === 1 && field.hubspotField === '') {
     const newConf = { ...hubspotConf }
     const tmp = generateMappedField(newConf, actionName)
