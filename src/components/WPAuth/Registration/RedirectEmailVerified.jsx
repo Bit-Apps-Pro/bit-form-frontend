@@ -41,7 +41,7 @@ export default function RedirectEmailVerified({
 
   return (
     <div>
-      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, maxHeight: 600, display: 'block' }} className="o-a">
+      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minHeight: 600 }} className="o-a">
         <Scrollbars autoHide>
           <div className="mr-2 mb-3">
             <div className="mt-2">
