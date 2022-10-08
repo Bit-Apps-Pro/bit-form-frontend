@@ -14,13 +14,11 @@ export default function RedirectEmailVerified({
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
-    console.log('name value', name, typeof value)
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp[name] = value
     }))
-    console.log('dataconf', dataConf)
   }
 
   const tinymceHandle = (val, name) => {
