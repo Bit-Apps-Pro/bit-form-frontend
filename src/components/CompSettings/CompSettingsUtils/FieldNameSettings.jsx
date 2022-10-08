@@ -78,7 +78,7 @@ export default function FieldNameSettings() {
         <input
           data-testid="nam-stng-inp"
           aria-label="Name for this Field"
-          placeholder={fldKey}
+          placeholder="Name for this Field"
           className={css(FieldStyle.input)}
           value={fieldName || ''}
           onChange={e => handleFieldName(e.target.value)}
