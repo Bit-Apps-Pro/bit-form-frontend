@@ -278,7 +278,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
-    const newBlk = `b${formID}-${uniqueFieldId}`
+    const newBlk = `${processedFieldData.typ}-b${formID}-${uniqueFieldId}`
     processedFieldData = { ...processedFieldData, fieldName: newBlk }
     const newLayoutItem = {
       i: newBlk, x, y, w, h, minH, maxH, minW,
