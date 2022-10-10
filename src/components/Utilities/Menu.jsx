@@ -32,7 +32,7 @@ export default function Menu(props) {
       <button
         ref={ref}
         onClick={handleMenu}
-        className={css(tableStyle.tableActionBtn, ut.mr2)}
+        className={css(tableStyle.tableActionBtn)}
         style={{ '--tooltip-txt': '"Column  Visibility"', '--tt-left': '148%' }}
         aria-label="icon-btn"
         type="button"
