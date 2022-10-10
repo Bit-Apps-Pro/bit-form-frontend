@@ -45,7 +45,7 @@ export default function IntegInfo({ allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]
   const { css } = useFela()
-
+  console.log({ allIntegURL })
   // route is info/:id but for redirect uri need to make new/:type
   let location = window.location.toString()
 

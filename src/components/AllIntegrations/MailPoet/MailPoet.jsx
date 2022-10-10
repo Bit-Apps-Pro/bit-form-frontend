@@ -52,7 +52,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2">
+      <div className="txt-center w-9 mt-2 cal-width">
         {/* <Steps step={3} active={step} /> */}
       </div>
 

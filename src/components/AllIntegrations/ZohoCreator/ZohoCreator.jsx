@@ -48,7 +48,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center w-9 mt-2 cal-width"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
       <ZohoCreatorAuthorization

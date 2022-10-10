@@ -25,9 +25,8 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, val, { themeVars: getLatestState('themeVars') }))
   }
-
-  const fontweightVariants = styles.font.fontWeightVariants.length !== 0 ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
-  const fontStyleVariants = styles.font.fontStyle.length !== 0 ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
+  const fontweightVariants = styles.font?.fontWeightVariants.length ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
+  const fontStyleVariants = styles.font?.fontStyle.length ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
   return (
     <>
 
@@ -45,7 +44,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
             w={130}
             h={30}
             id={`${id}-fs`}
-            cls={css((styles.font.fontType === 'Google' && themeVars[fontStyleVar] && !styles.font.fontStyleVariants?.includes(Number(themeVars[fontStyleVar]))) ? cls.warningBorder : '')}
+            cls={css((styles.font?.fontType === 'Google' && themeVars[fontStyleVar] && !styles.font.fontStyleVariants?.includes(Number(themeVars[fontStyleVar]))) ? cls.warningBorder : '')}
           />
         </div>
       </ThemeStylePropertyBlock>
@@ -63,7 +62,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
             w={130}
             h={30}
             id={`${id}-fw`}
-            cls={css((styles.font.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
+            cls={css((styles.font?.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
           />
         </div>
       </ThemeStylePropertyBlock>

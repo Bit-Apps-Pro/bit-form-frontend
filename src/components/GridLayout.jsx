@@ -279,7 +279,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `b${formID}-${uniqueFieldId}`
-    processedFieldData = { ...processedFieldData, fieldName: newBlk }
+    const fk = `${processedFieldData.typ}-${formID}-${uniqueFieldId}`
+    processedFieldData = { ...processedFieldData, fieldName: fk }
     const newLayoutItem = {
       i: newBlk, x, y, w, h, minH, maxH, minW,
     }

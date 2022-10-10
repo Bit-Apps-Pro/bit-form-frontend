@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import loadable from '@loadable/component'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { HashRouter, Link, NavLink, Route, Routes } from 'react-router-dom'
+import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
@@ -16,11 +17,21 @@ const Error404 = loadable(() => import('./pages/Error404'), { fallback: <Loader 
 const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
 document.querySelector('#wpbody').style.backgroundColor = backgroundColor
 
+const Nav = ({ setActive }) => {
+  const { pathname } = useLocation()
+  const url = pathname.split('/')
+  const len = url.length
+  const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments']
+  const active = nav.includes(url[len - 1]) || false
+  setActive(active)
+  return <></>
+}
+
 export default function App() {
   useEffect(() => {
     removeUnwantedCSS()
   }, [])
-
+  const [active, setActive] = useState(false)
   return (
     <>
       <Toaster
@@ -41,6 +52,7 @@ export default function App() {
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
             <div className="flx">
+              <Nav setActive={setActive} />
               <div className="logo flx" title={__('Bit Form')}>
                 <Link to="/" className="flx">
                   <img src={logo} alt="bit form logo" className="ml-2" />
@@ -57,8 +69,7 @@ export default function App() {
 
                 <NavLink
                   to="/app-settings/recaptcha"
-                  // to="/app-settings"
-                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                  className={active ? 'app-link-active' : ''}
                 >
                   {__('App Settings')}
                 </NavLink>
