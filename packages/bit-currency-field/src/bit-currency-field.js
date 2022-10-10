@@ -485,6 +485,10 @@ export default class BitCurrencyField {
     elm?.setAttribute?.(name, value)
   }
 
+  #setCustomClass(element, classes) {
+    classes.trim().split(/\b\s+\b/g).forEach(cls => this.#setClassName(element, cls))
+  }
+
   #setCustomAttr(element, objArr) {
     const optLen = objArr.length
     if (optLen) {
@@ -519,7 +523,7 @@ export default class BitCurrencyField {
         this.#setClassName(li, 'option')
         if ('option' in this.#config.classNames) {
           const optCls = this.#config.classNames.option
-          if (optCls) this.#setClassName(li, optCls)
+          if (optCls) this.#setCustomClass(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
         // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
@@ -530,7 +534,7 @@ export default class BitCurrencyField {
         this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if ('opt-lbl-wrp' in this.#config.classNames) {
           const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
-          if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+          if (optLblWrpCls) this.#setCustomClass(lblimgbox, optLblWrpCls)
         }
         if (this.#config.optionFlagImage) {
           const img = this.#createElm('img')
@@ -542,7 +546,7 @@ export default class BitCurrencyField {
           this.#setClassName(img, 'opt-icn')
           if ('opt-icn' in this.#config.classNames) {
             const optIcnCls = this.#config.classNames['opt-icn']
-            if (optIcnCls) this.#setClassName(img, optIcnCls)
+            if (optIcnCls) this.#setCustomClass(img, optIcnCls)
           }
           img.src = `${this.#assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
@@ -559,7 +563,7 @@ export default class BitCurrencyField {
         this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#config.classNames) {
           const optLblCls = this.#config.classNames['opt-lbl']
-          if (optLblCls) this.#setClassName(lbl, optLblCls)
+          if (optLblCls) this.#setCustomClass(lbl, optLblCls)
         }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)
@@ -572,7 +576,7 @@ export default class BitCurrencyField {
         this.#setClassName(suffix, 'opt-suffix')
         if ('opt-suffix' in this.#config.classNames) {
           const optsuffixCls = this.#config.classNames['opt-suffix']
-          if (optsuffixCls) this.#setClassName(suffix, optsuffixCls)
+          if (optsuffixCls) this.#setCustomClass(suffix, optsuffixCls)
         }
         this.#setTextContent(suffix, opt.i)
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')

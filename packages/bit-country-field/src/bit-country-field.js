@@ -386,6 +386,10 @@ export default class BitCountryField {
     this.virtualOptionList?.scrollToIndex(selectedIndex === -1 ? 0 : selectedIndex)
   }
 
+  #setCustomClass(element, classes) {
+    classes.trim().split(/\b\s+\b/g).forEach(cls => this.#setClassName(element, cls))
+  }
+
   #setCustomAttr(element, objArr) {
     const optLen = objArr.length
     if (optLen) {
@@ -420,13 +424,13 @@ export default class BitCountryField {
         this.#setClassName(li, 'option')
         if ('option' in this.#classNames) {
           const optCls = this.#classNames.option
-          if (optCls) this.#setClassName(li, optCls)
+          if (optCls) this.#setCustomClass(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if ('opt-lbl-wrp' in this.#classNames) {
           const optLblWrpCls = this.#classNames['opt-lbl-wrp']
-          if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+          if (optLblWrpCls) this.#setCustomClass(lblimgbox, optLblWrpCls)
         }
         if ('opt-lbl-wrp' in this.#attributes) {
           const optLblWrp = this.#attributes['opt-lbl-wrp']
@@ -442,7 +446,7 @@ export default class BitCountryField {
           this.#setClassName(img, 'opt-icn')
           if ('opt-icn' in this.#classNames) {
             const optIcnCls = this.#classNames['opt-icn']
-            if (optIcnCls) this.#setClassName(img, optIcnCls)
+            if (optIcnCls) this.#setCustomClass(img, optIcnCls)
           }
           img.src = `${this.#assetsURL}${opt.img}`
           img.alt = `${opt.lbl} flag image`
@@ -458,7 +462,7 @@ export default class BitCountryField {
         this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#classNames) {
           const optLblCls = this.#classNames['opt-lbl']
-          if (optLblCls) this.#setClassName(lbl, optLblCls)
+          if (optLblCls) this.#setCustomClass(lbl, optLblCls)
         }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)

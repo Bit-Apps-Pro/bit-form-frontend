@@ -441,6 +441,10 @@ export default class BitPhoneNumberField {
     elm?.setAttribute?.(name, value)
   }
 
+  #setCustomClass(element, classes) {
+    classes.trim().split(/\b\s+\b/g).forEach(cls => this.#setClassName(element, cls))
+  }
+
   #setCustomAttr(element, objArr) {
     const optLen = objArr.length
     if (optLen) {
@@ -475,13 +479,13 @@ export default class BitPhoneNumberField {
         this.#setClassName(li, 'option')
         if ('option' in this.#config.classNames) {
           const optCls = this.#config.classNames.option
-          if (optCls) this.#setClassName(li, optCls)
+          if (optCls) this.#setCustomClass(li, optCls)
         }
         const lblimgbox = this.#createElm('span')
         this.#setClassName(lblimgbox, 'opt-lbl-wrp')
         if ('opt-lbl-wrp' in this.#config.classNames) {
           const optLblwrpCls = this.#config.classNames['opt-lbl-wrp']
-          if (optLblwrpCls) this.#setClassName(lblimgbox, optLblwrpCls)
+          if (optLblwrpCls) this.#setCustomClass(lblimgbox, optLblwrpCls)
         }
         // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
         if ('opt-lbl-wrp' in this.#config.attributes) {
@@ -492,7 +496,7 @@ export default class BitPhoneNumberField {
         this.#setClassName(img, 'opt-icn')
         if ('opt-icn' in this.#config.classNames) {
           const optIcnCls = this.#config.classNames['opt-icn']
-          if (optIcnCls) this.#setClassName(img, optIcnCls)
+          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
         }
         // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         if ('opt-icn' in this.#config.attributes) {
@@ -507,7 +511,7 @@ export default class BitPhoneNumberField {
         this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#config.classNames) {
           const optLblCls = this.#config.classNames['opt-lbl']
-          if (optLblCls) this.#setClassName(lbl, optLblCls)
+          if (optLblCls) this.#setCustomClass(lbl, optLblCls)
         }
         // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
         if ('opt-lbl' in this.#config.attributes) {
@@ -520,7 +524,7 @@ export default class BitPhoneNumberField {
         this.#setClassName(prefix, 'opt-prefix')
         if ('opt-prefix' in this.#config.classNames) {
           const optPrefixCls = this.#config.classNames['opt-prefix']
-          if (optPrefixCls) this.#setClassName(prefix, optPrefixCls)
+          if (optPrefixCls) this.#setCustomClass(prefix, optPrefixCls)
         }
         this.#setTextContent(prefix, opt.code)
         // this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
