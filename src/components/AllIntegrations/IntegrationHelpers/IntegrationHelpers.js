@@ -3,12 +3,14 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 
 export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, confTmp, history, index, edit) => {
+  console.log({ allIntegURL })
   const integs = [...allintegs]
   if (edit) {
     integs[index] = { ...allintegs[index], ...confTmp }
     integs.push({ editItegration: true })
     setIntegration([...integs])
     history(allIntegURL)
+    console.log(allIntegURL)
   } else {
     const newInteg = [...integs]
     newInteg.push(confTmp)

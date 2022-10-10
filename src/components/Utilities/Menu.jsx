@@ -3,7 +3,7 @@ import { useFela } from 'react-fela'
 import ut from '../../styles/2.utilities'
 import tableStyle from '../../styles/table.style'
 
-export default function Menu(props) {
+export default function Menu({ children, title, icn }) {
   const [isComponentVisible, setIsComponentVisible] = useState(false)
   const ref = useRef(null)
   const { css } = useFela()
@@ -37,12 +37,12 @@ export default function Menu(props) {
         aria-label="icon-btn"
         type="button"
       >
-        {props.icn}
-        {props.title}
+        {icn}
+        {title}
       </button>
       <div />
       <div ref={ref} className={`btcd-menu-li ${isComponentVisible ? 'btcd-menu-a' : ''}`}>
-        {props.children}
+        {children}
       </div>
     </div>
   )
