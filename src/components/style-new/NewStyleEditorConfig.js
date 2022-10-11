@@ -270,14 +270,17 @@ const formCommonCssProps = {
   transition: '',
 }
 const editorConfig = {
+  // TODO: _frm-bg
   '_frm-bg': {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
+  // TODO: _frm
   _frm: {
     states: ['hover'],
     properties: { ...formCommonCssProps },
   },
+  // TODO: quick-tweaks
   'quick-tweaks': {
     properties: {
       border: {
@@ -288,6 +291,7 @@ const editorConfig = {
       },
     },
   },
+  // TODO: field-containers
   'field-containers': {
     states: ['hover'],
     properties: {
@@ -309,6 +313,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: label-containers
   'label-containers': {
     states: ['hover'],
     properties: {
@@ -330,6 +335,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: lbl
   lbl: {
     states: ['hover'],
     properties: {
@@ -351,6 +357,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: lbl-pre-i
   'lbl-pre-i': {
     states: ['hover'],
     properties: {
@@ -367,6 +374,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: lbl-suf-i
   'lbl-suf-i': {
     states: ['hover'],
     properties: {
@@ -383,6 +391,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: sub-titl
   'sub-titl': {
     states: ['hover'],
     properties: {
@@ -402,6 +411,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: sub-titl-pre-i
   'sub-titl-pre-i': {
     states: ['hover'],
     properties: {
@@ -418,6 +428,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: sub-titl-suf-i
   'sub-titl-suf-i': {
     states: ['hover'],
     properties: {
@@ -434,6 +445,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: hlp-txt
   'hlp-txt': {
     states: ['hover'],
     properties: {
@@ -453,6 +465,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: hlp-txt-pre-i
   'hlp-txt-pre-i': {
     states: ['hover'],
     properties: {
@@ -469,6 +482,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: hlp-txt-suf-i
   'hlp-txt-suf-i': {
     states: ['hover'],
     properties: {
@@ -485,6 +499,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: err-msg
   'err-msg': {
     states: ['hover'],
     properties: {
@@ -504,6 +519,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: err-txt-pre-i
   'err-txt-pre-i': {
     states: ['hover'],
     properties: {
@@ -520,6 +536,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: err-txt-suf-i
   'err-txt-suf-i': {
     states: ['hover'],
     properties: {
@@ -536,6 +553,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: btn
   btn: {
     states: ['hover'],
     properties: {
@@ -555,6 +573,7 @@ const editorConfig = {
       'box-shadow': '',
     },
   },
+  // TODO: btn-pre-i
   'pre-i': {
     states: ['hover'],
     properties: {
@@ -571,6 +590,7 @@ const editorConfig = {
       width: '',
     },
   },
+  // TODO: suf-i
   'suf-i': {
     states: ['hover'],
     properties: {
@@ -586,6 +606,16 @@ const editorConfig = {
       height: '',
       width: '',
     },
+  },
+  // TODO: btn-suf-i
+  'btn-pre-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
+  },
+  // TODO: btn-suf-i
+  'btn-suf-i': {
+    states: ['hover'],
+    properties: { ...iconCssProps },
   },
   defaultProps: {
     margin: '0px',
