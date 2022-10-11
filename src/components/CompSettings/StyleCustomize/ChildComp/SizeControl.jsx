@@ -5,7 +5,7 @@ import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
 export default function SizeControl({
-  label, className, width, customStyle, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1, dataTestId,
+  label, className, width, customStyle, options = [], sizeHandler, unit, inputHandler, actualValue, preDefinedValues, definedValueHandler, value, name, min = 1, max = 100, id, step = 1, dataTestId, sliderWidth,
 }) {
   const { css } = useFela()
   const isPreDefined = preDefinedValues?.includes(actualValue)
@@ -44,6 +44,7 @@ export default function SizeControl({
         placeholder={actualValue}
         hasTextMode={isPreDefined}
         dataTestId={dataTestId}
+        sliderWidth={sliderWidth}
       />
       {!isPreDefined && (
         <select
