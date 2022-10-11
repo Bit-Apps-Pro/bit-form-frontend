@@ -31,6 +31,7 @@ export default function Button({
           type={fieldData.btnTyp}
           {...fieldData.btnTyp === 'reset' && { onClick: handleReset }}
           {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
+          name={fieldData.fieldName}
         >
           {fieldData.btnPreIcn && (
             <img

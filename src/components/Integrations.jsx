@@ -1,9 +1,9 @@
 /* eslint-disable-next-line no-undef */
 // import { withQuicklink } from 'quicklink/dist/react/hoc'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { Link, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
@@ -71,14 +71,13 @@ function Integrations() {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
-  const location = useLocation()
+  const { formType, formID } = useParams()
   const navigate = useNavigate()
-  const { formID } = useParams()
-  const allIntegURL = useRef(location.pathname).current
   const bits = useRecoilValue($bits)
   const { isPro, proInfo } = bits
   const { css } = useFela()
 
+  const allIntegURL = `/form/settings/${formType}/${formID}/integrations`
   const pro = 1
 
   const integs = [
