@@ -28,7 +28,6 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -411,8 +410,7 @@ function AdvanceFileUpSettings() {
               type="text"
               name="labelFileTypeNotAllowed"
               value={fieldData?.config?.labelFileTypeNotAllowed}
-              on
-              Change={setConfigProp}
+              onChange={setConfigProp}
             />
           </div>
           <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -643,6 +641,7 @@ function AdvanceFileUpSettings() {
               className={css(FieldStyle.selectBox, ut.mr2, ut.ml1, ut.fw500)}
               name="imageResizeMode"
               onChange={setConfigProp}
+              value={fieldData.config.imageResizeMode}
             >
               <option value="">Select</option>
               <option value="cover">Cover</option>
@@ -682,6 +681,7 @@ function AdvanceFileUpSettings() {
               className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)}
               name="imageTransformOutputMimeType"
               onChange={setConfigProp}
+              value={fieldData.config.imageTransformOutputMimeType}
             >
               <option value="">Select</option>
               <option value="image/jpeg">Image/jpeg</option>
@@ -736,6 +736,7 @@ function AdvanceFileUpSettings() {
                 className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)}
                 name="imageTransformClientTransforms"
                 onChange={setConfigProp}
+                value={fieldData.config.imageTransformClientTransforms}
               >
                 <option value="">Select</option>
                 <option value="resize">Resize</option>
