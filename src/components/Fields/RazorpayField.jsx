@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import BitRazorpayField from 'bit-razorpay-field'
+import BitRazorpayField from 'bit-razorpay-field/src/bit-razorpay-field'
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'

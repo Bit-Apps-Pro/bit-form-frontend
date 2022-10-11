@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // import './currency-field-style.css'
-import BitCurrencyField from 'bit-currency-field'
-import { observeElm } from 'bit-helpers'
-import { default as bit_virtualized_list } from 'bit-virtualized-list'
+import BitCurrencyField from 'bit-currency-field/src/bit-currency-field'
+import { observeElm } from 'bit-helpers/src'
+import bit_virtualized_list from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
