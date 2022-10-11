@@ -25,6 +25,7 @@ import TableCheckBox from './TableCheckBox'
 import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import Select from './Select'
 import TableLoader from '../Loaders/TableLoader'
+import ut from '../../styles/2.utilities'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -39,6 +40,7 @@ const IndeterminateCheckbox = forwardRef(
 
 function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
   const [delay, setDelay] = useState(null)
+
   const handleSearch = e => {
     delay && clearTimeout(delay)
     const { value } = e.target
@@ -287,7 +289,7 @@ function Table(props) {
       />
       <div className="flx flx-between mt-1 mr-2">
         <div className="btcd-t-actions">
-          <div className="flx">
+          <div className="flx" style={{ marginLeft: 7 }}>
 
             {props.columnHidable && (
               <ColumnHide

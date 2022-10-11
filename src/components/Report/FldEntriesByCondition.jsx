@@ -242,7 +242,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     <>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-      <div className="flx">
+      <div className="flx ml-2">
         <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
           <span
             className="flx sm b-none pos-rel mr-1"
@@ -453,7 +453,7 @@ const reportSearch = {
     b: '1px solid #E6E6E6!important',
     brs: '8px!important',
     p: '3px 0 3px 24px!important',
-    ff: 'Montserrat',
+    ff: '"Outfit", sans-serif !important',
     fts: 'normal',
     fw: 500,
     fs: 12,
