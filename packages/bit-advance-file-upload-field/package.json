@@ -1,8 +1,7 @@
 {
   "name": "bit-advance-file-upload-field",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-advance-file-upload-field.min.js",
-  "module": "src/bit-advance-file-upload-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
