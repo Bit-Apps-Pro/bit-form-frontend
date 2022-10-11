@@ -32,39 +32,41 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
   const container = useRef(null)
 
   useEffect(() => {
-    if (!window.create) window.create = create
-    if (!window.destroy) window.destroy = destroy
-    if (!window.registerPlugin) window.registerPlugin = registerPlugin
-    if (!window.setOptions) window.setOptions = setOptions
+    const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
+    if (!iFrameWindow.create) iFrameWindow.create = create
+    if (!iFrameWindow.destroy) iFrameWindow.destroy = destroy
+    if (!iFrameWindow.registerPlugin) iFrameWindow.registerPlugin = registerPlugin
+    if (!iFrameWindow.setOptions) iFrameWindow.setOptions = setOptions
 
-    if (!window.bit_filepond_plugin_image_preview) {
-      window.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreviewMin
+    if (!iFrameWindow.bit_filepond_plugin_image_preview) {
+      iFrameWindow.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreviewMin
     }
-    if (!window.bit_filepond_plugin_file_validate_size) {
-      window.bit_filepond_plugin_file_validate_size = bitFilepondPluginFileValidateSize
+    if (!iFrameWindow.bit_filepond_plugin_file_validate_size) {
+      iFrameWindow.bit_filepond_plugin_file_validate_size = bitFilepondPluginFileValidateSize
     }
-    if (!window.bit_filepond_plugin_file_validate_type) {
-      window.bit_filepond_plugin_file_validate_type = bitFilepondPluginFileValidateTypeMin
+    if (!iFrameWindow.bit_filepond_plugin_file_validate_type) {
+      iFrameWindow.bit_filepond_plugin_file_validate_type = bitFilepondPluginFileValidateTypeMin
     }
-    if (!window.bit_filepond_plugin_image_crop) {
-      window.bit_filepond_plugin_image_crop = bitFilepondPluginImageCropMin
+    if (!iFrameWindow.bit_filepond_plugin_image_crop) {
+      iFrameWindow.bit_filepond_plugin_image_crop = bitFilepondPluginImageCropMin
     }
-    if (!window.bit_filepond_plugin_image_resize) {
-      window.bit_filepond_plugin_image_resize = bitFilepondPluginImageResizeMin
+    if (!iFrameWindow.bit_filepond_plugin_image_resize) {
+      iFrameWindow.bit_filepond_plugin_image_resize = bitFilepondPluginImageResizeMin
     }
-    if (!window.bit_filepond_plugin_image_transform) {
-      window.bit_filepond_plugin_image_transform = bitFilepondPluginImageTransformMin
+    if (!iFrameWindow.bit_filepond_plugin_image_transform) {
+      iFrameWindow.bit_filepond_plugin_image_transform = bitFilepondPluginImageTransformMin
     }
-    if (!window.bit_filepond_plugin_image_validate_size) {
-      window.bit_filepond_plugin_image_validate_size = bitFilepondPluginImageValidateSizeMin
+    if (!iFrameWindow.bit_filepond_plugin_image_validate_size) {
+      iFrameWindow.bit_filepond_plugin_image_validate_size = bitFilepondPluginImageValidateSizeMin
     }
-    if (!window.bit_filepond_plugin_media_preview) {
-      window.bit_filepond_plugin_media_preview = bitFilepondPluginMediaPreviewMin
+    if (!iFrameWindow.bit_filepond_plugin_media_preview) {
+      iFrameWindow.bit_filepond_plugin_media_preview = bitFilepondPluginMediaPreviewMin
     }
 
     const configuration = {
       configSetting: config,
-      document,
+      window: document.getElementById('bit-grid-layout').contentWindow,
+      document: document.getElementById('bit-grid-layout').contentDocument,
       formID,
       ajaxURL: typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL,
       nonce: typeof bits === 'undefined' ? '' : bits.nonce,
