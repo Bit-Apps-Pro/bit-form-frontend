@@ -77,7 +77,8 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         opacity: '0',
         cursor: 'pointer',
       },
-      [`.${fk}-files-list .file-wrpr`]: {
+      [`.${fk}-file-input-wrpr .files-list`]: {},
+      [`.${fk}-file-input-wrpr .file-wrpr`]: {
         'background-color': 'hsla(0, 0%, 97%, 100%)',
         'border-radius': '10px',
         display: 'flex',
@@ -88,12 +89,12 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'margin-top': '10px',
         padding: '5px',
       },
-      [`.${fk}-files-list .file-preview`]: {
+      [`.${fk}-file-input-wrpr .file-preview`]: {
         'border-radius': '10px',
         height: '25px',
         width: '25px',
       },
-      [`.${fk}-files-list .file-details`]: {
+      [`.${fk}-file-input-wrpr .file-details`]: {
         display: 'flex',
         'align-items': 'center',
         'justify-content': 'space-between',
@@ -101,7 +102,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '0px 10px',
       },
 
-      [`.${fk}-files-list .file-title`]: {
+      [`.${fk}-file-input-wrpr .file-title`]: {
         display: 'inline-block',
         'font-size': '14px',
         overflow: 'hidden',
@@ -110,11 +111,11 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         width: '80%',
       },
 
-      [`.${fk}-files-list .file-size`]: {
+      [`.${fk}-file-input-wrpr .file-size`]: {
         'font-size': '12px',
         'line-height': '1',
       },
-      [`.${fk}-files-list .cross-btn`]: {
+      [`.${fk}-file-input-wrpr .cross-btn`]: {
         cursor: 'pointer',
         border: 'none',
         'border-radius': '50px',
@@ -130,8 +131,8 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         width: '25px',
         transition: 'background-color 5ms',
       },
-      [`.${fk}-files-list .cross-btn:hover`]: { 'background-color': 'hsla(0, 0%, 91%, 100%)' },
-      [`.${fk}-err-wrp`]: {
+      [`.${fk}-file-input-wrpr .cross-btn:hover`]: { 'background-color': 'hsla(0, 0%, 91%, 100%)' },
+      [`.${fk}-file-input-wrpr .err-wrp`]: {
         display: 'none',
         opacity: '0',
         transition: 'display 1s, opacity 1s',
@@ -141,12 +142,11 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         color: 'darkred',
         'border-radius': '10px',
         height: '40px',
-        'margin-left': '10px',
         'margin-top': '10px',
         padding: '2px 20px',
-        width: '98%',
+        width: '100%',
       },
-      [`.${fk}-err-wrp.active`]: {
+      [`.${fk}-file-input-wrpr .err-wrp.active`]: {
         display: 'flex',
         opacity: '1',
         transition: 'display 1s, opacity 1s',

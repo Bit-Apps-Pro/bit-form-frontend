@@ -570,6 +570,15 @@ export default function ElementConfiguration({ fldKey }) {
                   highlightSelector={`[data-dev-cross-btn="${fldKey}"]`}
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'cross-btn')}
                 />
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.errWrp[0]}`}
+                  subRoute={fldKey}
+                  route="err-wrp"
+                  label="Warning/Invalid"
+                  offset="3.1"
+                  highlightSelector={`[data-dev-err-wrp="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'err-wrp')}
+                />
               </LayerAccordion>
             )}
           </>

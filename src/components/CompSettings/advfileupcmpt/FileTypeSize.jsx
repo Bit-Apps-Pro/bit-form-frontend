@@ -6,8 +6,10 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
+import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import { getNumFromStr, getStrFromStr } from '../../style-new/styleHelpers'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 
@@ -24,34 +26,17 @@ function FileTypeSize({ action }) {
       delete fieldData.config[name]
     }
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    addToBuilderHistory(generateHistoryData('', fldKey, 'File Size', e.target.checked, { fields: getLatestState('fields') }))
   }
 
-  const sizeHandler = (e, typ) => {
-    const val = findValue(fieldData.config, typ)
-    fieldData.config[typ] = val.toString().concat(e.target.value)
+  const sizeHandler = (value, unit, typ) => {
+    const newVal = `${value}${unit}`
+    fieldData.config[typ] = newVal
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    addToBuilderHistory(generateHistoryData('', fldKey, typ, newVal, { fields: getLatestState('fields') }))
   }
-
-  const inputHandler = (e, typ) => {
-    fieldData.config[typ] = e.toString().concat(findByte(fieldData.config, typ))
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-  }
-
-  const findByte = (data, typ) => {
-    const val = data?.[typ]?.match(/KB|MB|GB/)
-    if (val) {
-      return val[0]
-    }
-    return 'MB'
-  }
-
-  const findValue = (data, typ) => {
-    const val = data?.[typ]?.split(findByte(data, typ))
-    if (val) {
-      return val[0]
-    }
-    return 1
-  }
+  const getNumberValue = (propName) => getNumFromStr(fieldData.config[propName])
+  const getUnit = (propName) => getStrFromStr(fieldData.config[propName])
 
   return (
     <div className={css(ut.mt2, ut.px10)}>
@@ -71,10 +56,10 @@ function FileTypeSize({ action }) {
               className={css(ut.mt1)}
               width={94}
               options={['MB', 'KB']}
-              sizeHandler={(e) => sizeHandler(e, 'minFileSize')}
-              byteType={findByte(fieldData?.config, 'minFileSize')}
-              value={findValue(fieldData?.config, 'minFileSize')}
-              inputHandler={(e) => inputHandler(e, 'minFileSize')}
+              sizeHandler={({ unitKey, unitValue }) => sizeHandler(unitValue, unitKey, 'minFileSize')}
+              value={getNumberValue('minFileSize')}
+              unit={getUnit('minFileSize')}
+              inputHandler={({ unit, value }) => sizeHandler(value, unit, 'minFileSize')}
               dataTestId="min-fil-siz"
             />
           )}
@@ -122,10 +107,10 @@ function FileTypeSize({ action }) {
               label=""
               width={94}
               options={['MB', 'KB']}
-              sizeHandler={(e) => sizeHandler(e, 'maxFileSize')}
-              sizeVal={findByte(fieldData?.config, 'maxFileSize')}
-              value={findValue(fieldData?.config, 'maxFileSize')}
-              inputHandler={(e) => inputHandler(e, 'maxFileSize')}
+              sizeHandler={({ unitKey, unitValue }) => sizeHandler(unitValue, unitKey, 'maxFileSize')}
+              value={getNumberValue('maxFileSize')}
+              unit={getUnit('maxFileSize')}
+              inputHandler={({ unit, value }) => sizeHandler(value, unit, 'maxFileSize')}
               dataTestId="max-fil-siz"
             />
           )}
@@ -173,10 +158,10 @@ function FileTypeSize({ action }) {
               label=""
               width={94}
               options={['MB', 'KB']}
-              sizeHandler={(e) => sizeHandler(e, 'maxTotalFileSize')}
-              sizeVal={findByte(fieldData?.config, 'maxTotalFileSize')}
-              value={findValue(fieldData?.config, 'maxTotalFileSize')}
-              inputHandler={(e) => inputHandler(e, 'maxTotalFileSize')}
+              sizeHandler={({ unitKey, unitValue }) => sizeHandler(unitValue, unitKey, 'maxTotalFileSize')}
+              value={getNumberValue('maxTotalFileSize')}
+              unit={getUnit('maxTotalFileSize')}
+              inputHandler={({ unit, value }) => sizeHandler(value, unit, 'maxTotalFileSize')}
               dataTestId="max-totl-fil-siz"
             />
           )}

@@ -4,7 +4,7 @@ import BitFileUpField from 'bit-file-up-field/src/bit-file-up-field'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
@@ -53,8 +53,24 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
       maxFile,
       maxFileErrMsg: fieldData?.err?.maxFile?.msg || fieldData?.err?.maxFile?.dflt,
       assetsURL: `${bits.assetsURL}/../static/file-upload/`,
-      document: document.getElementById('bit-grid-layout')?.contentWindow?.document,
-      widnow: document.getElementById('bit-grid-layout')?.contentWindow,
+      document: document.getElementById('bit-grid-layout')?.contentDocument,
+      window: document.getElementById('bit-grid-layout')?.contentWindow,
+      attributes: {
+        'files-list': getDataDevAttrArr(fieldKey, 'files-list'),
+        'file-wrpr': getDataDevAttrArr(fieldKey, 'file-wrpr'),
+        'file-preview': getDataDevAttrArr(fieldKey, 'file-preview'),
+        'file-title': getDataDevAttrArr(fieldKey, 'file-title'),
+        'file-size': getDataDevAttrArr(fieldKey, 'file-size'),
+        'cross-btn': getDataDevAttrArr(fieldKey, 'cross-btn'),
+      },
+      classNames: {
+        'files-list': getCustomClsName(fieldKey, 'files-list'),
+        'file-wrpr': getCustomClsName(fieldKey, 'file-wrpr'),
+        'file-preview': getCustomClsName(fieldKey, 'file-preview'),
+        'file-title': getCustomClsName(fieldKey, 'file-title'),
+        'file-size': getCustomClsName(fieldKey, 'file-size'),
+        'cross-btn': getCustomClsName(fieldKey, 'cross-btn'),
+      },
     }
 
     fileUploadFieldRef.current = new BitFileUpField(fldElm, configOptions)
@@ -151,13 +167,8 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...getCustomAttributes(fieldKey, 'file-upload-input')}
                 />
               </div>
-              <div
-                data-dev-files-list={fieldKey}
-                className={`${fieldKey}-files-list ${getCustomClsName(fieldKey, 'files-list')}`}
-                {...getCustomAttributes(fieldKey, 'files-list')}
-              />
+              <div className={`err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} {...getCustomAttributes(fieldKey, 'err-wrp')} />
             </div>
-            <div className={`${fieldKey}-err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} {...getCustomAttributes(fieldKey, 'option')} />
           </div>
         </div>
       </InputWrapper>

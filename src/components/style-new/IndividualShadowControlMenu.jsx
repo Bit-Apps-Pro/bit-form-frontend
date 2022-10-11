@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -103,7 +103,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
   return (
     <div className={css(c.overflowXhidden)}>
       {arrOfExtractedShadowObj.map((shadowObj, indx) => (
-        <>
+        <Fragment key={`key-${indx + 1}`}>
           <SimpleAccordion
             key={`shadow-accordion-${indx + 12 * 23}`}
             className={css(c.accordionHead)}
@@ -224,7 +224,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
             </div>
           </SimpleAccordion>
           <div className={css(c.divider)} />
-        </>
+        </Fragment>
       ))}
       <div className={css(c.footer)}>
         <button
