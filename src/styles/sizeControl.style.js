@@ -48,7 +48,7 @@ const sizeControlStyle = {
     bc: 'var(--white-0-95) !important',
     lh: '1.5 !important',
     mnh: '18px !important',
-    h: 18,
+    // h: 18,
 
     // '&::-ms-expand': { display: 'none !important' },
     '&:focus': { bs: 'none !important' },

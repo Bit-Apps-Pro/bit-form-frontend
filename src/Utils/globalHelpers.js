@@ -1,7 +1,8 @@
-import { getRecoil } from 'recoil-nexus'
-import merge from 'deepmerge-alt'
+/* eslint-disable import/no-cycle */
 import { diff } from 'deep-object-diff'
-import { stringify, parse } from 'jcof'
+import merge from 'deepmerge-alt'
+import { parse, stringify } from 'jcof'
+import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
