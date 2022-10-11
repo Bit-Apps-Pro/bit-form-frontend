@@ -1,27 +1,36 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $builderSettings } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
+import { useParams } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $breakpoint, $builderSettings } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import ut from '../styles/2.utilities'
 import SizeControl from './CompSettings/StyleCustomize/ChildComp/SizeControl'
-import { getNumFromStr, getStrFromStr, unitConverter } from './style-new/styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, unitConverter } from './style-new/styleHelpers'
 import Cooltip from './Utilities/Cooltip'
 import Input from './Utilities/Input'
 import Select from './Utilities/Select'
 
 export default function BuilderSettings() {
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
+  const { formID } = useParams()
+  const [staticStylesState, setStaticStyleState] = useRecoilState($staticStylesState)
+  const breakpoints = useRecoilValue($breakpoint)
+  const [brkpnt, setBrkpnt] = useState(breakpoints)
   const [{ atomicClassPrefix, darkModeConfig }, setBuilderSettings] = useRecoilState($builderSettings)
   let darkModePrefereceInitialValue = 'disabled'
   if (darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
   if (darkModeConfig.darkModeSelector) darkModePrefereceInitialValue = 'selector'
   if (darkModeConfig.darkModeSelector && darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'selector-and-system-preference'
-
+  const breakPoints = {
+    lg: 'lgLightStyles',
+    md: 'mdLightStyles',
+    sm: 'smLightStyles',
+  }
   const [darkModePreference, setDarkModePreference] = useState(darkModePrefereceInitialValue)
-  const formWidth = styles.form['._frm-bg']?.width
+  const formWidth = staticStylesState.styleMergeWithAtomicClasses[breakPoints[brkpnt]]?.[`._frm-bg-${formID}`]?.width
 
   const handleDarkModePreference = (value) => {
     setDarkModePreference(value)
@@ -65,29 +74,48 @@ export default function BuilderSettings() {
   }
   const handleValues = ({ value: val, unit }) => {
     const preUnit = getStrFromStr(formWidth)
-    const convertvalue = unitConverter(unit, val, preUnit)
-    setStyles(preStyle => produce(preStyle, draft => {
-      draft.form['._frm-bg'].width = convertvalue + unit
+    const convertValue = unitConverter(unit, val, preUnit)
+    setStaticStyleState(preStyle => produce(preStyle, draft => {
+      const brcpnt = breakPoints[brkpnt]
+      const path = `styleMergeWithAtomicClasses->${brcpnt}->._frm-bg-${formID}->width`
+      const value = convertValue + unit
+      assignNestedObj(draft, path, value)
     }))
   }
 
   return (
     <div className={css(ut.mt2, ut.p1)}>
-      <SettingsBlock title="Add form width">
-        <SizeControl
-          customStyle={style}
-          width={250}
-          inputHandler={handleValues}
-          sizeHandler={({ unitKey, unitValue }) => handleValues({ value: unitValue, unit: unitKey })}
-          value={formWidth && getNumFromStr(formWidth)}
-          unit={formWidth && getStrFromStr(formWidth)}
-        />
-        <Cooltip>
-          Add form width.
-          {' '}
-          <a className={css(ut.cooltipLearnMoreLink)} href="doclink for form width">Learn More</a>
-        </Cooltip>
-      </SettingsBlock>
+      <div className={css({ flx: 'align-center', gap: '10px' })}>
+        <SettingsBlock title="Form width">
+          <SizeControl
+            className={css(style.select)}
+            width={250}
+            inputHandler={handleValues}
+            sizeHandler={({ unitKey, unitValue }) => handleValues({ value: unitValue, unit: unitKey })}
+            value={(formWidth && getNumFromStr(formWidth)) || 0}
+            unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
+            sliderWidth="40%"
+          />
+
+          <Select
+            color="primary"
+            value={brkpnt || 'md'}
+            onChange={e => setBrkpnt(e)}
+            options={[
+              { label: 'sm', value: 'sm' },
+              { label: 'md', value: 'md' },
+              { label: 'lg', value: 'lg' },
+            ]}
+            w={60}
+            className={css({ fs: 14, ml: 10 })}
+          />
+          <Cooltip>
+            Add form width.
+            {' '}
+            <a className={css(ut.cooltipLearnMoreLink)} href="#">Learn More</a>
+          </Cooltip>
+        </SettingsBlock>
+      </div>
       <SettingsBlock title="Atomic Class Prefix">
         <Input
           placeholder="Class Prefix"
@@ -99,7 +127,7 @@ export default function BuilderSettings() {
         <Cooltip>
           Add prefix to atomic classes.
           {' '}
-          <a className={css(ut.cooltipLearnMoreLink)} href="doclink for class prefix">Learn More</a>
+          <a className={css(ut.cooltipLearnMoreLink)} href="#">Learn More</a>
         </Cooltip>
       </SettingsBlock>
 
@@ -154,8 +182,10 @@ const SettingsBlock = ({ title, children }) => {
 }
 
 const style = {
-  borderRadius: '8px',
-  background: 'var(--b-79-96) !important',
-  height: '35px',
-  border: '1px solid rgb(230, 230, 230) !important',
+  select: {
+    brs: '8px',
+    bd: 'var(--b-79-96) !important',
+    h: '35px',
+    b: '1px solid rgb(230, 230, 230) !important',
+  },
 }

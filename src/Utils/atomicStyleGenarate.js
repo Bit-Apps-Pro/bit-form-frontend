@@ -3,6 +3,7 @@ import { atomizeCss, combineSelectors, expressAndCleanCssVars, optimizeAndDefine
 import { getRecoil } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { getLayoutDiff } from './FormBuilderHelper'
@@ -10,6 +11,7 @@ import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers
 
 export default function atomicStyleGenarate(sortedLayout) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
+  const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -55,12 +57,17 @@ export default function atomicStyleGenarate(sortedLayout) {
   const themeColorsLight = getRecoil($lightThemeColors)
   const themeColorsDark = getRecoil($darkThemeColors)
 
-  const { lgLightStyles: stylesLgLight,
-    lgDarkStyles: stylesLgDark,
+  let { lgLightStyles: stylesLgLight,
+    lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
     mdLightStyles: stylesMdLight,
-    mdDarkStyles: stylesMdDark,
+    mdDarkStyles: stylesMdDark, // eslint-disable-line prefer-const
     smLightStyles: stylesSmLight,
-    smDarkStyles: stylesSmDark } = removeUnusedStyles()
+    smDarkStyles: stylesSmDark, // eslint-disable-line prefer-const
+  } = removeUnusedStyles()
+
+  stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
+  stylesMdLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
+  stylesSmLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
 
   // const stylesLgLight = getRecoil($stylesLgLight)
   // const stylesMdLight = getRecoil($stylesMdLight)
