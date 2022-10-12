@@ -74,9 +74,11 @@ export default class BitAdvanceFileUpload {
       plugins.push(this.#window.bit_filepond_plugin_media_preview)
     }
 
-    this.#window.registerPlugin(...plugins)
+    const { create, registerPlugin } = this.#window.bit_filepond
 
-    this.#filePondRef = this.#window.create(this.#configSetting)
+    registerPlugin(...plugins)
+
+    this.#filePondRef = create(this.#configSetting)
     this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
     if (this.#config.onFileUpdate) {
       this.#filePondRef.on('updatefiles', this.#config.onFileUpdate)

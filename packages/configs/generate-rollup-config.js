@@ -10,6 +10,9 @@ const terserOptions = {
     passes: 10,
     drop_console: true,
   },
+  output: {
+    comments: false,
+  },
   // mangle: {
   //   properties: true,
   //   reserved: [
@@ -31,12 +34,7 @@ export default function generateRollupConfig() {
   return [
     {
       input: inputFilePath,
-      external: [
-        'window',
-        'document',
-        'bit_virtualized_list',
-        'bit_filepond_plugin_file_validate_size'
-      ],
+      external: ['window', 'document'],
 
       output: [
         ...isDev ? [
@@ -61,7 +59,6 @@ export default function generateRollupConfig() {
             },
           },
         ],
-
       ],
       plugins: [
         ...isDev ? [

@@ -114,19 +114,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-create.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-destroy.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-registerPlugin.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-setOptions.min.js'),
+        src: absPath('packages/bit-file-pond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },
       {

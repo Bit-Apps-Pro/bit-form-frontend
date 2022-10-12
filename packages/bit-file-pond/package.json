@@ -1,5 +1,5 @@
 {
-  "name": "bit-file-pond",
+  "name": "bit-filepond",
   "packageManager": "pnpm@7.6.0",
   "main": "src/index.js",
   "version": "1.0.0",
