@@ -6,8 +6,8 @@ import FieldLinkBtn from './FieldLinkButton'
 export default function FieldsList() {
   const fields = useRecoilValue($fields)
 
-  const hiddenFlds = Object.entries(fields).filter(([, fld]) => fld.hidden)
-  const notHiddenFlds = Object.entries(fields).filter(([, fld]) => !fld.hidden)
+  const hiddenFlds = Object.entries(fields).filter(([, fld]) => fld.valid?.hide)
+  const notHiddenFlds = Object.entries(fields).filter(([, fld]) => !fld.valid.hide)
 
   return (
     <>

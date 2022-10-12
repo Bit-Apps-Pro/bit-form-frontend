@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
@@ -17,7 +18,16 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
   function handleItemClick(event) {
     event.stopPropagation()
   }
-  return isContextMenu ? <div role="button" tabIndex="0" onClick={handleItemClick} onKeyPress={handleItemClick}>{children}</div> : children
+  return isContextMenu ? (
+    <div
+      role="button"
+      tabIndex="0"
+      onClick={handleItemClick}
+      onKeyPress={handleItemClick}
+    >
+      {children}
+    </div>
+  ) : children
 }
 
 export default function FieldContextMenu({
@@ -47,52 +57,23 @@ export default function FieldContextMenu({
     }
   }
 
-  const handleFieldHide = brkpnt => {
-    // setFields(allFields => produce(allFields, draft => {
-    //   const fldData = draft[fldKey]
-    //   if (!fldData.hidden) fldData.hidden = []
-    //   if (brkpnt === 'all' && fldData.hidden.length < 3) {
-    //     fldData.hidden = ['lg', 'md', 'sm']
-    //   } else if (brkpnt === 'all') {
-    //     fldData.hidden = []
-    //   } else if (fldData.hidden.includes(brkpnt)) {
-    //     fldData.hidden.splice(fldData.hidden.indexOf(brkpnt), 1)
-    //   } else {
-    //     fldData.hidden.push(brkpnt)
-    //   }
-    //   if (!fldData.hidden.length) delete fldData.hidden
-    // }))
+  const handleFieldHide = () => {
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
-      if (!fldData.hidden) fldData.hidden = []
-      if (brkpnt === 'all' && fldData.hidden.length < 3) {
-        fldData.hidden = ['lg', 'md', 'sm']
-      } else if (brkpnt === 'all') {
-        fldData.hidden = []
+      if ('hide' in fldData.valid && fldData.valid?.hide === true) {
+        delete fldData.valid.hide
+      } else {
+        fldData.valid.hide = true
       }
-      // else if (fldData.hidden.includes(brkpnt)) {
-      //   fldData.hidden.splice(fldData.hidden.indexOf(brkpnt), 1)
-      // } else {
-      //   fldData.hidden.push(brkpnt)
-      // }
-      if (!fldData.hidden.length) delete fldData.hidden
     })
 
-    let activeBrkpnt
-    if (brkpnt === 'all') activeBrkpnt = 'all device'
-    // else if (brkpnt === 'lg') activeBrkpnt = 'large'
-    // else if (brkpnt === 'md') activeBrkpnt = 'medium'
-    // else activeBrkpnt = 'small'
-
     setFields(allFields)
-    addToBuilderHistory({ event: `Field Hidden ${activeBrkpnt} ${fields[fldKey].hidden ? 'off' : 'on'}  `, state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Field Hidden ${fields[fldKey].valid?.hide ? 'off' : 'on'}  `, state: { fields: allFields, fldKey } })
   }
 
-  const checkIfHidden = brkpnt => {
+  const checkIfHidden = () => {
     const fldData = fields[fldKey]
-    if (fldData?.hidden?.length === 3) return true
-    if (fldData?.hidden?.includes(brkpnt)) return true
-    return false
+    return fldData?.valid?.hide || false
   }
 
   const deselectFieldId = e => {
@@ -125,7 +106,7 @@ export default function FieldContextMenu({
           <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
           <ContextMenuItem onClick={styleNavigation} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
           <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
-          <ContextMenuItem onClick={() => handleFieldHide('all')} label="Always Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+          <ContextMenuItem onClick={() => handleFieldHide()} label="Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
           {/* <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
               <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')}>
