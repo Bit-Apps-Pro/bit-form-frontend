@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
 import bitAdvanceFileUploadField from 'bit-advance-file-upload-field/src/bit-advance-file-upload-field'
-import { create, destroy, registerPlugin, setOptions } from 'bit-file-pond/src'
+import bitFilePond from 'bit-file-pond/src/bit-filepond'
 import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size/src/bit-filepond-plugin-file-validate-size'
 import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type/src/bit-filepond-plugin-file-validate-type'
 import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop/src/bit-filepond-plugin-image-crop'
@@ -33,10 +33,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
 
   useEffect(() => {
     const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
-    if (!iFrameWindow.create) iFrameWindow.create = create
-    if (!iFrameWindow.destroy) iFrameWindow.destroy = destroy
-    if (!iFrameWindow.registerPlugin) iFrameWindow.registerPlugin = registerPlugin
-    if (!iFrameWindow.setOptions) iFrameWindow.setOptions = setOptions
+    if (!iFrameWindow.bit_filepond) iFrameWindow.bit_filepond = bitFilePond
 
     if (!iFrameWindow.bit_filepond_plugin_image_preview) {
       iFrameWindow.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreviewMin
@@ -80,7 +77,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     const fldConstructor = advanceFileFieldRef.current
     const fldElm = container.current
     if (fldConstructor) {
-      destroy(container.current)
+      bitFilePond.destroy(container.current)
       if (fldElm.firstChild) fldElm.removeChild(fldElm.firstChild)
     }
     advanceFileFieldRef.current = new bitAdvanceFileUploadField(fldElm, configuration)
