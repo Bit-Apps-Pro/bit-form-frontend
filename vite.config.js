@@ -202,6 +202,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-validation/dist/customOptionValidation.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-validation/dist/dcsnbxFldValidation.min.js'),
         dest: absPath('../assets'),
       },

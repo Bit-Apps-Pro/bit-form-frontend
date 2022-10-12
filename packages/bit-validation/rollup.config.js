@@ -7,6 +7,7 @@ export default function generateRollupConfig() {
   const fileNames = [
     'checkFldValidation',
     'checkMinMaxOptions',
+    'customOptionValidation',
     'dcsnbxFldValidation',
     'emailFldValidation',
     'fileupFldValidation',
