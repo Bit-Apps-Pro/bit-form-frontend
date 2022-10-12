@@ -30,10 +30,13 @@ export default function generateRollupConfig() {
       passes: 10,
       drop_console: true,
     },
+    output: {
+      comments: false,
+    },
     // mangle: {
     //   properties: true,
     //   reserved: [
-    //     'observeElement',
+    //     'bit_country_field',
     //   ]
     // }
   }
