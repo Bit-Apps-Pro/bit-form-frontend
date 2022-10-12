@@ -31,7 +31,7 @@ export default function OtherOptionSettings() {
       fieldData.err.otherOptReq.show = true
       addDefaultStyleClasses(fldKey, 'otherOptions')
     } else {
-      fieldData.valid.otherOptReq = false
+      delete fieldData.valid.otherOptReq
       delete fieldData.addOtherOpt
     }
     const evnt = e.target.checked ? 'Add' : 'Remove'
@@ -53,7 +53,7 @@ export default function OtherOptionSettings() {
       fieldData.err.otherOptReq.dflt = '<p>Custom Option Required</p>'
       fieldData.err.otherOptReq.show = true
     } else {
-      fieldData.valid.otherOptReq = false
+      delete fieldData.valid.otherOptReq
     }
 
     const evnt = e.target.checked ? 'Requred' : 'Optional'
@@ -103,7 +103,7 @@ export default function OtherOptionSettings() {
       <div className={css(FieldStyle.placeholder)}>
         <div className={css({ flx: 'center-between', my: 5 })}>
           <span>Required Custom Input</span>
-          <SingleToggle id="req-other-opt" className={css(ut.mr2)} name="req-other-opt" action={toggleOtherOptReq} isChecked={fieldData.valid.otherOptReq} />
+          <SingleToggle id="req-other-opt" className={css(ut.mr2)} name="req-other-opt" action={toggleOtherOptReq} isChecked={!!fieldData.valid.otherOptReq} />
         </div>
         {fieldData.valid.otherOptReq && (
           <ErrorMessageSettings
@@ -116,7 +116,7 @@ export default function OtherOptionSettings() {
 
         <div className={css({ flx: 'center-between', my: 5 })}>
           <span>Input Placeholder</span>
-          <SingleToggle id="other-inp-ph" className={css(ut.mr2)} name="other-inp-ph" action={toggleOtherInpPh} isChecked={fieldData.otherPhShow} />
+          <SingleToggle id="other-inp-ph" className={css(ut.mr2)} name="other-inp-ph" action={toggleOtherInpPh} isChecked={!!fieldData.otherPhShow} />
         </div>
 
         {fieldData.otherPhShow && (
