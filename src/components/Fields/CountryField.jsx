@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-// import 'bit-virtualized-list'
-import BitCountryField from 'bit-country-field'
-import { observeElm } from 'bit-helpers'
-import { default as bit_virtualized_list } from 'bit-virtualized-list'
+import BitCountryField from 'bit-country-field/src/bit-country-field'
+import { observeElm } from 'bit-helpers/src'
+import bit_virtualized_list from 'bit-virtualized-list/src/bit-virtualized-list'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'

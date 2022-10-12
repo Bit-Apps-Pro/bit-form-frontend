@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
-import { observeElm } from 'bit-helpers'
-import BitPhoneNumberField from 'bit-phone-number-field'
-import { default as bit_virtualized_list } from 'bit-virtualized-list'
+import { observeElm } from 'bit-helpers/src'
+import BitPhoneNumberField from 'bit-phone-number-field/src/bit-phone-number-field'
+import bit_virtualized_list from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'

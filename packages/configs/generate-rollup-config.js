@@ -43,7 +43,7 @@ export default function generateRollupConfig() {
           {
             file: devOutputFilePath,
             name: libName,
-            format: 'umd',
+            format: 'iife',
             globals: {
               document: 'document',
               window: 'window',
@@ -53,7 +53,7 @@ export default function generateRollupConfig() {
           {
             file: outputFilePath,
             name: libName,
-            format: 'umd',
+            format: 'iife',
             plugins: [terser(terserOptions)],
             globals: {
               document: 'document',

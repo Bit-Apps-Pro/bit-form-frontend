@@ -1,8 +1,7 @@
 {
   "name": "bit-razorpay-field",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-razorpay-field.min.js",
-  "module": "src/bit-razorpay-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

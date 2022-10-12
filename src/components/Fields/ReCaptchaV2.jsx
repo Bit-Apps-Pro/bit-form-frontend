@@ -1,4 +1,4 @@
-import BitRecaptchaField from 'bit-recaptcha-field'
+import BitRecaptchaField from 'bit-recaptcha-field/src/bit-recaptcha-field'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'

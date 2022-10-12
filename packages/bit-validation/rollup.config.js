@@ -64,7 +64,7 @@ export default function generateRollupConfig() {
       {
         file: `${distFolder}/${fileName}.min.js`,
         name: fileName,
-        format: 'umd',
+        format: 'iife',
         plugins: [terser(terserOptions)],
         globals: {
           document: 'document',

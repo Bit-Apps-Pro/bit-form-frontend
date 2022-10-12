@@ -1,8 +1,7 @@
 {
   "name": "bit-filepond-plugin-image-crop",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-filepond-plugin-image-crop.min.js",
-  "module": "src/bit-filepond-plugin-image-crop.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

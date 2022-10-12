@@ -50,7 +50,7 @@ export default function generateRollupConfig() {
       {
         file: `${distFolder}/bit-filepond-${fileName}.min.js`,
         name: fileName,
-        format: 'umd',
+        format: 'iife',
         plugins: [terser(terserOptions)],
         globals: {
           document: 'document',

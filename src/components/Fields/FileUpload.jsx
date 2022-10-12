@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import BitFileUpField from 'bit-file-up-field'
+import BitFileUpField from 'bit-file-up-field/src/bit-file-up-field'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'

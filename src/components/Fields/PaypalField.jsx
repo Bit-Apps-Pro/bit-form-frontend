@@ -1,4 +1,4 @@
-import BitPaypalField from 'bit-paypal-field'
+import BitPaypalField from 'bit-paypal-field/src/bit-paypal-field'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
