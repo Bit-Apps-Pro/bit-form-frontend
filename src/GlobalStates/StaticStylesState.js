@@ -9,6 +9,6 @@ export const $staticStylesState = atom({
       mdLightStyles: {},
       smLightStyles: {},
     },
-    staticStyles: {},
+    staticStyles: { '.d-none': { display: 'none' } },
   },
 })

@@ -31,6 +31,7 @@ import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
 import { JCOF } from '../Utils/globalHelpers'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -95,6 +96,7 @@ const FormBuilder = ({ isLoading }) => {
   const setAllStyles = useSetRecoilState($allStyles)
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const setStaticStylesState = useSetRecoilState($staticStylesState)
   // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
@@ -122,11 +124,12 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
     if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars, themeColors, style: oldAllStyles } = oldStyles
+      const { themeVars, themeColors, style: oldAllStyles, statusStyle: staticStylesState } = oldStyles
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
       setAllStyles(JCOF.parse(oldAllStyles))
-
+      setStaticStylesState(JCOF.parse(staticStylesState))
+      console.log({ staticStylesState })
       setSavedStylesAndVars({
         allThemeColors: themeColors,
         allThemeVars: themeVars,
