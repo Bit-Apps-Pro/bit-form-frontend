@@ -3,16 +3,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import bitAdvanceFileUploadField from 'bit-advance-file-upload-field/src/bit-advance-file-upload-field'
+import BitAdvanceFileUploadField from 'bit-advance-file-upload-field/src/bit-advance-file-upload-field'
 import bitFilePond from 'bit-file-pond/src/bit-filepond'
 import bitFilepondPluginFileValidateSize from 'bit-filepond-plugin-file-validate-size/src/bit-filepond-plugin-file-validate-size'
-import bitFilepondPluginFileValidateTypeMin from 'bit-filepond-plugin-file-validate-type/src/bit-filepond-plugin-file-validate-type'
-import bitFilepondPluginImageCropMin from 'bit-filepond-plugin-image-crop/src/bit-filepond-plugin-image-crop'
-import bitFilepondPluginImagePreviewMin from 'bit-filepond-plugin-image-preview/src/bit-filepond-plugin-image-preview'
-import bitFilepondPluginImageResizeMin from 'bit-filepond-plugin-image-resize/src/bit-filepond-plugin-image-resize'
-import bitFilepondPluginImageTransformMin from 'bit-filepond-plugin-image-transform/src/bit-filepond-plugin-image-transform'
-import bitFilepondPluginImageValidateSizeMin from 'bit-filepond-plugin-image-validate-size/src/bit-filepond-plugin-image-validate-size'
-import bitFilepondPluginMediaPreviewMin from 'bit-filepond-plugin-media-preview/src/bit-filepond-plugin-media-preview'
+import bitFilepondPluginFileValidateType from 'bit-filepond-plugin-file-validate-type/src/bit-filepond-plugin-file-validate-type'
+import bitFilepondPluginImageCrop from 'bit-filepond-plugin-image-crop/src/bit-filepond-plugin-image-crop'
+import bitFilepondPluginImagePreview from 'bit-filepond-plugin-image-preview/src/bit-filepond-plugin-image-preview'
+import bitFilepondPluginImageResize from 'bit-filepond-plugin-image-resize/src/bit-filepond-plugin-image-resize'
+import bitFilepondPluginImageTransform from 'bit-filepond-plugin-image-transform/src/bit-filepond-plugin-image-transform'
+import bitFilepondPluginImageValidateSize from 'bit-filepond-plugin-image-validate-size/src/bit-filepond-plugin-image-validate-size'
+import bitFilepondPluginMediaPreview from 'bit-filepond-plugin-media-preview/src/bit-filepond-plugin-media-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef, useState } from 'react'
@@ -36,33 +36,33 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
     if (!iFrameWindow.bit_filepond) iFrameWindow.bit_filepond = bitFilePond
 
     if (!iFrameWindow.bit_filepond_plugin_image_preview) {
-      iFrameWindow.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreviewMin
+      iFrameWindow.bit_filepond_plugin_image_preview = bitFilepondPluginImagePreview
     }
     if (!iFrameWindow.bit_filepond_plugin_file_validate_size) {
       iFrameWindow.bit_filepond_plugin_file_validate_size = bitFilepondPluginFileValidateSize
     }
     if (!iFrameWindow.bit_filepond_plugin_file_validate_type) {
-      iFrameWindow.bit_filepond_plugin_file_validate_type = bitFilepondPluginFileValidateTypeMin
+      iFrameWindow.bit_filepond_plugin_file_validate_type = bitFilepondPluginFileValidateType
     }
     if (!iFrameWindow.bit_filepond_plugin_image_crop) {
-      iFrameWindow.bit_filepond_plugin_image_crop = bitFilepondPluginImageCropMin
+      iFrameWindow.bit_filepond_plugin_image_crop = bitFilepondPluginImageCrop
     }
     if (!iFrameWindow.bit_filepond_plugin_image_resize) {
-      iFrameWindow.bit_filepond_plugin_image_resize = bitFilepondPluginImageResizeMin
+      iFrameWindow.bit_filepond_plugin_image_resize = bitFilepondPluginImageResize
     }
     if (!iFrameWindow.bit_filepond_plugin_image_transform) {
-      iFrameWindow.bit_filepond_plugin_image_transform = bitFilepondPluginImageTransformMin
+      iFrameWindow.bit_filepond_plugin_image_transform = bitFilepondPluginImageTransform
     }
     if (!iFrameWindow.bit_filepond_plugin_image_validate_size) {
-      iFrameWindow.bit_filepond_plugin_image_validate_size = bitFilepondPluginImageValidateSizeMin
+      iFrameWindow.bit_filepond_plugin_image_validate_size = bitFilepondPluginImageValidateSize
     }
     if (!iFrameWindow.bit_filepond_plugin_media_preview) {
-      iFrameWindow.bit_filepond_plugin_media_preview = bitFilepondPluginMediaPreviewMin
+      iFrameWindow.bit_filepond_plugin_media_preview = bitFilepondPluginMediaPreview
     }
 
     const configuration = {
       configSetting: config,
-      window: document.getElementById('bit-grid-layout').contentWindow,
+      window: iFrameWindow,
       document: document.getElementById('bit-grid-layout').contentDocument,
       formID,
       ajaxURL: typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL,
@@ -80,7 +80,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
       bitFilePond.destroy(container.current)
       if (fldElm.firstChild) fldElm.removeChild(fldElm.firstChild)
     }
-    advanceFileFieldRef.current = new bitAdvanceFileUploadField(fldElm, configuration)
+    advanceFileFieldRef.current = new BitAdvanceFileUploadField(fldElm, configuration)
     setFileChange(prv => prv + 1)
   }, [fieldData?.config])
 

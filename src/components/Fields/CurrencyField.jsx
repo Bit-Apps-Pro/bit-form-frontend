@@ -2,7 +2,7 @@
 // import './currency-field-style.css'
 import BitCurrencyField from 'bit-currency-field/src/bit-currency-field'
 import { observeElm } from 'bit-helpers/src'
-import bit_virtualized_list from 'bit-virtualized-list/src/bit-virtualized-list'
+import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
@@ -27,6 +27,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
   } = fieldData.config
 
   useEffect(() => {
+    const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
     if (!currencyWrapElmRef?.current) {
       currencyWrapElmRef.current = selectInGrid(`.${fieldKey}-currency-fld-wrp`)
     }
@@ -52,7 +53,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
       options,
       assetsURL: `${bits.assetsURL}/../static/currencies/`,
       document: document.getElementById('bit-grid-layout').contentDocument,
-      window: document.getElementById('bit-grid-layout').contentWindow,
+      window: iFrameWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -70,11 +71,11 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
     }
 
     // add bit_virtualized_list to global
-    if (!window.bit_virtualized_list) {
-      window.bit_virtualized_list = bit_virtualized_list // eslint-disable-line camelcase
+    if (!iFrameWindow.bit_virtualized_list) {
+      iFrameWindow.bit_virtualized_list = bitVirtualizedList // eslint-disable-line camelcase
     }
-    if (!window.observeElm) {
-      window.observeElm = observeElm
+    if (!iFrameWindow.observeElm) {
+      iFrameWindow.observeElm = observeElm
     }
     currencyFieldRef.current = new BitCurrencyField(fldElm, configOptions)
   }, [fieldData])
