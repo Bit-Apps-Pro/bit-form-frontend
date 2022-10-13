@@ -229,6 +229,14 @@ function copyStatics(mode) {
         src: absPath('packages/bit-conditionals/dist/bit-conditionals.min.js'),
         dest: absPath('../assets'),
       },
+      {
+        src: absPath('packages/bit-frontend/dist/honeypot-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/submit-form.min.js'),
+        dest: absPath('../assets'),
+      },
     ],
   })
 }
