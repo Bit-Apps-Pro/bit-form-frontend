@@ -5,9 +5,9 @@ export const $staticStylesState = atom({
   key: '$staticStylesState',
   default: {
     styleMergeWithAtomicClasses: {
-      lgLightStyles: {},
-      mdLightStyles: {},
-      smLightStyles: {},
+      lgLightStyles: { form: {} },
+      mdLightStyles: { form: {} },
+      smLightStyles: { form: {} },
     },
     staticStyles: { '.d-none': { display: 'none' } },
   },

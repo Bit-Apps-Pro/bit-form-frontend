@@ -30,7 +30,7 @@ export default function BuilderSettings() {
     sm: 'smLightStyles',
   }
   const [darkModePreference, setDarkModePreference] = useState(darkModePrefereceInitialValue)
-  const formWidth = staticStylesState.styleMergeWithAtomicClasses[breakPoints[brkpnt]]?.[`._frm-bg-${formID}`]?.width
+  const formWidth = staticStylesState.styleMergeWithAtomicClasses[breakPoints[brkpnt]]?.form?.[`._frm-bg-${formID}`]?.width
 
   const handleDarkModePreference = (value) => {
     setDarkModePreference(value)
@@ -77,7 +77,7 @@ export default function BuilderSettings() {
     const convertValue = unitConverter(unit, val, preUnit)
     setStaticStyleState(preStyle => produce(preStyle, draft => {
       const brcpnt = breakPoints[brkpnt]
-      const path = `styleMergeWithAtomicClasses->${brcpnt}->._frm-bg-${formID}->width`
+      const path = `styleMergeWithAtomicClasses->${brcpnt}->form->._frm-bg-${formID}->width`
       const value = convertValue + unit
       assignNestedObj(draft, path, value)
     }))

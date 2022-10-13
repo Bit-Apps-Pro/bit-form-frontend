@@ -124,12 +124,12 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
     if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars, themeColors, style: oldAllStyles, statusStyle: staticStylesState } = oldStyles
+      const { themeVars, themeColors, style: oldAllStyles, staticStyles } = oldStyles
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
       setAllStyles(JCOF.parse(oldAllStyles))
-      setStaticStylesState(JCOF.parse(staticStylesState))
-      console.log({ staticStylesState })
+      console.log({ staticStyles })
+      setStaticStylesState(JCOF.parse(staticStyles))
       setSavedStylesAndVars({
         allThemeColors: themeColors,
         allThemeVars: themeVars,
