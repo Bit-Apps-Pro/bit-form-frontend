@@ -14,7 +14,7 @@ function SizeAndPosition() {
   const { fieldKey: fldKey } = useParams()
   const [layouts, setLayouts] = useRecoilState($layouts)
   const breakpoint = useRecoilValue($breakpoint)
-  const fieldSize = layouts[breakpoint].find(fl => (fl.i === fldKey))
+  const fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
 
   const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
@@ -90,11 +90,33 @@ function SizeAndPosition() {
       <div className={css(s.fd)}>
         <label className={css(ut.w5, s.label)} htmlFor="x">
           <span className={css(s.name)}>X</span>
-          <input data-testid="siz-n-pos-x-inp" aria-label="position x" placeholder="" min="0" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
+          <input
+            data-testid="siz-n-pos-x-inp"
+            aria-label="position x"
+            placeholder=""
+            min="0"
+            max={maxValue[breakpoint].x}
+            onChange={xHandler}
+            value={fieldSize.x}
+            className={css(ut.w8, s.input)}
+            id="x"
+            type="number"
+          />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="w">
           <span className={css(s.name)}>W</span>
-          <input data-testid="siz-n-pos-w-inp" aria-label="position w" placeholder="" min="0" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
+          <input
+            data-testid="siz-n-pos-w-inp"
+            aria-label="position w"
+            placeholder=""
+            min="0"
+            max={maxValue[breakpoint].w}
+            onChange={wHandler}
+            value={fieldSize.w}
+            className={css(ut.w8, s.input)}
+            id="w"
+            type="number"
+          />
         </label>
         {/* <label className={css(ut.w5, s.label)} htmlFor="y">
           <span className={css(s.name)}>Y</span>

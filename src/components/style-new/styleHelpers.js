@@ -76,6 +76,23 @@ export const json2CssStr = (className, jsonValue) => {
   return className + cssStr
 }
 
+export const jsObjtoCssStr = (jsObj) => {
+  const keys = Object.keys(jsObj)
+  let css = ''
+  keys.forEach((cls) => {
+    const clsName = Object.entries(jsObj[cls])
+    if (clsName.length === 0) return
+    let cssStr = '{'
+    clsName.forEach(([property, value]) => {
+      cssStr += `${property}:${value};`
+    })
+    cssStr = cssStr.substring(0, cssStr.length - 1)
+    cssStr += '}'
+    css += cls + cssStr
+  })
+  return css
+}
+
 export const changeFormDir = (style, dir) => produce(style, drft => {
   if (drft.theme === 'bitformDefault') {
     const fieldsKeysArr = Object.keys(drft.fields)

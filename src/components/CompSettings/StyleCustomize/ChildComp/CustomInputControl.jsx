@@ -50,6 +50,7 @@ export default function CustomInputControl(
     showArrow = true,
     placeholder,
     hasTextMode, dataTestId,
+    sliderWidth,
   },
 ) {
   const { css } = useFela()
@@ -117,7 +118,7 @@ export default function CustomInputControl(
   }
 
   return (
-    <div className={`${css(customInputControlStyle.container, visible ? customInputControlStyle.visible : '')} ${className}`} style={{ width: width || '100%' }}>
+    <div className={`${css(customInputControlStyle.container, { '& div[data-tippy-root]': { w: sliderWidth } }, visible ? customInputControlStyle.visible : '')} ${className}`} style={{ width: width || '100%' }}>
       {label && (
         <span
           className={css(customInputControlStyle.label, resizeValueByLabel ? customInputControlStyle.resizer : '')}

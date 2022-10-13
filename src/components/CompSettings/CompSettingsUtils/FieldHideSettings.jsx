@@ -2,8 +2,8 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $breakpoint, $fields } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
@@ -12,22 +12,19 @@ import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
-  const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
-  const isHidden = fields[fldKey].valid.hidden?.includes(breakpoint) || false
+  const isHidden = fields[fldKey].valid?.hide || false
   const { css } = useFela()
-  const setHidden = e => {
-    const { checked } = e.target
 
+  const setHidden = ({ target }) => {
+    const { checked } = target
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
-      if (!fldData.valid.hidden) fldData.valid.hidden = []
       if (checked) {
-        fldData.valid.hidden.push(breakpoint)
+        fldData.valid.hide = true
       } else {
-        fldData.valid.hidden.splice(fldData.valid.hidden.indexOf(breakpoint), 1)
+        delete fldData.valid.hide
       }
-      if (!fldData.valid.hidden.length) delete fldData.valid.hidden
     })
     const req = checked ? 'on' : 'off'
     setFields(allFields)

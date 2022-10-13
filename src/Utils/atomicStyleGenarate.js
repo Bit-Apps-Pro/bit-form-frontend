@@ -1,8 +1,10 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, optimizeAndDefineCssClassProps, objectToCssText } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { getLayoutDiff } from './FormBuilderHelper'
@@ -10,6 +12,7 @@ import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers
 
 export default function atomicStyleGenarate(sortedLayout) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
+  const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -55,12 +58,20 @@ export default function atomicStyleGenarate(sortedLayout) {
   const themeColorsLight = getRecoil($lightThemeColors)
   const themeColorsDark = getRecoil($darkThemeColors)
 
-  const { lgLightStyles: stylesLgLight,
-    lgDarkStyles: stylesLgDark,
+  let { lgLightStyles: stylesLgLight,
+    lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
     mdLightStyles: stylesMdLight,
-    mdDarkStyles: stylesMdDark,
+    mdDarkStyles: stylesMdDark, // eslint-disable-line prefer-const
     smLightStyles: stylesSmLight,
-    smDarkStyles: stylesSmDark } = removeUnusedStyles()
+    smDarkStyles: stylesSmDark, // eslint-disable-line prefer-const
+  } = removeUnusedStyles()
+
+  console.log({ stylesLgLight })
+  stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
+  stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
+  stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
+
+  console.log({ stylesLgLight })
 
   // const stylesLgLight = getRecoil($stylesLgLight)
   // const stylesMdLight = getRecoil($stylesMdLight)
@@ -408,8 +419,8 @@ export function generateFormGridStyle(breakpoint, formId) {
   const columnRepeat = 60
   // breakpoint === 'md' && (columnRepeat = 40)
   // breakpoint === 'sm' && (columnRepeat = 20)
-  let style = '._frm-g'
-  formId && (style += `-${formId}`)
+  let style = ''
+  formId && (style += `._frm-${formId}`)
   style += '{'
   breakpoint === 'lg' && (style += 'display:grid;')
   style += `grid-template-columns:repeat(${columnRepeat},minmax(1px,1fr))`
