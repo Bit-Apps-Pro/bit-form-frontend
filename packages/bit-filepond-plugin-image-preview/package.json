@@ -1,8 +1,7 @@
 {
   "name": "bit-filepond-plugin-image-preview",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-filepond-plugin-image-preview.min.js",
-  "module": "src/bit-filepond-plugin-image-preview.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

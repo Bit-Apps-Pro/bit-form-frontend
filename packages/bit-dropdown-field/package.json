@@ -1,8 +1,7 @@
 {
   "name": "bit-dropdown-field",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-dropdown-field.min.js",
-  "module": "src/bit-dropdown-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",

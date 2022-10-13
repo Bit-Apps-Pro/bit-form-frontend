@@ -8,6 +8,8 @@ export default class BitFileUpField {
 
   #fileSelectStatus = null
 
+  #fileInputWrpr = null
+
   #maxSizeLabel = null
 
   #fileUploadInput = null
@@ -23,6 +25,12 @@ export default class BitFileUpField {
   #document = null
 
   #window = {}
+
+  #attributes = {}
+
+  #classNames = {}
+
+  #fieldKey = ''
 
   #assetsURL = ''
 
@@ -60,13 +68,16 @@ export default class BitFileUpField {
 
     this.#document = config.document ? config.document : document
     this.#window = config.window ? config.window : window
+    this.#attributes = config.attributes || {}
+    this.#classNames = config.classNames || {}
 
     if (typeof selector === 'string') {
       this.#fileUploadWrap = this.#document.querySelector(selector)
     } else {
       this.#fileUploadWrap = selector
     }
-    this.fieldKey = this.#config.fieldKey
+    this.#fieldKey = this.#config.fieldKey
+    this.fieldKey = this.#fieldKey
 
     this.#assetsURL = config.assetsURL || ''
 
@@ -74,13 +85,13 @@ export default class BitFileUpField {
   }
 
   init() {
-    this.#fieldLabel = this.#select(`.${this.fieldKey}-label`)
-    this.#inpBtn = this.#select(`.${this.fieldKey}-inp-btn`)
-    this.#fileSelectStatus = this.#select(`.${this.fieldKey}-file-select-status`)
-    this.#maxSizeLabel = this.#select(`.${this.fieldKey}-max-size-lbl`)
-    this.#fileUploadInput = this.#select(`.${this.fieldKey}-file-upload-input`)
-    this.#filesList = this.#select(`.${this.fieldKey}-files-list`)
-    this.#errorWrap = this.#select(`.${this.fieldKey}-err-wrp`)
+    this.#fieldLabel = this.#select(`.${this.#fieldKey}-label`)
+    this.#inpBtn = this.#select(`.${this.#fieldKey}-inp-btn`)
+    this.#fileSelectStatus = this.#select(`.${this.#fieldKey}-file-select-status`)
+    this.#fileInputWrpr = this.#select(`.${this.#fieldKey}-file-input-wrpr`)
+    this.#maxSizeLabel = this.#select(`.${this.#fieldKey}-max-size-lbl`)
+    this.#fileUploadInput = this.#select(`.${this.#fieldKey}-file-upload-input`)
+    this.#errorWrap = this.#select(`.${this.#fieldKey}-file-input-wrpr .err-wrp`)
     const { multiple,
       allowedFileType,
       accept,
@@ -93,9 +104,7 @@ export default class BitFileUpField {
     if (showSelectStatus) this.#fileSelectStatus.innerHTML = fileSelectStatus
     else this.#fileSelectStatus?.remove()
     this.#files = {}
-    if (this.#filesList) this.#filesList.innerHTML = ''
-
-    /* if (!this.#config.showFileList) this.#filesList?.remove() */
+    this.#removeFilesList()
 
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
   }
@@ -103,7 +112,8 @@ export default class BitFileUpField {
   #fileUploadAction(e) {
     const { files } = this.#fileUploadInput
 
-    const { sizeUnit,
+    const {
+      sizeUnit,
       allowMaxSize,
       maxSize,
       maxSizeErrMsg,
@@ -118,7 +128,8 @@ export default class BitFileUpField {
       minFile,
       minFileErrMsg,
       maxFile,
-      maxFileErrMsg } = this.#config
+      maxFileErrMsg,
+    } = this.#config
 
     const maxFileSize = this.#maxFileSize(sizeUnit, maxSize)
 
@@ -133,7 +144,7 @@ export default class BitFileUpField {
     }
     if (!multiple && files.length > 0) {
       this.#files = {}
-      if (this.#filesList) this.#filesList.innerHTML = ''
+      if (this.#filesList) this.#setTextContent(this.#filesList, '')
     }
 
     for (let i = 0; i < files.length; i += 1) {
@@ -144,14 +155,85 @@ export default class BitFileUpField {
           if (!(maxFile > 0) || (Object.keys(this.#files).length < maxFile)) {
             this.#files[fileName] = file
             if (showFileList) {
-              this.#filesList.innerHTML += `<div id="file-wrp-${fileName}" data-dev-file-wrpr='${this.fieldKey}' class="file-wrpr">
-                ${showFilePreview ? `<img src="${this.#getPreviewUrl(file)}" alt="Uploaded Image"  data-dev-file-preview='${this.fieldKey}' class="file-preview" />` : ''}
-                  <div class="file-details">
-                    <span data-dev-file-title='${this.fieldKey}' class="file-title">${file.name}</span>
-                    ${showFileSize ? `<span data-dev-file-size='${this.fieldKey}' class="file-size">${this.#returnFileSize(file.size)}</span>` : ''}
-                  </div>
-                  <button data-file-id="${fileName}" data-dev-cross-btn='${this.fieldKey}' class="cross-btn">×</button>
-              </div>`
+              if (!this.#filesList) { this.#createFilesList() }
+
+              const fileWrp = this.#createElm('div')
+              fileWrp.id = `file-wrp-${fileName}`
+              this.#addClass(fileWrp, 'file-wrpr')
+              if ('file-wrpr' in this.#classNames) {
+                const fileWrpCls = this.#classNames['file-wrpr']
+                if (fileWrpCls) this.#setCustomClass(fileWrp, fileWrpCls)
+              }
+              if ('file-wrpr' in this.#attributes) {
+                const optLblWrp = this.#attributes['file-wrpr']
+                this.#setCustomAttr(fileWrp, optLblWrp)
+              }
+
+              if (showFilePreview) {
+                const filePreview = this.#createElm('img')
+                filePreview.src = this.#getPreviewUrl(file)
+                filePreview.alt = 'Image Uploaded'
+                this.#addClass(filePreview, 'file-preview')
+                if ('file-preview' in this.#classNames) {
+                  const prevCls = this.#classNames['file-preview']
+                  if (prevCls) this.#setCustomClass(filePreview, prevCls)
+                }
+                if ('file-preview' in this.#attributes) {
+                  const prevAttr = this.#attributes['file-preview']
+                  this.#setCustomAttr(filePreview, prevAttr)
+                }
+
+                fileWrp.append(filePreview)
+              }
+
+              const fileDetails = this.#createElm('div')
+              this.#addClass(fileDetails, 'file-details')
+
+              const fileTitle = this.#createElm('span')
+              this.#addClass(fileTitle, 'file-title')
+              if ('file-title' in this.#classNames) {
+                const fileTitleCls = this.#classNames['file-title']
+                if (fileTitleCls) this.#setCustomClass(fileTitle, fileTitleCls)
+              }
+              if ('file-title' in this.#config.attributes) {
+                const fileTitleAttr = this.#config.attributes['file-title']
+                this.#setCustomAttr(fileTitle, fileTitleAttr)
+              }
+              this.#setTextContent(fileTitle, file.name)
+
+              fileDetails.append(fileTitle)
+
+              if (showFileSize) {
+                const fileSize = this.#createElm('span')
+                this.#addClass(fileSize, 'file-size')
+                if ('file-size' in this.#classNames) {
+                  const fileSizeCls = this.#classNames['file-size']
+                  if (fileSizeCls) this.#setCustomClass(fileSize, fileSizeCls)
+                }
+                if ('file-size' in this.#config.attributes) {
+                  const fileSizeAttr = this.#config.attributes['file-size']
+                  this.#setCustomAttr(fileSize, fileSizeAttr)
+                }
+                this.#setTextContent(fileSize, this.#returnFileSize(file.size))
+                fileDetails.append(fileSize)
+              }
+              fileWrp.append(fileDetails)
+
+              const crossBtn = this.#createElm('button')
+              this.#addClass(crossBtn, 'cross-btn')
+              if ('cross-btn' in this.#classNames) {
+                const crossBtnCls = this.#classNames['cross-btn']
+                if (crossBtnCls) this.#setCustomClass(crossBtn, crossBtnCls)
+              }
+              this.#setAttribute(crossBtn, 'data-file-id', fileName)
+              if ('cross-btn' in this.#config.attributes) {
+                const crossBtnAttr = this.#config.attributes['cross-btn']
+                this.#setCustomAttr(crossBtn, crossBtnAttr)
+              }
+              this.#setTextContent(crossBtn, '×')
+              fileWrp.append(crossBtn)
+
+              this.#filesList.append(fileWrp)
             }
             if (isItTotalMax) totalFileSize += file.size
           } else {
@@ -169,7 +251,7 @@ export default class BitFileUpField {
       }
     }
     /* this.#window.document.querySelectorAll() */
-    this.#selectAll(`.${this.fieldKey}-files-list .cross-btn`).forEach(element => {
+    this.#selectAll(`.${this.#fieldKey}-file-input-wrpr .cross-btn`).forEach(element => {
       this.#addEvent(element, 'click', ev => this.#removeAction(ev))
     })
 
@@ -187,21 +269,42 @@ export default class BitFileUpField {
       this.#errorWrap.innerHTML = minFileErrMsg
       this.#addClass(this.#errorWrap, 'active')
     }
+    if (!this.#filesList && error.length > 0) { this.#createFilesList() }
     error.map((err, errId) => {
       this.#filesList.insertAdjacentHTML('afterbegin', `
-      <div id='err-${errId}' class="${this.fieldKey}-err-wrp">
-          <span>${err}</span>
+      <div id='err-${errId}' class="err-wrp">
+          ${err}
       </div>`)
       const errorElemnt = this.#select(`#err-${errId}`)
-      errorElemnt.classList.add('active')
+      this.#addClass(errorElemnt, 'active')
 
       setTimeout(() => {
-        errorElemnt.classList.remove('active')
+        this.#removeClass(errorElemnt, 'active')
       }, 3000)
       setTimeout(() => {
         errorElemnt?.remove()
+        if (!Object.keys(this.#files).length) this.#removeFilesList()
       }, 5000)
     })
+  }
+
+  #createFilesList() {
+    this.#filesList = this.#createElm('div')
+    this.#addClass(this.#filesList, 'files-list')
+    if ('files-list' in this.#classNames) {
+      const fileListCls = this.#classNames['files-list']
+      if (fileListCls) this.#setCustomClass(this.#filesList, fileListCls)
+    }
+    if ('files-list' in this.#attributes) {
+      const fileListWrp = this.#attributes['files-list']
+      this.#setCustomAttr(this.#filesList, fileListWrp)
+    }
+    this.#fileInputWrpr.append(this.#filesList)
+  }
+
+  #removeFilesList() {
+    this.#filesList?.remove()
+    this.#filesList = null
   }
 
   #filesIntializeToInput() {
@@ -222,6 +325,7 @@ export default class BitFileUpField {
       this.#fileSelectStatus.innerText = `${fileLength} file${fileLength > 1 ? 's' : ''} selected`
     } else {
       this.#fileSelectStatus.innerHTML = this.#config.fileSelectStatus
+      this.#removeFilesList()
     }
     this.#filesIntializeToInput()
   }
@@ -231,6 +335,10 @@ export default class BitFileUpField {
   #selectAll(selector) { return this.#fileUploadWrap.querySelectorAll(selector) }
 
   #remove(selector) { this.#select(selector)?.remove() }
+
+  #createElm(elm) {
+    return this.#document.createElement(elm)
+  }
 
   #getPreviewUrl(file) {
     const extention = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -339,6 +447,27 @@ export default class BitFileUpField {
 
   #removeClass(element, className) {
     element.classList.remove(className)
+  }
+
+  #setTextContent(elm, txt) {
+    elm.textContent = txt
+  }
+
+  #setAttribute(elm, name, value) {
+    elm?.setAttribute?.(name, value)
+  }
+
+  #setCustomClass(element, classes) {
+    classes.trim().split(/\b\s+\b/g).forEach(cls => this.#addClass(element, cls))
+  }
+
+  #setCustomAttr(element, objArr) {
+    const optLen = objArr.length
+    if (optLen) {
+      for (let i = 0; i < optLen; i += 1) {
+        this.#setAttribute(element, objArr[i].key, objArr[i].value)
+      }
+    }
   }
 
   #returnFileSize(number) {

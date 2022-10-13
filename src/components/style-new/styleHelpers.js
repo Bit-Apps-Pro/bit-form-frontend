@@ -420,6 +420,7 @@ export const styleClasses = {
   fileTitl: ['file-title'],
   fileSize: ['file-size'],
   crossBtn: ['cross-btn'],
+  errWrp: ['err-wrp'],
   btnPreIcn: ['btn-pre-i'],
   btnSufIcn: ['btn-suf-i'],
   err: ['err-msg'],
@@ -760,7 +761,7 @@ export const isValidURL = (string) => {
 }
 
 export const getValueFromStateVar = (stateObj, val) => {
-  if (val && val.match(/(var)/g)?.[0] === 'var') {
+  if (val?.match?.(/(var)/g)?.[0] === 'var') {
     const getVarProperty = val.replace(/\(|var|,.*|\)|(!important|\s)/gi, '')
     return stateObj[getVarProperty] || ''
   }
@@ -970,12 +971,14 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'opt-lbl': 'option-list .opt-lbl',
     'opt-suffix': 'option-list .opt-suffix',
     'opt-prefix': 'option-list .opt-prefix',
-    'file-wrpr': 'files-list .file-wrpr',
-    'file-preview': 'files-list .file-preview',
-    'file-details': 'files-list .file-details',
-    'file-title': 'files-list .file-title',
-    'file-size': 'files-list .file-size',
-    'cross-btn': 'files-list .cross-btn',
+    'files-list': 'file-input-wrpr .files-list',
+    'file-wrpr': 'file-input-wrpr .file-wrpr',
+    'file-preview': 'file-input-wrpr .file-preview',
+    'file-details': 'file-input-wrpr .file-details',
+    'file-title': 'file-input-wrpr .file-title',
+    'file-size': 'file-input-wrpr .file-size',
+    'cross-btn': 'file-input-wrpr .cross-btn',
+    'err-wrp': 'file-input-wrpr .err-wrp',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey

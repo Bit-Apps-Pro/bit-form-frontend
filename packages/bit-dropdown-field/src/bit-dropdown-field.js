@@ -465,6 +465,10 @@ export default class BitDropdownField {
     elm?.setAttribute?.(name, value)
   }
 
+  #setCustomClass(element, classes) {
+    classes.trim().split(/\b\s+\b/g).forEach(cls => this.#setClassName(element, cls))
+  }
+
   #setCustomAttr(element, objArr) {
     const optLen = objArr.length
     if (optLen) {
@@ -495,7 +499,7 @@ export default class BitDropdownField {
       this.#setClassName(lblimgbox, 'opt-lbl-wrp')
       if ('opt-lbl-wrp' in this.#config.classNames) {
         const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
-        if (optLblWrpCls) this.#setClassName(lblimgbox, optLblWrpCls)
+        if (optLblWrpCls) this.#setCustomClass(lblimgbox, optLblWrpCls)
       }
       // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
       if ('opt-lbl-wrp' in this.#config.attributes) {
@@ -508,7 +512,7 @@ export default class BitDropdownField {
         // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
         if ('opt-icn' in this.#config.classNames) {
           const optIcnCls = this.#config.classNames['opt-icn']
-          if (optIcnCls) this.#setClassName(img, optIcnCls)
+          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
         }
         if ('opt-icn' in this.#config.attributes) {
           const optIcn = this.#config.attributes['opt-icn']
@@ -523,7 +527,7 @@ export default class BitDropdownField {
       this.#setClassName(lbl, 'opt-lbl')
       if ('opt-lbl' in this.#config.classNames) {
         const optLblCls = this.#config.classNames['opt-lbl']
-        if (optLblCls) this.#setClassName(lbl, optLblCls)
+        if (optLblCls) this.#setCustomClass(lbl, optLblCls)
       }
       // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
       if ('opt-lbl' in this.#config.attributes) {
@@ -536,7 +540,7 @@ export default class BitDropdownField {
       this.#setClassName(prefix, 'opt-prefix')
       if ('opt-prefix' in this.#config.classNames) {
         const optPrefix = this.#config.classNames['opt-prefix']
-        if (optPrefix) this.#setClassName(prefix, optPrefix)
+        if (optPrefix) this.#setCustomClass(prefix, optPrefix)
       }
       if ('opt-prefix' in this.#config.attributes) {
         const optPrefix = this.#config.attributes['opt-prefix']

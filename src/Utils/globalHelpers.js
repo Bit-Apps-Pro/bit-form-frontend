@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { diff } from 'deep-object-diff'
 import merge from 'deepmerge-alt'
 import { parse, stringify } from 'jcof'
@@ -141,17 +140,10 @@ export const getCustomAttributes = (fk, element) => {
 export const getDataDevAttrArr = (fk, element) => {
   const fields = getRecoil($fields)
   const attr = fields[fk]?.customAttributes?.[element]
-  const dataDevObj = { [`data-dev-${element}`]: fk }
+  const dataDevObj = [{ key: `data-dev-${element}`, value: fk }]
   if (!([element] in fields[fk].customAttributes)) return dataDevObj
   if (attr) {
-    const attrLen = attr.length
-    let i = 0
-    while (i < attrLen) {
-      if (attr[i].key && attr[i].value) {
-        dataDevObj[[attr[i].key]] = attr[i].value
-      }
-      i += 1
-    }
+    dataDevObj.push(...attr)
   }
   return dataDevObj
 }

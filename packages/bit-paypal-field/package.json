@@ -1,8 +1,7 @@
 {
   "name": "bit-paypal-field",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-paypal-field.min.js",
-  "module": "src/bit-paypal-field.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
