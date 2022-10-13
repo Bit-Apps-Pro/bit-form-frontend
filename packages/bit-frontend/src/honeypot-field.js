@@ -25,13 +25,13 @@ const addedHiddenFld = (contentId, props) => {
       bitformId = document.createElement('input')
       bitformId.type = 'hidden'
       bitformId.name = 'bitforms_id'
-      bitformId.value = `bitforms_${props.formID}`
+      bitformId.value = `bitforms_${props.formId}`
       form.appendChild(bitformId)
     }
 
     const uri = new URL(props.ajaxURL)
     uri.searchParams.append('action', 'bitforms_nonce_expire_check')
-    const body = { nonce: currentNonce.value, formId: props.formID }
+    const body = { nonce: currentNonce.value, formId: props.formId }
     fetch(
       uri,
       {
@@ -53,6 +53,8 @@ const addedHiddenFld = (contentId, props) => {
             honepotFld.type = 'text'
             honepotFld.name = honeypotFldName
             honepotFld.value = ''
+            honepotFld.style.display = 'none'
+            honepotFld.required = true
             form.appendChild(honepotFld)
           }
         }
