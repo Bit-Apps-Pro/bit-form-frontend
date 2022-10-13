@@ -17,7 +17,7 @@ function generateWebpackConfig({ dir }) {
       // clean: true,
       library: {
         name: libName,
-        type: 'umd',
+        type: 'iife',
       },
     },
     module: {

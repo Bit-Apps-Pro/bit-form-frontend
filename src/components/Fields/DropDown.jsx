@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-plusplus */
-import BitDropdownField from 'bit-dropdown-field'
-import { observeElm } from 'bit-helpers'
+import BitDropdownField from 'bit-dropdown-field/src/bit-dropdown-field'
+import { observeElm } from 'bit-helpers/src'
 import { Fragment, memo, useEffect, useRef } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'

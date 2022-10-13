@@ -1022,27 +1022,31 @@ const editorConfig = {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'files-list': {
+    'file-input-wrpr .files-list': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'files-list .file-wrpr': {
+    'file-input-wrpr .file-wrpr': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },
     },
-    'files-list .file-preview': {
+    'file-input-wrpr .file-preview': {
       states: ['hover'],
       properties: { ...iconCssProps },
     },
-    'files-list .file-title': {
+    'file-input-wrpr .file-title': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'files-list .file-size': {
+    'file-input-wrpr .file-size': {
       states: ['hover'],
       properties: { ...labelCssProps },
     },
-    'files-list .cross-btn': {
+    'file-input-wrpr .cross-btn': {
+      states: ['hover'],
+      properties: { ...buttonCssProps },
+    },
+    'file-input-wrpr .err-wrp': {
       states: ['hover'],
       properties: { ...buttonCssProps },
     },
