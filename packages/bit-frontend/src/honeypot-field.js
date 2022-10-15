@@ -49,13 +49,20 @@ const addedHiddenFld = (contentId, props) => {
           }
 
           if (honeypotFldName) {
-            const honepotFld = document.createElement('input')
-            honepotFld.type = 'text'
-            honepotFld.name = honeypotFldName
-            honepotFld.value = ''
-            honepotFld.style.display = 'none'
-            honepotFld.required = true
-            form.appendChild(honepotFld)
+            const honeyPotFld1 = document.createElement('input')
+            honeyPotFld1.type = 'text'
+            honeyPotFld1.name = 'b_h_t'
+            honeyPotFld1.value = honeypotFldName
+            honeyPotFld1.style.display = 'none'
+            form.appendChild(honeyPotFld1)
+
+            const honeyPotFld2 = document.createElement('input')
+            honeyPotFld2.type = 'text'
+            honeyPotFld2.name = honeypotFldName
+            honeyPotFld2.value = ''
+            honeyPotFld2.style.display = 'none'
+            honeyPotFld2.required = true
+            form.appendChild(honeyPotFld2)
           }
         }
       })

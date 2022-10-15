@@ -9,7 +9,8 @@ function pushFilToFormData(formData, fld, files) {
         formData.append(`${fld}[]`, files[i]?.file)
       }
     }
-    uploadedFileNames.length && formData.append(fld, uploadedFileNames.join(','))
+    uploadedFileNames.length
+      && formData.append(fld, uploadedFileNames.join(','))
   } else {
     const file = !files[0]?.serverId ? files[0]?.file : files[0]?.serverId
     formData.append(fld, file)
@@ -21,8 +22,13 @@ function bitFormSubmitAction(e) {
   e.preventDefault()
   const contentId = e.target.id.slice(e.target.id.indexOf('-') + 1)
 
-  if (typeof validateForm !== 'undefined' && !validateForm({ form: contentId })) {
-    const validationEvent = new CustomEvent('bf-form-validation-error', { detail: { formId: contentId, fieldId: '', error: '' } })
+  if (
+    typeof validateForm !== 'undefined'
+    && !validateForm({ form: contentId })
+  ) {
+    const validationEvent = new CustomEvent('bf-form-validation-error', {
+      detail: { formId: contentId, fieldId: '', error: '' },
+    })
     e.target.dispatchEvent(validationEvent)
     return
   }
@@ -31,7 +37,9 @@ function bitFormSubmitAction(e) {
   const props = window.bf_globals[contentId]
 
   const inits = props.inits || {}
-  const fileFields = Object.keys(inits).filter(fldKey => props.fields[fldKey].typ === 'advanced-file-up')
+  const fileFields = Object.keys(inits).filter(
+    (fldKey) => props.fields[fldKey].typ === 'advanced-file-up',
+  )
   for (let i = 0; i < fileFields?.length; i++) {
     if (formData.has(fileFields[i])) {
       formData.delete(fileFields[i])
@@ -62,118 +70,153 @@ function bitFormSubmitAction(e) {
   }
   if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
     grecaptcha.ready(() => {
-      grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'submit' }).then((token) => {
-        formData.append('g-recaptcha-response', token)
-        const uri = new URL(props?.ajaxURL)
-        uri.searchParams.append('action', 'bitforms_submit_form')
-        const submitResp = fetch(
-          uri,
-          {
+      grecaptcha
+        .execute(props.gRecaptchaSiteKey, { action: 'submit' })
+        .then((token) => {
+          formData.append('g-recaptcha-response', token)
+          const uri = new URL(props?.ajaxURL)
+          uri.searchParams.append('action', 'bitforms_submit_form')
+          const submitResp = fetch(uri, {
             method: 'POST',
             body: formData,
-          },
-        )
-        submitResponse(submitResp, contentId, formData)
-      })
+          })
+          submitResponse(submitResp, contentId, formData)
+        })
     })
   } else {
     const uri = new URL(props?.ajaxURL)
     uri.searchParams.append('action', 'bitforms_submit_form')
-    const submitResp = fetch(
-      uri,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
+    const submitResp = fetch(uri, {
+      method: 'POST',
+      body: formData,
+    })
     submitResponse(submitResp, contentId, formData)
   }
 }
 
 function submitResponse(resp, contentId, formData) {
-  resp.then(response => new Promise((resolve, reject) => {
-    if (response.staus > 400) {
-      const errorEvent = new CustomEvent('bf-form-submit-error', { detail: { formId: contentId, errors: result.data } })
-      document.getElementById(`form-${contentId}`).dispatchEvent(errorEvent)
-      response.staus === 500 ? reject(new Error('Mayebe Internal Server Error')) : reject(response.json())
-    } else resolve(response.json())
-  })).then(result => {
-    const successEvent = new CustomEvent('bf-form-submit-success', { detail: { formId: contentId, entryId: result.entryId, formData } })
-    document.getElementById(`form-${contentId}`).dispatchEvent(successEvent)
-    let responsedRedirectPage = null
-    let hitCron = null
-    let newNonce = ''
-    if (result !== undefined && result.success) {
-      handleReset(contentId)
-      if (typeof result.data === 'object') {
-        genereateNewHpToken(result.data)
-        responsedRedirectPage = result.data.redirectPage
-        if (result.data.cron) {
-          hitCron = result.data.cron
+  resp
+    .then(
+      (response) => new Promise((resolve, reject) => {
+        if (response.staus > 400) {
+          const errorEvent = new CustomEvent('bf-form-submit-error', {
+            detail: { formId: contentId, errors: result.data },
+          })
+          document
+            .getElementById(`form-${contentId}`)
+            .dispatchEvent(errorEvent)
+          response.staus === 500
+            ? reject(new Error('Mayebe Internal Server Error'))
+            : reject(response.json())
+        } else resolve(response.json())
+      }),
+    )
+    .then((result) => {
+      const successEvent = new CustomEvent('bf-form-submit-success', {
+        detail: { formId: contentId, entryId: result.entryId, formData },
+      })
+      document.getElementById(`form-${contentId}`).dispatchEvent(successEvent)
+      let responsedRedirectPage = null
+      let hitCron = null
+      let newNonce = ''
+      if (result !== undefined && result.success) {
+        const form = document.getElementById(`form-${contentId}`)
+        const oldTokenValue = form.querySelector('input[name="b_h_t"]').value
+        handleReset(contentId)
+        if (typeof result.data === 'object') {
+          if (form) {
+            genereateNewHpToken(result.data, form, oldTokenValue)
+          }
+          responsedRedirectPage = result.data.redirectPage
+          if (result.data.cron) {
+            hitCron = result.data.cron
+          }
+          if (result.data.cronNotOk) {
+            hitCron = result.data.cronNotOk
+          }
+          if (result.data.new_nonce) {
+            newNonce = result.data.new_nonce
+          }
+          setToastMessage({
+            contentId,
+            msg: result.data.message,
+            show: true,
+            type: 'warning',
+            error: false,
+            id: 1,
+          })
+        } else {
+          setToastMessage({
+            contentId,
+            msg: result.data,
+            show: true,
+            error: false,
+            id: 2,
+          })
         }
-        if (result.data.cronNotOk) {
-          hitCron = result.data.cronNotOk
-        }
-        if (result.data.new_nonce) {
-          newNonce = result.data.new_nonce
-        }
-        setToastMessage({ contentId, msg: result.data.message, show: true, type: 'warning', error: false, id: 1 })
       } else {
-        setToastMessage({ contentId, msg: result.data, show: true, error: false, id: 2 })
+        const errorEvent = new CustomEvent('bf-form-submit-error', {
+          detail: { formId: contentId, errors: result.data },
+        })
+        document.getElementById(`form-${contentId}`).dispatchEvent(errorEvent)
+        handleFormValidationErrorMessages(result, contentId)
       }
-    } else {
-      const errorEvent = new CustomEvent('bf-form-submit-error', { detail: { formId: contentId, errors: result.data } })
-      document.getElementById(`form-${contentId}`).dispatchEvent(errorEvent)
-      handleFormValidationErrorMessages(result, contentId)
-    }
 
-    if (responsedRedirectPage) {
-      triggerIntegration(hitCron, newNonce, contentId)
-      const timer = setTimeout(() => {
-        window.location = decodeURI(responsedRedirectPage)
-        if (timer) {
-          clearTimeout(timer)
-        }
-      }, 1000)
-    } else {
-      triggerIntegration(hitCron, newNonce, contentId)
-    }
+      if (responsedRedirectPage) {
+        triggerIntegration(hitCron, newNonce, contentId)
+        const timer = setTimeout(() => {
+          window.location = decodeURI(responsedRedirectPage)
+          if (timer) {
+            clearTimeout(timer)
+          }
+        }, 1000)
+      } else {
+        triggerIntegration(hitCron, newNonce, contentId)
+      }
 
-    disabledSubmitButton(contentId, false)
-  })
-    .catch(error => {
+      disabledSubmitButton(contentId, false)
+    })
+    .catch((error) => {
       const err = error?.message ? error.message : 'Unknown Error'
-      setToastMessage({ contentId, msg: err, show: true, type: 'error', error: true, id: 3 })
+      setToastMessage({
+        contentId,
+        msg: err,
+        show: true,
+        type: 'error',
+        error: true,
+        id: 3,
+      })
       disabledSubmitButton(contentId, false)
     })
 }
 
-function genereateNewHpToken(responseData) {
-  const allContentids = window?.bf_globals
-  allContentids
-    && Object.keys(allContentids).forEach((contentId) => {
-      const form = document.getElementById(`form-${contentId}`)
-      const oldHpToken = form.querySelector(
-        `input[name=${responseData.old_hp_token}]`,
-      )
-      if (oldHpToken) {
-        oldHpToken.name = responseData.hp_token
-      }
-    })
+function genereateNewHpToken(responseData, form, oldTokenValue) {
+  const token = form.querySelector("input[name='b_h_t']")
+  if (token) {
+    token.value = responseData.hp_token
+    const oldTokenFldName = form.querySelector(`input[name="${oldTokenValue}"]`)
+    if (oldTokenFldName) {
+      oldTokenFldName.name = responseData.hp_token
+    }
+  }
 }
 
 function handleReset(contentId, customHook = false) {
   if (customHook) {
-    const resetEvent = new CustomEvent('bf-form-reset', { detail: { formId: contentId } })
+    const resetEvent = new CustomEvent('bf-form-reset', {
+      detail: { formId: contentId },
+    })
     document.getElementById(`form-${contentId}`).dispatchEvent(resetEvent)
   }
 
-  const customFields = ['select',
+  const customFields = [
+    'select',
     'phone-number',
     'country',
     'currency',
     'file-up',
-    'advanced-file-up']
+    'advanced-file-up',
+  ]
   const props = window.bf_globals[contentId]
   document.getElementById(`form-${contentId}`).reset()
 
@@ -189,7 +232,9 @@ function handleReset(contentId, customHook = false) {
 }
 function setToastMessage(msgObj) {
   console.log('msg', msgObj)
-  const msgWrpr = document.getElementById(`bf-form-msg-wrp-${msgObj.contentId}`)
+  const msgWrpr = document.getElementById(
+    `bf-form-msg-wrp-${msgObj.contentId}`,
+  )
   if (msgWrpr.firstChild) {
     msgWrpr.firstChild.classList.remove('active')
   }
@@ -213,26 +258,38 @@ function triggerIntegration(hitCron, newNonce, contentId) {
     } else {
       const uri = new URL(props.ajaxURL)
       uri.searchParams.append('action', 'bitforms_trigger_workflow')
-      const data = { cronNotOk: hitCron, token: newNonce || props.nonce, id: props.appID }
-      fetch(
-        uri,
-        {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        },
-      )
-        .then(response => response.json())
+      const data = {
+        cronNotOk: hitCron,
+        token: newNonce || props.nonce,
+        id: props.appID,
+      }
+      fetch(uri, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((response) => response.json())
     }
   }
 }
 function handleFormValidationErrorMessages(result, contentId) {
   const { data: responseData } = result
   if (responseData && typeof responseData === 'string') {
-    setToastMessage({ contentId, msg: responseData, error: true, show: true, id: 4 })
+    setToastMessage({
+      contentId,
+      msg: responseData,
+      error: true,
+      show: true,
+      id: 4,
+    })
   } else if (responseData) {
     if (responseData.$form !== undefined) {
-      setToastMessage({ contentId, msg: responseData.$form, error: true, show: true, id: 5 })
+      setToastMessage({
+        contentId,
+        msg: responseData.$form,
+        error: true,
+        show: true,
+        id: 5,
+      })
       delete responseData.$form
     }
     if (Object.keys(responseData).length > 0) {
@@ -244,7 +301,7 @@ function handleFormValidationErrorMessages(result, contentId) {
 }
 
 function dispatchFieldError(fldErrors, contentId) {
-  Object.keys(fldErrors).forEach(fk => {
+  Object.keys(fldErrors).forEach((fk) => {
     const errFld = document.querySelector(`#form-${contentId} .${fk}-err-txt`)
     errFld.innerHTML = fldErrors[fk]
     errFld.parentElement.style.marginTop = '5px'
@@ -254,12 +311,16 @@ function dispatchFieldError(fldErrors, contentId) {
 }
 
 function disabledSubmitButton(contentId, disabled) {
-  document.getElementById(`form-${contentId}`).querySelector('button[type="submit"]').disabled = disabled
+  document
+    .getElementById(`form-${contentId}`)
+    .querySelector('button[type="submit"]').disabled = disabled
 }
 
 document.querySelectorAll('form').forEach((frm) => {
   if (frm.id.includes('form-bitforms')) {
     frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
-    frm.querySelector('button[type="reset"]')?.addEventListener('click', (e) => handleReset(frm.id.slice(frm.id.indexOf('-') + 1), true))
+    frm
+      .querySelector('button[type="reset"]')
+      ?.addEventListener('click', (e) => handleReset(frm.id.slice(frm.id.indexOf('-') + 1), true))
   }
 })
