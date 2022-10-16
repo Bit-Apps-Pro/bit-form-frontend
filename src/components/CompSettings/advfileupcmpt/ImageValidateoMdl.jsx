@@ -1,6 +1,8 @@
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import ut from '../../../styles/2.utilities'
+import { __ } from '../../../Utils/i18nwrap'
+import Btn from '../../Utilities/Btn'
 import Modal from '../../Utilities/Modal'
 import FileLblProperty from './FileLblProperty'
 
@@ -33,8 +35,10 @@ export default function ImageValidateoMdl({ showMdl, setshowMdl, title }) {
           </div>
 
         </Scrollbars>
-        <div className={css({ dy: 'flex', jc: 'end' })}>
-          <button type="button" className={css(ut.mr2, ut.btn_primary)} onClick={() => setshowMdl(false)}>Close</button>
+        <div className={css({ dy: 'flex', jc: 'end', mt: 13, mb: 32 })}>
+          <Btn size="sm" onClick={() => setshowMdl(false)}>
+            {__('Close')}
+          </Btn>
         </div>
       </div>
     </Modal>
