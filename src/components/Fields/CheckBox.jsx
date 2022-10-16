@@ -192,6 +192,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
             >
               <input
                 data-testid={`${fieldKey}-ci`}
+                data-oopt={fieldKey}
                 id={`${fieldKey}-chk-${attr.opt.length}`}
                 type="checkbox"
                 className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}

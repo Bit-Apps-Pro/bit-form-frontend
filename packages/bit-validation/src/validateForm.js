@@ -13,7 +13,7 @@ export default function validateForm({ form, input }) {
   } else if (input) {
     if (!window?.bf_globals?.[contentId].validateFocusLost) return true
     const fldKey = generateFieldKey(input.name)
-    formEntries = { [fldKey]: input.value }
+    formEntries = generateFormEntries()
     fields = { [fldKey]: fields[fldKey] }
   }
 
@@ -33,13 +33,16 @@ export default function validateForm({ form, input }) {
     }
 
     let errKey = ''
-    if (fldType === 'check' && fldValue) {
+    if (fldType === 'check') {
       errKey = typeof checkFldValidation !== 'undefined' ? checkFldValidation(fldValue, fldData) : ''
     }
-    if (!fldValue) {
+    if ((fldType === 'check' || fldType === 'radio') && !errKey && typeof customOptionValidation !== 'undefined') errKey = customOptionValidation(fldKey, fldData)
+    if (!fldValue && !errKey) {
       errKey = typeof requiredFldValidation !== 'undefined' ? requiredFldValidation(fldData) : null
+    }
+    if (errKey) {
       generateErrMsg(errKey, fldKey, fldData)
-      if (errKey) formCanBeSubmitted = false
+      formCanBeSubmitted = false
       continue
     }
 
@@ -50,7 +53,7 @@ export default function validateForm({ form, input }) {
     else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
     else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
-    if ((fldType === 'check' || fldType === 'radio') && typeof customOptionValidation !== 'undefined') customOptionValidation(fldValue, fldData)
+
     if (fldData?.valid?.regexr) {
       errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
       if (errKey) {

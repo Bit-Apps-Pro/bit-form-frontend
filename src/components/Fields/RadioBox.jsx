@@ -148,7 +148,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
             >
               <input
                 data-testid={`${fieldKey}-ci`}
-                data-other-opt
+                data-oopt={fieldKey}
                 id={`${fieldKey}-chk-${attr.opt.length}`}
                 type="radio"
                 className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}

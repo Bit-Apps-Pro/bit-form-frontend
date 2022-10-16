@@ -319,6 +319,10 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/checkMinMaxOptions.min.js'),
             },
             {
+              from: path.resolve(__dirname, 'packages/bit-validation/dist/customOptionValidation.min.js'),
+              to: path.resolve(__dirname, '../assets/js/customOptionValidation.min.js'),
+            },
+            {
               from: path.resolve(__dirname, 'packages/bit-validation/dist/dcsnbxFldValidation.min.js'),
               to: path.resolve(__dirname, '../assets/js/dcsnbxFldValidation.min.js'),
             },
