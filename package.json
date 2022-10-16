@@ -115,7 +115,7 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "vbuild": "vite build",
-    "build-bit-currency": "cd ./packages/bit-currency-field && pnpm run build && cp -r ./dist/bit-currency-field.min.js ../../../assets"
+    "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run dev && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {
