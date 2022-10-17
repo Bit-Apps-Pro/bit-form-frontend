@@ -304,7 +304,7 @@ function Integrations() {
           </div>
         </Route>
 
-        <Route path={`${path}/new/:integUrlName`}>
+        <Route path={`${path}/new/:integUrlName`}>  
           <NewInteg allIntegURL={allIntegURL} />
         </Route>
 
