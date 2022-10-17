@@ -20,8 +20,8 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   const [creatorConf, setCreatorConf] = useState({
     name: 'Zoho Creator API',
     type: 'Zoho Creator',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.YN34H0SNYOASNVTOYPKPO158PD8VTD' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '04e7b570f25f7702d93a84a3ab8121880788782464' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.12XEA6EAXCFW7MG89VS95W5K04HYZB' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '9645829285a894d562eda417a2fcdf26147f1bf5b2' : '',
     accountOwner: '',
     field_map: [
       { formField: '', zohoFormField: '' },
