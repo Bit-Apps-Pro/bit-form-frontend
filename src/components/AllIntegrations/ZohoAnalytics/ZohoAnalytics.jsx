@@ -4,10 +4,10 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoAnalyticsAuthorization from './ZohoAnalyticsAuthorization'
-import { handleInput, setGrantTokenResponse } from './ZohoAnalyticsCommonFunc'
+import { handleInput } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 
 export default function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -26,7 +26,7 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse()
+    window.opener && setGrantTokenResponse('zohoAnalytics')
   }, [])
 
   const nextPage = () => {

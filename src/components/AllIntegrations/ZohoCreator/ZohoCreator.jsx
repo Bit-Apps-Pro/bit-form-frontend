@@ -42,7 +42,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
       return
     }
 
-    setStep(2)
+    setStep(3)
   }
 
   return (
