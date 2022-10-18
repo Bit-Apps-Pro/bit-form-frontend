@@ -1,74 +1,116 @@
 /* eslint-disable no-param-reassign */
 
-import { memo, useState } from 'react'
+import produce from 'immer'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $confirmations, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $confirmations, $isNewThemeStyleLoaded, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $savedStylesAndVars } from '../../GlobalStates/SavedStylesAndVars'
+import { $allStyles, $styles } from '../../GlobalStates/StylesState'
+import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import { deepCopy } from '../../Utils/Helpers'
+import bitsFetch from '../../Utils/bitsFetch'
+import { JCOF } from '../../Utils/globalHelpers'
+import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { msgDefaultConfig } from '../style-new/styleHelpers'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
+import confirmMsgCssStyles from './confirmMsgCssStyles'
 import Message from './Message'
 
 function ConfMsg({ removeIntegration }) {
+  const { formID } = useParams()
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [allConf, setAllConf] = useRecoilState($confirmations)
+  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const setStyles = useSetRecoilState($styles)
+  const allConfirmations = deepCopy(allConf)
   const { css } = useFela()
+  useEffect(() => {
+    if (!isNewThemeStyleLoaded) {
+      bitsFetch({ formID }, 'bitforms_form_helpers_state')
+        .then(res => {
+          const fetchedBuilderHelperStates = res.data?.[0]?.builder_helper_state || {}
+          if (!isObjectEmpty(fetchedBuilderHelperStates)) {
+            const { themeVars, themeColors, style: oldAllStyles } = fetchedBuilderHelperStates
+            setAllThemeColors(JCOF.parse(themeColors))
+            setAllThemeVars(JCOF.parse(themeVars))
+            setAllStyles(JCOF.parse(oldAllStyles))
+
+            setSavedStylesAndVars({
+              allThemeColors: themeColors,
+              allThemeVars: themeVars,
+              allStyles: oldAllStyles,
+            })
+            setIsNewThemeStyleLoaded(true)
+          }
+        })
+    }
+  }, [])
 
   const handleMsgTitle = (e, idx) => {
-    const confirmation = deepCopy(allConf)
-    confirmation.type.successMsg[idx].title = e.target.value
-    setAllConf(confirmation)
+    allConfirmations.type.successMsg[idx].title = e.target.value
+    setAllConf(allConfirmations)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addMoreMsg = () => {
-    const confirmation = deepCopy(allConf)
-    if (!confirmation?.type?.successMsg) {
-      confirmation.type = { successMsg: [], ...confirmation.type }
+    if (!allConfirmations?.type?.successMsg) {
+      allConfirmations.type = { successMsg: [], ...allConfirmations.type }
     }
-    confirmation.type.successMsg.push({
-      title: `Untitled Message ${confirmation.type.successMsg.length + 1}`,
+    const newMsgId = allConfirmations.type.successMsg.length
+    const TEMP_CONF_ID = `_tmp_${newMsgId}_conf_id`
+    const newSuccessMsg = {
+      title: `Untitled Message ${newMsgId + 1}`,
       msg: __('<p>Successfully Submitted.</p>'),
       config: msgDefaultConfig,
-    })
-    setAllConf(confirmation)
+    }
+    const { msgType, position, animation, styles: defaultStyle } = msgDefaultConfig || {}
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.confirmations.push({
+        confMsgId: TEMP_CONF_ID,
+        style: confirmMsgCssStyles('formId', TEMP_CONF_ID, msgType, position, animation, defaultStyle),
+      })
+    }))
+    allConfirmations.type.successMsg.push(newSuccessMsg)
+    setAllConf(allConfirmations)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const closeMdl = () => {
-    confMdl.show = false
-    setConfMdl({ ...confMdl })
+    setConfMdl({ show: false })
   }
 
   const showDelConf = (i) => {
-    confMdl.show = true
-    confMdl.action = () => rmvMsg(i)
-    setConfMdl({ ...confMdl })
+    setConfMdl({ show: true, action: () => rmvMsg(i) })
   }
 
   const rmvMsg = async i => {
-    const confirmation = deepCopy(allConf)
-    const tmpData = confirmation.type.successMsg[i]
-    confirmation.type.successMsg.splice(i, 1)
-    setAllConf(confirmation)
-    confMdl.show = false
-    setConfMdl({ ...confMdl })
+    const tmpData = allConfirmations.type.successMsg.splice(i, 1)[0]
+    setConfMdl({ show: false })
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const tempId = tmpData.id || `_tmp_${i}_conf_id`
+      drft.confirmations = drft.confirmations.filter(confObj => confObj.confMsgId !== tempId)
+    }))
     if (tmpData.id !== undefined) {
       const status = await removeIntegration(tmpData.id, 'msg')
       if (!status) {
-        confirmation.type.successMsg.splice(i, 0, tmpData)
-        setAllConf(confirmation)
+        allConfirmations.type.successMsg.splice(i, 0, tmpData)
       }
     }
+    setAllConf(allConfirmations)
   }
 
   return (

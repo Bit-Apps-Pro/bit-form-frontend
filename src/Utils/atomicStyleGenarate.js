@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-import { atomizeCss, combineSelectors, expressAndCleanCssVars, optimizeAndDefineCssClassProps, objectToCssText } from 'atomize-css'
+import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
-import { $breakpointSize, $builderSettings, $formId } from '../GlobalStates/GlobalStates'
+import { $breakpointSize, $builderSettings, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
@@ -264,6 +264,10 @@ function flatenStyleObj(styleObj) {
   const fieldKeys = Object.keys(styleObj.fields)
   const fieldKeyCount = fieldKeys.length
 
+  flatedStyleObj = {
+    ...flatedStyleObj,
+    ...getConfirmationMsgStyles(styleObj), // get confirmation message styles wich are added in conditonals
+  }
   for (let i = 0; i < fieldKeyCount; i += 1) {
     const fieldKey = fieldKeys[i]
     if (styleObj?.fields?.[fieldKey]?.classes) {
@@ -274,6 +278,41 @@ function flatenStyleObj(styleObj) {
     }
   }
   return flatedStyleObj
+}
+
+function getConfirmationMsgStyles(styleObj) {
+  const workflows = getRecoil($workflows)
+  const tempStyleObj = {}
+  let msgStyles = {}
+  styleObj?.confirmations?.forEach(cmfObj => {
+    tempStyleObj[cmfObj.confMsgId] = cmfObj.style
+  })
+
+  workflows?.forEach(workflow => {
+    workflow.conditions?.forEach(condition => {
+      condition.actions?.success?.forEach(conf => {
+        if (conf.type === 'successMsg' && conf.details.id) {
+          const msgId = JSON.parse(conf.details.id)?.id
+          if (tempStyleObj[msgId]) {
+            msgStyles = {
+              ...msgStyles,
+              ...tempStyleObj[msgId],
+            }
+          }
+        }
+      })
+      if (condition.actions?.failure) {
+        const msgId = JSON.parse(condition.actions?.failure)?.id
+        if (tempStyleObj[msgId]) {
+          msgStyles = {
+            ...msgStyles,
+            ...tempStyleObj[msgId],
+          }
+        }
+      }
+    })
+  })
+  return msgStyles
 }
 
 function getElmClassNamesByAtomicClass(atomicClasses, classMaps) {

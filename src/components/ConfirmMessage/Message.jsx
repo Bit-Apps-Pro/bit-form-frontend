@@ -36,6 +36,7 @@ function Message({ id, msgItem }) {
   const [activePeperties, setActiveProperties] = useState('background')
   const [controller, setController] = useState('All')
   const { msgType, position, animation, autoHide, duration, styles } = msgItem?.config || {}
+  const TEMP_CONF_ID = `_tmp_${id}_conf_id`
 
   const handleActiveProperties = ({ target: { name } }) => {
     setActiveProperties(name)
@@ -260,7 +261,7 @@ function Message({ id, msgItem }) {
                   onChange={handlePositionChange}
                 >
                   {
-                    (positions[msgType][animation] || positions[msgType])?.map(value => <option value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
+                    (positions[msgType][animation] || positions[msgType])?.map(value => <option key={value} value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                   }
                 </select>
               </div>
@@ -552,7 +553,7 @@ function Message({ id, msgItem }) {
       </SliderModal>
       <ConfirmMsgPreview
         index={id}
-        msgId={msgItem.id || id}
+        msgId={msgItem.id || TEMP_CONF_ID}
         active={msgActive}
         setActive={setMsgActive}
         msgType={msgType || 'snackbar'}
