@@ -95,7 +95,7 @@ export default function EmailNotificationWorkflowAction({
             {mailTem?.map((itm, i) => (
               <option
                 key={`sem-${i + 2.3}`}
-                value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                value={itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) })}
               >
                 {itm.title}
               </option>

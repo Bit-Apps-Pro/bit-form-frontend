@@ -46,7 +46,7 @@ export default function RedirectPageWorkflowAction({ lgcGrpInd,
             {confirmations?.type?.redirectPage?.map((itm, i) => (
               <option
                 key={`sr-${i + 2.5}`}
-                value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                value={itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) })}
               >
                 {itm.title}
               </option>

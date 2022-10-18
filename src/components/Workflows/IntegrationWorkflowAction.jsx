@@ -46,7 +46,7 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
           isMultiple
           options={integrations?.map((itm, i) => ({
             label: itm.name,
-            value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }),
+            value: itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) }),
           }))}
           placeholder={__('Select Integation')}
         />
