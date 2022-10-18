@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -21,10 +21,12 @@ import TransitionControl from './TransitionControl'
 
 export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
-  const { fieldKey, formID } = useParams()
+  const { fieldKey, formID, formType } = useParams()
+  const navigator = useNavigate()
   const [styles, setStyles] = useRecoilState($styles)
   const elemn = `.${element}-${formID}`
-  const formWrpStylesObj = styles.form[elemn]
+  const formWrpStylesObj = styles.form?.[elemn]
+  if (!formWrpStylesObj) return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
   const themeColors = useRecoilValue($themeColors)
 
