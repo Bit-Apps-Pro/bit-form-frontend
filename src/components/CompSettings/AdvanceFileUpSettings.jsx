@@ -19,6 +19,7 @@ import { __ } from '../../Utils/i18nwrap'
 import { fileFormats } from '../../Utils/StaticData/fileformat'
 import Cooltip from '../Utilities/Cooltip'
 import DropDown from '../Utilities/DropDown'
+import Select from '../Utilities/Select'
 import SingleToggle from '../Utilities/SingleToggle'
 import FileLblPropertyMdl from './advfileupcmpt/FileLblPropertyMdl'
 import FileStyle from './advfileupcmpt/FileStyle'
@@ -57,6 +58,7 @@ function AdvanceFileUpSettings() {
 
   const setConfigProp = e => {
     const { value, name, type } = e.target
+    console.log(value, name, type)
     if (value && type === 'number') {
       fieldData.config[name] = Number(value)
     } else if (value && type !== 'number') {
@@ -486,7 +488,7 @@ function AdvanceFileUpSettings() {
               className={css(FieldStyle.input)}
               type="number"
               name="imagePreviewMaxHeight"
-              value={fieldData?.config?.imagePreviewMaxHeight}
+              value={fieldData?.config?.imagePreviewMaxHeight || ''}
               min="0"
               onChange={setConfigProp}
             />
@@ -506,7 +508,7 @@ function AdvanceFileUpSettings() {
               className={css(FieldStyle.input)}
               type="number"
               name="imagePreviewHeight"
-              value={fieldData?.config?.imagePreviewHeight}
+              value={fieldData?.config?.imagePreviewHeight || ''}
               min="0"
               onChange={setConfigProp}
             />
@@ -529,7 +531,7 @@ function AdvanceFileUpSettings() {
         <SingleToggle
           id="pdf-prvw-stng"
           className={css(ut.mr30)}
-          isChecked={fieldData?.config?.allowPreview}
+          isChecked={fieldData?.config?.allowPreview || ''}
           name="allowPreview"
           action={(e) => enablePlugin(e, 'allowPreview')}
         />
@@ -676,17 +678,20 @@ function AdvanceFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <select
-              data-testid="img-outpt-typ-slct"
-              className={css(FieldStyle.selectBox, ut.mr2, ut.fw500)}
-              name="imageTransformOutputMimeType"
-              onChange={setConfigProp}
-              value={fieldData.config.imageTransformOutputMimeType}
-            >
-              <option value="">Select</option>
-              <option value="image/jpeg">Image/jpeg</option>
-              <option value="image/png">Image/png</option>
-            </select>
+            <Select
+              dataTestId="img-outpt-typ-slct"
+              color="primary"
+              inputName="imageTransformOutputMimeType"
+              value={fieldData.config.imageTransformOutputMimeType || ''}
+              onChange={(value, e) => setConfigProp(e)}
+              options={[
+                { label: 'Select', value: '' },
+                { label: 'Image/jpeg', value: 'image/jpeg' },
+                { label: 'Image/png', value: 'image/png' },
+              ]}
+              w="99%"
+              className={css({ fs: 14 }, ut.mt2)}
+            />
           </div>
           <div className={css(ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxc)}>
@@ -724,24 +729,28 @@ function AdvanceFileUpSettings() {
             </select>
           </div> */}
           <div className={css(ut.mt2, FieldStyle.labelTip)}>
-            <div className={css(ut.flxc)}>
+            <div className={css(ut.flxcb)}>
               <label className={css(ut.fw500, ut.ml1, ut.mt1)}>Client Transforms</label>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Client Transform
                 </div>
               </Cooltip>
-              <select
-                data-testid="clnt-trnsfrm-slct"
-                className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)}
-                name="imageTransformClientTransforms"
-                onChange={setConfigProp}
-                value={fieldData.config.imageTransformClientTransforms}
-              >
-                <option value="">Select</option>
-                <option value="resize">Resize</option>
-                <option value="crop">Crop</option>
-              </select>
+
+              <Select
+                dataTestId="clnt-trnsfrm-slct"
+                color="primary"
+                inputName="imageTransformClientTransforms"
+                value={fieldData.config.imageTransformClientTransforms || ''}
+                onChange={(value, e) => setConfigProp(e)}
+                options={[
+                  { label: 'Select', value: '' },
+                  { label: 'Resize', value: 'resize' },
+                  { label: 'Crop', value: 'crop' },
+                ]}
+                w="30%"
+                className={css({ fs: 14 }, ut.mt2)}
+              />
             </div>
 
           </div>
@@ -763,7 +772,6 @@ function AdvanceFileUpSettings() {
       >
         <div className={css(ut.flxc, ut.mt2)}>
           <div className={css(ut.fw500, ut.w8)}>{__('Customized')}</div>
-
           <button
             data-testid="img-vldtn-cstmztn-btn"
             type="button"
