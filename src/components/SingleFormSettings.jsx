@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { produce } from 'immer'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates/GlobalStates'
 import BlockIcn from '../Icons/BlockIcn'
@@ -29,6 +29,9 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
 import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
+import { assignNestedObj } from './style-new/styleHelpers'
+import { deleteNestedObj } from '../Utils/FormBuilderHelper'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -37,6 +40,8 @@ export default function SingleFormSettings() {
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
   const bits = useRecoilValue($bits)
+  // const setStaticStyle = useSetRecoilState($staticStylesState)
+  const [staticStyleState, setStaticStyleState] = useRecoilState($staticStylesState)
   const { isPro } = bits
   const [proModal, setProModal] = useState({ show: false, msg: '' })
 
@@ -203,11 +208,17 @@ export default function SingleFormSettings() {
   const hideReCaptchaBadge = e => {
     const additional = deepCopy(additionalSetting)
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
-    if (e.target.checked) {
-      additional.settings.recaptchav3.hideReCaptcha = true
-    } else {
-      delete additional.settings.recaptchav3.hideReCaptcha
-    }
+    setStaticStyleState(prvStyle => produce(prvStyle, draft => {
+      if (e.target.checked) {
+        additional.settings.recaptchav3.hideReCaptcha = true
+        const path = 'staticStyles->.grecaptcha-badge->visibility'
+        assignNestedObj(draft, path, 'hidden')
+      } else {
+        delete additional.settings.recaptchav3.hideReCaptcha
+        const path = 'staticStyles->.grecaptcha-badge'
+        deleteNestedObj(draft, path)
+      }
+    }))
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -591,7 +602,7 @@ export default function SingleFormSettings() {
         {additionalSetting.enabled.recaptchav3 && (
           <>
             <div className="flx mb-4 ml-2">
-              <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha} className="flx" />
+              <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha || ''} className="flx" />
               {__('Hide ReCaptcha Badge')}
             </div>
             <span
