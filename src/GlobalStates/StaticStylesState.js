@@ -9,6 +9,9 @@ export const $staticStylesState = atom({
       mdLightStyles: { form: {} },
       smLightStyles: { form: {} },
     },
-    staticStyles: { '.d-none': { display: 'none' } },
+    staticStyles: {
+      '.d-none': { display: 'none' },
+      '.vis-n': { visibility: 'hidden' },
+    },
   },
 })
