@@ -25,8 +25,8 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const navigator = useNavigate()
   const [styles, setStyles] = useRecoilState($styles)
   const elemn = `.${element}-${formID}`
+  if (!('form' in styles && elemn in styles.form)) return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`, { replace: true })
   const formWrpStylesObj = styles.form?.[elemn]
-  if (!formWrpStylesObj) return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
   const themeColors = useRecoilValue($themeColors)
 
