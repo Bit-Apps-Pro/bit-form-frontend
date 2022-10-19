@@ -34,6 +34,7 @@ import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
+import filePondCss from '../styles/filepond-css'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
@@ -251,6 +252,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smDarkStyles,
     }
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
+    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
+    atomicClassMap.font = lgLightStyles.font.fontURL
 
     if (!isStyleNotLoaded) {
       const atomicData = {
@@ -291,7 +294,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {
         formName,
-        theme: 'default',
         confirmation: confirmations,
         mailTem: mailTemplates,
         integrations: allIntegrations,
