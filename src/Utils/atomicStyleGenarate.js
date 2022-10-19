@@ -66,12 +66,9 @@ export default function atomicStyleGenarate(sortedLayout) {
     smDarkStyles: stylesSmDark, // eslint-disable-line prefer-const
   } = removeUnusedStyles()
 
-  console.log({ stylesLgLight })
   stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
-
-  console.log({ stylesLgLight })
 
   // const stylesLgLight = getRecoil($stylesLgLight)
   // const stylesMdLight = getRecoil($stylesMdLight)
