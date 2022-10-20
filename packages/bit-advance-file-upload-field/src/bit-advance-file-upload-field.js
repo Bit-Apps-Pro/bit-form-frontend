@@ -3,7 +3,9 @@ export default class BitAdvanceFileUpload {
 
   #filePondRef = null
 
-  #doument = null
+  #document = null
+
+  #window = null
 
   #configSetting = {}
 
@@ -31,7 +33,8 @@ export default class BitAdvanceFileUpload {
     } else {
       this.#fieldUploadWrapper = selector
     }
-    this.#doument = this.#config.document
+    this.#window = config.window ? config.window : window
+    this.#document = config.document ? config.document : document
     this.#formID = this.#config.formID
     this.#configSetting = this.#config.configSetting
     this.#ajaxURL = this.#config.ajaxURL
@@ -47,29 +50,31 @@ export default class BitAdvanceFileUpload {
   init() {
     const plugins = []
     if (this.#configSetting.allowFileSizeValidation) {
-      plugins.push(bit_filepond_plugin_file_validate_size)
+      plugins.push(this.#window.bit_filepond_plugin_file_validate_size)
     }
     if (this.#configSetting.allowFileTypeValidation) {
-      plugins.push(bit_filepond_plugin_file_validate_type)
+      plugins.push(this.#window.bit_filepond_plugin_file_validate_type)
     }
     if (this.#configSetting.allowImageCrop) {
-      plugins.push(bit_filepond_plugin_image_crop)
+      plugins.push(this.#window.bit_filepond_plugin_image_crop)
     }
     if (this.#configSetting.allowImagePreview) {
-      plugins.push(bit_filepond_plugin_image_preview)
+      plugins.push(this.#window.bit_filepond_plugin_image_preview)
     }
     if (this.#configSetting.allowImageResize) {
-      plugins.push(bit_filepond_plugin_image_resize)
+      plugins.push(this.#window.bit_filepond_plugin_image_resize)
     }
     if (this.#configSetting.allowImageTransform) {
-      plugins.push(bit_filepond_plugin_image_transform)
+      plugins.push(this.#window.bit_filepond_plugin_image_transform)
     }
     if (this.#configSetting.allowImageValidateSize) {
-      plugins.push(bit_filepond_plugin_image_validate_size)
+      plugins.push(this.#window.bit_filepond_plugin_image_validate_size)
     }
     if (this.#configSetting.allowPreview) {
-      plugins.push(bit_filepond_plugin_media_preview)
+      plugins.push(this.#window.bit_filepond_plugin_media_preview)
     }
+
+    const { create, registerPlugin } = this.#window.bit_filepond
 
     registerPlugin(...plugins)
 
@@ -133,7 +138,7 @@ export default class BitAdvanceFileUpload {
             const existFileId = this.uploaded_files.find(
               (file) => file === uniqueFileId,
             )
-           
+
             if (existFileId) {
               const fileIndex = this.uploaded_files.indexOf(uniqueFileId)
               this.uploaded_files.splice(fileIndex, 1)

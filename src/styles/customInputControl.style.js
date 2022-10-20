@@ -82,7 +82,6 @@ const customInputControlStyle = {
 
   dec: {
     bm: 3,
-
     ':hover': { bm: 1 },
   },
 

@@ -1,22 +1,22 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
+import { $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const { '*': rightBarUrl } = useParams()
-  const breakpoint = useRecoilValue($breakpoint)
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
   const { styleMode } = flages
   const [rightBar, element, urlFldKey] = rightBarUrl.split('/')
   const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)
   const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0) && urlFldKey === fieldKey
-  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
+  const isHidden = fieldData.valid?.hide || false
 
   const err = fieldData.error || ''
   const fldWrapperElm = useRef(null)
@@ -39,7 +39,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
     if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
   }
 
-  const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
+  // const generateBackslashPattern = str => (str || '').split('$_bf_$').join('\\')
 
   return (
     <div

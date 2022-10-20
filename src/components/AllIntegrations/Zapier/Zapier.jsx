@@ -26,7 +26,7 @@ function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
+      <div className="txt-center w-9 mt-2 cal-width"><Steps step={2} active={step} /></div>
       <TutorialLink
         title={tutorialLinks.zapier.title}
         youTubeLink={tutorialLinks.zapier.link}

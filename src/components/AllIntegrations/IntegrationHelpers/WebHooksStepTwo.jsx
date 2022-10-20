@@ -3,7 +3,7 @@ import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import Btn from '../../Utilities/Btn'
 
-export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
+export default function WebHooksStepTwo({ saveConfig, edit, disabled }) {
   const { css } = useFela()
   return (
     edit
@@ -28,24 +28,16 @@ export default function WebHooksStepTwo({ step, saveConfig, edit, disabled }) {
         </div>
       )
       : (
-        <div className="txt-center" style={{ marginLeft: 210 }}>
+        <div className="txt-center" style={{ marginLeft: 120 }}>
           <h2 className="ml-3">{__('Successfully Integrated')}</h2>
           <Btn
             variant="success"
             onClick={saveConfig}
+            className={`${css(app.btn)}`}
           >
             {__('Finish & Save ')}
             &nbsp;✔
           </Btn>
-          {/* <button
-            id="secondary-update-btn"
-            onClick={saveConfig}
-            className={`${css(app.btn)} btcd-btn-lg green sh-sm`}
-            type="button"
-          >
-            {__('Finish & Save ')}
-            ✔
-          </button> */}
         </div>
       )
   )

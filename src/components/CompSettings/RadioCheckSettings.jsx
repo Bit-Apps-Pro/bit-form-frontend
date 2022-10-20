@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { getRecoil } from 'recoil-nexus'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import CloseIcn from '../../Icons/CloseIcn'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
@@ -15,6 +16,7 @@ import { addToBuilderHistory, reCalculateFldHeights, setRequired } from '../../U
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { assignNestedObj } from '../style-new/styleHelpers'
+import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -463,7 +465,7 @@ function RadioCheckSettings() {
       </SimpleAccordion> */}
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button
+        {/* <button
           data-testid="edt-opt-stng"
           onClick={openOptionModal}
           className={css(app.btn, { my: 0 })}
@@ -471,7 +473,19 @@ function RadioCheckSettings() {
         >
           &nbsp;
           {__('Edit Options')}
-        </button>
+        </button> */}
+        <Btn
+          dataTestId="edt-opt-stng"
+          variant="default-outline"
+          size="sm"
+          className={css({ mt: 10 })}
+          onClick={openOptionModal}
+        >
+          {__('Add/Edit Options')}
+          <span className={css(style.plsIcn)}>
+            <CloseIcn size="13" stroke="3" />
+          </span>
+        </Btn>
       </div>
       <FieldSettingsDivider />
 
@@ -553,3 +567,9 @@ function RadioCheckSettings() {
 }
 
 export default memo(RadioCheckSettings)
+
+const style = {
+  plsIcn: {
+    ml: 3, mt: 3, tm: 'rotate(45deg)',
+  },
+}

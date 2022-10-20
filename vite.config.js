@@ -114,19 +114,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-create.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-destroy.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-registerPlugin.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond-setOptions.min.js'),
+        src: absPath('packages/bit-file-pond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -202,6 +190,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-validation/dist/customOptionValidation.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-validation/dist/dcsnbxFldValidation.min.js'),
         dest: absPath('../assets'),
       },
@@ -239,6 +231,14 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-conditionals/dist/bit-conditionals.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/honeypot-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/submit-form.min.js'),
         dest: absPath('../assets'),
       },
     ],

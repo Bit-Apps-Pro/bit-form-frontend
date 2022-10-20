@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
 import produce from 'immer'
 import { useEffect, useState } from 'react'
@@ -27,8 +28,9 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows,
+  $workflows
 } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -42,7 +44,7 @@ import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
 // TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
-import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
+import { jsObjtoCssStr, removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -78,6 +80,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setAllStyles = useSetRecoilState($allStyles)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const builderSettings = useRecoilValue($builderSettings)
+  const staticStylesState = useRecoilValue($staticStylesState)
 
   const breakpointSize = useRecoilValue($breakpointSize)
 
@@ -208,7 +211,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
 
-    const {
+    let {
       atomicCssText,
       atomicClassMap,
       lightThemeColors,
@@ -247,6 +250,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles,
     }
+    atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
 
     if (!isStyleNotLoaded) {
       const atomicData = {
@@ -277,6 +281,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       // themeVars: isStyleNotLoaded ? undefined : allThemeVars,
       // atomicClassMap: isStyleNotLoaded ? undefined : atomicClassMap,
       ...(!isStyleNotLoaded && { style: JCOF.stringify(allStyles) }),
+      ...(!isStyleNotLoaded && { staticStyles: JCOF.stringify(staticStylesState) }),
       ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
       ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
       ...(!isStyleNotLoaded && { atomicClassMap }),
@@ -330,7 +335,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (!isStyleNotLoaded) {
             setAllThemeColors(allThemeColors)
             setAllThemeVars(allThemeVars)
-            setAllStyles(allStyles)
+            setAllStyles(JCOF.parse(data?.style)) // updated style obj with updated confirmation id from backend
             removeUnuseStylesAndUpdateState()
           }
 

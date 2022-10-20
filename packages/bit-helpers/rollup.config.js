@@ -17,10 +17,13 @@ export default function generateRollupConfig() {
       passes: 10,
       drop_console: true,
     },
+    output: {
+      comments: false,
+    },
     // mangle: {
     //   properties: true,
     //   reserved: [
-    //     'observeElement',
+    //     'bit_country_field',
     //   ]
     // }
   }
@@ -50,7 +53,7 @@ export default function generateRollupConfig() {
       {
         file: `${distFolder}/${fileName}.min.js`,
         name: fileName,
-        format: 'umd',
+        format: 'iife',
         plugins: [terser(terserOptions)],
         globals: {
           document: 'document',

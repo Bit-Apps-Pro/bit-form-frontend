@@ -5220,7 +5220,7 @@ _:-ms-fullscreen,
   min-width: 180px;
   border-radius: 6px;
   padding: 3px 8px 4px 8px;
-  font-family: 'Montserrat';
+  font-family: 'Outfit', sans-serif !important;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -5262,12 +5262,13 @@ _:-ms-fullscreen,
   padding: 3px 7px;
   min-height: 30px;
 
-  font-family: 'Montserrat';
+  font-family: 'Outfit', sans-serif !important;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
   line-height: 181.9%;
   width: 80%;
+  cursor: pointer;
 }
 
 .report-content-item {
@@ -5498,4 +5499,10 @@ _:-ms-fullscreen,
 }
 .rdrDateDisplayItem {
   border-radius: 8px;
+}
+
+.cal-width {
+  .d-in-b {
+    width: calc(100% + 44px);
+  }
 }

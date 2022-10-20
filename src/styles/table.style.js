@@ -10,7 +10,7 @@ const tableStyle = {
     cr: 'var(--dp-blue)',
     ':hover': { bd: 'var(--b-79-96)', cr: 'var(--blue)' },
     ':focus-visible': { focusOutline: 1 },
-    ff: 'Montserrat',
+    ff: '"Outfit", sans-serif !important',
   },
 }
 

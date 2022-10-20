@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-// import 'bit-virtualized-list'
-import BitCountryField from 'bit-country-field'
-import { observeElm } from 'bit-helpers'
-import { default as bit_virtualized_list } from 'bit-virtualized-list'
+import BitCountryField from 'bit-country-field/src/bit-country-field'
+import { observeElm } from 'bit-helpers/src'
+import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -20,6 +19,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   const { options, ph } = fieldData
 
   useEffect(() => {
+    const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
     if (!countryWrapElmRef?.current) {
       countryWrapElmRef.current = selectInGrid(`.${fieldKey}-country-fld-wrp`)
     }
@@ -56,7 +56,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       options,
       assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').contentDocument,
-      window: document.getElementById('bit-grid-layout').contentWindow,
+      window: iFrameWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -71,12 +71,11 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       },
     }
 
-    // add bit_virtualized_list to global
-    if (!window.bit_virtualized_list) {
-      window.bit_virtualized_list = bit_virtualized_list
+    if (!iFrameWindow.bit_virtualized_list) {
+      iFrameWindow.bit_virtualized_list = bitVirtualizedList
     }
-    if (!window.observeElm) {
-      window.observeElm = observeElm
+    if (!iFrameWindow.observeElm) {
+      iFrameWindow.observeElm = observeElm
     }
     countryFieldRef.current = new BitCountryField(fldElm, configOptions)
   }, [fieldData])

@@ -2,9 +2,7 @@
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import {
-  createRef, useCallback, useEffect, useReducer, useState, useDeferredValue, StrictMode,
-} from 'react'
+import { createRef, useCallback, useDeferredValue, useEffect, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -13,15 +11,17 @@ import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
 import ToolbarLoader from '../components/Loaders/ToolbarLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
+  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
@@ -29,10 +29,9 @@ import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
-import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
-import { JCOF, select } from '../Utils/globalHelpers'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -96,6 +95,8 @@ const FormBuilder = ({ isLoading }) => {
   const setAllStyles = useSetRecoilState($allStyles)
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const setStaticStylesState = useSetRecoilState($staticStylesState)
+  // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
 
@@ -122,11 +123,11 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
     if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars, themeColors, style: oldAllStyles } = oldStyles
+      const { themeVars, themeColors, style: oldAllStyles, staticStyles } = oldStyles
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
       setAllStyles(JCOF.parse(oldAllStyles))
-
+      setStaticStylesState(JCOF.parse(staticStyles))
       setSavedStylesAndVars({
         allThemeColors: themeColors,
         allThemeVars: themeVars,
@@ -143,9 +144,9 @@ const FormBuilder = ({ isLoading }) => {
         }
       }))
       setStyleLoading(false)
+      setIsNewThemeStyleLoaded(true)
     } else if (!isFetchingStyles && !isNewForm) {
       // declare new theme exist , no need old theme functions
-      setIsNewThemeStyleLoaded(false)
       setOldExistingStyle()
     }
   }, [fetchedBuilderHelperStates])

@@ -447,7 +447,7 @@ export default function FileUploadSettings() {
 
       <div className={css(FieldStyle.fieldSection)}>
         <DropDown
-          className="w-10"
+          className={`w-10 ${css(style.msl)}`}
           titleClassName="title"
           title={__('Allowed File Type:')}
           isMultiple
@@ -488,4 +488,21 @@ const propNameLabel = {
   showFileList: 'Show File List',
   showFilePreview: 'Show File Preview',
   showFileSize: 'Show File Size',
+}
+const style = {
+  msl: {
+    '&.msl-vars': {
+      '--font-size': '13px',
+    },
+    '& .msl-options .msl-option:hover': {
+      bd: 'var(--b-79-96)',
+    },
+    '& .msl-options .msl-option:focus': {
+      bd: 'var(--b-79-96)',
+    },
+    '& .msl': {
+      bd: 'var(--b-79-96) !important',
+      b: '1px solid hsl(0deg 0% 90%) !important',
+    },
+  },
 }

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "bit-virtualized-list",
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "pnpm@7.6.0",
   "main": "dist/bit-virtualized-list.min.js",
   "version": "1.0.0",
   "scripts": {

@@ -72,7 +72,6 @@ const FieldStyle = {
         'border-top-left-radius': '8px',
         'border-top-right-radius': '8px',
         background: '#fff !important',
-
       },
       '& .msl-input': { p: 3, cr: '#2c3338' },
     },

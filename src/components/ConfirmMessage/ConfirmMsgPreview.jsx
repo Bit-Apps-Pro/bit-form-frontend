@@ -1,10 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import produce from 'immer'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
-import { $confirmations } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 import confirmMsgCssStyles from './confirmMsgCssStyles'
@@ -14,8 +15,9 @@ export default function ConfirmMsgPreview({
 }) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)
   const { formID } = useParams()
-  const setAllConf = useSetRecoilState($confirmations)
-  const styleObject = confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles)
+  const setStyles = useSetRecoilState($styles)
+  const styleObject = useCallback(() => confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles), [formID, msgId, msgType, position, animation, confirmationStyles])
+
   const delayTimeoutFunc = useRef(null)
   const handleBackdrop = ({ target }) => {
     if (target.dataset.modalBackdrop || target.parentNode.dataset.modalBackdrop) {
@@ -23,10 +25,14 @@ export default function ConfirmMsgPreview({
     }
   }
   useEffect(() => {
-    setAllConf(prevConf => produce(prevConf, draft => {
-      draft.type.successMsg[index].config.stylesObj = styleObject
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.confirmations.filter(confMsgObj => {
+        if (confMsgObj.confMsgId === msgId) {
+          confMsgObj.style = styleObject()
+        }
+      })
     }))
-  }, [])
+  }, [styleObject])
 
   useEffect(() => {
     if (autoHide) {
@@ -40,13 +46,9 @@ export default function ConfirmMsgPreview({
     }
   }, [active])
 
-  useEffect(() => {
-
-  }, [styleObject])
-
   return (
     <>
-      <RenderStyle styleClasses={styleObject} />
+      <RenderStyle styleClasses={styleObject()} />
       <div
         role="dialog"
         aria-hidden="true"
