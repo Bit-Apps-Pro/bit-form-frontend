@@ -22,7 +22,7 @@ function DropDown({
       <MultiSelect
         width="100%"
         defaultValue={val}
-        className={` ${className}`}
+        className={`${css(dropdownCls.multiselectInput)} ${className}`}
         onChange={action}
         singleSelect={!isMultiple}
         customValue={allowCustomOpt || addable}
@@ -42,7 +42,7 @@ const dropdownCls = {
     fw: 500,
     mt: 10,
     '& .msl': {
-      h: '32px!important',
+      // h: '32px!important',
       bd: 'var(--b-79-96)',
       b: 0,
       '&.msl-active-up': {
@@ -59,7 +59,7 @@ const dropdownCls = {
       '-webkit-clip-path': 'inset(0px -10px 0 -10px)',
       'clip-path': 'inset(0px -10px 0 -10px)',
     },
-    '&.msl-vars': { w: '99% !important', '--font-size': '14px' },
+    '&.msl-vars': { w: '99% !important', '--font-size': '12px' },
     '&.msl-wrp > .msl-options': {
       pn: 'relative !important',
       'border-top-left-radius': 0,
