@@ -10,9 +10,7 @@ import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
 import StyleCustomizeLoader from '../Loaders/StyleCustomizeLoader'
-import ThemeGallary from '../style-new/ThemeGallary'
 import Modal from '../Utilities/Modal'
-import FieldsList from './FieldsList'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
 
@@ -22,6 +20,8 @@ const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fal
 const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
 const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
 const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
+const FieldsList = loadable(() => import('./FieldsList'), { fallback: <FieldSettingsLoader /> })
+const ThemeGallary = loadable(() => import('../style-new/ThemeGallary'), { fallback: <FieldSettingsLoader /> })
 
 function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { pathname } = useLocation()
