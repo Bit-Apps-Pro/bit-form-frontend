@@ -22,7 +22,7 @@ import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './sty
 
 export default function FontPickerMenu({ id }) {
   const { css } = useFela()
-  const { fieldKey, element } = useParams()
+  const { fieldKey, element, formID } = useParams()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -129,6 +129,7 @@ export default function FontPickerMenu({ id }) {
       drft.font.fontWeightVariants = weight
       drft.font.fontStyle = style
       drft.font.fontURL = url
+      drft.form[`._frm-bg-${formID}`]['font-family'] = fontFamily
     }))
     setThemeVars(prvState => produce(prvState, drft => {
       drft['--g-font-family'] = fontFamily
