@@ -72,7 +72,10 @@ export default function EmailNotification({
         </div>
         <div className="mt-2 f-right flx mb-3">
           <Btn variant="danger-outline" className={css({ mr: 5 })} onClick={cancelModal}>{__('Cancel')}</Btn>
-          <Btn onClick={() => setshowMdl(false)}>&nbsp;{__('Save')}&nbsp;</Btn>
+          <Btn onClick={() => setshowMdl(false)}>
+            {__('Save')}
+&nbsp;
+          </Btn>
         </div>
       </>
     </Modal>
