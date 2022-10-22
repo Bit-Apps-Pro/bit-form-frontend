@@ -15,7 +15,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import {
-  $additionalSettings, $builderHistory, $builderSettings, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
+  $additionalSettings, $builderHistory, $builderSettings, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
@@ -63,6 +63,7 @@ function FormDetails() {
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const setIsNewThemeStyleLoaded = useSetRecoilState($isNewThemeStyleLoaded)
   const newFormId = useRecoilValue($newFormId)
   const { css } = useFela()
 
@@ -139,6 +140,7 @@ function FormDetails() {
     setAllThemeVars(allThemeVars)
     setAllStyles(allStyles)
     setSavedStylesAndVars({ allThemeColors, allThemeVars, allStyles })
+    setIsNewThemeStyleLoaded(true)
     // TODO: RUBel , recheck this
     // setBuilderHistory({
     //   name,
