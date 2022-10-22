@@ -12,10 +12,11 @@ import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Btn from '../../Utilities/Btn'
-import TableCheckBox from '../../Utilities/TableCheckBox'
 import Tip from '../../Utilities/Tip'
+import TipGroup from '../../Utilities/Tip/TipGroup'
 import VirtualList from '../../Utilities/VirtualList'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
+import CheckBox from '../../Utilities/CheckBox'
 
 const SortContainer = SortableContainer(({ children }) => children)
 
@@ -204,69 +205,69 @@ const SortableItem = SortableElement(({
               />
             </>
           )}
-          {!isGroupStart && checkByDefault && (
-            <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-              <Tip msg="Check by Default" place="bottom">
-                <TableCheckBox
-                  checked={value.check !== undefined}
-                  onChange={(e) => setCheck(e, optIndx)}
-                  className=""
-                />
-              </Tip>
-            </span>
-          )}
-          {type === 'check' && (
-            <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
-              <Tip msg="Required" place="bottom">
-                <TableCheckBox
-                  checked={value.req !== undefined}
-                  className="m-0 "
-                  onChange={(e) => setReq(e, optIndx)}
-                />
-              </Tip>
-            </span>
-          )}
+
+          <div className={`${css(ut.flxc)}`}>
+            <TipGroup interactive={false}>
+              {!isGroupStart && checkByDefault && (
+                <Tip msg="Check by Default">
+                  <CheckBox
+                    className={css({ se: 35 })}
+                    checked={value.check !== undefined}
+                    onChange={(e) => setCheck(e, optIndx)}
+                  />
+                </Tip>
+              )}
+              {type === 'check' && (
+                <Tip msg="Required">
+                  <CheckBox
+                    checked={value.req !== undefined}
+                    className="m-0"
+                    onChange={(e) => setReq(e, optIndx)}
+                  />
+                </Tip>
+              )}
+            </TipGroup>
+          </div>
           <div className={`${css(optionStyle.action)} acc ${isGroupStart && 'group-acc'} ${value.req && 'active'}`}>
-            <div className={`${css(ut.flxc, ut.dyn)} btnIcn`}>
-              <Tip whiteSpaceNowrap className={css({ w: '100%', dy: 'inline-block' })} msg={`Add Option ${isGroupStart ? 'in Group' : ''}`} place="bottom">
-                <button
-                  data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
-                  type="button"
-                  onClick={() => addOption(optIndx)}
-                  className={css(optionStyle.btn)}
-                >
-                  <span
-                    className={css(optionStyle.addbtnside)}
+            <div className={`${css(ut.dyn)} btnIcn`}>
+              <TipGroup interactive={false}>
+                <Tip whiteSpaceNowrap className={css({ dy: 'inline-block' })} msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
+                  <button
+                    data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
+                    type="button"
+                    onClick={() => addOption(optIndx)}
+                    className={css(optionStyle.btn, ut.flxc)}
                   >
-                    <CloseIcn size="12" stroke="3" />
-                  </span>
-                </button>
-              </Tip>
-              <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button
-                  data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`}
-                  type="button"
-                  onClick={() => cloneOption()}
-                  className={css(optionStyle.btn)}
-                >
-                  <CopyIcn size="16" stroke="2" />
-                </button>
-              </Tip>
-              <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                <button
-                  data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
-                  type="button"
-                  onClick={() => rmvOption(optIndx)}
-                  className={css(optionStyle.btn)}
-                >
-                  <TrashIcn size="16" stroke="1.5" />
-                </button>
-              </Tip>
+                    <span className={css(optionStyle.addbtnside)}>
+                      <CloseIcn size="12" stroke="4" />
+                    </span>
+                  </button>
+                </Tip>
+                <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
+                  <button
+                    data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`}
+                    type="button"
+                    onClick={() => cloneOption()}
+                    className={css(optionStyle.btn)}
+                  >
+                    <CopyIcn size="18" stroke="2.5" />
+                  </button>
+                </Tip>
+                <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
+                  <button
+                    data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
+                    type="button"
+                    onClick={() => rmvOption(optIndx)}
+                    className={css(optionStyle.btn)}
+                  >
+                    <TrashIcn size="18" stroke="2" />
+                  </button>
+                </Tip>
+              </TipGroup>
             </div>
           </div>
         </div>
       )}
-
     </div>
   )
 })
@@ -276,7 +277,6 @@ export default function VisualOptionsTab({
 }) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
-
   useEffect(() => { setOption(flattenOptions(options, optKey)) }, [options])
 
   const addOption = () => {
@@ -437,21 +437,25 @@ const optionStyle = {
     w: 200,
     oe: 'none',
     ':focus': {
-      bcr: 'var(--b-59)',
-      bs: '0 0 0 1px var(--b-59)',
+      bcr: 'var(--blue)',
+      bs: '0 0 0 1px var(--blue)',
     },
   },
   label: { w: 175, dy: 'inline-block' },
 
   btn: {
+    flx: 'center',
     brs: 7,
-    fs: 12,
     curp: 1,
-    ta: 'right',
     b: 'none',
-    p: 3,
+    p: 0,
     bd: 'none',
     ml: 5,
+    se: 35,
+    ':hover': {
+      bd: 'var(--b-97)',
+      cr: 'var(--blue)',
+    },
   },
   addbtnside: { dy: 'inline-block', tm: 'rotate(45deg)' },
   add_btn: { ml: 19, p: 5 },
@@ -470,13 +474,16 @@ const optionStyle = {
 
   ListItemEven: { bc: '#f8f8f0' },
   action: {
-    dy: 'none',
-    pb: 5,
-    mt: 5,
+    pn: 'relative',
+    flx: 'center',
     '&.active': { flx: 'align-center' },
     '&:hover': {
       flx: 'align-center',
-      '& .btnIcn': { flx: 'align-center' },
+      '& .btnIcn': { flx: 'center' },
     },
+  },
+  actionWrp: {
+    flx: 'center',
+    // bd: 'red',
   },
 }
