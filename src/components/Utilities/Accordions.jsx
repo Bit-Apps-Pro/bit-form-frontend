@@ -21,7 +21,8 @@ function Accordions({
     }
   }
 
-  const focusEdit = () => {
+  const focusEdit = (e) => {
+    e.stopPropagation()
     inp.current.focus()
   }
 
@@ -41,12 +42,34 @@ function Accordions({
 
   return (
     <div className={`btcd-accr sh-sm ${cls}`}>
-      <div className={`btcd-accr-btn ${tgl && 'blue'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
+      <div className={`btcd-accr-btn ${tgl && 'blue active'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
         <div className="btcd-accr-title w-10">
           <div className={css({ flx: 'align-center' })}>
             {customTitle}
-            {title !== undefined && <input aria-label="accrodions" title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
-            {titleEditable && <div className="edit-icn" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span style={{ color: tgl ? 'white' : 'gray' }}><EditIcn /></span></div>}
+            {title !== undefined && (
+              <input
+                aria-label="accrodions"
+                title={title}
+                ref={inp}
+                className={titleEditable && 'edit'}
+                style={{ color: tgl ? 'white' : 'inherit' }}
+                type="text"
+                onChange={onTitleChange}
+                value={title}
+                readOnly={titleEditable === undefined}
+              />
+            )}
+            {titleEditable && (
+              <button
+                type="button"
+                className="edit-icn"
+                onClick={focusEdit}
+                aria-label="focus edit"
+                style={{ color: tgl ? 'white' : 'gray' }}
+              >
+                <EditIcn size={16} />
+              </button>
+            )}
             {!tgl && header}
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}
@@ -65,7 +88,7 @@ function Accordions({
           onEntering={el => setH(el.offsetHeight)}
           onEntered={onAccordionExpand}
           onExiting={() => setH(0)}
-          onExit={el => onAccordionCollapse(el)}
+          onExit={onAccordionCollapse}
           unmountOnExit
         >
           <div className="p-2">

@@ -1,4 +1,3 @@
-import confirmMsgCssStyles from '../../../components/ConfirmMessage/confirmMsgCssStyles'
 import { msgDefaultConfig } from '../../../components/style-new/styleHelpers'
 import themeProvider from '../../../components/style-new/themes/0_themeProvider'
 
@@ -69,7 +68,6 @@ function defaultConfirmations(formID) {
           autoHide,
           duration,
           styles,
-          stylesObj: confirmMsgCssStyles(formID, 0, msgType, position, animation, styles),
         },
       }],
       redirectPage: [{ title: 'Untitled Redirect Url 1', url: '' }],

@@ -14,13 +14,11 @@ export default function RedirectEmailVerified({
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
-    console.log('name value', name, typeof value)
     setDataConf(tmpConf => produce(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp[name] = value
     }))
-    console.log('dataconf', dataConf)
   }
 
   const tinymceHandle = (val, name) => {
@@ -43,7 +41,7 @@ export default function RedirectEmailVerified({
 
   return (
     <div>
-      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minWidth: 800, minHeight: 400, maxHeight: 600, display: 'block' }} className="o-a">
+      <Modal md show={showMdl} setModal={setCustomRedirectMdl} title={title} style={{ minHeight: 600 }} className="o-a">
         <Scrollbars autoHide>
           <div className="mr-2 mb-3">
             <div className="mt-2">

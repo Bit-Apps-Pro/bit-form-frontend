@@ -45,7 +45,7 @@ export default function WebhookWorkflowAction({ lgcGrpInd,
           isMultiple
           options={confirmations?.type?.webHooks?.map((itm, i) => ({
             label: itm.title,
-            value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }),
+            value: itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) }),
           }))}
           placeholder={__('Select Hooks to Call')}
         />

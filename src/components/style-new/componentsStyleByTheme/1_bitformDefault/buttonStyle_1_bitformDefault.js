@@ -32,7 +32,7 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'border-radius': 'var(--btn-bdr-rad)',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
-        'font-family': 'var(--fld-lbl-fs)',
+        'font-family': 'var(--g-font-family)',
         'font-style': 'var(--btn-f-style)',
         'line-height': '1',
         margin: 'var(--btn-m)',

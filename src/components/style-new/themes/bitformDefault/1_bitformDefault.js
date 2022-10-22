@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
+import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import advancedFileUp_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
@@ -19,6 +20,7 @@ import recaptchaStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitf
 import selectStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import { msgDefaultConfig } from '../../styleHelpers'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
@@ -111,12 +113,13 @@ export default function bitformDefaultTheme({
           font,
           form: lgLightform({ formId }),
           fields: lgLightFieldStyles,
+          confirmations: lgLightConfMsg,
         },
-        lgDarkStyles: cleanObj({ form: {}, fields: lgDarkFieldStyles }),
-        mdLightStyles: cleanObj({ form: {}, fields: mdLightFieldStyles }),
-        mdDarkStyles: cleanObj({ form: {}, fields: mdDarkFieldStyles }),
-        smLightStyles: cleanObj({ form: {}, fields: smLightFieldStyles }),
-        smDarkStyles: cleanObj({ form: {}, fields: smDarkFieldStyles }),
+        lgDarkStyles: cleanObj({ form: {}, fields: lgDarkFieldStyles, confirmations: {} }),
+        mdLightStyles: cleanObj({ form: {}, fields: mdLightFieldStyles, confirmations: {} }),
+        mdDarkStyles: cleanObj({ form: {}, fields: mdDarkFieldStyles, confirmations: {} }),
+        smLightStyles: cleanObj({ form: {}, fields: smLightFieldStyles, confirmations: {} }),
+        smDarkStyles: cleanObj({ form: {}, fields: smDarkFieldStyles, confirmations: {} }),
       }
   }
 }
@@ -422,6 +425,15 @@ const lgLightform = ({ formId }) => ({
   [`._frm-bg-${formId}`]: {},
   [`._frm-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
 })
+
+const { msgType, position, animation, styles } = msgDefaultConfig || {}
+const TEMP_CONF_ID = '_tmp_0_conf_id'
+const lgLightConfMsg = [
+  {
+    confMsgId: TEMP_CONF_ID,
+    style: confirmMsgCssStyles('formId', TEMP_CONF_ID, msgType, position, animation, styles),
+  },
+]
 
 const text = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {

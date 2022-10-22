@@ -25,7 +25,6 @@ export default function EmailNotification({
       setDataConf(tmpConf => produce(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         const tmp = type ? draft[type] : draft
-        // tmp[name] = value
         tmp.body = tamplate
         // eslint-disable-next-line no-param-reassign
         tmp.sub = 'Email Subject'
@@ -33,8 +32,6 @@ export default function EmailNotification({
       setshowMdl(false)
     })
   }
-
-  console.log('dataConf', dataConf, showMdl)
 
   const handleInput = e => {
     setDataConf(tmpConf => produce(tmpConf, draft => {
@@ -74,8 +71,8 @@ export default function EmailNotification({
           </label>
         </div>
         <div className="mt-2 f-right flx mb-3">
-          <Btn variant="danger" className={css({ mr: 5 })} onClick={cancelModal}>{__('Cancel')}</Btn>
-          <Btn onClick={() => setshowMdl(false)}>{__('Save')}</Btn>
+          <Btn variant="danger-outline" className={css({ mr: 5 })} onClick={cancelModal}>{__('Cancel')}</Btn>
+          <Btn onClick={() => setshowMdl(false)}>&nbsp;{__('Save')}&nbsp;</Btn>
         </div>
       </>
     </Modal>

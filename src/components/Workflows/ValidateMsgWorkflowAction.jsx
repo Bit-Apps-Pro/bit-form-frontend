@@ -31,7 +31,7 @@ export default function ValidateMsgWorkflowAction({ lgcGrpInd,
       {confirmations?.type?.successMsg?.map((itm, i) => (
         <option
           key={`vm-${i + 2.7}`}
-          value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+          value={itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) })}
         >
           {itm.title}
         </option>

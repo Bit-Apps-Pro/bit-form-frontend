@@ -28,7 +28,6 @@
   --gray-4: hsl(var(--db-h), 21%, 42%);
   --red: hsl(0, 100%, 64%);
 
-
   /* for blue and hue */
   --blue-h-s: 215, 100%;
   --blue-base: 215;
@@ -312,7 +311,7 @@
   }
 
   .btcd-cbx-title {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .btcd-t-cbx {
@@ -320,7 +319,7 @@
     float: left;
     width: 20px;
     height: 20px;
-    margin-right: 7px;
+    margin-right:9px;
     // border       : 2px solid #c8ccd4;
     border: 2px solid var(--b-12-81);
     border-radius: 3px;

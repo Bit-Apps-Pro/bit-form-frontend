@@ -26,7 +26,6 @@ export default function SuccessMsgWorkflowAction({ lgcGrpInd,
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
-
   return (
     <div className={css(ut.mt2)}>
       <TableCheckBox
@@ -46,7 +45,7 @@ export default function SuccessMsgWorkflowAction({ lgcGrpInd,
             {confirmations?.type?.successMsg?.map((itm, i) => (
               <option
                 key={`sm-${i + 2.3}`}
-                value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}
+                value={itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) })}
               >
                 {itm.title}
               </option>

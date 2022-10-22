@@ -119,28 +119,10 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingsDivider />
 
-      {/* <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
-        <SingleToggle
-          id="fld-dsbl-stng"
-          tip="By disabling this option, the field disable will be hidden"
-          title={__('Disabled Field')}
-          action={setDiasabled}
-          isChecked={isDiasabled}
-        />
-      </div> */}
       <FieldDisabledSettings />
 
       <FieldSettingsDivider />
 
-      {/* <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '36px !important' })}>
-        <SingleToggle
-          id="rdonly-stng"
-          tip="By disabling this option, the field readonly will be hidden"
-          title={__('Read Only')}
-          action={setReadOnly}
-          isChecked={fieldData.valid.readonly}
-        />
-      </div> */}
       <FieldReadOnlySettings />
 
       <FieldSettingsDivider />

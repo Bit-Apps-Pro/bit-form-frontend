@@ -28,7 +28,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows,
+  $workflows
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
@@ -337,7 +337,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (!isStyleNotLoaded) {
             setAllThemeColors(allThemeColors)
             setAllThemeVars(allThemeVars)
-            setAllStyles(allStyles)
+            setAllStyles(JCOF.parse(data?.style)) // updated style obj with updated confirmation id from backend
             removeUnuseStylesAndUpdateState()
           }
 

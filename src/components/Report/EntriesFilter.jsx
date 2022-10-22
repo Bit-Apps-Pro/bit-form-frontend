@@ -39,7 +39,6 @@ export default function EntriesFilter({ fetchData }) {
       pageIndex, pageSize, sortBy, filters, globalFilter, conditions, entriesFilterByDate,
     })
   }
-  console.log('data', data)
 
   return (
     <div className="flx mr-2">

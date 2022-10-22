@@ -66,10 +66,15 @@ export default function SimpleAccordion({
   const cancelBubble = (e) => e.stopPropagation()
 
   const getAbsoluteHeight = (el) => {
-    const styles = window.getComputedStyle(el)
-    const margin = parseFloat(styles.marginTop)
-      + parseFloat(styles.marginBottom)
-    return Math.ceil(el.offsetHeight + margin)
+    const element = el
+    const { overflow } = element.style
+    element.style.overflow = 'auto'
+    let { height, marginBlock } = window.getComputedStyle(element)
+    height = parseFloat(height)
+    marginBlock = parseFloat(marginBlock)
+    element.style.overflow = overflow
+
+    return Math.round(height + marginBlock)
   }
 
   const setAccHeight = (el) => setH(getAbsoluteHeight(el))
@@ -96,7 +101,6 @@ export default function SimpleAccordion({
             {title}
             {tip && (
               <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
-                {/* <div className="txt-body">{__(tip)}</div> */}
                 <div className="txt-body">
                   <RenderHtml html={tip} />
                 </div>
@@ -117,7 +121,7 @@ export default function SimpleAccordion({
         </div>
       </div>
 
-      <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden', padding: '2px' }}>
+      <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
         <CSSTransition
           in={tgl}
           timeout={300}
@@ -126,7 +130,6 @@ export default function SimpleAccordion({
           onExit={el => setH(el.offsetHeight)}
           onExiting={() => setH(0)}
           unmountOnExit
-        // style={{ overflow: tgl ? 'auto' : 'hidden' }}
         >
           <div className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
             {children}
