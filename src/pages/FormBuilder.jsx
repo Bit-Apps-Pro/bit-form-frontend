@@ -2,7 +2,15 @@
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, useCallback, useDeferredValue, useEffect, useReducer, useState } from 'react'
+import {
+  createRef,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useReducer,
+  useState,
+  StrictMode,
+} from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -18,7 +26,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId
+  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -29,7 +37,7 @@ import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState } from '../Utils/FormBuilderHelper'
-import { JCOF } from '../Utils/globalHelpers'
+import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
@@ -98,7 +106,7 @@ const FormBuilder = ({ isLoading }) => {
   const setStaticStylesState = useSetRecoilState($staticStylesState)
   // eslint-disable-next-line no-console
 
-  const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
+  const { forceBuilderWidthToLG } = builderHookStates
 
   // useEffect(() => {
   // if (formType === 'new') {

@@ -19,7 +19,7 @@ function LogicBlock({
   const formFields = flds.concat(additionalFields)
 
   const bits = useRecoilValue($bits)
-  const { isPro, userMail } = bits
+  const { userMail } = bits
   const disabledLogics = disabledLogicType
 
   let type = ''
