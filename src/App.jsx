@@ -28,10 +28,10 @@ const Nav = ({ setActive }) => {
 }
 
 export default function App() {
-  useEffect(() => {
-    removeUnwantedCSS()
-  }, [])
   const [active, setActive] = useState(false)
+
+  useEffect(removeUnwantedCSS, [])
+
   return (
     <>
       <Toaster
@@ -49,6 +49,7 @@ export default function App() {
           },
         }}
       />
+
       <HashRouter>
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
@@ -93,6 +94,7 @@ export default function App() {
 }
 
 function removeUnwantedCSS() {
+  console.log('removecss')
   const conflictStyles = ['bootstrap']
   const styles = document.styleSheets
 
