@@ -18,6 +18,7 @@ import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { reCalculateFldHeights } from '../Utils/FormBuilderHelper'
+import { __ } from '../Utils/i18nwrap'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import VirtualList from './Utilities/VirtualList'
@@ -181,7 +182,7 @@ export default function FormBuilderHistory() {
 
             {histories.length <= 2 && (
               <span className={css(builderHistoryStyle.secondary)}>
-                no data found
+                {__('History Empty')}
               </span>
             )}
             {histories.length > 2 && (
