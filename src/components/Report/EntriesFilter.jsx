@@ -53,7 +53,7 @@ export default function EntriesFilter({ fetchData }) {
         appendTo="parent"
         className="tippy-box tippy-box-datepicker"
         content={(
-          <div style={{ minHeight: '200px !important' }}>
+          <div style={{ minHeight: '200px !important' }} className={css(tableStyle.dataRange)}>
             <DateRange
               onChange={item => setData([item.date])}
               moveRangeOnFirstSelection={false}
@@ -66,9 +66,9 @@ export default function EntriesFilter({ fetchData }) {
               endDatePlaceholder="End Date"
             />
             {/* <div className="flx flx-between ml-1"> */}
-            <div className={css({ flx: 'center-between', pt: 8, pb: 6 })}>
-              <Btn size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
-              <Btn size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
+            <div className={css({ flx: '', jc: 'end', pt: 8, pb: 6 })}>
+              <Btn className={css(ut.mr1)} size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
+              <Btn variant="default-outline" size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
             </div>
           </div>
         )}

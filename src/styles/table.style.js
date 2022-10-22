@@ -12,6 +12,11 @@ const tableStyle = {
     ':focus-visible': { focusOutline: 1 },
     ff: '"Outfit", sans-serif !important',
   },
+  dataRange: {
+    '& .rdrMonth': { p: 0 },
+    '& .rdrNextPrevButton': { m: 0 },
+    '& .rdrMonthAndYearWrapper': { pt: 0 },
+  },
 }
 
 export default tableStyle
