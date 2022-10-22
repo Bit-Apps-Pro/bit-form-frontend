@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import { lowerCaseAllAndReplaceSpaceToHipen } from '../style-new/styleHelpers'
 import Tip from './Tip'
+import TipGroup from './Tip/TipGroup'
 
 export default function StyleSegmentControl({
   defaultActive,
@@ -152,40 +153,42 @@ export default function StyleSegmentControl({
     <div className={`${css(style.wrapper)} ${className}`}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} style={{ width: defaultItmWidth }} />
-        {options?.map((item, i) => {
-          const btn = (
-            <button
-              key={`segment-option-${i * 10}`}
-              type="button"
-              className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-              onClick={e => eventHandler(e, i)}
-              onKeyPress={e => eventHandler(e, i)}
-              data-label={item.label}
-              data-testid={`${lowerCaseAllAndReplaceSpaceToHipen(item.label)}-tab`}
-            >
-              {checkToShow(item, 'icn') && (
-                <span className={`icn ${css(style.icn)} ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
-              )}
-              {checkToShow(item, 'label') && __(item.label)}
-            </button>
-          )
-          if (item.tip) {
-            return (
-              <Tip
-                key={`segment-option-${i * 100}`}
-                className={css({ w: '100%', dy: 'inline-block' })}
-                msg={item.tip}
-                place={tipPlace}
-                whiteSpaceNowrap
-                theme="light-border"
-                delay={300}
+        <TipGroup>
+          {options?.map((item, i) => {
+            const btn = (
+              <button
+                key={`segment-option-${i * 10}`}
+                type="button"
+                className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
+                onClick={e => eventHandler(e, i)}
+                onKeyPress={e => eventHandler(e, i)}
+                data-label={item.label}
+                data-testid={`${lowerCaseAllAndReplaceSpaceToHipen(item.label)}-tab`}
               >
-                {btn}
-              </Tip>
+                {checkToShow(item, 'icn') && (
+                  <span className={`icn ${css(style.icn)} ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
+                )}
+                {checkToShow(item, 'label') && __(item.label)}
+              </button>
             )
-          }
-          return btn
-        })}
+            if (item.tip) {
+              return (
+                <Tip
+                  key={`segment-option-${i * 100}`}
+                  className={css({ w: '100%', dy: 'inline-block' })}
+                  msg={item.tip}
+                  place={tipPlace}
+                  whiteSpaceNowrap
+                  theme="light-border"
+                  delay={300}
+                >
+                  {btn}
+                </Tip>
+              )
+            }
+            return btn
+          })}
+        </TipGroup>
       </div>
     </div>
   )

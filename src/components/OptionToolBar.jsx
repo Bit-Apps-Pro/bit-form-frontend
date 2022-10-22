@@ -28,6 +28,7 @@ import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
+import TipGroup from './Utilities/Tip/TipGroup'
 
 const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
 
@@ -115,38 +116,40 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
         <div className={css(ut.flxc)}>
-          <Tip msg="Form Fields">
-            <button
-              data-testid="field-mode"
-              onClick={formFieldButtonHandler}
-              type="button"
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2])} ${(!flags.styleMode && showToolBar) && 'active'}`}
-            >
-              <AddIcon size="22" />
-            </button>
-          </Tip>
-          <Tip msg="Elements & Layers">
-            <button
-              data-testid="style-mode"
-              onClick={styleModeButtonHandler}
-              type="button"
-              className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && showToolBar) && 'active'}`}
-            >
-              <LayerIcon size="22" />
-            </button>
-          </Tip>
-          {flags.styleMode && (
-            <Tip msg="Inspect Element">
+          <TipGroup>
+            <Tip msg="Form Fields">
               <button
-                data-testid="inspect-element"
-                onClick={inspectModeButtonHandler}
+                data-testid="field-mode"
+                onClick={formFieldButtonHandler}
                 type="button"
-                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
+                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2])} ${(!flags.styleMode && showToolBar) && 'active'}`}
               >
-                <InspectIcn size="20" />
+                <AddIcon size="22" />
               </button>
             </Tip>
-          )}
+            <Tip msg="Elements & Layers">
+              <button
+                data-testid="style-mode"
+                onClick={styleModeButtonHandler}
+                type="button"
+                className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && showToolBar) && 'active'}`}
+              >
+                <LayerIcon size="22" />
+              </button>
+            </Tip>
+            {flags.styleMode && (
+              <Tip msg="Inspect Element">
+                <button
+                  data-testid="inspect-element"
+                  onClick={inspectModeButtonHandler}
+                  type="button"
+                  className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
+                >
+                  <InspectIcn size="20" />
+                </button>
+              </Tip>
+            )}
+          </TipGroup>
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
           <StyleSegmentControl
@@ -194,7 +197,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
 
           <FormBuilderHistory />
           <div className={css(OptionToolBarStyle.border_right)} />
-          <Tip msg="Custom CSS and JS">
+          <Tip msg="Builder Settings">
             <button
               data-testid="custom-css-js"
               className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`}
