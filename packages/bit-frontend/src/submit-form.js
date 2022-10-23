@@ -1,23 +1,3 @@
-function pushFilToFormData(formData, fld, files) {
-  if (files?.length > 1) {
-    const uploadedFileNames = []
-    for (let i = 0; i < files.length; i += 1) {
-      const { serverId } = files[i]
-      if (serverId) {
-        uploadedFileNames.push(serverId)
-      } else {
-        formData.append(`${fld}[]`, files[i]?.file)
-      }
-    }
-    uploadedFileNames.length
-      && formData.append(fld, uploadedFileNames.join(','))
-  } else {
-    const file = !files[0]?.serverId ? files[0]?.file : files[0]?.serverId
-    formData.append(fld, file)
-  }
-  return formData
-}
-
 function bitFormSubmitAction(e) {
   e.preventDefault()
   const contentId = e.target.id.slice(e.target.id.indexOf('-') + 1)
@@ -36,23 +16,8 @@ function bitFormSubmitAction(e) {
   let formData = new FormData(e.target)
   const props = window.bf_globals[contentId]
 
-  const inits = props.inits || {}
-  const fileFields = Object.keys(inits).filter(
-    (fldKey) => props.fields[fldKey].typ === 'advanced-file-up',
-  )
-  for (let i = 0; i < fileFields?.length; i++) {
-    if (formData.has(fileFields[i])) {
-      formData.delete(fileFields[i])
-      if (inits[fileFields[i]]?.on_select_upload) {
-        formData.append(fileFields[i], inits[fileFields[i]].uploaded_files)
-      } else {
-        formData = pushFilToFormData(
-          formData,
-          fileFields[i],
-          inits[fileFields[i]].files,
-        )
-      }
-    }
+  if (typeof advancedFileHandle !== 'undefined') {
+    formData = advancedFileHandle(props, formData)
   }
   if (props.GCLID) {
     formData.set('GCLID', props.GCLID)
@@ -74,26 +39,24 @@ function bitFormSubmitAction(e) {
         .execute(props.gRecaptchaSiteKey, { action: 'submit' })
         .then((token) => {
           formData.append('g-recaptcha-response', token)
-          const uri = new URL(props?.ajaxURL)
-          uri.searchParams.append('action', 'bitforms_submit_form')
-          const submitResp = fetch(uri, {
-            method: 'POST',
-            body: formData,
-          })
+          const submitResp = bfSubmitFetch(props?.ajaxURL, formData)
           submitResponse(submitResp, contentId, formData)
         })
     })
   } else {
-    const uri = new URL(props?.ajaxURL)
-    uri.searchParams.append('action', 'bitforms_submit_form')
-    const submitResp = fetch(uri, {
-      method: 'POST',
-      body: formData,
-    })
+    const submitResp = bfSubmitFetch(props?.ajaxURL, formData)
     submitResponse(submitResp, contentId, formData)
   }
 }
 
+function bfSubmitFetch(ajaxURL, formData) {
+  const uri = new URL(ajaxURL)
+  uri.searchParams.append('action', 'bitforms_submit_form')
+  return fetch(uri, {
+    method: 'POST',
+    body: formData,
+  })
+}
 function submitResponse(resp, contentId, formData) {
   resp
     .then(
@@ -102,9 +65,7 @@ function submitResponse(resp, contentId, formData) {
           const errorEvent = new CustomEvent('bf-form-submit-error', {
             detail: { formId: contentId, errors: result.data },
           })
-          document
-            .getElementById(`form-${contentId}`)
-            .dispatchEvent(errorEvent)
+          bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
           response.staus === 500
             ? reject(new Error('Mayebe Internal Server Error'))
             : reject(response.json())
@@ -115,13 +76,13 @@ function submitResponse(resp, contentId, formData) {
       const successEvent = new CustomEvent('bf-form-submit-success', {
         detail: { formId: contentId, entryId: result.entryId, formData },
       })
-      document.getElementById(`form-${contentId}`).dispatchEvent(successEvent)
+      bfSelect(`#form-${contentId}`).dispatchEvent(successEvent)
       let responsedRedirectPage = null
       let hitCron = null
       let newNonce = ''
       if (result !== undefined && result.success) {
-        const form = document.getElementById(`form-${contentId}`)
-        const oldTokenValue = form.querySelector('input[name="b_h_t"]').value
+        const form = bfSelect(`#form-${contentId}`)
+        const oldTokenValue = bfSelect('input[name="b_h_t"]', form)?.value
         handleReset(contentId)
         if (typeof result.data === 'object') {
           if (form) {
@@ -139,6 +100,7 @@ function submitResponse(resp, contentId, formData) {
           }
           setToastMessage({
             contentId,
+            msgId: result.data.msg_id,
             msg: result.data.message,
             show: true,
             type: 'warning',
@@ -158,7 +120,7 @@ function submitResponse(resp, contentId, formData) {
         const errorEvent = new CustomEvent('bf-form-submit-error', {
           detail: { formId: contentId, errors: result.data },
         })
-        document.getElementById(`form-${contentId}`).dispatchEvent(errorEvent)
+        bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
         handleFormValidationErrorMessages(result, contentId)
       }
 
@@ -191,59 +153,46 @@ function submitResponse(resp, contentId, formData) {
 }
 
 function genereateNewHpToken(responseData, form, oldTokenValue) {
-  const token = form.querySelector("input[name='b_h_t']")
+  const token = bfSelect("input[name='b_h_t']", form)
   if (token) {
     token.value = responseData.hp_token
-    const oldTokenFldName = form.querySelector(`input[name="${oldTokenValue}"]`)
+    const oldTokenFldName = bfSelect(`input[name="${oldTokenValue}"]`, form)
     if (oldTokenFldName) {
       oldTokenFldName.name = responseData.hp_token
     }
   }
 }
-
 function handleReset(contentId, customHook = false) {
   if (customHook) {
     const resetEvent = new CustomEvent('bf-form-reset', {
       detail: { formId: contentId },
     })
-    document.getElementById(`form-${contentId}`).dispatchEvent(resetEvent)
+    bfSelect(`#form-${contentId}`).dispatchEvent(resetEvent)
   }
 
-  const customFields = [
-    'select',
-    'phone-number',
-    'country',
-    'currency',
-    'file-up',
-    'advanced-file-up',
-  ]
   const props = window.bf_globals[contentId]
-  document.getElementById(`form-${contentId}`).reset()
-
-  for (const [fieldKey, fieldData] of Object.entries(props?.fields || {})) {
-    if (customFields.includes(fieldData.typ)) {
-      window.bf_globals[contentId].inits[fieldKey].reset()
-    }
-  }
+  bfSelect(`#form-${contentId}`).reset()
+  typeof customFieldsReset !== 'undefined' && customFieldsReset()
 
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
     resetCaptcha()
   }
 }
 function setToastMessage(msgObj) {
-  console.log('msg', msgObj)
-  const msgWrpr = document.getElementById(
-    `bf-form-msg-wrp-${msgObj.contentId}`,
-  )
+  let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
   if (msgWrpr.firstChild) {
     msgWrpr.firstChild.classList.remove('active')
   }
-  msgWrpr.innerHTML = `<div class="form-msg ${msgObj.type}">${msgObj.msg}<div>`
+  msgWrpr.innerHTML = `<div class="form-msg ${msgObj.type}">${msgObj.msg}</div>`
+  msgWrpr = bfSelect('.form-msg', msgWrpr)
+  if (msgObj.msgId) {
+    msgWrpr = bfSelect(`.msg-content-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
+  }
   setTimeout(() => {
-    msgWrpr.firstChild.classList.add('active')
+    msgWrpr.classList.add('active')
   }, 100)
   setTimeout(() => {
-    msgWrpr.firstChild.classList.remove('active')
+    msgWrpr.classList.remove('active')
   }, 5000)
 }
 function triggerIntegration(hitCron, newNonce, contentId) {
@@ -302,7 +251,7 @@ function handleFormValidationErrorMessages(result, contentId) {
 
 function dispatchFieldError(fldErrors, contentId) {
   Object.keys(fldErrors).forEach((fk) => {
-    const errFld = document.querySelector(`#form-${contentId} .${fk}-err-txt`)
+    const errFld = bfSelect(`#form-${contentId} .${fk}-err-txt`)
     errFld.innerHTML = fldErrors[fk]
     errFld.parentElement.style.marginTop = '5px'
     errFld.parentElement.style.height = `${errFld.offsetHeight}px`
@@ -311,16 +260,13 @@ function dispatchFieldError(fldErrors, contentId) {
 }
 
 function disabledSubmitButton(contentId, disabled) {
-  document
-    .getElementById(`form-${contentId}`)
-    .querySelector('button[type="submit"]').disabled = disabled
+  bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
 }
 
 document.querySelectorAll('form').forEach((frm) => {
-  if (frm.id.includes('form-bitforms')) {
+  if (frm.id?.startsWith('form-bitforms')) {
     frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
-    frm
-      .querySelector('button[type="reset"]')
-      ?.addEventListener('click', (e) => handleReset(frm.id.slice(frm.id.indexOf('-') + 1), true))
+    bfSelect('button[type="reset"]', frm)
+      ?.addEventListener('click', (e) => handleReset(e, true))
   }
 })

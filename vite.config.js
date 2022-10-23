@@ -2,7 +2,7 @@
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { normalizePath, defineConfig } from 'vite'
+import { defineConfig, normalizePath } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 let chunkCount = 0
@@ -110,7 +110,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-helpers/dist/select.min.js'),
+        src: absPath('packages/bit-helpers/dist/bfSelect.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -239,6 +239,18 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-frontend/dist/submit-form.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/hidden-token-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/advanced-file-up-handle.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/custom-fields-reset.min.js'),
         dest: absPath('../assets'),
       },
     ],
