@@ -1,17 +1,17 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
-import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import EmailNotificationWorkflowAction from './EmailNotificationWorkflowAction'
-import WebhookWorkflowAction from './WebhookWorkflowAction'
-import RedirectPageWorkflowAction from './RedirectPageWorkflowAction'
-import IntegrationWorkflowAction from './IntegrationWorkflowAction'
-import SuccessMsgWorkflowAction from './SuccessMsgWorkflowAction'
 import FieldWorkflowAction from './FieldWorkflowAction'
+import IntegrationWorkflowAction from './IntegrationWorkflowAction'
+import RedirectPageWorkflowAction from './RedirectPageWorkflowAction'
+import SuccessMsgWorkflowAction from './SuccessMsgWorkflowAction'
 import ValidateMsgWorkflowAction from './ValidateMsgWorkflowAction'
-import ut from '../../styles/2.utilities'
+import WebhookWorkflowAction from './WebhookWorkflowAction'
 
 export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
@@ -72,7 +72,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
       {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
         <>
           <div className={css(ut.mt3, ut.mb1)}><b className="txt-dp">Additional Actions</b></div>
-          <div className={condGrp.cond_type === 'always' && 'ml-4'}>
+          <div className={(condGrp.cond_type === 'always' ? 'ml-4' : '')}>
             {lgcGrp.action_run !== 'delete' && (
               <SuccessMsgWorkflowAction
                 lgcGrpInd={lgcGrpInd}
