@@ -44,7 +44,6 @@ import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-// TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
 import { jsObjtoCssStr, removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
@@ -162,8 +161,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (checkUpdateBtnErrors()) return
-      // TODO: update the code
-      // if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
       saveForm()
     } else {
       select('#update-btn').click()
@@ -314,7 +311,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
-            // TODO : keep current route but replace form type and id
             navigate(`/form/${page}/${formType}/${data.id}/${rightBarUrl}`, { replace: true })
           }
           setLay(layouts)
