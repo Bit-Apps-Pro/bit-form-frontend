@@ -4,6 +4,7 @@ import Apikey from '../components/Apikey'
 import Captcha from '../components/Captcha'
 import Cpt from '../components/Cpt/Cpt'
 import GCLID from '../components/GCLID'
+import General from '../components/General'
 // import Cpt from '../components/Cpt/Cpt';
 import Payments from '../components/Payments'
 import SMTP from '../components/Smtp/SMTP'
@@ -13,6 +14,8 @@ import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import PaymentsIcn from '../Icons/PaymentsIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
+import Settings2 from '../Icons/Settings2'
+import SettingsIcn from '../Icons/SettingsIcn'
 import { __ } from '../Utils/i18nwrap'
 
 function AppSettingsPage() {
@@ -61,6 +64,13 @@ function AppSettingsPage() {
           <PaymentsIcn size="16" className="mr-2" />
           <span className="ml-2">{__('Payments')}</span>
         </NavLink>
+        <NavLink
+          to="/app-settings/general"
+          className={({ isActive }) => (isActive ? 'btcd-app-s-a' : '')}
+        >
+          <SettingsIcn size="18" className="mr-2" />
+          <span className="ml-2">{__('General')}</span>
+        </NavLink>
       </aside>
 
       <Routes>
@@ -77,6 +87,7 @@ function AppSettingsPage() {
         <Route path="cpt" element={<Cpt />} />
         <Route path="api" element={<Apikey />} />
         <Route path="payments/*" element={<Payments />} />
+        <Route path="general" element={<General />} />
         {/* </Route> */}
       </Routes>
     </div>

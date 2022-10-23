@@ -318,6 +318,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+          data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)
