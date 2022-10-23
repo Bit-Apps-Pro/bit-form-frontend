@@ -110,7 +110,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const updateBtnEvent = e => {
     if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
       e.preventDefault()
-      if (!updateBtn.disabled) {
+      if (!updateBtn.disabled && !buttonDisabled) {
         saveOrUpdateForm()
       }
       return false
@@ -177,6 +177,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   const saveForm = (type, updatedData) => {
+    setbuttonDisabled(true)
     let mailTemplates = mailTem
     let additionalSettings = additional
     let allIntegrations = integrations
@@ -253,7 +254,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
     atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
-    atomicClassMap.font = lgLightStyles.font.fontURL
+    if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
     if (!isStyleNotLoaded) {
       const atomicData = {
@@ -357,7 +358,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           }))
           resetUpdateBtn()
           setDeletedFldKey([])
-          setbuttonDisabled(false)
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')
@@ -375,13 +375,19 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     toast.promise(formSavePromise, {
       loading: __('Updating...', 'biform'),
-      success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.'),
+      success: (res) => {
+        setbuttonDisabled(false)
+        return res?.data?.message || res?.data
+      },
+      error: () => {
+        setbuttonDisabled(false)
+        return __('Error occurred, Please try again.')
+      },
     })
   }
 
   return (
-    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}>
+    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled || buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
