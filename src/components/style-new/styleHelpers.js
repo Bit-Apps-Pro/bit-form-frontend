@@ -7,7 +7,9 @@ import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import {
+  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
+} from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
@@ -685,15 +687,14 @@ export const generateFontUrl = (font, string) => {
   return `https://fonts.googleapis.com/css2?family=${fontFamily}${newParmrs}&display=swap`
 }
 
-export const findExistingFontStyleNWeidth = () => {
-  const styles = getRecoil($styles)
-  const themeVars = getRecoil($themeVars)
+export const findExistingFontStyleNWeight = (styles, themeVars) => {
+  if (!('fields' in styles)) return [[], []]
   const fontWeightVariant = []
   const fontStyleVariant = []
   const fieldsArr = Object.keys(styles.fields)
-  const fieldsLenght = fieldsArr.length
+  const fieldsLength = fieldsArr.length
 
-  for (let fldIndx = 0; fldIndx < fieldsLenght; fldIndx += 1) {
+  for (let fldIndx = 0; fldIndx < fieldsLength; fldIndx += 1) {
     const fieldClasses = styles.fields[fieldsArr[fldIndx]].classes
     const fieldClassesArr = Object.keys(fieldClasses)
     const fieldClassesLen = fieldClassesArr.length
@@ -714,22 +715,63 @@ export const findExistingFontStyleNWeidth = () => {
   return [fontWeightVariant, fontStyleVariant]
 }
 
-export const updateGoogleFontUrl = () => {
-  const styles = getRecoil($styles)
+export const updateGoogleFontUrl = (allStyles) => {
   const themeVars = getRecoil($themeVars)
+  const themeVarsLgLight = getRecoil($themeVarsLgLight)
+  const themeVarsLgDark = getRecoil($themeVarsLgDark)
+  const themeVarsMdLight = getRecoil($themeVarsMdLight)
+  const themeVarsMdDark = getRecoil($themeVarsMdDark)
+  const themeVarsSmLight = getRecoil($themeVarsSmLight)
+  const themeVarsSmDark = getRecoil($themeVarsSmDark)
+  let fontWeights = []
+  let fontStyleVariant = []
+  if (allStyles?.lgLightStyles?.font?.fontType !== 'Google') return allStyles
+  const {
+    lgLightStyles,
+    lgDarkStyles,
+    mdLightStyles,
+    mdDarkStyles,
+    smLightStyles,
+    smDarkStyles,
+  } = allStyles
+
+  const [lgFontWeightVariant, lgFontStyleVariant] = findExistingFontStyleNWeight(lgLightStyles, themeVarsLgLight)
+  const [mdFontWeightVariant, mdFontStyleVariant] = findExistingFontStyleNWeight(mdLightStyles, themeVarsMdLight)
+  const [smFontWeightVariant, smFontStyleVariant] = findExistingFontStyleNWeight(smLightStyles, themeVarsSmLight)
+  const [lgFontWeightVariantDark, lgFontStyleVariantDark] = findExistingFontStyleNWeight(lgDarkStyles, themeVarsLgDark)
+  const [mdFontWeightVariantDark, mdFontStyleVariantDark] = findExistingFontStyleNWeight(mdDarkStyles, themeVarsMdDark)
+  const [smFontWeightVariantDark, smFontStyleVariantDark] = findExistingFontStyleNWeight(smDarkStyles, themeVarsSmDark)
 
   const fontWeightparam = []
   let string = ''
   const globalFont = themeVars['--g-font-family']
-  const [fontWeightVariant, fontStyleVariant] = findExistingFontStyleNWeidth(styles, themeVars)
+  fontWeights = [
+    ...lgFontWeightVariant,
+    ...mdFontWeightVariant,
+    ...smFontWeightVariant,
+    ...lgFontWeightVariantDark,
+    ...mdFontWeightVariantDark,
+    ...smFontWeightVariantDark,
+  ]
+  fontStyleVariant = [
+    ...lgFontStyleVariant,
+    ...mdFontStyleVariant,
+    ...smFontStyleVariant,
+    ...lgFontStyleVariantDark,
+    ...mdFontStyleVariantDark,
+    ...smFontStyleVariantDark,
+  ]
+  fontWeights = [...new Set(fontWeights)]
+  fontStyleVariant = [...new Set(fontStyleVariant)]
 
-  const fontWeightVLen = fontWeightVariant.length
+  // const fontWeightVLen = fontWeightVariant.length
+  const fontWeightVLen = fontWeights.length
   if (fontWeightVLen > 0) {
     for (let indx = 0; indx < fontWeightVLen; indx += 1) {
       if (fontStyleVariant.includes('italic')) {
-        fontWeightparam.push(`1,${fontWeightVariant[indx]};`)
+        fontWeightparam.push(`1,${fontWeights[indx]};`)
       }
-      fontWeightparam.push(`0,${fontWeightVariant[indx]};`)
+      fontWeightparam.push(`0,${fontWeights[indx]};`)
     }
     const str = fontWeightparam.sort().toString().replace(/;,/gi, ';')
     string = str.substring(0, str.length - 1)
@@ -737,10 +779,11 @@ export const updateGoogleFontUrl = () => {
   }
 
   const url = generateFontUrl(globalFont, string)
-  const newStyles = produce(styles, drft => {
-    drft.font.fontURL = url
+  const newStyles = produce(allStyles, drft => {
+    drft.lgLightStyles.font.fontURL = url
   })
-  setRecoil($styles, newStyles)
+  // setRecoil($styles, newStyles)
+  return newStyles
 }
 
 export const arrayToObject = (arr) => {

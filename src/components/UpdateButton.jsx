@@ -163,7 +163,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     } else if (btnTyp === 'update-btn') {
       if (checkUpdateBtnErrors()) return
       // TODO: update the code
-      if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
+      // if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
       saveForm()
     } else {
       select('#update-btn').click()
@@ -243,7 +243,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightThemeVars,
       smDarkThemeVars,
     }
-    const allStyles = {
+    let allStyles = {
       lgLightStyles,
       lgDarkStyles,
       mdLightStyles,
@@ -251,6 +251,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles,
     }
+    allStyles = updateGoogleFontUrl(allStyles)
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
     atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
     atomicClassMap.font = lgLightStyles.font.fontURL
@@ -314,7 +315,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             setSavedFormId(data.id)
             setButtonText('Update')
             // TODO : keep current route but replace form type and id
-            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
+            navigate(`/form/${page}/${formType}/${data.id}/${rightBarUrl}`, { replace: true })
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))

@@ -104,7 +104,7 @@ const ComponentsByTheme = ({ layoutItem, formID, fields, resizingFld }) => {
   if (componentProps && componentProps.typ === 'recaptcha') {
     componentProps.siteKey = reCaptchaV2.siteKey
   }
-  // TODO : handle old components in v1 compitable
+  // TODO : handle old components in v1 compatible
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
