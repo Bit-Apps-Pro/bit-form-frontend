@@ -29,7 +29,6 @@ export default function TextArea({
   const parentHight = getNumFromStr(fldWrp?.parentElement?.style.height) || 0
   let height = ''
   const convertStrToNum = (str) => Number(getNumFromStr(str)) || 0
-
   if (resizingFld.fieldKey === fieldKey) {
     tempResize.current.resize = true
 
@@ -66,7 +65,7 @@ export default function TextArea({
     )
 
     const fieldHeight = Math.ceil(Number(parentHight) - removableSpace)
-    height = `${fieldHeight}px`
+    height = `${fieldHeight + 2}px`
     inputFldWrp.children[0].style.height = height
   }
   if (tempResize.current.resize && !resizingFld.fieldKey) {
