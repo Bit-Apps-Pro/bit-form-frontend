@@ -332,9 +332,9 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
             <Grow open={controller === 'classes'}>
               <div className={css(ut.m10)}>
-                <label className={css({ fs: 14, fw: 600 })}>Custom Class Name</label>
+                <label className={css({ fs: 14, fw: 600 })}>Custom Class Names</label>
                 <AutoResizeInput
-                  ariaLabel="Custom Class Name"
+                  ariaLabel="Custom Class Names"
                   placeholder="e.g. class1 class2 class3"
                   value={customClsName?.[element] || ''}
                   changeAction={customClsNamHandler}

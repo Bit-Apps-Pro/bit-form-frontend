@@ -513,7 +513,7 @@ function TextFieldSettings() {
                   >
                     {__('Add/Edit Suggestions')}
                     <span className={css(style.plsIcn)}>
-                      <CloseIcn size="13" stroke="3" />
+                      <CloseIcn size="13" stroke="4" />
                     </span>
                   </Btn>
                 </div>
@@ -947,6 +947,6 @@ const style = {
     fs: 11,
   },
   plsIcn: {
-    ml: 3, mt: 3, tm: 'rotate(45deg)',
+    ml: 8, mt: 3, tm: 'rotate(45deg)',
   },
 }

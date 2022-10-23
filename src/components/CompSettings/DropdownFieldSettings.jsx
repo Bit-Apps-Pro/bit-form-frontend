@@ -324,7 +324,6 @@ export default function DropdownFieldSettings() {
         open
       >
         <div className={css({ p: '5px 10px' })}>
-          <span>Options Lists</span>
           {optionsList.map((listObj, index) => {
             const listName = Object.keys(listObj)
             return (
@@ -433,7 +432,7 @@ const c = {
     curp: 1,
     brs: '50%',
     bd: 'none',
-    ':hover': { bd: '#7ea8ff', cr: '#460000' },
+    ':hover': { bd: 'var(--b-20-93)', cr: 'var(--blue)' },
   },
 }
 

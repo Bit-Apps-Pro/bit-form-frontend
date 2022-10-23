@@ -19,7 +19,6 @@ import EditIcn from '../../Icons/EditIcn'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
 import PlusIcn from '../../Icons/PlusIcn'
 import RefreshIcn from '../../Icons/RefreshIcn'
-import SearchIcn from '../../Icons/SearchIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import tableStyle from '../../styles/table.style'
@@ -175,7 +174,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       isDefault: '0',
       type: 'table',
       details: {
-        report_name: 'new report ',
+        report_name: 'Untitled filter ',
         hiddenColumns: [],
         pageSize: 10,
         sortBy: [],
@@ -244,9 +243,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
 
       <div className="flx ml-2">
         <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
-          <span
-            className="flx sm b-none pos-rel mr-1"
-          >
+          <span className="flx sm b-none pos-rel mr-1">
             <FilterIcn size="16" stroke="2" />
           </span>
           <div className="w-9">
@@ -357,7 +354,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             md
             show={showMdl}
             setModal={setshowMdl}
-            title="Report"
+            title="Create Filter"
             style={{ overflow: 'auto' }}
             onCloseMdl={onCloseMdl}
           >

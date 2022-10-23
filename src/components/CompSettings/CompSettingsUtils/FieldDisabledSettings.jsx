@@ -36,7 +36,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
       <SingleToggle
         id="fld-dsbl-stng"
         tip={tippyHelperMsg.disabled}
-        title={__('Disabled Field')}
+        title={__('Disabled')}
         action={setDiasabled}
         isChecked={isDiasabled}
       />

@@ -6,7 +6,6 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import useSWR from 'swr'
 import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
@@ -20,36 +19,42 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import VirtualList from '../Utilities/VirtualList'
 import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
 
+const API_KEY = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
+const URL = `https://www.googleapis.com/webfonts/v1/webfonts?key=${API_KEY}&sort=popularity`
+
 export default function FontPickerMenu({ id }) {
   const { css } = useFela()
   const { fieldKey, element, formID } = useParams()
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [styles, setStyles] = useRecoilState($styles)
   const [focusSearch, setfocusSearch] = useState(false)
   const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempStyle = useRecoilValue($tempStyles)
 
-  // const inheritFont = (themeVars['--g-font-family'] === 'inherit' || tempStyle.themeVars['--g-font-family'] === 'inherit')
   const inheritFont = themeVars['--g-font-family'] === 'inherit'
-  const checkGoogleFontExist = (styles.font.fontType === 'Google')
-
-  const apiKey = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
-  const uri = `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`
-  const { data: allFonts } = useSWR(uri, (url) => fetch(url, {})
-    .then(res => res.json()))
+  const fontSource = (styles.font.fontType === 'Google')
 
   useEffect(() => {
-    allFonts && setFonts(allFonts.items)
-    allFonts && localStorage.setItem('bf-fonts', JSON.stringify(allFonts.items))
-    if (!allFonts) {
-      setLoading(true)
+    if ('bf-fonts' in localStorage) {
+      try {
+        setFonts(JSON.parse(localStorage.getItem('bf-fonts')))
+        setLoading(false)
+      } catch (error) {
+        console.error(error)
+      }
     } else {
-      setLoading(false)
+      fetch(URL)
+        .then((res) => res.json())
+        .then((data) => {
+          setFonts(data.items)
+          setLoading(false)
+          localStorage.setItem('bf-fonts', JSON.stringify(data.items))
+        })
     }
-  }, [allFonts])
+  }, [])
 
   const onTabChangeHandler = (lbl) => {
     setController(lbl)
@@ -57,7 +62,7 @@ export default function FontPickerMenu({ id }) {
 
   const findSelectedFontIndx = () => (
     styles?.font?.fontType === 'Google'
-      ? allFonts.items.findIndex(itm => itm.family === themeVars['--g-font-family'])
+      ? fonts.findIndex(itm => itm.family === themeVars['--g-font-family'])
       : 0
   )
 
@@ -122,6 +127,7 @@ export default function FontPickerMenu({ id }) {
   }
 
   const setCheck = (fontFamily, variants) => {
+    console.log({ fontFamily, variants })
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
     setStyles(prvStyles => produce(prvStyles, drft => {
@@ -138,10 +144,16 @@ export default function FontPickerMenu({ id }) {
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `${fontFamily} ${variants}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
-  const fontSorted = (orderBy) => {
-    const sorted = sortByField(fonts, 'family', orderBy)
-    setSorted(orderBy === 'ASC')
-    setFonts(sorted)
+  const sortFonts = (orderBy) => {
+    if (orderBy === 'ASC') {
+      const sortedFonts = sortByField(fonts, 'family', orderBy)
+      setSorted(true)
+      setFonts(sortedFonts)
+    } else {
+      const localFonts = JSON.parse(localStorage.getItem('bf-fonts'))
+      setSorted(false)
+      setFonts(localFonts)
+    }
   }
 
   const setThemeFont = ({ target: { checked } }) => {
@@ -241,7 +253,7 @@ export default function FontPickerMenu({ id }) {
                   title="Sort by ascending order"
                   className={`${css(fontStyle.sort_btn)} ${isSorted && 'active'}`}
                   type="button"
-                  onClick={() => fontSorted(isSorted ? 'DESC' : 'ASC')}
+                  onClick={() => sortFonts(isSorted ? 'DESC' : 'ASC')}
                   aria-label="Sort Fonts Family"
                   data-testid="sort-font"
                 >
@@ -264,7 +276,7 @@ export default function FontPickerMenu({ id }) {
               >
                 <span className={css(fontStyle.title)}>{fonts[index]?.family}</span>
                 {
-                  ((checkGoogleFontExist && (themeVars['--g-font-family'] === fonts[index]?.family || tempStyle.themeVars['--g-font-family'] === fonts[index]?.family)))
+                  ((fontSource && (themeVars['--g-font-family'] === fonts[index]?.family || tempStyle.themeVars['--g-font-family'] === fonts[index]?.family)))
                   && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
                 }
               </button>

@@ -108,5 +108,5 @@ const ComponentsByTheme = ({ layoutItem, formID, fields, resizingFld }) => {
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
-  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} resizingFld={resizingFld} />
+  return <MapComponents formID={formID} atts={componentProps} fieldKey={layoutItem.i} resizingFld={resizingFld} />
 }

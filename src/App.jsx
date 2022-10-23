@@ -28,26 +28,28 @@ const Nav = ({ setActive }) => {
 }
 
 export default function App() {
-  useEffect(() => {
-    removeUnwantedCSS()
-  }, [])
   const [active, setActive] = useState(false)
+
+  useEffect(removeUnwantedCSS, [])
+
   return (
     <>
       <Toaster
-        position="bottom-right"
+        position="bottom-center"
         containerStyle={{ inset: '-25px 30px 20px -10px' }}
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#333',
+            background: '#011638',
             color: '#fff',
             bottom: 40,
             padding: '15px 18px',
-            boxShadow: '0 0px 7px rgb(0 0 0 / 30%), 0 3px 30px rgb(0 0 0 / 20%)',
+            borderRadius: 12,
+            boxShadow: '0 2px 7px rgb(0 0 0 / 30%), 0 3px 30px rgb(0 0 0 / 20%)',
           },
         }}
       />
+
       <HashRouter>
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
@@ -92,6 +94,7 @@ export default function App() {
 }
 
 function removeUnwantedCSS() {
+  console.log('removecss')
   const conflictStyles = ['bootstrap']
   const styles = document.styleSheets
 

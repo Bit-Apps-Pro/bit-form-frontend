@@ -103,7 +103,6 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         </span>
       </div>
       <h5>Preview Data </h5>
-      {' '}
       <table className="f-table" style={{ overflowX: 'scroll', overflowY: 'scroll' }}>
         <tr className="tr">
           {fileColumns.map((value, index) => (
@@ -118,7 +117,6 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
       </table>
       <div>
         <button type="submit" className={`${css(app.btn)} btn-md blue btcd-mdl-btn`}>Import Data</button>
-        {'  '}
         <button type="button" className={`${css(app.btn)} btn-md white btcd-mdl-btn`}>Cancel</button>
       </div>
     </div>

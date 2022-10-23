@@ -2,7 +2,15 @@
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
 import produce from 'immer'
-import { createRef, useCallback, useDeferredValue, useEffect, useReducer, useState } from 'react'
+import {
+  createRef,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useReducer,
+  useState,
+  StrictMode,
+} from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -18,7 +26,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId
+  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -29,7 +37,7 @@ import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState } from '../Utils/FormBuilderHelper'
-import { JCOF } from '../Utils/globalHelpers'
+import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
@@ -72,7 +80,7 @@ const FormBuilder = ({ isLoading }) => {
   const isNewForm = formType !== 'edit'
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
-  const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
+  const [showToolBar, setShowToolbar] = useState(!toolbarOff)
   const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
   const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
@@ -84,7 +92,6 @@ const FormBuilder = ({ isLoading }) => {
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
   const [styleLoading, setStyleLoading] = useState(true)
   const bits = useRecoilValue($bits)
-  const [showToolBar, setShowToolbar] = useState(false)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
@@ -99,7 +106,7 @@ const FormBuilder = ({ isLoading }) => {
   const setStaticStylesState = useSetRecoilState($staticStylesState)
   // eslint-disable-next-line no-console
 
-  const { forceBuilderWidthToLG, forceBuilderWidthToBrkPnt } = builderHookStates
+  const { forceBuilderWidthToLG } = builderHookStates
 
   // useEffect(() => {
   // if (formType === 'new') {
@@ -128,7 +135,9 @@ const FormBuilder = ({ isLoading }) => {
       setAllThemeColors(JCOF.parse(themeColors))
       setAllThemeVars(JCOF.parse(themeVars))
       setAllStyles(JCOF.parse(oldAllStyles))
-      setStaticStylesState(JCOF.parse(staticStyles))
+      // fix staticstyle var undefined
+      // console.log({ staticStyles })
+      // setStaticStylesState(JCOF.parse(staticStyles))
       setSavedStylesAndVars({
         allThemeColors: themeColors,
         allThemeVars: themeVars,
@@ -166,37 +175,50 @@ const FormBuilder = ({ isLoading }) => {
     }
   }, [brkPoint, v1Style])
 
-  useEffect(() => { setResponsiveView('lg') }, [forceBuilderWidthToLG])
+  useEffect(() => { setbrkPoint('lg') }, [forceBuilderWidthToLG])
 
   useEffect(() => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : LEFT_MENU_WIDTH
+    const leftBarWidth = toolbarOff ? 0 : LEFT_MENU_WIDTH
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
+    setbrkPoint(brkPoint)
+
     if (brkPoint === 'lg') {
-      setbrkPoint('lg')
       resizer.resizeSection(0, { toSize: leftBarWidth })
       resizer.resizeSection(2, { toSize: rightBarWidth })
     } else if (brkPoint === 'md') {
-      setbrkPoint('md')
       const dividedWidth = (window.innerWidth - tabletSize) / 2
       const s0 = dividedWidth - leftBarWidth
       const s2 = dividedWidth - rightBarWidth
       resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     } else if (brkPoint === 'sm') {
-      setbrkPoint('sm')
       const dividedWidth = (window.innerWidth - mobileSize) / 2
       const s0 = dividedWidth - leftBarWidth
       const s2 = dividedWidth - rightBarWidth
       resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', brkPoint, { breakpoint: getLatestState('breakpoint'), styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
     conRef.current.applyResizer(resizer)
-  }, [forceBuilderWidthToBrkPnt])
+  }, [brkPoint, element, fieldKey, setbrkPoint, toolbarOff])
 
-  const styleProvider = () => {
+  useEffect(() => {
+    const res = conRef.current.getResizer()
+    if (showToolBar && res.getSectionSize(0) <= 160) {
+      res.resizeSection(0, { toSize: 160 })
+      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: false }))
+      conRef.current.applyResizer(res)
+    } else if (!showToolBar && res.getSectionSize(0) >= 160) {
+      res.resizeSection(0, { toSize: 0 })
+      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: true }))
+      conRef.current.applyResizer(res)
+    }
+  }, [showToolBar])
+
+  const styleProvider = useCallback(() => {
     if (!isNewThemeStyleLoaded) {
       if (brkPoint === 'md') {
         const st = v1Style['@media only screen and (max-width:600px)'] || v1Style['@media only screen and (max-width: 600px)']
@@ -208,7 +230,7 @@ const FormBuilder = ({ isLoading }) => {
       }
     }
     return v1Style
-  }
+  }, [brkPoint, isNewThemeStyleLoaded, v1Style])
 
   function setOldExistingStyle() {
     const headers = new Headers()
@@ -259,73 +281,25 @@ const FormBuilder = ({ isLoading }) => {
     sessionStorage.setItem('btcd-fs', bitCipher(oldStyleText))
   }
 
-  const toggleToolBar = useCallback(() => {
-    const res = conRef.current.getResizer()
-    if (res.getSectionSize(0) >= 160) {
-      res.resizeSection(0, { toSize: 0 })
-      setTolbarSiz(true)
-      setShowToolbar(true)
-      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: true }))
-    } else {
-      res.resizeSection(0, { toSize: 160 })
-      setTolbarSiz(false)
-      setShowToolbar(false)
-      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: false }))
-    }
-    conRef.current.applyResizer(res)
-  }, [conRef])
-
-  const addNewData = useCallback(ndata => {
-    setNewData(ndata)
-  }, [])
+  const addNewData = useCallback(ndata => setNewData(ndata), [])
 
   const onResize = useCallback(resizer => {
     if (resizer.isBarActivated(1)) {
-      resizer.resizeSection(0, { toSize: resizer.getSectionSize(2) - 135 })
+      resizer.resizeSection(0, { toSize: resizer.getSectionSize(2) - 130 })
     }
   }, [])
 
-  const onResizeActivate = useCallback(() => {
+  const onResizeActivate = () => {
     setBuilderPointerEventNone(true)
-    document.querySelector('.tool-sec').style.transition = 'flex-grow 0ms'
-  }, [])
+    select('.tool-sec').style.transition = 'flex-grow 0ms'
+  }
 
-  const afterResizing = useCallback(() => {
+  const afterResizing = () => {
     setBuilderPointerEventNone(false)
-    document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
-  }, [])
+    select('.tool-sec').style.transition = 'flex-grow 500ms'
+  }
 
-  const setResponsiveView = useCallback(view => {
-    const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : LEFT_MENU_WIDTH
-    const rightBarWidth = 307
-    const mobileSize = 400
-    const tabletSize = 590
-    if (view === 'lg') {
-      setbrkPoint('lg')
-      resizer.resizeSection(0, { toSize: leftBarWidth })
-      resizer.resizeSection(2, { toSize: rightBarWidth })
-    } else if (view === 'md') {
-      setbrkPoint('md')
-      const dividedWidth = (window.innerWidth - tabletSize) / 2
-      const s0 = dividedWidth - leftBarWidth
-      const s2 = dividedWidth - rightBarWidth
-      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
-      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
-    } else if (view === 'sm') {
-      setbrkPoint('sm')
-      const dividedWidth = (window.innerWidth - mobileSize) / 2
-      const s0 = dividedWidth - leftBarWidth
-      const s2 = dividedWidth - rightBarWidth
-      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
-      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
-    }
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', view, { breakpoint: getLatestState('breakpoint'), styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
-    conRef.current.applyResizer(resizer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conRef])
-
-  const setGrWidth = (paneWidth) => {
+  const handleResize = (paneWidth) => {
     setGridWidth(paneWidth)
     const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
@@ -348,10 +322,8 @@ const FormBuilder = ({ isLoading }) => {
   return (
     <>
       <OptionToolBar
-        setResponsiveView={setResponsiveView}
         setShowToolbar={setShowToolbar}
         showToolBar={showToolBar}
-        toggleToolBar={toggleToolBar}
       />
       <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
@@ -363,56 +335,53 @@ const FormBuilder = ({ isLoading }) => {
       >
         <Section
           className="tool-sec"
-          defaultSize={showToolBar ? 0 : LEFT_MENU_WIDTH}
+          defaultSize={showToolBar ? LEFT_MENU_WIDTH : 0}
         >
-          {styleMode ? <StyleLayers /> : (
-            <ToolBar
-              setNewData={addNewData}
-              className="tile"
-              tolbarSiz={tolbarSiz}
-              setTolbar={toggleToolBar}
-            />
-          )}
+          <StrictMode>
+            {styleMode ? <StyleLayers /> : <ToolBar setNewData={addNewData} />}
+          </StrictMode>
         </Section>
         <Bar className="bar bar-l" />
 
         <Section
-          onSizeChanged={setGrWidth}
+          onSizeChanged={handleResize}
           minSize={320}
           defaultSize={BUILDER_WIDTH}
         >
-          {!isLoading && !styleLoading ? (
-            <RenderPortal
-              id="bit-grid-layout"
-              style={{ width: gridWidth, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
-            >
-              <RenderThemeVarsAndFormCSS />
-              <RenderCssInPortal />
-              {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
-              <GridLayout
-                style={styleProvider()}
-                gridWidth={deferedGridWidth}
-                newData={newData}
-                setNewData={setNewData}
-                formType={formType}
-                formID={formID}
-                setAlertMdl={setAlertMdl}
-              />
-            </RenderPortal>
-          ) : <GridLayoutLoader />}
+          <StrictMode>
+            {!isLoading && !styleLoading ? (
+              <RenderPortal
+                id="bit-grid-layout"
+                style={{ width: gridWidth, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
+              >
+                <RenderThemeVarsAndFormCSS />
+                <RenderCssInPortal />
+                {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
+                <GridLayout
+                  style={styleProvider()}
+                  gridWidth={deferedGridWidth}
+                  newData={newData}
+                  setNewData={setNewData}
+                  formType={formType}
+                  formID={formID}
+                  setAlertMdl={setAlertMdl}
+                />
+              </RenderPortal>
+            ) : <GridLayoutLoader />}
 
+          </StrictMode>
         </Section>
 
         <Bar className="bar bar-r" />
 
         <Section id="settings-menu" defaultSize={RIGHT_MENU_WIDTH} minSize={100}>
-          <BuilderRightPanel
-            brkPoint={brkPoint}
-            style={styleProvider()}
-            setResponsiveView={setResponsiveView}
-            styleDispatch={styleDispatch}
-            formID={formID}
-          />
+          <StrictMode>
+            <BuilderRightPanel
+              style={styleProvider()}
+              styleDispatch={styleDispatch}
+              formID={formID}
+            />
+          </StrictMode>
         </Section>
       </Container>
       <ConfirmModal

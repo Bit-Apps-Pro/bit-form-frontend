@@ -28,7 +28,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows
+  $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
