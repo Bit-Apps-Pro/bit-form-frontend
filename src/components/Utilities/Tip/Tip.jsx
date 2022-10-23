@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import Tippy from '@tippyjs/react'
 import { animateFill } from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
@@ -22,6 +23,8 @@ export default function Tip({
   felaStyle = {},
   whiteSpaceNowrap = false,
   trigger = 'mouseenter',
+  singleton = null,
+  interactive = true,
 }) {
   const { css } = useFela()
   const style = { fw: 400, ff: '"Roboto", sans-serif', fs: 12, letterSpacing: '.3px', ...whiteSpaceNowrap && { whiteSpace: 'nowrap' } }
@@ -35,9 +38,12 @@ export default function Tip({
       delay={delay}
       theme={theme}
       animation="shift-away"
-      interactive
+      moveTransition="transform 0.2s ease-out"
       maxWidth={width}
       arrow={false}
+      {...interactive && { interactive }}
+      {...singleton && { singleton }}
+      // offset={[00, 0]}
       content={<span className={css([style, felaStyle])}>{msg}</span>}
     >
       <span className={className}>{children}</span>

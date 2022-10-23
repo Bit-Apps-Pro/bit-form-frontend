@@ -4,7 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
+import { $breakpoint, $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ErrorBoundary from '../ErrorBoundary'
@@ -23,13 +23,14 @@ const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <Fie
 const FieldsList = loadable(() => import('./FieldsList'), { fallback: <FieldSettingsLoader /> })
 const ThemeGallary = loadable(() => import('../style-new/ThemeGallary'), { fallback: <FieldSettingsLoader /> })
 
-function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
+function BuilderRightPanel({ style, styleDispatch }) {
   const { pathname } = useLocation()
   const { formID, '*': rightPanel } = useParams()
   const rightBar = rightPanel.split('/')[0]
   const { css } = useFela()
   const setScrollTop = useSetRecoilState($builderRightPanelScroll)
   const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
+  const [brkPoint, setResponsiveView] = useRecoilState($breakpoint)
 
   useEffect(() => {
     // setSelectedFieldId(fieldKey)
