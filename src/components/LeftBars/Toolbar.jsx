@@ -79,7 +79,7 @@ function Toolbar({ setNewData }) {
       name: __('Multiline Text'),
       keywords: 'Multline Text',
       icn: <TextareaIcn size="23" />,
-      pos: { h: 100, w: 60, i: 'shadow_block' },
+      pos: { h: 100, w: 60, minW: 9, i: 'shadow_block' },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text'),
