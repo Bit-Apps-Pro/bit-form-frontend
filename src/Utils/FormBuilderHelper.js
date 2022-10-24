@@ -812,3 +812,12 @@ export function isLayoutSame(l1, l2) {
   }
   return true
 }
+
+export function getAbsoluteElmHeight(el, withMargin = 1) {
+  if (!el) return 0
+  const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
+  if (!withMargin) return el.offsetHeight
+  const stl = iFrameWindow.getComputedStyle(el)
+  const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+  return el.offsetHeight + margin
+}
