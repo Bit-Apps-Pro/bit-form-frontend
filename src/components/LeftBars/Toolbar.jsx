@@ -729,7 +729,6 @@ function Toolbar({ setNewData }) {
     }, */
   ]
 
-  // TODO disable this event when a modal opened
   useEffect(() => {
     window.addEventListener('keydown', searchKey)
     return () => {

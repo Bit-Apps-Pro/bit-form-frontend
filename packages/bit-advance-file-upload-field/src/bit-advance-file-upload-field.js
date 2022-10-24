@@ -84,14 +84,12 @@ export default class BitAdvanceFileUpload {
       this.#filePondRef.on('updatefiles', this.#config.onFileUpdate)
     }
 
-    // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
     if (this.#uploadFileToServer) {
       const uri = new URL(this.#ajaxURL)
       this.on_select_upload = this.#configSetting.instantUpload
       uri.searchParams.append('_ajax_nonce', this.#nonce)
 
       this.#filePondRef.setOptions({
-        // TODO - config e uploadFileToServer jodi true ashe, tahole upload hobe, nahole hobena
         server: {
           process: (
             fieldName,

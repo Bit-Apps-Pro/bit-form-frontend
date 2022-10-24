@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import ut from '../../styles/2.utilities'
 import tableStyle from '../../styles/table.style'
 
 export default function Menu({ children, title, icn }) {
