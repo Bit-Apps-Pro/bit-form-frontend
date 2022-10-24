@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpoint,
+import {
+  $breakpoint,
   $builderHistory,
   $builderHookStates,
   $colorScheme,
   $fields,
-  $layouts } from '../GlobalStates/GlobalStates'
+  $layouts
+} from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -18,6 +20,7 @@ import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { reCalculateFldHeights } from '../Utils/FormBuilderHelper'
+import { __ } from '../Utils/i18nwrap'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import VirtualList from './Utilities/VirtualList'
@@ -181,7 +184,7 @@ export default function FormBuilderHistory() {
 
             {histories.length <= 2 && (
               <span className={css(builderHistoryStyle.secondary)}>
-                no data found
+                {__('History Empty')}
               </span>
             )}
             {histories.length > 2 && (

@@ -17,11 +17,9 @@ export default function TableCheckBox(props) {
         <span className="btcd-cbx-title">{props.title}</span>
       </div>
       {props.subTitle && (
-        <>
-          <small className="d-blk mt-1 ml-6 txt-dp" style={{ lineHeight: '18px' }}>
-            {props.subTitle}
-          </small>
-        </>
+        <small className="d-blk mt-1 ml-6 txt-dp" style={{ lineHeight: '18px' }}>
+          {props.subTitle}
+        </small>
       )}
     </label>
   )
