@@ -244,8 +244,6 @@ function handleFormValidationErrorMessages(result, contentId) {
     }
     if (Object.keys(responseData).length > 0) {
       dispatchFieldError(responseData, contentId)
-      /*  //TODO dispatchFieldData */
-      console.log('hi')
     }
   }
 }
