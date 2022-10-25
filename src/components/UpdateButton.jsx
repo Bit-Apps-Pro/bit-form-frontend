@@ -118,9 +118,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const closeTabOrBrowserEvent = e => {
     if (updateBtn.unsaved) {
-      e.preventDefault()
-      // TODO remove this depricated feature
-      e.returnValue = ''
+      const event = e
+      event.preventDefault()
+      event.returnValue = 'Are you sure you want to exit?'
+      return event.returnValue
     }
   }
 
