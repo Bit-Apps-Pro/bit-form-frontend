@@ -188,6 +188,7 @@ function setToastMessage(msgObj) {
   if (msgObj.msgId) {
     msgWrpr = bfSelect(`.msg-content-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
   }
+  if (!msgWrpr) return
   setTimeout(() => {
     msgWrpr.classList.add('active')
   }, 100)

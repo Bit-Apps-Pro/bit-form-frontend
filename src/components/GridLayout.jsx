@@ -4,9 +4,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import {
-  memo, useContext, useEffect, useRef, useState, lazy, Suspense,
-} from 'react'
+import { lazy, memo, Suspense, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -23,7 +21,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId,
+  $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -39,13 +37,14 @@ import {
   filterNumber,
   fitAllLayoutItems,
   fitSpecificLayoutItem,
+  getAbsoluteElmHeight,
   getLatestState,
   getResizableHandles,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -517,7 +516,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
-    setResizingFalse()
     if (styleMode) return
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
@@ -610,12 +608,34 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const setResizingWX = (lays, lay) => {
-    const { w, x } = lays.find(l => l.i === lay.i)
-    setResizingFld({ fieldKey: lay.i, w, x })
+    if (resizingFld.fieldKey) {
+      const layout = lays.find(l => l.i === resizingFld.fieldKey)
+      setResizingFld(prevState => ({ ...prevState, w: layout.w, x: layout.x }))
+      return
+    }
+    const fldKey = lay.i
+    const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+    setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
+  }
+
+  const getInitHeightsForResizingTextarea = fldKey => {
+    const fldData = fields[fldKey]
+    if (!fldData) return
+    const fldType = fldData.typ
+    if (fldType === 'textarea') {
+      const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
+      const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
+      const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
+      const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
+      return { fldHeight, wrpHeight }
+    }
+
+    return {}
   }
 
   const setResizingFldKey = (_, lay) => {
-    setResizingFld({ fieldKey: lay.i })
+    const fldKey = lay.i
+    setResizingFld({ fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
   }
 
   return (
