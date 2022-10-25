@@ -344,6 +344,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     return { newBlk }
   }
 
+  const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
+    const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
+    const newFldKeyExceptFirstLetter = newFldKey.slice(1)
+    const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
+    const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
+    return newFldName
+  }
+
   const cloneLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (!handleFieldExtraAttr(fldData)) return
@@ -364,7 +372,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     setLayouts(tmpLayouts)
     setRootLayouts(tmpLayouts)
-    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newBlk } })
+    const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
+    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
     // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
 
