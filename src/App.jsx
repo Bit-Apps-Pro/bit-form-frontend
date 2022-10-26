@@ -21,7 +21,7 @@ const Nav = ({ setActive }) => {
   const { pathname } = useLocation()
   const url = pathname.split('/')
   const len = url.length
-  const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments']
+  const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general']
   const active = nav.includes(url[len - 1]) || false
   setActive(active)
   return <></>

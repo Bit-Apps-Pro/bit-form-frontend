@@ -114,6 +114,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-helpers/dist/setHiddenFld.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-file-pond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },
@@ -231,10 +235,6 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-conditionals/dist/bit-conditionals.min.js'),
-        dest: absPath('../assets'),
-      },
-      {
-        src: absPath('packages/bit-frontend/dist/honeypot-field.min.js'),
         dest: absPath('../assets'),
       },
       {
