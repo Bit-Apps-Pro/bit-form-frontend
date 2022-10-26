@@ -23,14 +23,15 @@ export default function advancedFileHandle(props, formData) {
     (fldKey) => props.fields[fldKey].typ === 'advanced-file-up',
   )
   for (let i = 0; i < fileFields?.length; i += 1) {
-    if (formData.has(fileFields[i])) {
-      formData.delete(fileFields[i])
-      if (inits[fileFields[i]]?.on_select_upload) {
-        formData.append(fileFields[i], inits[fileFields[i]].uploaded_files)
+    const fldName = props.fields[fileFields[i]].fieldName
+    if (formData.has(fldName)) {
+      formData.delete(fldName)
+      if (inits[fldName]?.on_select_upload) {
+        formData.append(fldName, inits[fldName].uploaded_files)
       } else {
         formData = pushFileToFormData(
           formData,
-          fileFields[i],
+          fldName,
           inits[fileFields[i]].files,
         )
       }

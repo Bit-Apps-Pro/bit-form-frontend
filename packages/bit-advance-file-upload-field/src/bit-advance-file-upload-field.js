@@ -177,6 +177,7 @@ export default class BitAdvanceFileUpload {
 
   reset() {
     this.#filePondRef.destroy(this.#filePondRef.element)
+    this.#fieldUploadWrapper.innerHTML = ''
     this.init()
   }
 }
