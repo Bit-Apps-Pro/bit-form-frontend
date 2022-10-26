@@ -67,7 +67,7 @@ export default function General() {
             </span>
             <b>{__('Generate Token after page load to prevent conflict with cache plugins.')}</b>
           </div>
-          <SingleToggle2 action={handler} name="cache_plugin" checked={appConf?.cache_plugin} className="flx" />
+          <SingleToggle2 action={handler} name="cache_plugin" checked={appConf?.cache_plugin || ''} className="flx" />
         </div>
       </div>
 
