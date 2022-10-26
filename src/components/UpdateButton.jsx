@@ -44,7 +44,6 @@ import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-// TODO - updateGoogleFontUrl move to Utils and discuss with team for optimization
 import { jsObjtoCssStr, removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
@@ -119,9 +118,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const closeTabOrBrowserEvent = e => {
     if (updateBtn.unsaved) {
-      e.preventDefault()
-      // TODO remove this depricated feature
-      e.returnValue = ''
+      const event = e
+      event.preventDefault()
+      event.returnValue = 'Are you sure you want to exit?'
+      return event.returnValue
     }
   }
 
@@ -162,8 +162,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
       if (checkUpdateBtnErrors()) return
-      // TODO: update the code
-      if (style?.font?.fontType === 'Google') updateGoogleFontUrl()
       saveForm()
     } else {
       select('#update-btn').click()
@@ -244,7 +242,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightThemeVars,
       smDarkThemeVars,
     }
-    const allStyles = {
+    let allStyles = {
       lgLightStyles,
       lgDarkStyles,
       mdLightStyles,
@@ -252,6 +250,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles,
     }
+    allStyles = updateGoogleFontUrl(allStyles)
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
     atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
@@ -314,8 +313,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
-            // TODO : keep current route but replace form type and id
-            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
+            navigate(`/form/${page}/${formType}/${data.id}/${rightBarUrl}`, { replace: true })
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))

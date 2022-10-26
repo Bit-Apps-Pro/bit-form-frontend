@@ -17,7 +17,7 @@ import { sortByField } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import VirtualList from '../Utilities/VirtualList'
-import { findExistingFontStyleNWeidth, generateFontUrl, isValidURL } from './styleHelpers'
+import { findExistingFontStyleNWeight, generateFontUrl, isValidURL } from './styleHelpers'
 
 const API_KEY = 'AIzaSyB9lRmRi8phfBLNMT3CpTF2DsWNLGfoFWY'
 const URL = `https://www.googleapis.com/webfonts/v1/webfonts?key=${API_KEY}&sort=popularity`
@@ -113,16 +113,16 @@ export default function FontPickerMenu({ id }) {
     const weightVariants = styles.font.fontWeightVariants
     const styleVariants = styles.font.fontStyle
 
-    const [fontWeight, fontStyle] = findExistingFontStyleNWeidth()
+    const [fontWeight, fontStyle] = findExistingFontStyleNWeight(styles, themeVars)
 
     const getNotExistVariant = fontWeight.filter(w => !weightVariants.includes(Number(w)))
-    const getNotExiststyle = fontStyle.filter(w => !styleVariants.includes(Number(w)))
+    const getNotExistsStyle = fontStyle.filter(w => !styleVariants.includes(Number(w)))
 
     if (getNotExistVariant.length > 0) {
       toast.error(`Not available font weight ${getNotExistVariant.toString()}!`)
     }
-    if (getNotExiststyle.length > 0) {
-      toast.error(`Not available font style ${getNotExiststyle.toString()}!`)
+    if (getNotExistsStyle.length > 0) {
+      toast.error(`Not available font style ${getNotExistsStyle.toString()}!`)
     }
   }
 
@@ -130,15 +130,15 @@ export default function FontPickerMenu({ id }) {
     console.log({ fontFamily, variants })
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
-    setStyles(prvStyles => produce(prvStyles, drft => {
-      drft.font.fontType = 'Google'
-      drft.font.fontWeightVariants = weight
-      drft.font.fontStyle = style
-      drft.font.fontURL = url
-      drft.form[`._frm-bg-${formID}`]['font-family'] = fontFamily
+    setStyles(prvStyles => produce(prvStyles, draft => {
+      draft.font.fontType = 'Google'
+      draft.font.fontWeightVariants = weight
+      draft.font.fontStyle = style
+      draft.font.fontURL = url
+      draft.form[`._frm-bg-${formID}`]['font-family'] = fontFamily
     }))
-    setThemeVars(prvState => produce(prvState, drft => {
-      drft['--g-font-family'] = fontFamily
+    setThemeVars(prvState => produce(prvState, draft => {
+      draft['--g-font-family'] = fontFamily
     }))
     styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantNStyle()
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `${fontFamily} ${variants}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
@@ -158,14 +158,14 @@ export default function FontPickerMenu({ id }) {
 
   const setThemeFont = ({ target: { checked } }) => {
     const font = checked ? 'inherit' : ''
-    setThemeVars(prvState => produce(prvState, drft => {
-      drft['--g-font-family'] = font
+    setThemeVars(prvState => produce(prvState, draft => {
+      draft['--g-font-family'] = font
     }))
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.font.fontType = font
-      drft.font.fontURL = ''
-      drft.font.fontStyle = []
-      drft.font.fontWeightVariants = []
+    setStyles(prvStyle => produce(prvStyle, draft => {
+      draft.font.fontType = font
+      draft.font.fontURL = ''
+      draft.font.fontStyle = []
+      draft.font.fontWeightVariants = []
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', font, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
@@ -173,21 +173,21 @@ export default function FontPickerMenu({ id }) {
   const customFontHandler = ({ target: { name, value } }) => {
     if (name === 'fontURL') {
       if (!isValidURL(value)) return
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.font.fontType = 'Custom'
-        drft.font.fontURL = value
-        drft.font.fontStyle = []
-        drft.font.fontWeightVariants = []
+      setStyles(prvStyle => produce(prvStyle, draft => {
+        draft.font.fontType = 'Custom'
+        draft.font.fontURL = value
+        draft.font.fontStyle = []
+        draft.font.fontWeightVariants = []
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles') }))
     } else {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.font.fontType = 'Custom'
-        drft.font.fontStyle = []
-        drft.font.fontWeightVariants = []
+      setStyles(prvStyle => produce(prvStyle, draft => {
+        draft.font.fontType = 'Custom'
+        draft.font.fontStyle = []
+        draft.font.fontWeightVariants = []
       }))
-      setThemeVars(prvState => produce(prvState, drft => {
-        drft['--g-font-family'] = value
+      setThemeVars(prvState => produce(prvState, draft => {
+        draft['--g-font-family'] = value
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
     }

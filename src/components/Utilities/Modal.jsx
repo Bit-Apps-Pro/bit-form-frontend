@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
+import { searchKey } from '../style-new/styleHelpers'
 
 export default function Modal({
   show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null,
@@ -24,6 +26,25 @@ export default function Modal({
     }
   }
   const cancelBubble = (e) => e.stopPropagation()
+
+  if (show) {
+    window.removeEventListener('keydown', searchKey)
+  } else {
+    window.addEventListener('keydown', searchKey)
+  }
+
+  const hideModal = (e) => {
+    if (e.code === 'Escape') {
+      handleCloseBtnClick()
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', hideModal)
+    return () => {
+      window.removeEventListener('keydown', hideModal)
+    }
+  }, [])
 
   return (
     <CSSTransition
@@ -51,7 +72,15 @@ export default function Modal({
         >
           <div data-testid="mdl-cntnt" className="btcd-modal-content">
             {headerAction}
-            <button data-testid="mdl-cls-btn" onClick={handleCloseBtnClick} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><CloseIcn size={16} stroke={3} /></button>
+            <button
+              data-testid="mdl-cls-btn"
+              onClick={handleCloseBtnClick}
+              className="icn-btn btcd-mdl-close"
+              aria-label="modal-close"
+              type="button"
+            >
+              <CloseIcn size={16} stroke={3} />
+            </button>
             {typeof title === 'string' && <h2 className="btcd-mdl-title flx" style={{ color: warning ? 'red' : '' }}>{title}</h2>}
             {typeof title === 'object' && title}
             <small className="btcd-mdl-subtitle">{subTitle}</small>

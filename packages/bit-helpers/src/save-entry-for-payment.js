@@ -82,14 +82,11 @@ function submitResponse(resp, contentId, formData) {
       let newNonce = ''
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
-        // const oldTokenValue = bfSelect('input[name="b_h_t"]', form)?.value
+        const oldTokenValue = bfSelect('input[name="b_h_t"]', form)?.value
         handleReset(contentId)
         if (typeof result.data === 'object') {
           if (form) {
-            // genereateNewHpToken(result.data, form, oldTokenValue)
-            result?.data?.hidden_fields?.map(hdnFld => {
-              setHiddenFld(hdnFld, form)
-            })
+            genereateNewHpToken(result.data, form, oldTokenValue)
           }
           responsedRedirectPage = result.data.redirectPage
           if (result.data.cron) {
@@ -155,16 +152,16 @@ function submitResponse(resp, contentId, formData) {
     })
 }
 
-// function genereateNewHpToken(responseData, form, oldTokenValue) {
-//   const token = bfSelect("input[name='b_h_t']", form)
-//   if (token) {
-//     token.value = responseData.hp_token
-//     const oldTokenFldName = bfSelect(`input[name="${oldTokenValue}"]`, form)
-//     if (oldTokenFldName) {
-//       oldTokenFldName.name = responseData.hp_token
-//     }
-//   }
-// }
+function genereateNewHpToken(responseData, form, oldTokenValue) {
+  const token = bfSelect("input[name='b_h_t']", form)
+  if (token) {
+    token.value = responseData.hp_token
+    const oldTokenFldName = bfSelect(`input[name="${oldTokenValue}"]`, form)
+    if (oldTokenFldName) {
+      oldTokenFldName.name = responseData.hp_token
+    }
+  }
+}
 function handleReset(contentId, customHook = false) {
   if (customHook) {
     const resetEvent = new CustomEvent('bf-form-reset', {
@@ -183,49 +180,20 @@ function handleReset(contentId, customHook = false) {
 }
 function setToastMessage(msgObj) {
   let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
-
-  msgWrpr.innerHTML = `<div class="form-msg .deactive ${msgObj.type}">${msgObj.msg}</div>`
+  if (msgWrpr.firstChild) {
+    msgWrpr.firstChild.classList.remove('active')
+  }
+  msgWrpr.innerHTML = `<div class="form-msg ${msgObj.type}">${msgObj.msg}</div>`
   msgWrpr = bfSelect('.form-msg', msgWrpr)
   if (msgObj.msgId) {
-    msgWrpr = bfSelect(`.msg-content-${msgObj.msgId} .msg-content`, bfSelect(`#${msgObj.contentId}`))
-    msgWrpr.innerHTML = msgObj.msg
-    msgWrpr = bfSelect(`.msg-container-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
+    msgWrpr = bfSelect(`.msg-content-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
   }
-  if (msgWrpr) {
-    msgWrpr.classList.replace('active', 'deactive')
-  }
-  if (!msgWrpr) return
   setTimeout(() => {
     msgWrpr.classList.add('active')
   }, 100)
   setTimeout(() => {
-    msgWrpr.classList.replace('active', 'deactive')
+    msgWrpr.classList.remove('active')
   }, 5000)
-}
-function triggerIntegration(hitCron, newNonce, contentId) {
-  const props = window.bf_globals[contentId]
-  if (hitCron) {
-    if (typeof hitCron === 'string') {
-      const uri = new URL(hitCron)
-      if (uri.protocol !== window.location.protocol) {
-        uri.protocol = window.location.protocol
-      }
-      fetch(uri)
-    } else {
-      const uri = new URL(props.ajaxURL)
-      uri.searchParams.append('action', 'bitforms_trigger_workflow')
-      const data = {
-        cronNotOk: hitCron,
-        token: newNonce || props.nonce,
-        id: props.appID,
-      }
-      fetch(uri, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      }).then((response) => response.json())
-    }
-  }
 }
 function handleFormValidationErrorMessages(result, contentId) {
   const { data: responseData } = result
@@ -263,15 +231,3 @@ function dispatchFieldError(fldErrors, contentId) {
     errFld.parentElement.style.removeProperty('display')
   })
 }
-
-function disabledSubmitButton(contentId, disabled) {
-  bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
-}
-
-document.querySelectorAll('form').forEach((frm) => {
-  if (frm.id?.startsWith('form-bitforms')) {
-    frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
-    bfSelect('button[type="reset"]', frm)
-      ?.addEventListener('click', (e) => handleReset(e, true))
-  }
-})

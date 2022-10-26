@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
 import MoveIcn from '../Icons/MoveIcn'
-import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
@@ -97,14 +96,8 @@ export default function FieldBlockWrapper({
 }
 
 const ComponentsByTheme = ({ layoutItem, formID, fields, resizingFld }) => {
-  const { reCaptchaV2 } = useContext(AppSettings)
-
   const componentProps = deepCopy(fields[layoutItem.i])
-  // TODO move this code with recaptcha component after remove react frontend
-  if (componentProps && componentProps.typ === 'recaptcha') {
-    componentProps.siteKey = reCaptchaV2.siteKey
-  }
-  // TODO : handle old components in v1 compitable
+  // TODO : handle old components in v1 compatible
   if (0) {
     return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }

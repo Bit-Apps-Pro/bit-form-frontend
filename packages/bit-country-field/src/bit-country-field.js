@@ -676,7 +676,7 @@ export default class BitCountryField {
     this.#detachAllEvents()
   }
 
-  // TODO make public reset api for all custom field
+  // make public reset api for all custom field
   reset() {
     // if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm?.click()
     this.#clearSelectedCountry()

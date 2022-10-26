@@ -879,4 +879,4 @@ export default class BitDropdownField {
 //   }
 // })
 
-// TODO setconfig property
+// setconfig property

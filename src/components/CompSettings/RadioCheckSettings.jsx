@@ -241,35 +241,6 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
-      {/* <FieldReadOnlySettings />
-
-      <FieldSettingsDivider />
-
-      <FieldDisabledSettings />
-
-      <FieldSettingsDivider /> */}
-
-      {/* <SimpleAccordion
-        id="rqrd-stng"
-        title={__('Required')}
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        switching
-        tip="By disabling this option, the field required will be hidden"
-        tipProps={{ width: 250, icnSize: 17 }}
-        toggleAction={setRadioRequired}
-        toggleChecked={isRadioRequired}
-        open
-      >
-        {(isRadioRequired || isOptionRequired) && (
-          <ErrorMessageSettings
-            id="rqrd-stng"
-            type="req"
-            title="Error Message"
-            tipTitle="By enabling this feature, user will see the error message when required option is not checked"
-          />
-        )}
-      </SimpleAccordion> */}
-      {/* TODO this required settings should be checked by Md.abbas */}
       <RequiredSettings />
 
       <FieldSettingsDivider />

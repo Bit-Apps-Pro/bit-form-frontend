@@ -4,9 +4,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import {
-  memo, useContext, useEffect, useRef, useState, lazy, Suspense,
-} from 'react'
+import { lazy, memo, Suspense, useContext, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -23,7 +21,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId,
+  $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -39,6 +37,7 @@ import {
   filterNumber,
   fitAllLayoutItems,
   fitSpecificLayoutItem,
+  getAbsoluteElmHeight,
   getLatestState,
   getResizableHandles,
   isLayoutSame,
@@ -46,6 +45,7 @@ import {
   propertyValueSumY,
   reCalculateFldHeights,
   removeFormUpdateError,
+  sortLayoutByXY
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -334,10 +334,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       return newStyles
     })
 
-    // TODO remove tempstyle add savedStylesAndvars
-    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
-      draftStyle.styles = newStyles
-    }))
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
 
@@ -346,6 +342,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }, 100)
 
     return { newBlk }
+  }
+
+  const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
+    const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
+    const newFldKeyExceptFirstLetter = newFldKey.slice(1)
+    const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
+    const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
+    return newFldName
   }
 
   const cloneLayoutItem = fldKey => {
@@ -368,7 +372,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     setLayouts(tmpLayouts)
     setRootLayouts(tmpLayouts)
-    const oldFields = produce(fields, draft => { draft[newBlk] = fldData })
+    const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
+    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
     // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
 
@@ -384,10 +389,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       })
     }))
 
-    // TODO remove tempstyle add savedStylesAndvars
-    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
-      draftStyle.styles = getLatestState('styles')
-    }))
     sessionStorage.setItem('btcd-lc', '-')
 
     setTimeout(() => {
@@ -517,7 +518,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
-    setResizingFalse()
     if (styleMode) return
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
@@ -588,15 +588,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
   }, [inspectMode])
 
-  // TODO: rubel redundent sort layout function
-  // sort the fields in the order of their position based on the y and x coordinates
-  const sortLayoutsBasedOnXY = () => {
-    const lays = deepCopy(layouts[breakpoint])
-    lays.sort(sortArrOfObjByMultipleProps(['y', 'x']))
-
-    return lays
-  }
-
   const setResizingFalse = () => {
     if (isObjectEmpty(resizingFld)) return
     if (delayRef.current !== null) {
@@ -610,12 +601,34 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const setResizingWX = (lays, lay) => {
-    const { w, x } = lays.find(l => l.i === lay.i)
-    setResizingFld({ fieldKey: lay.i, w, x })
+    if (resizingFld.fieldKey) {
+      const layout = lays.find(l => l.i === resizingFld.fieldKey)
+      setResizingFld(prevState => ({ ...prevState, w: layout.w, x: layout.x }))
+      return
+    }
+    const fldKey = lay.i
+    const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+    setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
+  }
+
+  const getInitHeightsForResizingTextarea = fldKey => {
+    const fldData = fields[fldKey]
+    if (!fldData) return
+    const fldType = fldData.typ
+    if (fldType === 'textarea') {
+      const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
+      const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
+      const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
+      const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
+      return { fldHeight, wrpHeight }
+    }
+
+    return {}
   }
 
   const setResizingFldKey = (_, lay) => {
-    setResizingFld({ fieldKey: lay.i })
+    const fldKey = lay.i
+    setResizingFld({ fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
   }
 
   return (
@@ -694,7 +707,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                 </ResponsiveReactGridLayout>
               ) : (
                 <div className="_frm-g">
-                  {sortLayoutsBasedOnXY().map(layoutItem => (
+                  {sortLayoutByXY(layouts[breakpoint]).map(layoutItem => (
                     <div
                       key={layoutItem.i}
                       data-key={layoutItem.i}
