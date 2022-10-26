@@ -312,7 +312,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
-            navigate(`/form/${page}/${formType}/${data.id}/${rightBarUrl}`, { replace: true })
+            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
           }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
