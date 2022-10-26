@@ -186,6 +186,8 @@ export default function inputWrapperClasses(fk) {
       'border-width': 'var(--err-bdr-width, 0)',
       'font-weight': 'var(--err-txt-font-w)',
       'font-style': 'var(--err-txt-font-style)',
+      height: 'var(--err-h)',
+      transition: 'all .3s',
     },
     [`.${fk}-err-txt-pre-i`]: {
       width: 'var(--err-txt-pre-i-w)',
