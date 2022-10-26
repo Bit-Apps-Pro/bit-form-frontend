@@ -82,11 +82,9 @@ function submitResponse(resp, contentId, formData) {
       let newNonce = ''
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
-        // const oldTokenValue = bfSelect('input[name="b_h_t"]', form)?.value
         handleReset(contentId)
         if (typeof result.data === 'object') {
           if (form) {
-            // genereateNewHpToken(result.data, form, oldTokenValue)
             result?.data?.hidden_fields?.map(hdnFld => {
               setHiddenFld(hdnFld, form)
             })
@@ -106,7 +104,7 @@ function submitResponse(resp, contentId, formData) {
             msgId: result.data.msg_id,
             msg: result.data.message,
             show: true,
-            type: 'warning',
+            type: 'success',
             error: false,
             id: 1,
           })
@@ -114,6 +112,7 @@ function submitResponse(resp, contentId, formData) {
           setToastMessage({
             contentId,
             msg: result.data,
+            type: 'success',
             show: true,
             error: false,
             id: 2,
@@ -155,16 +154,6 @@ function submitResponse(resp, contentId, formData) {
     })
 }
 
-// function genereateNewHpToken(responseData, form, oldTokenValue) {
-//   const token = bfSelect("input[name='b_h_t']", form)
-//   if (token) {
-//     token.value = responseData.hp_token
-//     const oldTokenFldName = bfSelect(`input[name="${oldTokenValue}"]`, form)
-//     if (oldTokenFldName) {
-//       oldTokenFldName.name = responseData.hp_token
-//     }
-//   }
-// }
 function handleReset(contentId, customHook = false) {
   if (customHook) {
     const resetEvent = new CustomEvent('bf-form-reset', {
@@ -175,7 +164,7 @@ function handleReset(contentId, customHook = false) {
 
   const props = window.bf_globals[contentId]
   bfSelect(`#form-${contentId}`).reset()
-  typeof customFieldsReset !== 'undefined' && customFieldsReset()
+  typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
 
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
     resetCaptcha()
@@ -184,7 +173,7 @@ function handleReset(contentId, customHook = false) {
 function setToastMessage(msgObj) {
   let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
 
-  msgWrpr.innerHTML = `<div class="form-msg .deactive ${msgObj.type}">${msgObj.msg}</div>`
+  msgWrpr.innerHTML = `<div class="form-msg deactive ${msgObj.type}">${msgObj.msg}</div>`
   msgWrpr = bfSelect('.form-msg', msgWrpr)
   if (msgObj.msgId) {
     msgWrpr = bfSelect(`.msg-content-${msgObj.msgId} .msg-content`, bfSelect(`#${msgObj.contentId}`))
@@ -194,9 +183,9 @@ function setToastMessage(msgObj) {
   if (msgWrpr) {
     msgWrpr.classList.replace('active', 'deactive')
   }
-  if (!msgWrpr) return
+  if (!msgWrpr) { return }
   setTimeout(() => {
-    msgWrpr.classList.add('active')
+    msgWrpr.classList.replace('deactive', 'active')
   }, 100)
   setTimeout(() => {
     msgWrpr.classList.replace('active', 'deactive')
