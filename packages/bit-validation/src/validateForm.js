@@ -40,11 +40,12 @@ export default function validateForm({ form, input }) {
     if (!fldValue && !errKey) {
       errKey = typeof requiredFldValidation !== 'undefined' ? requiredFldValidation(fldData) : null
     }
+    generateErrMsg(errKey, fldKey, fldData)
     if (errKey) {
-      generateErrMsg(errKey, fldKey, fldData)
       formCanBeSubmitted = false
       continue
     }
+    if (!fldValue) continue
 
     if (fldType === 'number' && typeof nmbrFldValidation !== 'undefined') errKey = nmbrFldValidation(fldValue, fldData)
     else if (fldType === 'email' && typeof emailFldValidation !== 'undefined') errKey = emailFldValidation(fldValue, fldData)
