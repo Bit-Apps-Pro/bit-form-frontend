@@ -111,7 +111,7 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       errFld.parentElement.style.marginTop = '9px'
-      errFld.parentElement.style.height = '30px'
+      errFld.parentElement.style.height = `${errFld.scrollHeight}px`
       // errFld.parentElement.style.removeProperty('display')
       errFld.parentElement.style.opacity = 1
       scrollToFld(fldKey)
