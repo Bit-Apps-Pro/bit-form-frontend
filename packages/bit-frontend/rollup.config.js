@@ -5,7 +5,7 @@ import { terser } from 'rollup-plugin-terser'
 
 export default function generateRollupConfig() {
   const isDev = process.env.NODE_ENV === 'dev'
-  const fileNames = ['hidden-token-field', 'honeypot-field', 'submit-form', 'custom-fields-reset', 'advanced-file-up-handle']
+  const fileNames = ['hidden-token-field', 'submit-form', 'custom-fields-reset', 'advanced-file-up-handle']
 
   const external = [
     'window',
