@@ -241,7 +241,6 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
-      {/* TODO this required settings should be checked by Md.abbas */}
       <RequiredSettings />
 
       <FieldSettingsDivider />

@@ -48,7 +48,7 @@ export default function Payment({ allIntegURL }) {
       if (!tmpSetting.apiKey || !tmpSetting.apiSecret || !tmpSetting.name) {
         validation = true
       }
-    } else if (!tmpSetting.name || !tmpSetting.clientID) {
+    } else if (!tmpSetting.name || !tmpSetting.clientID || !tmpSetting.clientSecret || !tmpSetting.mode) {
       validation = true
     }
 

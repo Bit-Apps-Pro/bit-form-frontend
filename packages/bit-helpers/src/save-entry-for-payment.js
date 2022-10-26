@@ -188,38 +188,12 @@ function setToastMessage(msgObj) {
   if (msgObj.msgId) {
     msgWrpr = bfSelect(`.msg-content-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
   }
-  if (!msgWrpr) return
   setTimeout(() => {
     msgWrpr.classList.add('active')
   }, 100)
   setTimeout(() => {
     msgWrpr.classList.remove('active')
   }, 5000)
-}
-function triggerIntegration(hitCron, newNonce, contentId) {
-  const props = window.bf_globals[contentId]
-  if (hitCron) {
-    if (typeof hitCron === 'string') {
-      const uri = new URL(hitCron)
-      if (uri.protocol !== window.location.protocol) {
-        uri.protocol = window.location.protocol
-      }
-      fetch(uri)
-    } else {
-      const uri = new URL(props.ajaxURL)
-      uri.searchParams.append('action', 'bitforms_trigger_workflow')
-      const data = {
-        cronNotOk: hitCron,
-        token: newNonce || props.nonce,
-        id: props.appID,
-      }
-      fetch(uri, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      }).then((response) => response.json())
-    }
-  }
 }
 function handleFormValidationErrorMessages(result, contentId) {
   const { data: responseData } = result
@@ -257,15 +231,3 @@ function dispatchFieldError(fldErrors, contentId) {
     errFld.parentElement.style.removeProperty('display')
   })
 }
-
-function disabledSubmitButton(contentId, disabled) {
-  bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
-}
-
-document.querySelectorAll('form').forEach((frm) => {
-  if (frm.id?.startsWith('form-bitforms')) {
-    frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
-    bfSelect('button[type="reset"]', frm)
-      ?.addEventListener('click', (e) => handleReset(e, true))
-  }
-})

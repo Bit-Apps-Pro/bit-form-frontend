@@ -44,7 +44,8 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
+  sortLayoutByXY
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -333,10 +334,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       return newStyles
     })
 
-    // TODO remove tempstyle add savedStylesAndvars
-    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
-      draftStyle.styles = newStyles
-    }))
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
 
@@ -345,6 +342,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }, 100)
 
     return { newBlk }
+  }
+
+  const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
+    const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
+    const newFldKeyExceptFirstLetter = newFldKey.slice(1)
+    const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
+    const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
+    return newFldName
   }
 
   const cloneLayoutItem = fldKey => {
@@ -367,7 +372,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     setLayouts(tmpLayouts)
     setRootLayouts(tmpLayouts)
-    const oldFields = produce(fields, draft => { draft[newBlk] = fldData })
+    const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
+    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
     // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
 
@@ -383,10 +389,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       })
     }))
 
-    // TODO remove tempstyle add savedStylesAndvars
-    setTempStyles(prevTempStyle => produce(prevTempStyle, draftStyle => {
-      draftStyle.styles = getLatestState('styles')
-    }))
     sessionStorage.setItem('btcd-lc', '-')
 
     setTimeout(() => {
@@ -586,15 +588,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
   }, [inspectMode])
 
-  // TODO: rubel redundent sort layout function
-  // sort the fields in the order of their position based on the y and x coordinates
-  const sortLayoutsBasedOnXY = () => {
-    const lays = deepCopy(layouts[breakpoint])
-    lays.sort(sortArrOfObjByMultipleProps(['y', 'x']))
-
-    return lays
-  }
-
   const setResizingFalse = () => {
     if (isObjectEmpty(resizingFld)) return
     if (delayRef.current !== null) {
@@ -714,7 +707,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                 </ResponsiveReactGridLayout>
               ) : (
                 <div className="_frm-g">
-                  {sortLayoutsBasedOnXY().map(layoutItem => (
+                  {sortLayoutByXY(layouts[breakpoint]).map(layoutItem => (
                     <div
                       key={layoutItem.i}
                       data-key={layoutItem.i}
