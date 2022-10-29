@@ -13,7 +13,7 @@ export const $staticStylesState = atom({
       '.d-none': { display: 'none' },
       '.vis-n': { visibility: 'hidden' },
       '.form-msg': {
-        background: 'green',
+        background: '#ffe8c3',
         'border-radius': '6px',
         margin: '6px 0px',
         padding: '5px 14px',

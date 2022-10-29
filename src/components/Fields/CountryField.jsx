@@ -41,6 +41,13 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       noCountryFoundText,
     } = fieldData.config
 
+    if (!iFrameWindow.bit_virtualized_list) {
+      iFrameWindow.bit_virtualized_list = bitVirtualizedList
+    }
+    if (!iFrameWindow.observeElm) {
+      iFrameWindow.observeElm = observeElm
+    }
+
     const configOptions = {
       fieldKey,
       selectedFlagImage,
@@ -71,12 +78,6 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
       },
     }
 
-    if (!iFrameWindow.bit_virtualized_list) {
-      iFrameWindow.bit_virtualized_list = bitVirtualizedList
-    }
-    if (!iFrameWindow.observeElm) {
-      iFrameWindow.observeElm = observeElm
-    }
     countryFieldRef.current = new BitCountryField(fldElm, configOptions)
   }, [fieldData])
 

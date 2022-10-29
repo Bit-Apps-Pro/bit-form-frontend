@@ -9,6 +9,8 @@ export default class BitAdvanceFileUpload {
 
   #configSetting = {}
 
+  #fieldKey = null
+
   #formID = null
 
   #ajaxURL = null
@@ -28,6 +30,7 @@ export default class BitAdvanceFileUpload {
 
   constructor(selector, config) {
     Object.assign(this.#config, config)
+    this.#fieldKey = config.fieldKey
     if (typeof selector === 'string') {
       this.#fieldUploadWrapper = this.#config.document.querySelector(selector)
     } else {
@@ -80,6 +83,9 @@ export default class BitAdvanceFileUpload {
 
     this.#filePondRef = create(this.#configSetting)
     this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
+    setTimeout(() => {
+      this.#document.querySelector(`.${this.#fieldKey}-lbl`).setAttribute('for', this.#select('input[name="filepond"]').id)
+    }, 100)
     if (this.#config.onFileUpdate) {
       this.#filePondRef.on('updatefiles', this.#config.onFileUpdate)
     }
@@ -175,8 +181,11 @@ export default class BitAdvanceFileUpload {
     // this.#filePondRef.destroy(this.#filePondRef.element)
   }
 
+  #select(selector) { return this.#fieldUploadWrapper.querySelector(selector) || console.error('selector not found', selector) }
+
   reset() {
     this.#filePondRef.destroy(this.#filePondRef.element)
+    this.#fieldUploadWrapper.innerHTML = ''
     this.init()
   }
 }

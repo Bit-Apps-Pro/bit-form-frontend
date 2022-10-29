@@ -33,7 +33,7 @@ function DropDown({
     const {
       selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect,
     } = fieldData.config
-
+    const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
     const configOptions = {
       fieldKey,
       selectedOptImage,
@@ -49,7 +49,7 @@ function DropDown({
       closeOnSelect,
       activeList,
       document: document.getElementById('bit-grid-layout').contentDocument,
-      window: document.getElementById('bit-grid-layout').contentWindow,
+      window: iFrameWindow,
       attributes: {
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
         'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
@@ -64,8 +64,8 @@ function DropDown({
       },
     }
 
-    if (!window.observeElm) {
-      window.observeElm = observeElm
+    if (!iFrameWindow.observeElm) {
+      iFrameWindow.observeElm = observeElm
     }
     // dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
     dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
