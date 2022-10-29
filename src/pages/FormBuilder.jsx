@@ -28,7 +28,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
   $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
 } from '../GlobalStates/GlobalStates'
-import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $savedStyles, $savedStylesAndVars, $savedThemeColors, $savedThemeVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -95,7 +95,7 @@ const FormBuilder = ({ isLoading }) => {
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
 
   const setAllThemeColors = useSetRecoilState($allThemeColors)
@@ -131,28 +131,33 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
     if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars, themeColors, style: oldAllStyles, staticStyles } = oldStyles
-      setAllThemeColors(JCOF.parse(themeColors))
-      setAllThemeVars(JCOF.parse(themeVars))
-      setAllStyles(JCOF.parse(oldAllStyles))
+      const { themeVars: themeVarsStr, themeColors: themeColorsStr, style: stylesStr, staticStyles: staticStylesStr } = oldStyles
+      const themeVars = JCOF.parse(themeVarsStr)
+      const themeColors = JCOF.parse(themeColorsStr)
+      const style = JCOF.parse(stylesStr)
+      // const staticStyles = JCOF.parse(staticStylesStr)
+
+      setAllThemeVars(themeVars)
+      setAllThemeColors(themeColors)
+      setAllStyles(style)
       // fix staticstyle var undefined
       // console.log({ staticStyles })
-      // setStaticStylesState(JCOF.parse(staticStyles))
+      // setStaticStylesState(staticStyles)
       setSavedStylesAndVars({
-        allThemeColors: themeColors,
         allThemeVars: themeVars,
-        allStyles: oldAllStyles,
+        allThemeColors: themeColors,
+        allStyles: style,
       })
 
       setBreakpointSize(oldStyles.breakpointSize)
 
-      setBuilderHistory(prevHistory => produce(prevHistory, drft => {
-        const { state } = drft.histories[0]
-        drft.histories[0].state = {
-          ...state,
-          // ...allStyleStates, // TODO fix this with lot of state
-        }
-      }))
+      const allStyleStates = {
+        allThemeVars: themeVars,
+        allThemeColors: themeColors,
+        allStyles: style,
+      }
+
+      addToBuilderHistory({ state: { ...allStyleStates } }, false, 0)
       setStyleLoading(false)
       setIsNewThemeStyleLoaded(true)
     } else if (!isFetchingStyles && !isNewForm) {
@@ -201,7 +206,6 @@ const FormBuilder = ({ isLoading }) => {
       resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Breakpoint', brkPoint, { breakpoint: getLatestState('breakpoint'), styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
     conRef.current.applyResizer(resizer)
   }, [brkPoint, element, fieldKey, setbrkPoint, toolbarOff])
 
