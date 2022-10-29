@@ -1,10 +1,7 @@
 import { atom, selector } from 'recoil'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
-export const $themeVarsLgLight = atom({
-  key: '$themeVarsLgLight',
-  default: {},
-})
+export const $themeVarsLgLight = atom({ key: '$themeVarsLgLight', default: {} })
 export const $themeVarsMdLight = atom({ key: '$themeVarsMdLight', default: {} })
 export const $themeVarsSmLight = atom({ key: '$themeVarsSmLight', default: {} })
 
