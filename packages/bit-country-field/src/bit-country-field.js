@@ -117,6 +117,8 @@ export default class BitCountryField {
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
+    this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`)
+    this.#selectedCountryClearBtnElm = this.#selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {}
     this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
@@ -335,10 +337,6 @@ export default class BitCountryField {
     const selectedItem = this.#getSelectedCountryItem()
     if (!selectedItem) return
 
-    this.#selectedCountryLblElm = this.#select(`.${this.fieldKey}-selected-country-lbl`)
-    if (this.#selectedCountryClearable) {
-      this.#selectedCountryClearBtnElm = this.#selectedCountryClearable ? this.#select(`.${this.fieldKey}-inp-clr-btn`) : {}
-    }
     if (this.#selectedFlagImage && this.#selectedCountryImgElm) {
       this.#selectedCountryImgElm.src = `${this.#assetsURL}${selectedItem.img}`
     }
