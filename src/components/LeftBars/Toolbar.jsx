@@ -554,7 +554,7 @@ function Toolbar({ setNewData }) {
       name: __('Decision Box'),
       keywords: 'Decision box, GDPR',
       icn: <DecisionBoxIcn size="23" />,
-      pos: { h: 80, w: 60, i: 'shadow_block' },
+      pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box'),
