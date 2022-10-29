@@ -111,7 +111,7 @@ export default class BitCurrencyField {
     this.#addEvent(this.#currencyInputElm, 'blur', () => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
 
-    observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    this.#window.observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
 
     if (this.#config.selectedCurrencyClearable) this.#addEvent(this.#clearCurrencyInputElm, 'click', e => { this.#handleClearCurrencyInput(e) })
 
@@ -500,7 +500,7 @@ export default class BitCurrencyField {
 
   #generateOptions() {
     const selectedIndex = this.#getSelectedCurrencyIndex()
-    this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
+    this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#options.length,
       rowHeight: this.rowHeight,

@@ -115,7 +115,7 @@ export default class BitDropdownField {
     // this.#addEvent(this.#customOption, 'click', () => { this.#addCustomOption() })
     // }
 
-    observeElm(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
+    this.#window.observeElm(this.#dropdownHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
   }
 
   #initOptionsList() {

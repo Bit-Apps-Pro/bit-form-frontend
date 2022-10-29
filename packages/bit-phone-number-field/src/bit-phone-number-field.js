@@ -125,7 +125,7 @@ export default class BitPhoneNumberField {
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
     this.#placeholderImage = this.#config.placeholderImage ? this.#config.placeholderImage : this.#placeholderImage
 
-    observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    this.#window.observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
@@ -456,7 +456,7 @@ export default class BitPhoneNumberField {
 
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
-    this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
+    this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#options.length,
       rowHeight: this.rowHeight,

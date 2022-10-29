@@ -62,6 +62,7 @@ function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
 
     const configuration = {
       configSetting: config,
+      fieldKey,
       window: iFrameWindow,
       document: document.getElementById('bit-grid-layout').contentDocument,
       formID,

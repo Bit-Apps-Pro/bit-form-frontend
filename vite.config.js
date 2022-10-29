@@ -246,11 +246,11 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/advanced-file-up-handle.min.js'),
+        src: absPath('packages/bit-frontend/dist/advancedFileHandle.min.js'),
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/custom-fields-reset.min.js'),
+        src: absPath('packages/bit-frontend/dist/customFieldsReset.min.js'),
         dest: absPath('../assets'),
       },
     ],
