@@ -25,6 +25,7 @@ import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { bitDecipher, hideWpMenu, resetRecoilStates, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
@@ -56,7 +57,6 @@ function FormDetails() {
   const [integrations, setIntegration] = useRecoilState($integrations)
   const setConfirmations = useSetRecoilState($confirmations)
   const setReportId = useSetRecoilState($reportId)
-  const setBuilderHistory = useSetRecoilState($builderHistory)
   const setBuilderSettings = useSetRecoilState($builderSettings)
   const setLayouts = useSetRecoilState($layouts)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
@@ -97,19 +97,7 @@ function FormDetails() {
     setAllStyles(allStyles)
     setSavedStylesAndVars({ allThemeColors, allThemeVars, allStyles })
     setIsNewThemeStyleLoaded(true)
-    // TODO: RUBel , recheck this
-    // setBuilderHistory({
-    //   name,
-    //   fields,
-    //   layouts,
-    //   confirmations,
-    //   conditions,
-    //   allThemeColors,
-    //   allThemeVars,
-    //   allStyles,
-    //   breakpoint: 'lg',
-    //   colorScheme: 'light',
-    // })
+    addToBuilderHistory({ state: { fields, layouts, allThemeColors, allThemeVars, allStyles } }, false, 0)
     setisLoading(false)
   }
 
@@ -125,10 +113,10 @@ function FormDetails() {
       const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
       if (formData.layout !== undefined) {
         setLayouts(formData.layout)
-        setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = formData.layout }))
+        addToBuilderHistory({ state: { layouts: formData.layout } }, false, 0)
       }
       setFields(formData.fields)
-      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = formData.fields }))
+      addToBuilderHistory({ state: { fields: formData.fields } }, false, 0)
       setFormInfo(oldInfo => ({ ...oldInfo, formName: formData.form_name }))
       setworkFlows(formData.workFlows)
       setAdditional(formData.additional)
@@ -188,12 +176,12 @@ function FormDetails() {
             const responseData = res.data
             if (responseData.form_content.layout !== undefined) {
               setLayouts(responseData.form_content.layout)
-              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layouts }))
+              addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
             }
             const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
 
             setFields(responseData.form_content.fields)
-            setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
+            addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
             setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)
