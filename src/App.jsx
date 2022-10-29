@@ -94,7 +94,6 @@ export default function App() {
 }
 
 function removeUnwantedCSS() {
-  console.log('removecss')
   const conflictStyles = ['bootstrap']
   const styles = document.styleSheets
 
