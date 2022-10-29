@@ -42,7 +42,7 @@ function FormDetails() {
   const setFormId = useSetRecoilState($formId)
   const setFields = useSetRecoilState($fields)
   const setFieldLabels = useSetRecoilState($fieldLabels)
-  const [fulScn, setFulScn] = useState(true)
+  const [appFullScreen, setAppFullScreen] = useState(true)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const updateBtn = useRecoilValue($updateBtn)
@@ -74,50 +74,6 @@ function FormDetails() {
     const pathArray = loaciton.pathname.split('/')
     return pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1)
   }
-
-  // const setNewFormProps = () => {
-  //   // for all kind of template
-  //   if (formType === 'new') {
-  //     setworkFlows(defaultWorkflowValue)
-  //     setConfirmations(defaultConfirmationValue(formID))
-  //   }
-  //   // form blank form only
-  //   // if (formId === 'Blank') {
-  //   if (formType === 'new') {
-  //     const btnFld = {}
-  //     const btnFieldKey = `b${newFormId}-1`
-  //     btnFld[btnFieldKey] = btnData
-  //     setFields(btnFld)
-  //     const btnLay = { lg: [], md: [], sm: [] }
-  //     const subBtnLay = { h: 40, i: btnFieldKey, w: 60, x: 0, y: 0 }
-  //     btnLay.lg.push(subBtnLay)
-  //     btnLay.md.push(subBtnLay)
-  //     btnLay.sm.push(subBtnLay)
-  //     setLay(btnLay)
-  //     setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-  //       draft.histories[0].state = { fields: btnFld, layouts: btnLay, breakpoint, colorScheme }
-  //     }))
-  //     setisLoading(false)
-  //     setStyles(styles => produce(styles, draftStyle => {
-  //       const globalTheme = draftStyle.theme
-  //       if (globalTheme === 'bitformDefault') {
-  //         const fieldStyle = bitformDefaultTheme({ fieldKey: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] })
-  //         draftStyle.fields[btnFieldKey] = fieldStyle
-  //       }
-
-  //       // if (globalTheme === 'material') {
-  //       //   const fieldStyle = materialTheme(btnFieldKey, btnData.typ, themeVars['--dir'])
-  //       //   draftStyle.fields[btnFieldKey] = fieldStyle
-  //       // }
-
-  //       if (globalTheme === 'atlassian') {
-  //         const obj = { fk: btnFieldKey, type: btnData.typ, direction: themeVars['--dir'] }
-  //         const fieldStyle = atlassianTheme(obj)
-  //         draftStyle.fields[btnFieldKey] = fieldStyle
-  //       }
-  //     }))
-  //   }
-  // }
 
   const setNewFormInitialStates = () => {
     const {
@@ -189,7 +145,7 @@ function FormDetails() {
 
   const onUnmount = () => {
     showWpMenu()
-    setFulScn(false)
+    setAppFullScreen(false)
     resetRecoilStates()
   }
 
@@ -300,7 +256,7 @@ function FormDetails() {
 
   return (
     <ShowProModalContext.Provider value={setProModal}>
-      <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
+      <div className={`btcd-builder-wrp ${appFullScreen && 'btcd-ful-scn'}`}>
         <Modal
           sm
           show={proModal.show}

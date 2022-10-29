@@ -1597,6 +1597,9 @@ arrow:after,
  }
  
  .tip-btn {
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
     font-family: "Outfit", sans-serif;
     border: 0;
     padding: 6px 15px;

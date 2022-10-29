@@ -20,7 +20,6 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
       [`.${fk}-cc`]: {
         display: 'flex',
         'flex-wrap': 'wrap',
-        'margin-top': '8px',
       },
       // checkbox wrapper
       [`.${fk}-cw`]: { margin: '0px 10px 0px 0px' },
@@ -30,7 +29,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         display: 'flex',
         'align-items': 'center',
         color: 'var(--global-font-color)',
-        padding: '5px',
+        padding: '3px',
       },
       [`.${fk}-ct`]: { 'line-height': 'initial' },
       // checkbox input

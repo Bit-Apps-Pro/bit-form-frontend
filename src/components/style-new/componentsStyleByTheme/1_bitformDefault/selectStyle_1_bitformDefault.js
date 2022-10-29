@@ -20,9 +20,9 @@ export default function selectStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'border-width': 'var(--g-bdr-width)!important',
         'font-size': 'var(--fld-fs)!important',
         color: 'var(--global-font-color)!important',
-        padding: '10px 8px 10px 8px!important',
+        padding: '6px!important',
         'line-height': '1.4 !important',
-        'min-height': '40px',
+        height: '40px',
       },
       [`.${fk}-fld:focus`]: {
         'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30)!important',

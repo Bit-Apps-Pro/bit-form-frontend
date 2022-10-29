@@ -12,7 +12,7 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
       [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
       // field style
       [`.${fk}-fld`]: {
-        display: ' inline-block !important',
+        display: type === 'textarea' ? 'block!important' : 'inline-block!important',
         direction: 'inherit !important',
         // 'max-width': '100% !important',
         'font-family': 'var(--g-font-family)',
@@ -25,7 +25,7 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
         color: 'var(--global-font-color) !important',
-        padding: '10px 8px 10px 8px!important',
+        padding: '8px!important',
         'line-height': '1.4 !important',
         // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
         height: type === 'textarea' ? '' : '40px',
