@@ -1,5 +1,7 @@
 import { replaceWithField } from './checkLogic'
 
+const select = (contentId, selector) => document.querySelector(`#form-${contentId} ${selector}`)
+
 const setFieldValue = (fldData, val) => {
   const { fieldName, typ } = fldData
   if (typ === 'radio') {
@@ -46,6 +48,34 @@ const setActionValue = (actionDetail, props, fieldValues) => {
 const setActionHide = (actionDetail, props, val) => {
   if (props.fields[actionDetail.field]) {
     props.fields[actionDetail.field].valid.hide = val
+    const fldKey = actionDetail.field
+
+    const selector = document.querySelector(`.btcd-fld-itm.${fldKey}`)
+    const fld = window.getComputedStyle(selector)
+    let heightCount = 0
+    if (fld.boxSizing === 'border-box') {
+      heightCount = selector.offsetHeight
+    } else {
+      heightCount = (
+        parseInt(fld.paddingTop)
+        + parseInt(fld.paddingBottom)
+        + selector.offsetHeight
+        + parseInt(fld.marginTop)
+        + parseInt(fld.marginBottom)
+        + parseInt(fld.borderTopWidth)
+        + parseInt(fld.borderBottomWidth)
+      )
+    }
+    if (val) {
+      selector.classList.add('fld-hide')
+      if (selector.style.height) {
+        selector.style.removeProperty('height')
+      }
+    } else {
+      selector.style.height = heightCount
+      selector.classList.remove('fld-hide')
+    }
+    console.log(heightCount)
   }
 }
 
