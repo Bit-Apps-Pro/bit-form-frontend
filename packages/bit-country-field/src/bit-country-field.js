@@ -132,7 +132,7 @@ export default class BitCountryField {
     this.#setCountryNameFromURL()
 
     this.#addEventListenersToElm()
-    observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
+    this.#window.observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
     this.#generateOptions()
 
     if (!this.#selectedFlagImage) {
@@ -401,7 +401,7 @@ export default class BitCountryField {
 
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
-    this.virtualOptionList = new bit_virtualized_list(this.#optionListElm, {
+    this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
       rowCount: this.#listOptions.length,
       rowHeight: this.rowHeight,
