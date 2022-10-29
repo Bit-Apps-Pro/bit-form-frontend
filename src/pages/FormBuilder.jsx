@@ -104,6 +104,7 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setStaticStylesState = useSetRecoilState($staticStylesState)
+  const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG } = builderHookStates
@@ -116,50 +117,54 @@ const FormBuilder = ({ isLoading }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const { data: fetchedBuilderHelperStates, isValidating: isFetchingStyles } = useSWR(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
-    .then(({ data: [response] }) => response?.builder_helper_state))
-
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
     let isV2Form = true
-    const oldStyles = fetchedBuilderHelperStates || {}
-    if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
-      isV2Form = false
+    if (!isNewForm) {
+      bitsFetch({ formID }, 'bitforms_form_helpers_state')
+        .then(({ data }) => {
+          setIsFetchingV2Styles(false)
+          const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
+          const oldStyles = fetchedBuilderHelperStates || {}
+          if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
+            isV2Form = false
+          }
+          if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
+            const { themeVars, themeColors, style: oldAllStyles, staticStyles } = oldStyles
+            setAllThemeColors(JCOF.parse(themeColors))
+            setAllThemeVars(JCOF.parse(themeVars))
+            setAllStyles(JCOF.parse(oldAllStyles))
+            // fix staticstyle var undefined
+            // console.log({ staticStyles })
+            // setStaticStylesState(JCOF.parse(staticStyles))
+            setSavedStylesAndVars({
+              allThemeColors: themeColors,
+              allThemeVars: themeVars,
+              allStyles: oldAllStyles,
+            })
+
+            setBreakpointSize(oldStyles.breakpointSize)
+
+            setBuilderHistory(prevHistory => produce(prevHistory, drft => {
+              const { state } = drft.histories[0]
+              drft.histories[0].state = {
+                ...state,
+                // ...allStyleStates, // TODO fix this with lot of state
+              }
+            }))
+            setStyleLoading(false)
+            setIsNewThemeStyleLoaded(true)
+          } else if (!isFetchingV2Styles && !isNewForm) {
+            // declare new theme exist , no need old theme functions
+            setOldExistingStyle()
+          }
+        })
     }
 
     if (!isObjectEmpty(styles)) {
       setStyleLoading(false)
     }
-    if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars, themeColors, style: oldAllStyles, staticStyles } = oldStyles
-      setAllThemeColors(JCOF.parse(themeColors))
-      setAllThemeVars(JCOF.parse(themeVars))
-      setAllStyles(JCOF.parse(oldAllStyles))
-      // fix staticstyle var undefined
-      // console.log({ staticStyles })
-      // setStaticStylesState(JCOF.parse(staticStyles))
-      setSavedStylesAndVars({
-        allThemeColors: themeColors,
-        allThemeVars: themeVars,
-        allStyles: oldAllStyles,
-      })
-
-      setBreakpointSize(oldStyles.breakpointSize)
-
-      setBuilderHistory(prevHistory => produce(prevHistory, drft => {
-        const { state } = drft.histories[0]
-        drft.histories[0].state = {
-          ...state,
-          // ...allStyleStates, // TODO fix this with lot of state
-        }
-      }))
-      setStyleLoading(false)
-      setIsNewThemeStyleLoaded(true)
-    } else if (!isFetchingStyles && !isNewForm) {
-      // declare new theme exist , no need old theme functions
-      setOldExistingStyle()
-    }
-  }, [fetchedBuilderHelperStates])
+  }, [])
 
   useEffect(() => {
     if (!isNewThemeStyleLoaded) {
