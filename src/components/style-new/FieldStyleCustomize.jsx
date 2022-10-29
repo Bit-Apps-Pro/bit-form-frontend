@@ -8,7 +8,7 @@
 import { produce } from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $builderRightPanelScroll, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -36,10 +36,9 @@ export default function FieldStyleCustomizeHOC() {
   const { formType, formID, '*': rightParams } = useParams()
   const [, element, fieldKey] = rightParams.split('/')
   const styles = useRecoilValue($styles)
-  const navigator = useNavigate()
 
   if (!styles?.fields?.[fieldKey]) {
-    return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`)
+    return <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} />
   }
   return <FieldStyleCustomize {...{ formType, formID, fieldKey, element }} />
 }
