@@ -9,7 +9,7 @@ import {
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { selectInGrid } from './globalHelpers'
+import { mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
 
@@ -363,16 +363,22 @@ export function prepareLayout(lays, respectLGLayoutOrder) {
   return layouts
 }
 
-export const addToBuilderHistory = (historyData, unsaved = true) => {
+export const addToBuilderHistory = (historyData, unsaved = true, index = undefined) => {
   const builderHistoryState = getRecoil($builderHistory)
   const changedHistory = produce(builderHistoryState, draft => {
-    const lastHistory = draft.histories[draft.histories.length - 1]
-    if ((lastHistory.type === historyData.type) && (lastHistory.state.fldKey === historyData.state.fldKey)) {
-      draft.histories.pop()
-      draft.active = draft.histories.length - 1
+    if (index !== undefined) {
+      if (!draft.histories[index]) draft.histories[index] = {}
+      const history = draft.histories[index]
+      draft.histories[index] = mergeNestedObj(history, historyData)
+    } else {
+      const lastHistory = draft.histories[draft.histories.length - 1]
+      if ((lastHistory.type === historyData.type) && (lastHistory.state.fldKey === historyData.state.fldKey)) {
+        draft.histories.pop()
+        draft.active = draft.histories.length - 1
+      }
+      draft.histories.splice(draft.active + 1)
+      draft.active = draft.histories.push(historyData) - 1
     }
-    draft.histories.splice(draft.active + 1)
-    draft.active = draft.histories.push(historyData) - 1
   })
   setRecoil($builderHistory, changedHistory)
 
