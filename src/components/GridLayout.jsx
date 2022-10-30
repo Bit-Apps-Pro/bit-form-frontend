@@ -4,7 +4,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 import produce from 'immer'
-import { lazy, memo, Suspense, useContext, useEffect, useRef, useState } from 'react'
+import {
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
+} from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -21,7 +23,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -45,7 +47,7 @@ import {
   propertyValueSumY,
   reCalculateFldHeights,
   removeFormUpdateError,
-  sortLayoutByXY
+  sortLayoutByXY,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -707,7 +709,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                 </ResponsiveReactGridLayout>
               ) : (
                 <div className="_frm-g">
-                  {sortLayoutByXY(layouts[breakpoint]).map(layoutItem => (
+                  {layouts[breakpoint].map(layoutItem => (
                     <div
                       key={layoutItem.i}
                       data-key={layoutItem.i}

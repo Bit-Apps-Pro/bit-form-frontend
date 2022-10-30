@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import toast from 'react-hot-toast'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   $breakpoint,
   $builderHistory,
   $builderHookStates,
   $colorScheme,
   $fields,
-  $layouts
+  $layouts,
 } from '../GlobalStates/GlobalStates'
-import { $styles } from '../GlobalStates/StylesState'
-import { $themeColors } from '../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $allStyles, $styles } from '../GlobalStates/StylesState'
+import { $allThemeColors, $themeColors } from '../GlobalStates/ThemeColorsState'
+import { $allThemeVars, $themeVars } from '../GlobalStates/ThemeVarsState'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import HistoryIcn from '../Icons/HistoryIcn'
 import RedoIcon from '../Icons/RedoIcon'
@@ -49,6 +51,9 @@ export default function FormBuilderHistory() {
   const setStyles = useSetRecoilState($styles)
   const setThemeColors = useSetRecoilState($themeColors)
   const setThemeVars = useSetRecoilState($themeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const rowVirtualizer = useRef(null)
@@ -62,7 +67,7 @@ export default function FormBuilderHistory() {
   }, [active, disabled])
 
   const handleHistory = indx => {
-    if (indx < 0 || disabled) return
+    if (indx < 0 || disabled || active === indx) return
 
     const { state } = histories[indx]
     setDisabled(true)
@@ -79,18 +84,17 @@ export default function FormBuilderHistory() {
     } else {
       checkForPreviousState(indx, setBreakpoint, 'breakpoint')
     }
-    setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1 }))
-
-    if (state.layouts) {
-      setLayouts(state.layouts)
-    } else {
-      checkForPreviousState(indx, setLayouts, 'layouts')
-    }
 
     if (state.fields) {
       setFields(state.fields)
     } else {
       checkForPreviousState(indx, setFields, 'fields')
+    }
+
+    if (state.layouts) {
+      setLayouts(state.layouts)
+    } else {
+      checkForPreviousState(indx, setLayouts, 'layouts')
     }
 
     if (state.styles) {
@@ -111,9 +115,36 @@ export default function FormBuilderHistory() {
       checkForPreviousState(indx, setThemeVars, 'themeVars')
     }
 
+    if (state.allThemeColors) {
+      setAllThemeColors(state.allThemeColors)
+    }
+
+    if (state.allThemeVars) {
+      setAllThemeVars(state.allThemeVars)
+    }
+
+    if (state.allStyles) {
+      setAllStyles(state.allStyles)
+    }
+
+    showEventMessages(indx)
+
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
+    setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     reCalculateFldHeights()
     setDisabled(false)
+  }
+
+  const showEventMessages = indx => {
+    if (active > indx) {
+      for (let i = active; i > indx; i -= 1) {
+        toast.error(histories[i].event, { style: { textDecoration: 'line-through' } })
+      }
+    } else {
+      for (let i = active + 1; i <= indx; i += 1) {
+        toast.success(histories[i].event)
+      }
+    }
   }
 
   const checkForPreviousState = (indx, setState, stateName) => {
@@ -134,7 +165,7 @@ export default function FormBuilderHistory() {
     setShowHistory(false)
   }
 
-  const itemSizes = [25, ...new Array(histories.length - 1).fill(40)]
+  const itemSizes = histories.map(h => (h.state.fldKey ? 40 : 25))
 
   return (
     <div>
@@ -182,12 +213,12 @@ export default function FormBuilderHistory() {
               History
             </p>
 
-            {histories.length <= 2 && (
+            {histories.length <= 1 && (
               <span className={css(builderHistoryStyle.secondary)}>
                 {__('History Empty')}
               </span>
             )}
-            {histories.length > 2 && (
+            {histories.length > 1 && (
               <VirtualList
                 virtualizerRef={rowVirtualizer}
                 className={css(builderHistoryStyle.list)}
@@ -202,7 +233,7 @@ export default function FormBuilderHistory() {
                       title={histories[index].event}
                     >
                       <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
-                      {index > 0 && (
+                      {histories[index].state.fldKey && (
                         <span className={css(builderHistoryStyle.fldkey)}>
                           {`Field Key: ${histories[index].state.fldKey}`}
                         </span>
