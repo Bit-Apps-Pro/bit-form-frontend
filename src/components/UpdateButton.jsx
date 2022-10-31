@@ -81,9 +81,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const builderSettings = useRecoilValue($builderSettings)
   const staticStylesState = useRecoilValue($staticStylesState)
-
   const breakpointSize = useRecoilValue($breakpointSize)
-
   const customCodes = useRecoilValue($customCodes)
 
   useEffect(() => {
@@ -252,7 +250,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     allStyles = updateGoogleFontUrl(allStyles)
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
-    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
+    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : ''
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
     if (!isStyleNotLoaded) {
