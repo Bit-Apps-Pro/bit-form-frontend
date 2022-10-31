@@ -6,6 +6,9 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import filepondCSS from 'filepond/dist/filepond.min.css'
+import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+
 import {
   $additionalSettings,
   $breakpointSize,
@@ -34,7 +37,6 @@ import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
-import filePondCss from '../styles/filepond-css'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
@@ -252,7 +254,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     allStyles = updateGoogleFontUrl(allStyles)
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
-    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filePondCss : null
+    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? filepondCSS : null
+    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview) ? filepondPluginImagePreviewCSS : null
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
     if (!isStyleNotLoaded) {
