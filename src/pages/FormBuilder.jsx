@@ -150,9 +150,11 @@ const FormBuilder = ({ isLoading }) => {
       setOldExistingStyle()
     }
 
-    setTimeout(() => {
-      if (isV2Form && isNewForm && !isFetchingStyles) select('#update-btn').click()
-    }, 100)
+    if (isV2Form && isNewForm && !isFetchingStyles) {
+      setTimeout(() => {
+        select('#update-btn').click()
+      }, 100)
+    }
   }, [fetchedBuilderHelperStates])
 
   useEffect(() => {
