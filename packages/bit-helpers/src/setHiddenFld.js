@@ -4,9 +4,14 @@ export default function setHiddenFld(data, form) {
     hdnFld = document.createElement('input')
     hdnFld.type = 'hidden'
     hdnFld.className = 'd-none'
-    hdnFld.name = data.name
     form.append(hdnFld)
   }
-  hdnFld.value = data.value
+  if (data.name === 'b_h_t') {
+    bfSelect(`input[name="${hdnFld.value}"]`, form)?.remove()
+    setHiddenFld({ name: data.value, required: true }, form)
+  }
+  Object.keys(data).forEach(key => {
+    hdnFld[key] = data[key]
+  })
   return hdnFld
 }
