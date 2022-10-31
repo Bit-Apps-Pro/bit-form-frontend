@@ -126,16 +126,14 @@ function submitResponse(resp, contentId, formData) {
         handleFormValidationErrorMessages(result, contentId)
       }
 
+      triggerIntegration(hitCron, newNonce, contentId)
       if (responsedRedirectPage) {
-        triggerIntegration(hitCron, newNonce, contentId)
         const timer = setTimeout(() => {
           window.location = decodeURI(responsedRedirectPage)
           if (timer) {
             clearTimeout(timer)
           }
         }, 1000)
-      } else {
-        triggerIntegration(hitCron, newNonce, contentId)
       }
 
       disabledSubmitButton(contentId, false)
@@ -164,6 +162,7 @@ function handleReset(contentId, customHook = false) {
 
   const props = window.bf_globals[contentId]
   bfSelect(`#form-${contentId}`).reset()
+  localStorage.setItem('bf-entry-id', '')
   typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
 
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
@@ -264,3 +263,4 @@ document.querySelectorAll('form').forEach((frm) => {
       ?.addEventListener('click', (e) => handleReset(e, true))
   }
 })
+localStorage.setItem('bf-entry-id', '')
