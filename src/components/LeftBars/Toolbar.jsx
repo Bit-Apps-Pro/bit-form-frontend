@@ -67,7 +67,7 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'text',
         lbl: __('Text Field'),
-        ph: __('Placeholder Text...'),
+        ph: __('Placeholder...'),
         phHide: true,
         valid: {},
         err: {},
@@ -77,13 +77,13 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Multiline Text'),
-      keywords: 'Multline Text',
+      keywords: 'Multline Text, Textarea, Text Area',
       icn: <TextareaIcn size="23" />,
       pos: { h: 100, w: 60, minW: 9, i: 'shadow_block' },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text'),
-        ph: __('Placeholder Text...'),
+        ph: __('Placeholder...'),
         phHide: true,
         valid: {},
         err: {},
@@ -93,7 +93,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Email'),
-      keywords: 'Email',
+      keywords: 'Email, Email Address',
       icn: <MailIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
@@ -110,13 +110,13 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Number'),
-      keywords: 'Number',
+      keywords: 'Number, Numeric, Numeric Field',
       icn: <NumberIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'number',
-        lbl: __('Number Field'),
-        ph: __('Number Input'),
+        lbl: __('Number'),
+        ph: __('e.g. 123'),
         phHide: true,
         valid: {},
         err: { invalid: { dflt: 'Number is invalid', show: true } },
@@ -126,7 +126,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Select'),
-      keywords: 'Select',
+      keywords: 'Select, Dropdown, Drop Down',
       icn: <ChevronDownIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       tip: 'Select',
@@ -149,7 +149,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Radio Button'),
-      keywords: 'Radio button, button',
+      keywords: 'Radio button, Choice, Single Choice, Radio Group',
       icn: <RadioIcn size="23" />,
       pos: { h: 140, w: 60, i: 'shadow_block' },
       elm: {
@@ -170,7 +170,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Checkbox'),
-      keywords: 'Check Box',
+      keywords: 'Check Box, Mark, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
       icn: <CheckBoxIcn w="23" />,
       pos: { h: 140, w: 60, i: 'shadow_block' },
       elm: {
@@ -190,12 +190,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Dropdown'),
-      keywords: 'Dropdown',
+      keywords: 'Dropdown, Select, Drop Down, Multiple Select, Multiple Choice, Multiple Option',
       icn: <DropDownIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'select',
-        lbl: __('Drop Down'),
+        lbl: __('Dropdown'),
         mul: false,
         phHide: true,
         ph: 'Select a Option',
@@ -238,7 +238,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('File Upload'),
-      keywords: 'File Upload',
+      keywords: 'File Upload, Attachment',
       icn: <FileUploadIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
@@ -286,7 +286,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Advance File Upload'),
-      keywords: 'Advanced File Upload',
+      keywords: 'Advanced File Upload, Attachment, photo, image, video, audio, file, document, doc, pdf, excel, ppt',
       icn: <AdvanceFileUpIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
@@ -323,12 +323,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Country'),
-      keywords: 'Country',
+      keywords: 'Country, Country List, Country Dropdown, Country Select',
       icn: <FlagIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'country',
-        lbl: __('Country Field'),
+        lbl: __('Country'),
         mul: false,
         phHide: true,
         ph: 'Select a Country',
@@ -358,7 +358,7 @@ function Toolbar({ setNewData }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'currency',
-        lbl: __('Currency Field'),
+        lbl: __('Currency'),
         inputFormatOptions: {
           formatter: 'browser',
           showCurrencySymbol: true,
@@ -414,14 +414,14 @@ function Toolbar({ setNewData }) {
       },
     },
     {
-      name: __('User Name'),
+      name: __('Username'),
       keywords: 'User Name, text',
       icn: <UserIcn size="22" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'username',
-        lbl: __('User Name'),
-        ph: __('Placeholder Text...'),
+        lbl: __('Username'),
+        ph: __('e.g. John Doe'),
         phHide: true,
         valid: {},
         err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
@@ -447,12 +447,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Date'),
-      keywords: 'Date',
+      keywords: 'Date, Date Field, month',
       icn: <DateIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'date',
-        lbl: __('Date Input'),
+        lbl: __('Pick A Date'),
         valid: {},
         err: {},
         customClasses: {},
@@ -461,12 +461,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Time'),
-      keywords: 'Time',
+      keywords: 'Time, Time Picker, Time Select, minutes, hours',
       icn: <TimeIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'time',
-        lbl: __('Time Input'),
+        lbl: __('Select Time'),
         valid: {},
         err: {},
         customClasses: {},
@@ -475,12 +475,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Date-Time'),
-      keywords: 'Date-Time, Date, Time',
+      keywords: 'Date-Time, Date, Time, day, month, year',
       icn: <DateTimeIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'datetime-local',
-        lbl: __('Date-Time Input'),
+        lbl: __('Select Date-Time'),
         valid: {},
         err: {},
         customClasses: {},
@@ -489,12 +489,12 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Week'),
-      keywords: 'Week, Date',
+      keywords: 'Week, Date, day',
       icn: <WeekIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'week',
-        lbl: __('Week Input'),
+        lbl: __('Select Week'),
         valid: {},
         err: {},
         customClasses: {},
@@ -517,7 +517,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('URL'),
-      keywords: 'URL',
+      keywords: 'URL, Link, Website, Web Address, Web URL, Web Link, Web Site',
       icn: <UrlIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
@@ -527,7 +527,7 @@ function Toolbar({ setNewData }) {
           // eslint-disable-next-line max-len
           pattern: '^(?:(?:https?|ftp):$_bf_$/$_bf_$/)?(?:(?!(?:10|127)(?:$_bf_$.$_bf_$d{1,3}){3})(?!(?:169$_bf_$.254|192$_bf_$.168)(?:$_bf_$.$_bf_$d{1,3}){2})(?!172$_bf_$.(?:1[6-9]|2$_bf_$d|3[0-1])(?:$_bf_$.$_bf_$d{1,3}){2})(?:[1-9]$_bf_$d?|1$_bf_$d$_bf_$d|2[01]$_bf_$d|22[0-3])(?:$_bf_$.(?:1?$_bf_$d{1,2}|2[0-4]$_bf_$d|25[0-5])){2}(?:$_bf_$.(?:[1-9]$_bf_$d?|1$_bf_$d$_bf_$d|2[0-4]$_bf_$d|25[0-4]))|(?:(?:[a-z$_bf_$u00a1-$_bf_$uffff0-9]-*)*[a-z$_bf_$u00a1-$_bf_$uffff0-9]+)(?:$_bf_$.(?:[a-z$_bf_$u00a1-$_bf_$uffff0-9]-*)*[a-z$_bf_$u00a1-$_bf_$uffff0-9]+)*(?:$_bf_$.(?:[a-z$_bf_$u00a1-$_bf_$uffff]{2,})))(?::$_bf_$d{2,5})?(?:$_bf_$/$_bf_$S*)?$',
         },
-        lbl: __('URL Field'),
+        lbl: __('URL'),
         ph: __('https://www.example.com'),
         phHide: true,
         valid: {},
@@ -538,7 +538,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Color Picker'),
-      keywords: 'Color Picker',
+      keywords: 'Color Picker, Color Select, Color Picker Field, Color Select Field',
       icn: <ColorPickerIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
@@ -552,7 +552,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Decision Box'),
-      keywords: 'Decision box, GDPR',
+      keywords: 'Decision box, GDPR, Yes/No, Agree/Disagree',
       icn: <DecisionBoxIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
@@ -571,7 +571,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('reCaptcha v2'),
-      keywords: 'ReCaptcha v2',
+      keywords: 'ReCaptcha v2, Google ReCaptcha v2, spam protection, bot protection',
       icn: <ReCaptchaIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
@@ -586,7 +586,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: 'Button',
-      keywords: 'Button',
+      keywords: 'Button, Submit, Submit Button, Submit Form, click, click button',
       icn: <BtnIcn size="23" />,
       pos: { h: 60, w: 60, i: 'shadow_block' },
       elm: {
@@ -606,7 +606,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Paypal'),
-      keywords: 'Paypal, payment',
+      keywords: 'Paypal, payment, credit card, credit card payment',
       icn: <PaypalIcn w="23" />,
       pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
@@ -624,7 +624,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Razorpay'),
-      keywords: 'Razorpay, payment',
+      keywords: 'Razorpay, payment, credit card, credit card payment',
       icn: <RazorPayIcn w="17" h="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
@@ -660,7 +660,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Title'),
-      keywords: 'title',
+      keywords: 'title, heading, heading 1, heading 2, heading 3, heading 4, heading 5, heading 6',
       icn: <TitleIcn w="23" />,
       pos: { h: 48, w: 60, i: 'shadow_block' },
       elm: {
@@ -680,7 +680,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Image'),
-      keywords: 'image',
+      keywords: 'image, picture, photo, logo, icon, avatar, profile picture, profile photo',
       icn: <ImgFldIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
@@ -694,7 +694,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: __('Divider'),
-      keywords: 'divider',
+      keywords: 'divider, line, horizontal line, horizontal divider',
       icn: <DividerIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
@@ -708,7 +708,7 @@ function Toolbar({ setNewData }) {
     },
     {
       name: 'HTML',
-      keywords: 'HTML',
+      keywords: 'HTML, HTML Code, HTML Block, HTML Element, HTML Field, HTML Editor',
       icn: <CodeSnippetIcn size="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
