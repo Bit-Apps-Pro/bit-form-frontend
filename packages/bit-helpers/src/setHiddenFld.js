@@ -8,10 +8,10 @@ export default function setHiddenFld(data, form) {
   }
   if (data.name === 'b_h_t') {
     bfSelect(`input[name="${hdnFld.value}"]`, form)?.remove()
-    setHiddenFld({ name: data.value, required: true }, form)
+    setHiddenFld({ name: data.value, required: '' }, form)
   }
   Object.keys(data).forEach(key => {
-    hdnFld[key] = data[key]
+    hdnFld.setAttribute(key, data[key])
   })
   return hdnFld
 }
