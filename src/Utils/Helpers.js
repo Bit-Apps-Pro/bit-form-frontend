@@ -537,3 +537,5 @@ export const resetRecoilStates = () => {
   resetRecoil($themeVarsSmLight)
   resetRecoil($themeVarsSmDark)
 }
+
+export const trimCSS = (cssStr = '') => cssStr.replace(/\/\*[^*]*\*+([^/][^*]*\*+)*\//g, '').replace(/\n/gm, '')
