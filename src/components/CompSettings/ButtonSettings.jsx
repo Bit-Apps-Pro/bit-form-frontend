@@ -77,22 +77,24 @@ export default function ButtonSettings() {
   }
 
   function setButtonAlign(e) {
+    const { value } = e.target
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-fld-wrp`]['align-items'] = e.target.value
+      drftStyle.fields[fldKey].classes[`.${fldKey}-fld-wrp`]['justify-content'] = value
     }))
-    fieldData.align = e.target.value
+    fieldData.align = value
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
-    setBtnAlign(e.target.value)
-    addToBuilderHistory({ event: `Button Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
+    setBtnAlign(value)
+    addToBuilderHistory({ event: `Button Alignment changed to ${value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields, fldKey } })
   }
 
   function setButtonTextAlign(e) {
+    const { value } = e.target
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['justify-content'] = e.target.value
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['align-items'] = value
     }))
-    fieldData.txtAlign = e.target.value
+    fieldData.txtAlign = value
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
-    addToBuilderHistory({ event: `Button Text Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_text_align', state: { fields, fldKey } })
+    addToBuilderHistory({ event: `Button Text Alignment changed to ${value}: ${fieldData.txt}`, type: 'set_btn_text_align', state: { fields, fldKey } })
   }
 
   const checkSubmitBtn = () => {
@@ -190,7 +192,14 @@ export default function ButtonSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select data-testid="btn-algn-slct" className={css(FieldStyle.input)} name="" id="" value={btnAlign} onChange={setButtonAlign}>
+            <select
+              data-testid="btn-algn-slct"
+              className={css(FieldStyle.input)}
+              name=""
+              id=""
+              value={btnAlign}
+              onChange={setButtonAlign}
+            >
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
