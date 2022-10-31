@@ -177,7 +177,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   const saveForm = (type, updatedData) => {
-    setbuttonDisabled(true)
+    if (savedFormId) setbuttonDisabled(true)
     let mailTemplates = mailTem
     let additionalSettings = additional
     let allIntegrations = integrations
@@ -258,7 +258,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview) ? trimCSS(filepondPluginImagePreviewCSS) : null
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
-    if (!isStyleNotLoaded) {
+    if (!isStyleNotLoaded && savedFormId) {
       const atomicData = {
         form_id: savedFormId || newFormId,
         atomicCssText,
@@ -324,7 +324,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)
-          data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
           data?.reports && setReports(data?.reports || [])
@@ -374,17 +373,19 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         console.error('form save error=', err)
       })
 
-    toast.promise(formSavePromise, {
-      loading: __('Updating...', 'biform'),
-      success: (res) => {
-        setbuttonDisabled(false)
-        return res?.data?.message || res?.data
-      },
-      error: () => {
-        setbuttonDisabled(false)
-        return __('Error occurred, Please try again.')
-      },
-    })
+    if (savedFormId) {
+      toast.promise(formSavePromise, {
+        loading: __('Updating...', 'biform'),
+        success: (res) => {
+          setbuttonDisabled(false)
+          return res?.data?.message || res?.data
+        },
+        error: () => {
+          setbuttonDisabled(false)
+          return __('Error occurred, Please try again.')
+        },
+      })
+    }
   }
 
   return (
