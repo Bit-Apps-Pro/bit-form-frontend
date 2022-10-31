@@ -44,6 +44,8 @@ function MapComponents({
 }) {
   const styles = useRecoilValue($styles)
 
+  if (!atts?.typ) return
+
   switch (atts?.typ) {
     case 'text':
     case 'number':

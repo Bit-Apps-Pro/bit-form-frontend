@@ -1,4 +1,6 @@
 import { selector, atom } from 'recoil'
+import { getRecoil } from 'recoil-nexus'
+import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
@@ -9,6 +11,16 @@ export const $savedStylesAndVars = atom({
     allThemeColors: {},
     allStyles: {},
   },
+  effects: [({ onSet }) => {
+    onSet(() => {
+      const historyData = {
+        themeVars: getRecoil($savedThemeVars),
+        themeColors: getRecoil($savedThemeColors),
+        styles: getRecoil($savedStyles),
+      }
+      addToBuilderHistory({ state: historyData }, false, 0)
+    })
+  }],
 })
 
 export const $savedThemeColors = selector({

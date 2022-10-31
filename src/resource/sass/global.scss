@@ -265,7 +265,7 @@
 
   input {
     &:checked {
-      + {
+      + .btcd-cbx-wrp {
         .btcd-t-cbx {
           border-color: var(--b-50);
 
@@ -283,7 +283,7 @@
     }
 
     &:indeterminate {
-      + {
+      + .btcd-cbx-wrp {
         .btcd-t-cbx {
           border-color: var(--b-50);
 

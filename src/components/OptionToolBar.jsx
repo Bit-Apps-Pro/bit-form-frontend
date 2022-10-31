@@ -18,6 +18,7 @@ import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
+import { addToBuilderHistory, generateHistoryData } from '../Utils/FormBuilderHelper'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import BuilderSettings from './BuilderSettings'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
@@ -112,6 +113,11 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
     setColorScheme(prv => (prv === 'light' ? 'dark' : 'light'))
   }
 
+  const handleBreakpointChange = brkPoint => {
+    setBreakpoint(brkPoint)
+    addToBuilderHistory(generateHistoryData('', '', 'Breakpoint', brkPoint, { breakpoint: brkPoint }))
+  }
+
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
@@ -158,7 +164,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
             show={['icn']}
             tipPlace="bottom"
             defaultActive={breakpoint}
-            onChange={setBreakpoint}
+            onChange={handleBreakpointChange}
             className={css(ut.mr2)}
             options={[
               {

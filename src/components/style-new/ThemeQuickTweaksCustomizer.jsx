@@ -5,15 +5,18 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -24,17 +27,20 @@ import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import { changeFormDir } from './styleHelpers'
+import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
-  const { fieldKey, element } = useParams()
+  const { fieldKey, element, formType } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const themeColors = useRecoilValue($themeColors)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
   const fields = useRecoilValue($fields)
-
   const { '--dir': direction } = themeVars
+  const tmpStyles = useRecoilValue($savedStyles)
+  const tmpThemeColors = useRecoilValue($savedThemeColors)
+  const tmpThemeVars = useRecoilValue($savedThemeVars)
 
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
@@ -105,8 +111,47 @@ export default function ThemeQuickTweaksCustomizer() {
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', dir, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
+  const resetStyle = (e) => {
+    const { checked } = e.target
+
+    const existingFields = Object.keys(styles.fields)
+    const previousFields = Object.keys(tmpStyles.fields)
+
+    if (checked) {
+      setStyles(prv => produce(prv, drft => {
+        existingFields.forEach((fldKey) => {
+          if (previousFields.includes(fldKey)) {
+            drft.fields[fldKey] = tmpStyles.fields[fldKey]
+          } else {
+            drft.fields[fldKey] = bitformDefaultTheme({
+              type: fields[fldKey].typ,
+              fieldKey: fldKey,
+              direction: tmpThemeVars['--dir'],
+            })
+          }
+        })
+
+        drft.font = tmpStyles.font
+        drft.theme = tmpStyles.theme
+        drft.fieldSize = tmpStyles.fieldSize
+        drft.form = tmpStyles.form
+      }))
+      setThemeVars(tmpThemeVars)
+      setThemeColors(tmpThemeColors)
+    }
+  }
+
   return (
     <>
+      {formType === 'edit' && (
+        <div className={css(ut.flxcb)}>
+          <span className={css({ fs: 12, mb: 2 }, ut.fw500)}>Reset Style</span>
+          <SingleToggle
+            action={resetStyle}
+            id="reset-style"
+          />
+        </div>
+      )}
       <SimpleColorPicker
         title="Accent Color"
         subtitle="Theme Quick Tweaks Accent Color"

@@ -84,6 +84,8 @@ export default class BitDropdownField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#selectedOptImgElm = this.#select(`.${this.fieldKey}-selected-opt-img`)
+    this.#selectedOptLblElm = this.#select(`.${this.fieldKey}-selected-opt-lbl`)
+    this.#selectedOptClearBtnElm = this.#select(`.${this.fieldKey}-selected-opt-clear-btn`)
     this.#clearSearchBtnElm = this.#config.searchClearable ? this.#select(`.${this.fieldKey}-search-clear-btn`) : {}
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
@@ -306,7 +308,7 @@ export default class BitDropdownField {
       this.#selectedOptImgElm.src = this.#placeholderImage
     }
     this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
-    this.#selectedOptClearBtnElm.style.display = 'none'
+    if (this.#config.selectedOptClearable) this.#selectedOptClearBtnElm.style.display = 'none'
     this.#reRenderVirtualOptions()
   }
 
@@ -333,8 +335,6 @@ export default class BitDropdownField {
     }
     if (!selectedItem) return
 
-    this.#selectedOptLblElm = this.#select(`.${this.fieldKey}-selected-opt-lbl`)
-    this.#selectedOptClearBtnElm = this.#select(`.${this.fieldKey}-selected-opt-clear-btn`)
     if (this.#config.selectedOptImage) {
       if (this.#config.multipleSelect) {
         if (valueArr.length > 1) {
