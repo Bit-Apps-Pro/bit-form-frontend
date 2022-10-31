@@ -36,6 +36,14 @@ export const $staticStylesState = atom({
         opacity: '1',
         transition: 'all 1s ease-out',
       },
+      '.btcd-fld-itm': {
+        transition: 'all 0.2s ease',
+      },
+      '.fld-hide': {
+        'min-height': '0px',
+        height: 0,
+        overflow: 'hidden',
+      },
     },
   },
 })

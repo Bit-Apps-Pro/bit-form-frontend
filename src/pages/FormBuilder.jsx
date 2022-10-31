@@ -135,14 +135,13 @@ const FormBuilder = ({ isLoading }) => {
       const themeVars = JCOF.parse(themeVarsStr)
       const themeColors = JCOF.parse(themeColorsStr)
       const style = JCOF.parse(stylesStr)
-      // const staticStyles = JCOF.parse(staticStylesStr)
+      const staticStyles = JCOF.parse(staticStylesStr)
 
       setAllThemeVars(themeVars)
       setAllThemeColors(themeColors)
       setAllStyles(style)
-      // fix staticstyle var undefined
-      // console.log({ staticStyles })
-      // setStaticStylesState(staticStyles)
+      setStaticStylesState(staticStyles)
+
       setSavedStylesAndVars({
         allThemeVars: themeVars,
         allThemeColors: themeColors,
