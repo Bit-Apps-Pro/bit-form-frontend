@@ -1,3 +1,4 @@
+import sortJson from 'sort-json'
 import deepCopy from './helpers/deepCopy'
 import generateCssClass from './helpers/generateNewClassName'
 import isSameSpeficity from './helpers/isSameSpeficity'
@@ -7,7 +8,7 @@ export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = ''
   if (classPrefix) {
     atomicClassPrefix = classPrefix.trim()
   }
-  const selectorObj = deepCopy(stylesObj)
+  const selectorObj = sortJson(deepCopy(stylesObj))
   const atomicClasses = {}
   const classMaps = {}
   const classGen = generateCssClass()
