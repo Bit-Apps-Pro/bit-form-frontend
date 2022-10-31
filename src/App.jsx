@@ -40,7 +40,7 @@ export default function App() {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#011638',
+            background: 'var(--dp-blue-bg)',
             color: '#fff',
             bottom: 40,
             padding: '15px 18px',
