@@ -1,15 +1,12 @@
 /* eslint-disable no-param-reassign */
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
-import produce from 'immer'
 import {
-  createRef,
-  useCallback,
+  createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
   useReducer,
   useState,
-  StrictMode,
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -26,9 +23,9 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHistory, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
 } from '../GlobalStates/GlobalStates'
-import { $savedStyles, $savedStylesAndVars, $savedThemeColors, $savedThemeVars } from '../GlobalStates/SavedStylesAndVars'
+import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -36,7 +33,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter, generateHistoryData, getLatestState } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -95,7 +92,6 @@ const FormBuilder = ({ isLoading }) => {
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
 
   const setAllThemeColors = useSetRecoilState($allThemeColors)
@@ -131,37 +127,33 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
     if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
-      const { themeVars: themeVarsStr, themeColors: themeColorsStr, style: stylesStr, staticStyles: staticStylesStr } = oldStyles
-      const themeVars = JCOF.parse(themeVarsStr)
-      const themeColors = JCOF.parse(themeColorsStr)
-      const style = JCOF.parse(stylesStr)
-      const staticStyles = JCOF.parse(staticStylesStr)
+      const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
+      const allThemeVars = JCOF.parse(allThemeVarsStr)
+      const allThemeColors = JCOF.parse(allThemeColorsStr)
+      const allStyles = JCOF.parse(allStylesStr)
+      // const staticStyles = JCOF.parse(staticStylesStr)
 
-      setAllThemeVars(themeVars)
-      setAllThemeColors(themeColors)
-      setAllStyles(style)
-      setStaticStylesState(staticStyles)
+      setAllThemeVars(allThemeVars)
+      setAllThemeColors(allThemeColors)
+      setAllStyles(allStyles)
+      // setStaticStylesState(staticStyles)
 
-      setSavedStylesAndVars({
-        allThemeVars: themeVars,
-        allThemeColors: themeColors,
-        allStyles: style,
-      })
+      setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
 
       setBreakpointSize(oldStyles.breakpointSize)
 
-      const allStyleStates = {
-        allThemeVars: themeVars,
-        allThemeColors: themeColors,
-        allStyles: style,
-      }
-
-      addToBuilderHistory({ state: { ...allStyleStates } }, false, 0)
+      addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
       setStyleLoading(false)
       setIsNewThemeStyleLoaded(true)
     } else if (!isFetchingStyles && !isNewForm) {
       // declare new theme exist , no need old theme functions
       setOldExistingStyle()
+    }
+
+    if (isV2Form && isNewForm && !isFetchingStyles) {
+      setTimeout(() => {
+        select('#update-btn').click()
+      }, 100)
     }
   }, [fetchedBuilderHelperStates])
 

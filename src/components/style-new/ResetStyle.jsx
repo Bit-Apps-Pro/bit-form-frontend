@@ -97,13 +97,14 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
     else resetValue(propertyPath)
   }
 
+  if (!show) return ''
+
   return (
     <Tip msg="Reset style">
       <button
         onClick={reset}
         className={css(st.resetBtn)}
         type="button"
-        style={{ visibility: show ? 'visible' : 'hidden' }}
         data-testid={`${id}-reset-style`}
       >
         <StyleResetIcn size="20" />
