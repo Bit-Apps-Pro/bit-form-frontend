@@ -702,7 +702,7 @@ export const findExistingFontStyleNWeight = (styles, themeVars) => {
       const clsProperties = fieldClasses[fieldClassesArr[clsIndx]]
       if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-weight')) {
         let weight = clsProperties['font-weight']
-        weight = getValueFromStateVar(themeVars, weight)
+        weight = Number(getValueFromStateVar(themeVars, weight))
         if (weight && !fontWeightVariant.includes(weight)) fontWeightVariant.push(weight)
       }
       if (Object.prototype.hasOwnProperty.call(clsProperties, 'font-style')) {
@@ -763,9 +763,8 @@ export const updateGoogleFontUrl = (allStyles) => {
   ]
   fontWeights = [...new Set(fontWeights)]
   fontStyleVariant = [...new Set(fontStyleVariant)]
-
-  // const fontWeightVLen = fontWeightVariant.length
   const fontWeightVLen = fontWeights.length
+
   if (fontWeightVLen > 0) {
     for (let indx = 0; indx < fontWeightVLen; indx += 1) {
       if (fontStyleVariant.includes('italic')) {
@@ -782,7 +781,6 @@ export const updateGoogleFontUrl = (allStyles) => {
   const newStyles = produce(allStyles, drft => {
     drft.lgLightStyles.font.fontURL = url
   })
-  // setRecoil($styles, newStyles)
   return newStyles
 }
 

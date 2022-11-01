@@ -15,9 +15,11 @@ import {
   addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights
+  reCalculateFldHeights,
 } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
+import Btn from '../Utilities/Btn'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
 import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
@@ -28,6 +30,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import { changeFormDir } from './styleHelpers'
 import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
+import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeQuickTweaksCustomizer() {
@@ -111,34 +114,39 @@ export default function ThemeQuickTweaksCustomizer() {
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', dir, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 
-  const resetStyle = (e) => {
-    const { checked } = e.target
+  const getThemeWiseStyle = (theme, fk, type, dir) => {
+    const themes = {
+      bitformDefault: bitformDefaultTheme({ fieldKey: fk, type, direction: dir }),
+      individual: individual({ fk, type, direction: dir }),
+    }
+    return themes[theme]
+  }
 
+  const resetStyle = () => {
     const existingFields = Object.keys(styles.fields)
     const previousFields = Object.keys(tmpStyles.fields)
 
-    if (checked) {
-      setStyles(prv => produce(prv, drft => {
-        existingFields.forEach((fldKey) => {
-          if (previousFields.includes(fldKey)) {
-            drft.fields[fldKey] = tmpStyles.fields[fldKey]
-          } else {
-            drft.fields[fldKey] = bitformDefaultTheme({
-              type: fields[fldKey].typ,
-              fieldKey: fldKey,
-              direction: tmpThemeVars['--dir'],
-            })
-          }
-        })
+    setStyles(prv => produce(prv, drft => {
+      existingFields.forEach((fldKey) => {
+        if (previousFields.includes(fldKey)) {
+          drft.fields[fldKey] = tmpStyles.fields[fldKey]
+        } else {
+          drft.fields[fldKey] = getThemeWiseStyle(
+            styles.fields[fldKey].theme,
+            fldKey,
+            fields[fldKey].typ,
+            tmpThemeVars['--dir'],
+          )
+        }
+      })
 
-        drft.font = tmpStyles.font
-        drft.theme = tmpStyles.theme
-        drft.fieldSize = tmpStyles.fieldSize
-        drft.form = tmpStyles.form
-      }))
-      setThemeVars(tmpThemeVars)
-      setThemeColors(tmpThemeColors)
-    }
+      drft.font = tmpStyles.font
+      drft.theme = tmpStyles.theme
+      drft.fieldSize = tmpStyles.fieldSize
+      drft.form = tmpStyles.form
+    }))
+    setThemeVars(tmpThemeVars)
+    setThemeColors(tmpThemeColors)
   }
 
   return (
@@ -146,10 +154,13 @@ export default function ThemeQuickTweaksCustomizer() {
       {formType === 'edit' && (
         <div className={css(ut.flxcb)}>
           <span className={css({ fs: 12, mb: 2 }, ut.fw500)}>Reset Style</span>
-          <SingleToggle
-            action={resetStyle}
-            id="reset-style"
-          />
+          <Btn
+            dataTestId="style-reset-btn"
+            onClick={resetStyle}
+            size="sm"
+          >
+            {__('Reset')}
+          </Btn>
         </div>
       )}
       <SimpleColorPicker
@@ -246,8 +257,16 @@ export default function ThemeQuickTweaksCustomizer() {
         <SingleToggle id="rtl" isChecked={direction === 'rtl'} action={handleDir} />
       </div>
 
-      <SimpleColorPicker
+      {/* <SimpleColorPicker
         title="Field Wrapper Background Color"
+        subtitle="Theme Quick Tweaks Background Color"
+        value={globalBgColor}
+        stateObjName="themeColors"
+        propertyPath="--global-bg-color"
+        modalId="global-bg-clr"
+      /> */}
+      <SimpleColorPicker
+        title="From Background"
         subtitle="Theme Quick Tweaks Background Color"
         value={globalBgColor}
         stateObjName="themeColors"
