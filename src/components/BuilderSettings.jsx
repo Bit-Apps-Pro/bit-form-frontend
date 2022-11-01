@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $breakpoint, $builderSettings } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import ut from '../styles/2.utilities'
+import { deleteNestedObj } from '../Utils/FormBuilderHelper'
 import SizeControl from './CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { assignNestedObj, getNumFromStr, getStrFromStr, unitConverter } from './style-new/styleHelpers'
 import Cooltip from './Utilities/Cooltip'
@@ -79,7 +80,11 @@ export default function BuilderSettings() {
       const brcpnt = breakPoints[brkpnt]
       const path = `styleMergeWithAtomicClasses->${brcpnt}->form->._frm-bg-${formID}->width`
       const value = convertValue + unit
-      assignNestedObj(draft, path, value)
+      if (val === '') {
+        deleteNestedObj(draft, path)
+      } else {
+        assignNestedObj(draft, path, value)
+      }
     }))
   }
 
@@ -92,9 +97,10 @@ export default function BuilderSettings() {
             width={250}
             inputHandler={handleValues}
             sizeHandler={({ unitKey, unitValue }) => handleValues({ value: unitValue, unit: unitKey })}
-            value={(formWidth && getNumFromStr(formWidth)) || 0}
-            unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
+            value={(formWidth && getNumFromStr(formWidth)) || ''}
+            unit={(formWidth && getStrFromStr(formWidth)) || ''}
             sliderWidth="40%"
+            actualValue="auto"
           />
 
           <Select
