@@ -56,7 +56,7 @@ const btnStyle = {
     bd: 'hsl(211, 100%, 50%)',
     cr: 'hsl(0, 0%, 100%)',
     ':hover': { bd: 'hsla(211, 100%, 50%, 0.802)' },
-    ':focus': { bs: '0 0 0 0.2rem rgb(0 123 255 / 50%)' },
+    ':focus': { bs: 'rgb(140 186 255 / 35%) 0px 0px 0px 5px' },
   },
   secondary: {
     cr: 'hsl(0, 0%, 100%)',
