@@ -5,7 +5,7 @@ import { terser } from 'rollup-plugin-terser'
 
 export default function generateRollupConfig() {
   const isDev = process.env.NODE_ENV === 'dev'
-  const fileNames = ['hidden-token-field', 'submit-form', 'customFieldsReset', 'advancedFileHandle']
+  const fileNames = ['hidden-token-field', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'validate-focus']
 
   const external = [
     'window',
@@ -61,8 +61,7 @@ export default function generateRollupConfig() {
     output: [
       {
         file: `${distFolder}/${fileName}.min.js`,
-        name: fileName,
-        format: 'umd',
+        format: 'iife',
         plugins: [terser(terserOptions)],
         globals: {
           document: 'document',
