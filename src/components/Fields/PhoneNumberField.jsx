@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
 import { observeElm } from 'bit-helpers/src'
 import BitPhoneNumberField from 'bit-phone-number-field/src/bit-phone-number-field'
-import bit_virtualized_list from 'bit-virtualized-list/src/bit-virtualized-list'
+import BitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
@@ -39,6 +39,14 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
     if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
       fldConstructor.destroy()
     }
+    const iframeWindow = document.getElementById('bit-grid-layout').contentWindow
+    // add bit_virtualized_list to global
+    if (!iframeWindow.bit_virtualized_list) {
+      iframeWindow.bit_virtualized_list = BitVirtualizedList
+    }
+    if (!iframeWindow.observeElm) {
+      iframeWindow.observeElm = observeElm
+    }
     const { placeholderImage, options } = fieldData
     const configOptions = {
       fieldKey,
@@ -57,7 +65,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
       valueFormat,
       assetsURL: `${bits.assetsURL}/../static/countries/`,
       document: document.getElementById('bit-grid-layout').contentDocument,
-      window: document.getElementById('bit-grid-layout').contentWindow,
+      window: iframeWindow,
       attributes: {
         option: getDataDevAttrArr(fieldKey, 'option'),
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
@@ -72,13 +80,6 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         'opt-lbl': getCustomClsName(fieldKey, 'opt-lbl'),
         'opt-prefix': getCustomClsName(fieldKey, 'opt-prefix'),
       },
-    }
-    // add bit_virtualized_list to global
-    if (!window.bit_virtualized_list) {
-      window.bit_virtualized_list = bit_virtualized_list
-    }
-    if (!window.observeElm) {
-      window.observeElm = observeElm
     }
     phoneNumberFieldRef.current = new BitPhoneNumberField(fldElm, configOptions)
     // eslint-disable-next-line react-hooks/exhaustive-deps
