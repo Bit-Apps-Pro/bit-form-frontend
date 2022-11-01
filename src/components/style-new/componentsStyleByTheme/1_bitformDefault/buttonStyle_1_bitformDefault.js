@@ -4,7 +4,11 @@ import inputWrapperClasses from '../common/inputWrapperClasses'
 export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
-      [`.${fk}-fld-wrp`]: { ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`] },
+      [`.${fk}-fld-wrp`]: {
+        ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
+        display: 'flex',
+        'justify-content': 'start',
+      },
       // [`.${fk}-fld-wrp`]: {
       //   display: 'flex',
       //   'flex-direction': 'column',

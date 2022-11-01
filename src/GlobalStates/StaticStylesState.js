@@ -11,7 +11,6 @@ export const $staticStylesState = atom({
     },
     staticStyles: {
       '.d-none': { display: 'none' },
-      '.vis-n': { visibility: 'hidden' },
       '.form-msg': {
         background: '#ffe8c3',
         'border-radius': '6px',

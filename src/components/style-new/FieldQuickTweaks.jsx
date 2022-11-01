@@ -121,6 +121,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
             elemntKey = 'paypal-wrp'
             break
 
+          case 'select':
+            elemntKey = 'dpd-fld-wrp'
+            break
+
           default:
             break
         }
@@ -149,27 +153,38 @@ export default function FieldQuickTweaks({ fieldKey }) {
       case 'textarea':
         elementKey = 'fld'
         break
+
       case 'check':
         elementKey = 'ck'
         break
+
       case 'radio':
         elementKey = 'rdo'
         break
+
       case 'button':
         elementKey = 'btn'
         break
+
       case 'currency':
       case 'country':
         elementKey = `${fldType}-fld-wrp`
         break
+
       case 'image':
         elementKey = 'fld-wrp'
         break
+
       case 'phone-number':
         elementKey = 'phone-fld-wrp'
         break
+
       case 'paypal':
         elementKey = 'paypal-wrp'
+        break
+
+      case 'select':
+        elementKey = 'dpd-fld-wrp'
         break
 
       default:

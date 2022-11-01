@@ -1,7 +1,6 @@
 {
   "private": true,
   "name": "bit-frontend",
-  "packageManager": "yarn@3.1.0",
   "main": "src/index.js",
   "version": "1.0.0",
   "scripts": {

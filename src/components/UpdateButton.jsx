@@ -83,9 +83,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const builderSettings = useRecoilValue($builderSettings)
   const staticStylesState = useRecoilValue($staticStylesState)
-
   const breakpointSize = useRecoilValue($breakpointSize)
-
   const customCodes = useRecoilValue($customCodes)
 
   useEffect(() => {
