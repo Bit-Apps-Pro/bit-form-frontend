@@ -166,7 +166,7 @@ function handleReset(contentId, customHook = false) {
   typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
 
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
-    resetCaptcha()
+    window?.grecaptcha?.reset()
   }
 }
 function setToastMessage(msgObj) {
