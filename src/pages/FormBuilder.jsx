@@ -130,12 +130,14 @@ const FormBuilder = ({ isLoading }) => {
             const allThemeVars = JCOF.parse(allThemeVarsStr)
             const allThemeColors = JCOF.parse(allThemeColorsStr)
             const allStyles = JCOF.parse(allStylesStr)
-            const staticStyles = JCOF.parse(staticStylesStr)
+            if (staticStylesStr) {
+              const staticStyles = JCOF.parse(staticStylesStr)
+              setStaticStylesState(staticStyles)
+            }
 
             setAllThemeVars(allThemeVars)
             setAllThemeColors(allThemeColors)
             setAllStyles(allStyles)
-            setStaticStylesState(staticStyles)
 
             setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
 
@@ -155,7 +157,7 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
 
-    if (isV2Form && isNewForm) {
+    if (isV2Form && isNewForm && !isObjectEmpty(styles)) {
       setTimeout(() => {
         select('#update-btn').click()
       }, 100)
