@@ -89,7 +89,7 @@ export default function snackbarCssStyles(formID, msgId, position, animation, pa
       cursor: 'pointer',
     },
 
-    [`.close-${msgId}:hover`]: { color: closeIconHover, bd: closeHover },
+    [`.close-${msgId}:hover`]: { color: closeIconHover, background: closeHover },
 
     [`.close-${msgId}:focus`]: { color: closeIconHover },
 

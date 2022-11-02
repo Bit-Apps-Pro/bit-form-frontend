@@ -80,7 +80,7 @@ export default function belowOfFormCssStyles(formID, msgId, position, animation,
       cursor: 'pointer',
     },
 
-    [`.close-${msgId}:hover`]: { color: closeIconHover, bd: closeHover },
+    [`.close-${msgId}:hover`]: { color: closeIconHover, background: closeHover },
 
     [`.close-${msgId}:focus`]: { color: closeIconHover },
 
