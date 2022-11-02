@@ -3,7 +3,7 @@ import { atom, selector } from 'recoil'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
-export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: { validateFocusLost: true, empty_submission: true }, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
+export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
 export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} }) // eslint-disable-line no-undef
 export const $breakpoint = atom({ key: '$breakpoint', default: 'lg' })
 export const $breakpointSize = atom({ key: '$breakpointSize', default: { lg: 1024, md: 960, sm: 570 } })
