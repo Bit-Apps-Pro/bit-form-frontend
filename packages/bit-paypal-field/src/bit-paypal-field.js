@@ -3,8 +3,6 @@ export default class BitPayPalField {
 
   #formSelector = ''
 
-  #responseData = null
-
   #config = {
     namespace: 'paypal',
     payType: 'payment',
@@ -65,7 +63,7 @@ export default class BitPayPalField {
     return action.subscription.create({ plan_id: this.#config.planId })
   }
 
-  #handleOnClick(contentId) {
+  async #handleOnClick(contentId) {
     const form = bfSelect(this.#formSelector)
     if (
       typeof validateForm !== 'undefined'
@@ -103,19 +101,22 @@ export default class BitPayPalField {
       formData.append('hidden_fields', hidden)
     }
     if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
-      grecaptcha.ready(() => {
-        grecaptcha
-          .execute(props.gRecaptchaSiteKey, { action: 'submit' })
-          .then((token) => {
-            formData.append('g-recaptcha-response', token)
-            const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-            return this.#submitResponse(submitResp, contentId, formData)
-          })
+      const result = await new Promise(resolve => {
+        grecaptcha.ready(() => {
+          grecaptcha
+            .execute(props.gRecaptchaSiteKey, { action: 'submit' })
+            .then(async (token) => {
+              formData.append('g-recaptcha-response', token)
+              const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
+              resolve(await paymentSubmitResponse(this, submitResp, contentId, formData))
+            })
+        })
       })
-    } else {
-      const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-      return this.#submitResponse(submitResp, contentId, formData)
+      return result
     }
+    const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
+    const result = await paymentSubmitResponse(this, submitResp, contentId, formData)
+    return result
   }
 
   #setEntryId(id) {
@@ -133,43 +134,6 @@ export default class BitPayPalField {
       method: 'POST',
       body: formData,
     })
-  }
-
-  #submitResponse(resp, contentId, formData) {
-    resp
-      .then(
-        (response) => new Promise((resolve, reject) => {
-          if (response.staus > 400) {
-            const errorEvent = new CustomEvent('bf-form-submit-error', {
-              detail: { formId: contentId, errors: result.data },
-            })
-            bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
-            response.staus === 500
-              ? reject(new Error('Mayebe Internal Server Error'))
-              : reject(response.json())
-          } else resolve(response.json())
-        }),
-      )
-      .then((result) => {
-        const successEvent = new CustomEvent('bf-form-submit-success', {
-          detail: { formId: contentId, entryId: result.entryId, formData },
-        })
-        bfSelect(`#form-${contentId}`).dispatchEvent(successEvent)
-        this.#responseData = result.data
-        if (result !== undefined && result.success) {
-          this.#setEntryId(result.data.entry_id)
-          return true
-        }
-        const errorEvent = new CustomEvent('bf-form-submit-error', {
-          detail: { formId: contentId, errors: result.data },
-        })
-        bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
-        return false
-      })
-      .catch((error) => {
-        const err = error?.message ? error.message : 'Unknown Error'
-        return false
-      })
   }
 
   #onApproveHandler(_, actions) {
@@ -202,43 +166,35 @@ export default class BitPayPalField {
         )
         submitResp.then(() => {
           formParent.classList.remove('pos-rel', 'form-loading')
+          setBFMsg({
+            contentId: this.#config.contentId,
+            msg: this.responseData.message || this.responseData,
+            type: 'success',
+            show: true,
+            error: false,
+          })
+          this.responseData?.hidden_fields?.map(hdnFld => {
+            setHiddenFld(hdnFld, form)
+          })
           this.#responseRedirect()
-          this.#handleReset(this.#getContentId())
+          bfReset(this.#getContentId())
         })
       }
     })
   }
 
-  #handleReset(contentId, customHook = false) {
-    if (customHook) {
-      const resetEvent = new CustomEvent('bf-form-reset', {
-        detail: { formId: contentId },
-      })
-      bfSelect(`#form-${contentId}`).dispatchEvent(resetEvent)
-    }
-
-    const props = window.bf_globals[contentId]
-    bfSelect(`#form-${contentId}`).reset()
-    localStorage.setItem('bf-entry-id', '')
-    typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
-
-    if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
-      resetCaptcha()
-    }
-  }
-
   #responseRedirect() {
-    const responsedRedirectPage = this.#responseData.redirectPage
+    const responsedRedirectPage = this.responseData.redirectPage
     let hitCron = null
     let newNonce = ''
-    if (this.#responseData.cron) {
-      hitCron = this.#responseData.cron
+    if (this.responseData.cron) {
+      hitCron = this.responseData.cron
     }
-    if (this.#responseData.cronNotOk) {
-      hitCron = this.#responseData.cronNotOk
+    if (this.responseData.cronNotOk) {
+      hitCron = this.responseData.cronNotOk
     }
-    if (this.#responseData.new_nonce) {
-      newNonce = this.#responseData.new_nonce
+    if (this.responseData.new_nonce) {
+      newNonce = this.responseData.new_nonce
     }
 
     this.#triggerIntegration(hitCron, newNonce, this.#getContentId())

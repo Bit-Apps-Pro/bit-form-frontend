@@ -114,6 +114,22 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-helpers/dist/setBFMsg.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-helpers/dist/bfReset.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-helpers/dist/bfValidationErrMsg.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-helpers/dist/paymentSubmitResponse.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-helpers/dist/setHiddenFld.min.js'),
         dest: absPath('../assets'),
       },
@@ -239,6 +255,10 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-frontend/dist/submit-form.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
         dest: absPath('../assets'),
       },
       {

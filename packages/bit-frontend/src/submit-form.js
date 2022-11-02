@@ -82,7 +82,7 @@ function submitResponse(resp, contentId, formData) {
       let newNonce = ''
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
-        handleReset(contentId)
+        bfReset(contentId)
         if (typeof result.data === 'object') {
           if (form) {
             result?.data?.hidden_fields?.map(hdnFld => {
@@ -99,23 +99,21 @@ function submitResponse(resp, contentId, formData) {
           if (result.data.new_nonce) {
             newNonce = result.data.new_nonce
           }
-          setToastMessage({
+          setBFMsg({
             contentId,
             msgId: result.data.msg_id,
             msg: result.data.message,
             show: true,
             type: 'success',
             error: false,
-            id: 1,
           })
         } else {
-          setToastMessage({
+          setBFMsg({
             contentId,
             msg: result.data,
             type: 'success',
             show: true,
             error: false,
-            id: 2,
           })
         }
       } else {
@@ -123,7 +121,7 @@ function submitResponse(resp, contentId, formData) {
           detail: { formId: contentId, errors: result.data },
         })
         bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
-        handleFormValidationErrorMessages(result, contentId)
+        bfValidationErrMsg(result, contentId)
       }
 
       triggerIntegration(hitCron, newNonce, contentId)
@@ -140,56 +138,17 @@ function submitResponse(resp, contentId, formData) {
     })
     .catch((error) => {
       const err = error?.message ? error.message : 'Unknown Error'
-      setToastMessage({
+      setBFMsg({
         contentId,
         msg: err,
         show: true,
         type: 'error',
         error: true,
-        id: 3,
       })
       disabledSubmitButton(contentId, false)
     })
 }
 
-function handleReset(contentId, customHook = false) {
-  if (customHook) {
-    const resetEvent = new CustomEvent('bf-form-reset', {
-      detail: { formId: contentId },
-    })
-    bfSelect(`#form-${contentId}`).dispatchEvent(resetEvent)
-  }
-
-  const props = window.bf_globals[contentId]
-  bfSelect(`#form-${contentId}`).reset()
-  localStorage.setItem('bf-entry-id', '')
-  typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
-
-  if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
-    window?.grecaptcha?.reset()
-  }
-}
-function setToastMessage(msgObj) {
-  let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
-
-  msgWrpr.innerHTML = `<div class="form-msg deactive ${msgObj.type}">${msgObj.msg}</div>`
-  msgWrpr = bfSelect('.form-msg', msgWrpr)
-  if (msgObj.msgId) {
-    msgWrpr = bfSelect(`.msg-content-${msgObj.msgId} .msg-content`, bfSelect(`#${msgObj.contentId}`))
-    msgWrpr.innerHTML = msgObj.msg
-    msgWrpr = bfSelect(`.msg-container-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
-  }
-  if (msgWrpr) {
-    msgWrpr.classList.replace('active', 'deactive')
-  }
-  if (!msgWrpr) { return }
-  setTimeout(() => {
-    msgWrpr.classList.replace('deactive', 'active')
-  }, 100)
-  setTimeout(() => {
-    msgWrpr.classList.replace('active', 'deactive')
-  }, 5000)
-}
 function triggerIntegration(hitCron, newNonce, contentId) {
   const props = window.bf_globals[contentId]
   if (hitCron) {
@@ -215,42 +174,6 @@ function triggerIntegration(hitCron, newNonce, contentId) {
     }
   }
 }
-function handleFormValidationErrorMessages(result, contentId) {
-  const { data: responseData } = result
-  if (responseData && typeof responseData === 'string') {
-    setToastMessage({
-      contentId,
-      msg: responseData,
-      error: true,
-      show: true,
-      id: 4,
-    })
-  } else if (responseData) {
-    if (responseData.$form !== undefined) {
-      setToastMessage({
-        contentId,
-        msg: responseData.$form,
-        error: true,
-        show: true,
-        id: 5,
-      })
-      delete responseData.$form
-    }
-    if (Object.keys(responseData).length > 0) {
-      dispatchFieldError(responseData, contentId)
-    }
-  }
-}
-
-function dispatchFieldError(fldErrors, contentId) {
-  Object.keys(fldErrors).forEach((fk) => {
-    const errFld = bfSelect(`#form-${contentId} .${fk}-err-txt`)
-    errFld.innerHTML = fldErrors[fk]
-    errFld.parentElement.style.marginTop = '5px'
-    errFld.parentElement.style.height = `${errFld.offsetHeight}px`
-    errFld.parentElement.style.removeProperty('display')
-  })
-}
 
 function disabledSubmitButton(contentId, disabled) {
   bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
@@ -260,7 +183,14 @@ document.querySelectorAll('form').forEach((frm) => {
   if (frm.id?.startsWith('form-bitforms')) {
     frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
     bfSelect('button[type="reset"]', frm)
-      ?.addEventListener('click', (e) => handleReset(e, true))
+      ?.addEventListener('click', (e) => bfReset(frm.id.replace('form-', ''), true))
   }
+})
+
+document.querySelectorAll('.msg-backdrop,.msg-close').forEach((elm) => {
+  elm.addEventListener('click', e => {
+    e.stopPropagation()
+    bfSelect(`#${elm.dataset.contentid} .msg-container-${elm.dataset.msgid}`).classList.replace('active', 'deactive')
+  })
 })
 localStorage.setItem('bf-entry-id', '')
