@@ -252,8 +252,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     allStyles = updateGoogleFontUrl(allStyles)
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
-    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up') ? trimCSS(filepondCSS) : null
-    atomicCssText += Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview) ? trimCSS(filepondPluginImagePreviewCSS) : null
+
+    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) atomicCssText += trimCSS(filepondCSS)
+    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) trimCSS(filepondPluginImagePreviewCSS)
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
     if (!isStyleNotLoaded && savedFormId) {
