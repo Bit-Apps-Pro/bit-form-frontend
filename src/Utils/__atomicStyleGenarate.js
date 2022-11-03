@@ -10,7 +10,7 @@ import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLigh
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
-export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '__' }) {
+export default function atomicStyleGenarate(sortedLayout) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
@@ -41,15 +41,19 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     'background-color': 'none',
   }
 
-  const atomizeCssConfig = { classPrefix: atomicClassPrefix, classSuffix: atomicClassSuffix }
+  const atomizeCssConfig = { classPrefix: atomicClassPrefix }
   const cssFilterConfig = {
     ignoreWithFallbackValues,
     invalidPropValue,
   }
 
-  const formId = getRecoil($formId)
+  const LgDarkAtomicClassPostfix = '-D'
+  const MdLightAtomicClassPostfix = '-M'
+  const MdDarkAtomicClassPostfix = '-N'
+  const SmLightAtomicClassPostfix = '-S'
+  const SmDarkAtomicClassPostfix = '-P'
 
-  let atomicClassStart = 'A'
+  const formId = getRecoil($formId)
 
   // const layoutRowHeight = 2
 
@@ -67,6 +71,14 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
+
+  // const stylesLgLight = getRecoil($stylesLgLight)
+  // const stylesMdLight = getRecoil($stylesMdLight)
+  // const stylesSmLight = getRecoil($stylesSmLight)
+
+  // const stylesLgDark = getRecoil($stylesLgDark)
+  // const stylesMdDark = getRecoil($stylesMdDark)
+  // const stylesSmDark = getRecoil($stylesSmDark)
 
   const themeVarsLgLight = getRecoil($themeVarsLgLight)
   const themeVarsMdLight = getRecoil($themeVarsMdLight)
@@ -101,70 +113,90 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const allLgLightStyles = flatenStyleObj(lgLightStyles)
   const normalizedAllLgLightVars = expressAndCleanCssVars(allLgLightVars)
   const normalizedAllLgLightStyles = optimizeAndDefineCssClassProps(allLgLightStyles, normalizedAllLgLightVars, cssFilterConfig)
-  const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap, nextAtomicClass: lgLightNextAtomicClass } = atomizeCss(normalizedAllLgLightStyles, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = lgLightNextAtomicClass
+  const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap } = atomizeCss(normalizedAllLgLightStyles, atomizeCssConfig)
 
   // generate lg dark styles merged
   const allLgDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allLgDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles))
   const normalizedAllLgDarkVars = expressAndCleanCssVars(allLgDarkVars)
   const normalizedAllLgDarkStyles = optimizeAndDefineCssClassProps(allLgDarkStyles, normalizedAllLgDarkVars, cssFilterConfig)
-  const lgDarkStylesOnly = getObjectDiff(normalizedAllLgLightStyles, normalizedAllLgDarkStyles)
-  const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap, nextAtomicClass: lgDarkNextAtomicClass } = atomizeCss(lgDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = lgDarkNextAtomicClass
+  const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap } = atomizeCss(normalizedAllLgDarkStyles, atomizeCssConfig)
 
   // generate md light styles merged
   const allMdLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...lightThemeColors }
   const allMdLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles))
   const normalizedAllMdLightVars = expressAndCleanCssVars(allMdLightVars)
   const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars, cssFilterConfig)
-  const mdLightStylesOnly = getObjectDiff(normalizedAllMdLightStyles, normalizedAllLgLightStyles)
-  const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap, nextAtomicClass: mdLightNextAtomicClass } = atomizeCss(mdLightStylesOnly, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = mdLightNextAtomicClass
+  const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap } = atomizeCss(normalizedAllMdLightStyles, atomizeCssConfig)
 
   // generate md dark styles merged
   const allMdDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allMdDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles))
   const normalizedAllMdDarkVars = expressAndCleanCssVars(allMdDarkVars)
   const normalizedAllMdDarkStyles = optimizeAndDefineCssClassProps(allMdDarkStyles, normalizedAllMdDarkVars, cssFilterConfig)
-  const mdDarkStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllLgDarkStyles), normalizedAllMdDarkStyles)
-  const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap, nextAtomicClass: mdDarkNextAtomicClass } = atomizeCss(mdDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = mdDarkNextAtomicClass
+  const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap } = atomizeCss(normalizedAllMdDarkStyles, atomizeCssConfig)
 
   // generate sm light styles merged
   const allSmLightVars = { ...lgLightThemeVars, ...mdLightThemeVars, ...smLightThemeVars, ...lightThemeColors }
   const allSmLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles, smLightStyles))
   const normalizedAllSmLightVars = expressAndCleanCssVars(allSmLightVars)
   const normalizedAllSmLightStyles = optimizeAndDefineCssClassProps(allSmLightStyles, normalizedAllSmLightVars, cssFilterConfig)
-  const smLightStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllMdLightStyles), normalizedAllSmLightStyles)
-  const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap, nextAtomicClass: smLightNextAtomicClass } = atomizeCss(smLightStylesOnly, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = smLightNextAtomicClass
+  const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap } = atomizeCss(normalizedAllSmLightStyles, atomizeCssConfig)
 
   // generate sm dark styles merged
   const allSmDarkVars = { ...lgLightThemeVars, ...lgDarkThemeVars, ...mdDarkThemeVars, ...smDarkThemeVars, ...lightThemeColors, ...darkThemeColors }
   const allSmDarkStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, lgDarkStyles, mdDarkStyles, smDarkStyles))
   const normalizedAllSmDarkVars = expressAndCleanCssVars(allSmDarkVars)
   const normalizedAllSmDarkStyles = optimizeAndDefineCssClassProps(allSmDarkStyles, normalizedAllSmDarkVars, cssFilterConfig)
-  const smDarkStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllLgDarkStyles, normalizedAllMdDarkStyles), normalizedAllSmDarkStyles)
-  const { atomicClasses: smDarkAtomicStyles, classMaps: smDarkAtomicClassMap, nextAtomicClass: smDarkNextAtomicClass } = atomizeCss(smDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
-  atomicClassStart = smDarkNextAtomicClass
+  const { atomicClasses: smDarkAtomicStyles, classMaps: smDarkAtomicClassMap } = atomizeCss(normalizedAllSmDarkStyles, atomizeCssConfig)
+
+  // get only changes between main style object and (dark, mobo devices)
+  const lgDarkAtomicStylesFiltered = getObjectDiff(lgLightAtomicStyles, lgDarkAtomicStyles)
+  const mdLightAtomicStylesFiltered = getObjectDiff(lgLightAtomicStyles, mdLightAtomicStyles)
+  const mdDarkAtomicStylesFiltered = getObjectDiff(mergeNestedObj(lgLightAtomicStyles, lgDarkAtomicStyles), mdDarkAtomicStyles)
+  const smLightAtomicStylesFiltered = getObjectDiff(mergeNestedObj(lgLightAtomicStyles, mdLightAtomicStyles), smLightAtomicStyles)
+  const smDarkAtomicStylesFiltered = getObjectDiff(mergeNestedObj(lgLightAtomicStyles, lgDarkAtomicStyles, mdDarkAtomicStyles), smDarkAtomicStyles)
+
+  // filter classmap according to atomic classes
+  const lgDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(lgDarkAtomicStylesFiltered, lgDarkAtomicClassMap)
+  const mdLightAtomicClassMapFiltered = getElmClassNamesByAtomicClass(mdLightAtomicStylesFiltered, mdLightAtomicClassMap)
+  const mdDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(mdDarkAtomicStylesFiltered, mdDarkAtomicClassMap)
+  const smLightAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smLightAtomicStylesFiltered, smLightAtomicClassMap)
+  const smDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smDarkAtomicStylesFiltered, smDarkAtomicClassMap)
+
+  console.log('====', {
+    lgDarkAtomicClassMapFiltered,
+    lgDarkAtomicStylesFiltered,
+    lgDarkAtomicStyles,
+    mdLightAtomicClassMapFiltered,
+    mdDarkAtomicClassMapFiltered,
+    smLightAtomicClassMapFiltered,
+    smDarkAtomicClassMapFiltered,
+    diff: getObjectDiff(normalizedAllLgLightStyles, normalizedAllLgDarkStyles),
+  },)
+  // add suffix to atomic class and classmap of dark mode css and breakpoint css
+  const [lgDarkAtomicClassesPostfixed, lgDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(lgDarkAtomicStylesFiltered, lgDarkAtomicClassMapFiltered, LgDarkAtomicClassPostfix)
+  const [mdLightAtomicStylesPostfixed, mdLightClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdLightAtomicStylesFiltered, mdLightAtomicClassMapFiltered, MdLightAtomicClassPostfix)
+  const [mdDarkAtomicStylesPostfixed, mdDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdDarkAtomicStylesFiltered, mdDarkAtomicClassMapFiltered, MdDarkAtomicClassPostfix)
+  const [smLightAtomicStylesPostfixed, smLightClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(smLightAtomicStylesFiltered, smLightAtomicClassMapFiltered, SmLightAtomicClassPostfix)
+  const [smDarkAtomicStylesPostfixed, smDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(smDarkAtomicStylesFiltered, smDarkAtomicClassMapFiltered, SmDarkAtomicClassPostfix)
 
   const allMergedClassMaps = mergeNestedObj(
     lgLightAtomicClassMap,
-    lgDarkAtomicClassMap,
-    mdLightAtomicClassMap,
-    mdDarkAtomicClassMap,
-    smLightAtomicClassMap,
-    smDarkAtomicClassMap,
+    lgDarkClassMapPostfixed,
+    mdLightClassMapPostfixed,
+    mdDarkClassMapPostfixed,
+    smLightClassMapPostfixed,
+    smDarkClassMapPostfixed,
   )
 
   // optimize css by combine same styles selectors
   const lgLightCombineSelectors = combineSelectors(lgLightAtomicStyles)
-  const lgDarkCombinedSelectors = combineSelectors(lgDarkAtomicStyles)
-  const mdLightCombinedSelectors = combineSelectors(mdLightAtomicStyles)
-  const mdDarkCombinedSelectors = combineSelectors(mdDarkAtomicStyles)
-  const smLightCombinedSelectors = combineSelectors(smLightAtomicStyles)
-  const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStyles)
+  const lgDarkCombinedSelectors = combineSelectors(lgDarkAtomicClassesPostfixed)
+  const mdLightCombinedSelectors = combineSelectors(mdLightAtomicStylesPostfixed)
+  const mdDarkCombinedSelectors = combineSelectors(mdDarkAtomicStylesPostfixed)
+  const smLightCombinedSelectors = combineSelectors(smLightAtomicStylesPostfixed)
+  const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStylesPostfixed)
 
   // keep all fields in lay.lg and remove same layout fields from md and sm in order to keep only different fields in md and sm
   const simplyfiedLayout = {}
@@ -173,6 +205,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   simplyfiedLayout.sm = getLayoutDiff(sortedLayout.md, sortedLayout.sm)
 
   const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(simplyfiedLayout)
+
+  console.log('========', { darkModeSelector, darkModeOnSystemPreference })
 
   // generate css text from objects and add dark mode prefix if need
   const mdLightCssText = objectToCssText(mdLightCombinedSelectors)?.trim()
@@ -184,43 +218,30 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const smDarkCssText = objectToCssText(smDarkCombinedSelectors)?.trim()
   const smPrefixedDarkCssText = objectToCssText(addPrefixInObjectKeys(smDarkCombinedSelectors, `${darkModeSelector} `))?.trim()
 
-
-  console.log('=====',{
-    lgLightAtomicStyles,
-    lgDarkAtomicStyles,
-    mdLightAtomicStyles,
-  })
   // concat css texts
   let cssText = generateFormGridStyle('lg', formId)
   cssText += lgLayoutStyleText
   cssText += objectToCssText(lgLightCombineSelectors)
-  if (darkModeSelector.trim()) {
-    cssText += lgPrefixedDarkCssText
-  }
 
   if (mdLayoutStyleText || mdLightCssText) {
     cssText += `@media (max-width:${mdBreakpointSize}px){`
+    // cssText += generateFormGridStyle('md', formId) // unused after make all cols 60
     if (mdLayoutStyleText) cssText += mdLayoutStyleText
     if (mdLightCssText) cssText += mdLightCssText
-    if (darkModeSelector.trim()) {
-      cssText += mdPrefixedDarkCssText
-    }
     cssText += '}'
   }
 
   if (smLayoutStyleText || smLightCssText) {
     cssText += `@media (max-width:${smBreakpointSize}px){`
+    // cssText += generateFormGridStyle('sm', formId) // unused after make all cols 60
     if (smLayoutStyleText) cssText += smLayoutStyleText
     if (smLightCssText) cssText += smLightCssText
-    if (darkModeSelector.trim()) {
-      cssText += smPrefixedDarkCssText
-    }
     cssText += '}'
   }
 
-  // if (lgPrefixedDarkCssText) cssText += lgPrefixedDarkCssText
-  // if (mdPrefixedDarkCssText) cssText += mdPrefixedDarkCssText
-  // if (smPrefixedDarkCssText) cssText += smPrefixedDarkCssText
+  if (lgPrefixedDarkCssText) cssText += lgPrefixedDarkCssText
+  if (mdPrefixedDarkCssText) cssText += mdPrefixedDarkCssText
+  if (smPrefixedDarkCssText) cssText += smPrefixedDarkCssText
   if (lgDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark){${lgDarkCssText}}`
   if (mdDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${mdBreakpointSize}px){${mdDarkCssText}}`
   if (smDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${smBreakpointSize}px){${smDarkCssText}}`
