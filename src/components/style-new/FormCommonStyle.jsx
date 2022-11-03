@@ -26,16 +26,15 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const { fieldKey, formID, formType } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const elemn = `.${element}-${formID}`
-  // if (!('form' in styles && elemn in styles.form)) return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`, { replace: true })
   const formWrpStylesObj = styles.form?.[elemn]
-  const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
+  const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj || {})
   const themeColors = useRecoilValue($themeColors)
   console.log('formWrpStylesPropertiesArr', formWrpStylesPropertiesArr)
   useEffect(() => {
     if (!('form' in styles && elemn in styles.form)) {
       <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} replace />
     }
-  }, [styles])
+  }, [])
   const addableCssProps = Object
     .keys(editorConfig[element].properties)
     .filter(x => !formWrpStylesPropertiesArr?.includes(x))
@@ -236,7 +235,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   }
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
-      {!formWrpStylesPropertiesArr && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+      {formWrpStylesPropertiesArr.length === 0 && <LoaderSm size={100} clr="#000" className="ml-2" />}
       {formWrpStylesPropertiesArr.map((prop, indx) => (
         <div key={`css-property-${indx + 3 * 2}`}>
           {getCssProps(prop)}
