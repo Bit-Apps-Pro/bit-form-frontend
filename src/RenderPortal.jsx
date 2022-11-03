@@ -9,11 +9,18 @@ import { isFirefox } from './Utils/Helpers'
 // eslint-disable-next-line import/prefer-default-export
 export const RenderPortal = ({ children, title, ...props }) => {
   const [contentRef, setContentRef] = useState(null)
-  const mountNode = contentRef?.contentWindow?.document?.body
+  const mountNode = contentRef?.contentDocument?.body
 
   if (contentRef) {
     contentRef.contentWindow.addEventListener('keydown', searchKey)
     contentRef.contentWindow.addEventListener('keydown', handleUndoRedoShortcut)
+  }
+
+  const hasDoctype = (dom) => (dom.doctype !== null)
+
+  if (contentRef && !hasDoctype(contentRef.contentDocument)) {
+    const newDoctype = document.implementation.createDocumentType('html', '', '')
+    contentRef.contentDocument.insertBefore(newDoctype, contentRef.contentDocument.childNodes[0])
   }
 
   return (
@@ -23,7 +30,7 @@ export const RenderPortal = ({ children, title, ...props }) => {
       {...isFirefox() && { onLoad: e => setContentRef(e.target) }}
       {...!isFirefox() && { ref: setContentRef }}
     >
-      {mountNode && createPortal(children, mountNode)}
+      {mountNode && hasDoctype(contentRef.contentDocument) && createPortal(children, mountNode)}
     </iframe>
   )
 }

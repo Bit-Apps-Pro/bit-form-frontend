@@ -436,15 +436,6 @@ function RadioCheckSettings() {
       </SimpleAccordion> */}
 
       <div className={css(FieldStyle.fieldSection)}>
-        {/* <button
-          data-testid="edt-opt-stng"
-          onClick={openOptionModal}
-          className={css(app.btn, { my: 0 })}
-          type="button"
-        >
-          &nbsp;
-          {__('Edit Options')}
-        </button> */}
         <Btn
           dataTestId="edt-opt-stng"
           variant="default-outline"
