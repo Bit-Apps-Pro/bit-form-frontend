@@ -20,6 +20,7 @@ import {
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
+import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
 import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
@@ -147,6 +148,19 @@ export default function ThemeQuickTweaksCustomizer() {
     }))
     setThemeVars(tmpThemeVars)
     setThemeColors(tmpThemeColors)
+    addToBuilderHistory(
+      generateHistoryData(
+        element,
+        fieldKey,
+        'Reset Style',
+        'Reset Style',
+        {
+          styles: getLatestState('styles'),
+          themeVars: getLatestState('themeVars'),
+          themeColors: getLatestState('themeColors'),
+        },
+      ),
+    )
   }
 
   return (
@@ -154,13 +168,15 @@ export default function ThemeQuickTweaksCustomizer() {
       {formType === 'edit' && (
         <div className={css(ut.flxcb)}>
           <span className={css({ fs: 12, mb: 2 }, ut.fw500)}>Reset Style</span>
-          <Btn
-            dataTestId="style-reset-btn"
-            onClick={resetStyle}
-            size="sm"
-          >
-            {__('Reset')}
-          </Btn>
+          <Downmenu>
+            <Btn dataTestId="style-reset-btn" size="sm">
+              {__('Reset')}
+            </Btn>
+            <div>
+              <p>Are confirm reset style?</p>
+              <Btn onClick={resetStyle} width="100%" dataTestId="style-reset-confirm" size="sm">Confirm</Btn>
+            </div>
+          </Downmenu>
         </div>
       )}
       <SimpleColorPicker
