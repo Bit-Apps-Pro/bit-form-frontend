@@ -1,8 +1,8 @@
 {
-  "name": "BitForm | From Builder for Wordpress",
+  "name": "BitForm | Form Builder for Wordpress",
   "version": "1.0.3",
   "short_name": "Bit Form",
-  "description": "Modern From Builder for Wordpress",
+  "description": "Modern Form Builder for Wordpress",
   "icons": [
     {
       "src": "../img/logo-bg.svg",
