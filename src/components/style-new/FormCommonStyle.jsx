@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Navigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -7,6 +8,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { addToBuilderHistory, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import LoaderSm from '../Loaders/LoaderSm'
 import BackgroundControl from './BackgroundControl'
 import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
@@ -24,18 +26,18 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const { fieldKey, formID, formType } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const elemn = `.${element}-${formID}`
-  // if (!('form' in styles && elemn in styles.form)) return navigator(`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`, { replace: true })
   const formWrpStylesObj = styles.form?.[elemn]
-  const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
+  const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj || {})
   const themeColors = useRecoilValue($themeColors)
-
-  if (!('form' in styles && elemn in styles.form)) {
-    <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} replace />
-  }
-
+  console.log('formWrpStylesPropertiesArr', formWrpStylesPropertiesArr)
+  useEffect(() => {
+    if (!('form' in styles && elemn in styles.form)) {
+      <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} replace />
+    }
+  }, [])
   const addableCssProps = Object
     .keys(editorConfig[element].properties)
-    .filter(x => !formWrpStylesPropertiesArr.includes(x))
+    .filter(x => !formWrpStylesPropertiesArr?.includes(x))
 
   const getPropertyPath = (cssProperty) => `form->${elemn}->${cssProperty}`
 
@@ -233,6 +235,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   }
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
+      {formWrpStylesPropertiesArr.length === 0 && <LoaderSm size={100} clr="#000" className="ml-2" />}
       {formWrpStylesPropertiesArr.map((prop, indx) => (
         <div key={`css-property-${indx + 3 * 2}`}>
           {getCssProps(prop)}
@@ -241,7 +244,11 @@ export default function FormCommonStyle({ element, componentTitle }) {
       {
         addableCssProps.length > 0
         && (
-          <CssPropertyList id={`${element}-prop`} properties={addableCssProps} setProperty={setNewCssProp} />
+          <CssPropertyList
+            id={`${element}-prop`}
+            properties={addableCssProps}
+            setProperty={setNewCssProp}
+          />
         )
       }
     </div>
