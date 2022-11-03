@@ -4,6 +4,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
@@ -13,6 +14,7 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -373,15 +375,18 @@ export default function DropdownFieldSettings() {
               </Fragment>
             )
           })}
-          <button
-            data-testid="ad-opt-lst-btn"
+          <Btn
+            dataTestId="edt-opt-stng"
+            variant="default-outline"
+            size="sm"
+            className={css({ mt: 10 })}
             onClick={handleAddNewOptionList}
-            className={css(app.btn, { mt: 5, mb: 0 })}
-            type="button"
           >
-            &nbsp;
             {__('Add Options List')}
-          </button>
+            <span className={css({ ml: 3, mt: 3, tm: 'rotate(45deg)' })}>
+              <CloseIcn size="13" stroke="3" />
+            </span>
+          </Btn>
 
         </div>
       </SimpleAccordion>
