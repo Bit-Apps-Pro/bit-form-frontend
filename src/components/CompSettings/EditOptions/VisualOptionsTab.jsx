@@ -2,29 +2,21 @@ import { arrayMoveImmutable } from 'array-move'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
-import DragIcn from '../../../Icons/DragIcn'
 import PlusIcn from '../../../Icons/PlusIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
 import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Btn from '../../Utilities/Btn'
+import CheckBox from '../../Utilities/CheckBox'
+import { DragHandle, SortableItem, SortableList } from '../../Utilities/Sortable'
 import Tip from '../../Utilities/Tip'
 import TipGroup from '../../Utilities/Tip/TipGroup'
-import VirtualList from '../../Utilities/VirtualList'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
-import CheckBox from '../../Utilities/CheckBox'
 
-const SortContainer = SortableContainer(({ children }) => children)
-
-const DragHandle = SortableHandle(({ className }) => (
-  <span className={`handle ${className}`}><DragIcn size={14} /></span>
-))
-
-const SortableItem = SortableElement(({
+const SortableElm = ({
   value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault,
 }) => {
   const { css } = useFela()
@@ -270,7 +262,7 @@ const SortableItem = SortableElement(({
       )}
     </div>
   )
-})
+}
 
 export default function VisualOptionsTab({
   optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup,
@@ -348,16 +340,13 @@ export default function VisualOptionsTab({
 
   return (
     <>
-      <SortContainer onSortEnd={onSortEnd} useDragHandle>
-        <VirtualList
-          className={css(optionStyle.list)}
-          itemCount={option.length}
-          itemSizes={option.length ? generateItemSize() : 0}
-          scrollToIndex={scrolIndex}
-          renderItem={index => (
-            <SortableItem
-              key={`sortable-${option[index].id}`}
-              index={index}
+      <SortableList onSortEnd={onSortEnd} useDragHandle>
+        {option.map((_, index) => (
+          <SortableItem
+            key={`sortable-${option[index].id}`}
+            index={index}
+          >
+            <SortableElm
               optIndx={index}
               value={option[index]}
               type={type}
@@ -369,9 +358,9 @@ export default function VisualOptionsTab({
               optKey={optKey}
               checkByDefault={checkByDefault}
             />
-          )}
-        />
-      </SortContainer>
+          </SortableItem>
+        ))}
+      </SortableList>
       <div className={`flx ${css({ ml: 11, mt: 7 })}`}>
         <Btn
           size="sm"
