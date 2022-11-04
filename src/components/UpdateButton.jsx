@@ -174,6 +174,38 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     return (payFields.length > 0 || btns.length > 0)
   }
 
+  const generateAndSaveAtomicCss = currentFormId => {
+    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+
+    const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
+
+    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
+
+    let {
+      atomicCssText,
+      atomicClassMap,
+      lgLightStyles,
+    } = generatedAtomicStyles
+
+    atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
+
+    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) atomicCssText += trimCSS(filepondCSS)
+    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) atomicCssText += trimCSS(filepondPluginImagePreviewCSS)
+    if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
+
+    if (!isStyleNotLoaded && currentFormId) {
+      const atomicData = {
+        form_id: savedFormId || newFormId,
+        atomicCssText,
+        atomicClassMap,
+      }
+      bitsFetch(atomicData, 'bitforms_save_css')
+        .catch(err => console.error('save css error=', err))
+    }
+
+    return { ...generatedAtomicStyles, atomicCssText, atomicClassMap, layouts }
+  }
+
   const saveForm = (type, updatedData) => {
     if (savedFormId) setbuttonDisabled(true)
     let mailTemplates = mailTem
@@ -207,12 +239,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     // setUpdateBtn({ disabled: true, loading: true })
 
-    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
 
-    let {
-      atomicCssText,
+    const {
+      layouts,
       atomicClassMap,
       lightThemeColors,
       darkThemeColors,
@@ -228,7 +258,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdDarkStyles,
       smLightStyles,
       smDarkStyles,
-    } = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
+    } = generateAndSaveAtomicCss(savedFormId)
 
     const allThemeColors = {
       lightThemeColors,
@@ -251,20 +281,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smDarkStyles,
     }
     allStyles = updateGoogleFontUrl(allStyles)
-    atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
-
-    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) atomicCssText += trimCSS(filepondCSS)
-    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) trimCSS(filepondPluginImagePreviewCSS)
-    if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
-
-    if (!isStyleNotLoaded && savedFormId) {
-      const atomicData = {
-        form_id: savedFormId || newFormId,
-        atomicCssText,
-      }
-      bitsFetch(atomicData, 'bitforms_save_css')
-        .catch(err => console.error('save css error=', err))
-    }
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle = formStyle && (bitDecipher(formStyle))
@@ -312,11 +328,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         if (response?.success && componentMounted) {
           let { data } = response
           if (typeof data !== 'object') { data = JSON.parse(data) }
-          if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
-            setSavedFormId(data.id)
-            setButtonText('Update')
-            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
-          }
           setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
           data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
@@ -357,6 +368,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           }))
           resetUpdateBtn()
           setDeletedFldKey([])
+
+          if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
+            setSavedFormId(data.id)
+            setButtonText('Update')
+            navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
+            setTimeout(() => generateAndSaveAtomicCss(data.id), 100)
+          }
+
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')

@@ -528,7 +528,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const iFrameDocument = document.getElementById('bit-grid-layout').contentDocument
     if (iFrameDocument.elementsFromPoint) {
       const allPointedElements = iFrameDocument.elementsFromPoint(event.pageX, event.pageY)
-      const elmOnMousePointer = allPointedElements.find(el => !el.className.startsWith('highlight-'))
+      const elmOnMousePointer = allPointedElements.find(el => typeof el.className === 'string' && !el.className.startsWith('highlight-'))
       if (!elmOnMousePointer) return false
       if (elmCurrentHighlightedRef.current && elmOnMousePointer.isEqualNode(elmCurrentHighlightedRef.current)) return false
       let dataDevAttrFound = false

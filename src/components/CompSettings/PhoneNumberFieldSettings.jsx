@@ -14,6 +14,7 @@ import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { iconElementLabel } from '../style-new/styleHelpers'
+import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -352,10 +353,18 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
-        <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn, { my: 0 })} type="button">
-          &nbsp;
+        <Btn
+          dataTestId="edt-opt-stng"
+          variant="default-outline"
+          size="sm"
+          className={css({ mt: 10 })}
+          onClick={openOptionModal}
+        >
           {__('Edit Options')}
-        </button>
+          <span className={css({ ml: 3, mt: 3, tm: 'rotate(45deg)' })}>
+            <CloseIcn size="13" stroke="3" />
+          </span>
+        </Btn>
       </div>
 
       <FieldSettingsDivider />
