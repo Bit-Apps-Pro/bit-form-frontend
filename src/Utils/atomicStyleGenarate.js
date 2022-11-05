@@ -162,7 +162,7 @@ export default function atomicStyleGenarate(sortedLayout) {
   const smLightAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smLightAtomicStylesFiltered, smLightAtomicClassMap)
   const smDarkAtomicClassMapFiltered = getElmClassNamesByAtomicClass(smDarkAtomicStylesFiltered, smDarkAtomicClassMap)
 
-  // add suffic to atomic class and classmap of dark mode css and breakpoint css
+  // add suffix to atomic class and classmap of dark mode css and breakpoint css
   const [lgDarkAtomicClassesPostfixed, lgDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(lgDarkAtomicStylesFiltered, lgDarkAtomicClassMapFiltered, LgDarkAtomicClassPostfix)
   const [mdLightAtomicStylesPostfixed, mdLightClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdLightAtomicStylesFiltered, mdLightAtomicClassMapFiltered, MdLightAtomicClassPostfix)
   const [mdDarkAtomicStylesPostfixed, mdDarkClassMapPostfixed] = addPostfixToAtomicClassAndClassMaps(mdDarkAtomicStylesFiltered, mdDarkAtomicClassMapFiltered, MdDarkAtomicClassPostfix)

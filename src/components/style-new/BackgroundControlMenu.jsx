@@ -426,7 +426,13 @@ function BackgroundControlMenu({ stateObjName,
               <div className={css(ut.mt2, { p: '0px 2px' })}>
 
                 {controller.child === 'Upload' && (
-                  <ImageUploadInput title="Image" imageSrc={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''} value={bgImage?.slice(bgImage.lastIndexOf('/') + 1, -1)} clickAction={setWpMedia} clearAction={clearBgImage} />
+                  <ImageUploadInput
+                    title="Image"
+                    imageSrc={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''}
+                    value={bgImage?.slice(bgImage.lastIndexOf('/') + 1, -1)}
+                    clickAction={setWpMedia}
+                    clearAction={clearBgImage}
+                  />
                 )}
 
                 {controller.child === 'Link' && (
@@ -434,9 +440,24 @@ function BackgroundControlMenu({ stateObjName,
                     <div className={css(ut.flxClm)}>
                       <div className={css({ flx: 'between' })}>
                         <span className={css(bgImgControlStyle.title)}>URL</span>
-                        <span className={css(bgImgControlStyle.title, bgImgControlStyle.browse)} role="button" tabIndex={0} onClick={() => setUnsplashMdl(true)} onKeyUp={() => setUnsplashMdl(true)}>Browse</span>
+                        <span
+                          className={css(bgImgControlStyle.title, bgImgControlStyle.browse)}
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => setUnsplashMdl(true)}
+                          onKeyUp={() => setUnsplashMdl(true)}
+                        >
+                          Browse
+
+                        </span>
                       </div>
-                      <input type="url" className={css(bgImgControlStyle.urlinput, { pr: '30px !important' })} value={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''} onChange={urlChangeHandler} placeholder="ex: https://www.example.com" />
+                      <input
+                        type="url"
+                        className={css(bgImgControlStyle.urlinput, { pr: '30px !important' })}
+                        value={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''}
+                        onChange={urlChangeHandler}
+                        placeholder="ex: https://www.example.com"
+                      />
                     </div>
                     {/* <button type="button" className={css(ut.mt2)}>browse</button> */}
                   </div>
@@ -449,7 +470,13 @@ function BackgroundControlMenu({ stateObjName,
                         <StyleResetIcn size={12} />
                       </span>
                       <span className={css(backgroundImageControlStyle.icon)}>*</span> */}
-                      <select value={bgSize.type} name="" id="" onChange={sizeSelectHandler} className={css(sc.select)}>
+                      <select
+                        value={bgSize.type}
+                        name=""
+                        id=""
+                        onChange={sizeSelectHandler}
+                        className={css(sc.select)}
+                      >
                         <option value="auto">auto</option>
                         <option value="size">size</option>
                         <option value="cover">cover</option>
@@ -476,7 +503,13 @@ function BackgroundControlMenu({ stateObjName,
                         <StyleResetIcn size={12} />
                       </span> */}
                       {/* <span className={css(backgroundImageControlStyle.icon, bgPosition.includes('!important') ? backgroundImageControlStyle.activeicon : '')}>*</span> */}
-                      <select value={bgPosition.type} name="" id="" onChange={positionSelectHandler} className={css(sc.select)}>
+                      <select
+                        value={bgPosition.type}
+                        name=""
+                        id=""
+                        onChange={positionSelectHandler}
+                        className={css(sc.select)}
+                      >
                         <option value="positions">Positions</option>
                         <option value="size">Size</option>
                         <option value="inherit">Inherit</option>
@@ -498,47 +531,119 @@ function BackgroundControlMenu({ stateObjName,
                     <div className={css(ut.flxcb, ut.ml6, ut.mt2, bgImgControlStyle.positioncontainer)}>
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Top Left">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top left')} onClick={() => positionChangeHandler('top left')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top left' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('top left')}
+                            onClick={() => positionChangeHandler('top left')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Top Center">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top center')} onClick={() => positionChangeHandler('top center')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top center' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('top center')}
+                            onClick={() => positionChangeHandler('top center')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Top Right">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('top right')} onClick={() => positionChangeHandler('top right')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top right' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('top right')}
+                            onClick={() => positionChangeHandler('top right')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Center Left">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center left')} onClick={() => positionChangeHandler('center left')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center left' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('center left')}
+                            onClick={() => positionChangeHandler('center left')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Center">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center')} onClick={() => positionChangeHandler('center')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('center')}
+                            onClick={() => positionChangeHandler('center')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Center Right">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('center right')} onClick={() => positionChangeHandler('center right')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center right' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('center right')}
+                            onClick={() => positionChangeHandler('center right')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Bottom Left">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom left' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom left')} onClick={() => positionChangeHandler('bottom left')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom left' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('bottom left')}
+                            onClick={() => positionChangeHandler('bottom left')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Bottom Center">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom center' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom center')} onClick={() => positionChangeHandler('bottom center')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom center' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('bottom center')}
+                            onClick={() => positionChangeHandler('bottom center')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Bottom Right">
-                          <span className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom right' && bgImgControlStyle.positionDotActive)} role="button" onKeyPress={() => positionChangeHandler('bottom right')} onClick={() => positionChangeHandler('bottom right')} tabIndex={0}>&nbsp;</span>
+                          <span
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom right' && bgImgControlStyle.positionDotActive)}
+                            role="button"
+                            onKeyPress={() => positionChangeHandler('bottom right')}
+                            onClick={() => positionChangeHandler('bottom right')}
+                            tabIndex={0}
+                          >
+                            &nbsp;
+                          </span>
                         </Tip>
                       </div>
                     </div>

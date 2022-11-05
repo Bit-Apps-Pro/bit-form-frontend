@@ -215,7 +215,12 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
               className={`${css(s.imageBtn)} ${item.urls.regular === selectUrl && css(s.active)}`}
               onClick={() => handlePrefixIcon(item.urls.regular)}
             >
-              <img src={`${item.urls.thumb}`} onError={errHandle} alt={item.id} className={css(s.img)} />
+              <img
+                src={`${item.urls.thumb}`}
+                onError={errHandle}
+                alt={item.id}
+                className={css(s.img)}
+              />
             </button>
           ))}
         </div>
@@ -228,7 +233,13 @@ function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
           </div>
         )}
       </Scrollbars>
-      <button data-testid="icn-dwnld-n-sav" type="button" disabled={!selectUrl} className={css(s.saveBtn, s.btnPosition)} onClick={saveImage}>
+      <button
+        data-testid="icn-dwnld-n-sav"
+        type="button"
+        disabled={!selectUrl}
+        className={css(s.saveBtn, s.btnPosition)}
+        onClick={saveImage}
+      >
         <span className={css(ut.mr1, { dy: 'flex' })}><CPTIcn size="20" /></span>
         Save
         {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
