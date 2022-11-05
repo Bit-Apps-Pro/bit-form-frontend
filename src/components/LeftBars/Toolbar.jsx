@@ -687,6 +687,8 @@ function Toolbar({ setNewData }) {
         typ: 'image',
         alt: '',
         valid: {},
+        height: '',
+        width: '',
         img: {},
         err: {},
         customClasses: {},
