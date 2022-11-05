@@ -42,7 +42,7 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
           data-dev-img={fieldKey}
           className={`${fieldKey}-img ${getCustomClsName(fieldKey, 'img')}`}
           src={fieldData?.bg_img || tempData.current?.extarnalSource}
-          alt="bg"
+          alt={fieldData?.alt}
           {...getCustomAttributes(fieldKey, 'img')}
         />
       </div>

@@ -685,6 +685,7 @@ function Toolbar({ setNewData }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'image',
+        alt: '',
         valid: {},
         img: {},
         err: {},

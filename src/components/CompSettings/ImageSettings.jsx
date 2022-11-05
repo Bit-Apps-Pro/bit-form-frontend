@@ -5,12 +5,16 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
 import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
@@ -20,14 +24,38 @@ function ImageSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [icnMdl, setIcnMdl] = useState(false)
+  const alt = fieldData.alt || ''
 
   const removeImage = (name) => {
     if (fieldData[name]) {
       delete fieldData[name]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      addToBuilderHistory({ event: `Background Image Deleted: ${fieldData.lbl || fldKey}`, type: `delete_${name}`, state: { fldKey, fields: allFields } })
+      addToBuilderHistory(
+        {
+          event: `Background Image Deleted: ${fieldData.lbl || fldKey}`,
+          type: `delete_${name}`,
+          state: { fldKey, fields: allFields },
+        },
+      )
     }
+  }
+
+  function setAlt(e) {
+    const { value } = e.target
+    if (value === '') {
+      delete fieldData.alt
+    } else {
+      fieldData.alt = value.replace(/\\\\/g, '$_bf_$')
+    }
+    // eslint-disable-next-line no-param-reassign
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({
+      event: `Field alt Change ${fieldData.alt || fldKey}`,
+      type: 'field_alt_change',
+      state: { fields: allFields, fldKey },
+    })
   }
 
   return (
@@ -49,6 +77,24 @@ function ImageSettings() {
         removeIcon={() => removeImage('bg_img')}
       />
 
+      <FieldSettingsDivider />
+      <SimpleAccordion
+        id="nam-stng"
+        title={__('Image Alt Text')}
+        className={css(FieldStyle.fieldSection)}
+      >
+        <div>
+          <div className={css({ w: '97%', mx: 5 })}>
+            <AutoResizeInput
+              id="fld-lbl-stng"
+              ariaLabel="Label input"
+              changeAction={setAlt}
+              value={alt.replace(/\$_bf_\$/g, '\\')}
+              placeholder="e.g: Image of Bitform"
+            />
+          </div>
+        </div>
+      </SimpleAccordion>
       <FieldSettingsDivider />
 
       <Modal
