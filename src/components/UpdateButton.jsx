@@ -179,7 +179,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
 
-    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate(layouts)
+    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts })
 
     let {
       atomicCssText,
@@ -208,6 +208,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const saveForm = (type, updatedData) => {
     if (savedFormId) setbuttonDisabled(true)
+
     let mailTemplates = mailTem
     let additionalSettings = additional
     let allIntegrations = integrations
@@ -260,6 +261,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smDarkStyles,
     } = generateAndSaveAtomicCss(savedFormId)
 
+    // TODO : save style with formID and load when multiple form found and formID should be concat with atomic classes when show 
+    const { atomicCssWithFormIdText } = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts, atomicClassSuffix: formID })
+
     const allThemeColors = {
       lightThemeColors,
       darkThemeColors,
@@ -280,6 +284,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles,
     }
+
     allStyles = updateGoogleFontUrl(allStyles)
 
     let formStyle = sessionStorage.getItem('btcd-fs')

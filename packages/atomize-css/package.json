@@ -1,7 +1,7 @@
 {
   "name": "atomize-css",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "src/atomize-css/index.js",
   "module": "src/atomize-css/index.js",
   "scripts": {

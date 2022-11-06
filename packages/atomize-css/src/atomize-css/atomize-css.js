@@ -3,15 +3,17 @@ import deepCopy from './helpers/deepCopy'
 import generateCssClass from './helpers/generateNewClassName'
 import isSameSpeficity from './helpers/isSameSpeficity'
 
-export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = '' } = {}) {
-  let atomicClassPrefix = ''
-  if (classPrefix) {
-    atomicClassPrefix = classPrefix.trim()
-  }
+export function atomizeCss(
+  stylesObj,
+  { selectorSplitCount = 1,
+    classPrefix = '',
+    classSuffix = '',
+    atomicClassStart } = {},
+) {
   const selectorObj = sortJson(deepCopy(stylesObj))
   const atomicClasses = {}
   const classMaps = {}
-  const classGen = generateCssClass()
+  const classGen = generateCssClass({ start: atomicClassStart })
   const selectors = Object.keys(selectorObj)
   const selectorsCount = selectors.length
   for (let i = 0; i < selectorsCount; i += 1) {
@@ -59,9 +61,8 @@ export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = ''
         continue
       }
 
-      const newAtomicClassName = atomicClassPrefix + classGen.next().value
+      const newAtomicClassName = classPrefix + classGen.next().value + classSuffix
       const newAtomicSelectorWithPseudo = `.${newAtomicClassName}${getSelctorPseudo(selector)}`
-
 
       atomicClasses[newAtomicSelectorWithPseudo] = { [prop]: value }
 
@@ -81,7 +82,6 @@ export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = ''
     }
   }
 
-
   // add atomic alias to all class for rest of styles
   const filteredSelectors = Object.keys(selectorObj)
   const filteredSelectorsCount = filteredSelectors.length
@@ -93,7 +93,7 @@ export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = ''
       delete selectorObj[slector]
       continue
     }
-    const newAtomicClassName = atomicClassPrefix + classGen.next().value
+    const newAtomicClassName = classPrefix + classGen.next().value + classSuffix
     const newAtomicSelectorWithPseudo = `.${newAtomicClassName}${getSelctorPseudo(slector)}`
     atomicClasses[newAtomicSelectorWithPseudo] = definations
     const selectorWithoutPseudo = getFirstSelctorWithoutPseudo(slector)
@@ -108,6 +108,7 @@ export function atomizeCss(stylesObj, { selectorSplitCount = 1, classPrefix = ''
   return {
     atomicClasses,
     classMaps,
+    nextAtomicClass: classGen.next().value,
   }
 }
 

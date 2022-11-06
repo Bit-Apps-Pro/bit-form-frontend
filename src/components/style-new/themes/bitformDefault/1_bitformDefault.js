@@ -324,7 +324,7 @@ const lightThemeColors = {
 
   '--fld-focs-i-fltr': 'invert(26%) sepia(41%) saturate(6015%) hue-rotate(211deg) brightness(100%) contrast(108%)',
 
-  '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
+  '--fld-wrp-bg': '', // fieldwrapper background
   '--fld-wrp-bdr-clr': '', // field wrapper border color
   '--fld-wrp-sh': '', // field wrapper box shadow
 
