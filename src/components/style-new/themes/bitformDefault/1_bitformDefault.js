@@ -423,8 +423,8 @@ const font = {
 
 const lgLightform = ({ formId }) => ({
   [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box' },
-  [`._frm-bg-${formId}`]: {},
-  [`._frm-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+  [`._frm-bg-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+  [`._frm-${formId}`]: {},
 })
 
 const { msgType, position, animation, styles } = msgDefaultConfig || {}
