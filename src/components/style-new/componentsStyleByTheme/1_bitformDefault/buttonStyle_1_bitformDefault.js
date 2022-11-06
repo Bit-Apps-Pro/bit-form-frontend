@@ -45,7 +45,14 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'justify-content': 'center',
         'align-items': 'center',
       },
-
+      [`.${fk}-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+      [`.${fk}-btn:active:focus-visible`]: {
+        'outline-offset': 0,
+      },
       [`.${fk}-btn:disabled`]: {
         cursor: 'not-allowed',
         'pointer-events': 'none',

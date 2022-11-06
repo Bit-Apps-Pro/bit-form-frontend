@@ -20,11 +20,13 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses,
+import {
+  addDefaultStyleClasses,
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses } from '../style-new/styleHelpers'
+  styleClasses,
+} from '../style-new/styleHelpers'
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -50,6 +52,7 @@ function TitleSettings() {
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
+  const subtitleAlignment = styles.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'] || 'start'
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
@@ -117,7 +120,7 @@ function TitleSettings() {
 
   const hideSubTitle = ({ target: { checked } }) => {
     if (checked) {
-      fieldData.subtitle = 'Sub Title'
+      fieldData.subtitle = 'Subtitle'
       fieldData.subtitleHide = false
       addDefaultStyleClasses(selectedFieldId, 'subTitl')
     } else {
@@ -130,7 +133,7 @@ function TitleSettings() {
     // recalculate builder field height
     reCalculateFldHeights(fieldKey)
     addToBuilderHistory({
-      event: `Sub Title ${req}:  ${fieldData.lbl || fieldKey}`,
+      event: `Subtitle ${req}:  ${fieldData.lbl || fieldKey}`,
       type: 'subtitle_toggle',
       state: { fields: allFields, fldKey: fieldKey },
     })
@@ -146,7 +149,7 @@ function TitleSettings() {
     setFields(allFields)
     reCalculateFldHeights(fieldKey)
     addToBuilderHistory({
-      event: `Sub Title ${val}:  ${fieldData.lbl || fieldKey}`,
+      event: `Subtitle ${val}:  ${fieldData.lbl || fieldKey}`,
       type: 'subtitle_change',
       state: { fields: allFields, fldKey: fieldKey },
     })
@@ -174,7 +177,22 @@ function TitleSettings() {
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
     })
     setStyles(newStyles)
-    addToBuilderHistory({ event: `Position Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'position_changes', state: { styles: newStyles, fldKey: fieldKey } })
+    addToBuilderHistory({ event: `Title Alignment Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'position_changes', state: { styles: newStyles, fldKey: fieldKey } })
+  }
+
+  const handleSubtitleAlignment = (val) => {
+    // console.log({ val })
+    // console.log(styles.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'])
+    const newStyles = produce(styles, drftStyle => {
+      if (val === 'start') {
+        // console.log('first')
+        delete drftStyle.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content']
+      }else{
+        drftStyle.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'] = val
+      }
+    })
+    setStyles(newStyles)
+    addToBuilderHistory({ event: `Subtitle Alignment Change to ${val}:  ${fieldData.lbl || fieldKey}`, type: 'position_changes', state: { styles: newStyles, fldKey: fieldKey } })
   }
 
   useEffect(() => {
@@ -260,10 +278,10 @@ function TitleSettings() {
 
         <SimpleAccordion
           id="sub-titl-stng"
-          title={__('Sub Title')}
+          title={__('Subtitle')}
           className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
           switching
-          tip="By disabling this option, the field sub title will be hidden"
+          tip="By disabling this option, the field subtitle will be hidden"
           tipProps={{ width: 250, icnSize: 17 }}
           toggleAction={hideSubTitle}
           toggleChecked={!fieldData?.subtitleHide}
@@ -272,7 +290,6 @@ function TitleSettings() {
         >
           <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
             <div className={css(style.title)}>
-              <label className={css(ut.fw500, ut.flxcb)}>Sub Title</label>
               <Downmenu>
                 <button
                   data-testid="sub-titl-mor-opt-btn"
@@ -292,7 +309,7 @@ function TitleSettings() {
 
             <AutoResizeInput
               id="sub-titl-stng"
-              placeholder="Sub Title..."
+              placeholder="Type subtitle here..."
               name="subtitle"
               value={fieldData?.subtitle}
               changeAction={handleTitle}
@@ -325,6 +342,22 @@ function TitleSettings() {
             setIcon={() => setIconModel('subTitlSufIcn')}
             removeIcon={() => removeIcon('subTitlSufIcn')}
           />
+
+          <div className={css(style.main, ut.ml2)}>
+            <span className={css(ut.fw500)}>Alignment</span>
+            <StyleSegmentControl
+              show={['icn']}
+              tipPlace="bottom"
+              className={css(style.segment)}
+              options={[
+                { icn: <TxtAlignLeftIcn size="17" />, label: 'start', tip: 'Left' },
+                { icn: <TxtAlignCntrIcn size="17" />, label: 'center', tip: 'Center' },
+                { icn: <TxtAlignRightIcn size="17" />, label: 'end', tip: 'Right' },
+              ]}
+              onChange={handleSubtitleAlignment}
+              defaultActive={subtitleAlignment}
+            />
+          </div>
         </SimpleAccordion>
         <FieldSettingsDivider />
         <SizeAndPosition />

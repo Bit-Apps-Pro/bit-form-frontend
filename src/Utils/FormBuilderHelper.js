@@ -621,7 +621,7 @@ const elementLabel = (element) => {
     lbl: 'Label',
     'lbl-pre-i': 'Label Leading Icon',
     'lbl-suf-i': 'Label Trailing Icon',
-    'sub-titl': 'Sub Title',
+    'sub-titl': 'Subtitle',
     'sub-titl-pre-i': 'Subtitle Leading Icon',
     'sub-titl-suf-i': 'Subtitle Trailing Icon',
     'pre-i': 'Input Leading Icon',

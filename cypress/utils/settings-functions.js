@@ -67,7 +67,7 @@ export function adminLabelTest(adminLabel = "Test-Admin-Label") {
 }
 
 export function subTitleTest(subTitle = "Subtitle By Preview", preIcn = true, sufIcn = true, rmvIcn = false) {
-    it("Sub Title Test", () => {
+    it("Subtitle Test", () => {
         getByTestId('sub-titl-stng-sngl-tgl').click({ force: true })
         getByTestId('sub-titl-stng-sngl-tgl').click({ force: true })
         cy.getIFrameBody().find(`[data-testid='${cy.fieldKey}-sub-titl']`).should('not.exist')

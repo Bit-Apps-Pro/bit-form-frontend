@@ -269,7 +269,7 @@ const CountryFieldSettings = () => {
       <div className={css(FieldStyle.fieldSection)}>
         <Btn
           dataTestId="edt-opt-stng"
-          variant="default-outline"
+          variant="primary-outline"
           size="sm"
           className={css({ mt: 10 })}
           onClick={openOptionModal}

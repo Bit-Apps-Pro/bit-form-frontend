@@ -9,6 +9,7 @@ import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalSt
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import StyleResetIcn from '../../Icons/StyleResetIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import {
@@ -167,14 +168,23 @@ export default function ThemeQuickTweaksCustomizer() {
     <>
       {formType === 'edit' && (
         <div className={css(ut.flxcb)}>
-          <span className={css({ fs: 12, mb: 2 }, ut.fw500)}>Reset Style</span>
           <Downmenu>
-            <Btn dataTestId="style-reset-btn" size="sm">
-              {__('Reset')}
+            <Btn dataTestId="style-reset-btn" size="sm" gap={5} variant="primary-outline">
+              <StyleResetIcn size={12} />
+              {__('Reset Style')}
             </Btn>
             <div>
-              <p>Are confirm reset style?</p>
-              <Btn onClick={resetStyle} width="100%" dataTestId="style-reset-confirm" size="sm">Confirm</Btn>
+              <div className={css({ mt: 5, mb: 10 }, ut.fw500)}>Confirm reset style?</div>
+              <Btn
+                onClick={resetStyle}
+                width="100%"
+                dataTestId="style-reset-confirm"
+                size="sm"
+                className={css({ mb: 5, mx: 'auto' })}
+              >
+                Confirm
+
+              </Btn>
             </div>
           </Downmenu>
         </div>

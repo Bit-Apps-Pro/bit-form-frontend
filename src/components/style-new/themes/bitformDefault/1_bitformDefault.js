@@ -195,7 +195,7 @@ const lgLightThemeVars = {
   '--hlp-txt-font-w': 400, // helper text font weight
   '--hlp-txt-font-style': '', // helper text font style
 
-  '--err-m': '5px 1px 1px 1px', // error messages margin
+  '--err-m': '1px', // error messages margin
   '--err-p': '5px', // error messages padding
   '--err-bdr': 'solid', // error message border
   '--err-bdr-width': '1px', // error message border width
@@ -204,6 +204,11 @@ const lgLightThemeVars = {
   '--err-txt-fs': '12px', // error text font size
   '--err-txt-font-w': 400, // helper text font weight
   '--err-txt-font-style': '', // helper text font style
+  '--err-bg': 'hsla(0, 100%, 94%, 100)', // error messages background color
+  '--err-c': 'hsla(0 , 100%, 11%, 100)', // error messages text color
+  '--err-sh': '', // error messages box shadow
+  '--err-bdr-clr': 'solid hsla(0, 50%, 90%, 100)', // error message border color
+  '--err-h': '', // error message height
 
   '--pre-i-h': '25px', // fld prefix icon height
   '--pre-i-w': '25px', // fld prefix icon width
@@ -349,11 +354,6 @@ const lightThemeColors = {
   '--hlp-txt-sh': '', // helper text box shadow
   '--hlp-txt-bdr-clr': '', // helper text border color
 
-  '--err-bg': 'hsla(0, 82%, 87%, 100)', // error messages background color
-  '--err-c': 'hsla(0 , 68%, 35%, 100)', // error messages text color
-  '--err-sh': '0px 2px 8px 0px hsla(0, 0%, 39%, 20) ', // error messages box shadow
-  '--err-bdr-clr': 'hsla(0, 23%, 72%, 100)', // error message border color
-  '--err-h': '30px', // error message height
 
   '--pre-i-clr': '', // prefix icon color
   '--pre-i-fltr': '', // prefix icon filter
@@ -423,8 +423,8 @@ const font = {
 
 const lgLightform = ({ formId }) => ({
   [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box' },
-  [`._frm-bg-${formId}`]: {},
-  [`._frm-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+  [`._frm-bg-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+  [`._frm-${formId}`]: {},
 })
 
 const { msgType, position, animation, styles } = msgDefaultConfig || {}

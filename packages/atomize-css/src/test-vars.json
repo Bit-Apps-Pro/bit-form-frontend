@@ -173,10 +173,10 @@
   "--hlp-txt-c": "",
   "--hlp-txt-sh": "",
   "--hlp-txt-bdr": "",
-  "--err-bg": "hsla(0, 82%, 87%, 100)",
-  "--err-c": "hsla(0 , 68%, 35%, 100)",
-  "--err-sh": "0px 2px 8px 0px hsla(0, 0%, 39%, 20) ",
-  "--err-bdr": "solid hsla(0, 23%, 72%, 100)",
+  "--err-bg": "hsla(0, 100%, 94%, 100)",
+  "--err-c": "hsla(0 , 100%, 11%, 100)",
+  "--err-sh": "",
+  "--err-bdr": "solid hsla(0, 50%, 90%, 100)",
   "--pre-i-clr": "",
   "--pre-i-fltr": "invert(8%) sepia(8%) saturate(13%) hue-rotate(349deg) brightness(94%) contrast(84%);",
   "--pre-i-sh": "",
@@ -221,6 +221,6 @@
   "--btn-bgc": "hsla(208, 100%, 48%, 100%)",
   "--btn-c": "hsla(0, 0%, 100%, 100%)",
   "--btn-br": "none",
-  "--btn-sh": "2px 2px 4px -2px hsla(0, 0%, 0%, 40%)",
+  "--btn-sh": "0 2px 4px -2px hsla(0, 0%, 0%, 40%)",
   "--ck-bdr-c": "hsla(210, 78%, 96%, 100)"
 }
