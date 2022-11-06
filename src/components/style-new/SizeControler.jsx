@@ -107,6 +107,7 @@ const c = {
     w: 90,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
+    ta: 'left',
     ow: 'hidden',
   },
   active: { focusShadow: 1 },
