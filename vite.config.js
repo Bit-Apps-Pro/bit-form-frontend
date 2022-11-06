@@ -270,6 +270,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-frontend/dist/decisionFldHandle.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-frontend/dist/customFieldsReset.min.js'),
         dest: absPath('../assets'),
       },

@@ -16,9 +16,8 @@ function bitFormSubmitAction(e) {
   let formData = new FormData(e.target)
   const props = window.bf_globals[contentId]
 
-  if (typeof advancedFileHandle !== 'undefined') {
-    formData = advancedFileHandle(props, formData)
-  }
+  if (typeof advancedFileHandle !== 'undefined') formData = advancedFileHandle(props, formData)
+  if (typeof decisionFldHandle !== 'undefined') formData = decisionFldHandle(props, formData)
   if (props.GCLID) {
     formData.set('GCLID', props.GCLID)
   }
