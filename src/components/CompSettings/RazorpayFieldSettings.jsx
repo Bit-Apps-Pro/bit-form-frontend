@@ -361,7 +361,7 @@ export default function RazorpayFieldSettings() {
               />
               <SingleToggle
                 id="sub-titl"
-                title={__('Sub Title:')}
+                title={__('Subtitle:')}
                 action={setSubTitl}
                 isChecked={fieldData?.subTitl}
                 className="mt-5"

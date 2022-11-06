@@ -99,7 +99,7 @@ function StyleLayers() {
             childrenAccodin
             onClick={() => styleHandler('sub-titl')}
             offset="6"
-            title="Sub Title(s)"
+            title="Subtitle(s)"
             highlightSelector="[data-dev-sub-titl]"
           >
             <NavBtn

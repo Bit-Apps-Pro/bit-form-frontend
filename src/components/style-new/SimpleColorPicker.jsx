@@ -126,7 +126,7 @@ export default function SimpleColorPicker({
             data-testid={`${modalId}-modal-btn`}
           >
             <ColorPreview bg={colorStr} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{colorStr || 'Configure Color'}</span>
+            <span className={css(c.clrVal)}>{colorStr || 'Pick Color'}</span>
           </button>
           {colorStr && (
             <button

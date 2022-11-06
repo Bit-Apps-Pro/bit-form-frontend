@@ -230,9 +230,8 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
         <button
           className={css(c.addBtn)}
           type="button"
-          aria-label="Add Shadow"
           onClick={addShadowHandler}
-          title="Add Shadow"
+          title="None"
           data-testid={`${id}-add-shad`}
         >
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />

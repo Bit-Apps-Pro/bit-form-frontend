@@ -47,7 +47,7 @@ export default function ThemeCustomize() {
       lbl: 'Label(s)',
       'lbl-pre-i': 'Label Leading Icon(s)',
       'lbl-suf-i': 'Label Trailing Icon(s)',
-      'sub-titl': 'Sub Title(s)',
+      'sub-titl': 'Subtitle(s)',
       'sub-titl-pre-i': 'Subtitle Leading Icon(s)',
       'sub-titl-suf-i': 'Subtitle Trailing Icon(s)',
       'pre-i': 'Input Leading Icon(s)',

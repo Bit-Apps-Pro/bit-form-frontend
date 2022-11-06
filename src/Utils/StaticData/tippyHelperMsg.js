@@ -3,7 +3,7 @@ const tippyHelperMsg = {
   lbl: 'By disabling this option, the field label will be hidden',
   autoComplete: "By disabling this option, the field auto complete will be hidden. The HTML autocomplete attribute lets web developers specify what if any permission the user agent has to provide automated assistance in filling out form field values, <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete'>Learn more</a>",
   adminLbl: 'By disabling this option, the field admin label will be hidden',
-  subtitle: 'By disabling this option, the field sub title will be hidden',
+  subtitle: 'By disabling this option, the field subtitle will be hidden',
   helpText: 'By disabling this option, the field helper text will be hidden',
   defaultValue: 'By disabling this option, the field default will be hidden',
   suggestion: 'By disabling this option, the field suggestion will be hidden',

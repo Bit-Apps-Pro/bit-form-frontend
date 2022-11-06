@@ -122,7 +122,7 @@ export default function FilterColorPicker({
             data-testid={`${modalId}-modal-btn`}
           >
             <ColorPreview bg={ColorStr.val} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{ColorStr.val || 'Configure Color'}</span>
+            <span className={css(c.clrVal)}>{ColorStr.val || 'Pick Color'}</span>
           </button>
           {value && (
             <button
