@@ -10,7 +10,6 @@ import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLigh
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
-export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '__' }) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
@@ -184,12 +183,6 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const smDarkCssText = objectToCssText(smDarkCombinedSelectors)?.trim()
   const smPrefixedDarkCssText = objectToCssText(addPrefixInObjectKeys(smDarkCombinedSelectors, `${darkModeSelector} `))?.trim()
 
-
-  console.log('=====',{
-    lgLightAtomicStyles,
-    lgDarkAtomicStyles,
-    mdLightAtomicStyles,
-  })
   // concat css texts
   let cssText = generateFormGridStyle('lg', formId)
   cssText += lgLayoutStyleText

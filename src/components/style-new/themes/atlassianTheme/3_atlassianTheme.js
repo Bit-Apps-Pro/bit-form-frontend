@@ -388,8 +388,8 @@ const form = {
     },
   },
   dark: {
-    _frm: { 'background-color': 'var(--global-bg-color)' },
-    '_frm-bg': { padding: '10px' },
+    // _frm: { 'background-color': 'var(--global-bg-color)' },
+    // '_frm-bg': { padding: '10px' },
   },
 }
 
