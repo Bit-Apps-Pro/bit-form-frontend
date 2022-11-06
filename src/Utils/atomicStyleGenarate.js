@@ -10,6 +10,7 @@ import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLigh
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
+export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '' }) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
