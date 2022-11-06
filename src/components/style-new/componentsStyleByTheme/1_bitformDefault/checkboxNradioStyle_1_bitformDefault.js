@@ -67,7 +67,14 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       },
       [`.${fk}-ci:checked ~ [data-oinp-wrp]`]: { display: 'block !important' },
       [`.${fk}-ci:focus ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
-      [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
+      [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+      [`.${fk}-ci:active:focus-visible ~ [data-cl] [data-bx]`]: {
+        'outline-offset': 0,
+      },
       [`.${fk}-ci:active ~ [data-cl] [data-bx]`]: { transform: 'scale(0.9)' },
       [`.${fk}-ci:disabled ~ [data-cl]`]: {
         opacity: 0.6,
@@ -119,7 +126,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         [`.${fk}-svgwrp`]: {
           height: '12px',
           width: '10px',
-          filter: 'drop-shadow(0px 1px 1px hsl(var(--gah), var(--gas), 13%))',
+          filter: 'drop-shadow(0px 1px 1px hsl(var(--gah), var(--gas), 45%))',
         },
         [`.${fk}-ck-icn`]: { 'stroke-dashoffset': '16px' },
         [`.${fk}-ck-svgline`]: {
