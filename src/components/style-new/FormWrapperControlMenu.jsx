@@ -16,21 +16,21 @@ function FormWrapperControlMenu() {
     setStyleVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle.form._frm.margin = `${value}`
     }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'From Wrapper Margin', value, { styles: getLatestState('styles') }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Form Wrapper Margin', value, { styles: getLatestState('styles') }))
   }
 
   const paddingHandler = (value) => {
     setStyleVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle.form._frm.padding = `${value}`
     }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'From Wrapper Padding', value, { styles: getLatestState('styles') }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Form Wrapper Padding', value, { styles: getLatestState('styles') }))
   }
 
   const undoHandler = (value) => {
     setStyleVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle.form._frm[value] = '0px 0px 0px 0px'
     }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo From Wrapper Spacing', '0px 0px 0px 0px', { styles: getLatestState('styles') }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo Form Wrapper Spacing', '0px 0px 0px 0px', { styles: getLatestState('styles') }))
   }
   return (
     <>

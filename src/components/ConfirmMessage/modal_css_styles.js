@@ -92,7 +92,7 @@ export default function modalCssStyles(formID, msgId, position, animation, paddi
       cursor: 'pointer',
     },
 
-    [`.close-${msgId}:hover`]: { color: closeIconHover, bd: closeHover },
+    [`.close-${msgId}:hover`]: { color: closeIconHover, background: closeHover },
 
     [`.close-${msgId}:focus`]: { color: '#000' },
 

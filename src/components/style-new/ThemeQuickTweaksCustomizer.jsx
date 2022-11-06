@@ -282,7 +282,7 @@ export default function ThemeQuickTweaksCustomizer() {
         modalId="global-bg-clr"
       /> */}
       <SimpleColorPicker
-        title="From Background"
+        title="Form Background"
         subtitle="Theme Quick Tweaks Background Color"
         value={globalBgColor}
         stateObjName="themeColors"

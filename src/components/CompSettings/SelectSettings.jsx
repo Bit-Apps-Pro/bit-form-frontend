@@ -6,12 +6,14 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Btn from '../Utilities/Btn'
 import Cooltip from '../Utilities/Cooltip'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -533,10 +535,18 @@ export default function SelectSettings() {
         {__('Import Options')}
       </button>
       <br /> */}
-      <button data-testid="edt-opt-stng" onClick={openOptionModal} className={css(app.btn)} type="button">
-        &nbsp;
+      <Btn
+        dataTestId="edt-opt-stng"
+        variant="default-outline"
+        size="sm"
+        className={css({ mt: 10 })}
+        onClick={openOptionModal}
+      >
         {__('Edit Options')}
-      </button>
+        <span className={css({ ml: 3, mt: 3, tm: 'rotate(45deg)' })}>
+          <CloseIcn size="13" stroke="3" />
+        </span>
+      </Btn>
 
       {/* <div className="opt">
         <span className="font-w-m">{__('Options:')}</span>
