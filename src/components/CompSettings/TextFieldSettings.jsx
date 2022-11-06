@@ -505,7 +505,7 @@ function TextFieldSettings() {
               >
                 <div className={css(FieldStyle.placeholder, ut.mb1)}>
                   <Btn
-                    variant="default-outline"
+                    variant="primary-outline"
                     size="sm"
                     className={css({ mt: 10 })}
                     onClick={openOptionModal}
