@@ -195,7 +195,7 @@ const lgLightThemeVars = {
   '--hlp-txt-font-w': 400, // helper text font weight
   '--hlp-txt-font-style': '', // helper text font style
 
-  '--err-m': '1px', // error messages margin
+  '--err-m': '5px 1px 1px 1px', // error messages margin
   '--err-p': '5px', // error messages padding
   '--err-bdr': 'solid', // error message border
   '--err-bdr-width': '1px', // error message border width
@@ -353,7 +353,7 @@ const lightThemeColors = {
   '--err-c': 'hsla(0 , 68%, 35%, 100)', // error messages text color
   '--err-sh': '0px 2px 8px 0px hsla(0, 0%, 39%, 20) ', // error messages box shadow
   '--err-bdr-clr': 'hsla(0, 23%, 72%, 100)', // error message border color
-  '--err-h': '0', // error message height
+  '--err-h': '30px', // error message height
 
   '--pre-i-clr': '', // prefix icon color
   '--pre-i-fltr': '', // prefix icon filter

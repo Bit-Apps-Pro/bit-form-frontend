@@ -1,10 +1,11 @@
 function dispatchFieldError(fldErrors, contentId) {
   Object.keys(fldErrors).forEach((fk) => {
-    const errFld = bfSelect(`#form-${contentId} .${fk}-err-txt`)
-    errFld.innerHTML = fldErrors[fk]
-    errFld.parentElement.style.marginTop = '5px'
-    errFld.parentElement.style.height = `${errFld.offsetHeight}px`
-    errFld.parentElement.style.removeProperty('display')
+    const errWrp = bfSelect(`#form-${contentId} .${fk}-err-wrp`)
+    const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
+    bfSelect(`.${fk}-err-msg`, errWrp).style.removeProperty('display')
+    errTxt.innerHTML = fldErrors[fk]
+    errWrp.style.height = `${errTxt.offsetHeight}px`
+    errWrp.style.opacity = 1
   })
 }
 

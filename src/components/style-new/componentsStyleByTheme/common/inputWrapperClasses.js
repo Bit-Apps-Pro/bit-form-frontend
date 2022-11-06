@@ -170,6 +170,9 @@ export default function inputWrapperClasses(fk) {
       'border-radius': 'var(--hlp-txt-suf-i-bdr-rad, 0)',
       filter: 'var(--hlp-txt-suf-i-fltr)',
     },
+    [`.${fk}-err-wrp`]: {
+      transition: 'all .3s',
+    },
     [`.${fk}-err-msg`]: {
       'background-color': 'var(--err-bg, none)',
       color: 'var(--err-c, inherit)',
@@ -187,7 +190,6 @@ export default function inputWrapperClasses(fk) {
       'font-weight': 'var(--err-txt-font-w)',
       'font-style': 'var(--err-txt-font-style)',
       height: 'var(--err-h)',
-      transition: 'all .3s',
     },
     [`.${fk}-err-txt-pre-i`]: {
       width: 'var(--err-txt-pre-i-w)',

@@ -12,11 +12,11 @@ export default function bfReset(contentId, customHook = false) {
   typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
   typeof resetOtherOpt !== 'undefined' && resetOtherOpt()
   Object.keys(props.fields).forEach(fk => {
-    const errFld = bfSelect(`#form-${contentId} .${fk}-err-msg`)
-    if (errFld) {
-      errFld.style.marginTop = '0px'
-      errFld.style.height = '0px'
-      errFld.style.opacity = '0'
+    const errWrp = bfSelect(`#form-${contentId} .${fk}-err-wrp`)
+    if (errWrp) {
+      errWrp.style.height = '0px'
+      errWrp.style.opacity = 0
+      bfSelect(`.${fk}-err-msg`, errWrp).style.display = 'none'
     }
   })
 
