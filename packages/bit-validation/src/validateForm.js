@@ -55,14 +55,7 @@ export default function validateForm({ form, input }) {
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
     else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
 
-    if (fldData?.valid?.regexr) {
-      errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
-      if (errKey) {
-        generateErrMsg(errKey, fldKey, fldData)
-        formCanBeSubmitted = false
-        continue
-      }
-    }
+    if (fldData?.valid?.regexr && !errKey) errKey = typeof regexPatternValidation !== 'undefined' ? regexPatternValidation(fldValue, fldData) : null
 
     generateErrMsg(errKey, fldKey, fldData)
     if (errKey) formCanBeSubmitted = false
@@ -107,20 +100,22 @@ const generateFormEntries = () => {
 }
 
 const generateErrMsg = (errKey, fldKey, fldData) => {
-  const errFld = document.querySelector(`#form-${contentId} .${fldKey}-err-txt`)
-  if (errFld && 'err' in (fldData || {})) {
+  const errWrp = bfSelect(`#form-${contentId} .${fldKey}-err-wrp`)
+  const errTxt = bfSelect(`.${fldKey}-err-txt`, errWrp)
+  const errMsg = bfSelect(`.${fldKey}-err-msg`, errWrp)
+
+  if (errTxt && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
-      errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      errFld.parentElement.style.marginTop = '9px'
-      errFld.parentElement.style.height = `${errFld.scrollHeight}px`
-      // errFld.parentElement.style.removeProperty('display')
-      errFld.parentElement.style.opacity = 1
+      errMsg.style.removeProperty('display')
+      errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
+      errWrp.style.height = `${errTxt.parentElement.scrollHeight}px`
+      errWrp.style.opacity = 1
       scrollToFld(fldKey)
     } else {
-      errFld.innerHTML = ''
-      errFld.parentElement.style.marginTop = 0
-      errFld.parentElement.style.height = 0
-      errFld.parentElement.style.opacity = 0
+      errTxt.innerHTML = ''
+      errMsg.style.display = 'none'
+      errWrp.style.height = 0
+      errWrp.style.opacity = 0
     }
   }
 }

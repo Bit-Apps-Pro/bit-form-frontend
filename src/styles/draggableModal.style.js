@@ -3,7 +3,7 @@ const draggableModalStyle = {
     bc: 'var(--white-100)',
     pn: 'absolute',
     tp: 10,
-    zx: 9999,
+    zx: 9995,
     pt: 0,
     pb: 10,
     brs: 10,

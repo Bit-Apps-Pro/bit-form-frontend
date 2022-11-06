@@ -9,7 +9,7 @@
     "build-w": "webpack --mode=production"
   },
   "dependencies": {
-    "bit-file-pond": "file:../bit-file-pond/",
+    "bit-filepond": "file:../bit-file-pond/",
     "bit-filepond-plugin-file-validate-size": "file:../bit-filepond-plugin-file-validate-size",
     "bit-filepond-plugin-file-validate-type": "file:../bit-filepond-plugin-file-validate-type",
     "bit-filepond-plugin-image-crop": "file:../bit-filepond-plugin-image-crop",

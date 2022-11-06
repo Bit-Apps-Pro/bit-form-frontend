@@ -33,7 +33,7 @@ export default function SubTitleSettings() {
 
   const hideSubTitle = ({ target: { checked } }) => {
     if (checked) {
-      fieldData.subtitle = 'Sub Title'
+      fieldData.subtitle = 'Subtitle'
       fieldData.subtitleHide = true
       addDefaultStyleClasses(selectedFieldId, 'subTitl')
     } else {
@@ -46,7 +46,7 @@ export default function SubTitleSettings() {
     // recalculate builder field height
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
-      event: `Sub Title ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`,
+      event: `Subtitle ${req}:  ${fieldData.subtitle || adminLabel || fldKey}`,
       type: `subtitle_${req}`,
       state: { fields: allFields, fldKey },
     })
@@ -64,7 +64,7 @@ export default function SubTitleSettings() {
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
-      event: `Sub Title updated: ${adminLabel || fieldData.subtitle || fldKey}`,
+      event: `Subtitle updated: ${adminLabel || fieldData.subtitle || fldKey}`,
       type: 'change_subtitle',
       state: { fields: allFields, fldKey },
     })
@@ -94,7 +94,7 @@ export default function SubTitleSettings() {
     <div>
       <SimpleAccordion
         id="sub-titl-stng"
-        title={__('Sub Title')}
+        title={__('Subtitle')}
         className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip={tippyHelperMsg.subtitle}
@@ -107,8 +107,8 @@ export default function SubTitleSettings() {
         <div className={css(FieldStyle.placeholder)}>
           <AutoResizeInput
             id="sub-titl-stng"
-            ariaLabel="Sub title for this Field"
-            placeholder="Type sub title here..."
+            ariaLabel="Subtitle for this Field"
+            placeholder="Type subtitle here..."
             value={subtitle}
             changeAction={setSubTitle}
           />

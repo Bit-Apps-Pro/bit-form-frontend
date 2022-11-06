@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const allContentids = window?.bf_globals
+  const allContentids = window.bf_globals
   if (allContentids) {
     Object.keys(allContentids).forEach((contentId) => {
       const props = window.bf_globals[contentId]

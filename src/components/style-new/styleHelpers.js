@@ -8,7 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
-  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
+  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
 } from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
@@ -440,10 +440,10 @@ export const iconElementLabel = {
   titleSufIcn: 'Title Trailing',
   lblPreIcn: 'Label Leading',
   lblSufIcn: 'Label Trailing',
-  subTlePreIcn: 'Sub Title Leading',
-  subTleSufIcn: 'Sub Title Trailing',
-  subTitlPreIcn: 'sub Title Leading',
-  subTitlSufIcn: 'sub Title Trailing',
+  subTlePreIcn: 'Subtitle Leading',
+  subTleSufIcn: 'Subtitle Trailing',
+  subTitlPreIcn: 'subtitle Leading',
+  subTitlSufIcn: 'subtitle Trailing',
   hlpPreIcn: 'Helper Text Leading',
   hlpSufIcn: 'Helper Text Trailing',
   prefixIcn: 'Leading',
@@ -1027,7 +1027,7 @@ export const getActualElementKey = (elmKey, fldType = '') => {
 
 export const msgDefaultConfig = {
   msgType: 'snackbar',
-  position: 'top-center',
+  position: 'bottom-right',
   animation: 'fade',
   autoHide: false,
   duration: 1,

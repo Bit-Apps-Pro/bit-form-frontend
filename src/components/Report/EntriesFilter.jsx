@@ -67,7 +67,7 @@ export default function EntriesFilter({ fetchData }) {
             {/* <div className="flx flx-between ml-1"> */}
             <div className={css({ flx: '', jc: 'end', pt: 8, pb: 6 })}>
               <Btn className={css(ut.mr1)} size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
-              <Btn variant="default-outline" size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
+              <Btn variant="primary-outline" size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
             </div>
           </div>
         )}

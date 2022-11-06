@@ -377,7 +377,7 @@ export default function DropdownFieldSettings() {
           })}
           <Btn
             dataTestId="edt-opt-stng"
-            variant="default-outline"
+            variant="primary-outline"
             size="sm"
             className={css({ mt: 10 })}
             onClick={handleAddNewOptionList}
