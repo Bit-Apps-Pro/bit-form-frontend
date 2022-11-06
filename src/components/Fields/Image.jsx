@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
+import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
@@ -17,6 +18,7 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const setStyles = useSetRecoilState($styles)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
+  const setFields = useSetRecoilState($fields)
 
   if (resizingFld.fieldKey === fieldKey) {
     tempData.current.resize = true
@@ -27,8 +29,21 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
     }))
+
+    setFields(prvFields => produce(prvFields, drftFields => {
+      drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
+      drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
+    }))
     tempData.current.extarnalSource = `https://via.placeholder.com/${wrap?.current?.parentElement.clientWidth}x${wrap?.current?.parentElement.clientHeight}`
   }
+
+  useEffect(() => {
+    tempData.current.extarnalSource = `https://via.placeholder.com/${wrap?.current?.parentElement.clientWidth}x${wrap?.current?.parentElement.clientHeight}`
+    setFields(prvFields => produce(prvFields, drftFields => {
+      drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
+      drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
+    }))
+  }, [])
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
@@ -42,8 +57,10 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
           data-dev-img={fieldKey}
           className={`${fieldKey}-img ${getCustomClsName(fieldKey, 'img')}`}
           src={fieldData?.bg_img || tempData.current?.extarnalSource}
-          alt="bg"
+          alt={fieldData?.alt}
           {...getCustomAttributes(fieldKey, 'img')}
+          width={fieldData?.width}
+          height={fieldData?.height}
         />
       </div>
     </>

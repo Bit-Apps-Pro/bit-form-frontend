@@ -314,13 +314,15 @@ export default function FileUploadSettings() {
         open={showSelectStatus}
         disable={!showSelectStatus}
       >
-        <input
-          data-testid="fil-slct-stts-inp"
-          className={css(FieldStyle.input)}
-          type="text"
-          value={fileSelectStatus}
-          onChange={e => setConfigValue('fileSelectStatus', e.target.value)}
-        />
+        <div className={css({ m: 2 })}>
+          <input
+            data-testid="fil-slct-stts-inp"
+            className={css(FieldStyle.input)}
+            type="text"
+            value={fileSelectStatus}
+            onChange={e => setConfigValue('fileSelectStatus', e.target.value)}
+          />
+        </div>
       </SimpleAccordion>
 
       <FieldSettingsDivider />
@@ -338,14 +340,16 @@ export default function FileUploadSettings() {
         open={showMaxSize}
         disable={!showMaxSize}
       >
-        <input
-          data-testid="fil-slct-stts-inp"
-          className={css(FieldStyle.input)}
-          type="text"
-          value={maxSizeLabel}
-          placeholder="Write a Max Size Label Ex:(Max 2MB)"
-          onChange={e => setConfigValue('maxSizeLabel', e.target.value)}
-        />
+        <div className={css({ m: 2 })}>
+          <input
+            data-testid="fil-slct-stts-inp"
+            className={css(FieldStyle.input)}
+            type="text"
+            value={maxSizeLabel}
+            placeholder="Write a Max Size Label Ex:(Max 2MB)"
+            onChange={e => setConfigValue('maxSizeLabel', e.target.value)}
+          />
+        </div>
       </SimpleAccordion>
 
       <FieldSettingsDivider />
@@ -434,13 +438,15 @@ export default function FileUploadSettings() {
         className={css(FieldStyle.fieldSection)}
         open
       >
-        <input
-          data-testid="fil-exst-msg-inp"
-          className={css(FieldStyle.input)}
-          type="text"
-          value={fileExistMsg}
-          onChange={e => setConfigValue('fileExistMsg', e.target.value)}
-        />
+        <div className={css({ m: 2 })}>
+          <input
+            data-testid="fil-exst-msg-inp"
+            className={css(FieldStyle.input)}
+            type="text"
+            value={fileExistMsg}
+            onChange={e => setConfigValue('fileExistMsg', e.target.value)}
+          />
+        </div>
       </SimpleAccordion>
 
       <FieldSettingsDivider />
@@ -502,7 +508,6 @@ const style = {
     },
     '& .msl': {
       bd: 'var(--b-79-96) !important',
-      b: '1px solid hsl(0deg 0% 90%) !important',
     },
   },
 }

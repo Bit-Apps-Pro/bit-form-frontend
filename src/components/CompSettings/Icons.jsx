@@ -11,6 +11,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
+import CPTIcn from '../../Icons/CPTIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import SearchIcon from '../../Icons/SearchIcon'
@@ -25,7 +26,7 @@ import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
 
-function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '' }) {
+function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false }) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -47,6 +48,22 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const url = 'https://raw.githack.com'
   const ref = useRef()
   const [allStyles, setAllStyles] = useRecoilState($allStyles)
+  const clientId = 'n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU'
+  const [pageNo, setPageNo] = useState(1)
+  const [images, setImages] = useState([])
+  const [selectUrl, setSelectUrl] = useState('')
+  const [collectionPageNo, setCollectionPageNo] = useState(1)
+  const [searchImageTerm, setSearchImageTerm] = useState('')
+
+  const segmentOptions = [
+    { label: 'Icons', show: ['label'] },
+    { label: uploadLabel },
+    { label: 'Downloaded Icons' },
+  ]
+
+  if (unsplash) {
+    segmentOptions.push({ label: 'Unsplash' })
+  }
 
   const iconPacks = [
     { label: 'Font Awesome', value: 't=2_id_fontawesome', id: 'font-awesome', status: false },
@@ -62,6 +79,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     { label: 'Simple', value: 't=2_id_simpleicons', id: 'simple-icons', status: false },
   ]
   const [filter, setFilter] = useState(iconPacks || [])
+
+  const [collections, setCollections] = useState([])
 
   const existFilter = () => {
     if (searchTerm) return 'nofilter=true'
@@ -285,11 +304,109 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const handlePrefixIcon = e => {
     setPrefix(e.currentTarget.firstChild.src)
   }
+  // for unsplash image
+  useEffect(() => {
+    setSelectUrl('')
+    setFiles([])
+    setImages([])
+    setLoading(true)
+    fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=${pageNo}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          setTotal(data.length)
+          setImages(data)
+        }
+        setLoading(false)
+      })
+
+    fetch(`https://api.unsplash.com/collections/?client_id=${clientId}&page=${collectionPageNo}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          setCollections(data)
+        }
+        setLoading(false)
+      })
+  }, [])
+
+  const searchByCollections = (index, id, status) => {
+    const tmp = [...collections]
+    tmp.map(item => {
+      item.status = false
+    })
+    console.log(tmp)
+    if (!status) {
+      tmp[index].status = true
+    } else {
+      tmp[index].status = false
+    }
+    setCollections(tmp)
+
+    if (collections.length && !status) {
+      fetch(`https://api.unsplash.com/collections/${id}/photos?client_id=${clientId}&per_page=30`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setImages(data)
+            setTotal(data.length)
+          }
+        })
+    } else {
+      fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=${pageNo}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setImages(data)
+            setTotal(data.length)
+          }
+        })
+    }
+  }
+
+  // image search
+  // const onFetchImageData = (val) => {
+  //   setSearchLoading(true)
+  //   // const searchValue = searchTerm !== '' ? `&t=1_tag_${val}` : ''
+  //   if (val) {
+  //     fetch(`https://api.unsplash.com/search/photos/?query=${val}&client_id=${clientId}`)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         if (data) {
+  //           setImages(data.results)
+  //           setTotal(data.results.length)
+  //           setPageNo(1)
+  //         }
+  //         ref?.current?.scrollToTop(0)
+  //         setSearchLoading(false)
+  //       })
+  //   } else {
+  //     fetch(`https://api.unsplash.com/photos/?client_id=${clientId}&per_page=30&page=1`)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         if (data) {
+  //           setTotal(data.length)
+  //           setImages(data)
+  //         }
+  //         setSearchLoading(false)
+  //       })
+  //   }
+  // }
+
+  // const debouncedSearchImageTerm = useAsyncDebounce(onFetchImageData, 500)
+  // const onImageSearchChange = ({ target: { value } }) => {
+  //   setSearchImageTerm(value)
+  //   debouncedSearchImageTerm(value)
+  // }
+
+  const handleImage = (imgUrl) => {
+    setPrefix(imgUrl)
+  }
 
   return (
     <div>
       <StyleSegmentControl
-        options={[{ label: 'Icons', show: ['label'] }, { label: uploadLabel }, { label: 'Downloaded Icons' }]}
+        options={segmentOptions}
         onChange={lbl => onTabChangeHandler(lbl, 'parent')}
         defaultActive={controller.parent}
         defaultItmWidth={220}
@@ -340,7 +457,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             <div title="Loading...">
               <div className={css(ut.mt2)} />
               {Array(26).fill(1).map((itm, i) => (
-                <div key={`loading-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div
+                  key={`loading-${i * 2}`}
+                  title="Loading..."
+                  className={`${css(s.loadingPlaceholder)} loader`}
+                />
               ))}
             </div>
           )}
@@ -354,7 +475,12 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                 className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
                 onClick={handlePrefixIcon}
               >
-                <img src={`${url}${item.url}`} onError={errHandle} alt={item.name} className={css(s.img)} />
+                <img
+                  src={`${url}${item.url}`}
+                  onError={errHandle}
+                  alt={item.name}
+                  className={css(s.img)}
+                />
               </button>
             ))}
           </div>
@@ -362,16 +488,123 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             <div title="Loading...">
               <div className={css(ut.mt2)} />
               {Array(26).fill(1).map((itm, i) => (
-                <div key={`loading-2--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div
+                  key={`loading-2--${i * 2}`}
+                  title="Loading..."
+                  className={`${css(s.loadingPlaceholder)} loader`}
+                />
               ))}
             </div>
           )}
         </Scrollbars>
-        <button data-testid="icn-dwnld-n-sav" type="button" disabled={!prefix} className={css(s.saveBtn, s.btnPosition)} onClick={saveIcn}>
+        <button
+          data-testid="icn-dwnld-n-sav"
+          type="button"
+          disabled={!prefix}
+          className={css(s.saveBtn, s.btnPosition)}
+          onClick={saveIcn}
+        >
           <span className={css(ut.mr1)}><DownloadIcon size="19" /></span>
           Download & save
           {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
         </button>
+
+      </Grow>
+      <Grow open={controller.parent === 'Unsplash'}>
+        <div>
+          <div className={css(ut.mt2, ut.flxc, { flxp: 1, jc: 'center' })}>
+            {collections.map((collection, i) => (
+              <button
+                data-testid="icn-pck-btn"
+                key={collection.title}
+                title={collection.title}
+                onClick={() => searchByCollections(i, collection.id, collection.status)}
+                type="button"
+                className={`${css(s.chip, ut.mr2)} ${collection.status && css(s.active)}`}
+              >
+                {collection.title}
+              </button>
+            ))}
+          </div>
+          {/* <div className={css(ut.flxc, s.searchBar, ut.mt2, ut.mb2)}>
+
+            <div className={css(s.fields_search)}>
+              <input
+                data-testid="icns-mdl-srch-inp"
+                title="Search Images"
+                aria-label="Search Images"
+                placeholder="e.g. Abstract, Nature, People, etc."
+                id="search-icon"
+                type="search"
+                name="searchIcn"
+                value={searchImageTerm}
+                onChange={onImageSearchChange}
+                className={css(s.search_field)}
+              />
+              <span title="search" className={css(s.search_icn)}>
+                <SearchIcon size="20" />
+              </span>
+            </div>
+
+            <div>
+              {searchLoading && <LoaderSm size={20} clr="#13132b" />}
+            </div>
+
+          </div> */}
+
+          <Scrollbars ref={ref} style={{ minHeight: 350 }} onScroll={onScrollFetch}>
+            {loading && (
+              <div title="Loading...">
+                <div className={css(ut.mt2)} />
+                {Array(26).fill(1).map((itm, i) => (
+                  <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                ))}
+              </div>
+            )}
+            <div className={css(ut.mt2, s.imgWrp)}>
+              {images.map((item) => (
+                <button
+                  type="button"
+                  key={`(${item.id})`}
+                  title={`(${item.description})`}
+                  className={`${css(s.imageBtn)} ${item.urls.regular === prefix && css(s.activeImg)}`}
+                  onClick={() => handleImage(item.urls.regular)}
+                >
+                  <img
+                    src={`${item.urls.thumb}`}
+                    onError={errHandle}
+                    alt={item.id}
+                    className={css(s.imgH)}
+                  />
+                </button>
+              ))}
+            </div>
+            {scrollLoading && (
+              <div title="Loading...">
+                <div className={css(ut.mt2)} />
+                {Array(26).fill(1).map((itm, i) => (
+                  <div
+                    key={`loderfnt--${i * 2}`}
+                    title="Loading..."
+                    className={`${css(s.loadingPlaceholder)} loader`}
+                  />
+                ))}
+              </div>
+            )}
+          </Scrollbars>
+
+          <button
+            data-testid="icn-dwnld-n-sav"
+            type="button"
+            disabled={!prefix}
+            className={css(s.saveBtn, s.btnPosition)}
+            onClick={selectedSaveIcon}
+          >
+            <span className={css(ut.mr1, { dy: 'flex' })}><CPTIcn size="20" /></span>
+            Save
+            {dnLoading && <LoaderSm size={20} clr="#fff" className={ut.ml2} />}
+          </button>
+        </div>
 
       </Grow>
 
@@ -397,7 +630,12 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           <Scrollbars ref={ref} style={{ minHeight: '300px' }}>
             <div className={css(ut.flxc, ut.mt4, s.icon)}>
               {!!files.length && files.map((file, index) => (
-                <div key={`download-icn-${index * 2}`} className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`} data-file={file} style={{ display: 'inline-block' }}>
+                <div
+                  key={`download-icn-${index * 2}`}
+                  className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`}
+                  data-file={file}
+                  style={{ display: 'inline-block' }}
+                >
                   <button
                     data-testid={`dwnlodd-inc-del-btn-${index}`}
                     type="button"
@@ -425,7 +663,13 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
             </div>
           </Scrollbars>
         )}
-        <button data-testid="icn-sav-btn" type="button" disabled={!prefix} className={css(app.btn, s.saveBtn)} onClick={selectedSaveIcon}>
+        <button
+          data-testid="icn-sav-btn"
+          type="button"
+          disabled={!prefix}
+          className={css(app.btn, s.saveBtn)}
+          onClick={selectedSaveIcon}
+        >
           Save
         </button>
       </Grow>
@@ -496,6 +740,10 @@ const s = {
     ':hover': { bd: 'var(--white-0-95)' },
   },
   img: { h: 25 },
+  imgH: {
+    brs: 8,
+    h: 200,
+  },
   searchBar: {
     pn: 'relative',
     zx: 99,
@@ -583,5 +831,23 @@ const s = {
     ':hover:not(:disabled)': { bd: 'var(--b-36)' },
     ':disabled': { bd: 'var(--b-13-88)', cr: 'var(--b-16-35)', cur: 'not-allowed' },
   },
+  imageBtn: {
+    p: 0,
+    mxh: 200,
+    dy: 'block',
+    bd: 'none',
+    b: 'none',
+    m: 5,
+    brs: 8,
+    curp: 1,
+    ':hover': { oe: '4px solid var(--blue)' },
+  },
+  imgWrp: {
+    dy: 'flex',
+    flxp: 'wrap',
+    jc: 'center',
+    w: '100%',
+  },
+  activeImg: { oe: '4px solid var(--blue)' },
 }
 export default Icons
