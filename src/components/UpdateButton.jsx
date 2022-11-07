@@ -174,18 +174,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     return (payFields.length > 0 || btns.length > 0)
   }
 
-  const generateAndSaveAtomicCss = currentFormId => {
-    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-
-    const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
-
-    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts })
-
+  const mergeOtherStylesWithAtomicStyles = atomicStyles => {
     let {
       atomicCssText,
       atomicClassMap,
       lgLightStyles,
-    } = generatedAtomicStyles
+    } = atomicStyles
 
     atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
 
@@ -193,17 +187,36 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) atomicCssText += trimCSS(filepondPluginImagePreviewCSS)
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
+    return { atomicCssText, atomicClassMap }
+  }
+
+  const generateAndSaveAtomicCss = currentFormId => {
+    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+
+    const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
+
+    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts })
+
+    const { atomicCssText, atomicClassMap } = mergeOtherStylesWithAtomicStyles(generatedAtomicStyles)
+
     if (!isStyleNotLoaded && currentFormId) {
+      const generatedAtomicStylesWithFormId = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts, atomicClassSuffix: currentFormId })
+      const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = mergeOtherStylesWithAtomicStyles(generatedAtomicStylesWithFormId)
+
       const atomicData = {
         form_id: savedFormId || newFormId,
         atomicCssText,
+        atomicCssWithFormIdText,
         atomicClassMap,
+        atomicClassMapWithFormId,
       }
       bitsFetch(atomicData, 'bitforms_save_css')
         .catch(err => console.error('save css error=', err))
     }
 
-    return { ...generatedAtomicStyles, atomicCssText, atomicClassMap, layouts }
+    generatedAtomicStyles.layouts = layouts
+
+    return generatedAtomicStyles
   }
 
   const saveForm = (type, updatedData) => {
@@ -238,13 +251,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       return
     }
 
-    // setUpdateBtn({ disabled: true, loading: true })
+    // setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, disabled: true, loading: true }))
 
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
 
     const {
       layouts,
-      atomicClassMap,
       lightThemeColors,
       darkThemeColors,
       lgLightThemeVars,
@@ -260,9 +272,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       smLightStyles,
       smDarkStyles,
     } = generateAndSaveAtomicCss(savedFormId)
-
-    // TODO : save style with formID and load when multiple form found and formID should be concat with atomic classes when show 
-    const { atomicCssWithFormIdText } = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts, atomicClassSuffix: formID })
 
     const allThemeColors = {
       lightThemeColors,
@@ -310,7 +319,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(!isStyleNotLoaded && { staticStyles: JCOF.stringify(staticStylesState) }),
       ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
       ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
-      ...(!isStyleNotLoaded && { atomicClassMap }),
       breakpointSize,
       customCodes,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
