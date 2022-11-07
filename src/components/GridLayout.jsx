@@ -25,7 +25,7 @@ import {
   $selectedFieldId,
   $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
-import { $stylesLgLight, $tempStyles } from '../GlobalStates/StylesState'
+import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -47,18 +47,17 @@ import {
   propertyValueSumY,
   reCalculateFldHeights,
   removeFormUpdateError,
-  sortLayoutByXY,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import { isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
+import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
@@ -84,7 +83,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const themeVars = useRecoilValue($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
-  const setTempStyles = useSetRecoilState($tempStyles)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
