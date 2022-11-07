@@ -134,7 +134,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond.min.js'),
+        src: absPath('packages/bit-filepond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },
       {
