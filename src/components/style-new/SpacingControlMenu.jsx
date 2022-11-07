@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempStyles } from '../../GlobalStates/StylesState'
+import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
@@ -10,8 +10,7 @@ import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 export default function SpacingControlMenu() {
   const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempStyles = useRecoilValue($tempStyles)
-  const tempThemeVars = tempStyles.themeVars
+  const savedThemeVars = useRecoilValue($savedThemeVars)
 
   const { '--fld-m': fldMargin,
     '--fld-p': fldPadding } = themeVars
@@ -31,17 +30,17 @@ export default function SpacingControlMenu() {
   }
 
   const undoHandler = (value) => {
-    if (!tempThemeVars[value]) return
+    if (!savedThemeVars[value]) return
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[value] = tempThemeVars[value]
+      drftStyle[value] = savedThemeVars[value]
     }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo Field Spacing', tempThemeVars[value], { themeVars: getLatestState('themeVars') }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo Field Spacing', savedThemeVars[value], { themeVars: getLatestState('themeVars') }))
   }
 
   return (
     <>
-      <SpaceControl isResetable={tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fldMargin} title="Field Margin" onChange={val => FldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl isResetable={tempThemeVars['--fld-p']} undoHandler={() => undoHandler('--fld-p')} value={fldPadding} title="Field Padding" onChange={val => FldPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isResetable={savedThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fldMargin} title="Field Margin" onChange={val => FldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isResetable={savedThemeVars['--fld-p']} undoHandler={() => undoHandler('--fld-p')} value={fldPadding} title="Field Padding" onChange={val => FldPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
   )
 }
