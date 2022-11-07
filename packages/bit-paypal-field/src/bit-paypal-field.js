@@ -151,7 +151,7 @@ export default class BitPayPalField {
           payment_type: this.#isSubscription() ? 'subscription' : 'order',
           payment_response: result,
           entry_id: this.#getEntryId(),
-          fieldKey: this.#config.namespace,
+          fieldKey: this.#config.fieldKey,
         }
         const props = bf_globals[this.#getContentId()]
         const uri = new URL(props?.ajaxURL)
@@ -238,14 +238,17 @@ export default class BitPayPalField {
     return document.querySelector(elm)?.querySelector(selector)
   }
 
-  #getDynamicValue(fldName) {
-    let elm = this.#select(`[name="${fldName}"]`, this.#formSelector)
-    if (elm) {
-      if (elm.type === 'radio') {
-        elm = this.#select(`[name="${fldName}"]:checked`, this.#formSelector)
-      }
+  #getDynamicValue(fldKey) {
+    if (fldKey) {
+      const fldName = window.bf_globals[this.#getContentId()].fields[fldKey].fieldName
+      let elm = this.#select(`[name="${fldName}"]`, this.#formSelector)
+      if (elm) {
+        if (elm.type === 'radio') {
+          elm = this.#select(`[name="${fldName}"]:checked`, this.#formSelector)
+        }
 
-      return elm.value || ''
+        return elm.value || ''
+      }
     }
     return ''
   }
