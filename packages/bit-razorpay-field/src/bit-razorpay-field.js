@@ -1,7 +1,7 @@
-const formSelector = '.bf-form'
-
 export default class BitRazorpayField {
   #razorpayWrapper = null
+
+  #formSelector = ''
 
   #config = {
     clientId: '',
@@ -24,6 +24,7 @@ export default class BitRazorpayField {
     Object.assign(this.#config, config)
     this.#document = config.document || document
     this.#window = config.window || window
+    this.#formSelector = `#form-${this.#getContentId()}`
     if (typeof selector === 'string') {
       this.#razorpayWrapper = this.#document.querySelector(selector)
     } else {
@@ -45,23 +46,26 @@ export default class BitRazorpayField {
     selector.addEventListener(eventType, cb)
   }
 
-  #getDynamicValue(fldName) {
-    let elm = this.#select(`[name="${fldName}"]`, formSelector)
-    if (elm) {
-      if (elm.type === 'radio') {
-        elm = this.#select(`[name="${fldName}"]:checked`, formSelector)
-      }
+  #getDynamicValue(fldKey) {
+    if (fldKey) {
+      const fldName = window.bf_globals[this.#getContentId()].fields[fldKey].fieldName
+      let elm = this.#select(`[name="${fldName}"]`, this.#formSelector)
+      if (elm) {
+        if (elm.type === 'radio') {
+          elm = this.#select(`[name="${fldName}"]:checked`, this.#formSelector)
+        }
 
-      return elm.value || ''
+        return elm.value || ''
+      }
     }
     return ''
   }
 
   #onPaymentSuccess = (response) => {
-    const formParent = document.getElementById(`${this.#config.contentId}`)
+    const formParent = document.getElementById(`${this.#getContentId()}`)
     formParent.classList.add('pos-rel', 'form-loading')
-    const form = document.getElementById(`form-${this.#config.contentId}`)
-    const formID = this.#config.contentId?.split('_')[1]
+    const form = document.getElementById(`form-${this.#getContentId()}`)
+    const formID = this.#getContentId()?.split('_')[1]
     if (typeof form !== 'undefined' && form !== null) {
       const paymentParams = {
         formID,
@@ -71,7 +75,7 @@ export default class BitRazorpayField {
         entry_id: this.#getEntryId(),
       }
 
-      const props = bf_globals[this.#config.contentId]
+      const props = bf_globals[this.#getContentId()]
       const uri = new URL(props?.ajaxURL)
       uri.searchParams.append('_ajax_nonce', props?.nonce)
       uri.searchParams.append('action', 'bitforms_save_razorpay_details')
@@ -85,7 +89,7 @@ export default class BitRazorpayField {
       submitResp.then(() => {
         formParent.classList.remove('pos-rel', 'form-loading')
         setBFMsg({
-          contentId: this.#config.contentId,
+          contentId: this.#getContentId(),
           msg: this.responseData.message || this.responseData,
           type: 'success',
           show: true,
@@ -95,7 +99,7 @@ export default class BitRazorpayField {
           setHiddenFld(hdnFld, form)
         })
         this.#responseRedirect()
-        bfReset(this.#config.contentId)
+        bfReset(this.#getContentId())
       })
     }
   }
@@ -114,7 +118,7 @@ export default class BitRazorpayField {
       newNonce = this.responseData.new_nonce
     }
 
-    this.#triggerIntegration(hitCron, newNonce, this.#config.contentId)
+    this.#triggerIntegration(hitCron, newNonce, this.#getContentId())
     if (responsedRedirectPage) {
       const timer = setTimeout(() => {
         window.location = decodeURI(responsedRedirectPage)
@@ -245,6 +249,10 @@ export default class BitRazorpayField {
 
   #getEntryId() {
     return localStorage.getItem('bf-entry-id')
+  }
+
+  #getContentId() {
+    return this.#config.contentId
   }
 
   #bfSubmitFetch(ajaxURL, formData, update) {
