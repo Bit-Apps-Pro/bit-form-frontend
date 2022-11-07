@@ -204,10 +204,6 @@ const lgLightThemeVars = {
   '--err-txt-fs': '12px', // error text font size
   '--err-txt-font-w': 400, // helper text font weight
   '--err-txt-font-style': '', // helper text font style
-  '--err-bg': 'hsla(0, 100%, 94%, 100)', // error messages background color
-  '--err-c': 'hsla(0 , 100%, 11%, 100)', // error messages text color
-  '--err-sh': '', // error messages box shadow
-  '--err-bdr-clr': 'solid hsla(0, 50%, 90%, 100)', // error message border color
   '--err-h': '', // error message height
 
   '--pre-i-h': '25px', // fld prefix icon height
@@ -354,7 +350,6 @@ const lightThemeColors = {
   '--hlp-txt-sh': '', // helper text box shadow
   '--hlp-txt-bdr-clr': '', // helper text border color
 
-
   '--pre-i-clr': '', // prefix icon color
   '--pre-i-fltr': '', // prefix icon filter
   '--pre-i-sh': '', // prefix icon shadow
@@ -404,6 +399,11 @@ const lightThemeColors = {
   '--err-txt-suf-i-fltr': '', // helper txt suffix icon filter
   '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
   '--err-txt-suf-i-bdr-clr': '', // helper txt suffix icon border color
+
+  '--err-bg': 'hsla(0, 100%, 94%, 100)', // error messages background color
+  '--err-c': 'hsla(0, 100%, 11%, 100)', // error messages text color
+  '--err-sh': '', // error messages box shadow
+  '--err-bdr-clr': 'hsla(0, 50%, 90%, 100)', // error message border color
 
   '--btn-bg': 'var(--global-accent-color)', // button backgrond
   '--btn-bgc': 'var(--global-accent-color)', // button backgrond color
