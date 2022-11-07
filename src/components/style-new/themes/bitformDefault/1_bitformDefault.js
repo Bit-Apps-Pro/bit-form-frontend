@@ -354,7 +354,6 @@ const lightThemeColors = {
   '--hlp-txt-sh': '', // helper text box shadow
   '--hlp-txt-bdr-clr': '', // helper text border color
 
-
   '--pre-i-clr': '', // prefix icon color
   '--pre-i-fltr': '', // prefix icon filter
   '--pre-i-sh': '', // prefix icon shadow
