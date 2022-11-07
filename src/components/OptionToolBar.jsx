@@ -149,7 +149,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
                   data-testid="inspect-element"
                   onClick={inspectModeButtonHandler}
                   type="button"
-                  className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
+                  className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${flags.inspectMode ? 'active' : ''}`}
                 >
                   <InspectIcn size="20" />
                 </button>
