@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 export default function Grow({ children, open, overflw = 'auto' }) {
   const [H, setH] = useState(open ? 'auto' : 0)
   const [tgl, setTgl] = useState(open || false)
+  const nodeRef = useRef(null)
 
   useEffect(() => {
     setTgl(open)
@@ -16,21 +17,22 @@ export default function Grow({ children, open, overflw = 'auto' }) {
     return Math.ceil(el.offsetHeight + margin)
   }
 
-  const setAccHeight = (el) => setH(getAbsoluteHeight(el))
+  const setAccHeight = () => setH(getAbsoluteHeight(nodeRef.current))
 
   return (
     <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? overflw : 'hidden' }}>
       <CSSTransition
+        nodeRef={nodeRef}
         in={tgl}
         timeout={300}
         onEntering={setAccHeight}
         onEntered={() => setH('auto')}
-        onExit={el => setH(el.offsetHeight)}
+        onExit={() => setH(nodeRef.current.offsetHeight)}
         onExiting={() => setH(0)}
         unmountOnExit
         style={{ overflow: tgl ? overflw : 'hidden' }}
       >
-        <div className="body">
+        <div ref={nodeRef} className="body">
           {children}
         </div>
       </CSSTransition>

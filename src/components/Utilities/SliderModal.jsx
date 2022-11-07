@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -106,6 +106,7 @@ const s = {
 export default function SliderModal({ title = 'Example Title', className, show = true, setModal, children, isInfinite = true }) {
   const { css } = useFela()
   const [step, setStep] = useState(0)
+  const nodeRef = useRef(null)
 
   const setNewStep = (type) => {
     switch (type) {
@@ -162,8 +163,9 @@ export default function SliderModal({ title = 'Example Title', className, show =
       timeout={400}
       classNames="btc-slider-modal"
       unmountOnExit
+      nodeRef={nodeRef}
     >
-      <div>
+      <div ref={nodeRef}>
         <div
           aria-labelledby="title"
           aria-describedby="description"

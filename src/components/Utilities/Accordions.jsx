@@ -13,6 +13,7 @@ function Accordions({
   const [tgl, setTgl] = useState(false)
   const [H, setH] = useState(0)
   const inp = useRef(null)
+  const nodeRef = useRef(null)
   const { css } = useFela()
 
   const handleTgl = e => {
@@ -33,8 +34,8 @@ function Accordions({
     }
   }
 
-  const onAccordionCollapse = el => {
-    setH(el.offsetHeight)
+  const onAccordionCollapse = () => {
+    setH(nodeRef.current.offsetHeight)
     if (onCollapse) {
       onCollapse()
     }
@@ -83,20 +84,20 @@ function Accordions({
 
       <div className={`o-h ${tgl && 'delay-overflow'}`} style={{ height: H, transition: 'height 300ms' }}>
         <CSSTransition
+          nodeRef={nodeRef}
           in={tgl}
           timeout={300}
-          onEntering={el => setH(el.offsetHeight)}
+          onEntering={() => setH(nodeRef.current.offsetHeight)}
           onEntered={onAccordionExpand}
           onExiting={() => setH(0)}
           onExit={onAccordionCollapse}
           unmountOnExit
         >
-          <div className="p-2">
+          <div className="p-2" ref={nodeRef}>
             {children}
           </div>
         </CSSTransition>
       </div>
-
     </div>
   )
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { ColorPicker as Picker } from 'react-color-gradient-picker'
 import 'react-color-gradient-picker/dist/index.css'
 import { useFela } from 'react-fela'
@@ -9,12 +9,12 @@ import hexToRGBA from '../../../../Utils/hex2RGBA'
 import { __ } from '../../../../Utils/i18nwrap'
 import useComponentVisible from './useComponentVisible'
 
-ColorPicker.defaultProps = { alwGradient: true }
 
-export default function ColorPicker({ value, onChange, alwGradient }) {
+export default function ColorPicker({ value, onChange, alwGradient = true }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const [gradient, setgradient] = useState(false)
   const { css } = useFela()
+  const nodeRef = useRef(null)
   let isGradient = false
 
   let picrVal = { red: 0, green: 0, blue: 0, alpha: 0 }
@@ -64,6 +64,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
         style={{ background: value.replace('!important', '') }}
       />
       <CSSTransition
+        nodeRef={nodeRef}
         in={isComponentVisible}
         timeout={150}
         classNames="btc-pk"
@@ -71,7 +72,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
         onEntered={() => isGradient && setgradient(true)}
         onExit={() => setgradient(false)}
       >
-        <div className="pos-rel">
+        <div ref={nodeRef} className="pos-rel">
           <div className="btc-pick">
             <div className="txt-center">
               <button onClick={(() => setgradient(false))} className={`btcd-btn-sm ${css(app.btn)} mr-1 ${gradient ? 'btcd-btn-o-blue' : 'blue'}`} type="button">{__('Solid')}</button>

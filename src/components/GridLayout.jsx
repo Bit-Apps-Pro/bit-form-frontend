@@ -10,7 +10,6 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   $additionalSettings,
@@ -47,18 +46,17 @@ import {
   propertyValueSumY,
   reCalculateFldHeights,
   removeFormUpdateError,
-  sortLayoutByXY,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import { isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { highlightElm, removeHighlight, sortArrOfObjByMultipleProps } from './style-new/styleHelpers'
+import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
 
@@ -744,29 +742,21 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       </Scrollbars>
 
       <div ref={ref} className="pos-rel">
-        <CSSTransition
-          in={isComponentVisible}
-          timeout={150}
-          classNames="btc-pk"
-          unmountOnExit
-          onExit={() => resetContextMenu()}
-        >
-          <FieldContextMenu
-            isContextMenu
-            isComponentVisible={isComponentVisible}
-            setIsComponentVisible={setIsComponentVisible}
-            contextMenu={contextMenu}
-            setContextMenu={setContextMenu}
-            resetContextMenu={resetContextMenu}
-            navigateToFieldSettings={navigateToFieldSettings}
-            navigateToStyle={navigateToStyle}
-            cloneLayoutItem={cloneLayoutItem}
-            removeLayoutItem={removeLayoutItem}
-            className="right-click-context-menu"
-          />
-        </CSSTransition>
+        <FieldContextMenu
+          isContextMenu
+          isComponentVisible={isComponentVisible}
+          setIsComponentVisible={setIsComponentVisible}
+          contextMenu={contextMenu}
+          setContextMenu={setContextMenu}
+          resetContextMenu={resetContextMenu}
+          navigateToFieldSettings={navigateToFieldSettings}
+          navigateToStyle={navigateToStyle}
+          cloneLayoutItem={cloneLayoutItem}
+          removeLayoutItem={removeLayoutItem}
+          className="right-click-context-menu"
+        />
       </div>
-    </div>
+    </div >
   )
 }
 export default memo(GridLayout)
