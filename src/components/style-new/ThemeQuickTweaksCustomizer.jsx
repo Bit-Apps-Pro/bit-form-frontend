@@ -87,7 +87,7 @@ export default function ThemeQuickTweaksCustomizer() {
                 const comStlVal = comStlPropertiesObj[comnStlProperty]
                 if (mainStlVal !== comStlVal) {
                   if (mainStlVal?.match(/(var)/gi)) {
-                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')
+                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
                     if (tmpThemeVar[mainStateVar] !== comStlVal) {
                       tmpThemeVar[mainStateVar] = comStlVal
                     }
@@ -149,6 +149,7 @@ export default function ThemeQuickTweaksCustomizer() {
     }))
     setThemeVars(tmpThemeVars)
     setThemeColors(tmpThemeColors)
+    reCalculateFldHeights()
     addToBuilderHistory(
       generateHistoryData(
         element,
