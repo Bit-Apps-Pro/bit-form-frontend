@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
@@ -19,6 +20,7 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
   const setFields = useSetRecoilState($fields)
+  const { width, height } = fieldData
 
   if (resizingFld.fieldKey === fieldKey) {
     tempData.current.resize = true
@@ -44,6 +46,10 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
   }, [])
+
+  useEffect(() => {
+    tempData.current.extarnalSource = `https://via.placeholder.com/${width}x${height}`
+  }, [width, height])
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />

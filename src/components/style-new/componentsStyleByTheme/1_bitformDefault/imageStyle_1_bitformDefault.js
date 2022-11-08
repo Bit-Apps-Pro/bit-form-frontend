@@ -5,8 +5,8 @@ export default function imageStyle_1_bitformDefault({ fk, breakpoint, colorSchem
       [`.${fk}-fld-wrp`]:
         { height: '100%', width: '100%' },
       [`.${fk}-img`]: {
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
       },
     }
   }
