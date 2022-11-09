@@ -21,13 +21,13 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const styleClassesForRender = deepCopy(styleClasses)
   const setFields = useSetRecoilState($fields)
   const { width, height } = fieldData
+  const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld-wrp->${cssProperty}`
 
   if (resizingFld.fieldKey === fieldKey) {
     tempData.current.resize = true
   }
   if (tempData.current.resize && !resizingFld.fieldKey) {
     tempData.current.resize = false
-    const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld-wrp->${cssProperty}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
     }))
@@ -45,9 +45,14 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
+      assignNestedObj(drftStyle, getPropertyPath('wight'), `${wrap?.current?.parentElement.clientWidth}px`)
+    }))
   }, [])
 
   useEffect(() => {
+    console.log({ width, height })
     tempData.current.extarnalSource = `https://via.placeholder.com/${width}x${height}`
   }, [width, height])
   return (
@@ -67,6 +72,7 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
           {...getCustomAttributes(fieldKey, 'img')}
           width={fieldData?.width}
           height={fieldData?.height}
+          draggable={false}
         />
       </div>
     </>
