@@ -45,14 +45,13 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
-      assignNestedObj(drftStyle, getPropertyPath('wight'), `${wrap?.current?.parentElement.clientWidth}px`)
-    }))
+    // setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    //   assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
+    //   assignNestedObj(drftStyle, getPropertyPath('width'), `${wrap?.current?.parentElement.clientWidth}px`)
+    // }))
   }, [])
 
   useEffect(() => {
-    console.log({ width, height })
     tempData.current.extarnalSource = `https://via.placeholder.com/${width}x${height}`
   }, [width, height])
   return (
