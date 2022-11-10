@@ -230,7 +230,7 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
   }
 
   if (field.typ === 'recaptcha' && additionalSettings?.enabled?.recaptchav3) {
-    return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
+    return { validType: 'onlyOne', msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
   }
 
   if (field.typ === 'recaptcha' && (bits.allFormSettings?.gReCaptcha?.secretKey === '' || bits.allFormSettings?.gReCaptcha?.siteKey === '')) {
