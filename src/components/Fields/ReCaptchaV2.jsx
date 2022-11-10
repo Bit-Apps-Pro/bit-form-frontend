@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { loadScript, removeScript, select, selectInGrid } from '../../Utils/globalHelpers'
+import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
