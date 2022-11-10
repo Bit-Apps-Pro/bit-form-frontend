@@ -87,7 +87,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-dpd-wrp`]: {
         'background-color': 'transparent',
         overflow: 'hidden', // unused css
-        'font-weight': 500, // unused css
+        'font-weight': '500', // unused css
         display: 'flex',
         'justify-content': 'space-between',
         'align-items': 'center',
@@ -99,7 +99,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'font-size': '12px',
         outline: 'none', // unused css
       },
-      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) - 10%), var(--gfbg-a))' },
       [`.${fk}-dpd-wrp:focus-visible`]: {
         'border-radius': '8px 0px 0px 8px',
         'box-shadow': '0 0 0 2px hsla(0, 0%, 95%, 100%) inset',

@@ -97,7 +97,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-dpd-wrp`]: {
         'background-color': 'transparent',
         overflow: 'hidden', // unused css
-        'font-weight': 500, // unused css
+        'font-weight': '500', // unused css
         display: 'flex',
         'justify-content': 'space-between',
         'align-items': 'center',
@@ -110,7 +110,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         outline: 'none', // unused css
       },
 
-      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) - 10%), var(--gfbg-a))' },
 
       [`.${fk}-selected-country-wrp`]: {
         height: '100%',
