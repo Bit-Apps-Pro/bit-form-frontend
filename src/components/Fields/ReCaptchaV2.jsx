@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
+import { loadScript, removeScript, select, selectInGrid } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
@@ -19,7 +19,9 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
   const { siteKey = '' } = appSettingsContext?.reCaptchaV2 || {}
 
   useEffect(() => {
-    const src = 'https://www.google.com/recaptcha/api.js?render=explicit'
+    window.renderGrecaptcha = renderGrecaptcha
+
+    const src = 'https://www.google.com/recaptcha/api.js?onload=renderGrecaptcha&render=explicit'
     const srcData = {
       src,
       integrity: '',
@@ -36,7 +38,7 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
     }
   }, [])
 
-  function onloadCallback() {
+  function renderGrecaptcha() {
     let recaptchaElm = selectInGrid(`.${fieldKey}-recaptcha`)
     if (recaptchaId.current !== null) {
       recaptchaElm?.remove()
@@ -56,11 +58,11 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
     }
     recaptchaResetIntervalRef.current = setInterval(() => {
       window.grecaptcha.reset(recaptchaId.current)
-    }, 36000)
+    }, 30000)
   }
 
   useEffect(() => {
-    if (window.grecaptcha) onloadCallback()
+    if (window.grecaptcha) renderGrecaptcha()
   }, [fieldData])
 
   return (
