@@ -111,6 +111,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
               <div
                 data-testid={`${fieldKey}-dpd-wrp`}
                 className={`${fieldKey}-dpd-wrp`}
+                data-dev-dpd-wrp={fieldKey}
                 role="combobox"
                 aria-live="assertive"
                 aria-labelledby="country-label-2"
@@ -245,10 +246,12 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   }
                 </div>
                 <ul
-                  className={`${fieldKey}-option-list`}
+                  className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')}`}
                   tabIndex="-1"
                   role="listbox"
                   aria-label="country list"
+                  data-dev-option-list={fieldKey}
+                  {...getCustomAttributes(fieldKey, 'option-list')}
                 >
                   <li className="option">
                     <span className="opt-prefix">Prefix</span>

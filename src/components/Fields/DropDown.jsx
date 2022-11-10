@@ -261,6 +261,7 @@ function DropDown({
                         aria-hidden="true"
                         aria-label="Option List"
                         data-list={listName}
+                        data-dev-option-list={fieldKey}
                         tabIndex="-1"
                         role="listbox"
                         {...getCustomAttributes(fieldKey, 'option-list')}

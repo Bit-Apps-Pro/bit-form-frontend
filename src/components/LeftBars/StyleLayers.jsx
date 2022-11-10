@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
+import { memo } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { memo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
@@ -359,6 +359,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="dpd-wrp"
+                    label="Dropdown Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-dpd-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'dpd-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="selected-currency-img"
                     label="Selected Currency Image"
                     offset="2.5"
@@ -415,6 +423,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-list"
+                    label="Option List"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-list="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-list')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option"
                     label="Currency Option"
                     offset="2.5"
@@ -464,6 +480,14 @@ function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-phone-fld-wrp="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-fld-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="dpd-wrp"
+                    label="Dropdown Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-dpd-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'dpd-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -520,6 +544,14 @@ function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'phone-search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option-list"
+                    label="Option List"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-list="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-list')}
                   />
                   <NavBtn
                     subRoute={fldKey}
@@ -631,6 +663,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-list"
+                    label="Option List"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-list="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-list')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option"
                     label="Country Option"
                     offset="2.5"
@@ -728,6 +768,14 @@ function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-search-clear-btn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'search-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option-list"
+                    label="Option List"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-list="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-list')}
                   />
                   <NavBtn
                     subRoute={fldKey}
