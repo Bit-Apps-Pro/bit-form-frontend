@@ -104,7 +104,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
 
   const onValueChange = (stateObjName, pathName, val, prop) => {
     // const stateObjName = obj.borderWidth || obj.borderRadius
-    const index = getValueByObjPath(stateObj(stateObjName), pathName).indexOf('!important')
+    const index = getValueByObjPath(stateObj(stateObjName), pathName)?.indexOf('!important')
     const newVal = index >= 0 ? `${val} !important` : val
     setStyleStateObj(stateObjName, pathName, newVal, { setThemeVars, setThemeColors, setStyles })
     if (prop === 'borderColor' && hslaPaths) {
