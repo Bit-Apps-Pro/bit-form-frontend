@@ -90,7 +90,7 @@ export default function ReCaptchaSettings() {
       >
         <div className={css(FieldStyle.placeholder)}>
           <select
-            data-testId="siz-slct"
+            data-testid="siz-slct"
             className={css(FieldStyle.input)}
             aria-label="Size for ReCaptcha Field"
             placeholder="Select Size here..."
