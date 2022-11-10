@@ -46,6 +46,10 @@ export default class BitRazorpayField {
     selector.addEventListener(eventType, cb)
   }
 
+  #removeEvent(selector, eventType, cb) {
+    selector.removeEventListener(eventType, cb)
+  }
+
   #getDynamicValue(fldKey) {
     if (fldKey) {
       const fldName = window.bf_globals[this.#getContentId()].fields[fldKey].fieldName
@@ -265,7 +269,7 @@ export default class BitRazorpayField {
   }
 
   destroy() {
-    this.#razorpayWrapper.innerHTML = ''
+    this.#removeEvent(this.#select(`.${this.#config.fieldKey}-razorpay-btn`), 'click', () => { this.#displayRazorpay() })
   }
 
   reset() {
