@@ -27,7 +27,7 @@ export default class BitCurrencyField {
 
   #optionListElm = null
 
-  #initialOptElm = null
+  #rowHeight = 30
 
   #currencySelectedFromList = false
 
@@ -98,9 +98,6 @@ export default class BitCurrencyField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-    this.#initialOptElm = this.#select('.option')
-    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
-    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#currencyNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
@@ -118,6 +115,11 @@ export default class BitCurrencyField {
     this.#handleDefaultCurrencyInputValue()
 
     this.#generateOptions()
+    // setTimeout(() => {
+    this.#rowHeight = this.#select('.option')?.offsetHeight || this.#rowHeight
+    this.#optionListElm.innerHTML = ''
+    this.#generateOptions()
+    // }, 1000)
 
     if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
@@ -299,7 +301,7 @@ export default class BitCurrencyField {
     return value.replace(regexp, '')
   }
 
-  #select(selector) { return this.#currencyNumberFieldWrapper.querySelector(selector) }
+  #select(selector) { return this.#currencyNumberFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -501,9 +503,9 @@ export default class BitCurrencyField {
   #generateOptions() {
     const selectedIndex = this.#getSelectedCurrencyIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
-      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
       rowCount: this.#options.length,
-      rowHeight: this.rowHeight,
+      rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
       renderRow: index => {
         const opt = this.#options[index]

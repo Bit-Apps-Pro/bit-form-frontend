@@ -113,6 +113,19 @@ export default class BitCountryField {
     else this.#window = window
   }
 
+  #generateTempOpt() {
+    this.#optionListElm.innerHTML = `
+    <li class="option">
+      <span class="opt-prefix">Prefix</span>
+      <span class="opt-lbl-wrp">
+        ${this.#optionFlagImage ? '<img class="opt-icn" src="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'/>" alt="Placeholder" />' : ''}
+        <span class="opt-lbl">Option</span>
+      </span>
+      <span class="opt-suffix">Suffix</span>
+    </li>
+    `
+  }
+
   init() {
     this.#countryHiddenInputElm = this.#select(`.${this.fieldKey}-country-hidden-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
@@ -124,8 +137,12 @@ export default class BitCountryField {
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
+    // this.#initialOptElm = this.#select('.option')
+    // if (!this.#initialOptElm) {
+    this.#generateTempOpt()
     this.#initialOptElm = this.#select('.option')
-    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
+    // }
+    this.rowHeight = this.#initialOptElm?.offsetHeight || 30
     this.#initialOptElm?.remove()
 
     this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress()
