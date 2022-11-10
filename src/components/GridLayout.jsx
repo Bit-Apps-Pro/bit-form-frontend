@@ -518,6 +518,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
+    setResizingFalse()
     if (styleMode) return
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
