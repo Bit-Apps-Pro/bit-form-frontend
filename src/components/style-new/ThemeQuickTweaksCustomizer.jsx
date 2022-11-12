@@ -225,6 +225,21 @@ export default function ThemeQuickTweaksCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      {/* <ThemeStylePropertyBlock label="Outline">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={['--g-bdr-width', '--g-bdr-rad']}
+            stateObjName="themeVars"
+            id="g-bdr"
+          />
+          <OutlineControl
+            subtitle="Theme Quick Tweaks Outline Color"
+            objectPaths={outlinePathsObj}
+            id="global-outline"
+            hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
+          />
+        </div>
+      </ThemeStylePropertyBlock> */}
 
       <SimpleColorPicker
         title="Field Background Color"
@@ -301,6 +316,7 @@ export default function ThemeQuickTweaksCustomizer() {
         modalId="global-bg-clr"
       />
     </>
+
   )
 }
 const sizes = {
@@ -325,3 +341,27 @@ const borderPathsObj = [
     paths: { 'border-color': '--global-fld-bdr-clr' },
   },
 ]
+
+// const outlinePathsObj = {
+//   object: 'themeVars',
+//   paths: {
+//     outline: '--global-outline',
+//     'outline-offset': '--global-outline-offset',
+//   },
+// }
+// const outlinePathsObj = [
+//   {
+//     object: 'themeVars',
+//     paths: {
+//       'outline-width': '--g-o-w',
+//       'outline-offset': '--g-o-offset',
+//       'outline-style': '--g-o-s',
+//     },
+//   },
+//   {
+//     object: 'themeColors',
+//     paths: {
+//       'outline-color': '--g-o-c',
+//     },
+//   },
+// ]

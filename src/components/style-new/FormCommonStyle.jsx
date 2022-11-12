@@ -14,6 +14,7 @@ import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
+import OutlineControl from './OutlineControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
@@ -214,6 +215,25 @@ export default function FormCommonStyle({ element, componentTitle }) {
                 id={`${element}-bdr-ctrl`}
               />
             </span>
+          </StylePropertyBlock>
+        )
+      case 'outline':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('outline')}
+            title="Outline"
+          >
+            <ResetStyle
+              propertyPath={[String(Object.values(objPaths.paths))]}
+              stateObjName="styles"
+              id="fld-wrp-outline"
+            />
+            <OutlineControl
+              allowImportant
+              subtitle={`${componentTitle} Outline`}
+              objectPaths={objPaths}
+              id="fld-wrp-cont-outline"
+            />
           </StylePropertyBlock>
         )
       case 'transition':

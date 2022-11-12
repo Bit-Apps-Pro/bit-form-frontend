@@ -294,6 +294,13 @@ const lgLightThemeVars = {
   '--btn-bdr': 'none', // button border
   '--btn-bdr-rad': '5px', // button border radius
   '--btn-bdr-width': '1px', // button border radius
+
+  // outline style properties assign for testing purpose
+  '--global-outline': '1px solid hsla(217, 100%, 50%, 100)', // outline
+  '--global-outline-offset': '1px', // outline offset
+  '--g-o-offset': '1px', // outline offset
+  '--g-o-w': '1px', // outline width
+  '--g-o-s': 'solid', // outline style
 }
 
 const lightThemeColors = {
@@ -412,6 +419,9 @@ const lightThemeColors = {
   '--btn-sh': '2px 2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
 
   '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
+
+  '--g-o-c': 'hsla(217, 100%, 50%, 100)', // outline color for testing purposes
+
 }
 
 const font = {
@@ -423,7 +433,12 @@ const font = {
 
 const lgLightform = ({ formId }) => ({
   [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box' },
-  [`._frm-bg-${formId}`]: { 'background-color': 'var(--global-bg-color)' },
+  [`._frm-bg-${formId}`]: {
+    'background-color': 'var(--global-bg-color)',
+    // outline: 'var(--g-o-w) var(--g-o-s) var(--g-o-c)',
+    // outline: '1px solid hsla(217, 100%, 50%, 100)',
+    // 'outline-offset': '10px',
+  },
   [`._frm-${formId}`]: {},
 })
 
