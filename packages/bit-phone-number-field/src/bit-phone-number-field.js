@@ -102,19 +102,14 @@ export default class BitPhoneNumberField {
 
     this.#handleDefaultPhoneInputValue()
 
+    this.#generateOptions()
+
     this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
-
-    this.#generateOptions()
-    setTimeout(() => {
-      this.#rowHeight = this.#select('.option')?.offsetHeight || this.#rowHeight
-      this.#optionListElm.innerHTML = ''
-      this.#generateOptions()
-    }, 1000)
 
     if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
@@ -130,7 +125,7 @@ export default class BitPhoneNumberField {
     this.#window.observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
   }
 
-  #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
+  #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -456,6 +451,19 @@ export default class BitPhoneNumberField {
     }
   }
 
+  #setRowHeightOnMount() {
+    const opt = this.#select('.option')
+    if (!opt) return
+    const stl = this.#window.getComputedStyle(opt)
+    const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+    const optHeight = (opt.offsetHeight + margin) || 0
+    if (optHeight !== this.#rowHeight) {
+      this.#rowHeight = optHeight
+      this.#optionListElm.innerHTML = ''
+      this.#generateOptions()
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
@@ -463,6 +471,7 @@ export default class BitPhoneNumberField {
       rowCount: this.#options.length,
       rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
+      onMount: () => this.#setRowHeightOnMount(),
       renderRow: index => {
         const opt = this.#options[index]
         const li = this.#createElm('li')
