@@ -115,11 +115,6 @@ export default class BitCurrencyField {
     this.#handleDefaultCurrencyInputValue()
 
     this.#generateOptions()
-    // setTimeout(() => {
-    this.#rowHeight = this.#select('.option')?.offsetHeight || this.#rowHeight
-    this.#optionListElm.innerHTML = ''
-    this.#generateOptions()
-    // }, 1000)
 
     if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
@@ -134,7 +129,7 @@ export default class BitCurrencyField {
 
   #handleCurrencyInputFocus() {
     this.#setAttribute(this.#currencyInputElm, 'type', 'number')
-    this.#currencyInputElm.value = this.#currencyInputElm.dataset.numValue
+    this.#currencyInputElm.value = this.#currencyInputElm.dataset.numValue || ''
   }
 
   #roundNumbers(value, precision = 0) {
@@ -301,7 +296,7 @@ export default class BitCurrencyField {
     return value.replace(regexp, '')
   }
 
-  #select(selector) { return this.#currencyNumberFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
+  #select(selector) { return this.#currencyNumberFieldWrapper.querySelector(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -500,6 +495,19 @@ export default class BitCurrencyField {
     }
   }
 
+  #setRowHeightOnMount() {
+    const opt = this.#select('.option')
+    if (!opt) return
+    const stl = this.#window.getComputedStyle(opt)
+    const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+    const optHeight = (opt.offsetHeight + margin) || 0
+    if (optHeight !== this.#rowHeight) {
+      this.#rowHeight = optHeight
+      this.#optionListElm.innerHTML = ''
+      this.#generateOptions()
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCurrencyIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
@@ -507,6 +515,7 @@ export default class BitCurrencyField {
       rowCount: this.#options.length,
       rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
+      onMount: () => this.#setRowHeightOnMount(),
       renderRow: index => {
         const opt = this.#options[index]
         const li = this.#createElm('li')
