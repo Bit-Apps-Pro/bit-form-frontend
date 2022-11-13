@@ -18,7 +18,7 @@ import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { addToBuilderHistory, generateHistoryData } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import BuilderSettings from './BuilderSettings'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
@@ -103,6 +103,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
       navigate(`${path}/themes`)
     }
     removeUnuseStylesAndUpdateState()
+    reCalculateFldHeights()
   }
 
   const inspectModeButtonHandler = () => {

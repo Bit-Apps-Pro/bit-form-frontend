@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -23,7 +23,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId,
+  $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -46,7 +46,7 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -103,7 +103,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const location = useLocation()
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
-
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
@@ -132,7 +131,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
   }, [fieldChangeCounter])
 
-  useEffect(() => { margeNewData() }, [newData])
+  useEffect(() => { if (newData !== null) margeNewData() }, [newData])
+
   useEffect(() => {
     const lgLength = layouts.lg.length
     const mdLength = layouts.md.length
@@ -180,9 +180,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }, [v1Styles, gridWidth, formID, styles])
 
   const margeNewData = () => {
-    if (newData !== null) {
-      addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
-    }
+    addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
 
@@ -290,6 +288,12 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     const newFields = { ...fields, [newBlk]: processedFieldData }
+    if (newLayouts.lg.length !== Object.keys(newFields).length) {
+      const fldArr = Object.keys(newFields)
+      const layArr = newLayouts.lg.map(lay => lay.i)
+      const missingFields = fldArr.filter(fld => !layArr.includes(fld))
+      if (missingFields.length) missingFields.forEach(fldKey => delete newFields[fldKey])
+    }
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
     setFields(newFields)
