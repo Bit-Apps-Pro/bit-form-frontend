@@ -11,7 +11,7 @@ export default function titleStyle_1_bitformDefault({ fk, breakpoint, colorSchem
       [`.${fk}-titl-wrp`]: { padding: '0px 5px' },
       [`.${fk}-title`]: {
         margin: '5px',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         'text-align': 'center',
         color: 'var(--global-font-color) !important',
         'word-break': 'break-all',
@@ -20,7 +20,7 @@ export default function titleStyle_1_bitformDefault({ fk, breakpoint, colorSchem
       },
       [`.${fk}-sub-titl`]: {
         margin: '5px',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         'text-align': 'center',
         color: 'var(--global-font-color) !important',
         'word-break': 'break-all',

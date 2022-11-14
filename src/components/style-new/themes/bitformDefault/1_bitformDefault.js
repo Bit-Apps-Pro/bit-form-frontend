@@ -311,7 +311,7 @@ const lightThemeColors = {
   '--gaa': 100, // global primary opacity
   '--global-font-color': 'hsla(0, 0%, 14%, 100)',
   '--gfh': 0, // global font color hue
-  '--gfs': '0%', // global fonst color saaturation
+  '--gfs': '0%', // global font color saturation
   '--gfl': '14%', // global font color lightness
   '--gfa': 100, // global font color opacity
   '--global-bg-color': '', // background color
@@ -332,7 +332,7 @@ const lightThemeColors = {
 
   '--fld-focs-i-fltr': 'invert(26%) sepia(41%) saturate(6015%) hue-rotate(211deg) brightness(100%) contrast(108%)',
 
-  '--fld-wrp-bg': '', // fieldwrapper background
+  '--fld-wrp-bg': '', // field wrapper background
   '--fld-wrp-bdr-clr': '', // field wrapper border color
   '--fld-wrp-sh': '', // field wrapper box shadow
 
@@ -432,7 +432,7 @@ const font = {
 }
 
 const lgLightform = ({ formId }) => ({
-  [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box' },
+  [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box', 'font-family': 'var(--g-font-family)' },
   [`._frm-bg-${formId}`]: {
     'background-color': 'var(--global-bg-color)',
     // outline: 'var(--g-o-w) var(--g-o-s) var(--g-o-c)',
