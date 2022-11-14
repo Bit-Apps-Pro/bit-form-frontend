@@ -127,7 +127,6 @@ export default function FontPickerMenu({ id }) {
   }
 
   const setCheck = (fontFamily, variants) => {
-    console.log({ fontFamily, variants })
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
     setStyles(prvStyles => produce(prvStyles, draft => {
@@ -182,6 +181,9 @@ export default function FontPickerMenu({ id }) {
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles') }))
     } else {
       setStyles(prvStyle => produce(prvStyle, draft => {
+        if (prvStyle.font.fontType === 'Google') {
+          draft.font.fontURL = ''
+        }
         draft.font.fontType = 'Custom'
         draft.font.fontStyle = []
         draft.font.fontWeightVariants = []
