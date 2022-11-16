@@ -15,7 +15,6 @@ import FilterControlMenu from '../../../style-new/FilterControlMenu'
 import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 import IndividualShadowControlMenu from '../../../style-new/IndividualShadowControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
-import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
@@ -46,7 +45,6 @@ const RenderComponent = ({
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
     case 'text-decoration': return <TextDecorationControlMenu objectPaths={objectPaths} id={id} />
-    case 'field-margin-control': return <MarginControlMenu />
     case 'theme-control': return <CustomThemeGallary fldKey={fldKey} />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} id={id} />
@@ -72,7 +70,6 @@ const setTitle = (component) => {
     'label-control': 'Label Placement',
     'spacing-control': 'Label Spacing',
     'text-decoration': 'Text Decoration',
-    'field-margin-control': 'Field Margin',
     'theme-control': 'Theme Gallery',
     'form-wrapper-control': 'Form Wrapper',
     'space-control': 'Margin & Padding',

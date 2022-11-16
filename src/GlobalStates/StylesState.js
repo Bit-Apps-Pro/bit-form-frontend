@@ -2,16 +2,6 @@ import { atom, selector } from 'recoil'
 import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
-export const $tempStyles = atom({
-  key: '$tempStyles',
-  default: {
-    themeVars: {},
-    lightThemeColors: {},
-    darkThemeColors: {},
-    styles: {},
-  },
-})
-
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
   default: {},

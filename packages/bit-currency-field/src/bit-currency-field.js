@@ -27,7 +27,7 @@ export default class BitCurrencyField {
 
   #optionListElm = null
 
-  #initialOptElm = null
+  #rowHeight = 30
 
   #currencySelectedFromList = false
 
@@ -98,9 +98,6 @@ export default class BitCurrencyField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-    this.#initialOptElm = this.#select('.option')
-    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
-    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#currencyNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
@@ -132,7 +129,7 @@ export default class BitCurrencyField {
 
   #handleCurrencyInputFocus() {
     this.#setAttribute(this.#currencyInputElm, 'type', 'number')
-    this.#currencyInputElm.value = this.#currencyInputElm.dataset.numValue
+    this.#currencyInputElm.value = this.#currencyInputElm.dataset.numValue || ''
   }
 
   #roundNumbers(value, precision = 0) {
@@ -498,13 +495,27 @@ export default class BitCurrencyField {
     }
   }
 
+  #setRowHeightOnMount() {
+    const opt = this.#select('.option')
+    if (!opt) return
+    const stl = this.#window.getComputedStyle(opt)
+    const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+    const optHeight = (opt.offsetHeight + margin) || 0
+    if (optHeight !== this.#rowHeight) {
+      this.#rowHeight = optHeight
+      this.#optionListElm.innerHTML = ''
+      this.#generateOptions()
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCurrencyIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
-      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
       rowCount: this.#options.length,
-      rowHeight: this.rowHeight,
+      rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
+      onMount: () => this.#setRowHeightOnMount(),
       renderRow: index => {
         const opt = this.#options[index]
         const li = this.#createElm('li')

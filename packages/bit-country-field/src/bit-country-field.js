@@ -23,8 +23,6 @@ export default class BitCountryField {
 
   #optionListElm
 
-  #initialOptElm
-
   #selectedCountryCode = ''
 
   #listOptions = []
@@ -50,6 +48,8 @@ export default class BitCountryField {
   #noCountryFoundText = 'No Currency Found'
 
   #maxHeight = 370
+
+  #rowHeight = 30
 
   #document
 
@@ -92,6 +92,7 @@ export default class BitCountryField {
     this.#placeholder = config.placeholder
     this.#searchPlaceholder = config.searchPlaceholder || 'Search Country'
     this.#noCountryFoundText = config.noCountryFoundText || 'No Country Found'
+    this.#rowHeight = config.rowHeight || 30
     this.#maxHeight = config.maxHeight || 370
     this.#selectedFlagImage = config.selectedFlagImage
     this.#selectedCountryClearable = config.selectedCountryClearable
@@ -124,9 +125,8 @@ export default class BitCountryField {
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-    this.#initialOptElm = this.#select('.option')
-    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
-    this.#initialOptElm?.remove()
+
+    this.#generateOptions()
 
     this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
@@ -135,7 +135,6 @@ export default class BitCountryField {
 
     this.#addEventListenersToElm()
     this.#window.observeElm(this.#countryHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleInputValueChange(oldVal, newVal) })
-    this.#generateOptions()
 
     if (!this.#selectedFlagImage) {
       this.#selectedCountryImgElm?.remove()
@@ -180,9 +179,7 @@ export default class BitCountryField {
     }
   }
 
-  #select(selector) { return this.#countryFieldWrapper.querySelector(selector) || console.error('selector not found', selector) }
-
-  #selectAll(selector) { return this.#countryFieldWrapper.querySelectorAll(selector) || console.error('selector not found', selector) }
+  #select(selector) { return this.#countryFieldWrapper.querySelector(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
@@ -397,13 +394,27 @@ export default class BitCountryField {
     }
   }
 
+  #setRowHeightOnMount() {
+    const opt = this.#select('.option')
+    if (!opt) return
+    const stl = this.#window.getComputedStyle(opt)
+    const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+    const optHeight = (opt.offsetHeight + margin) || 0
+    if (optHeight !== this.#rowHeight) {
+      this.#rowHeight = optHeight
+      this.#optionListElm.innerHTML = ''
+      this.#generateOptions()
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
-      height: (this.#maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
+      height: (this.#maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
       rowCount: this.#listOptions.length,
-      rowHeight: this.rowHeight,
+      rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
+      onMount: () => this.#setRowHeightOnMount(),
       renderRow: index => {
         const opt = this.#listOptions[index]
         const li = this.#createElm('li')

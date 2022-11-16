@@ -142,7 +142,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
+        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
         transition: 'height .3s',
       },
 

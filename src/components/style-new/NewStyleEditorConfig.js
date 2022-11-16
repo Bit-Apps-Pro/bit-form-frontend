@@ -1139,6 +1139,10 @@ const editorConfig = {
         transition: '',
       },
     },
+    'dpd-wrp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
+    },
     'selected-currency-img': {
       states: [],
       properties: {
@@ -1286,6 +1290,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-list': {
+      states: ['hover', 'focus'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
@@ -1394,6 +1404,10 @@ const editorConfig = {
         },
         transition: '',
       },
+    },
+    'dpd-wrp': {
+      states: ['hover', 'focus'],
+      properties: { ...fieldWrpCssProps },
     },
     'option-search-wrp': {
       states: [],
@@ -1536,6 +1550,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-list': {
+      states: ['hover', 'focus'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'option-list .option': {
@@ -1757,12 +1777,7 @@ const editorConfig = {
     'country-fld-wrp': {
       states: ['hover', 'focus'],
       properties: {
-        border: {
-          'border-style': true,
-          'border-color': true,
-          'border-width': true,
-          'border-radius': true,
-        },
+        ...fieldWrpCssProps,
         transition: '',
       },
     },
@@ -1913,6 +1928,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-list': {
+      states: ['hover', 'focus'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'option-list .option': {
       states: ['hover', 'focus'],
       properties: {
@@ -1992,6 +2013,7 @@ const editorConfig = {
     'dpd-fld-wrp': {
       states: ['hover', 'focus'],
       properties: {
+        ...fieldWrpCssProps,
         border: {
           'border-style': true,
           'border-color': true,
@@ -2165,6 +2187,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-list': {
+      states: ['hover', 'focus'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'option-list .option': {

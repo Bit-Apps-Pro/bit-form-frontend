@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
+import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
@@ -17,9 +18,8 @@ export default function SizeControlMenu({ objectPaths }) {
   const { fieldKey, element } = useParams()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
-  const tempStyles = useRecoilValue($tempStyles)
+  const savedThemeVars = useRecoilValue($savedThemeVars)
   const [aspectRatio, setAspectRation] = useState(true)
-  const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
   const getVal = (propertyPath) => {
@@ -80,9 +80,9 @@ export default function SizeControlMenu({ objectPaths }) {
 
   const undoHandler = (v) => {
     if (object === 'themeVars') {
-      // if (!tempThemeVars[v]) return
+      // if (!savedThemeVars[v]) return
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[v] = tempThemeVars[v] || '0px'
+        drftStyle[v] = savedThemeVars[v] || '0px'
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, v, '0px', { themeVars: getLatestState('themeVars') }))
     }

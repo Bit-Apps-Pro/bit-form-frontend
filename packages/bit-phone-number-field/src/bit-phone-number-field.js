@@ -31,7 +31,7 @@ export default class BitPhoneNumberField {
 
   #optionListElm = null
 
-  #initialOptElm = null
+  #rowHeight = 30
 
   #options = []
 
@@ -94,9 +94,6 @@ export default class BitPhoneNumberField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-    this.#initialOptElm = this.#select('.option')
-    this.rowHeight = this.rowHeight ? this.rowHeight : (this.#initialOptElm?.offsetHeight || 30)
-    this.#initialOptElm?.remove()
 
     this.#addEvent(this.#phoneNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
@@ -105,14 +102,14 @@ export default class BitPhoneNumberField {
 
     this.#handleDefaultPhoneInputValue()
 
+    this.#generateOptions()
+
     this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
-
-    this.#generateOptions()
 
     if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
@@ -454,13 +451,27 @@ export default class BitPhoneNumberField {
     }
   }
 
+  #setRowHeightOnMount() {
+    const opt = this.#select('.option')
+    if (!opt) return
+    const stl = this.#window.getComputedStyle(opt)
+    const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
+    const optHeight = (opt.offsetHeight + margin) || 0
+    if (optHeight !== this.#rowHeight) {
+      this.#rowHeight = optHeight
+      this.#optionListElm.innerHTML = ''
+      this.#generateOptions()
+    }
+  }
+
   #generateOptions() {
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
-      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.rowHeight,
+      height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
       rowCount: this.#options.length,
-      rowHeight: this.rowHeight,
+      rowHeight: this.#rowHeight,
       initialIndex: selectedIndex === -1 ? 0 : selectedIndex,
+      onMount: () => this.#setRowHeightOnMount(),
       renderRow: index => {
         const opt = this.#options[index]
         const li = this.#createElm('li')

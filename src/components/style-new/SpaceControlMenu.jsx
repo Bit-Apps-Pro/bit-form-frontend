@@ -2,7 +2,8 @@
 import produce from 'immer'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
+import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
@@ -12,8 +13,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { element, fieldKey } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
-  const tempStyles = useRecoilValue($tempStyles)
-  const tempThemeVars = tempStyles.themeVars
+  const savedThemeVars = useRecoilValue($savedThemeVars)
   const { object, paths } = objectPaths
 
   const spaceHandler = (val, propertyPath) => {
@@ -38,9 +38,9 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
 
   const undoHandler = (v) => {
     if (object === 'themeVars') {
-      // if (!tempThemeVars[v]) return
+      // if (!savedThemeVars[v]) return
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[v] = tempThemeVars[v] || '0px'
+        drftStyle[v] = savedThemeVars[v] || '0px'
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, v, '0px', { themeVars: getLatestState('themeVars') }))
     }
@@ -59,7 +59,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
     }
   }
 
-  const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
+  const checkIsResetable = (v) => (object === 'themeVars') && (savedThemeVars[v] !== themeVars[v])
 
   return (
     <>

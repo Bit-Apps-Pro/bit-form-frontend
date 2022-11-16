@@ -2,8 +2,10 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { hideAll } from 'tippy.js'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -154,8 +156,8 @@ export default function ThemeQuickTweaksCustomizer() {
       generateHistoryData(
         element,
         fieldKey,
-        'Reset Style',
-        'Reset Style',
+        'Reset All Styles',
+        '',
         {
           styles: getLatestState('styles'),
           themeVars: getLatestState('themeVars'),
@@ -163,6 +165,7 @@ export default function ThemeQuickTweaksCustomizer() {
         },
       ),
     )
+    hideAll()
   }
 
   return (

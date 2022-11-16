@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
 import BitCountryField from 'bit-country-field/src/bit-country-field'
 import { observeElm } from 'bit-helpers/src'
 import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
+import { useEffect, useRef } from 'react'
+import { useRecoilValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -237,10 +237,12 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                   )}
                 </div>
                 <ul
-                  className={`${fieldKey}-option-list`}
+                  className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')}`}
                   tabIndex="-1"
                   role="listbox"
                   aria-label="country list"
+                  data-dev-option-list={fieldKey}
+                  {...getCustomAttributes(fieldKey, 'option-list')}
                 >
                   <li className="option">
                     <span className="opt-prefix">Prefix</span>
