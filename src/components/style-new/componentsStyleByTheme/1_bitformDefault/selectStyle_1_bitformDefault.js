@@ -10,7 +10,7 @@ export default function selectStyle_1_BitformDefault({ fk, breakpoint, colorSche
         display: ' inline-block !important',
         direction: 'inherit !important',
         // 'max-width': '100% !important',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         width: '100% !important',
         outline: 'none !important',
         'background-color': 'var(--global-fld-bg-color, transparent)!important',
