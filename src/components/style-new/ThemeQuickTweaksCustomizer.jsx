@@ -2,8 +2,10 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { hideAll } from 'tippy.js'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -87,7 +89,7 @@ export default function ThemeQuickTweaksCustomizer() {
                 const comStlVal = comStlPropertiesObj[comnStlProperty]
                 if (mainStlVal !== comStlVal) {
                   if (mainStlVal?.match(/(var)/gi)) {
-                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')
+                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
                     if (tmpThemeVar[mainStateVar] !== comStlVal) {
                       tmpThemeVar[mainStateVar] = comStlVal
                     }
@@ -149,12 +151,13 @@ export default function ThemeQuickTweaksCustomizer() {
     }))
     setThemeVars(tmpThemeVars)
     setThemeColors(tmpThemeColors)
+    reCalculateFldHeights()
     addToBuilderHistory(
       generateHistoryData(
         element,
         fieldKey,
-        'Reset Style',
-        'Reset Style',
+        'Reset All Styles',
+        '',
         {
           styles: getLatestState('styles'),
           themeVars: getLatestState('themeVars'),
@@ -162,6 +165,7 @@ export default function ThemeQuickTweaksCustomizer() {
         },
       ),
     )
+    hideAll()
   }
 
   return (
@@ -224,6 +228,21 @@ export default function ThemeQuickTweaksCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+      {/* <ThemeStylePropertyBlock label="Outline">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={['--g-bdr-width', '--g-bdr-rad']}
+            stateObjName="themeVars"
+            id="g-bdr"
+          />
+          <OutlineControl
+            subtitle="Theme Quick Tweaks Outline Color"
+            objectPaths={outlinePathsObj}
+            id="global-outline"
+            hslaPaths={{ h: '--gfbc-h', s: '--gfbc-s', l: '--gfbc-l', a: '--gfbc-a' }}
+          />
+        </div>
+      </ThemeStylePropertyBlock> */}
 
       <SimpleColorPicker
         title="Field Background Color"
@@ -300,6 +319,7 @@ export default function ThemeQuickTweaksCustomizer() {
         modalId="global-bg-clr"
       />
     </>
+
   )
 }
 const sizes = {
@@ -324,3 +344,27 @@ const borderPathsObj = [
     paths: { 'border-color': '--global-fld-bdr-clr' },
   },
 ]
+
+// const outlinePathsObj = {
+//   object: 'themeVars',
+//   paths: {
+//     outline: '--global-outline',
+//     'outline-offset': '--global-outline-offset',
+//   },
+// }
+// const outlinePathsObj = [
+//   {
+//     object: 'themeVars',
+//     paths: {
+//       'outline-width': '--g-o-w',
+//       'outline-offset': '--g-o-offset',
+//       'outline-style': '--g-o-s',
+//     },
+//   },
+//   {
+//     object: 'themeColors',
+//     paths: {
+//       'outline-color': '--g-o-c',
+//     },
+//   },
+// ]

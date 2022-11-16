@@ -10,12 +10,16 @@ function Tools({ setNewData, value, children, title }) {
 
   const { css } = useFela()
 
-  const handleOnDrag = (e) => {
-    e.dataTransfer.setData('text/plain', '')
-    setDraggingField(value)
+  const setBreakpointToLg = () => {
     if (brkPoint !== 'lg') {
       setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToLG: prv.forceBuilderWidthToLG + 1 }))
     }
+  }
+
+  const handleOnDrag = (e) => {
+    e.dataTransfer.setData('text/plain', '')
+    setDraggingField(value)
+    setBreakpointToLg()
   }
 
   return (
@@ -30,7 +34,7 @@ function Tools({ setNewData, value, children, title }) {
       draggable
       // onDrag={e => debounce(bounce(e), 1000)}
       unselectable="on"
-      onClick={() => setNewData(value)}
+      onClick={() => { setBreakpointToLg(); setNewData(value) }}
       onKeyPress={() => setNewData(value)}
       onDragStart={handleOnDrag}
       onDragEnd={() => setDraggingField(null)}

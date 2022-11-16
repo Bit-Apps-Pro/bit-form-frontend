@@ -23,7 +23,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
         overflow: 'hidden',
         display: 'flex',
@@ -97,7 +97,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-dpd-wrp`]: {
         'background-color': 'transparent',
         overflow: 'hidden', // unused css
-        'font-weight': 500, // unused css
+        'font-weight': '500', // unused css
         display: 'flex',
         'justify-content': 'space-between',
         'align-items': 'center',
@@ -110,7 +110,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         outline: 'none', // unused css
       },
 
-      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(0, 0%, 95%, 100%)' },
+      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) - 10%), var(--gfbg-a))' },
 
       [`.${fk}-selected-country-wrp`]: {
         height: '100%',
@@ -174,7 +174,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         width: 'calc(100% - 50px)',
         padding: '8px 26px 8px 8px',
         'font-size': 'var(--fld-fs) !important',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
         'background-color': 'var(--global-fld-bg-color, transparent)',
       },
@@ -229,7 +229,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-radius': '8px !important',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
         'font-size': '16px',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
       },
 

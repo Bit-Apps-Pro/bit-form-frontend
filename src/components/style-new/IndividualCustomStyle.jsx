@@ -37,7 +37,7 @@ import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import {
-  addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter,
+  addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter
 } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'
@@ -80,12 +80,20 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     // }
     // console.log('pseudoPahtObj', pseudoPahtObj?.[elementKey]?.[state] || '')
     switch (elementKey) {
+      case 'dpd-fld-wrp':
       case 'currency-fld-wrp':
       case 'phone-fld-wrp':
         if (state === 'hover') {
-          state = `hover:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
+          state = 'hover:not(.menu-open):not(.disabled)'
         } else if (state === 'focus') {
-          state = `focus-within:not(.${fldKey}-menu-open,.${fldKey}-disabled)`
+          state = 'focus-within:not(.menu-open):not(.disabled)'
+        } else if (state === 'active') {
+          state = '.menu-open'
+        }
+        break
+      case 'dpd-wrp':
+        if (state === 'focus') {
+          state = 'focus-visible'
         }
         break
       case 'search-clear-btn':

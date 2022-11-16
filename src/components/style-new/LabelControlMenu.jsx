@@ -15,10 +15,12 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
-import { addToBuilderHistory,
+import {
+  addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+  reCalculateFldHeights
+} from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -71,6 +73,7 @@ export default function LabelControlMenu() {
           drftStyle['--inp-wrp-width'] = ''
           drftStyle['--lbl-wrp-sa'] = ''
           drftStyle['--fld-wrp-width'] = ''
+          drftStyle['--lbl-wrp-m'] = '0 0 5px 0'
         }))
         setOpenVarPos(false)
         reCalculateFldHeights()
@@ -82,6 +85,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-width'] ||= '40%'
           drftStyle['--inp-wrp-width'] = '100%'
           drftStyle['--fld-wrp-width'] = '100%'
+          drftStyle['--lbl-wrp-m'] = ''
         }))
         setOpenVarPos(true)
         reCalculateFldHeights()
@@ -93,6 +97,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-width'] ||= '40%'
           drftStyle['--inp-wrp-width'] = '60%'
           drftStyle['--fld-wrp-width'] = '100%'
+          drftStyle['--lbl-wrp-m'] = ''
         }))
         setOpenVarPos(true)
         reCalculateFldHeights()

@@ -23,7 +23,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
         overflow: 'hidden',
         display: 'flex',
@@ -142,7 +142,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
+        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
         transition: 'height .3s',
       },
 
@@ -208,7 +208,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'border-radius': '8px',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
         'font-size': '16px',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
       },
 

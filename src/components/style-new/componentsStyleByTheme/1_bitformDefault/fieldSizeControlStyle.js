@@ -33,7 +33,6 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
           [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
         },
-
         ...(fieldType === 'select' || fieldType === 'country') && {
           [`.${fk}-dpd-fld-wrp`]: {
             'border-radius': '6px',
@@ -89,9 +88,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem' },
-          [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
-          [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
+          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem', height: '25px' },
+          [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '10px' },
         },
 
       }
@@ -146,7 +146,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           },
           [`.${fk}-phone-amount-input`]: { padding: '8px 6px' },
           [`.${fk}-phone-fld-container`]: { height: '30px' },
-          [`.${fk}-selected-country-img`]: { height: '14px', width: '26px', 'border-radius': '4px' },
+          [`.${fk}-selected-country-img`]: { height: '17px', width: '25px', 'border-radius': '4px' },
         },
 
         ...fieldType === 'currency' && {
@@ -156,7 +156,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           },
           [`.${fk}-currency-amount-input`]: { padding: '8px 6px' },
           [`.${fk}-currency-fld-container`]: { height: '30px' },
-          [`.${fk}-selected-currency-img`]: { height: '14px', width: '26px', 'border-radius': '4px' },
+          [`.${fk}-selected-currency-img`]: { height: '17px', width: '25px', 'border-radius': '4px' },
         },
 
         ...(fieldType === 'select'
@@ -184,9 +184,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '9px 15px', 'font-size': '0.875rem' },
+          [`.${fk}-inp-btn`]: { padding: '4px 9px', 'font-size': '0.875rem', height: '30px' },
           [`.${fk}-pre-i`]: { width: '18px', height: '18px' },
           [`.${fk}-suf-i`]: { width: '18px', height: '18px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '12px' },
         },
       }
     // case 'small':
@@ -285,9 +286,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '11px 20px', 'font-size': '1rem' },
-          [`.${fk}-pre-i`]: { width: '20px', height: '20px' },
-          [`.${fk}-suf-i`]: { width: '20px', height: '20px' },
+          [`.${fk}-inp-btn`]: { padding: '5px 11px', 'font-size': '1rem', height: '35px' },
+          [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '16px' },
         },
       }
     // case 'large':
@@ -385,9 +387,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '12px 22px', 'font-size': '1.125rem' },
+          [`.${fk}-inp-btn`]: { padding: '12px 18px', 'font-size': '1.125rem', height: '44px' },
           [`.${fk}-pre-i`]: { width: '24px', height: '24px' },
           [`.${fk}-suf-i`]: { width: '24px', height: '24px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '1.125rem' },
         },
       }
     case 'large-2':
@@ -478,9 +481,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-btn-pre-i`]: { width: '28px', height: '28px' },
         },
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '14px 24px', 'font-size': '1.313rem' },
+          [`.${fk}-inp-btn`]: { padding: '14px 22px', 'font-size': '1.313rem', height: '48px' },
           [`.${fk}-pre-i`]: { width: '28px', height: '28px' },
           [`.${fk}-suf-i`]: { width: '28px', height: '28px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '1.313rem' },
         },
       }
     default:

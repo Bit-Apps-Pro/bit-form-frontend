@@ -52,7 +52,7 @@ function TitleSettings() {
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
-  const subtitleAlignment = styles.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'] || 'start'
+  const subtitleAlignment = styles.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]?.['justify-content'] || 'start'
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
@@ -187,7 +187,7 @@ function TitleSettings() {
       if (val === 'start') {
         // console.log('first')
         delete drftStyle.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content']
-      }else{
+      } else {
         drftStyle.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'] = val
       }
     })

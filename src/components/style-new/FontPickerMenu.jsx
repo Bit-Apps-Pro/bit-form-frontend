@@ -6,7 +6,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
+import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
@@ -32,7 +33,7 @@ export default function FontPickerMenu({ id }) {
   const [focusSearch, setfocusSearch] = useState(false)
   const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempStyle = useRecoilValue($tempStyles)
+  const savedThemeVars = useRecoilValue($savedThemeVars)
 
   const inheritFont = themeVars['--g-font-family'] === 'inherit'
   const fontSource = (styles.font.fontType === 'Google')
@@ -127,7 +128,6 @@ export default function FontPickerMenu({ id }) {
   }
 
   const setCheck = (fontFamily, variants) => {
-    console.log({ fontFamily, variants })
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
     setStyles(prvStyles => produce(prvStyles, draft => {
@@ -182,6 +182,9 @@ export default function FontPickerMenu({ id }) {
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles') }))
     } else {
       setStyles(prvStyle => produce(prvStyle, draft => {
+        if (prvStyle.font.fontType === 'Google') {
+          draft.font.fontURL = ''
+        }
         draft.font.fontType = 'Custom'
         draft.font.fontStyle = []
         draft.font.fontWeightVariants = []
@@ -276,7 +279,7 @@ export default function FontPickerMenu({ id }) {
               >
                 <span className={css(fontStyle.title)}>{fonts[index]?.family}</span>
                 {
-                  ((fontSource && (themeVars['--g-font-family'] === fonts[index]?.family || tempStyle.themeVars['--g-font-family'] === fonts[index]?.family)))
+                  ((fontSource && (themeVars['--g-font-family'] === fonts[index]?.family || savedThemeVars['--g-font-family'] === fonts[index]?.family)))
                   && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />
                 }
               </button>

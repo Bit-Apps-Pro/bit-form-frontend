@@ -15,7 +15,6 @@ import FilterControlMenu from '../../../style-new/FilterControlMenu'
 import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 import IndividualShadowControlMenu from '../../../style-new/IndividualShadowControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
-import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SizeControlMenu from '../../../style-new/SizeControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
@@ -25,6 +24,7 @@ import BorderImageControlMenu from './BorderImageControlMenu'
 import TextDecorationControlMenu from './TextDecorationControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
+const OutlineControlMenu = lazy(() => import('./OutlineControlMenu'))
 const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColorsPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
@@ -34,6 +34,7 @@ const RenderComponent = ({
 }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
+    case 'outline-style': return <OutlineControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -44,7 +45,6 @@ const RenderComponent = ({
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
     case 'text-decoration': return <TextDecorationControlMenu objectPaths={objectPaths} id={id} />
-    case 'field-margin-control': return <MarginControlMenu />
     case 'theme-control': return <CustomThemeGallary fldKey={fldKey} />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} id={id} />
@@ -61,6 +61,7 @@ const RenderComponent = ({
 const setTitle = (component) => {
   const titles = {
     'border-style': 'Border',
+    'outline-style': 'Outline',
     'border-image': 'Border Image',
     'color-picker': 'Color picker',
     background: 'Background',
@@ -69,7 +70,6 @@ const setTitle = (component) => {
     'label-control': 'Label Placement',
     'spacing-control': 'Label Spacing',
     'text-decoration': 'Text Decoration',
-    'field-margin-control': 'Field Margin',
     'theme-control': 'Theme Gallery',
     'form-wrapper-control': 'Form Wrapper',
     'space-control': 'Margin & Padding',

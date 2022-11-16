@@ -18,7 +18,7 @@ import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { addToBuilderHistory, generateHistoryData } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import BuilderSettings from './BuilderSettings'
 import Grow from './CompSettings/StyleCustomize/ChildComp/Grow'
@@ -103,6 +103,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
       navigate(`${path}/themes`)
     }
     removeUnuseStylesAndUpdateState()
+    reCalculateFldHeights()
   }
 
   const inspectModeButtonHandler = () => {
@@ -149,7 +150,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
                   data-testid="inspect-element"
                   onClick={inspectModeButtonHandler}
                   type="button"
-                  className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.inspectMode && !showToolBar) && 'active'}`}
+                  className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${flags.inspectMode ? 'active' : ''}`}
                 >
                   <InspectIcn size="20" />
                 </button>

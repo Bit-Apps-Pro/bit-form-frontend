@@ -12,8 +12,6 @@ import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ stateObjName, propertyPath, id }) {
-  // const { lightThemeColors: tmpLightThemeColors,
-  //   darkThemeColors: tmpDarkThemeColors } = useRecoilValue($tempStyles)
   const tmpThemeColors = useRecoilValue($savedThemeColors)
   const tmpThemeVars = useRecoilValue($savedThemeVars)
   const tmpStyles = useRecoilValue($savedStyles)

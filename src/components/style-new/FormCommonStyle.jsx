@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Navigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -14,6 +14,7 @@ import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
+import OutlineControl from './OutlineControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
@@ -29,8 +30,10 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const formWrpStylesObj = styles.form?.[elemn]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj || {})
   const themeColors = useRecoilValue($themeColors)
-  console.log('formWrpStylesPropertiesArr', formWrpStylesPropertiesArr)
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
+    setIsLoading(false)
     if (!('form' in styles && elemn in styles.form)) {
       <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} replace />
     }
@@ -214,6 +217,25 @@ export default function FormCommonStyle({ element, componentTitle }) {
             </span>
           </StylePropertyBlock>
         )
+      case 'outline':
+        return (
+          <StylePropertyBlock
+            delPropertyHandler={() => delPropertyHandler('outline')}
+            title="Outline"
+          >
+            <ResetStyle
+              propertyPath={[String(Object.values(objPaths.paths))]}
+              stateObjName="styles"
+              id="fld-wrp-outline"
+            />
+            <OutlineControl
+              allowImportant
+              subtitle={`${componentTitle} Outline`}
+              objectPaths={objPaths}
+              id="fld-wrp-cont-outline"
+            />
+          </StylePropertyBlock>
+        )
       case 'transition':
         return (
           <TransitionControl
@@ -233,9 +255,10 @@ export default function FormCommonStyle({ element, componentTitle }) {
         break
     }
   }
+
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
-      {formWrpStylesPropertiesArr.length === 0 && <LoaderSm size={100} clr="#000" className="ml-2" />}
+      {formWrpStylesPropertiesArr.length === 0 && isLoading && <LoaderSm size={50} clr="#006aff" className="ml-2" />}
       {formWrpStylesPropertiesArr.map((prop, indx) => (
         <div key={`css-property-${indx + 3 * 2}`}>
           {getCssProps(prop)}
