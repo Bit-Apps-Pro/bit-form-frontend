@@ -99,7 +99,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         display: 'inline-block !important',
         direction: 'inherit !important',
         // 'max-width': '100% !important',
-        'font-family': 'var(--g-font-family)',
+        // 'font-family': 'var(--g-font-family)',
         margin: '0px 0px 0px 33px',
         width: 'calc(100% - 33px) !important',
         outline: 'none !important',

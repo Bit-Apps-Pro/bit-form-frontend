@@ -266,6 +266,10 @@ const formCommonCssProps = {
     'border-width': true,
     'border-radius': true,
   },
+  outline: {
+    outline: true,
+    'outline-offset': true,
+  },
   'box-shadow': '',
   transition: '',
 }

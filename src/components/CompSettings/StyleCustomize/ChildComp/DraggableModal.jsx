@@ -24,6 +24,7 @@ import BorderImageControlMenu from './BorderImageControlMenu'
 import TextDecorationControlMenu from './TextDecorationControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
+const OutlineControlMenu = lazy(() => import('./OutlineControlMenu'))
 const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColorsPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
@@ -33,6 +34,7 @@ const RenderComponent = ({
 }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
+    case 'outline-style': return <OutlineControlMenu objectPaths={objectPaths} hslaPaths={hslaPaths} id={id} />
     case 'border-image': return <BorderImageControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'background': return <BackgroundControlMenu stateObjName={stateObjName} action={action} objectPaths={objectPaths} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
@@ -59,6 +61,7 @@ const RenderComponent = ({
 const setTitle = (component) => {
   const titles = {
     'border-style': 'Border',
+    'outline-style': 'Outline',
     'border-image': 'Border Image',
     'color-picker': 'Color picker',
     background: 'Background',
