@@ -19,19 +19,10 @@ import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SizeControl from './SizeControl'
 
 /**
- * @Function BorderControlMenu
- * @param {objectPaths, hslaPaths}  Array|Object
+ * @function OutlineControlMenu
+ * @param {objectPaths}  Array|Object
  * @param {id} String
- * @When BorderControlMenu are Array
- * {
- *    @index 0=> ThemVars
- *    @ThemeVars|@ThemeColors Object.paths 1st property is border
- * }
- * @When BorderControlMenu is object
- * {
- *   @Object.paths 1st property is border
- * }
- * @returns
+ * @when OutlineControlMenu are Array
  */
 
 export default function OutlineControlMenu({ objectPaths, id }) {
