@@ -8,7 +8,7 @@ import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
 
 export default function EditOptions({
-  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup,
+  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup, showUpload = false,
 }) {
   const optKey = useRef(1)
   const { css } = useFela()
@@ -59,6 +59,7 @@ export default function EditOptions({
           valKey={valKey}
           checkByDefault={checkByDefault}
           hasGroup={hasGroup}
+          showUpload={showUpload}
         />
       )}
       {editOptionType === 'Text' && (

@@ -2,8 +2,10 @@ import { arrayMoveImmutable } from 'array-move'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
+import EditIcn from '../../../Icons/EditIcn'
 import PlusIcn from '../../../Icons/PlusIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
 import ut from '../../../styles/2.utilities'
@@ -11,15 +13,19 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Btn from '../../Utilities/Btn'
 import CheckBox from '../../Utilities/CheckBox'
+import Modal from '../../Utilities/Modal'
 import { DragHandle, SortableItem, SortableList } from '../../Utilities/Sortable'
 import Tip from '../../Utilities/Tip'
 import TipGroup from '../../Utilities/Tip/TipGroup'
+import IconsModal from '../IconsModal'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
 
 const SortableElm = ({
-  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault,
+  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault, showUpload = false,
 }) => {
   const { css } = useFela()
+  const [optionMdl, setOptionMdl] = useState(false)
+  const { fieldKey: fldKey } = useParams()
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
   const isGroupEnd = 'type' in value && value.type.includes('group') && value.type.includes('end')
@@ -180,6 +186,22 @@ const SortableElm = ({
 
           {!('type' in value) && (
             <>
+              {showUpload && (
+                <div className={css(ut.flxc, ut.ml2)}>
+                  <img
+                    className={css(optionStyle.img)}
+                    src={value?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
+                    alt={value?.img}
+                  />
+                  <button
+                    className={css(ut.m10, optionStyle.imgAddBtn)}
+                    type="button"
+                    onClick={() => setOptionMdl(true)}
+                  >
+                    <EditIcn size="20" />
+                  </button>
+                </div>
+              )}
               <input
                 type="text"
                 value={value[lblKey]}
@@ -260,12 +282,29 @@ const SortableElm = ({
           </div>
         </div>
       )}
+      <Modal
+        md
+        autoHeight
+        show={optionMdl}
+        setModal={() => setOptionMdl(false)}
+        className="o-v "
+        title={__('Icons')}
+      >
+        <IconsModal
+          setModal={setOptionMdl}
+          setOption={setOption}
+          option={option}
+          optIndx={optIndx}
+          unsplash
+        />
+      </Modal>
     </div>
+
   )
 }
 
 export default function VisualOptionsTab({
-  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup,
+  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup, showUpload,
 }) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
@@ -357,6 +396,7 @@ export default function VisualOptionsTab({
               setScrolIndex={setScrolIndex}
               optKey={optKey}
               checkByDefault={checkByDefault}
+              showUpload={showUpload}
             />
           </SortableItem>
         ))}
@@ -405,6 +445,26 @@ const optionStyle = {
       { flx: 'align-center' },
     '&:hover > .acc > div': { flx: 'align-center' },
     '&:hover > .acc.group-acc': { flx: '', ai: 'flex-end', pb: 0 },
+  },
+  img: {
+    w: 25,
+    h: 17,
+    brs: 3,
+    bd: 'hsla(0, 0%, 0%, 5%)',
+    b: '1px solid rgba(0, 0, 0, 0.05)',
+  },
+
+  imgAddBtn: {
+    se: 25,
+    flx: 'center',
+    b: 'none',
+    p: 3,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    bd: 'none',
+    ':hover': { bd: 'var(--b-20-93)', cr: 'var(--blue)' },
   },
 
   grouptitleinput: {
