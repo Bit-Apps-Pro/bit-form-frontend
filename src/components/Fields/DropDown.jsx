@@ -20,6 +20,8 @@ function DropDown({
   const { optionsList, ph } = fieldData
   const { activeList, optionIcon, allowCustomOption } = fieldData.config
 
+  // console.log('fieldData', fieldData, optionIcon)
+
   useEffect(() => {
     if (!dropdownWrapElmRef?.current) {
       dropdownWrapElmRef.current = selectInGrid(`.${fieldKey}-dpd-fld-wrp`)
@@ -253,6 +255,7 @@ function DropDown({
                   optionsList.map((listObj, index) => {
                     const listName = Object.keys(listObj)[0]
                     const options = Object.values(listObj)[0]
+                    // console.log('options', options)
                     let dataIndex = 0
                     return (
                       <ul
@@ -324,7 +327,7 @@ function DropDown({
                                         {optionIcon && (
                                           <img
                                             className="opt-icn"
-                                            src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                                            src={opt2?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
                                             alt="BD"
                                             loading="lazy"
                                           />
@@ -358,7 +361,7 @@ function DropDown({
                                   {optionIcon && (
                                     <img
                                       className={`opt-icn ${getCustomClsName(fieldKey, 'opt-icn')}`}
-                                      src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
+                                      src={opt?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
                                       alt="BD"
                                       loading="lazy"
                                     />
