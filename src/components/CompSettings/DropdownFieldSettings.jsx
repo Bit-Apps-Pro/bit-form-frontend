@@ -407,8 +407,9 @@ export default function DropdownFieldSettings() {
         autoHeight
         show={optionMdl}
         setModal={() => setOptionMdl(false)}
-        className="o-v"
+        className="o-v "
         title={__('Options')}
+        width="720px"
       >
         <div className="pos-rel">
           <EditOptions
@@ -419,6 +420,7 @@ export default function DropdownFieldSettings() {
             valKey="val"
             type="radio"
             hasGroup
+            showUpload={optionIcon}
           />
         </div>
       </Modal>
