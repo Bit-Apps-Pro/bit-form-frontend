@@ -80,7 +80,7 @@ export default class BitCurrencyField {
       this.#currencyNumberFieldWrapper = selector
     }
 
-    this.#options = [...this.#config.options]
+    this.#options = [...this.#config.options].filter(c => !c.hide)
     this.fieldKey = this.#config.fieldKey
     this.#assetsURL = config.assetsURL
     this.init()
