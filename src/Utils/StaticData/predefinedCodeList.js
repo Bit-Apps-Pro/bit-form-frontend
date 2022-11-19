@@ -1,14 +1,14 @@
 import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { SmartTagField } from './SmartTagField'
 import { firstCharCap } from '../Helpers'
+import { SmartTagField } from './SmartTagField'
 
 const fields = getRecoil($fields)
 const generateFldName = fld => (fld.lbl || fld.adminLbl || fld.txt)
 const generateFieldsOpts = () => Object.entries(fields).map(([fldKey, fldData]) => ({ lbl: generateFldName(fldData) || fldKey, val: `${fldKey}` }))
-const generateSmartTagOpts = () => SmartTagField.map(({ name, label }) => ({ lbl: label, val: `window.bf_globals['${name}']` }))
+const generateSmartTagOpts = () => SmartTagField.map(({ name, label }) => ({ lbl: label, val: `bfVars.${name}` }))
 const generateEventCodeForFld = eventTyp => `// On Field ${firstCharCap(eventTyp)}
-document.querySelector(fieldKey).addEventListener('${eventTyp}', event => {
+document.querySelector(\`#form-\${bfContentId}\`).querySelector('#fieldKey').addEventListener('${eventTyp}', event => {
   // Write your code here
 })`
 const generateEventChild = eventTyp => ({ lbl: `On ${firstCharCap(eventTyp)}`, val: generateEventCodeForFld(eventTyp) })
@@ -20,7 +20,7 @@ export const jsPredefinedCodeList = [
     childs: [
       {
         lbl: 'Form ID',
-        val: 'window.bf_globals[\'formId\']',
+        val: 'bf_globals[bfContentId].formId',
       },
       ...generateSmartTagOpts(),
     ],
@@ -39,28 +39,28 @@ export const jsPredefinedCodeList = [
       {
         lbl: 'On Form Submit Success',
         val: `/* On Form Submit Success */
-document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-submit-success', ({detail:{formId, entryId, formData}}) => {
+document.querySelector(\`#form-\${bfContentId}\`).addEventListener('bf-form-submit-success', ({detail:{formId, entryId, formData}}) => {
 \t/* Write your code here... */
 })`,
       },
       {
         lbl: 'On Form Submit Error',
         val: `/* On Form Submit Error */
-document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-submit-error', ({detail:{formId, errors}}) => {
+document.querySelector(\`#form-\${bfContentId}\`).addEventListener('bf-form-submit-error', ({detail:{formId, errors}}) => {
 \t/* Write your code here... */
 })`,
       },
       {
         lbl: 'On Form Reset',
         val: `// On Form Reset
-document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-reset', ({detail:{formId}}) => {
+document.querySelector(\`#form-\${bfContentId}\`).addEventListener('bf-form-reset', ({detail:{formId}}) => {
 \t// Write your code here...
 })`,
       },
       {
         lbl: 'On Form Validation Error',
         val: `/* On Form Validation Error */
-document.querySelector(\`#\${bfContentId}\`).addEventListener('bf-form-validation-error', ({detail:{formId, fieldId, error}}) => {
+document.querySelector(\`#form-\${bfContentId}\`).addEventListener('bf-form-validation-error', ({detail:{formId, fieldId, error}}) => {
 \t/* Write your code here... */
 })`,
       },
