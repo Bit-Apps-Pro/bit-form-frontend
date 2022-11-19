@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
 import EditIcn from '../../../Icons/EditIcn'
+import EyeIcon from '../../../Icons/EyeIcon'
+import EyeOffIcon from '../../../Icons/EyeOffIcon'
+import NoneIcn from '../../../Icons/NoneIcn'
 import PlusIcn from '../../../Icons/PlusIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
 import ut from '../../../styles/2.utilities'
@@ -21,7 +24,7 @@ import IconsModal from '../IconsModal'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
 
 const SortableElm = ({
-  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault, showUpload = false,
+  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault, showUpload = false, hideNDisabledOptions,
 }) => {
   const { css } = useFela()
   const [optionMdl, setOptionMdl] = useState(false)
@@ -61,6 +64,19 @@ const SortableElm = ({
     const newOption = produce(option, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[ind][typ] = e.target.value
+    })
+
+    setOption(newOption)
+    setScrolIndex(optIndx)
+  }
+  const setOptStatus = (ind, typ) => {
+    const newOption = produce(option, draft => {
+      // eslint-disable-next-line no-param-reassign
+      if (option[ind][typ]) {
+        delete draft[ind][typ]
+        return
+      }
+      draft[ind][typ] = true
     })
 
     setOption(newOption)
@@ -158,7 +174,7 @@ const SortableElm = ({
   return (
     <div
       data-testid={`sortable-itm-wrp-${optIndx}`}
-      className={css(optionStyle.container, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}
+      className={css(optionStyle.container, option[optIndx]?.disabled && optionStyle.disabled, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}
     >
       {!isGroupEnd && (
         <div className={css(optionStyle.inputContainer)}>
@@ -244,40 +260,69 @@ const SortableElm = ({
           </div>
           <div className={`${css(optionStyle.action)} acc ${isGroupStart && 'group-acc'} ${value.req && 'active'}`}>
             <div className={`${css(ut.dyn)} btnIcn`}>
-              <TipGroup interactive={false}>
-                <Tip whiteSpaceNowrap className={css({ dy: 'inline-block' })} msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
-                  <button
-                    data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
-                    type="button"
-                    onClick={() => addOption(optIndx)}
-                    className={css(optionStyle.btn, ut.flxc)}
-                  >
-                    <span className={css(optionStyle.addbtnside)}>
-                      <CloseIcn size="12" stroke="4" />
-                    </span>
-                  </button>
-                </Tip>
-                <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
-                  <button
-                    data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`}
-                    type="button"
-                    onClick={() => cloneOption()}
-                    className={css(optionStyle.btn)}
-                  >
-                    <CopyIcn size="18" stroke="2.5" />
-                  </button>
-                </Tip>
-                <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
-                  <button
-                    data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
-                    type="button"
-                    onClick={() => rmvOption(optIndx)}
-                    className={css(optionStyle.btn)}
-                  >
-                    <TrashIcn size="18" stroke="2" />
-                  </button>
-                </Tip>
-              </TipGroup>
+              {!hideNDisabledOptions && (
+                <TipGroup interactive={false}>
+                  <Tip whiteSpaceNowrap className={css({ dy: 'inline-block' })} msg={`Add Option ${isGroupStart ? 'in Group' : ''}`}>
+                    <button
+                      data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
+                      type="button"
+                      onClick={() => addOption(optIndx)}
+                      className={css(optionStyle.btn, ut.flxc)}
+                    >
+                      <span className={css(optionStyle.addbtnside)}>
+                        <CloseIcn size="12" stroke="4" />
+                      </span>
+                    </button>
+                  </Tip>
+                  <Tip msg={`Clone ${isGroupStart ? 'Group' : 'Option'}`}>
+                    <button
+                      data-testid={`srtble-itm-add-optn-cln-grp-${optIndx}`}
+                      type="button"
+                      onClick={() => cloneOption()}
+                      className={css(optionStyle.btn)}
+                    >
+                      <CopyIcn size="18" stroke="2.5" />
+                    </button>
+                  </Tip>
+                  <Tip msg={`Delete ${isGroupStart ? 'Group' : 'Option'}`}>
+                    <button
+                      data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
+                      type="button"
+                      onClick={() => rmvOption(optIndx)}
+                      className={css(optionStyle.btn)}
+                    >
+                      <TrashIcn size="18" stroke="2" />
+                    </button>
+                  </Tip>
+                </TipGroup>
+              )}
+              {hideNDisabledOptions && (
+                <TipGroup interactive={false}>
+                  <Tip whiteSpaceNowrap className={css({ dy: 'inline-block' })} msg={`Option ${option[optIndx]?.hide ? 'Hide' : 'Show'}`}>
+                    <button
+                      data-testid={`srtble-itm-add-optn-grp-${optIndx}`}
+                      type="button"
+                      onClick={() => setOptStatus(optIndx, 'hide')}
+                      className={css(optionStyle.btn, ut.flxc)}
+                    >
+                      {option[optIndx]?.hide ? (
+                        <EyeOffIcon size="18" />
+                      ) : (<EyeIcon size="18" />)}
+
+                    </button>
+                  </Tip>
+                  <Tip msg={`Field ${option[optIndx]?.disabled ? 'Disabled' : 'Enabled'}`}>
+                    <button
+                      data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
+                      type="button"
+                      onClick={() => setOptStatus(optIndx, 'disabled')}
+                      className={css(optionStyle.btn)}
+                    >
+                      <NoneIcn size="15" />
+                    </button>
+                  </Tip>
+                </TipGroup>
+              )}
             </div>
           </div>
         </div>
@@ -304,7 +349,7 @@ const SortableElm = ({
 }
 
 export default function VisualOptionsTab({
-  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup, showUpload,
+  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup, showUpload, hideNDisabledOptions,
 }) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
@@ -397,6 +442,7 @@ export default function VisualOptionsTab({
               optKey={optKey}
               checkByDefault={checkByDefault}
               showUpload={showUpload}
+              hideNDisabledOptions={hideNDisabledOptions}
             />
           </SortableItem>
         ))}
@@ -432,6 +478,7 @@ export default function VisualOptionsTab({
 }
 
 const optionStyle = {
+  disabled: { bd: 'hsla(0, 11%, 93%, 100%)' },
   list: { width: '100%', height: 300 },
   container: { flx: '' },
   groupstart: { pt: 7, pb: 5, bc: 'var(--white-0-93)' },

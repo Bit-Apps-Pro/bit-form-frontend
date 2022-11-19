@@ -8,7 +8,7 @@ import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
 
 export default function EditOptions({
-  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup, showUpload = false,
+  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
 }) {
   const optKey = useRef(1)
   const { css } = useFela()
@@ -41,14 +41,7 @@ export default function EditOptions({
 
   return (
     <div className={css(style.wrapper)}>
-      <StyleSegmentControl
-        options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
-        onChange={lbl => handleSegment(lbl)}
-        defaultActive={editOptionType}
-        wideTab
-      />
-
-      {editOptionType === 'Visual' && (
+      {onlyVisualOptionsTab ? (
         <VisualOptionsTab
           optKey={optKey}
           options={options}
@@ -60,24 +53,50 @@ export default function EditOptions({
           checkByDefault={checkByDefault}
           hasGroup={hasGroup}
           showUpload={showUpload}
+          hideNDisabledOptions={hideNDisabledOptions}
         />
-      )}
-      {editOptionType === 'Text' && (
-        <TextOptionsTab
-          options={options}
-          optionTxt={optionTxt}
-          setOptionTxt={setOptionTxt}
-          lblKey={lblKey}
-          valKey={valKey}
-        />
-      )}
-      {editOptionType === 'Import' && (
-        <ImportOptionsTab
-          setOptions={setOptions}
-          lblKey={lblKey}
-          valKey={valKey}
-          setEditOptionType={setEditOptionType}
-        />
+      ) : (
+        <>
+          <StyleSegmentControl
+            options={[{ label: 'Visual' }, { label: 'Text' }, { label: 'Import' }]}
+            onChange={lbl => handleSegment(lbl)}
+            defaultActive={editOptionType}
+            wideTab
+          />
+
+          {editOptionType === 'Visual' && (
+            <VisualOptionsTab
+              optKey={optKey}
+              options={options}
+              option={option}
+              setOption={setOption}
+              type={type}
+              lblKey={lblKey}
+              valKey={valKey}
+              checkByDefault={checkByDefault}
+              hasGroup={hasGroup}
+              showUpload={showUpload}
+              hideNDisabledOptions={hideNDisabledOptions}
+            />
+          )}
+          {editOptionType === 'Text' && (
+            <TextOptionsTab
+              options={options}
+              optionTxt={optionTxt}
+              setOptionTxt={setOptionTxt}
+              lblKey={lblKey}
+              valKey={valKey}
+            />
+          )}
+          {editOptionType === 'Import' && (
+            <ImportOptionsTab
+              setOptions={setOptions}
+              lblKey={lblKey}
+              valKey={valKey}
+              setEditOptionType={setEditOptionType}
+            />
+          )}
+        </>
       )}
     </div>
   )

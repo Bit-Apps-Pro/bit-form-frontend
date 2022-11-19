@@ -339,6 +339,8 @@ const CurrencyFieldSettings = () => {
             lblKey="lbl"
             valKey="val"
             type="radio"
+            onlyVisualOptionsTab
+            hideNDisabledOptions
           />
         </div>
       </Modal>
