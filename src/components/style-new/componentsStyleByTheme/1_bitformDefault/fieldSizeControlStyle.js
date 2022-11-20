@@ -19,6 +19,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '16px', height: '16px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '16px', height: '16px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '10px', height: '10px' },
+          [`.${fk}-ct`]: { 'font-size': '12px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '3px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '0.625rem',
           padding: '6px 4px !important',
@@ -100,6 +108,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '14px', height: '14px' },
+          [`.${fk}-ct`]: { 'font-size': '14px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '4px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '0.8rem',
@@ -203,6 +219,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '18px', height: '18px' },
+          [`.${fk}-ct`]: { 'font-size': '16px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '5px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '1rem',
           padding: '10px 8px',
@@ -305,6 +329,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '22px', height: '22px' },
+          [`.${fk}-ct`]: { 'font-size': '18px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '6px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '1.2rem',
           padding: '11px 9px',
@@ -398,6 +430,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-lbl`]: { 'font-size': '20px' },
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '26px', height: '26px' },
+          [`.${fk}-ct`]: { 'font-size': '20px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '7px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '1.4rem',

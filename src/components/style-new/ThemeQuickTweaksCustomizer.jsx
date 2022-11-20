@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -97,6 +96,8 @@ export default function ThemeQuickTweaksCustomizer() {
                     drft.fields[fldKey].classes[comnStylClass][comnStlProperty] = comStlVal
                   }
                 }
+              } else {
+                drft.fields[fldKey].classes[comnStylClass][comnStlProperty] = comStlPropertiesObj[comnStlProperty]
               }
             }
           }
