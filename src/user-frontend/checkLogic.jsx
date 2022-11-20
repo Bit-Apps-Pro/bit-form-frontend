@@ -40,6 +40,7 @@ export const checkLogic = (logics, fields) => {
       value = parseInt(value, 10)
     }
     const targetFieldValue = value
+
     switch (logics.logic) {
       case 'equal':
         if (!fields[logics.field].value) {
@@ -90,7 +91,7 @@ export const checkLogic = (logics, fields) => {
         return targetFieldValue !== logicsVal
 
       case 'null':
-        return targetFieldValue && targetFieldValue.length === 0
+        return targetFieldValue.length === 0
 
       case 'not_null':
         return targetFieldValue && targetFieldValue.length > 0
