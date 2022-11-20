@@ -103,22 +103,22 @@ export default function FormCommonStyle({ element, componentTitle }) {
     ]
 
     switch (prop) {
-      case 'background-color':
-        return (
-          <SimpleColorPicker
-            title="Background Color"
-            subtitle={`${componentTitle} Background Color`}
-            value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background-color'])}
-            modalId={`${element}-cnr-bdc`}
-            stateObjName="styles"
-            propertyPath={objPaths.paths?.['background-color']}
-            deleteable
-            delPropertyHandler={() => delPropertyHandler('background-color')}
-            clearHandler={() => clearHandler('background-color')}
-            allowImportant
-            canSetVariable
-          />
-        )
+      // case 'background-color':
+      //   return (
+      //     <SimpleColorPicker
+      //       title="Background Color"
+      //       subtitle={`${componentTitle} Background Color`}
+      //       value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background-color'])}
+      //       modalId={`${element}-cnr-bdc`}
+      //       stateObjName="styles"
+      //       propertyPath={objPaths.paths?.['background-color']}
+      //       deleteable
+      //       delPropertyHandler={() => delPropertyHandler('background-color')}
+      //       clearHandler={() => clearHandler('background-color')}
+      //       allowImportant
+      //       canSetVariable
+      //     />
+      //   )
 
       case 'background':
         return (
