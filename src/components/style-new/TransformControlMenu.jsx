@@ -220,7 +220,6 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
-  overflowXhidden: { owx: 'hidden' },
   input: {
     fs: 14,
     fw: 500,
