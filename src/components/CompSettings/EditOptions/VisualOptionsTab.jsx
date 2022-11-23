@@ -174,7 +174,7 @@ const SortableElm = ({
   return (
     <div
       data-testid={`sortable-itm-wrp-${optIndx}`}
-      className={css(optionStyle.container, option[optIndx]?.disabled && optionStyle.disabled, isGroupStart ? optionStyle.groupstart : '', isGroupChild() ? optionStyle.groupchild : '', isGroupEnd ? optionStyle.groupend : '')}
+      className={css(optionStyle.container, (option[optIndx]?.disabled || option[optIndx]?.hide) && optionStyle.disabled, isGroupStart ? optionStyle.groupStart : '', isGroupChild() ? optionStyle.groupChild : '', isGroupEnd ? optionStyle.groupend : '')}
     >
       {!isGroupEnd && (
         <div className={css(optionStyle.inputContainer)}>
@@ -183,12 +183,12 @@ const SortableElm = ({
           </div>
           {isGroupStart && (
             <div>
-              <span className={css(ut.flxc, ut.ml2, ut.mr2, optionStyle.grouptitle)}>
+              <span className={css(ut.flxc, ut.ml2, ut.mr2, optionStyle.groupTitle)}>
                 Group Title
               </span>
               <input
                 type="text"
-                className={css(optionStyle.grouptitleinput)}
+                className={css(optionStyle.groupTitleInput)}
                 onChange={setGroupTitle}
                 value={value.groupLbl}
               />
@@ -483,10 +483,10 @@ const optionStyle = {
   disabled: { bd: 'hsla(0, 11%, 93%, 100%)' },
   list: { width: '100%', height: 300 },
   container: { flx: '' },
-  groupstart: { pt: 7, pb: 5, bc: 'var(--white-0-93)' },
-  groupchild: { pl: 25, bc: 'var(--white-0-93)' },
+  groupStart: { pt: 7, pb: 5, bc: 'var(--white-0-93)' },
+  groupChild: { pl: 25, bc: 'var(--white-0-93)' },
   groupend: { h: 20, bc: 'var(--white-0-93)' },
-  grouptitle: { fs: 10 },
+  groupTitle: { fs: 10 },
   inputContainer: {
     flx: '',
     mnw: 560,
@@ -516,7 +516,7 @@ const optionStyle = {
     ':hover': { bd: 'var(--b-20-93)', cr: 'var(--blue)' },
   },
 
-  grouptitleinput: {
+  groupTitleInput: {
     bc: 'transparent !important',
     b: '0px !important',
     oe: 0,
