@@ -425,27 +425,29 @@ export default function VisualOptionsTab({
   return (
     <>
       <SortableList onSortEnd={onSortEnd} useDragHandle>
-        {option.map((_, index) => (
-          <SortableItem
-            key={`sortable-${option[index].id}`}
-            index={index}
-          >
-            <SortableElm
-              optIndx={index}
-              value={option[index]}
-              type={type}
-              option={option}
-              setOption={setOption}
-              lblKey={lblKey}
-              valKey={valKey}
-              setScrolIndex={setScrolIndex}
-              optKey={optKey}
-              checkByDefault={checkByDefault}
-              showUpload={showUpload}
-              hideNDisabledOptions={hideNDisabledOptions}
-            />
-          </SortableItem>
-        ))}
+        <div className={css(optionStyle.scroll)}>
+          {option.map((_, index) => (
+            <SortableItem
+              key={`sortable-${option[index].id}`}
+              index={index}
+            >
+              <SortableElm
+                optIndx={index}
+                value={option[index]}
+                type={type}
+                option={option}
+                setOption={setOption}
+                lblKey={lblKey}
+                valKey={valKey}
+                setScrolIndex={setScrolIndex}
+                optKey={optKey}
+                checkByDefault={checkByDefault}
+                showUpload={showUpload}
+                hideNDisabledOptions={hideNDisabledOptions}
+              />
+            </SortableItem>
+          ))}
+        </div>
       </SortableList>
       <div className={`flx ${css({ ml: 11, mt: 7 })}`}>
         <Btn
@@ -581,5 +583,9 @@ const optionStyle = {
   actionWrp: {
     flx: 'center',
     // bd: 'red',
+  },
+  scroll: {
+    mxh: 300,
+    owy: 'scroll',
   },
 }
