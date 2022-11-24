@@ -37,7 +37,7 @@ import SimpleColorPicker from './SimpleColorPicker'
 import SizeControler from './SizeControler'
 import SpacingControl from './SpacingControl'
 import {
-  addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter
+  addableCssPropsByField, addableCssPropsObj, arrayToObject, assignNestedObj, getActualElementKey, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter,
 } from './styleHelpers'
 import StylePropertyBlock from './StylePropertyBlock'
 import TextDecorationControl from './TextDecorationControl'

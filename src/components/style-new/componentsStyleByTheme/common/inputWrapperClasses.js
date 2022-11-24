@@ -3,7 +3,8 @@ export default function inputWrapperClasses(fk) {
     [`.${fk}-fld-wrp`]: {
       display: 'var(--fld-wrp-dis, block)',
       'flex-direction': 'var(--fld-wrp-fdir, row)',
-      'background-color': 'var(--fld-wrp-bg, transparent)',
+      // 'background-color': 'var(--fld-wrp-bg, transparent)',
+      background: 'var(--fld-wrp-bg, transparent)',
       padding: 'var(--fld-wrp-p, 0)',
       margin: 'var(--fld-wrp-m, 0)',
       position: 'relative',
