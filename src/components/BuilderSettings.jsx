@@ -106,7 +106,7 @@ export default function BuilderSettings() {
           <Select
             color="primary"
             value={brkpnt || 'md'}
-            onChange={e => setBrkpnt(e)}
+            onChange={(value, e) => setBrkpnt(e)}
             options={[
               { label: 'sm', value: 'sm' },
               { label: 'md', value: 'md' },

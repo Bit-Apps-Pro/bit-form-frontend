@@ -5,11 +5,12 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { ReactSortable } from 'react-sortablejs'
 import {
-  useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable,
+  useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable
 } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
+import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'
 import CopyIcn from '../../Icons/CopyIcn'
@@ -19,13 +20,11 @@ import SortIcn from '../../Icons/SortIcn'
 import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
+import TableLoader from '../Loaders/TableLoader'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
-import TableCheckBox from './TableCheckBox'
-import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import Select from './Select'
-import TableLoader from '../Loaders/TableLoader'
-import ut from '../../styles/2.utilities'
+import TableCheckBox from './TableCheckBox'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -120,7 +119,7 @@ function Table(props) {
       columns,
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
-      pageCount: props.pageCount,
+      pageCount: Math.ceil(data.length / 10),
       initialState: {
         pageIndex: 0,
         hiddenColumns: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'hiddenColumns' in currentReportData.details) ? currentReportData.details.hiddenColumns : [],
@@ -488,10 +487,10 @@ function Table(props) {
             size="sm"
             w={170}
             value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value))
+            onChange={(value, e) => {
+              setPageSize(Number(value))
               if (props.getPageSize) {
-                props.getPageSize(e.target.value, pageIndex)
+                props.getPageSize(value, pageIndex)
               }
             }}
             options={[
