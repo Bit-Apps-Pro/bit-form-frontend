@@ -5,7 +5,7 @@ const imageUploadInputStyle = {
     brs: 10,
     flx: 'align-center',
     h: 30,
-    w: 150,
+    w: 130,
     p: 2,
     bc: 'var(--white-0-95)',
     cr: 'var(--white-0-50)',
