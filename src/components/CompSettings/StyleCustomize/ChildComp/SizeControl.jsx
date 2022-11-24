@@ -49,7 +49,7 @@ export default function SizeControl({
       {!isPreDefined && (
         <select
           value={unit}
-          className={css(sizeControlStyle.selectt, ut.fontBody, { fs: '12px !important', bd: 'var(--b-79-96) !important' })}
+          className={css(sizeControlStyle.selectt, ut.fontBody, { fs: '12px !important' })}
           name={name}
           onChange={({ target: { value: valu } }) => sizeHandler({ unitKey: valu, unitValue: value, id })}
           data-testid={`${dataTestId}-unit-select`}
