@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -17,21 +18,21 @@ export default function ButtonCustomizer() {
   const { css } = useFela()
   const themeColors = useRecoilValue($themeColors)
 
-  const { '--btn-bgc': btnBgc,
+  const { // '--btn-bgc': btnBgc,
     '--btn-bg': btnBg,
     '--btn-c': btnC,
     '--btn-sh': btnSh } = themeColors
 
   return (
     <div className={css(ut.m10)}>
-      <SimpleColorPicker
+      {/* <SimpleColorPicker
         title="Background Color"
         subtitle="Button Background Color"
         value={btnBgc}
         stateObjName="themeColors"
         propertyPath="--btn-bgc"
         modalId="btn-bgc"
-      />
+      /> */}
 
       <BackgroundControl
         title="Background"
