@@ -56,10 +56,14 @@ export default function FormCommonStyle({ element, componentTitle }) {
   }
 
   const setNewCssProp = (prop) => {
+    let value = ''
+    if (typeof editorConfig[element].properties[prop] !== 'object') {
+      value = editorConfig[element].properties[prop]
+    }
     setStyles(prvStyles => produce(prvStyles, drft => {
-      assignNestedObj(drft, getPropertyPath(prop), editorConfig.defaultProps[prop])
+      assignNestedObj(drft, getPropertyPath(prop), value)
     }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, editorConfig.defaultProps[prop], { styles: getLatestState('styles') }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, value, { styles: getLatestState('styles') }))
   }
 
   const clearHandler = (property) => {

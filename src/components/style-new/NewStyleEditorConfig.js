@@ -256,7 +256,7 @@ const formCommonCssProps = {
     'background-repeat': true,
     'background-size': true,
   },
-  'background-color': '',
+  // 'background-color': '',
   color: '',
   padding: '5px',
   margin: '5px',
@@ -270,7 +270,7 @@ const formCommonCssProps = {
     outline: true,
     'outline-offset': true,
   },
-  'box-shadow': '',
+  'box-shadow': '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)',
   transition: '',
 }
 const editorConfig = {
