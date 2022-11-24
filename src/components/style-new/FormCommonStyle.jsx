@@ -142,7 +142,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
       case 'color':
         return (
           <SimpleColorPicker
-            title="Color"
+            title="Text Color"
             subtitle={`${componentTitle} Color`}
             value={getValueFromStateVar(themeColors, formWrpStylesObj?.color)}
             modalId={`${element}-cnr-clr`}
