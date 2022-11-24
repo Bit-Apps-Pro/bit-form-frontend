@@ -88,7 +88,7 @@ const fieldWrpCssProps = {
   margin: '5px',
   padding: '5px',
   opacity: '100%',
-  'box-shadow': '',
+  'box-shadow': '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)',
   width: '',
   'max-width': '',
   'min-width': '',
