@@ -50,7 +50,7 @@ const navbar = {
       cr: 'var(--b-54-12)',
     },
   },
-  btcd_bld_lnk: { ml: '-15%' },
+  btcd_bld_lnk: { ml: '-6%' },
 
   btcd_bld_btn: { flx: 'center' },
   cls_btn: {
