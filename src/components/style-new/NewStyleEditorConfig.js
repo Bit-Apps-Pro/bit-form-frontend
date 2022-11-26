@@ -1266,6 +1266,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -1527,6 +1533,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'search-clear-btn': {
@@ -1905,6 +1917,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -2080,6 +2098,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'option-search-wrp': {

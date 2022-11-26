@@ -176,7 +176,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 </button>
               )}
             </div>
-            <div className={`${fieldKey}-option-wrp`}>
+            <div className={`${fieldKey}-option-wrp  ${getCustomClsName(fieldKey, 'option-wrp')}`} data-dev-option-wrp={fieldKey} {...getCustomAttributes(fieldKey, 'option-search-wrp')}>
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div
                   data-dev-option-search-wrp={fieldKey}

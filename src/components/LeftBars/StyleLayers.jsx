@@ -391,6 +391,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-wrp"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option-search-wrp"
                     label="Option Search Wrapper"
                     offset="2.5"
@@ -515,6 +523,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-wrp"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option-search-wrp"
                     label="Option Search Wrapper"
                     offset="2.5"
@@ -631,6 +647,14 @@ function StyleLayers() {
                   />
                   <NavBtn
                     subRoute={fldKey}
+                    route="option-wrp"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
                     route="option-search-wrp"
                     label="Option Search Wrapper"
                     offset="2.5"
@@ -736,6 +760,14 @@ function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-selected-opt-clear-btn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'selected-opt-clear-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="option-wrp"
+                    label="Option Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-option-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'option-wrp')}
                   />
                   <NavBtn
                     subRoute={fldKey}
