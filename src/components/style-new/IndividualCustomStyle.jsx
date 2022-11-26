@@ -83,48 +83,49 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
       case 'dpd-fld-wrp':
       case 'currency-fld-wrp':
       case 'phone-fld-wrp':
+      case 'country-fld-wrp':
         if (state === 'hover') {
-          state = 'hover:not(.menu-open):not(.disabled)'
+          state = ':hover:not(.menu-open):not(.disabled)'
         } else if (state === 'focus') {
-          state = 'focus-within:not(.menu-open):not(.disabled)'
+          state = ':focus-within:not(.menu-open):not(.disabled)'
         } else if (state === 'active') {
           state = '.menu-open'
         }
         break
       case 'dpd-wrp':
         if (state === 'focus') {
-          state = 'focus-visible'
+          state = ':focus-visible'
         }
         break
       case 'search-clear-btn':
         if (state === 'focus') {
-          state = 'focus-visible'
+          state = ':focus-visible'
         }
         break
       case 'option':
         if (state === 'hover') {
-          state = 'hover:not(.selected-opt)'
+          state = ':hover:not(.selected-opt)'
         }
         if (state === 'focus') {
-          state = 'focus-visible'
+          state = ':focus-visible'
         }
         break
       case 'input-clear-btn':
         if (state === 'hover') {
-          state = 'hover'
+          state = ':hover'
         }
         if (state === 'focus') {
-          state = 'focus-visible'
+          state = ':focus-visible'
         }
         break
       case 'razorpay-btn':
         if (state === 'before') {
-          state = ':before'
+          state = '::before'
         }
         break
 
       default:
-        return state
+        if (state) { return `:${state}` }
     }
     console.log('state', state)
     return state
@@ -133,8 +134,8 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
 
-  const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {})
-  const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`}`] || {}
+  const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {})
+  const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {}
   Object.entries(addableCssPropsObj(fieldType, elementKey) || {}).forEach(([prop, propObj]) => {
     if (typeof propObj === 'object' && !existCssProps?.includes(prop)) {
       if (Object.keys(propObj).find(propName => existCssProps.includes(propName))) existCssProps.push(prop)
@@ -145,7 +146,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const fontStyleVariants = styles.font?.fontStyle.length !== 0 ? arrayToObject(styles.font?.fontStyle) : staticFontStyleVariants
 
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
-  const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}${selector}->${cssProperty}`
+  const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `${state}`}${selector}->${cssProperty}`
 
   const existImportant = (path) => getValueByObjPath(styles, path).match(/(!important)/gi)?.[0]
   const getTitle = {
@@ -256,7 +257,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   }
 
   const delPropertyHandler = (property, state = '') => {
-    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
@@ -268,7 +268,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const delMultiPropertyHandler = (propertyPaths, state = '') => {
-    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       propertyPaths.map(propertyPath => {
         deleteNestedObj(drft, propertyPath, state)
@@ -277,7 +276,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${propertyPaths[0]} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const clearHandler = (property, state = '') => {
-    state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       assignNestedObj(drft, deleteNestedObj(property, state), '')
     }))
@@ -289,7 +287,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const [letterSpacingVal, letterSpacingUnit] = getStyleValueAndUnit('letter-spacing')
 
   const spacingHandler = ({ value, unit }, prop, prvUnit, state = '') => {
-    state = getPseudoPath(state)
+    // state = getPseudoPath(state)
     const convertvalue = unitConverter(unit, value, prvUnit)
     let v = `${convertvalue}${unit}`
     const checkExistImportant = existImportant(getPropertyPath(prop, state))
@@ -308,7 +306,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, property, value, { styles: getLatestState('styles') }))
   }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
-    state = getPseudoPath(state)
+    // state = getPseudoPath(state)
     setStyles(prvStyle => produce(prvStyle, drft => {
       let v = val
       const checkExistImportant = existImportant(getPropertyPath(property, state))
@@ -1177,7 +1175,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
                 <FilterColorPicker
                   title="Leading Icon Color"
                   subtitle="Icon Fill Color(Filter)"
-                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()} ~ .${fldKey}-pre-i`}`]?.color}
+                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `${getPseudoPath(stateController).toLowerCase()} ~ .${fldKey}-pre-i`}`]?.color}
                   stateObjName="styles"
                   propertyPath={[getPropertyPath('color', state, ` ~ .${fldKey}-pre-i`), getPropertyPath('filter', state, ` ~ .${fldKey}-pre-i`)]}
                   objectPaths={{
@@ -1194,7 +1192,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
                 <FilterColorPicker
                   title="Trailing Icon Color"
                   subtitle="Icon Fill Color(Filter)"
-                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `:${getPseudoPath(stateController).toLowerCase()}`} ~ .${fldKey}-suf-i`]?.color}
+                  value={classes?.[`.${fldKey}-${elementKey}${stateController && `${getPseudoPath(stateController).toLowerCase()}`} ~ .${fldKey}-suf-i`]?.color}
                   stateObjName="styles"
                   propertyPath={[getPropertyPath('color', state, ` ~ .${fldKey}-suf-i`), getPropertyPath('filter', state, ` ~ .${fldKey}-suf-i`)]}
                   objectPaths={{

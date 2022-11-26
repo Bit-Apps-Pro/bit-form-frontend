@@ -72,7 +72,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-currency-fld-wrp.menu-open`]: {
-        'z-index': 999,
+        'z-index': '999',
         'box-shadow':
           '0px 1.2px 2.2px hsla(0, 0%, 0%, 32%), 0px 2.9px 5.3px hsla(0, 0%, 0%, 22%),0px 5.4px 10px hsla(0, 0%, 0%, 21%),0px 9.6px 17.9px hsla(0, 0%, 0%, 17%),0px 18px 33.4px hsla(0, 0%, 0%, 17%),0px 43px 80px hsla(0, 0%, 0%, 10%)',
         border: 'solid hsla(0, 0%, 87%, 100%)',
