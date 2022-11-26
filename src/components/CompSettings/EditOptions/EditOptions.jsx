@@ -8,14 +8,14 @@ import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
 
 export default function EditOptions({
-  optionMdl, options, setOptions, type, lblKey, valKey, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
+  optionMdl, options, setOptions, type, lblKey, valKey, imgKey, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
 }) {
   const optKey = useRef(1)
   const { css } = useFela()
   const [editOptionType, setEditOptionType] = useState('Visual')
   const [tabChanged, setTabChanged] = useState('')
   const [option, setOption] = useState(() => flattenOptions(options, optKey) || [])
-  const [optionTxt, setOptionTxt] = useState(() => convertOptionsToText(flattenOptions(options, optKey), lblKey, valKey))
+  const [optionTxt, setOptionTxt] = useState(() => convertOptionsToText(flattenOptions(options, optKey), lblKey, valKey, imgKey))
 
   useEffect(() => {
     if (tabChanged || !optionMdl) {
@@ -86,6 +86,7 @@ export default function EditOptions({
               setOptionTxt={setOptionTxt}
               lblKey={lblKey}
               valKey={valKey}
+              imgKey={imgKey}
             />
           )}
           {editOptionType === 'Import' && (

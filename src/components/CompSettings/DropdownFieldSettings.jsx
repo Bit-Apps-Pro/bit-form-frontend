@@ -418,6 +418,7 @@ export default function DropdownFieldSettings() {
             setOptions={newOpts => handleEditOptions(newOpts)}
             lblKey="lbl"
             valKey="val"
+            imgKey="img"
             type="radio"
             hasGroup
             showUpload={optionIcon}

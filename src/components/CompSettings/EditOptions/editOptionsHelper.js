@@ -59,16 +59,22 @@ export const formatOptions = (optns, lblKey) => {
   return newOpts
 }
 
-export const convertOptionsToText = (optns, lblKey, valKey) => {
+export const convertOptionsToText = (optns, lblKey, valKey, imgKey) => {
   let optionsText = ''
   optns.map(opt => {
     if (opt.type === 'group') {
       optionsText += `group-start:${opt.title}${'\r\n'}`
       opt.childs.map(ot => {
+        if (imgKey && ot[imgKey]) {
+          optionsText += `[${ot[imgKey]}]; `
+        }
         optionsText += `${ot[lblKey]}${ot[valKey] ? `:${ot[valKey]}` : ''}${'\r\n'}`
       })
       optionsText += `group-end:${opt.title}${'\r\n'}`
     } else {
+      if (imgKey && opt[imgKey]) {
+        optionsText += `[${opt[imgKey]}]; `
+      }
       optionsText += `${opt[lblKey]}${opt[valKey] ? `:${opt[valKey]}` : ''}${'\r\n'}`
     }
   })
