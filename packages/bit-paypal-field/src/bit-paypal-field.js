@@ -263,9 +263,11 @@ export default class BitPayPalField {
     const shippingAmount = Number(shippingVal).toFixed(2) * 1
     const taxAmount = ((Number(taxVal) * orderAmount) / 100).toFixed(2) * 1
     const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2) * 1
+    const formID = this.#getContentId()?.split('_')[1]
     return action.order.create({
       purchase_units: [{
-        description: this.#getDynamicValue(this.#config.descFld) || this.#config.description,
+        // description: this.#getDynamicValue(this.#config.descFld) || this.#config.description,
+        description: `form-id:${formID};entry-id:${this.#getEntryId()};field-key:${this.#config.fieldKey}`,
         amount:
         {
           currency_code: currency,

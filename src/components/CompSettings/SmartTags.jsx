@@ -15,7 +15,7 @@ function SmartTags({ fieldName }) {
   const formFields = useRecoilValue($fieldsArr)
   const { css } = useFela()
   const addField = (key) => {
-    fieldData[fieldName] += `{${key}}`
+    fieldData[fieldName] += `\${${key}}`
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
@@ -50,7 +50,7 @@ function SmartTags({ fieldName }) {
               type="button"
               className={`${css(style.button)} btnHover`}
               title={f.label}
-              onClick={() => addField(f.value)}
+              onClick={() => addField(f.name)}
             >
               {f.label}
             </button>

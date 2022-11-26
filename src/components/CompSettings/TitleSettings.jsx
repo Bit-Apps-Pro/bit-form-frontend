@@ -290,6 +290,7 @@ function TitleSettings() {
         >
           <div className={css(FieldStyle.placeholder, ut.mt1, ut.ml1)}>
             <div className={css(style.title)}>
+              <label className={css(ut.fw500)}>Text</label>
               <Downmenu>
                 <button
                   data-testid="sub-titl-mor-opt-btn"
