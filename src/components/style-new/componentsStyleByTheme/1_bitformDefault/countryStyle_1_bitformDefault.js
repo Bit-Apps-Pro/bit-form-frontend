@@ -148,7 +148,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         overflow: 'hidden', // unused css
         display: 'flex',
         'flex-direction': 'column',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
+        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
         transition: 'height .3s',
       },
 

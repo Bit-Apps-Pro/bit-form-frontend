@@ -172,7 +172,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
-        'background-color': 'var(--global-fld-bg-color, transparent)',
+        'background-color': 'transparent',
       },
 
       // /* Chrome, Safari, Edge, Opera */
@@ -196,7 +196,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         overflow: 'hidden', // unused css
         display: 'flex',
         'flex-direction': 'column',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
+        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
         transition: 'height .3s',
       },
 
