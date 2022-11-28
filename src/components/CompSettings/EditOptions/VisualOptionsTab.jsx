@@ -482,7 +482,12 @@ export default function VisualOptionsTab({
 const optionStyle = {
   disabled: { bd: 'hsla(0, 11%, 93%, 100%)' },
   list: { width: '100%', height: 300 },
-  container: { flx: '' },
+  container: {
+    flx: '',
+    ':hover .acc': { flx: 'align-center' },
+    ':hover .acc > div': { flx: 'align-center' },
+    ':hover .acc.group-acc': { flx: '', ai: 'flex-end', pb: 0 },
+  },
   groupStart: { pt: 7, pb: 5, bc: 'var(--white-0-93)' },
   groupChild: { pl: 25, bc: 'var(--white-0-93)' },
   groupend: { h: 20, bc: 'var(--white-0-93)' },
@@ -490,10 +495,6 @@ const optionStyle = {
   inputContainer: {
     flx: '',
     mnw: 560,
-    '&:hover > .acc':
-      { flx: 'align-center' },
-    '&:hover > .acc > div': { flx: 'align-center' },
-    '&:hover > .acc.group-acc': { flx: '', ai: 'flex-end', pb: 0 },
   },
   img: {
     w: 25,
