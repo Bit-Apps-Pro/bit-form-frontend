@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
 import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
@@ -20,6 +21,7 @@ import {
   $deletedFldKey,
   $fieldLabels,
   $fields,
+  $flags,
   $formInfo,
   $forms,
   $integrations,
@@ -31,7 +33,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows
+  $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
@@ -40,7 +42,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { prepareLayout } from '../Utils/FormBuilderHelper'
+import { prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, isObjectEmpty, trimCSS } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -85,6 +87,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const staticStylesState = useRecoilValue($staticStylesState)
   const breakpointSize = useRecoilValue($breakpointSize)
   const customCodes = useRecoilValue($customCodes)
+  const flags = useRecoilValue($flags)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -158,6 +161,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const saveOrUpdateForm = btnTyp => {
     const saveBtn = select('#secondary-update-btn')
+    if (flags.styleMode) {
+      reCalculateFldHeights()
+    }
     if (saveBtn) {
       saveBtn.click()
     } else if (btnTyp === 'update-btn') {
@@ -420,7 +426,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled || buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}>
+    <button
+      id="update-btn"
+      className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`}
+      type="button"
+      onClick={() => saveOrUpdateForm('update-btn')}
+      disabled={updateBtn.disabled || buttonDisabled}
+      style={{ '--tooltip-txt': `'${__('ctrl + s')}'` }}
+    >
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
