@@ -80,7 +80,7 @@ export default function LayerAccordion({
       tabIndex={0}
       onKeyUp={toggleAccordion}
       onKeyPress={toggleAccordion}
-      className={`${className} ${tgl && 'active'} ${css(cls.accordionLbl)}`}
+      className={`${className} ${tgl && css(cls.active)} ${css(cls.accordionLbl)}`}
       onClick={onClick}
       data-testid={dataTestId}
     >
@@ -240,5 +240,8 @@ const cls = {
     bc: '#ffd64f',
     ml: '3px',
     px: 2,
+  },
+  active: {
+    bd: 'hsl(0deg 13% 97%)',
   },
 }
