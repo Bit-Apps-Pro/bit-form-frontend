@@ -162,14 +162,11 @@ function RadioCheckSettings() {
       fieldData.optionCol = value
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    let colStr = ''
-    for (let colindx = 0; colindx < value; colindx += 1) {
-      colStr += '1fr '
-    }
+
     const newStyles = produce(styles, drft => {
       const gridStyle = {
         display: 'grid',
-        'grid-template-columns': colStr,
+        'grid-template-columns': `repeat(${value}, 1fr)`,
         width: '100%',
         'grid-row-gap': '10px',
         'column-gap': '10px',
