@@ -121,15 +121,15 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   }
 
   const options = [
-    { icn: <ChevronDownIcn size={12} />, label: 'Solid', value: 'solid' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Dashed', value: 'dashed' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Dotted', value: 'dotted' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Double', value: 'double' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Groove', value: 'groove' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Ridge', value: 'ridge' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Inset', value: 'inset' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Outset', value: 'outset' },
-    { icn: <ChevronDownIcn size={12} />, label: 'None', value: 'none' },
+    { label: 'Solid', value: 'solid' },
+    { label: 'Dashed', value: 'dashed' },
+    { label: 'Dotted', value: 'dotted' },
+    { label: 'Double', value: 'double' },
+    { label: 'Groove', value: 'groove' },
+    { label: 'Ridge', value: 'ridge' },
+    { label: 'Inset', value: 'inset' },
+    { label: 'Outset', value: 'outset' },
+    { label: 'None', value: 'none' },
   ]
 
   return (
@@ -181,6 +181,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
           max="20"
           width="128px"
           dataTestId={`${id}-rdus`}
+          radius
         />
       )}
     </>
