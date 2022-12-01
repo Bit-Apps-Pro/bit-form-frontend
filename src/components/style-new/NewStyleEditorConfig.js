@@ -1128,8 +1128,9 @@ const editorConfig = {
   currency: {
     ...textFldCssProps,
     'currency-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
+        ...fieldWrpCssProps,
         border: {
           'border-style': true,
           'border-color': true,
@@ -1265,6 +1266,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -1394,8 +1401,9 @@ const editorConfig = {
   'phone-number': {
     ...textFldCssProps,
     'phone-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
+        ...fieldWrpCssProps,
         border: {
           'border-style': true,
           'border-color': true,
@@ -1525,6 +1533,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'search-clear-btn': {
@@ -1775,7 +1789,7 @@ const editorConfig = {
   country: {
     ...textFldCssProps,
     'country-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
         ...fieldWrpCssProps,
         transition: '',
@@ -1903,6 +1917,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -2011,7 +2031,7 @@ const editorConfig = {
   select: {
     ...textFldCssProps,
     'dpd-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
         ...fieldWrpCssProps,
         border: {
@@ -2078,6 +2098,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'option-search-wrp': {

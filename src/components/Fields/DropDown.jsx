@@ -99,7 +99,7 @@ function DropDown({
             />
             <div
               data-testid={`${fieldKey}-dpd-wrp`}
-              data-dev-dpd-fld-wrp={fieldKey}
+              data-dev-dpd-wrp={fieldKey}
               className={`${fieldKey}-dpd-wrp ${getCustomClsName(fieldKey, 'dpd-wrp')}`}
               role="combobox"
               aria-controls=""
@@ -180,7 +180,7 @@ function DropDown({
                 </div>
               </div>
             </div>
-            <div className={`${fieldKey}-option-wrp ${getCustomClsName(fieldKey, 'option-wrp')}`}>
+            <div className={`${fieldKey}-option-wrp ${getCustomClsName(fieldKey, 'option-wrp')}`} data-dev-option-wrp={fieldKey} {...getCustomAttributes(fieldKey, 'option-search-wrp')}>
               <div className={`${fieldKey}-option-inner-wrp ${getCustomClsName(fieldKey, 'option-inner-wrp')}`}>
                 <div data-dev-option-search-wrp={fieldKey} className={`${fieldKey}-option-search-wrp ${getCustomClsName(fieldKey, 'option-search-wrp')}`}>
                   <input

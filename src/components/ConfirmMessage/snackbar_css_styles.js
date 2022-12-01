@@ -97,6 +97,7 @@ export default function snackbarCssStyles(formID, msgId, position, animation, pa
       width: '15px',
       height: '15px',
       'stroke-width': 2,
+      'pointer-events': 'none',
     },
   }
 }

@@ -88,6 +88,7 @@ export default function belowOfFormCssStyles(formID, msgId, position, animation,
       width: '15px',
       height: '15px',
       'stroke-width': 2,
+      'pointer-events': 'none',
     },
   }
 }

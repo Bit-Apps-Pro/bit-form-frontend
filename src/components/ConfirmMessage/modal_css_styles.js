@@ -100,6 +100,7 @@ export default function modalCssStyles(formID, msgId, position, animation, paddi
       width: '15px',
       height: '15px',
       'stroke-width': 2,
+      'pointer-events': 'none',
     },
   }
 }
