@@ -211,6 +211,7 @@ export default function ThemeQuickTweaksCustomizer() {
         stateObjName="themeColors"
         propertyPath="--global-font-color"
         modalId="global-font-clr"
+        hslaPaths={{ h: '--gfh', s: '--gfs', l: '--gfl', a: '--gfa' }}
       />
 
       <ThemeStylePropertyBlock label="Border">
