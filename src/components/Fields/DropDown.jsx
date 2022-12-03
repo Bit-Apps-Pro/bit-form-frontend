@@ -196,8 +196,8 @@ function DropDown({
                     data-dev-opt-search-icn={fieldKey}
                     className={`${fieldKey}-icn ${fieldKey}-opt-search-icn ${getCustomClsName(fieldKey, 'opt-search-icn')}`}
                     aria-hidden="true"
-                    width="22"
-                    height="22"
+                    width="18"
+                    height="18"
                     role="img"
                     title="Search icon"
                     viewBox="0 0 24 24"
