@@ -102,6 +102,7 @@ function submitResponse(resp, contentId, formData) {
             contentId,
             msgId: result.data.msg_id,
             msg: result.data.message,
+            duration: result.data.msg_duration,
             show: true,
             type: 'success',
             error: false,
@@ -188,8 +189,10 @@ document.querySelectorAll('form').forEach((frm) => {
 
 document.querySelectorAll('.msg-backdrop,.msg-close').forEach((elm) => {
   elm.addEventListener('click', e => {
-    e.stopPropagation()
-    bfSelect(`#${elm.dataset.contentid} .msg-container-${elm.dataset.msgid}`).classList.replace('active', 'deactive')
+    if (e.target === elm) {
+      e.stopPropagation()
+      bfSelect(`#${elm.dataset.contentid} .msg-container-${elm.dataset.msgid}`).classList.replace('active', 'deactive')
+    }
   })
 })
 localStorage.setItem('bf-entry-id', '')

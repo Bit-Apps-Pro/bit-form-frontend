@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { convertOptionsToText } from './editOptionsHelper'
 
-export default function TextOptionsTab({ options, optionTxt, setOptionTxt, lblKey, valKey }) {
+export default function TextOptionsTab({ options, optionTxt, setOptionTxt, lblKey, valKey, imgKey }) {
   const { css } = useFela()
 
-  useEffect(() => { setOptionTxt(convertOptionsToText(options, lblKey, valKey)) }, [options])
+  useEffect(() => { setOptionTxt(convertOptionsToText(options, lblKey, valKey, imgKey)) }, [options])
 
   const handleOptionText = e => {
     setOptionTxt(e.target.value)

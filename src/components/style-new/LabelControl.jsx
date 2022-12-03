@@ -10,7 +10,7 @@ export default function LabelControl({ id }) {
   return (
     <button
       className={css(c.preview_wrp, c.btn, draggableModal.id === id && c.active)}
-      onClick={e => showDraggableModal(e, setDraggableModal, { component: 'label-control', id })}
+      onClick={e => showDraggableModal(e, setDraggableModal, { component: 'label-control', id, width: 270 })}
       type="button"
       data-testid="lbl-placement-ctrl"
     >

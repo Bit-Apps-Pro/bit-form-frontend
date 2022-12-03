@@ -103,7 +103,7 @@ export default class BitCountryField {
     this.#assetsURL = config.assetsURL
     this.#onChange = config.onChange
     this.#initialOptions = config.options
-    this.#listOptions = [...this.#initialOptions]
+    this.#listOptions = [...this.#initialOptions].filter(c => !c.hide)
     this.#attributes = config.attributes || {}
     this.#classNames = config.classNames || {}
     // rubel vaiya! can we use tarnary operator here?

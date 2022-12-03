@@ -4,7 +4,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import { searchKey } from '../style-new/styleHelpers'
 
 export default function Modal({
-  show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null,
+  show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null, width,
 }) {
   const nodeRef = useRef(null)
   const handleClickOutside = e => {
@@ -73,7 +73,7 @@ export default function Modal({
           className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className} ${autoHeight ? 'auto-height' : ''}`}
           style={style}
         >
-          <div data-testid="mdl-cntnt" className="btcd-modal-content">
+          <div data-testid="mdl-cntnt" className="btcd-modal-content" style={{ width: width }}>
             {headerAction}
             <button
               data-testid="mdl-cls-btn"

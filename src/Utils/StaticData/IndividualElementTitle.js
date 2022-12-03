@@ -58,6 +58,7 @@ export const getElementTitle = (element) => {
     case 'cross-btn': return 'Cross Button'
     case 'inp-clr-btn': return 'Selected Clear Button'
     case 'input-clear-btn': return 'Input Clear Button'
+    case 'option-wrp': return 'Option Wrapper'
 
     case 'selected-currency-img':
     case 'selected-country-img': return 'Selected Image'

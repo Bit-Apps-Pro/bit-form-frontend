@@ -123,7 +123,9 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
                 drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
                 drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '6px'
-                drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                if (style.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]?.margin) {
+                  drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                }
                 drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '35px !important'
                 drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-left'] = '35px !important'
               } else if (dir === 'ltr') {
@@ -131,7 +133,9 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
                 drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
-                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                if (style.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]?.margin) {
+                  delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                }
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right']
               }
               break

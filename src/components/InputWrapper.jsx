@@ -188,6 +188,45 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             </div>
           )
         }
+        {
+          (showAllErrorMsg || showOnlyThisFldErrMsg) && (
+            <div
+              data-testid={`${fieldKey}-err-msg`}
+              data-dev-err-msg={fieldKey}
+              className={`${fieldKey}-err-msg ${getCustomClsName(fieldKey, 'err-msg')}`}
+              {...getCustomAttributes(fieldKey, 'err-msg')}
+            >
+              {fieldData.errPreIcn && (
+                <img
+                  data-testid={`${fieldKey}-err-txt-pre-i`}
+                  data-dev-err-txt-pre-i={fieldKey}
+                  className={`${fieldKey}-err-txt-pre-i ${getCustomClsName(fieldKey, 'err-txt-pre-i')}`}
+                  src={fieldData.errPreIcn}
+                  alt=""
+                  {...getCustomAttributes(fieldKey, 'err-txt-pre-i')}
+                />
+              )}
+              <div
+                data-testid={`${fieldKey}-err-txt`}
+                data-dev-err-txt={fieldKey}
+                className={`${fieldKey}-err-txt ${getCustomClsName(fieldKey, 'err-txt')}`}
+                {...getCustomAttributes(fieldKey, 'err-txt')}
+              >
+                {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
+              </div>
+              {fieldData.errSufIcn && (
+                <img
+                  data-testid={`${fieldKey}-err-txt-suf-i`}
+                  data-dev-err-txt-suf-i={fieldKey}
+                  className={`${fieldKey}-err-txt-suf-i ${getCustomClsName(fieldKey, 'err-txt-suf-i')}`}
+                  src={fieldData.errSufIcn}
+                  alt=""
+                  {...getCustomAttributes(fieldKey, 'err-txt-suf-i')}
+                />
+              )}
+            </div>
+          )
+        }
       </div>
       {/* TEMPORARY HIDE */}
       {/* {(err || fieldData?.err) && (
@@ -198,7 +237,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         </div>
       )} */}
       {/* field error message */}
-      {
+      {/* {
         (showAllErrorMsg || showOnlyThisFldErrMsg) && (
           <div
             data-testid={`${fieldKey}-err-msg`}
@@ -236,7 +275,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             )}
           </div>
         )
-      }
+      } */}
     </div>
   )
 }

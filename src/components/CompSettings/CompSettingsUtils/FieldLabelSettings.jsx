@@ -13,11 +13,13 @@ import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormB
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
-import { addDefaultStyleClasses,
+import {
+  addDefaultStyleClasses,
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses } from '../../style-new/styleHelpers'
+  styleClasses,
+} from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'

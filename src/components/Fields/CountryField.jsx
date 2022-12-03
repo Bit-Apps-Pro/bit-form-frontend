@@ -176,7 +176,7 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
                 </div>
               </div>
             </div>
-            <div className={`${fieldKey}-option-wrp`}>
+            <div className={`${fieldKey}-option-wrp  ${getCustomClsName(fieldKey, 'option-wrp')}`} data-dev-option-wrp={fieldKey} {...getCustomAttributes(fieldKey, 'option-search-wrp')}>
               <div className={`${fieldKey}-option-inner-wrp`}>
                 <div className={`${fieldKey}-option-search-wrp`} data-dev-option-search-wrp={fieldKey}>
                   <input

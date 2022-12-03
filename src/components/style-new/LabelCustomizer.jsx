@@ -30,38 +30,6 @@ export default function LabelCustomizer() {
         propertyPath="--fld-lbl-bg"
         modalId="fld-lbl-bg"
       />
-      <SimpleColorPicker
-        title="Text Color"
-        subtitle="Label Text Color"
-        value={flc}
-        stateObjName="themeColors"
-        propertyPath="--fld-lbl-c"
-        modalId="fld-lbl-c"
-      />
-      <div className={css(ut.flxcb, ut.mt2)}>
-        <span className={css(ut.fw500)}>{__('Spacing')}</span>
-        <SpacingControl
-          action={{ type: 'spacing-control' }}
-          subtitle="Label Spacing"
-          objectPaths={flSpacingObj}
-          id="lbl-spacing-control"
-        />
-      </div>
-      <ThemeStylePropertyBlock label="Shadow">
-        <div className={css(ut.flxc)}>
-          <ResetStyle
-            propertyPath={fldLblShObj.paths.shadow}
-            stateObjName={fldLblShObj.object}
-            id="fld-lbl-sh"
-          />
-          <ShadowControl
-            subtitle="Label Shadow"
-            value={flSh}
-            objectPaths={fldLblShObj}
-            id="fld-lbl-sh"
-          />
-        </div>
-      </ThemeStylePropertyBlock>
       <ThemeStylePropertyBlock label="Border">
         <div className={css(ut.flxc)}>
           <ResetStyle
@@ -86,6 +54,39 @@ export default function LabelCustomizer() {
         fontWeightVar="--lbl-font-w"
         fontStyleVar="--lbl-font-style"
         id="fld-lbl-font"
+      />
+
+      <ThemeStylePropertyBlock label="Shadow">
+        <div className={css(ut.flxc)}>
+          <ResetStyle
+            propertyPath={fldLblShObj.paths.shadow}
+            stateObjName={fldLblShObj.object}
+            id="fld-lbl-sh"
+          />
+          <ShadowControl
+            subtitle="Label Shadow"
+            value={flSh}
+            objectPaths={fldLblShObj}
+            id="fld-lbl-sh"
+          />
+        </div>
+      </ThemeStylePropertyBlock>
+      <div className={css(ut.flxcb, ut.mt2)}>
+        <span className={css(ut.fw500)}>{__('Spacing')}</span>
+        <SpacingControl
+          action={{ type: 'spacing-control' }}
+          subtitle="Label Spacing"
+          objectPaths={flSpacingObj}
+          id="lbl-spacing-control"
+        />
+      </div>
+      <SimpleColorPicker
+        title="Text Color"
+        subtitle="Label Text Color"
+        value={flc}
+        stateObjName="themeColors"
+        propertyPath="--fld-lbl-c"
+        modalId="fld-lbl-c"
       />
     </div>
   )

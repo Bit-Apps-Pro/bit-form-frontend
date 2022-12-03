@@ -49,13 +49,14 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
+import { fieldSizing } from './style-new/componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
@@ -80,7 +81,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
-  const themeVars = useRecoilValue($themeVars)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
@@ -308,15 +309,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     // add style
     let newStyles = styles
+    const tempThemeVars = deepCopy(themeVars)
     setStyles(preStyles => {
       newStyles = produce(preStyles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
-          draftStyle.fields[newBlk] = bitformDefaultTheme({
+          const defaultFieldStyle = bitformDefaultTheme({
             type: processedFieldData.typ,
             fieldKey: newBlk,
             direction: themeVars['--dir'],
           })
+          draftStyle.fields[newBlk] = defaultFieldStyle
+          if (preStyles.fieldsSize !== 'medium') {
+            fieldSizing(defaultFieldStyle, draftStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+          }
         }
 
         // if (globalTheme === 'material') {
@@ -336,6 +342,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       })
       return newStyles
     })
+    setThemeVars(tempThemeVars)
 
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })

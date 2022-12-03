@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const fldName = fldData.typ === 'check' ? `${fldData.fieldName}[]` : fldData.fieldName
         const onaction = ['check', 'radio'].includes(fldData.typ) ? 'input' : 'blur'
         form.querySelectorAll(`[name='${fldName}']`).forEach(elm => {
-          elm.addEventListener(onaction, e => validateForm({ input: e.target }))
+          if (props.validateFocusLost) {
+            elm.addEventListener(onaction, e => validateForm({ input: e.target }))
+          }
+          if (props.onfieldCondition) {
+            elm.addEventListener('input', e => bit_conditionals(e))
+          }
         })
       })
     })

@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -26,7 +25,7 @@ import Btn from '../Utilities/Btn'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
-import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { fieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
 import LabelControl from './LabelControl'
@@ -57,50 +56,14 @@ export default function ThemeQuickTweaksCustomizer() {
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fieldsSize = value
-      const flds = prvStyle.fields
+    setStyles(prvStyles => produce(prvStyles, draft => {
+      draft.fieldsSize = value
+      const flds = prvStyles.fields
       const fldKeyArr = Object.keys(flds)
       const fldKeyArrLen = fldKeyArr.length
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        const commonStyles = commonStyle(fldKey, value, fields[fldKey].typ)
-        const commonStylClasses = Object.keys(commonStyles)
-
-        const fldClassesObj = flds[fldKey].classes
-        drft.fields[fldKey].fieldSize = value
-        // const fldClasses = Object.keys(fldClassesObj)
-
-        const commonStylClassesLen = commonStylClasses.length
-        for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
-          const comnStylClass = commonStylClasses[indx]
-
-          if (Object.prototype.hasOwnProperty.call(fldClassesObj, comnStylClass)) {
-            const mainStlPropertiesObj = fldClassesObj[comnStylClass]
-            const comStlPropertiesObj = commonStyles[comnStylClass]
-            const comnStlProperties = Object.keys(comStlPropertiesObj)
-            const comnStlPropertiesLen = comnStlProperties.length
-
-            for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
-              const comnStlProperty = comnStlProperties[popIndx]
-
-              if (Object.prototype.hasOwnProperty.call(mainStlPropertiesObj, comnStlProperty)) {
-                const mainStlVal = mainStlPropertiesObj[comnStlProperty]
-                const comStlVal = comStlPropertiesObj[comnStlProperty]
-                if (mainStlVal !== comStlVal) {
-                  if (mainStlVal?.match(/(var)/gi)) {
-                    const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
-                    if (tmpThemeVar[mainStateVar] !== comStlVal) {
-                      tmpThemeVar[mainStateVar] = comStlVal
-                    }
-                  } else {
-                    drft.fields[fldKey].classes[comnStylClass][comnStlProperty] = comStlVal
-                  }
-                }
-              }
-            }
-          }
-        }
+        fieldSizing(flds[fldKey], draft, fldKey, flds[fldKey].fieldType, value, tmpThemeVar)
       }
     }))
 
@@ -111,6 +74,7 @@ export default function ThemeQuickTweaksCustomizer() {
       themeVars: getLatestState('themeVars'),
     }))
   }
+
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
     setStyles(prv => changeFormDir(prv, dir))
@@ -270,7 +234,7 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
         <select
-          defaultValue={styles.fieldsSize || 'medium'}
+          defaultValue={styles.fieldsSize}
           onChange={setSizes}
           className={css(sc.select)}
           data-testid="field-sizes-select"

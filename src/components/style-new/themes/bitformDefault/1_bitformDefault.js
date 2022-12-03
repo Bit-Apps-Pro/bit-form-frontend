@@ -460,7 +460,8 @@ const lgLightform = ({ formId }) => ({
     'font-family': 'var(--g-font-family)',
   },
   [`._frm-bg-${formId}`]: {
-    'background-color': 'var(--global-bg-color)',
+    background: 'var(--global-bg-color)',
+    // 'background-color': 'var(--global-bg-color)', // discuss with rubel vaiya about this
     // outline: 'var(--g-o-w) var(--g-o-s) var(--g-o-c)',
     // outline: '1px solid hsla(217, 100%, 50%, 100)',
     // 'outline-offset': '10px',

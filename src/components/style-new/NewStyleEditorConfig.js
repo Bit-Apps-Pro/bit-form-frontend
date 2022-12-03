@@ -88,7 +88,7 @@ const fieldWrpCssProps = {
   margin: '5px',
   padding: '5px',
   opacity: '100%',
-  'box-shadow': '',
+  'box-shadow': '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)',
   width: '',
   'max-width': '',
   'min-width': '',
@@ -211,7 +211,7 @@ const buttonCssProps = {
   margin: '5px',
   padding: '5px',
   opacity: '100%',
-  'box-shadow': '',
+  'box-shadow': '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)',
   'font-size': '',
   'font-weight': '',
   width: '',
@@ -256,7 +256,7 @@ const formCommonCssProps = {
     'background-repeat': true,
     'background-size': true,
   },
-  'background-color': '',
+  // 'background-color': '',
   color: '',
   padding: '5px',
   margin: '5px',
@@ -270,7 +270,7 @@ const formCommonCssProps = {
     outline: true,
     'outline-offset': true,
   },
-  'box-shadow': '',
+  'box-shadow': '0px 5px 15px 2px hsla(0, 0%, 0%, 35%)',
   transition: '',
 }
 const editorConfig = {
@@ -1128,8 +1128,9 @@ const editorConfig = {
   currency: {
     ...textFldCssProps,
     'currency-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
+        ...fieldWrpCssProps,
         border: {
           'border-style': true,
           'border-color': true,
@@ -1265,6 +1266,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -1394,8 +1401,9 @@ const editorConfig = {
   'phone-number': {
     ...textFldCssProps,
     'phone-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
+        ...fieldWrpCssProps,
         border: {
           'border-style': true,
           'border-color': true,
@@ -1525,6 +1533,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'search-clear-btn': {
@@ -1775,7 +1789,7 @@ const editorConfig = {
   country: {
     ...textFldCssProps,
     'country-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
         ...fieldWrpCssProps,
         transition: '',
@@ -1903,6 +1917,12 @@ const editorConfig = {
         'backdrop-filter': '',
       },
     },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
     'search-clear-btn': {
       states: ['hover', 'focus'],
       properties: {
@@ -2011,7 +2031,7 @@ const editorConfig = {
   select: {
     ...textFldCssProps,
     'dpd-fld-wrp': {
-      states: ['hover', 'focus'],
+      states: ['hover', 'focus', 'active'],
       properties: {
         ...fieldWrpCssProps,
         border: {
@@ -2078,6 +2098,12 @@ const editorConfig = {
         height: '',
         filter: '',
         'backdrop-filter': '',
+      },
+    },
+    'option-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
       },
     },
     'option-search-wrp': {

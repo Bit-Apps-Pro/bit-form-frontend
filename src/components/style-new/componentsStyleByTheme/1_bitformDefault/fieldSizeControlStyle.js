@@ -1,3 +1,7 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+import { assignNestedObj } from '../../styleHelpers'
+
 /**
  * @function commonStyle(fk, type, fieldType)
  * @param {string} fk field key
@@ -18,6 +22,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt`]: { 'font-size': '8px' },
         [`.${fk}-hlp-txt-pre-i`]: { width: '16px', height: '16px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '16px', height: '16px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '10px', height: '10px' },
+          [`.${fk}-ct`]: { 'font-size': '12px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '3px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '0.625rem',
@@ -100,6 +112,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '14px', height: '14px' },
+          [`.${fk}-ct`]: { 'font-size': '14px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '4px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '0.8rem',
@@ -203,6 +223,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '18px', height: '18px' },
+          [`.${fk}-ct`]: { 'font-size': '16px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '5px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '1rem',
           padding: '10px 8px',
@@ -305,6 +333,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '22px', height: '22px' },
+          [`.${fk}-ct`]: { 'font-size': '18px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '6px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '1.2rem',
           padding: '11px 9px',
@@ -399,6 +435,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
 
+        ...(fieldType === 'radio' || fieldType === 'check') && {
+          [`.${fk}-bx`]: { width: '26px', height: '26px' },
+          [`.${fk}-ct`]: { 'font-size': '20px' },
+        },
+        ...(fieldType === 'check') && {
+          [`.${fk}-ck`]: { 'border-radius': '7px' },
+        },
+
         [`.${fk}-fld`]: {
           'font-size': '1.4rem',
           padding: '12px 10px',
@@ -489,5 +533,48 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
       }
     default:
       return 'default......'
+  }
+}
+
+export const fieldSizing = (fieldPrvStyle, draft, fldKey, fldType, fldSize, tempThemeVars) => {
+  const commonStyles = commonStyle(fldKey, fldSize, fldType)
+  const commonStylClasses = Object.keys(commonStyles)
+  const fldClassesObj = fieldPrvStyle.classes
+  const sizePath = `fields->${fldKey}->fieldSize`
+  assignNestedObj(draft, sizePath, fldSize)
+
+  const commonStylClassesLen = commonStylClasses.length
+  for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+    const comnStylClass = commonStylClasses[indx]
+
+    if (Object.prototype.hasOwnProperty.call(fldClassesObj, comnStylClass)) {
+      const mainStlPropertiesObj = fldClassesObj[comnStylClass]
+      const comStlPropertiesObj = commonStyles[comnStylClass]
+      const comnStlProperties = Object.keys(comStlPropertiesObj)
+      const comnStlPropertiesLen = comnStlProperties.length
+
+      for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
+        const comnStlProperty = comnStlProperties[popIndx]
+
+        if (Object.prototype.hasOwnProperty.call(mainStlPropertiesObj, comnStlProperty)) {
+          const mainStlVal = mainStlPropertiesObj[comnStlProperty]
+          const comStlVal = comStlPropertiesObj[comnStlProperty]
+          if (mainStlVal !== comStlVal) {
+            if (mainStlVal?.match(/(var)/gi)) {
+              const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
+              if (tempThemeVars[mainStateVar] !== comStlVal) {
+                tempThemeVars[mainStateVar] = comStlVal
+              }
+            } else {
+              const path = `fields->${fldKey}->classes->${comnStylClass}->${comnStlProperty}`
+              assignNestedObj(draft, path, comStlVal)
+            }
+          }
+        } else {
+          const path = `fields->${fldKey}->classes->${comnStylClass}->${comnStlProperty}`
+          assignNestedObj(draft, path, comStlPropertiesObj[comnStlProperty])
+        }
+      }
+    }
   }
 }
