@@ -31,11 +31,13 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         transition: 'box-shadow .3s',
       },
 
-      [`.${fk}-dpd-fld-wrp:hover:not(.menu-open):not(.disabled)`]: { 'border-color': 'var(--global-accent-color) !important' },
+      [`.${fk}-dpd-fld-wrp:hover:not(.menu-open):not(.disabled)`]: {
+        'border-color': 'var(--global-accent-color)!important',
+      },
 
       [`.${fk}-dpd-fld-wrp:focus-within:not(.menu-open):not(.disabled)`]: {
         'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
-        'border-color': 'var(--global-accent-color) !important',
+        'border-color': 'var(--global-accent-color)!important',
       },
 
       [`.${fk}-dpd-fld-wrp.disabled .${fk}-dpd-wrp`]: {
@@ -50,18 +52,6 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
-      },
-
-      [`.${fk}-dpd-fld-wrp.menu-open`]: {
-        'z-index': '999',
-        'box-shadow':
-          `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
-        0px 2.9px 5.3px hsla(0, 0%, 0%, 4.5%),
-        0px 5.4px 10px hsla(0, 0%, 0%, 5.4%),
-        0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
-        0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
-        0px 43px 80px hsla(0, 0%, 0%, 10%)`,
-        'border-color': 'hsla(0, 0%, 87%, 100%)',
       },
 
       [`.${fk}-dpd-wrp`]: {
@@ -81,6 +71,18 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         outline: 'none',
         /* border      : 1px solid 'red', */
       },
+      [`.${fk}-dpd-fld-wrp.menu-open`]: {
+        'background-color': 'var(--bg-0)',
+        'z-index': '999',
+        'box-shadow':
+          `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
+        0px 2.9px 5.3px hsla(0, 0%, 0%, 4.5%),
+        0px 5.4px 10px hsla(0, 0%, 0%, 5.4%),
+        0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
+        0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
+        0px 43px 80px hsla(0, 0%, 0%, 10%)`,
+        'border-color': 'var(--bg-20)!important',
+      },
 
       [`.${fk}-selected-opt-wrp`]: {
         height: '100%',
@@ -98,9 +100,9 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+        outline: '1px solid var(--bg-10)',
         'margin-right': '10px',
-        'background-color': 'hsla(0, 0%, 0%, 5%)',
+        'background-color': 'var(--bg-15)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
@@ -122,11 +124,12 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-selected-opt-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-selected-opt-clear-btn:hover`]: {
+        'background-color': 'var(--bg-15)',
+      },
 
       [`.${fk}-selected-opt-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
-        outline: 'none',
+        outline: '1.5px solid var(--global-accent-color)',
       },
 
       [`.${fk}-dpd-btn-wrp`]: {
@@ -143,7 +146,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         display: 'flex',
         'flex-direction': 'column',
         // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'height .3s',
+        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
@@ -157,62 +160,72 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-option-list`]: {
         padding: '0',
-        margin: '0',
+        margin: '0 0 2px 0',
         height: '100%',
         'overflow-y': 'auto',
 
         /* firefox */
         'scrollbar-width': 'thin !important',
-        'scrollbar-color': 'hsla(0, 0%, 0%, 10%) transparent !important',
+        'scrollbar-color': 'var(--bg-15) transparent !important',
       },
 
-      [`.${fk}-option-list::-webkit-scrollbar`]: { width: '8px' },
+      [`.${fk}-option-list::-webkit-scrollbar`]: {
+        width: '8px',
+      },
 
       /* .option-list::-webkit-scrollbar-track`]: {
         background: #'fafafa',
       }, */
 
       [`.${fk}-option-list::-webkit-scrollbar-thumb`]: {
-        'background-color': 'hsla(0, 0%, 0%, 10%)',
-        'border-radius': '10px',
+        'background-color': 'var(--bg-15)',
+        'border-radius': 'var(--g-bdr-rad)',
       },
 
-      [`.${fk}-option-list:not(.active-list)`]: { display: 'none' },
+      [`.${fk}-option-list:not(.active-list)`]: {
+        display: 'none',
+      },
 
       [`.${fk}-option-search-wrp`]: {
         position: 'relative',
-        // 'margin-bottom': '5px',
-        padding: '5px',
+        // padding: '0 5px',
+        margin: '5px 5px 0 5px',
       },
 
       [`.${fk}-icn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
       },
 
-      [`.${fk}-opt-search-icn`]: { left: '13px' },
+      [`.${fk}-opt-search-icn`]: {
+        left: '8px',
+      },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        'padding-left': '41px',
+        'padding-left': '35px',
         outline: 'none',
         'box-shadow': 'none',
-        /* border-radius: '8px', */
         border: 'none',
         /* border-top: 1px solid #'ddd', */
         /* border-bottom: 1px solid #'ddd', */
         height: '35px',
-        'border-radius': '8px',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
-        'font-size': '16px',
-        // 'font-family': 'var(--g-font-family)',
+        'border-radius': 'calc(var(--g-bdr-rad) - 1px)',
+        'background-color': 'var(--bg-5)',
+        'font-size': '1rem',
+        'font-family': 'inherit',
         color: 'var(--global-font-color) !important',
       },
-
-      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
+      [`.${fk}-opt-search-input::placeholder`]: {
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.5)',
+      },
+      [`.${fk}-opt-search-input:focus`]: {
+        'background-color': 'var(--bg-0)',
+        'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
+      },
+      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-accent-color)' },
 
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
@@ -221,25 +234,26 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-search-clear-btn`]: {
         display: 'none',
-        right: '6px',
+        right: '11px',
         padding: '0',
         margin: '0',
-        background: 'transparent',
+        background: 'var(--bg-25)',
         border: '0',
         outline: '0',
         cursor: 'pointer',
-        'margin-right': '5px',
         'place-content': 'center',
         width: '16px',
         height: '16px',
         'border-radius': '50%',
-        color: 'var(--global-font-color)',
+        color: 'var(--bg-0)',
       },
 
-      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-search-clear-btn:hover`]: {
+        background: 'var(--bg-50)',
+      },
 
       [`.${fk}-search-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
+        'box-shadow': '0 0 0 2px var(--global-accent-color)',
         outline: 'none',
       },
 
@@ -263,43 +277,49 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-list .option`]: {
         margin: '2px 5px',
         transition: 'background 0.2s',
-        'border-radius': '6px',
-        // 'font-size': 'var(--fld-fs)',
+        'border-radius': 'calc(var(--g-bdr-rad) - 2px)',
+        'font-size': '14px',
         cursor: 'pointer',
         'text-align': 'left',
         border: 'none',
-        padding: '5px 7px',
+        padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
         'justify-content': 'space-between',
       },
 
-      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.opt-group-title)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.opt-group-title)`]: {
+        'background-color': 'var(--bg-10)',
+      },
 
       [`.${fk}-option-list .option:focus-visible`]: {
-        'box-shadow': '0 0 0 2px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
-        outline: 'none',
+        outline: '2px solid var(--global-accent-color)',
+        'background-color': 'var(--bg-10)',
       },
 
-      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
-      },
+      // [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+      //   'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      // },
 
-      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: {
+        'background-color': 'var(--global-accent-color)',
+      },
 
       [`.${fk}-option-list .opt-group-title`]: {
         'font-size': 'calc(var(--fld-fs) - 2px)',
         cursor: 'default',
-        background: 'hsla(0, 0%, 98%, 100%)',
         opacity: '.7',
+        'font-weight': 600,
       },
 
-      [`.${fk}-option-list .opt-group-child`]: { 'padding-left': '15px !important' },
+      [`.${fk}-option-list .opt-group-child`]: {
+        'padding-left': '15px !important',
+      },
 
       [`.${fk}-option-list .selected-opt`]: {
-        // color: 'white',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
-        // 'background-color': 'hsla(216, 100%, 50%, 100%)',
+        color: 'var(--bg-0)',
+        'font-weight': 500,
+        'background-color': 'var(--global-accent-color)',
       },
 
       [`.${fk}-option-list .opt-not-found`]: {
@@ -340,7 +360,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
-        color: 'hsla(0, 0%, 94%, 30%) !important',
+        color: 'var(--bg-10) !important',
         opacity: '0.5',
       },
     }

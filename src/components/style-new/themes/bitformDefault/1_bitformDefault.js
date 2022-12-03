@@ -416,12 +416,35 @@ const lightThemeColors = {
   '--btn-bgc': 'var(--global-accent-color)', // button backgrond color
   '--btn-c': 'hsla(0, 0%, 100%, 100%)', // button font color color
   '--btn-bdr-clr': 'none', // button border color
-  '--btn-sh': '2px 2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
+  '--btn-sh': '0   2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
 
   '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
 
   '--g-o-c': 'hsla(217, 100%, 50%, 100)', // outline color for testing purposes
 
+  '--bg-0': 'hsl(0, 0%, 100%)',
+  '--bg-5': 'hsl(0, 0%, 95%)',
+  '--bg-10': 'hsl(0, 0%, 90%)',
+  '--bg-15': 'hsl(0, 0%, 85%)',
+  '--bg-20': 'hsl(0, 0%, 80%)',
+  '--bg-25': 'hsl(0, 0%, 75%)',
+  '--bg-30': 'hsl(0, 0%, 70%)',
+  '--bg-35': 'hsl(0, 0%, 65%)',
+  '--bg-40': 'hsl(0, 0%, 60%)',
+  '--bg-45': 'hsl(0, 0%, 55%)',
+  '--bg-50': 'hsl(0, 0%, 50%)',
+  '--bg-55': 'hsl(0, 0%, 45%)',
+  '--bg-60': 'hsl(0, 0%, 40%)',
+  '--bg-65': 'hsl(0, 0%, 35%)',
+  '--bg-70': 'hsl(0, 0%, 30%)',
+  '--bg-75': 'hsl(0, 0%, 25%)',
+  '--bg-80': 'hsl(0, 0%, 20%)',
+  '--bg-85': 'hsl(0, 0%, 15%)',
+  '--bg-90': 'hsl(0, 0%, 10%)',
+  '--bg-95': 'hsl(0, 0%, 5%)',
+  '--bg-100': 'hsl(0, 0%, 0%)',
+  // '--white-0': 'hsl(0, 0%, 100%)',
+  // '--white-10': 'hsl(0, 90%, 100%)',
 }
 
 const font = {
@@ -432,7 +455,10 @@ const font = {
 }
 
 const lgLightform = ({ formId }) => ({
-  [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box', 'font-family': 'var(--g-font-family)' },
+  [`._frm-bg-${formId} *`]: {
+    'box-sizing': 'border-box',
+    'font-family': 'var(--g-font-family)',
+  },
   [`._frm-bg-${formId}`]: {
     'background-color': 'var(--global-bg-color)',
     // outline: 'var(--g-o-w) var(--g-o-s) var(--g-o-c)',
