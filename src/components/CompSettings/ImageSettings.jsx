@@ -167,7 +167,7 @@ function ImageSettings() {
               ariaLabel="Label input"
               changeAction={setAlt}
               value={alt.replace(/\$_bf_\$/g, '\\')}
-              placeholder="e.g: Image of Bitform"
+              placeholder="Alternative Text"
             />
           </div>
         </div>
