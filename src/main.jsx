@@ -1,8 +1,5 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
-/* eslint-disable react/jsx-filename-extension */
-// import 'react-app-polyfill/ie11'
-// import 'react-app-polyfill/stable'
 import './resource/sass/app.scss'
 import './resource/sass/global.scss'
 import { createRenderer } from 'fela'
