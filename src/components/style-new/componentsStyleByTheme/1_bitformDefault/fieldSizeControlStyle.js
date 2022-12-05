@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
+import { deepCopy } from '../../../../Utils/Helpers'
 import { assignNestedObj } from '../../styleHelpers'
 
 /**
@@ -536,12 +537,12 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
   }
 }
 
-export const updateFieldStyleByFieldSizing = (fieldPrvStyle, draft, fldKey, fldType, fldSize, tempThemeVars) => {
+export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
   const commonStyles = commonStyle(fldKey, fldSize, fldType)
   const commonStylClasses = Object.keys(commonStyles)
-  const fldClassesObj = fieldPrvStyle.classes
-  const sizePath = `fields->${fldKey}->fieldSize`
-  assignNestedObj(draft, sizePath, fldSize)
+  const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
+  const fldClassesObj = copyFieldPrvStyle.classes
+  assignNestedObj(copyFieldPrvStyle, 'fieldSize', fldSize)
 
   const commonStylClassesLen = commonStylClasses.length
   for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
@@ -566,15 +567,17 @@ export const updateFieldStyleByFieldSizing = (fieldPrvStyle, draft, fldKey, fldT
                 tempThemeVars[mainStateVar] = comStlVal
               }
             } else {
-              const path = `fields->${fldKey}->classes->${comnStylClass}->${comnStlProperty}`
-              assignNestedObj(draft, path, comStlVal)
+              const path = `classes->${comnStylClass}->${comnStlProperty}`
+              assignNestedObj(copyFieldPrvStyle, path, comStlVal)
             }
           }
         } else {
-          const path = `fields->${fldKey}->classes->${comnStylClass}->${comnStlProperty}`
-          assignNestedObj(draft, path, comStlPropertiesObj[comnStlProperty])
+          const path = `classes->${comnStylClass}->${comnStlProperty}`
+          assignNestedObj(copyFieldPrvStyle, path, comStlPropertiesObj[comnStlProperty])
         }
       }
     }
   }
+
+  return copyFieldPrvStyle
 }

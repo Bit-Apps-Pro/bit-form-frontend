@@ -62,7 +62,8 @@ export default function ThemeQuickTweaksCustomizer() {
       const fldKeyArrLen = fldKeyArr.length
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        updateFieldStyleByFieldSizing(flds[fldKey], draft, fldKey, flds[fldKey].fieldType, value, tmpThemeVar)
+        const updateStyle = updateFieldStyleByFieldSizing(flds[fldKey], fldKey, flds[fldKey].fieldType, value, tmpThemeVar)
+        draft.fields[fldKey] = updateStyle
       }
     }))
 

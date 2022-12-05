@@ -320,9 +320,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             fieldKey: newBlk,
             direction: themeVars['--dir'],
           })
-          draftStyle.fields[newBlk] = defaultFieldStyle
           if (preStyles.fieldsSize !== 'medium') {
-            updateFieldStyleByFieldSizing(defaultFieldStyle, draftStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+            draftStyle.fields[newBlk] = updateStyle
+          } else {
+            draftStyle.fields[newBlk] = defaultFieldStyle
           }
         }
 
