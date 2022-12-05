@@ -384,7 +384,11 @@ export default function RenderCssInPortal() {
   position: absolute;
   top: 0;
   left: 0;
+  text-align: center;  vertical-align: -50%;
   content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='5'%3E%3Cpath d='m3 3l18 18M10.584 10.587a2 2 0 0 0 2.828 2.83' /%3E%3Cpath d='M9.363 5.365A9.466 9.466 0 0 1 12 5c4 0 7.333 2.333 10 7c-.778 1.361-1.612 2.524-2.503 3.488m-2.14 1.861C15.726 18.449 13.942 19 12 19c-4 0-7.333-2.333-10-7c1.369-2.395 2.913-4.175 4.632-5.341' /%3E%3C/g%3E%3C/svg%3E");
   width: 100%;
   height: 100%;
   background-color: hsla(0, 0%, 0%, 20%);
@@ -459,7 +463,6 @@ display:none;
 
 
 `
-
   return (
     <style>
       {gridLayoutStyle}
