@@ -561,7 +561,7 @@ export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fl
           const mainStlVal = mainStlPropertiesObj[comnStlProperty]
           const comStlVal = comStlPropertiesObj[comnStlProperty]
           if (mainStlVal !== comStlVal) {
-            if (mainStlVal?.match(/(var)/gi)) {
+            if (mainStlVal?.match(/(var)/gi) && tempThemeVars) {
               const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
               if (tempThemeVars[mainStateVar] !== comStlVal) {
                 tempThemeVars[mainStateVar] = comStlVal

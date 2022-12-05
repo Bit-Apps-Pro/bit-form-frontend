@@ -12,7 +12,7 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
 import PaypalFieldQuickTweaks from './QuickTweaks/PaypalFieldQuickTweaks'
 import RazorpayFieldQuickTweaks from './QuickTweaks/RazorpayFieldQuickTweaks'
@@ -41,27 +41,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const setSizes = ({ target: { value } }) => {
-    const commonStyleClasses = commonStyle(fieldKey, value, fieldData.typ)
-    const cmnStlClasses = Object.keys(commonStyleClasses)
-
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fieldKey].fieldSize = value
-      const stylesClasses = drftStyle.fields[fieldKey].classes
-      const cmnStlClsLen = cmnStlClasses.length
-
-      for (let i = 0; i < cmnStlClsLen; i += 1) {
-        if (Object.prototype.hasOwnProperty.call(stylesClasses, cmnStlClasses[i])) {
-          const cmnClsProperty = commonStyleClasses[cmnStlClasses[i]]
-          const cmnClsPropertyKey = Object.keys(cmnClsProperty)
-          const cmnClsPropertyKeyLan = cmnClsPropertyKey.length
-
-          for (let popIndx = 0; popIndx < cmnClsPropertyKeyLan; popIndx += 1) {
-            const cmnClsPropertyValue = cmnClsProperty[cmnClsPropertyKey[popIndx]]
-            // eslint-disable-next-line no-param-reassign
-            drftStyle.fields[fieldKey].classes[cmnStlClasses[i]][cmnClsPropertyKey[popIndx]] = cmnClsPropertyValue
-          }
-        }
-      }
+      const updateStyle = updateFieldStyleByFieldSizing(prvStyle.fields[fieldKey], fieldKey, fieldData.typ, value)
+      drftStyle.fields[fieldKey] = updateStyle
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
   }
