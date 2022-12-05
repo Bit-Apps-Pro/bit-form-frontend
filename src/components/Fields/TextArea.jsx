@@ -86,7 +86,7 @@ export default function TextArea({
       >
         <div
           data-testid={`${fieldKey}-inp-fld-wrp`}
-          data-dev-inp-fld-wrp={fieldKey}
+          // data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >

@@ -148,7 +148,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
 
       <div
         data-testid={`${fieldKey}-inp-wrp`}
-        data-dev-inp-wrp={fieldKey}
+        // data-dev-inp-wrp={fieldKey}
         className={`${fieldKey}-inp-wrp ${getCustomClsName(fieldKey, 'inp-wrp')}`}
         {...getCustomAttributes(fieldKey, 'inp-wrp')}
       >
