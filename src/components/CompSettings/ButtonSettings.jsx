@@ -68,7 +68,7 @@ export default function ButtonSettings() {
       setError({ btnTyp: '' })
     }
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['background-color'] = e.target.value === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'var(--btn-bgc)'
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].background = e.target.value === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'var(--btn-bgc)'
       drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = e.target.value === 'reset' ? 'hsla(208, 46%, 25%, 100)' : 'var(--btn-c)'
     }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
