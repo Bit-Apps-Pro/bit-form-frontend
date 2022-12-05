@@ -179,6 +179,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'background-color': 'transparent',
       },
 
+      [`.${fk}-phone-number-input::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
+
       [`.${fk}-opt-lbl`]: {},
 
       [`.${fk}-option-wrp`]: {

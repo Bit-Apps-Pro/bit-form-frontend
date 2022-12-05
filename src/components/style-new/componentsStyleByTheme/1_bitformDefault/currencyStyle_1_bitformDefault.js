@@ -188,6 +188,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       // /* Firefox */
       [`.${fk}-currency-amount-input[type=number]`]: { '-moz-appearance': 'textfield' },
 
+      [`.${fk}-currency-amount-input::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
+
       [`.${fk}-option-wrp`]: {
         'max-height': '0px',
         'min-height': 'auto', // unused css

@@ -24,6 +24,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import EditOptions from './EditOptions/EditOptions'
@@ -144,6 +145,10 @@ const PhoneNumberFieldSettings = () => {
       <FieldSettingsDivider />
 
       <SizeAndPosition />
+
+      <FieldSettingsDivider />
+
+      <PlaceholderSettings />
 
       <FieldSettingsDivider />
 
