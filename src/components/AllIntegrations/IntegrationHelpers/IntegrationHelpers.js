@@ -18,6 +18,7 @@ export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, confTmp,
 }
 
 export const setGrantTokenResponse = (integ) => {
+  console.log('called')
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
   const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
@@ -44,7 +45,7 @@ export const handleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf, setE
     return
   }
   setisLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -75,7 +76,7 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
+  tokenRequestParams.redirectURI = bits.zohoRedirectURL
   bitsFetch(tokenRequestParams, `bitforms_${ajaxInteg}_generate_token`)
     .then(result => result)
     .then(result => {

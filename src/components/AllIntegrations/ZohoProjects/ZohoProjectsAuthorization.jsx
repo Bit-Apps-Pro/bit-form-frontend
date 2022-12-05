@@ -7,13 +7,15 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
-import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import { refreshPortals } from './ZohoProjectsCommonFunc'
 
 export default function ZohoProjectsAuthorization({ formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
+  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -56,7 +58,7 @@ export default function ZohoProjectsAuthorization({ formID, projectsConf, setPro
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-        <CopyText value={redirectLocation || `${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit', 'bitform')}
@@ -74,7 +76,7 @@ export default function ZohoProjectsAuthorization({ formID, projectsConf, setPro
 
         {!isInfo && (
           <>
-            <button onClick={() => handleAuthorize(projectsConf, setProjectsConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            <button onClick={() => handleAuthorize('zohoProjects', 'zprojects', scopes, projectsConf, setProjectsConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>

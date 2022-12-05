@@ -55,7 +55,6 @@ export default function NewInteg({ allIntegURL }) {
   const [integs, setIntegration] = useRecoilState($integrations)
   const integrations = deepCopy(integs)
   const formFields = useRecoilValue($fieldsArr)
-
   const NewIntegs = () => {
     switch (integUrlName) {
       case 'Zoho CRM':

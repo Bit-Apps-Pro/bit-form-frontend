@@ -4,16 +4,18 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
-import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
+import { refreshApplications } from './ZohoCreatorCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { $bits } from '../../../GlobalStates'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
+  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE,ZohoCreator.report.UPDATE'
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -62,7 +64,7 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-        <CopyText value={redirectLocation || `${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit', 'bitform')}
@@ -80,10 +82,10 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
         <div className="mt-3"><b>{__('Owner Name (Your Zoho Creator screen name):', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e, creatorConf, setCreatorConf)} name="accountOwner" value={creatorConf.accountOwner} type="text" placeholder={__('Your Zoho Creator screen name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red' }}>{error.accountOwner}</div>
-
+        zohoCreator
         {!isInfo && (
           <>
-            <button onClick={() => handleAuthorize(creatorConf, setCreatorConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            <button onClick={() => handleAuthorize('zohoCreator', 'zcreator', scopes, creatorConf, setCreatorConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>

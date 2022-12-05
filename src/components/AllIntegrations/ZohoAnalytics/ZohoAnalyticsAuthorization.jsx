@@ -4,16 +4,18 @@ import { __ } from '../../../Utils/i18nwrap'
 import { checkValidEmail } from '../../../Utils/Helpers'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import BackIcn from '../../../Icons/BackIcn'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { $bits } from '../../../GlobalStates'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
+  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -61,7 +63,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-        <CopyText value={redirectLocation || `${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit', 'bitform')}
@@ -82,7 +84,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
 
         {!isInfo && (
           <>
-            <button onClick={() => handleAuthorize(analyticsConf, setAnalyticsConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            <button onClick={() => handleAuthorize('zohoAnalytics', 'zanalytics', scopes, analyticsConf, setAnalyticsConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
