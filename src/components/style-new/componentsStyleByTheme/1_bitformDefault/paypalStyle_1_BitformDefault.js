@@ -10,8 +10,9 @@ export default function paypalStyle_1_BitformDefault({ fk, breakpoint, colorSche
         margin: 'var(--fld-wrp-m, 0)',
         position: 'relative',
         'box-shadow': 'var(--fld-wrp-sh, none)',
+        'border-style': 'var(--fld-wrp-bdr, medium)',
+        'border-color': 'var(--fld-wrp-bdr-clr, none)',
         'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
-        border: 'var(--fld-wrp-bdr, medium none)',
         'border-width': 'var(--fld-wrp-bdr-width, 0)',
       },
 

@@ -432,7 +432,7 @@ const font = {
 }
 
 const lgLightform = ({ formId }) => ({
-  [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box', 'font-family': 'var(--g-font-family)' },
+  [`._frm-bg-${formId} *`]: { 'box-sizing': 'border-box !important', 'font-family': 'var(--g-font-family)' },
   [`._frm-bg-${formId}`]: {
     background: 'var(--global-bg-color)',
     // 'background-color': 'var(--global-bg-color)', // discuss with rubel vaiya about this

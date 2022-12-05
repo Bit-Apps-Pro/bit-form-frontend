@@ -125,9 +125,9 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-selected-country-img`]: {
-        height: '17px',
+        height: '17px !important',
         width: '25px',
-        'border-radius': '3px',
+        'border-radius': '3px !important',
         'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
         'margin-right': '10px',
         'background-color': 'hsla(0, 0%, 0%, 5%)',
@@ -142,8 +142,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
-        padding: '0px',
-        background: 'transparent',
+        padding: '0px !important',
+        background: 'transparent !important',
         border: '0px',
         outline: '0px',
         cursor: 'pointer',
@@ -151,11 +151,11 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'place-content': 'center',
         width: '16px',
         height: '16px',
-        'border-radius': '50%',
+        'border-radius': '50% !important',
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
 
       [`.${fk}-input-clear-btn:focus-visible`]: {
         'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
@@ -169,10 +169,10 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-phone-number-input`]: {
-        border: '0px',
+        border: '0px !important',
         outline: '0px',
         width: 'calc(100% - 50px)',
-        padding: '8px 26px 8px 8px',
+        padding: '8px 26px 8px 8px !important',
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
@@ -221,10 +221,10 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        'padding-left': '41px',
+        'padding-left': '41px !important',
         outline: 'none',
         'box-shadow': 'none',
-        border: 'none',
+        border: 'none !important',
         height: '35px',
         'border-radius': '8px !important',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
@@ -246,20 +246,20 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         right: '6px',
         top: '15px',
         height: '16px', // unused css
-        padding: '0px',
+        padding: '0px !important',
         margin: '0px', // unused css
-        background: 'transparent',
+        background: 'transparent !important',
         border: '0px',
         outline: '0px', // unused css
         cursor: 'pointer',
-        'margin-right': '5px',
+        'margin-right': '5px !important',
         'place-content': 'center',
         width: '16px', // unused css
-        'border-radius': '50%',
+        'border-radius': '50% !important',
         color: 'var(--global-font-color)',
       },
 
-      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
 
       [`.${fk}-search-clear-btn:focus-visible`]: {
         'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
@@ -268,7 +268,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-option-list`]: {
         padding: '0px',
-        margin: '0px',
+        margin: '0px !important',
         height: '100%', // unused css
         'overflow-y': 'auto',
 
@@ -285,7 +285,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-option-list .option`]: {
-        margin: '0px 5px',
+        margin: '0px 5px !important',
         transition: 'background 0.2s',
         'border-radius': '6px',
         // 'font-size': 'var(--fld-fs) !important',
