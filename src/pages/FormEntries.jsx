@@ -421,7 +421,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   }
 
   const splitFileName=(fileId)=>{
-    const fileName = fileId?.split('${bf}')
+    const fileName = fileId?.split('_')
     if(fileName.length>1){
       return fileName[1]
     }
@@ -430,7 +430,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   }
 
   const splitFileLink=(fileId)=>{
-    const fileName = fileId?.split('${bf}')
+    const fileName = fileId?.split('_')
     if(fileName.length>1){
       return fileName[0]
     }
