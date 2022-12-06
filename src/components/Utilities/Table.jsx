@@ -404,7 +404,7 @@ function Table(props) {
                           key={`t-d-${cell.row.index}`}
                           className="td flx"
                           {...cell.getCellProps()}
-                          {...props.rorowClickable
+                          {...props.rowClickable
                           && typeof cell.column.Header === 'string'
                           && {
                             onClick: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
