@@ -5244,7 +5244,8 @@ _:-ms-fullscreen,
 }
 
 .show_tippy_action {
-  display: none;
+  display: flex;
+  opacity: 0;
   &> .icn-btn {
     margin-right: 2px;
     &:hover {
@@ -5258,14 +5259,12 @@ _:-ms-fullscreen,
   //background: white;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   padding: 3px 7px;
   min-height: 30px;
-
   font-family: 'Outfit', sans-serif !important;
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
   line-height: 181.9%;
   width: 80%;
   cursor: pointer;
@@ -5282,6 +5281,9 @@ _:-ms-fullscreen,
   &:hover {
     background: var(--b-79-96);
     border-radius: 8px;
+  }
+  &:hover .show_tippy_action {
+    opacity: 1;
   }
 
 }
