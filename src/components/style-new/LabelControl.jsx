@@ -38,6 +38,7 @@ const c = {
   clrVal: {
     w: 70,
     textOverflow: 'ellipsis',
+    ta: 'left',
     ow: 'hidden',
   },
   active: { focusShadow: 1 },

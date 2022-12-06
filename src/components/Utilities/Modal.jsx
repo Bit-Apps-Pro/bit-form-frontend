@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
 import { searchKey } from '../style-new/styleHelpers'
@@ -6,6 +6,7 @@ import { searchKey } from '../style-new/styleHelpers'
 export default function Modal({
   show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null, width,
 }) {
+  const nodeRef = useRef(null)
   const handleClickOutside = e => {
     if (closeOnOutsideClick === false) return
     if (e.target.classList.contains('btcd-modal-wrp')) {
@@ -52,8 +53,10 @@ export default function Modal({
       timeout={210}
       classNames="btc-mdl-trn"
       unmountOnExit
+      nodeRef={nodeRef}
     >
       <div
+        ref={nodeRef}
         aria-label="modal-backdrop"
         data-testid="mdl-wrp"
         role="button"

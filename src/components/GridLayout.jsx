@@ -10,7 +10,6 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   $additionalSettings,
@@ -754,29 +753,21 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       </Scrollbars>
 
       <div ref={ref} className="pos-rel">
-        <CSSTransition
-          in={isComponentVisible}
-          timeout={150}
-          classNames="btc-pk"
-          unmountOnExit
-          onExit={() => resetContextMenu()}
-        >
-          <FieldContextMenu
-            isContextMenu
-            isComponentVisible={isComponentVisible}
-            setIsComponentVisible={setIsComponentVisible}
-            contextMenu={contextMenu}
-            setContextMenu={setContextMenu}
-            resetContextMenu={resetContextMenu}
-            navigateToFieldSettings={navigateToFieldSettings}
-            navigateToStyle={navigateToStyle}
-            cloneLayoutItem={cloneLayoutItem}
-            removeLayoutItem={removeLayoutItem}
-            className="right-click-context-menu"
-          />
-        </CSSTransition>
+        <FieldContextMenu
+          isContextMenu
+          isComponentVisible={isComponentVisible}
+          setIsComponentVisible={setIsComponentVisible}
+          contextMenu={contextMenu}
+          setContextMenu={setContextMenu}
+          resetContextMenu={resetContextMenu}
+          navigateToFieldSettings={navigateToFieldSettings}
+          navigateToStyle={navigateToStyle}
+          cloneLayoutItem={cloneLayoutItem}
+          removeLayoutItem={removeLayoutItem}
+          className="right-click-context-menu"
+        />
       </div>
-    </div>
+    </div >
   )
 }
 export default memo(GridLayout)

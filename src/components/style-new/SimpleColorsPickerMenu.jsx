@@ -117,6 +117,26 @@ function SimpleColorsPickerMenu({ stateObjName,
             const setFilterValue = hexToCSSFilter(hexValue)
             drftThmClr['--fld-focs-i-fltr'] = setFilterValue.filter
           }
+          // generate bg color shades
+          if (propertyPath === '--global-bg-color') {
+            for (let i = 0; i < 105; i += 5) {
+              let clr = ''
+              // const clr = tinycolor(`hsl(${h}, ${s}%, ${l}%)`);
+              // console.log('__', clr.isLight())
+              if (l > 50 && l - i <= 0) {
+                clr = `hsl(${Math.round(h)}, ${Math.round(s)}%, 0%)`
+              } else if (l < 50 && l + i >= 100) {
+                clr = `hsl(${Math.round(h)}, ${Math.round(s)}%, 100%)`
+              } else {
+                clr = `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l > 50
+                  ? l - i
+                  : l + i)}%)`
+              }
+              drftThmClr[`--bg-${i}`] = clr
+            }
+            console.log('g bg color', drftThmClr[`--gbg-${5}`])
+          }
+
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeColors: getLatestState('themeColors') }))
         break

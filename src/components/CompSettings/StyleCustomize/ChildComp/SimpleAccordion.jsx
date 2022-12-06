@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilValue } from 'recoil'
@@ -35,6 +35,7 @@ export default function SimpleAccordion({
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
+  const nodeRef = useRef(null)
 
   const { css } = useFela()
   const toggleAccordion = (e) => {
@@ -67,6 +68,7 @@ export default function SimpleAccordion({
 
   const getAbsoluteHeight = (el) => {
     const element = el
+    console.log({ el })
     const { overflow } = element.style
     element.style.overflow = 'auto'
     let { height, marginBlock } = window.getComputedStyle(element)
@@ -77,7 +79,7 @@ export default function SimpleAccordion({
     return Math.round(height + marginBlock)
   }
 
-  const setAccHeight = (el) => setH(getAbsoluteHeight(el))
+  const setAccHeight = () => setH(getAbsoluteHeight(nodeRef.current))
 
   return (
     <div
@@ -123,15 +125,16 @@ export default function SimpleAccordion({
 
       <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
         <CSSTransition
+          nodeRef={nodeRef}
           in={tgl}
           timeout={300}
           onEntering={setAccHeight}
           onEntered={() => setH('auto')}
-          onExit={el => setH(el.offsetHeight)}
+          onExit={() => setH(nodeRef.current.offsetHeight)}
           onExiting={() => setH(0)}
           unmountOnExit
         >
-          <div className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
+          <div ref={nodeRef} className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
             {children}
           </div>
         </CSSTransition>

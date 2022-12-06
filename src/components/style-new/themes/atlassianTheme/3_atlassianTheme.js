@@ -371,7 +371,7 @@ const themeColors = {
   '--btn-bgc': 'var(--global-accent-color)', // button backgrond color
   '--btn-c': 'hsla(0, 0%, 100%, 100%)', // button font color color
   '--btn-br': 'none', // button border
-  '--btn-sh': '2px 2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
+  '--btn-sh': '0 2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
 
   '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
 }

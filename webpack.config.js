@@ -231,19 +231,19 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/select.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-create.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-filepond/dist/bit-filepond-create.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-filepond-create.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-destroy.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-filepond/dist/bit-filepond-destroy.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-filepond-destroy.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-registerPlugin.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-filepond/dist/bit-filepond-registerPlugin.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-filepond-registerPlugin.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-file-pond/dist/bit-filepond-setOptions.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-filepond/dist/bit-filepond-setOptions.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-filepond-setOptions.min.js'),
             },
             {

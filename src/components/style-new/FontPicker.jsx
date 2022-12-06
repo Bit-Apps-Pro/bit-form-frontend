@@ -42,6 +42,7 @@ const c = {
     w: 70,
     textOverflow: 'ellipsis',
     ow: 'hidden',
+    ta: 'left',
   },
   active: { focusShadow: 1 },
 }

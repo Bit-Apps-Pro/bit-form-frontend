@@ -42,9 +42,9 @@ export default defineConfig(({ mode }) => ({
 
     // sourcemap: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'src/index.jsx'),
+      input: path.resolve(__dirname, 'src/main.jsx'),
       output: {
-        entryFileNames: '[name].js',
+        entryFileNames: 'main.js',
         compact: true,
         validate: true,
         generatedCode: {
@@ -56,8 +56,8 @@ export default defineConfig(({ mode }) => ({
           const pathArr = fInfo.name.split('/')
           const fileName = pathArr[pathArr.length - 1]
 
-          if (fileName === 'index.css' && fInfo.source.length > 5000) {
-            return 'index.css'
+          if (fileName === 'main.css') {
+            return 'main.css'
           }
           if (fileName === 'logo.svg') {
             return 'logo.svg'
@@ -134,7 +134,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-file-pond/dist/bit-filepond.min.js'),
+        src: absPath('packages/bit-filepond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },
       {

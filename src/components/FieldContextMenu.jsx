@@ -1,9 +1,10 @@
 /* eslint-disable import/no-unresolved */
 import produce from 'immer'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
+import { CSSTransition } from 'react-transition-group'
 import { $fields, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'
@@ -32,7 +33,6 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
 
 export default function FieldContextMenu({
   isContextMenu,
-  isComponentVisible,
   contextMenu,
   resetContextMenu,
   layoutItem,
@@ -41,11 +41,13 @@ export default function FieldContextMenu({
   className,
   cloneLayoutItem,
   removeLayoutItem,
+  isComponentVisible,
 }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const { css } = useFela()
+  const nodeRef = useRef(null)
   const [activeSubMenus, setActiveSubMenus] = useState([])
 
   const subMenuParent = parentName => activeSubMenus.includes(parentName)
@@ -99,15 +101,23 @@ export default function FieldContextMenu({
   }
 
   return (
-    <div style={generateContextMenuStyle()}>
-      <div className={`context-menu ${className}`}>
-        <ul className="context-list">
-          <ContextMenuItem onClick={deselectFieldId} label="Deselect" icn={<DeSelectIcn />} />
-          <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
-          <ContextMenuItem onClick={styleNavigation} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
-          <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
-          <ContextMenuItem onClick={() => handleFieldHide()} label="Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
-          {/* <MenuItemWrapper isContextMenu={isContextMenu}>
+    <CSSTransition
+      nodeRef={nodeRef}
+      in={isComponentVisible}
+      timeout={150}
+      classNames="btc-pk"
+      unmountOnExit
+      onExit={resetContextMenu}
+    >
+      <div ref={nodeRef} style={generateContextMenuStyle()}>
+        <div className={`context-menu ${className}`}>
+          <ul className="context-list">
+            <ContextMenuItem onClick={deselectFieldId} label="Deselect" icn={<DeSelectIcn />} />
+            <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
+            <ContextMenuItem onClick={styleNavigation} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
+            <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
+            <ContextMenuItem onClick={() => handleFieldHide()} label="Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+            {/* <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
               <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')}>
                 <button
@@ -133,14 +143,15 @@ export default function FieldContextMenu({
               </Downmenu>
             </li>
           </MenuItemWrapper> */}
-          <MenuItemWrapper isContextMenu={isContextMenu}>
-            <li className="context-item">
-              <FieldDeleteButton placement="bottom" className={`context-btn delete ${subMenuParent('delete') ? 'active' : ''}`} label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} toggleSubMenu={toggleSubMenu} />
-            </li>
-          </MenuItemWrapper>
-        </ul>
+            <MenuItemWrapper isContextMenu={isContextMenu}>
+              <li className="context-item">
+                <FieldDeleteButton placement="bottom" className={`context-btn delete ${subMenuParent('delete') ? 'active' : ''}`} label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} toggleSubMenu={toggleSubMenu} />
+              </li>
+            </MenuItemWrapper>
+          </ul>
+        </div>
       </div>
-    </div>
+    </CSSTransition>
   )
 }
 

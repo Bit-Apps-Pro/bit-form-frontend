@@ -52,7 +52,7 @@ export default class BitDropdownField {
     options: [],
     attributes: {},
     classNames: {},
-    onChange: val => { console.log(val) },
+    onChange: () => { },
   }
 
   #debounceTimeout = null

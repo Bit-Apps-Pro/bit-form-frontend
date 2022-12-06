@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -27,6 +27,7 @@ export default function LayerAccordion({
 }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
+  const nodeRef = useRef(null)
 
   const { css } = useFela()
   const { '*': rightBarUrl } = useParams()
@@ -72,7 +73,7 @@ export default function LayerAccordion({
     return Math.ceil(el.offsetHeight + margin)
   }
 
-  const setAccHeight = (el) => setH(getAbsoluteHeight(el))
+  const setAccHeight = () => setH(getAbsoluteHeight(nodeRef.current))
 
   return (
     <div
@@ -139,16 +140,18 @@ export default function LayerAccordion({
       </div>
       <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
         <CSSTransition
+          nodeRef={nodeRef}
           in={tgl}
           timeout={300}
           onEntering={setAccHeight}
           onEntered={() => setH('auto')}
-          onExit={el => setH(el.offsetHeight)}
+          onExit={() => setH(nodeRef.current.offsetHeight)}
           onExiting={() => setH(0)}
           unmountOnExit
           style={{ overflow: tgl ? 'auto' : 'hidden' }}
         >
           <div
+            ref={nodeRef}
             className={`body ${css(cls.body)}`}
             onClick={cancelBubble}
             onKeyPress={cancelBubble}
