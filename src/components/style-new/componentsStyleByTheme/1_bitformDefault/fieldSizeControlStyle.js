@@ -24,11 +24,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '16px', height: '16px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '16px', height: '16px' },
 
-        ...(fieldType === 'radio' || fieldType === 'check') && {
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '10px', height: '10px' },
           [`.${fk}-ct`]: { 'font-size': '12px' },
         },
-        ...(fieldType === 'check') && {
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '3px' },
         },
 
@@ -114,11 +114,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
 
-        ...(fieldType === 'radio' || fieldType === 'check') && {
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '14px', height: '14px' },
           [`.${fk}-ct`]: { 'font-size': '14px' },
         },
-        ...(fieldType === 'check') && {
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '4px' },
         },
 
@@ -224,11 +224,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
 
-        ...(fieldType === 'radio' || fieldType === 'check') && {
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '18px', height: '18px' },
           [`.${fk}-ct`]: { 'font-size': '16px' },
         },
-        ...(fieldType === 'check') && {
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '5px' },
         },
 
@@ -334,11 +334,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
 
-        ...(fieldType === 'radio' || fieldType === 'check') && {
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '22px', height: '22px' },
           [`.${fk}-ct`]: { 'font-size': '18px' },
         },
-        ...(fieldType === 'check') && {
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '6px' },
         },
 
@@ -436,11 +436,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
 
-        ...(fieldType === 'radio' || fieldType === 'check') && {
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '26px', height: '26px' },
           [`.${fk}-ct`]: { 'font-size': '20px' },
         },
-        ...(fieldType === 'check') && {
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '7px' },
         },
 

@@ -49,7 +49,6 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
-    console.log({ v: value, u: unit, preN: prvUnit, p: prop })
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
@@ -272,24 +271,24 @@ export default function FieldQuickTweaks({ fieldKey }) {
         // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
         />
       )}
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check|decision-box)$/gi) && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Fields Size</span>
+          <select
+            data-testid="field-size-ctrl"
+            value={fieldSize}
+            onChange={setSizes}
+            className={css(sc.select)}
+          >
+            {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
+          </select>
+        </div>
+      )}
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check)$/gi) && (
-        <>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Fields Size</span>
-            <select
-              data-testid="field-size-ctrl"
-              value={fieldSize}
-              onChange={setSizes}
-              className={css(sc.select)}
-            >
-              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
-            </select>
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <ThemeControl fldKey={fieldKey} />
-          </div>
-        </>
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Theme</span>
+          <ThemeControl fldKey={fieldKey} />
+        </div>
       )}
 
       {fieldType === 'button' && (
