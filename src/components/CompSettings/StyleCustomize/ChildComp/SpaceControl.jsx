@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import BorderFullIcn from '../../../../Icons/BorderFullIcn'
+import BorderLeftTopIcn from '../../../../Icons/BorderLeftTopIcn'
 import BoxFullIcon from '../../../../Icons/BoxFullIcon'
 import BoxIcon from '../../../../Icons/BoxIcon'
 import ut from '../../../../styles/2.utilities'
@@ -17,7 +19,9 @@ export default function SpaceControl({
   className,
   stateObjName,
   propertyPath,
-  width, dataTestId,
+  width,
+  dataTestId,
+  radius,
 }) {
   const { css } = useFela()
 
@@ -35,7 +39,7 @@ export default function SpaceControl({
 
   const options = [
     { label: 'All', icn: <BoxFullIcon stroke="1.7" size={14} />, show: ['icn'], tip: 'All Side' },
-    { label: 'Individual', icn: <BoxIcon stroke="1.7" size="15" />, show: ['icn'], tip: 'Individual Side' },
+    { label: 'Individual', icn: radius ? <BorderFullIcn size={20} /> : <BoxIcon stroke="1.7" size="15" />, show: ['icn'], tip: 'Individual Side' },
   ]
 
   /*
@@ -62,6 +66,7 @@ export default function SpaceControl({
   }
 
   const handleValues = ({ value: val, unit, id }) => {
+    console.log('handleValues', val, unit, id)
     const preUnit = getStrFromStr(values[id])
     const convertvalue = unitConverter(unit, val, preUnit)
 
@@ -124,7 +129,7 @@ export default function SpaceControl({
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="0"
-              label={<BoxIcon size="14" variant="top" className={css(s.blueTxt)} />}
+              label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(90deg)' })} /> : <BoxIcon size="14" variant="top" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[0])}
               unit={sizeUnits(values[0])}
@@ -137,7 +142,7 @@ export default function SpaceControl({
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
               id="1"
-              label={<BoxIcon size="14" variant="right" className={css(s.blueTxt)} />}
+              label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(180deg)' })} /> : <BoxIcon size="14" variant="right" className={css(s.blueTxt)} />}
               width="100px"
               value={sizeValues(values[1])}
               unit={sizeUnits(values[1])}
@@ -149,11 +154,12 @@ export default function SpaceControl({
               min="0"
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
-              id="2"
-              label={<BoxIcon size="14" variant="bottom" className={css(s.blueTxt)} />}
+              id="3"
+              // label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(0deg)' })} /> : <BoxIcon size="14" variant="bottom" className={css(s.blueTxt)} />}
+              label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(0deg)' })} /> : <BoxIcon size="14" variant="left" className={css(s.blueTxt)} />}
               width="100px"
-              value={sizeValues(values[2])}
-              unit={sizeUnits(values[2])}
+              value={sizeValues(values[3])}
+              unit={sizeUnits(values[3])}
               options={unitOption}
               className={css(ut.mr1)}
               dataTestId={`${dataTestId}-bottom`}
@@ -162,11 +168,12 @@ export default function SpaceControl({
               min="0"
               inputHandler={handleValues}
               sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
-              id="3"
-              label={<BoxIcon size="14" variant="left" className={css(s.blueTxt)} />}
+              id="2"
+              label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(270deg)' })} /> : <BoxIcon size="14" variant="bottom" className={css(s.blueTxt)} />}
+              // label={radius ? <BorderLeftTopIcn size={12} className={css({ tm: 'rotate(270deg)' })} /> : <BoxIcon size="14" variant="left" className={css(s.blueTxt)} />}
               width="100px"
-              value={sizeValues(values[3])}
-              unit={sizeUnits(values[3])}
+              value={sizeValues(values[2])}
+              unit={sizeUnits(values[2])}
               options={unitOption}
               dataTestId={`${dataTestId}-left`}
             />
