@@ -40,8 +40,6 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
     }
   }
 
-  console.log('workDriveConf', workDriveConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
