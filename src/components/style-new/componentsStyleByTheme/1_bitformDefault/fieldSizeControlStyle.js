@@ -27,6 +27,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '10px', height: '10px' },
           [`.${fk}-ct`]: { 'font-size': '12px' },
+          ...(fieldType === 'check' || fieldType === 'radio') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '0.625rem',
+              padding: '6px 4px !important',
+              height: '25px',
+              'border-radius': '6px',
+            },
+          },
         },
         ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '3px' },
@@ -117,6 +125,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '14px', height: '14px' },
           [`.${fk}-ct`]: { 'font-size': '14px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '0.8rem',
+              padding: '8px 6px',
+              height: '30px',
+              'border-radius': '8px',
+            },
+          },
         },
         ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '4px' },
@@ -227,6 +243,13 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '18px', height: '18px' },
           [`.${fk}-ct`]: { 'font-size': '16px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1rem',
+              padding: '10px 8px',
+              height: '40px',
+            },
+          },
         },
         ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '5px' },
@@ -337,7 +360,16 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '22px', height: '22px' },
           [`.${fk}-ct`]: { 'font-size': '18px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1.2rem',
+              padding: '11px 9px',
+              height: '44px',
+              'border-radius': '12px',
+            },
+          },
         },
+
         ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '6px' },
         },
@@ -439,6 +471,14 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '26px', height: '26px' },
           [`.${fk}-ct`]: { 'font-size': '20px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1.4rem',
+              padding: '12px 10px',
+              height: '48px',
+              'border-radius': '13px',
+            },
+          },
         },
         ...(fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-ck`]: { 'border-radius': '7px' },
@@ -539,6 +579,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
 export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
   const commonStyles = commonStyle(fldKey, fldSize, fldType)
+  console.log('commonStyles', commonStyles)
   const commonStylClasses = Object.keys(commonStyles)
   const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
   const fldClassesObj = copyFieldPrvStyle.classes
