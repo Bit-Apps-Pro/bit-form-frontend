@@ -282,6 +282,7 @@ export default function ThemeQuickTweaksCustomizer() {
         stateObjName="themeColors"
         propertyPath="--global-bg-color"
         modalId="global-bg-clr"
+        hslaPaths={{ h: '--gbg-h', s: '--gbg-s', l: '--gbg-l', a: '--gbg-a' }}
       />
     </>
 
