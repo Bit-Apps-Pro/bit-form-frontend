@@ -32,16 +32,16 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
 
       [`.${fk}-inp-btn`]: {
         'align-items': 'center',
-        'background-color': 'var(--btn-bg)',
+        'background-color': 'var(--btn-bg) !important',
         border: 'none',
-        'border-radius': '8px',
+        'border-radius': '8px !important',
         'box-shadow': 'none',
         color: 'hsla(0, 0%, 100%, 100%)',
         cursor: 'pointer',
         display: 'inline-flex',
         height: '35px',
         'margin-right': '8px',
-        padding: '5px 11px',
+        padding: '5px 11px !important',
       },
 
       [`.${fk}-pre-i`]: {

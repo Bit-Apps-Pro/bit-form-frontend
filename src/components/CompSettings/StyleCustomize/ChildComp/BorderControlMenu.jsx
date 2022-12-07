@@ -182,6 +182,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
           max="20"
           width="128px"
           dataTestId={`${id}-rdus`}
+          radius
         />
       )}
     </>

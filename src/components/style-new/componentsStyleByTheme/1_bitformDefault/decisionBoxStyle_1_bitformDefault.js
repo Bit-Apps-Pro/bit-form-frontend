@@ -35,7 +35,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
       // checkbox input
       [`.${fk}-ci`]: {
         position: 'absolute',
-        opacity: '0!important',
+        opacity: '0 !important',
       },
       [`.${fk}-ci:checked ~ [data-cl] [data-bx]`]: {
         background: 'var(--global-accent-color)',

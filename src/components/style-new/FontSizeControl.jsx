@@ -9,7 +9,7 @@ import ut from '../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import ResetStyle from './ResetStyle'
-import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, unitConverter } from './styleHelpers'
+import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 
 export default function FontSizeControl({ stateObjName, propertyPath, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -23,6 +23,9 @@ export default function FontSizeControl({ stateObjName, propertyPath, id }) {
       fs = themeVars[propertyPath]
     } else {
       fs = getValueByObjPath(styles, propertyPath)
+    }
+    while (fs?.match?.(/(var)/g)?.[0] === 'var') {
+      fs = getValueFromStateVar(themeVars, fs)
     }
     const val = getNumFromStr(fs)
     const unt = getStrFromStr(fs)

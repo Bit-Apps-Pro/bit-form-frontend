@@ -152,6 +152,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                 data-testid={`${fieldKey}-phone-nmbr-inp`}
                 data-dev-phone-number-input={fieldKey}
                 aria-label="Phone Number"
+                {...'ph' in attr && { placeholder: attr.ph }}
                 type="tel"
                 className={`${fieldKey}-phone-number-input`}
                 autoComplete="tel"

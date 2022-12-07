@@ -359,6 +359,7 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'currency',
         lbl: __('Currency'),
+        ph: __('Enter Amount..'),
         inputFormatOptions: {
           formatter: 'browser',
           showCurrencySymbol: true,
@@ -394,6 +395,7 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'phone-number',
         lbl: __('Phone Number'),
+        ph: __('Enter Phone Number'),
         config: {
           selectedFlagImage: true,
           selectedCountryClearable: true,

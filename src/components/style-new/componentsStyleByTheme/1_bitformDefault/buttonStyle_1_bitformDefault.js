@@ -33,7 +33,7 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'font-weight': 'var(--btn-fw)',
         'border-style': 'var(--btn-bdr)',
         'border-color': 'var(--btn-bdr-clr)',
-        'border-radius': 'var(--btn-bdr-rad)',
+        'border-radius': 'var(--btn-bdr-rad) !important',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
         // 'font-family': 'var(--g-font-family)',

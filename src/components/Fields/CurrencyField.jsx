@@ -148,6 +148,7 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                 data-testid={`${fieldKey}-crncy-amnt-inp`}
                 aria-label="Currency Input"
                 type="text"
+                {...'ph' in attr && { placeholder: attr.ph }}
                 className={`${fieldKey}-currency-amount-input`}
                 tabIndex={fieldData.valid.disabled ? '-1' : '0'}
               />

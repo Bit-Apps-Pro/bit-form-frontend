@@ -1,16 +1,69 @@
+/* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
+import { getRecoil } from 'recoil-nexus'
 import { mergeNestedObj } from '../Utils/globalHelpers'
-import { $breakpoint, $colorScheme } from './GlobalStates'
+import { $breakpoint, $colorScheme, $formId } from './GlobalStates'
 
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
   default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesLgLight-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
 })
-export const $stylesLgDark = atom({ key: '$stylesLgDark', default: {} })
-export const $stylesMdLight = atom({ key: '$stylesMdLight', default: {} })
-export const $stylesMdDark = atom({ key: '$stylesMdDark', default: {} })
-export const $stylesSmLight = atom({ key: '$stylesSmLight', default: {} })
-export const $stylesSmDark = atom({ key: '$stylesSmDark', default: {} })
+export const $stylesLgDark = atom({
+  key: '$stylesLgDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesLgDark-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
+})
+export const $stylesMdLight = atom({
+  key: '$stylesMdLight',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesMdLight-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
+})
+export const $stylesMdDark = atom({
+  key: '$stylesMdDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesMdDark-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
+})
+export const $stylesSmLight = atom({
+  key: '$stylesSmLight',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesSmLight-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
+})
+export const $stylesSmDark = atom({
+  key: '$stylesSmDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newStyles) => {
+      const formId = getRecoil($formId)
+      sessionStorage.setItem(`stylesSmDark-bf-${formId}`, JSON.stringify(newStyles))
+    })
+  }],
+})
 
 export const $styles = selector({
   key: '$styles',

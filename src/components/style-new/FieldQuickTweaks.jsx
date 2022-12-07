@@ -12,7 +12,7 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import commonStyle from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
 import PaypalFieldQuickTweaks from './QuickTweaks/PaypalFieldQuickTweaks'
 import RazorpayFieldQuickTweaks from './QuickTweaks/RazorpayFieldQuickTweaks'
@@ -41,33 +41,14 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const setSizes = ({ target: { value } }) => {
-    const commonStyleClasses = commonStyle(fieldKey, value, fieldData.typ)
-    const cmnStlClasses = Object.keys(commonStyleClasses)
-
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle.fields[fieldKey].fieldSize = value
-      const stylesClasses = drftStyle.fields[fieldKey].classes
-      const cmnStlClsLen = cmnStlClasses.length
-
-      for (let i = 0; i < cmnStlClsLen; i += 1) {
-        if (Object.prototype.hasOwnProperty.call(stylesClasses, cmnStlClasses[i])) {
-          const cmnClsProperty = commonStyleClasses[cmnStlClasses[i]]
-          const cmnClsPropertyKey = Object.keys(cmnClsProperty)
-          const cmnClsPropertyKeyLan = cmnClsPropertyKey.length
-
-          for (let popIndx = 0; popIndx < cmnClsPropertyKeyLan; popIndx += 1) {
-            const cmnClsPropertyValue = cmnClsProperty[cmnClsPropertyKey[popIndx]]
-            // eslint-disable-next-line no-param-reassign
-            drftStyle.fields[fieldKey].classes[cmnStlClasses[i]][cmnClsPropertyKey[popIndx]] = cmnClsPropertyValue
-          }
-        }
-      }
+      const updateStyle = updateFieldStyleByFieldSizing(prvStyle.fields[fieldKey], fieldKey, fieldData.typ, value)
+      drftStyle.fields[fieldKey] = updateStyle
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
   }
 
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
-    console.log({ v: value, u: unit, preN: prvUnit, p: prop })
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
@@ -290,24 +271,24 @@ export default function FieldQuickTweaks({ fieldKey }) {
         // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
         />
       )}
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check|decision-box)$/gi) && (
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Fields Size</span>
+          <select
+            data-testid="field-size-ctrl"
+            value={fieldSize}
+            onChange={setSizes}
+            className={css(sc.select)}
+          >
+            {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
+          </select>
+        </div>
+      )}
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check)$/gi) && (
-        <>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Fields Size</span>
-            <select
-              data-testid="field-size-ctrl"
-              value={fieldSize}
-              onChange={setSizes}
-              className={css(sc.select)}
-            >
-              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
-            </select>
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <ThemeControl fldKey={fieldKey} />
-          </div>
-        </>
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500)}>Theme</span>
+          <ThemeControl fldKey={fieldKey} />
+        </div>
       )}
 
       {fieldType === 'button' && (

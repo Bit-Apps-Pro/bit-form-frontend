@@ -105,9 +105,9 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       },
 
       [`.${fk}-selected-country-img`]: {
-        height: '17px',
+        height: '17px !important',
         width: '25px',
-        'border-radius': '3px',
+        'border-radius': '3px !important',
         'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
         'margin-right': '10px',
         'background-color': 'hsla(0, 0%, 0%, 5%)',
@@ -118,9 +118,9 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       [`.${fk}-inp-clr-btn`]: {
         display: 'none',
         right: '6px', // unused css
-        padding: '0', // unused css
+        padding: '0px !important', // unused css
         margin: '0', // unused css
-        background: 'transparent',
+        background: 'transparent !important',
         border: '0',
         outline: '0', // unused css
         cursor: 'pointer',
@@ -128,11 +128,11 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'place-content': 'center',
         width: '16px',
         height: '16px', // unused css
-        'border-radius': '50%',
+        'border-radius': '50% !important',
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-inp-clr-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-inp-clr-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
 
       [`.${fk}-dpd-btn-wrp`]: {
         display: 'flex',
@@ -166,7 +166,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
 
       [`.${fk}-option-list`]: {
         padding: '0',
-        margin: '0',
+        margin: '0px !important',
         height: '100%', // unused css
         'overflow-y': 'auto',
 
@@ -203,11 +203,11 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px', // unused css
-        'padding-left': '41px',
+        'padding-left': '41px !important',
         outline: 'none',
         'box-shadow': 'none',
         /* border-radius: 8px, */
-        border: 'none',
+        border: 'none !important',
         /* border-top: 1px solid #ddd, */
         /* border-bottom: 1px solid #ddd, */
         height: '35px',
@@ -240,25 +240,25 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
-        padding: '0px',
+        padding: '0px !important',
         margin: '0px',
-        background: 'transparent',
+        background: 'transparent !important',
         border: '',
         'border-width': '0px',
-        'border-radius': '50%',
+        'border-radius': '50% !important',
         outline: 0,
         cursor: 'pointer',
-        'margin-right': '5px',
+        'margin-right': '5px !important',
         'place-content': 'center',
         width: '16px',
         height: '16px',
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%)' },
+      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
 
       [`.${fk}-option-list .option`]: {
-        margin: '0 5px',
+        margin: '0 5px !important',
         transition: 'background 0.2s',
         'border-radius': '6px',
         'font-size': 'var(--fld-fs)',
