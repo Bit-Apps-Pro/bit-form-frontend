@@ -1,16 +1,15 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
-import { mergeNestedObj } from '../Utils/globalHelpers'
-import { $breakpoint, $colorScheme, $formId } from './GlobalStates'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF, mergeNestedObj } from '../Utils/globalHelpers'
+import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesLgLight-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesLgLight', JCOF.stringify(newStyles))
     })
   }],
 })
@@ -19,8 +18,7 @@ export const $stylesLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesLgDark-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesLgDark', JCOF.stringify(newStyles))
     })
   }],
 })
@@ -29,8 +27,7 @@ export const $stylesMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesMdLight-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesMdLight', JCOF.stringify(newStyles))
     })
   }],
 })
@@ -39,8 +36,7 @@ export const $stylesMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesMdDark-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesMdDark', JCOF.stringify(newStyles))
     })
   }],
 })
@@ -49,8 +45,7 @@ export const $stylesSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesSmLight-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesSmLight', JCOF.stringify(newStyles))
     })
   }],
 })
@@ -59,8 +54,7 @@ export const $stylesSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`stylesSmDark-bf-${formId}`, JSON.stringify(newStyles))
+      addToSessionStorage('stylesSmDark', JCOF.stringify(newStyles))
     })
   }],
 })

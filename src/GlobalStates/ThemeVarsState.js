@@ -1,15 +1,15 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
-import { $breakpoint, $colorScheme, $formId } from './GlobalStates'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
+import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $themeVarsLgLight = atom({
   key: '$themeVarsLgLight',
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgLight) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsLgLight-bf-${formId}`, JSON.stringify(newThemeVarsLgLight))
+      addToSessionStorage('themeVarsLgLight', JCOF.stringify(newThemeVarsLgLight))
     })
   }],
 })
@@ -18,8 +18,7 @@ export const $themeVarsMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdLight) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsMdLight-bf-${formId}`, JSON.stringify(newThemeVarsMdLight))
+      addToSessionStorage('themeVarsMdLight', JCOF.stringify(newThemeVarsMdLight))
     })
   }],
 })
@@ -28,8 +27,7 @@ export const $themeVarsSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmLight) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsSmLight-bf-${formId}`, JSON.stringify(newThemeVarsSmLight))
+      addToSessionStorage('themeVarsSmLight', JCOF.stringify(newThemeVarsSmLight))
     })
   }],
 })
@@ -39,8 +37,7 @@ export const $themeVarsLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgDark) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsLgDark-bf-${formId}`, JSON.stringify(newThemeVarsLgDark))
+      addToSessionStorage('themeVarsLgDark', JCOF.stringify(newThemeVarsLgDark))
     })
   }],
 })
@@ -49,8 +46,7 @@ export const $themeVarsMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdDark) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsMdDark-bf-${formId}`, JSON.stringify(newThemeVarsMdDark))
+      addToSessionStorage('themeVarsMdDark', JCOF.stringify(newThemeVarsMdDark))
     })
   }],
 })
@@ -59,8 +55,7 @@ export const $themeVarsSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmDark) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`themeVarsSmDark-bf-${formId}`, JSON.stringify(newThemeVarsSmDark))
+      addToSessionStorage('themeVarsSmDark', JCOF.stringify(newThemeVarsSmDark))
     })
   }],
 })

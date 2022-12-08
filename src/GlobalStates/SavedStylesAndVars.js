@@ -1,4 +1,4 @@
-import { selector, atom } from 'recoil'
+import { atom, selector } from 'recoil'
 import { getRecoil } from 'recoil-nexus'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { mergeNestedObj } from '../Utils/globalHelpers'

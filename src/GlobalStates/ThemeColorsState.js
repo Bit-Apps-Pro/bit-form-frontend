@@ -1,15 +1,15 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
-import { $colorScheme, $formId } from './GlobalStates'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
+import { $colorScheme } from './GlobalStates'
 
 export const $lightThemeColors = atom({
   key: '$lightThemeColors',
   default: {},
   effects: [({ onSet }) => {
     onSet((newLightThemeColors) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`lightThemeColors-bf-${formId}`, JSON.stringify(newLightThemeColors))
+      addToSessionStorage('lightThemeColors', JCOF.stringify(newLightThemeColors))
     })
   }],
 })
@@ -18,8 +18,7 @@ export const $darkThemeColors = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((darkThemeColors) => {
-      const formId = getRecoil($formId)
-      sessionStorage.setItem(`darkThemeColors-bf-${formId}`, JSON.stringify(darkThemeColors))
+      addToSessionStorage('darkThemeColors', JCOF.stringify(darkThemeColors))
     })
   }],
 })
