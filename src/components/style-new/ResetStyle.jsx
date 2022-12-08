@@ -8,6 +8,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
+import st from '../../styles/ResetButton.style'
 import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
@@ -19,7 +20,6 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-
   let show = false
   switch (stateObjName) {
     case 'styles':
@@ -109,19 +109,4 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
       </button>
     </Tip>
   )
-}
-
-const st = {
-  resetBtn: {
-    se: 20,
-    flx: 'center',
-    p: 3,
-    brs: 20,
-    b: 'none',
-    bd: 'none',
-    curp: 1,
-    cr: 'var(--white-0-0-29)',
-    mr: 3,
-    ':hover': { bd: 'var(--white-0-95)', cr: 'var(--white-0-29)' },
-  },
 }
