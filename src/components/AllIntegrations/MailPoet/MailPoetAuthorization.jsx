@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -12,13 +9,12 @@ import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 
 export default function MailPoetAuthorization({
-  formID, mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo,
+  mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo,
 }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ integrationName: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { css } = useFela()
 
   const handleAuthorize = () => {
     setIsLoading('auth')

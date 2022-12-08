@@ -1,15 +1,12 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 
 export default function GoogleSheetAuthorization({
@@ -18,7 +15,6 @@ export default function GoogleSheetAuthorization({
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const bits = useRecoilValue($bits)
-  const { css } = useFela()
   const { siteURL } = bits
 
   const handleInput = e => {
@@ -114,25 +110,16 @@ export default function GoogleSheetAuthorization({
         <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
         {!isInfo && (
           <>
-            <Btn
-              variant="success"
-              onClick={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)}
-              className={css(ut.mt3, { ml: 3 })}
-              disabled={isAuthorized}
-            >
-              {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-              {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-            </Btn>
+            <AuthorizeBtn
+              isAuthorized={isAuthorized}
+              isLoading={isLoading}
+              handleAuthorize={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+            />
             <br />
-            <Btn
-              onClick={() => nextPage(2)}
-              className={css(ut.ftRight)}
-              variant="success"
+            <NextBtn
+              nextPageHanlder={() => nextPage(2)}
               disabled={!isAuthorized}
-            >
-              {__('Next')}
-              <BackIcn className="ml-1 rev-icn" />
-            </Btn>
+            />
           </>
         )}
       </div>

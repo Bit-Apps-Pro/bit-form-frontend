@@ -1,16 +1,14 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import ut from '../../../styles/2.utilities'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { getAllList } from './ElasticEmailCommonFunc'
 
 export default function ElasticEmailAuthorization({ elasticEmailConf, setElasticEmailConf, step, setstep, isInfo }) {
@@ -18,7 +16,6 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { css } = useFela()
 
   const handleAuthorize = () => {
     const newConf = { ...elasticEmailConf }
@@ -116,25 +113,16 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
       )}
       {!isInfo && (
         <>
-          <Btn
-            variant="success"
-            onClick={handleAuthorize}
-            disabled={isAuthorized || isLoading}
-            className={css(ut.mt3)}
-          >
-            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-            {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-          </Btn>
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+            handleAuthorize={() => handleAuthorize()}
+          />
           <br />
-          <Btn
-            variant="success"
-            onClick={() => nextPage(2)}
+          <NextBtn
+            nextPageHanlder={() => nextPage(2)}
             disabled={!isAuthorized}
-            className={css(ut.ftRight)}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </Btn>
+          />
         </>
       )}
     </div>
