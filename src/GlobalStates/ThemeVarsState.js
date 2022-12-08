@@ -1,13 +1,64 @@
+/* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
-export const $themeVarsLgLight = atom({ key: '$themeVarsLgLight', default: {} })
-export const $themeVarsMdLight = atom({ key: '$themeVarsMdLight', default: {} })
-export const $themeVarsSmLight = atom({ key: '$themeVarsSmLight', default: {} })
+export const $themeVarsLgLight = atom({
+  key: '$themeVarsLgLight',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsLgLight) => {
+      addToSessionStorage('themeVarsLgLight', JCOF.stringify(newThemeVarsLgLight))
+    })
+  }],
+})
+export const $themeVarsMdLight = atom({
+  key: '$themeVarsMdLight',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsMdLight) => {
+      addToSessionStorage('themeVarsMdLight', JCOF.stringify(newThemeVarsMdLight))
+    })
+  }],
+})
+export const $themeVarsSmLight = atom({
+  key: '$themeVarsSmLight',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsSmLight) => {
+      addToSessionStorage('themeVarsSmLight', JCOF.stringify(newThemeVarsSmLight))
+    })
+  }],
+})
 
-export const $themeVarsLgDark = atom({ key: '$themeVarsLgDark', default: {} })
-export const $themeVarsMdDark = atom({ key: '$themeVarsMdDark', default: {} })
-export const $themeVarsSmDark = atom({ key: '$themeVarsSmDark', default: {} })
+export const $themeVarsLgDark = atom({
+  key: '$themeVarsLgDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsLgDark) => {
+      addToSessionStorage('themeVarsLgDark', JCOF.stringify(newThemeVarsLgDark))
+    })
+  }],
+})
+export const $themeVarsMdDark = atom({
+  key: '$themeVarsMdDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsMdDark) => {
+      addToSessionStorage('themeVarsMdDark', JCOF.stringify(newThemeVarsMdDark))
+    })
+  }],
+})
+export const $themeVarsSmDark = atom({
+  key: '$themeVarsSmDark',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newThemeVarsSmDark) => {
+      addToSessionStorage('themeVarsSmDark', JCOF.stringify(newThemeVarsSmDark))
+    })
+  }],
+})
 
 export const $themeVars = selector({
   key: '$themeVars',

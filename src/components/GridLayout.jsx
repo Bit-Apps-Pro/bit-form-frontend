@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -22,7 +22,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
@@ -45,7 +45,7 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -56,7 +56,7 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { fieldSizing } from './style-new/componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './style-new/componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
 import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
@@ -319,9 +319,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             fieldKey: newBlk,
             direction: themeVars['--dir'],
           })
-          draftStyle.fields[newBlk] = defaultFieldStyle
           if (preStyles.fieldsSize !== 'medium') {
-            fieldSizing(defaultFieldStyle, draftStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+            draftStyle.fields[newBlk] = updateStyle
+          } else {
+            draftStyle.fields[newBlk] = defaultFieldStyle
           }
         }
 

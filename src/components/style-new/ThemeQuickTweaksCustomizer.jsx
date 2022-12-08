@@ -25,7 +25,7 @@ import Btn from '../Utilities/Btn'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
-import { fieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
 import LabelControl from './LabelControl'
@@ -47,7 +47,6 @@ export default function ThemeQuickTweaksCustomizer() {
   const tmpStyles = useRecoilValue($savedStyles)
   const tmpThemeColors = useRecoilValue($savedThemeColors)
   const tmpThemeVars = useRecoilValue($savedThemeVars)
-
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
@@ -63,7 +62,8 @@ export default function ThemeQuickTweaksCustomizer() {
       const fldKeyArrLen = fldKeyArr.length
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        fieldSizing(flds[fldKey], draft, fldKey, flds[fldKey].fieldType, value, tmpThemeVar)
+        const updateStyle = updateFieldStyleByFieldSizing(flds[fldKey], fldKey, flds[fldKey].fieldType, value, tmpThemeVar)
+        draft.fields[fldKey] = updateStyle
       }
     }))
 

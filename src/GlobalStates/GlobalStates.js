@@ -1,13 +1,23 @@
 import produce from 'immer'
 import { atom, selector } from 'recoil'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
 export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} }) // eslint-disable-line no-undef
-export const $breakpoint = atom({ key: '$breakpoint', default: 'lg' })
+export const $breakpoint = atom({
+  key: '$breakpoint',
+  default: 'lg',
+  effects: [({ onSet }) => {
+    onSet((newBreakpoint) => {
+      addToSessionStorage('breakpoint', newBreakpoint)
+    })
+  }],
+})
 export const $breakpointSize = atom({ key: '$breakpointSize', default: { lg: 1024, md: 960, sm: 570 } })
-export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset', state: { breakpoint: 'lg', colorScheme: 'light', } }], active: 0 } })
+export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset', state: { breakpoint: 'lg', colorScheme: 'light' } }], active: 0 } })
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
@@ -22,11 +32,30 @@ export const $formId = atom({ key: '$formId', default: 0 })
 export const $formInfo = atom({ key: '$formInfo', default: { formName: 'Untitled Form' } })
 export const $forms = atom({ key: '$forms', default: getFormsFromPhpVariable(), dangerouslyAllowMutability: true })
 export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerouslyAllowMutability: true })
-export const $fields = atom({ key: '$fields', default: [], dangerouslyAllowMutability: true })
+export const $fields = atom({
+  key: '$fields',
+  default: [],
+  dangerouslyAllowMutability: true,
+  effects: [({ onSet }) => {
+    onSet((newFields) => {
+      addToSessionStorage('fields', JCOF.stringify(newFields))
+    })
+  }],
+})
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false, inspectMode: false } })
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $isNewThemeStyleLoaded = atom({ key: '$isNewThemeStyleLoaded', default: false })
-export const $layouts = atom({ key: '$layouts', default: { lg: [], md: [], sm: [] }, dangerouslyAllowMutability: true })
+export const $layouts = atom({
+  key: '$layouts',
+  default: { lg: [], md: [], sm: [] },
+  dangerouslyAllowMutability: true,
+  effects: [({ onSet }) => {
+    onSet((newLayouts, oldLayouts) => {
+      if (newLayouts.lg.length !== oldLayouts.lg.length) return
+      addToSessionStorage('layouts', JCOF.stringify(newLayouts))
+    })
+  }],
+})
 export const $mailTemplates = atom({ key: '$mailTemplates', default: [], dangerouslyAllowMutability: true })
 export const $reports = atom({ key: '$reports', default: [], dangerouslyAllowMutability: true })
 export const $reportId = atom({ key: '$reportId', default: {} })

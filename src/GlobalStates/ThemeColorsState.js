@@ -1,8 +1,27 @@
+/* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
+import { addToSessionStorage } from '../Utils/FormBuilderHelper'
+import { JCOF } from '../Utils/globalHelpers'
 import { $colorScheme } from './GlobalStates'
 
-export const $lightThemeColors = atom({ key: '$lightThemeColors', default: {} })
-export const $darkThemeColors = atom({ key: '$darkThemeColors', default: {} })
+export const $lightThemeColors = atom({
+  key: '$lightThemeColors',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((newLightThemeColors) => {
+      addToSessionStorage('lightThemeColors', JCOF.stringify(newLightThemeColors))
+    })
+  }],
+})
+export const $darkThemeColors = atom({
+  key: '$darkThemeColors',
+  default: {},
+  effects: [({ onSet }) => {
+    onSet((darkThemeColors) => {
+      addToSessionStorage('darkThemeColors', JCOF.stringify(darkThemeColors))
+    })
+  }],
+})
 
 export const $themeColors = selector({
   key: '$themeColors',

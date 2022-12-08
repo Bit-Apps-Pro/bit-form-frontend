@@ -6,12 +6,11 @@ import {
   useDeferredValue,
   useEffect,
   useReducer,
-  useState,
+  useState
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import useSWR from 'swr'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
@@ -23,7 +22,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId,
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -33,7 +32,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter, getSessionStorageStates } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -100,6 +99,8 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setStaticStylesState = useSetRecoilState($staticStylesState)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setBreakpoint = useSetRecoilState($breakpoint)
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   // eslint-disable-next-line no-console
 
@@ -116,7 +117,39 @@ const FormBuilder = ({ isLoading }) => {
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
     let isV2Form = true
+
     if (!isNewForm) {
+      const sessionStorageBreakpoint = getSessionStorageStates({ stateName: 'breakpoint' })
+      const sessionStorageAllThemeVars = {
+        lgLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgLight', strType: 'jcof' }),
+        mdLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdLight', strType: 'jcof' }),
+        smLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmLight', strType: 'jcof' }),
+        lgDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgDark', strType: 'jcof' }),
+        mdDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdDark', strType: 'jcof' }),
+        smDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmDark', strType: 'jcof' }),
+      }
+      const sessionStorageAllThemeColors = {
+        lightThemeColors: getSessionStorageStates({ stateName: 'lightThemeColors', strType: 'jcof' }),
+        darkThemeColors: getSessionStorageStates({ stateName: 'darkThemeColors', strType: 'jcof' }),
+      }
+      const sessionStorageAllStyles = {
+        lgLightStyles: getSessionStorageStates({ stateName: 'stylesLgLight', strType: 'jcof' }),
+        mdLightStyles: getSessionStorageStates({ stateName: 'stylesMdLight', strType: 'jcof' }),
+        smLightStyles: getSessionStorageStates({ stateName: 'stylesSmLight', strType: 'jcof' }),
+        lgDarkStyles: getSessionStorageStates({ stateName: 'stylesLgDark', strType: 'jcof' }),
+        mdDarkStyles: getSessionStorageStates({ stateName: 'stylesMdDark', strType: 'jcof' }),
+        smDarkStyles: getSessionStorageStates({ stateName: 'stylesSmDark', strType: 'jcof' }),
+      }
+      if (sessionStorageBreakpoint) {
+        setBreakpoint(sessionStorageBreakpoint)
+        setAllThemeVars(sessionStorageAllThemeVars)
+        setAllThemeColors(sessionStorageAllThemeColors)
+        setAllStyles(sessionStorageAllStyles)
+        setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
+        setUpdateBtn({ unsaved: true })
+        setStyleLoading(false)
+        return
+      }
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
         .then(({ data }) => {
           setIsFetchingV2Styles(false)
@@ -138,7 +171,6 @@ const FormBuilder = ({ isLoading }) => {
             setAllThemeVars(allThemeVars)
             setAllThemeColors(allThemeColors)
             setAllStyles(allStyles)
-
             setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
 
             setBreakpointSize(oldStyles.breakpointSize)
