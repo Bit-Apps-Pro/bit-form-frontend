@@ -579,7 +579,6 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
 export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
   const commonStyles = commonStyle(fldKey, fldSize, fldType)
-  console.log('commonStyles', commonStyles)
   const commonStylClasses = Object.keys(commonStyles)
   const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
   const fldClassesObj = copyFieldPrvStyle.classes
