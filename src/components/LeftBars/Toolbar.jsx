@@ -360,6 +360,7 @@ function Toolbar({ setNewData }) {
         typ: 'currency',
         lbl: __('Currency'),
         ph: __('Enter Amount..'),
+        phHide: true,
         inputFormatOptions: {
           formatter: 'browser',
           showCurrencySymbol: true,
@@ -396,6 +397,7 @@ function Toolbar({ setNewData }) {
         typ: 'phone-number',
         lbl: __('Phone Number'),
         ph: __('Enter Phone Number'),
+        phHide: true,
         config: {
           selectedFlagImage: true,
           selectedCountryClearable: true,
