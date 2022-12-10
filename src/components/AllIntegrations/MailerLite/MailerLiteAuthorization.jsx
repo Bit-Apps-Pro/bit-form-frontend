@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'

@@ -20,6 +20,7 @@ import TitleFieldQuickTweaks from './QuickTweaks/TitleFieldQuickTweaks'
 import SimpleColorPicker from './SimpleColorPicker'
 import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import ThemeControl from './ThemeControl'
+import ThemeStyleReset from './ThemeStyleReset'
 
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
@@ -274,14 +275,17 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check|decision-box)$/gi) && (
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500)}>Fields Size</span>
-          <select
-            data-testid="field-size-ctrl"
-            value={fieldSize}
-            onChange={setSizes}
-            className={css(sc.select)}
-          >
-            {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
-          </select>
+          <span className={css(ut.flxc)}>
+            <ThemeStyleReset id="field-theme" fk={fieldKey} />
+            <select
+              data-testid="field-size-ctrl"
+              value={fieldSize}
+              onChange={setSizes}
+              className={css(sc.select)}
+            >
+              {Object.keys(sizes).map((key) => <option key={key} value={key}>{sizes[key]}</option>)}
+            </select>
+          </span>
         </div>
       )}
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check)$/gi) && (

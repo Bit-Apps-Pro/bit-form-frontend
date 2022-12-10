@@ -8,7 +8,7 @@ export default function NextBtn({ nextPageHanlder, disabled }) {
   const { css } = useFela()
   return (
     <Btn
-      variant="success"
+      variant={disabled ? 'disabled' : 'success'}
       onClick={nextPageHanlder}
       className={css(ut.ftRight)}
       disabled={disabled}
