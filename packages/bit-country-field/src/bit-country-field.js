@@ -587,7 +587,7 @@ export default class BitCountryField {
     } else {
       this.#countryFieldWrapper.classList.remove('menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
-      this.searchOptions('')
+      setTimeout(() => { this.searchOptions('') }, 100)
       this.#searchInputElm.blur()
       this.#searchInputElm.tabIndex = '-1'
       this.#clearSearchBtnElm.tabIndex = '-1'
