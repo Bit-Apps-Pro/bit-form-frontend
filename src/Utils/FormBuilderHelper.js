@@ -4,12 +4,12 @@ import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { mergeNestedObj, selectInGrid } from './globalHelpers'
+import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
 
@@ -826,4 +826,26 @@ export function getAbsoluteElmHeight(el, withMargin = 1) {
   const stl = iFrameWindow.getComputedStyle(el)
   const margin = parseFloat(stl.marginTop) + parseFloat(stl.marginBottom)
   return el.offsetHeight + margin
+}
+
+export function addToSessionStorage(key, value, formId) {
+  let newVal = value
+  if (typeof value !== 'string') newVal = JSON.stringify(value)
+  if (formId === 0) {
+    sessionStorage.setItem(key, newVal)
+    return
+  }
+  const currentFormId = getRecoil($formId)
+  if (!currentFormId) return
+  sessionStorage.setItem(`${key}-bf-${currentFormId}`, newVal)
+}
+
+export const getSessionStorageStates = ({ stateName, strType }, formId) => {
+  let sessionKey = stateName
+  const currentFormId = getRecoil($formId)
+  if (formId !== 0) sessionKey = `${stateName}-bf-${currentFormId}`
+  const state = sessionStorage.getItem(sessionKey)
+  if (strType === 'json') return state ? JSON.parse(state) : null
+  if (strType === 'jcof') return state ? JCOF.parse(state) : null
+  return state
 }

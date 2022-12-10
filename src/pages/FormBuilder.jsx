@@ -22,7 +22,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -32,7 +32,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter, getSessionStorageStates } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -99,6 +99,8 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setStaticStylesState = useSetRecoilState($staticStylesState)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setBreakpoint = useSetRecoilState($breakpoint)
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   // eslint-disable-next-line no-console
 
@@ -117,70 +119,37 @@ const FormBuilder = ({ isLoading }) => {
     let isV2Form = true
 
     if (!isNewForm) {
+      const sessionStorageBreakpoint = getSessionStorageStates({ stateName: 'breakpoint' })
       const sessionStorageAllThemeVars = {
-        lgDarkThemeVars: {},
-        lgLightThemeVars: {},
-        mdDarkThemeVars: {},
-        mdLightThemeVars: {},
-        smDarkThemeVars: {},
-        smLightThemeVars: {},
+        lgLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgLight', strType: 'jcof' }),
+        mdLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdLight', strType: 'jcof' }),
+        smLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmLight', strType: 'jcof' }),
+        lgDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgDark', strType: 'jcof' }),
+        mdDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdDark', strType: 'jcof' }),
+        smDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmDark', strType: 'jcof' }),
       }
       const sessionStorageAllThemeColors = {
-        lightThemeColors: {},
-        darkThemeColors: {},
+        lightThemeColors: getSessionStorageStates({ stateName: 'lightThemeColors', strType: 'jcof' }),
+        darkThemeColors: getSessionStorageStates({ stateName: 'darkThemeColors', strType: 'jcof' }),
       }
       const sessionStorageAllStyles = {
-        lgDarkStyles: {},
-        lgLightStyles: {},
-        mdDarkStyles: {},
-        mdLightStyles: {},
-        smDarkStyles: {},
-        smLightStyles: {},
+        lgLightStyles: getSessionStorageStates({ stateName: 'stylesLgLight', strType: 'jcof' }),
+        mdLightStyles: getSessionStorageStates({ stateName: 'stylesMdLight', strType: 'jcof' }),
+        smLightStyles: getSessionStorageStates({ stateName: 'stylesSmLight', strType: 'jcof' }),
+        lgDarkStyles: getSessionStorageStates({ stateName: 'stylesLgDark', strType: 'jcof' }),
+        mdDarkStyles: getSessionStorageStates({ stateName: 'stylesMdDark', strType: 'jcof' }),
+        smDarkStyles: getSessionStorageStates({ stateName: 'stylesSmDark', strType: 'jcof' }),
       }
-      const themeVarsLgLight = sessionStorage.getItem(`themeVarsLgLight-bf-${formID}`)
-      const themeVarsLgDark = sessionStorage.getItem(`themeVarsLgDark-bf-${formID}`)
-      const themeVarsMdLight = sessionStorage.getItem(`themeVarsMdLight-bf-${formID}`)
-      const themeVarsMdDark = sessionStorage.getItem(`themeVarsMdDark-bf-${formID}`)
-      const themeVarsSmLight = sessionStorage.getItem(`themeVarsSmLight-bf-${formID}`)
-      const themeVarsSmDark = sessionStorage.getItem(`themeVarsSmDark-bf-${formID}`)
-
-      const darkThemeColors = sessionStorage.getItem(`darkThemeColors-bf-${formID}`)
-      const lightThemeColors = sessionStorage.getItem(`lightThemeColors-bf-${formID}`)
-
-      const stylesSmDark = sessionStorage.getItem(`stylesSmDark-bf-${formID}`)
-      const stylesSmLight = sessionStorage.getItem(`stylesSmLight-bf-${formID}`)
-      const stylesMdDark = sessionStorage.getItem(`stylesMdDark-bf-${formID}`)
-      const stylesMdLight = sessionStorage.getItem(`stylesMdLight-bf-${formID}`)
-      const stylesLgDark = sessionStorage.getItem(`stylesLgDark-bf-${formID}`)
-      const stylesLgLight = sessionStorage.getItem(`stylesLgLight-bf-${formID}`)
-
-      if (!themeVarsLgLight || !themeVarsLgDark || !themeVarsMdLight || !themeVarsMdDark || !themeVarsSmLight || !themeVarsSmDark) {
-        sessionStorageAllThemeVars.lgDarkThemeVars = themeVarsLgDark
-        sessionStorageAllThemeVars.lgLightThemeVars = themeVarsLgLight
-        sessionStorageAllThemeVars.mdDarkThemeVars = themeVarsMdDark
-        sessionStorageAllThemeVars.mdLightThemeVars = themeVarsMdLight
-        sessionStorageAllThemeVars.smDarkThemeVars = themeVarsSmDark
-        sessionStorageAllThemeVars.smLightThemeVars = themeVarsSmLight
+      if (sessionStorageBreakpoint) {
+        setBreakpoint(sessionStorageBreakpoint)
+        setAllThemeVars(sessionStorageAllThemeVars)
+        setAllThemeColors(sessionStorageAllThemeColors)
+        setAllStyles(sessionStorageAllStyles)
+        setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
+        setUpdateBtn({ unsaved: true })
+        setStyleLoading(false)
+        return
       }
-
-      if (!darkThemeColors || !lightThemeColors) {
-        sessionStorageAllThemeColors.lightThemeColors = lightThemeColors
-        sessionStorageAllThemeColors.darkThemeColors = darkThemeColors
-      }
-
-      if (!stylesSmDark || !stylesSmLight || !stylesMdDark || !stylesMdLight || !stylesLgDark || !stylesLgLight) {
-        sessionStorageAllStyles.lgDarkStyles = stylesLgDark
-        sessionStorageAllStyles.lgLightStyles = stylesLgLight
-        sessionStorageAllStyles.mdDarkStyles = stylesMdDark
-        sessionStorageAllStyles.mdLightStyles = stylesMdLight
-        sessionStorageAllStyles.smDarkStyles = stylesSmDark
-        sessionStorageAllStyles.smLightStyles = stylesSmLight
-      }
-
-      console.log('sessionStorageAllThemeVars', sessionStorageAllThemeVars)
-      console.log('sessionStorageAllThemeColors', sessionStorageAllThemeColors)
-      console.log('sessionStorageAllStyles', sessionStorageAllStyles)
-      // if (sessionStorageAllThemeVars) { }
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
         .then(({ data }) => {
           setIsFetchingV2Styles(false)

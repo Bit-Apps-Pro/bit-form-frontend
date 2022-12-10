@@ -35,6 +35,7 @@ import { changeFormDir } from './styleHelpers'
 import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
+import ThemeStyleReset from './ThemeStyleReset'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
@@ -233,22 +234,25 @@ export default function ThemeQuickTweaksCustomizer() {
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Field Sizes</span>
-        <select
-          defaultValue={styles.fieldsSize}
-          onChange={setSizes}
-          className={css(sc.select)}
-          data-testid="field-sizes-select"
-        >
-          {Object.keys(sizes).map((key, index) => (
-            <option
-              key={`size-${index * 5 * 2}`}
-              value={key}
-              data-testid={`globl-size-${key}`}
-            >
-              {sizes[key]}
-            </option>
-          ))}
-        </select>
+        <span className={css(ut.flxc)}>
+          <ThemeStyleReset id="global-theme" />
+          <select
+            value={styles.fieldsSize}
+            onChange={setSizes}
+            className={css(sc.select)}
+            data-testid="field-sizes-select"
+          >
+            {Object.keys(sizes).map((key, index) => (
+              <option
+                key={`size-${index * 5 * 2}`}
+                value={key}
+                data-testid={`globl-size-${key}`}
+              >
+                {sizes[key]}
+              </option>
+            ))}
+          </select>
+        </span>
       </div>
 
       <FontSizeControl
