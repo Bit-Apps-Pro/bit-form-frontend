@@ -79,8 +79,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
         0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
         0px 43px 80px hsla(0, 0%, 0%, 10%)`,
-        border: 'solid var(--bg-20)',
-        'border-width': '1px',
+        'border-color': 'var(--bg-10)!important',
       },
       [`.${fk}-currency-inner-wrp`]: {
         display: 'flex',
@@ -99,14 +98,13 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '34px',
         margin: '3px',
         padding: '8px 8px',
-        'box-sizing': 'border-box', // unused css
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css
         'border-radius': 'calc(var(--g-bdr-rad) - 3px)',
       },
       [`.${fk}-dpd-wrp:hover`]: {
-        'background-color': 'hsla(var(--gbg-h), var(--gbg-s), calc(var(--gbg-l) + 20%), 0.4)',
+        'background-color': 'var(--bg-5)',
       },
       [`.${fk}-dpd-wrp:focus-visible`]: {
         outline: '2px solid var(--global-accent-color)',
@@ -126,40 +124,38 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-selected-currency-img`]: {
         height: '17px !important',
         width: '25px',
-        border: 'none', // unused css
-        'border-width': '0px', // unused css
         'border-radius': '3px !important',
-        'box-shadow': '0 0 0 1px var(--bg-50)',
+        'box-shadow': '0 0 0 1px var(--bg-15)',
         margin: '0px 10px 0px 0px',
-        'background-color': 'var(--bg-55)',
+        'background-color': 'var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
       [`.${fk}-input-clear-btn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
         padding: '0px !important',
         margin: '0px 5px 0px 0px',
-        background: 'transparent !important',
+        background: 'var(--bg-40) !important',
         border: 'none',
-        'border-width': '0px',
         'border-radius': '50% !important',
         outline: 0,
         cursor: 'pointer',
         'place-content': 'center',
         width: '16px',
         height: '15px',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-5) !important',
       },
 
-      [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
+      [`.${fk}-input-clear-btn:hover`]: {
+        'background-color': 'var(--bg-60) !important',
+      },
 
       [`.${fk}-input-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px blue inset',
+        'box-shadow': '0 0 0 1.5px var(--global-accent-color)',
         outline: 'none',
       },
 
@@ -171,11 +167,11 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-currency-amount-input`]: {
-        border: '0px !important',
-        outline: '0px',
+        border: '0 !important',
+        'font-family': 'inherit',
+        outline: 0,
         width: 'calc(100% - 50px)',
-        padding: '8px !important',
-        'padding-right': '26px !important',
+        padding: '8px 26px 8px 8px !important',
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
@@ -195,7 +191,9 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       // /* Firefox */
       [`.${fk}-currency-amount-input[type=number]`]: { '-moz-appearance': 'textfield' },
 
-      [`.${fk}-currency-amount-input::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
+      [`.${fk}-currency-amount-input::placeholder`]: {
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important',
+      },
 
       [`.${fk}-option-wrp`]: {
         'max-height': '0px',
@@ -210,9 +208,6 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-option-inner-wrp`]: {
-        'padding-top': 0, // unused css
-        'border-top': 0, // unused css
-        margin: 0, // unused css
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
@@ -236,10 +231,9 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-opt-search-icn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-25) !important',
         left: '13px',
       },
 
@@ -254,6 +248,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'border-radius': 'calc(var(--g-bdr-rad) - 1px)!important',
         'font-size': '1rem',
         'background-color': 'var(--bg-5)',
+        'font-family': 'inherit',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
       },
@@ -264,7 +259,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'background-color': 'var(--bg-0)',
         'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
       },
-      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-accent-color)' },
+
+      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)!important' },
 
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
@@ -273,16 +269,14 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-search-clear-btn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
         padding: '0px !important',
         margin: '0',
-        background: 'transparent !important',
-        border: '',
-        'border-width': '0px',
+        background: 'var(--bg-40) !important',
+        border: 'none',
         'border-radius': '50% !important',
         outline: 0,
         cursor: 'pointer',
@@ -290,15 +284,15 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'place-content': 'center',
         width: '16px',
         height: '16px',
-        color: 'var(--bg-0)',
+        color: 'var(--bg-5)',
       },
 
       [`.${fk}-search-clear-btn:hover`]: {
-        'background-color': 'var(--bg-50)!important',
+        'background-color': 'var(--bg-60)!important',
       },
 
       [`.${fk}-search-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
+        'box-shadow': '0 0 0 1.5px var(--global-accent-color)',
         outline: 'none',
       },
 
@@ -310,51 +304,61 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
         /* firefox */
         'scrollbar-width': 'thin !important',
-        'scrollbar-color': 'hsla(0, 0%, 0%, 20%) !important',
+        'scrollbar-color': 'var(--bg-15) transparent !important',
       },
 
-      [`.${fk}-option-list::-webkit-scrollbar`]: { width: '8px' },
+      [`.${fk}-option-list::-webkit-scrollbar`]: {
+        width: '8px',
+      },
 
       [`.${fk}-option-list::-webkit-scrollbar-thumb`]: {
-        'background-color': 'hsla(0, 0%, 0%, 10%)',
-        'border-radius': '10px',
+        'background-color': 'var(--bg-15)',
+        'border-radius': 'var(--g-bdr-rad)',
       },
 
       [`.${fk}-option-list .option`]: {
-        margin: '0 5px !important', // unused css
+        margin: '2px 5px !important', // unused css
         transition: 'background 0.2s',
-        'border-radius': '6px',
-        // 'font-size': 'var(--fld-fs)',
+        'border-radius': 'calc(var(--g-bdr-rad) - 2px)',
+        'font-size': 'calc(var(--fld-fs) - 2px)',
         cursor: 'pointer',
         'text-align': 'left', // unused css
-        border: 'none', // unused css
-        padding: '5px 7px',
+        padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
       },
 
-      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: {
+        'background-color': 'var(--bg-10)',
+      },
 
       [`.${fk}-option-list .option:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
-        outline: 'none',
+        outline: '2px solid var(--global-accent-color)',
+        'background-color': 'var(--bg-10)',
       },
 
-      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
-      },
+      // [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+      //   'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      // },
 
       [`.${fk}-option-list .selected-opt`]: {
-        // color: 'white',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
+        color: 'var(--bg-0)',
+        'font-weight': 500,
+        'background-color': 'var(--global-accent-color)',
+      },
+      [`.${fk}-option-list .selected-opt .opt-suffix`]: {
+        background: 'hsla(var(--gah), var(--gas), calc(var(--gal) - 10%), 1)',
       },
 
-      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: {
+        'background-color': 'var(--global-accent-color)',
+      },
 
       [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
         'list-style': 'none',
         margin: '5px',
+        'font-size': 'calc(var(--fld-fs) - 2px)',
       },
       [`.${fk}-option-list .opt-lbl`]: {},
 
@@ -369,20 +373,26 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        'border-width': '1px', // unused css
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+        'box-shadow': '0 0 0 1px var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
 
-      [`.${fk}-option-list .opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
+      [`.${fk}-option-list .opt-suffix`]: {
+        'font-size': 'calc(var(--fld-fs) - 3px)',
+        background: 'var(--bg-10)',
+        'border-radius': '5px',
+        padding: '3px',
+      },
 
-      [`.${fk}-currency-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
+      [`.${fk}-currency-fld-wrp.menu-open .${fk}-dpd-down-btn`]: {
+        transform: 'rotate(180deg)',
+      },
 
       [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
-        color: 'hsla(0, 0%, 33%, 100%) !important',
+        color: 'var(--bg-10) !important',
         opacity: '0.5',
       },
     }

@@ -162,8 +162,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                   {...getCustomAttributes(fieldKey, 'input-clear-btn')}
                 >
                   <svg
-                    width="15"
-                    height="15"
+                    width="12"
+                    height="12"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -222,8 +222,8 @@ const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, style
                       {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                     >
                       <svg
-                        width="13"
-                        height="13"
+                        width="12"
+                        height="12"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"

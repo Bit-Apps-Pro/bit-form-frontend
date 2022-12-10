@@ -71,7 +71,7 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
         'opt-lbl-wrp': getDataDevAttrArr(fieldKey, 'opt-lbl-wrp'),
         'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
         'opt-lbl': getDataDevAttrArr(fieldKey, 'opt-lbl'),
-        'opt-prefix': getDataDevAttrArr(fieldKey, 'opt-prefix'),
+        'opt-a': getDataDevAttrArr(fieldKey, 'opt-prefix'),
       },
       classNames: {
         option: getCustomClsName(fieldKey, 'option'),
@@ -168,8 +168,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                   {...getCustomAttributes(fieldKey, 'input-clear-btn')}
                 >
                   <svg
-                    width="15"
-                    height="15"
+                    width="12"
+                    height="12"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -230,8 +230,8 @@ export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses 
                         {...getCustomAttributes(fieldKey, 'search-clear-btn')}
                       >
                         <svg
-                          width="13"
-                          height="13"
+                          width="12"
+                          height="12"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
