@@ -40,7 +40,6 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
       [`.${fk}-country-fld-wrp.readonly .${fk}-dpd-wrp`]: {
-        cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
@@ -55,6 +54,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       },
 
       [`.${fk}-country-fld-wrp.menu-open`]: {
+        'background-color': 'var(--bg-0)',
         'z-index': '999',
         'box-shadow':
           `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
@@ -63,7 +63,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
         0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
         0px 43px 80px hsla(0, 0%, 0%, 10%)`,
-        'border-color': 'hsla(0, 0%, 87%, 100%)',
+        'border-color': 'var(--bg-10)!important',
       },
 
       [`.${fk}-country-fld-wrp:focus-within`]: {
@@ -77,7 +77,6 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       [`.${fk}-dpd-wrp`]: {
         'background-color': 'transparent',
         overflow: 'hidden', // unused css
-        'border-radius': '7px', // unused css
         'font-weight': '500', // unused css
         display: 'flex',
         'justify-content': 'space-between',
@@ -108,9 +107,9 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         height: '17px !important',
         width: '25px',
         'border-radius': '3px !important',
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
-        'margin-right': '10px',
-        'background-color': 'hsla(0, 0%, 0%, 5%)',
+        outline: '1px solid var(--bg-10)',
+        'background-color': 'var(--bg-15)',
+        margin: '0 10px 0 0',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
@@ -132,7 +131,9 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-inp-clr-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
+      [`.${fk}-inp-clr-btn:hover`]: {
+        'background-color': 'var(--bg-15) !important',
+      },
 
       [`.${fk}-dpd-btn-wrp`]: {
         display: 'flex',
@@ -150,15 +151,10 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         display: 'flex',
         'flex-direction': 'column',
         // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'height .3s',
+        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
-        /* padding: 5px, */
-        'padding-top': '0', // unused css
-        /* border     : 1px solid #ddd, */
-        'border-top': '0', // unused css
-        margin: '0', // unused css
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
@@ -166,13 +162,13 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
 
       [`.${fk}-option-list`]: {
         padding: '0',
-        margin: '0px !important',
+        margin: '0 0 2px 0 !important',
         height: '100%', // unused css
         'overflow-y': 'auto',
 
         /* firefox */
         'scrollbar-width': 'thin !important',
-        'scrollbar-color': 'hsla(0, 0%, 0%, 100%) !important',
+        'scrollbar-color': 'var(--bg-15) transparent !important',
       },
 
       [`.${fk}-option-list::-webkit-scrollbar`]: { width: '8px' },
@@ -182,19 +178,17 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       }, */
 
       [`.${fk}-option-list::-webkit-scrollbar-thumb`]: {
-        'background-color': 'hsla(0, 0%, 0%, 2%)',
-        'border-radius': '10px',
+        'background-color': 'var(--bg-15)',
+        'border-radius': 'var(--g-bdr-rad)',
       },
 
       [`.${fk}-option-search-wrp`]: {
         position: 'relative',
-        // 'margin-bottom': '5px',
-        padding: '5px',
+        margin: '5px 5px 0 5px',
       },
 
       [`.${fk}-opt-search-icn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         left: '13px',
@@ -206,43 +200,46 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'padding-left': '41px !important',
         outline: 'none',
         'box-shadow': 'none',
+        'font-family': 'inherit',
         /* border-radius: 8px, */
         border: 'none !important',
         /* border-top: 1px solid #ddd, */
         /* border-bottom: 1px solid #ddd, */
+        'background-color': 'var(--bg-5)',
         height: '35px',
-        'border-radius': '8px !important',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
-        'font-size': '16px',
+        'border-radius': 'calc(var(--g-bdr-rad) - 1px) !important',
+        'font-size': '1rem',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
       },
 
-      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
-
+      [`.${fk}-opt-search-input::placeholder`]: {
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.5)',
+      },
+      [`.${fk}-opt-search-input:focus`]: {
+        'background-color': 'var(--bg-0)',
+        'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
+      },
+      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)' },
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
-
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
-
       [`.${fk}-opt-search-input::-webkit-search-results-button`]: { display: 'none' },
-
       [`.${fk}-opt-search-input::-webkit-search-results-decoration`]: { display: 'none' },
 
-      [`.${fk}-opt-search-input:focus`]: {
-        /* border-radius   : 20px,
-        background-color: red, */
-      },
+      // [`.${fk}-opt-search-input:focus`]: {
+      /* border-radius   : 20px,
+      background-color: red, */
+      // },
 
       [`.${fk}-search-clear-btn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
         padding: '0px !important',
         margin: '0px',
-        background: 'transparent !important',
+        background: 'var(--bg-25) !important',
         border: '',
         'border-width': '0px',
         'border-radius': '50% !important',
@@ -252,39 +249,54 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         'place-content': 'center',
         width: '16px',
         height: '16px',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-0)',
       },
 
-      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
+      [`.${fk}-search-clear-btn:hover`]: {
+        background: 'var(--bg-50) !important',
+      },
+
+      [`.${fk}-search-clear-btn:focus-visible`]: {
+        'box-shadow': '0 0 0 2px var(--global-accent-color)',
+        outline: 'none',
+      },
 
       [`.${fk}-option-list .option`]: {
-        margin: '0 5px !important',
+        margin: '2px 5px !important',
         transition: 'background 0.2s',
-        'border-radius': '6px',
-        'font-size': 'var(--fld-fs)',
+        'border-radius': 'calc(var(--g-bdr-rad) - 2px)',
+        'font-size': 'calc(var(--fld-fs) - 2px)',
         cursor: 'pointer',
         'text-align': 'left', // unused css
         border: 'none', // unused css
-        padding: '5px 7px',
+        padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
         'justify-content': 'space-between',
       },
 
-      [`.${fk}-option-list .option:hover:not(.selected-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt)`]: {
+        'background-color': 'var(--bg-10)',
+      },
 
       [`.${fk}-option-list .option:focus-visible`]: {
-        'box-shadow': '0 0 0 2px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
-        outline: 'none',
+        outline: '2px solid var(--global-accent-color)',
+        'background-color': 'var(--bg-10)',
       },
 
-      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      // [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+      //   'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      // },
+
+      [`.${fk}-option-list .selected-opt`]: {
+        color: 'var(--bg-0)',
+        'font-weight': 500,
+        'background-color': 'var(--global-accent-color)',
       },
 
-      [`.${fk}-option-list .selected-opt`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
-
-      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: {
+        'background-color': 'var(--global-accent-color)',
+      },
 
       [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
@@ -312,7 +324,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+        'box-shadow': '0 0 0 1px var(--bg-5)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
@@ -333,7 +345,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
       [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
-        color: 'hsla(0, 0%, 33%, 100%) !important',
+        color: 'var(--bg-10) !important',
         opacity: '0.5',
       },
     }
