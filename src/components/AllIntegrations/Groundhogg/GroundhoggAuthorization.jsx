@@ -1,17 +1,13 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
 import { __ } from '../../../Utils/i18nwrap'
-import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { fetchAllTags, handleAuthorize } from './GroundhoggCommonFunc'
 
 export default function GroundhoggAuthorization({
-  formID, groundhoggConf, setGroundhoggConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo,
+  formID, groundhoggConf, setGroundhoggConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo,
 }) {
   const [isAuthorized, setisAuthorized] = useState(false)
-  const { css } = useFela()
   const [error, setError] = useState({ token: '', public_key: '', domainName: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -90,9 +86,10 @@ export default function GroundhoggAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
       {!isInfo && (
         <>
-          <Btn
-            variant="success"
-            onClick={() => handleAuthorize(
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+            handleAuthorize={() => handleAuthorize(
               groundhoggConf,
               setGroundhoggConf,
               setError,
@@ -100,22 +97,12 @@ export default function GroundhoggAuthorization({
               setIsLoading,
               setSnackbar,
             )}
-            className={css(ut.mt3, { ml: 3 })}
-            disabled={isAuthorized || isLoading}
-          >
-            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-            {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
-          </Btn>
+          />
           <br />
-          <Btn
-            variant="success"
-            onClick={nextPage}
-            className={css(ut.ftRight)}
+          <NextBtn
+            nextPageHanlder={() => nextPage()}
             disabled={!isAuthorized}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </Btn>
+          />
         </>
       )}
     </div>

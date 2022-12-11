@@ -16,7 +16,15 @@ export const $breakpoint = atom({
     })
   }],
 })
-export const $breakpointSize = atom({ key: '$breakpointSize', default: { lg: 1024, md: 960, sm: 570 } })
+export const $breakpointSize = atom({
+  key: '$breakpointSize',
+  default: { lg: 1024, md: 960, sm: 570 },
+  effects: [({ onSet }) => {
+    onSet((newSize) => {
+      addToSessionStorage('breakpointSize', JCOF.stringify(newSize))
+    })
+  }],
+})
 export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset', state: { breakpoint: 'lg', colorScheme: 'light' } }], active: 0 } })
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })

@@ -1,15 +1,11 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import BackIcn from '../../../Icons/BackIcn'
-import ut from '../../../styles/2.utilities'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import LoaderSm from '../../Loaders/LoaderSm'
-import Btn from '../../Utilities/Btn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import AuthorizeBtn from '../AuthorizeBtn'
+import NextBtn from '../NextBtn'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
 
 export default function DropboxAuthorization({
@@ -17,7 +13,6 @@ export default function DropboxAuthorization({
 }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ apiKey: '', apiSecret: '' })
-  const { css } = useFela()
 
   const nextPage = () => {
     getAllDropboxFolders(formID, dropboxConf, setDropboxConf, setIsLoading)
@@ -132,26 +127,16 @@ export default function DropboxAuthorization({
 
       {!isInfo && (
         <>
-          <Btn
-            variant="success"
-            onClick={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading)}
-            disabled={isAuthorized}
-            className={css(ut.mt3)}
-          >
-            {isAuthorized ? __('Authorized ✔') : __('Authorize')}
-            {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
-          </Btn>
+          <AuthorizeBtn
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+            handleAuthorize={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading)}
+          />
           <br />
-          <Btn
-            onClick={nextPage}
-            variant="success"
+          <NextBtn
+            nextPageHanlder={() => nextPage()}
             disabled={!isAuthorized}
-            className={css(ut.ftRight)}
-          >
-            {__('Next')}
-            <BackIcn className="ml-1 rev-icn" />
-          </Btn>
-
+          />
         </>
       )}
     </div>

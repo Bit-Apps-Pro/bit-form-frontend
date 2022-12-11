@@ -1,12 +1,8 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
-import BackIcn from '../../../Icons/BackIcn'
-import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
@@ -19,7 +15,6 @@ export default function MailChimpAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
-  const { css } = useFela()
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
     setTimeout(() => {

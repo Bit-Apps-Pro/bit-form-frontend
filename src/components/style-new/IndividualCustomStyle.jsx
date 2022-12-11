@@ -339,7 +339,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
       paths: {},
     }
 
-    const configProperty = editorConfig[fieldType][elementKey].properties[propName]
+    const configProperty = editorConfig?.[fieldType]?.[elementKey]?.properties?.[propName]
     let propertyKeys = [propName]
     if (typeof configProperty === 'object') {
       propertyKeys = Object.keys(configProperty)

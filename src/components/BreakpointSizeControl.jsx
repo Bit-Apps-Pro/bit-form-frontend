@@ -18,7 +18,7 @@ export default function BreakpointSizeControl() {
   const toggleRespectOrder = () => setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
   const breakpointSizeHandler = ({ target: { name, value } }) => {
     // eslint-disable-next-line no-param-reassign
-    const size = produce(breakpointSize, draft => { draft[name] = value })
+    const size = produce(breakpointSize, draft => { draft[name] = Number(value) })
     setBreakpointSize(size)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }

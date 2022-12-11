@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import LoaderSm from '../../Loaders/LoaderSm'
-import BackIcn from '../../../Icons/BackIcn'
-import { getAllRecipient, handleAuthorize } from './RapidmailCommonFunc'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
+import { getAllRecipient, handleAuthorize } from './RapidmailCommonFunc'
 
 export default function RapidmailAuthorization({
   rapidmailConf,
@@ -19,8 +17,6 @@ export default function RapidmailAuthorization({
 }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ username: '', password: '' })
-
-  console.log('rapidmailConf', rapidmailConf)
 
   const nextPage = () => {
     !rapidmailConf?.default

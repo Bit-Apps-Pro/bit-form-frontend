@@ -341,7 +341,7 @@ const lightThemeColors = {
   '--lbl-wrp-bdr-clr': '', // label wrapper border color
 
   '--fld-lbl-bg': '', // field label background color
-  '--fld-lbl-c': '', // field babel color
+  '--fld-lbl-c': 'var(--global-font-color)', // field babel color
   '--fld-lbl-sh': '', // field label box shadow
   '--fld-lbl-bdr-clr': '', // field label border color
 

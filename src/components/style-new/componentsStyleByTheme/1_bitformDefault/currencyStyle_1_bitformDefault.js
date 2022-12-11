@@ -16,7 +16,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-currency-fld-wrp`]: {
         position: 'absolute',
         width: '100%',
-        'background-color': 'var(--global-fld-bg-color, transparent)',
+        'background-color': 'var(--global-fld-bg-color)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',
@@ -37,7 +37,6 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
       [`.${fk}-currency-fld-wrp.readonly .${fk}-currency-inner-wrp`]: {
-        cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa))',
@@ -52,7 +51,6 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a))',
       },
       [`.${fk}-currency-fld-wrp.readonly .${fk}-currency-amount-input`]: {
-        cursor: 'not-allowed',
         'pointer-events': 'none',
         'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 20%), var(--gfbg-a))',
         color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa)) !important',
@@ -72,6 +70,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-currency-fld-wrp.menu-open`]: {
+        'background-color': 'var(--bg-0)',
         'z-index': '999',
         'box-shadow':
           `0px 1.2px 2.2px hsla(0, 0%, 0%, 3.2%),
@@ -80,8 +79,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
         0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
         0px 43px 80px hsla(0, 0%, 0%, 10%)`,
-        border: 'solid hsla(0, 0%, 87%, 100%)',
-        'border-width': '1px',
+        'border-color': 'var(--bg-10)!important',
       },
       [`.${fk}-currency-inner-wrp`]: {
         display: 'flex',
@@ -97,17 +95,19 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        height: '40px',
-        padding: '8px 12px',
-        'box-sizing': 'border-box', // unused css
+        height: '34px',
+        margin: '3px',
+        padding: '8px 8px',
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css
+        'border-radius': 'calc(var(--g-bdr-rad) - 3px)',
       },
-      [`.${fk}-dpd-wrp:hover`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) - 10%), var(--gfbg-a))' },
+      [`.${fk}-dpd-wrp:hover`]: {
+        'background-color': 'var(--bg-5)',
+      },
       [`.${fk}-dpd-wrp:focus-visible`]: {
-        'border-radius': '8px 0px 0px 8px',
-        'box-shadow': '0 0 0 2px hsla(0, 0%, 95%, 100%) inset',
+        outline: '2px solid var(--global-accent-color)',
       },
 
       [`.${fk}-selected-currency-wrp`]: {
@@ -124,40 +124,38 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-selected-currency-img`]: {
         height: '17px !important',
         width: '25px',
-        border: 'none', // unused css
-        'border-width': '0px', // unused css
         'border-radius': '3px !important',
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+        'box-shadow': '0 0 0 1px var(--bg-15)',
         margin: '0px 10px 0px 0px',
-        'background-color': 'hsla(0, 0%, 0%, 5%)',
+        'background-color': 'var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
       [`.${fk}-input-clear-btn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
         padding: '0px !important',
         margin: '0px 5px 0px 0px',
-        background: 'transparent !important',
+        background: 'var(--bg-40) !important',
         border: 'none',
-        'border-width': '0px',
         'border-radius': '50% !important',
         outline: 0,
         cursor: 'pointer',
         'place-content': 'center',
         width: '16px',
         height: '15px',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-5) !important',
       },
 
-      [`.${fk}-input-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
+      [`.${fk}-input-clear-btn:hover`]: {
+        'background-color': 'var(--bg-60) !important',
+      },
 
       [`.${fk}-input-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px blue inset',
+        'box-shadow': '0 0 0 1.5px var(--global-accent-color)',
         outline: 'none',
       },
 
@@ -169,11 +167,11 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-currency-amount-input`]: {
-        border: '0px !important',
-        outline: '0px',
+        border: '0 !important',
+        'font-family': 'inherit',
+        outline: 0,
         width: 'calc(100% - 50px)',
-        padding: '8px !important',
-        'padding-right': '26px !important',
+        padding: '8px 26px 8px 8px !important',
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
@@ -193,7 +191,9 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       // /* Firefox */
       [`.${fk}-currency-amount-input[type=number]`]: { '-moz-appearance': 'textfield' },
 
-      [`.${fk}-currency-amount-input::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
+      [`.${fk}-currency-amount-input::placeholder`]: {
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important',
+      },
 
       [`.${fk}-option-wrp`]: {
         'max-height': '0px',
@@ -204,13 +204,10 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         display: 'flex',
         'flex-direction': 'column',
         // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'height .3s',
+        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
-        'padding-top': 0, // unused css
-        'border-top': 0, // unused css
-        margin: 0, // unused css
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
@@ -220,7 +217,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-search-wrp`]: {
         position: 'relative',
         // 'margin-bottom': '5px',
-        padding: '5px',
+        // padding: '5px',
+        margin: '5px 5px 0 5px',
       },
 
       [`.${fk}-icn`]: {
@@ -233,10 +231,9 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-opt-search-icn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-25) !important',
         left: '13px',
       },
 
@@ -248,14 +245,22 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'box-shadow': 'none',
         border: 'none !important',
         height: '35px',
-        'border-radius': '8px !important',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-a))',
-        'font-size': '16px',
+        'border-radius': 'calc(var(--g-bdr-rad) - 1px)!important',
+        'font-size': '1rem',
+        'background-color': 'var(--bg-5)',
+        'font-family': 'inherit',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
       },
+      [`.${fk}-opt-search-input::placeholder`]: {
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.5)',
+      },
+      [`.${fk}-opt-search-input:focus`]: {
+        'background-color': 'var(--bg-0)',
+        'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
+      },
 
-      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
+      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)!important' },
 
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
@@ -264,16 +269,14 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-search-clear-btn`]: {
         position: 'absolute',
-        stroke: 'hsla(0, 1%, 68%, 100%)',
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
         right: '6px',
         padding: '0px !important',
-        margin: '0px',
-        background: 'transparent !important',
-        border: '',
-        'border-width': '0px',
+        margin: '0',
+        background: 'var(--bg-40) !important',
+        border: 'none',
         'border-radius': '50% !important',
         outline: 0,
         cursor: 'pointer',
@@ -281,13 +284,15 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'place-content': 'center',
         width: '16px',
         height: '16px',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--bg-5)',
       },
 
-      [`.${fk}-search-clear-btn:hover`]: { 'background-color': 'hsla(0, 0%, 98%, 100%) !important' },
+      [`.${fk}-search-clear-btn:hover`]: {
+        'background-color': 'var(--bg-60)!important',
+      },
 
       [`.${fk}-search-clear-btn:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(240, 100%, 50%, 100%) inset',
+        'box-shadow': '0 0 0 1.5px var(--global-accent-color)',
         outline: 'none',
       },
 
@@ -299,51 +304,61 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
         /* firefox */
         'scrollbar-width': 'thin !important',
-        'scrollbar-color': 'hsla(0, 0%, 0%, 20%) !important',
+        'scrollbar-color': 'var(--bg-15) transparent !important',
       },
 
-      [`.${fk}-option-list::-webkit-scrollbar`]: { width: '8px' },
+      [`.${fk}-option-list::-webkit-scrollbar`]: {
+        width: '8px',
+      },
 
       [`.${fk}-option-list::-webkit-scrollbar-thumb`]: {
-        'background-color': 'hsla(0, 0%, 0%, 10%)',
-        'border-radius': '10px',
+        'background-color': 'var(--bg-15)',
+        'border-radius': 'var(--g-bdr-rad)',
       },
 
       [`.${fk}-option-list .option`]: {
-        margin: '0 5px !important', // unused css
+        margin: '2px 5px !important', // unused css
         transition: 'background 0.2s',
-        'border-radius': '6px',
-        // 'font-size': 'var(--fld-fs)',
+        'border-radius': 'calc(var(--g-bdr-rad) - 2px)',
+        'font-size': 'calc(var(--fld-fs) - 2px)',
         cursor: 'pointer',
         'text-align': 'left', // unused css
-        border: 'none', // unused css
-        padding: '5px 7px',
+        padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
       },
 
-      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))' },
+      [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: {
+        'background-color': 'var(--bg-10)',
+      },
 
       [`.${fk}-option-list .option:focus-visible`]: {
-        'box-shadow': '0 0 0 1.5px hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a)) inset',
-        outline: 'none',
+        outline: '2px solid var(--global-accent-color)',
+        'background-color': 'var(--bg-10)',
       },
 
-      [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
-      },
+      // [`.${fk}-option-list .option:focus-within:not(.selected-opt):not(.disabled-opt)`]: {
+      //   'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
+      // },
 
       [`.${fk}-option-list .selected-opt`]: {
-        // color: 'white',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
+        color: 'var(--bg-0)',
+        'font-weight': 500,
+        'background-color': 'var(--global-accent-color)',
+      },
+      [`.${fk}-option-list .selected-opt .opt-suffix`]: {
+        background: 'hsla(var(--gah), var(--gas), calc(var(--gal) - 10%), 1)',
       },
 
-      [`.${fk}-option-list .selected-opt:focus-visible`]: { 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))' },
+      [`.${fk}-option-list .selected-opt:focus-visible`]: {
+        'background-color': 'var(--global-accent-color)',
+      },
 
       [`.${fk}-option-list .opt-not-found`]: {
         'text-align': 'center',
         'list-style': 'none',
         margin: '5px',
+        'font-size': 'calc(var(--fld-fs) - 2px)',
       },
       [`.${fk}-option-list .opt-lbl`]: {},
 
@@ -358,20 +373,26 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        'border-width': '1px', // unused css
-        'box-shadow': '0 0 0 1px hsla(0, 0%, 88%, 100%)',
+        'box-shadow': '0 0 0 1px var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
 
-      [`.${fk}-option-list .opt-suffix`]: { 'font-size': 'calc(var(--fld-fs) - 50%)' },
+      [`.${fk}-option-list .opt-suffix`]: {
+        'font-size': 'calc(var(--fld-fs) - 3px)',
+        background: 'var(--bg-10)',
+        'border-radius': '5px',
+        padding: '3px',
+      },
 
-      [`.${fk}-currency-fld-wrp.menu-open .${fk}-dpd-down-btn`]: { transform: 'rotate(180deg)' },
+      [`.${fk}-currency-fld-wrp.menu-open .${fk}-dpd-down-btn`]: {
+        transform: 'rotate(180deg)',
+      },
 
       [`.${fk}-option-list .disabled-opt`]: {
         'pointer-events': 'none',
         cursor: 'not-allowed',
-        color: 'hsla(0, 0%, 33%, 100%) !important',
+        color: 'var(--bg-10) !important',
         opacity: '0.5',
       },
     }

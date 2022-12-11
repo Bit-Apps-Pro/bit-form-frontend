@@ -115,7 +115,7 @@ export default class BitPhoneNumberField {
 
     if (this.#config.searchClearable) {
       this.#searchInputElm.style.paddingRight = '25px'
-      this.#clearSearchBtnElm.style.display = 'block'
+      this.#clearSearchBtnElm.style.display = 'none'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
     this.#searchInputElm.value = ''
@@ -697,7 +697,7 @@ export default class BitPhoneNumberField {
     } else {
       this.#phoneNumberFieldWrapper.classList.remove('menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
-      this.searchOptions('')
+      setTimeout(() => { this.searchOptions('') }, 100)
       this.#setAttribute(this.#searchInputElm, 'tabindex', -1)
       this.#setAttribute(this.#clearSearchBtnElm, 'tabindex', -1)
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-expanded', false)
