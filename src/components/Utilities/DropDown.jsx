@@ -61,7 +61,8 @@ const dropdownCls = {
     },
     '&.msl-vars': { w: '99% !important', '--font-size': '12px' },
     '&.msl-wrp > .msl-options': {
-      pn: 'relative !important',
+      // pn: 'relative !important',
+      pn: 'absolute !important',
       'border-top-left-radius': 0,
       'border-top-right-radius': 0,
       '& div > .msl-option': { p: '4px 4px' },
