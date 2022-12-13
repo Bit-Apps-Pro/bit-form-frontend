@@ -23,9 +23,9 @@ export default function ThemeStyleReset({ id, fk }) {
   }
 
   if (fk) {
-    show = ('fields' in styles && styles.fields[fk].fieldSize) !== ('fields' in saveStyles && saveStyles.fields[fk].fieldSize)
+    show = ('fields' in styles && styles.fields[fk]?.fieldSize) !== ('fields' in saveStyles && saveStyles.fields[fk]?.fieldSize)
   } else {
-    show = ('fields' in styles && styles.fieldsSize) !== ('fields' in saveStyles && saveStyles.fieldsSize)
+    show = ('fields' in styles && styles?.fieldsSize) !== ('fields' in saveStyles && saveStyles?.fieldsSize)
   }
 
   const resetStyle = () => {
