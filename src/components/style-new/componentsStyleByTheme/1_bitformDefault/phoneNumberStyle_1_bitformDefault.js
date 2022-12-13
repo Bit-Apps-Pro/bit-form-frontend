@@ -365,14 +365,14 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'user-select': 'none',
       },
 
-      [`.${fk}-option-list .opt-prefix`]: {
+      [`.${fk}-option-list .opt-suffix`]: {
         'font-size': 'calc(var(--fld-fs) - 3px)',
         background: 'var(--bg-10)',
         'border-radius': '5px',
         padding: '3px',
       },
 
-      [`.${fk}-option-list .selected-opt .opt-prefix`]: {
+      [`.${fk}-option-list .selected-opt .opt-suffix`]: {
         background: 'hsla(var(--gah), var(--gas), calc(var(--gal) - 10%), 1)',
       },
 

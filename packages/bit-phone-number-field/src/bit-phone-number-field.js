@@ -531,17 +531,17 @@ export default class BitPhoneNumberField {
         }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(img, lbl)
-        const prefix = this.#createElm('span')
-        this.#setClassName(prefix, 'opt-prefix')
-        if ('opt-prefix' in this.#config.classNames) {
-          const optPrefixCls = this.#config.classNames['opt-prefix']
-          if (optPrefixCls) this.#setCustomClass(prefix, optPrefixCls)
+        const suffix = this.#createElm('span')
+        this.#setClassName(suffix, 'opt-suffix')
+        if ('opt-suffix' in this.#config.classNames) {
+          const optSuffixCls = this.#config.classNames['opt-suffix']
+          if (optSuffixCls) this.#setCustomClass(suffix, optSuffixCls)
         }
-        this.#setTextContent(prefix, opt.code)
-        // this.#setAttribute(prefix, 'data-dev-opt-prefix', this.fieldKey)
-        if ('opt-prefix' in this.#config.attributes) {
-          const optsufix = this.#config.attributes['opt-prefix']
-          this.#setCustomAttr(prefix, optsufix)
+        this.#setTextContent(suffix, opt.code)
+        this.#setAttribute(suffix, 'data-dev-opt-suffix', this.fieldKey)
+        if ('opt-suffix' in this.#config.attributes) {
+          const optSuffix = this.#config.attributes['opt-suffix']
+          this.#setCustomAttr(suffix, optSuffix)
         }
         this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
         this.#setAttribute(li, 'role', 'option')
@@ -563,7 +563,7 @@ export default class BitPhoneNumberField {
           this.#setClassName(li, 'disabled-opt')
         }
 
-        li.append(lblimgbox, prefix)
+        li.append(lblimgbox, suffix)
 
         if (this.#selectedCountryCode === opt.i) {
           this.#setClassName(li, 'selected-opt')

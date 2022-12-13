@@ -1649,7 +1649,7 @@ const editorConfig = {
         color: '',
       },
     },
-    'option-list .opt-prefix': {
+    'option-list .opt-suffix': {
       states: [],
       properties: {
         border: {
