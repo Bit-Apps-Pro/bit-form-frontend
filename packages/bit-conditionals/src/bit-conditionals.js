@@ -18,6 +18,7 @@ const getAllFieldsValueFromForm = (form, props) => {
       formEntries[fldKey].push(value)
     } else formEntries[fldKey] = value
   })
+  Object.keys(fields).filter(key => fields[key].btnTyp === 'button').forEach(fldKey => { formEntries[fldKey] = '' })
 
   return Object.entries(formEntries).reduce((acc, [key, value]) => ({ ...acc, [key]: { value, type: fields[key].typ, multiple: Array.isArray(value) } }), {})
 }
@@ -62,6 +63,8 @@ export default function onBlurHandler(event) {
       const condition = conditions[condIndx]
       if (['if', 'else-if'].includes(condition.cond_type)) {
         const { logics } = condition
+        const clickLogics = logics.filter(logic => logic.logic === 'on_click')
+        if (clickLogics.length && fldKey !== clickLogics[0].field) return false /* check is target equal to button click of logic */
         logicStatus = checkLogic(logics, fieldValues, props)
         if (logicStatus) break
       }

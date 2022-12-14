@@ -39,6 +39,8 @@ const compareValueLogic = (logics, fields, targetFieldValue, logicsVal) => {
       return checkEndWithLogic(logics, fields, targetFieldValue, logicsVal)
     case 'between':
       return checkBetweenLogic(logics, fields, targetFieldValue, logicsVal)
+    case 'on_click':
+      return true
     default:
       return false
   }

@@ -117,7 +117,7 @@ function LogicBlock({
     return 'Smart Key'
   }
 
-  const notNeededValField = ['null', 'not_null']
+  const notNeededValField = ['null', 'not_null', 'on_click']
   return (
     <div className={`${css(lgcStyle.lgcBlk)} btcd-logic-blk`}>
       <div className={css(lgcStyle.processDgrm)}>

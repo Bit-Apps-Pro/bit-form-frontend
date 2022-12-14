@@ -2,9 +2,11 @@
 
 import { resetRecoil } from 'recoil-nexus'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $reportId, $reports, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $reportId, $reports, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows
 } from '../GlobalStates/GlobalStates'
-import { $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight } from '../GlobalStates/StylesState'
+import {
+  $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight
+} from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 
@@ -232,7 +234,7 @@ export const checkValidEmail = email => {
   }
   return false
 }
-export const makeFieldsArrByLabel = (fields, labels = [], fldsToFilter = ['button']) => {
+export const makeFieldsArrByLabel = (fields, labels = [], fldsToFilter = []) => {
   const fldArrByLabel = Object.entries(fields).filter(fld => !fldsToFilter.includes(fld[1].typ)).map(([fldKey, fld]) => {
     const fldByLabel = labels.find(lbl => lbl.key === fldKey)
     return {
