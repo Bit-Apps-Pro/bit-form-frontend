@@ -10,7 +10,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light-border.css'
 
 export default function Downmenu({
-  children, instance = null, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click',
+  children, instance = null, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click', offset = [0, 10],
 }) {
   return (
     <Tippy
@@ -26,6 +26,7 @@ export default function Downmenu({
       animation="shift-away-extreme"
       interactive
       maxWidth={width}
+      offset={offset}
       arrow={arrow && roundArrow}
       content={children[1]}
     >
