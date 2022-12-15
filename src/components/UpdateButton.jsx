@@ -430,6 +430,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     const allSessionStorageKeys = Object.keys(sessionStorage)
     const filteredKeys = allSessionStorageKeys.filter(key => key.startsWith('btcd-') && key.endsWith(`-bf-${formId}`))
     filteredKeys.forEach(key => sessionStorage.removeItem(key))
+    sessionStorage.setItem(`is-bf-form-updated-${formId}`, true)
   }
 
   return (
