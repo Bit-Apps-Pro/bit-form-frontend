@@ -117,12 +117,14 @@ export const omitByObj = (mainObj, omitObj) => {
   const mainObjKeys = Object.keys(mainObj)
 
   forEach(mainObjKeys, mainKey => {
+    const currentMainObj = mainObj[mainKey]
     if (!(mainKey in omitObj)) {
-      newObj[mainKey] = deepCopy(mainObj[mainKey])
+      newObj[mainKey] = deepCopy(currentMainObj)
       return
     }
-    if (typeof omitObj[mainKey] === 'object' && omitObj[mainKey] !== null) {
-      newObj[mainKey] = omitByObj(mainObj[mainKey], omitObj[mainKey])
+    const omittableObj = omitObj[mainKey]
+    if (typeof omittableObj === 'object' && omittableObj !== null) {
+      newObj[mainKey] = omitByObj(currentMainObj, omittableObj)
     }
   })
 
