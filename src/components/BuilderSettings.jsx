@@ -95,6 +95,7 @@ export default function BuilderSettings() {
           <SizeControl
             className={css(style.select)}
             width={250}
+            max={1000}
             inputHandler={handleValues}
             sizeHandler={({ unitKey, unitValue }) => handleValues({ value: unitValue, unit: unitKey })}
             value={(formWidth && getNumFromStr(formWidth)) || ''}
