@@ -222,8 +222,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)',
-        color: 'var(--global-font-color) !important',
-        left: '13px',
+        color: 'var(--global-font-color)',
+        left: '8px',
       },
 
       [`.${fk}-opt-search-input`]: {
@@ -250,7 +250,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
       },
 
-      [`.${fk}-opt-search-input:focus~svg`]: { stroke: 'var(--global-font-color)' },
+      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)' },
 
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
