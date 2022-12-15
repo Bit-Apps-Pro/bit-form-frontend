@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           if (props.onfieldCondition) {
             elm.addEventListener('input', e => bit_conditionals(e))
+            if (fldData.typ === 'button') elm.addEventListener('click', e => bit_conditionals(e))
+            observeElm(elm, 'value', (oldValue, newValue) => {
+              if (oldValue !== newValue) {
+                bit_conditionals({ target: elm })
+              }
+            })
           }
         })
       })
