@@ -1,3 +1,4 @@
+/* eslint-disable es/no-logical-assignment-operators */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
@@ -19,7 +20,7 @@ import {
   addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights
+  reCalculateFldHeights,
 } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -97,7 +98,7 @@ export default function LabelControlMenu() {
           drftStyle['--lbl-wrp-width'] ||= '40%'
           drftStyle['--inp-wrp-width'] = '60%'
           drftStyle['--fld-wrp-width'] = '100%'
-          drftStyle['--lbl-wrp-m'] = ''
+          drftStyle['--lbl-wrp-m'] = '0px 0px 0px 10px'
         }))
         setOpenVarPos(true)
         reCalculateFldHeights()

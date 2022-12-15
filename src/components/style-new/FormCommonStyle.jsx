@@ -129,7 +129,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
           <BackgroundControl
             title="Background"
             subtitle={`${componentTitle} Background`}
-            value={getValueFromStateVar(themeColors, formWrpStylesObj?.background)}
+            value={getValueFromStateVar(themeColors, formWrpStylesObj?.['background-image'] || formWrpStylesObj?.background)}
             modalId={`${element}-cnr-bd`}
             stateObjName="styles"
             objectPaths={objPaths}

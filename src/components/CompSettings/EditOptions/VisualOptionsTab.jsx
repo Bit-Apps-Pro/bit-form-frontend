@@ -3,6 +3,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
+import CloseEyeIcn from '../../../Icons/CloseEyeIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
 import EditIcn from '../../../Icons/EditIcn'
@@ -305,20 +306,17 @@ const SortableElm = ({
                       onClick={() => setOptStatus(optIndx, 'hide')}
                       className={css(optionStyle.btn, ut.flxc)}
                     >
-                      {option[optIndx]?.hide ? (
-                        <EyeOffIcon size="18" />
-                      ) : (<EyeIcon size="18" />)}
-
+                      {option[optIndx]?.hide ? <EyeOffIcon size="18" /> : <EyeIcon size="18" />}
                     </button>
                   </Tip>
-                  <Tip msg={`Field ${option[optIndx]?.disabled ? 'Disabled' : 'Enabled'}`}>
+                  <Tip msg={`Field ${option[optIndx]?.disabled ? 'Enabled' : 'Disabled'}`}>
                     <button
                       data-testid={`srtble-itm-add-optn-dlt-grp-${optIndx}`}
                       type="button"
                       onClick={() => setOptStatus(optIndx, 'disabled')}
                       className={css(optionStyle.btn)}
                     >
-                      <NoneIcn size="15" />
+                      {option[optIndx]?.disabled ? <CloseEyeIcn size="20" /> : <NoneIcn size="15" />}
                     </button>
                   </Tip>
                 </TipGroup>

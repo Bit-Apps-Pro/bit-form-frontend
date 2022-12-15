@@ -122,6 +122,7 @@ import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
 import MenuIcon from '../Icons/MenuIcon'
 import './ShowIcon.css'
+import CloseEyeIcn from '../Icons/CloseEyeIcn'
 
 export default function ShowIcon() {
   const [searchIcon, setSearchIcon] = useState([])
@@ -150,7 +151,6 @@ export default function ShowIcon() {
   }, [])
 
   const searchIcn = (e) => {
-    console.log(e)
     if (e.ctrlKey && e.code === 'Slash') {
       document.getElementById('search-bar').focus()
     }
@@ -167,6 +167,11 @@ export default function ShowIcon() {
       key: 'Menu Icon',
       icon: <MenuIcon size="30" />,
       com: '<MenuIcon size="30" />',
+    },
+    {
+      key: 'Close Eye Icon',
+      icon: <CloseEyeIcn size="30" />,
+      com: '<CloseEyeIcn size="30" />',
     },
     {
       key: 'A to Z Sort',
@@ -785,6 +790,8 @@ export default function ShowIcon() {
     },
 
   ]
+
+  console.log('icons', icons.length)
 
   icons.sort((a, b) => {
     const ka = a.key.toLowerCase()

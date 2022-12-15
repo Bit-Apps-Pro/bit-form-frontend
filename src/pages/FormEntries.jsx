@@ -13,7 +13,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $reportId, $reports, $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates/GlobalStates'
+import { $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -135,8 +135,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   )
 
   const closeRowDetail = useCallback(() => {
-    rowDtl.show = false
-    setRowDtl({ ...rowDtl })
+    setRowDtl({ ...rowDtl, show: false })
   }, [rowDtl])
 
   const setBulkDelete = useCallback((rows, action) => {

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -8,7 +9,7 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 export default function TelegramActions({ formFields, telegramConf, setTelegramConf }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
   const actionHandler = (e) => {
-    const newConf = { ...telegramConf }
+    const newConf = deepCopy(telegramConf)
     if (e.target.value !== '') {
       newConf.actions.attachments = e.target.value
     } else {
