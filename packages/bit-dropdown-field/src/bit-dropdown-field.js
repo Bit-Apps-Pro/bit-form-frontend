@@ -49,6 +49,7 @@ export default class BitDropdownField {
     searchPlaceholder: 'Search option',
     maxHeight: 370,
     closeOnSelect: false,
+    showChip: true,
     options: [],
     attributes: {},
     classNames: {},
@@ -738,7 +739,7 @@ export default class BitDropdownField {
     } else {
       this.#removeClassName(this.#dropdownFieldWrapper, 'menu-open')
       this.#document.removeEventListener('click', this.#handleOutsideClick)
-      this.searchOptions('')
+      setTimeout(() => { this.searchOptions('') }, 100)
       this.#setTabIndex(this.#searchInputElm, -1)
       this.#setTabIndex(this.#clearSearchBtnElm, -1)
       this.#dropdownWrapperElm.setAttribute('aria-expanded', 'false')

@@ -261,7 +261,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         display: 'none',
         position: 'absolute',
         right: '6px',
-        top: '15px',
+        top: '50%',
+        transform: 'translateY(-50%)',
         height: '16px', // unused css
         padding: '0px !important',
         margin: '0px', // unused css

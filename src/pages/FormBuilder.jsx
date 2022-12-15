@@ -140,6 +140,7 @@ const FormBuilder = ({ isLoading }) => {
         mdDarkStyles: getSessionStorageStates({ stateName: 'stylesMdDark', strType: 'jcof' }),
         smDarkStyles: getSessionStorageStates({ stateName: 'stylesSmDark', strType: 'jcof' }),
       }
+      const sessionBreakpointSize = getSessionStorageStates({ stateName: 'breakpointSize', strType: 'jcof' })
       if (sessionStorageBreakpoint) {
         setBreakpoint(sessionStorageBreakpoint)
         setAllThemeVars(sessionStorageAllThemeVars)
@@ -147,7 +148,9 @@ const FormBuilder = ({ isLoading }) => {
         setAllStyles(sessionStorageAllStyles)
         setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
         setUpdateBtn({ unsaved: true })
+        setBreakpointSize(sessionBreakpointSize)
         setStyleLoading(false)
+        setIsNewThemeStyleLoaded(true)
         return
       }
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
