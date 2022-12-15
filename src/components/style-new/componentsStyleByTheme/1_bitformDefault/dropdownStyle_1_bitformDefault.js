@@ -62,9 +62,9 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        height: '40px',
-        padding: '8px 12px',
+        padding: '8px',
         'box-sizing': 'border-box',
+        'min-height': '40px',
         // 'font-size': '12px',
         position: 'relative',
         outline: 'none',
@@ -89,6 +89,54 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'align-items': 'center',
       },
 
+      [`.${fk}-selected-opt-lbl.multi-chip`]: {
+        display: 'flex',
+        'flex-wrap': 'wrap',
+        gap: '5px',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-wrp`]: {
+        display: 'flex',
+        'align-items': 'center',
+        'background-color': 'var(--bg-10)',
+        padding: '5px 8px',
+        'border-radius': '8px',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-icn`]: {
+        'margin-right': '5px',
+        width: '13px',
+        height: '13px',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-lbl`]: {
+        'font-size': '13px',
+        color: 'var(--global-font-color)',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-clear-btn`]: {
+        border: 'none',
+        outline: 'none',
+        'box-shadow': 'none',
+        'margin-left': '5px',
+        'border-radius': '50%',
+        cursor: 'pointer',
+        display: 'grid',
+        'place-content': 'center',
+        height: '17px',
+        width: '17px',
+        'background-color': 'var(--bg-5)',
+        color: 'var(--global-font-color)',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-clear-btn:hover`]: {
+        'background-color': 'var(--bg-15)',
+      },
+
+      [`.${fk}-selected-opt-lbl .chip-clear-btn:focus-visible`]: {
+        outline: '1.5px solid var(--global-accent-color)',
+      },
+
       [`.${fk}-selected-opt-lbl`]: {
         // 'font-size': 'var(--fld-fs)',
         // 'font-family': 'var(--g-font-family)',
@@ -99,11 +147,14 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        outline: '1px solid var(--bg-10)',
         margin: '0 10px 0 0',
-        'background-color': 'var(--bg-15)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
+      },
+
+      [`.${fk}-dpd-fld-wrp .placeholder-img`]: {
+        'background-color': 'var(--bg-15)',
+        outline: '1px solid var(--bg-10)',
       },
 
       [`.${fk}-selected-opt-clear-btn`]: {

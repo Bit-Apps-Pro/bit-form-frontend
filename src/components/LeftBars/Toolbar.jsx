@@ -223,6 +223,7 @@ function Toolbar({ setNewData }) {
           searchPlaceholder: 'Search options..',
           maxHeight: 400,
           multipleSelect: true,
+          showChip: true,
           selectedOptImgSrc: 'test.png',
           closeOnSelect: false,
           activeList: 0,

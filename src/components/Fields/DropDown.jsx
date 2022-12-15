@@ -33,7 +33,7 @@ function DropDown({
     }
 
     const {
-      selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, selectedOptImgSrc, closeOnSelect,
+      selectedOptImage, selectedOptClearable, searchClearable, searchPlaceholder, maxHeight, multipleSelect, showChip, selectedOptImgSrc, closeOnSelect,
     } = fieldData.config
     const iFrameWindow = document.getElementById('bit-grid-layout').contentWindow
     const configOptions = {
@@ -45,6 +45,7 @@ function DropDown({
       optionIcon,
       maxHeight,
       multipleSelect,
+      showChip,
       placeholder: ph,
       searchPlaceholder,
       selectedOptImgSrc,
@@ -117,7 +118,7 @@ function DropDown({
                   <img
                     data-testid={`${fieldKey}-slctd-opt-img`}
                     data-dev-selected-opt-img={fieldKey}
-                    className={`${fieldKey}-selected-opt-img ${getCustomClsName(fieldKey, 'selected-opt-img')}`}
+                    className={`${fieldKey}-selected-opt-img placeholder-img ${getCustomClsName(fieldKey, 'selected-opt-img')}`}
                     aria-hidden="true"
                     alt="selected option icon"
                     src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
@@ -128,7 +129,7 @@ function DropDown({
                   data-testid={`${fieldKey}-slctd-opt-lbl`}
                   aria-label="Selected Option Label"
                   data-dev-selected-opt-lbl={fieldKey}
-                  className={`${fieldKey}-selected-opt-lbl ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
+                  className={`${fieldKey}-selected-opt-lbl ${(fieldData.config.multipleSelect && fieldData.config.showChip) ? 'multi-chip' : ''} ${getCustomClsName(fieldKey, 'selected-opt-lbl')}`}
                   {...getCustomAttributes(fieldKey, 'selected-opt-lbl')}
                 >
                   {ph}
