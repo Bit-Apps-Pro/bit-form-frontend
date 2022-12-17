@@ -19,7 +19,9 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
 
       /* filepond-root */
-      [`.${fk}-inp-wrp .filepond--root`]: { margin: '0px 0px 40px 0px !important' },
+      [`.${fk}-inp-wrp .filepond--root`]: {
+        'min-height': '40px',
+      },
 
       /* the text color of the drop label */
       [`.${fk}-inp-wrp .filepond--drop-label`]: {
@@ -43,11 +45,11 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       [`.${fk}-inp-wrp .filepond--file-action-button:focus`]: { 'box-shadow': '0 0 0 0.125em rgba(255, 255, 255, 0.9)' },
 
       /* the background color of the filepond drop area */
-      [`.${fk}-inp-wrp .filepond--panel-root`]: { 'background-color': '#eee' },
+      [`.${fk}-inp-wrp .filepond--panel-root`]: { 'background-color': 'var(--bg-50)' },
 
       /* the border radius of the file item */
       [`.${fk}-inp-wrp .filepond--item-panel`]: {
-        'border-radius': '0.5em',
+        // 'border-radius': '0.5em',
         'background-color': '#555',
       },
 

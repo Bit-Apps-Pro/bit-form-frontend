@@ -195,7 +195,7 @@ const lgLightThemeVars = {
   '--hlp-txt-font-w': 400, // helper text font weight
   '--hlp-txt-font-style': '', // helper text font style
 
-  '--err-m': '1px', // error messages margin
+  '--err-m': '5px 0 0 0', // error messages margin
   '--err-p': '5px', // error messages padding
   '--err-bdr': 'solid', // error message border
   '--err-bdr-width': '1px', // error message border width
