@@ -45,7 +45,7 @@ const sizeControlStyle = {
     p: '0px !important',
     pr: '3px !important',
     pl: '3px !important',
-    bc: 'var(--white-0-95) !important',
+    bc: 'transparent !important',
     lh: '1.5 !important',
     mnh: '18px !important',
     // h: 18,
