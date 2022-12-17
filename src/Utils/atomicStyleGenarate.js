@@ -3,7 +3,7 @@
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
-import { $breakpointSize, $builderSettings, $formId, $workflows } from '../GlobalStates/GlobalStates'
+import { $breakpointSize, $builderSettings, $fields, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
@@ -360,6 +360,7 @@ function addPrefixInObjectKeys(obj, prefix) {
 }
 
 export function generateLayoutStyle(layouts) {
+  const fields = getRecoil($fields)
   let lgLayoutStyleText = ''
   let mdLayoutStyleText = ''
   let smLayoutStyleText = ''
@@ -368,6 +369,7 @@ export function generateLayoutStyle(layouts) {
     // for large screen
     const lgFld = layouts.lg[i]
     const lgClsName = lgFld.i
+    const fldData = fields[lgClsName]
 
     const lg_g_r_s = Math.round(lgFld.y + 1)
     const lg_g_c_s = Math.round(lgFld.x + 1)
@@ -383,13 +385,16 @@ export function generateLayoutStyle(layouts) {
     // lgLayoutStyleText += `-ms-grid-row-span:${lg_g_r_span};`
     // lgLayoutStyleText += `-ms-grid-column:${lg_g_c_s};`
     // lgLayoutStyleText += `-ms-grid-column-span:${lg_g_c_span};`
-    lgLayoutStyleText += `min-height:${lg_min_height}`
+    if (!fldData?.layout?.autoHeight) {
+      lgLayoutStyleText += `min-height:${lg_min_height}`
+    }
     lgLayoutStyleText += '}'
   }
   for (let i = 0; i < layouts.md.length; i += 1) {
     // for medium screen
     const mdFld = layouts.md[i]
     const mdClsName = mdFld.i
+    const fldData = fields[mdClsName]
 
     const md_g_r_s = Math.round(mdFld.y + 1)
     const md_g_c_s = Math.round(mdFld.x + 1)
@@ -405,13 +410,16 @@ export function generateLayoutStyle(layouts) {
     // mdLayoutStyleText += `-ms-grid-row-span:${md_g_r_span};`
     // mdLayoutStyleText += `-ms-grid-column:${md_g_c_s};`
     // mdLayoutStyleText += `-ms-grid-column-span:${md_g_c_span};`
-    mdLayoutStyleText += `min-height:${md_min_height}`
+    if (!fldData?.layout?.autoHeight) {
+      mdLayoutStyleText += `min-height:${md_min_height}`
+    }
     mdLayoutStyleText += '}'
   }
   for (let i = 0; i < layouts.sm.length; i += 1) {
     // for small screen
     const smFld = layouts.sm[i]
     const smClsName = smFld.i
+    const fldData = fields[smClsName]
 
     const sm_g_r_s = Math.round(smFld.y + 1)
     const sm_g_c_s = Math.round(smFld.x + 1)
@@ -427,7 +435,9 @@ export function generateLayoutStyle(layouts) {
     // smLayoutStyleText += `-ms-grid-row-span:${sm_g_r_span};`
     // smLayoutStyleText += `-ms-grid-column:${sm_g_c_s};`
     // smLayoutStyleText += `-ms-grid-column-span:${sm_g_c_span};`
-    smLayoutStyleText += `min-height:${sm_min_height}`
+    if (!fldData?.layout?.autoHeight) {
+      smLayoutStyleText += `min-height:${sm_min_height}`
+    }
     smLayoutStyleText += '}'
   }
 
