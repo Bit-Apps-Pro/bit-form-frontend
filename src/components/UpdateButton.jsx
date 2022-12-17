@@ -398,6 +398,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')
+          setTimeout(() => clearAllFormSessionStorageData(data.id), 100)
         } else if (!response?.success && response?.data === 'Token expired') {
           sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
           window.location.reload()
@@ -423,6 +424,13 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         },
       })
     }
+  }
+
+  const clearAllFormSessionStorageData = formId => {
+    const allSessionStorageKeys = Object.keys(sessionStorage)
+    const filteredKeys = allSessionStorageKeys.filter(key => key.startsWith('btcd-') && key.endsWith(`-bf-${formId}`))
+    filteredKeys.forEach(key => sessionStorage.removeItem(key))
+    sessionStorage.setItem(`is-bf-form-updated-${formId}`, true)
   }
 
   return (

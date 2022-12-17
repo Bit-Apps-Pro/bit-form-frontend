@@ -87,6 +87,7 @@ const forEach = (array, iteratee) => {
   }
   return array
 }
+
 export const deepCopy = (target, map = new WeakMap()) => {
   if (typeof target !== 'object' || target === null) {
     return target
@@ -109,6 +110,25 @@ export const deepCopy = (target, map = new WeakMap()) => {
     })
   }
   return cloneTarget
+}
+
+export const omitByObj = (mainObj, omitObj) => {
+  const newObj = {}
+  const mainObjKeys = Object.keys(mainObj)
+
+  forEach(mainObjKeys, mainKey => {
+    const currentMainObj = mainObj[mainKey]
+    if (!(mainKey in omitObj)) {
+      newObj[mainKey] = deepCopy(currentMainObj)
+      return
+    }
+    const omittableObj = omitObj[mainKey]
+    if (typeof omittableObj === 'object' && omittableObj !== null) {
+      newObj[mainKey] = omitByObj(currentMainObj, omittableObj)
+    }
+  })
+
+  return newObj
 }
 
 export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {

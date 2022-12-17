@@ -3,6 +3,8 @@
 export default class BitDropdownField {
   #dropdownFieldWrapper = null
 
+  #dropdownFldContainer = null
+
   #dropdownHiddenInputElm = null
 
   #searchInputElm = null
@@ -10,6 +12,8 @@ export default class BitDropdownField {
   #optionWrapperElm = null
 
   #dropdownWrapperElm = null
+
+  #selectedOptWrpElm = null
 
   #selectedOptImgElm = null
 
@@ -84,6 +88,7 @@ export default class BitDropdownField {
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
+    this.#selectedOptWrpElm = this.#select(`.${this.fieldKey}-selected-opt-wrp`)
     this.#selectedOptImgElm = this.#select(`.${this.fieldKey}-selected-opt-img`)
     this.#selectedOptLblElm = this.#select(`.${this.fieldKey}-selected-opt-lbl`)
     this.#selectedOptClearBtnElm = this.#select(`.${this.fieldKey}-selected-opt-clear-btn`)
@@ -129,13 +134,20 @@ export default class BitDropdownField {
     this.#options = [...this.#config.options]
   }
 
-  #select(selector, elm) { return this.#dropdownFieldWrapper.querySelector(selector) }
+  #select(selector, elm) {
+    if (!elm) return this.#dropdownFieldWrapper.querySelector(selector)
+    return elm.querySelector(selector)
+  }
 
   #selectAll(selector) { return this.#dropdownFieldWrapper.querySelectorAll(selector) }
 
   #addEvent(selector, eventType, cb) {
     selector?.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
+  }
+
+  #appendChild(parent, child) {
+    parent.appendChild(child)
   }
 
   #setDefaultValue() {
@@ -225,6 +237,7 @@ export default class BitDropdownField {
         this.setSelectedOption(searchedOption.val)
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (this.#config.multipleSelect) return
       e.preventDefault()
       const selectedOptionIndex = this.#getSelectedOptionIndex()
       const direction = (e.key === 'ArrowDown') ? 'next' : 'previous'
@@ -232,6 +245,19 @@ export default class BitDropdownField {
       if (this.#allowCustomOption && optIndex === 0) optIndex = 1
       if (optIndex > -1 && (optIndex < this.#config.options.length)) {
         this.value = this.#config.options[optIndex].val
+      }
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const isChipClearBtnFocused = activeEl.classList.contains('chip-clear-btn')
+      if (isChipClearBtnFocused) {
+        let hasChipWrp = null
+        if (e.key === 'ArrowRight') {
+          hasChipWrp = activeEl.parentElement.nextElementSibling
+        } else if (e.key === 'ArrowLeft') {
+          hasChipWrp = activeEl.parentElement.previousElementSibling
+        }
+        if (hasChipWrp) {
+          focussableEl = this.#select('.chip-clear-btn', hasChipWrp)
+        }
       }
     }
 
@@ -257,7 +283,7 @@ export default class BitDropdownField {
       if (this.#containsClass(opt, 'disabled-opt')) obj.disabled = true
       const imgElm = opt.querySelector('.opt-icn')
       if (this.#config.selectedOptImage && imgElm?.src) {
-        obj.img = imgElm.src
+        obj.icn = imgElm.src
       }
       const { attributes } = opt
       const len = attributes.length
@@ -307,14 +333,91 @@ export default class BitDropdownField {
     this.#selectedOptValue = ''
     if (this.#config.selectedOptImage) {
       this.#selectedOptImgElm.src = this.#placeholderImage
+      this.#handlePlaceholderImgCls(this.#selectedOptImgElm)
     }
-    this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
+    if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips([])
+    if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
     if (this.#config.selectedOptClearable) this.#selectedOptClearBtnElm.style.display = 'none'
     this.#reRenderVirtualOptions()
   }
 
   #searchOptionObjByVal(val) {
     return [...this.#config.options, ...this.#customOptions].find(opt => opt.val === val)
+  }
+
+  #generateSelectedOptChips(valueArr) {
+    this.#setTextContent(this.#selectedOptLblElm, '')
+    this.#dropdownFldContainer = this.#dropdownFieldWrapper.parentElement
+    if (!valueArr.length) {
+      this.#dropdownFldContainer.style.removeProperty('min-height')
+      if (this.#config.selectedOptImage) this.#selectedOptImgElm.style.display = 'block'
+      this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
+      return
+    }
+    if (this.#config.selectedOptImage) this.#selectedOptImgElm.style.display = 'none'
+    valueArr.forEach((val, valIndx) => {
+      const chipWrp = this.#createElm('div')
+      this.#setClassName(chipWrp, 'chip-wrp')
+      const chipWrpCustomClasses = this.#config.customClasses?.['chip-wrp']
+      if (chipWrpCustomClasses) this.#setCustomClass(chipWrp, chipWrpCustomClasses)
+      const chipWrpCustomAttributes = this.#config.customAttributes?.['chip-wrp']
+      if (chipWrpCustomAttributes) this.#setCustomAttr(chipWrp, chipWrpCustomAttributes)
+
+      if (this.#config.selectedOptImage && this.#config.optionIcon) {
+        const chipIcn = this.#createElm('img')
+        this.#setClassName(chipIcn, 'chip-icn')
+        const optObj = this.#searchOptionObjByVal(val)
+        this.#setAttribute(chipIcn, 'src', optObj.icn || this.#placeholderImage)
+        this.#handlePlaceholderImgCls(chipIcn, optObj.icn)
+        this.#setAttribute(chipIcn, 'alt', optObj.lbl)
+        const chipIcnCustomClasses = this.#config.customClasses?.['chip-icn']
+        if (chipIcnCustomClasses) this.#setCustomClass(chipIcn, chipIcnCustomClasses)
+        const chipIcnCustomAttributes = this.#config.customAttributes?.['chip-icn']
+        if (chipIcnCustomAttributes) this.#setCustomAttr(chipIcn, chipIcnCustomAttributes)
+        this.#appendChild(chipWrp, chipIcn)
+      }
+
+      const chipLbl = this.#createElm('span')
+      this.#setClassName(chipLbl, 'chip-lbl')
+      const chipLblCustomClasses = this.#config.customClasses?.['chip-lbl']
+      if (chipLblCustomClasses) this.#setCustomClass(chipLbl, chipLblCustomClasses)
+      const chipLblCustomAttributes = this.#config.customAttributes?.['chip-lbl']
+      if (chipLblCustomAttributes) this.#setCustomAttr(chipLbl, chipLblCustomAttributes)
+
+      this.#setTextContent(chipLbl, val)
+      this.#appendChild(chipWrp, chipLbl)
+
+      const chipClearBtn = this.#createElm('button')
+      this.#setClassName(chipClearBtn, 'chip-clear-btn')
+      const chipClearBtnCustomClasses = this.#config.customClasses?.['chip-clear-btn']
+      if (chipClearBtnCustomClasses) this.#setCustomClass(chipClearBtn, chipClearBtnCustomClasses)
+      const chipClearBtnCustomAttributes = this.#config.customAttributes?.['chip-clear-btn']
+      if (chipClearBtnCustomAttributes) this.#setCustomAttr(chipClearBtn, chipClearBtnCustomAttributes)
+      chipClearBtn.innerHTML = this.#selectedOptClearBtnElm.innerHTML
+      this.#addEvent(chipClearBtn, 'click', e => { this.#clearSelectedChip(e, valIndx) })
+      this.#addEvent(chipClearBtn, 'keyup', e => { e.key === 'Backspace' && this.#clearSelectedChip(e, valIndx) })
+      this.#appendChild(chipWrp, chipClearBtn)
+
+      this.#appendChild(this.#selectedOptLblElm, chipWrp)
+    })
+    this.#dropdownFldContainer = this.#dropdownFieldWrapper.parentElement
+    this.#dropdownFldContainer.style.minHeight = `${this.#dropdownFieldWrapper.offsetHeight - this.#optionWrapperElm.offsetHeight}px`
+  }
+
+  #clearSelectedChip(e, chipIndex) {
+    e.stopPropagation()
+    const valueArr = this.#selectedOptValue.split(this.#config.separator)
+    valueArr.splice(chipIndex, 1)
+    this.setSelectedOption(valueArr.join(this.#config.separator))
+    this.#reRenderVirtualOptions()
+  }
+
+  #handlePlaceholderImgCls(elm = null, remove = 0) {
+    if (remove) {
+      this.#removeClassName(elm, 'placeholder-img')
+    } else {
+      this.#setClassName(elm, 'placeholder-img')
+    }
   }
 
   setSelectedOption(values) {
@@ -331,26 +434,29 @@ export default class BitDropdownField {
       selectedItem = this.#searchOptionObjByVal(values)
     }
     this.#selectedOptValue = values
-    if (!this.#selectedOptValue) {
-      this.#clearSelectedOption()
-    }
+    if (!this.#selectedOptValue) this.#clearSelectedOption()
     if (!selectedItem) return
 
     if (this.#config.selectedOptImage) {
       if (this.#config.multipleSelect) {
         if (valueArr.length > 1) {
           this.#selectedOptImgElm.src = this.#placeholderImage
+          this.#handlePlaceholderImgCls(this.#selectedOptImgElm)
         } else if (valueArr.length === 1) {
-          this.#selectedOptImgElm.src = selectedItem.img || this.#placeholderImage
+          this.#selectedOptImgElm.src = selectedItem.icn || this.#placeholderImage
+          this.#handlePlaceholderImgCls(this.#selectedOptImgElm, selectedItem.icn)
         } else {
           this.#selectedOptImgElm.src = this.#placeholderImage
+          this.#handlePlaceholderImgCls(this.#selectedOptImgElm)
         }
       } else {
-        this.#selectedOptImgElm.src = selectedItem.img || this.#placeholderImage
+        this.#selectedOptImgElm.src = selectedItem.icn || this.#placeholderImage
+        this.#handlePlaceholderImgCls(this.#selectedOptImgElm, selectedItem.icn)
       }
     }
 
-    this.#setTextContent(this.#selectedOptLblElm, selectedItem.lbl)
+    if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips(valueArr)
+    if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, selectedItem.lbl)
     if (this.#config.closeOnSelect) this.setMenu({ open: false })
     this.#setAttribute(this.#dropdownHiddenInputElm, 'value', values)
     if (this.#config.selectedOptClearable) {
@@ -401,6 +507,7 @@ export default class BitDropdownField {
   }
 
   #handleOptionValue(e) {
+    e.stopPropagation()
     const optElm = e.currentTarget
     const val = optElm.dataset.value
     if (this.#allowCustomOption && optElm.classList.contains('create-opt')) {
@@ -492,7 +599,7 @@ export default class BitDropdownField {
       if (opt.i === 'not-found') {
         this.#setTextContent(li, opt.lbl)
         this.#setClassName(li, 'opt-not-found')
-        this.#optionListElm.appendChild(li)
+        this.#appendChild(this.#optionListElm, li)
         return
       }
       this.#setClassName(li, 'option')
@@ -519,7 +626,8 @@ export default class BitDropdownField {
           const optIcn = this.#config.attributes['opt-icn']
           this.#setCustomAttr(img, optIcn)
         }
-        img.src = opt.img
+        img.src = opt.icn || this.#placeholderImage
+        this.#handlePlaceholderImgCls(img, opt.icn)
         img.alt = opt.lbl
         img.loading = 'lazy'
         lblimgbox.append(img)
@@ -580,11 +688,12 @@ export default class BitDropdownField {
         }
       }
 
-      this.#optionListElm.appendChild(li)
+      this.#appendChild(this.#optionListElm, li)
     }
   }
 
   #handleSearchInput(e) {
+    e.stopPropagation()
     if (e.key === 'Enter' && this.#options.length) {
       const optKey = this.#options?.[0].i
       if (optKey) {

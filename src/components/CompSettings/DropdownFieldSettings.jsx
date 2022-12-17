@@ -56,7 +56,7 @@ export default function DropdownFieldSettings() {
     selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
     showSearchPh,
-    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList,
+    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList, showChip,
   } = fieldData.config
 
   const handleConfigChange = (val, name) => {
@@ -68,6 +68,7 @@ export default function DropdownFieldSettings() {
 
   const handleMultiSelect = (val, name) => {
     fieldData.config[name] = val
+    fieldData.config.showChip = val
     fieldData.config.closeOnSelect = !val
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -301,6 +302,20 @@ export default function DropdownFieldSettings() {
         isChecked={multipleSelect}
         tip="By disabling this option, the field multiple will be hidden"
       />
+
+      {multipleSelect && (
+        <>
+          <FieldSettingsDivider />
+          <SingleToggle
+            id="show-chip"
+            className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
+            title={__('Show Selected Option Chip:')}
+            action={e => handleConfigChange(e.target.checked, 'showChip')}
+            isChecked={showChip}
+            tip="Show selected options as chip (clearable). If disabled, count of selected options will be shown as text."
+          />
+        </>
+      )}
 
       <FieldSettingsDivider />
 

@@ -119,39 +119,42 @@ const FormBuilder = ({ isLoading }) => {
     let isV2Form = true
 
     if (!isNewForm) {
-      const sessionStorageBreakpoint = getSessionStorageStates({ stateName: 'breakpoint' })
-      const sessionStorageAllThemeVars = {
-        lgLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgLight', strType: 'jcof' }),
-        mdLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdLight', strType: 'jcof' }),
-        smLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmLight', strType: 'jcof' }),
-        lgDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgDark', strType: 'jcof' }),
-        mdDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdDark', strType: 'jcof' }),
-        smDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmDark', strType: 'jcof' }),
-      }
-      const sessionStorageAllThemeColors = {
-        lightThemeColors: getSessionStorageStates({ stateName: 'lightThemeColors', strType: 'jcof' }),
-        darkThemeColors: getSessionStorageStates({ stateName: 'darkThemeColors', strType: 'jcof' }),
-      }
-      const sessionStorageAllStyles = {
-        lgLightStyles: getSessionStorageStates({ stateName: 'stylesLgLight', strType: 'jcof' }),
-        mdLightStyles: getSessionStorageStates({ stateName: 'stylesMdLight', strType: 'jcof' }),
-        smLightStyles: getSessionStorageStates({ stateName: 'stylesSmLight', strType: 'jcof' }),
-        lgDarkStyles: getSessionStorageStates({ stateName: 'stylesLgDark', strType: 'jcof' }),
-        mdDarkStyles: getSessionStorageStates({ stateName: 'stylesMdDark', strType: 'jcof' }),
-        smDarkStyles: getSessionStorageStates({ stateName: 'stylesSmDark', strType: 'jcof' }),
-      }
-      const sessionBreakpointSize = getSessionStorageStates({ stateName: 'breakpointSize', strType: 'jcof' })
-      if (sessionStorageBreakpoint) {
-        setBreakpoint(sessionStorageBreakpoint)
-        setAllThemeVars(sessionStorageAllThemeVars)
-        setAllThemeColors(sessionStorageAllThemeColors)
-        setAllStyles(sessionStorageAllStyles)
-        setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
-        setUpdateBtn({ unsaved: true })
-        setBreakpointSize(sessionBreakpointSize)
-        setStyleLoading(false)
-        setIsNewThemeStyleLoaded(true)
-        return
+      const sessionIsBfFormUpdated = getSessionStorageStates({ stateName: `is-bf-form-updated-${formID}` }, 0)
+      if (!sessionIsBfFormUpdated) {
+        const sessionStorageBreakpoint = getSessionStorageStates({ stateName: 'breakpoint' })
+        const sessionStorageAllThemeVars = {
+          lgLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgLight', strType: 'jcof' }),
+          mdLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdLight', strType: 'jcof' }),
+          smLightThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmLight', strType: 'jcof' }),
+          lgDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsLgDark', strType: 'jcof' }),
+          mdDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsMdDark', strType: 'jcof' }),
+          smDarkThemeVars: getSessionStorageStates({ stateName: 'themeVarsSmDark', strType: 'jcof' }),
+        }
+        const sessionStorageAllThemeColors = {
+          lightThemeColors: getSessionStorageStates({ stateName: 'lightThemeColors', strType: 'jcof' }),
+          darkThemeColors: getSessionStorageStates({ stateName: 'darkThemeColors', strType: 'jcof' }),
+        }
+        const sessionStorageAllStyles = {
+          lgLightStyles: getSessionStorageStates({ stateName: 'stylesLgLight', strType: 'jcof' }),
+          mdLightStyles: getSessionStorageStates({ stateName: 'stylesMdLight', strType: 'jcof' }),
+          smLightStyles: getSessionStorageStates({ stateName: 'stylesSmLight', strType: 'jcof' }),
+          lgDarkStyles: getSessionStorageStates({ stateName: 'stylesLgDark', strType: 'jcof' }),
+          mdDarkStyles: getSessionStorageStates({ stateName: 'stylesMdDark', strType: 'jcof' }),
+          smDarkStyles: getSessionStorageStates({ stateName: 'stylesSmDark', strType: 'jcof' }),
+        }
+        const sessionBreakpointSize = getSessionStorageStates({ stateName: 'breakpointSize', strType: 'jcof' })
+        if (sessionStorageBreakpoint) {
+          setBreakpoint(sessionStorageBreakpoint)
+          setAllThemeVars(sessionStorageAllThemeVars)
+          setAllThemeColors(sessionStorageAllThemeColors)
+          setAllStyles(sessionStorageAllStyles)
+          setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
+          setUpdateBtn({ unsaved: true })
+          setBreakpointSize(sessionBreakpointSize)
+          setStyleLoading(false)
+          setIsNewThemeStyleLoaded(true)
+          return
+        }
       }
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
         .then(({ data }) => {
