@@ -36,6 +36,7 @@ import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function AdvanceFileUpSettings() {
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
@@ -116,6 +117,10 @@ function AdvanceFileUpSettings() {
       <FieldSettingsDivider />
 
       <AdminLabelSettings />
+
+      <FieldSettingsDivider />
+
+      <SizeAndPosition />
 
       <FieldSettingsDivider />
 
