@@ -187,7 +187,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   className={`${fieldKey}-ct ${getCustomClsName(fieldKey, 'ct')}`}
                   {...getCustomAttributes(fieldKey, 'ct')}
                 >
-                  Others..
+                  Other..
                 </span>
               </label>
               <div data-oinp-wrp className={`${fieldKey}-other-inp-wrp`}>
@@ -198,6 +198,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                   className={`${fieldKey}-other-inp ${getCustomClsName(fieldKey, 'other-inp')}`}
                   {...attr.valid.otherOptReq && { required: true }}
                   {...'otherInpPh' in attr && { placeholder: attr.otherInpPh }}
+                  {...!('otherInpPh' in attr) && { placeholder: 'Other...' }}
                   value={otherOptValue}
                   onChange={handleOtherOptInput}
                 />

@@ -8,12 +8,12 @@ import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHookStates, $fields, $layouts } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { fileFormats } from '../../Utils/StaticData/fileformat'
@@ -45,6 +45,8 @@ function AdvanceFileUpSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
+  const setLayouts = useSetRecoilState($layouts)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
 
   const handle = ({ target: { checked, name } }) => {
     if (checked) {
@@ -59,11 +61,20 @@ function AdvanceFileUpSettings() {
 
   const setConfigProp = e => {
     const { value, name, type } = e.target
-    console.log(value, name, type)
     if (value && type === 'number') {
       fieldData.config[name] = Number(value)
     } else if (value && type !== 'number') {
       fieldData.config[name] = value
+
+      if (name === 'stylePanelLayout' && value === 'circle') {
+        setLayouts(prevLayouts => produce(prevLayouts, draftLayouts => {
+          const fldLayoutsLg = draftLayouts.lg.findIndex(itm => itm.i === fldKey)
+
+          draftLayouts.lg[fldLayoutsLg].w = 20
+        }))
+        setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+        setTimeout(() => reCalculateFldHeights(fldKey), 100)
+      }
     } else {
       delete fieldData.config[name]
     }
@@ -94,11 +105,13 @@ function AdvanceFileUpSettings() {
 
     if (checked && typ === 'allowImageCrop' || typ === 'allowImageResize') {
       fieldData.config.allowImageTransform = true
+      fieldData.config.imageResizeMode = 'cover'
     }
 
     if (fieldData?.config?.allowImageCrop || fieldData?.config?.allowImageResize) {
       fieldData.config.allowImageTransform = true
     }
+
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${typ} Plugin ${checked ? 'on' : 'off'} : ${fieldData.lbl || fldKey}`, type: typ, state: { fldKey, fields: allFields } })
@@ -337,10 +350,11 @@ function AdvanceFileUpSettings() {
               name="maxFiles"
               value={fieldData?.config?.maxFiles}
               onChange={setConfigProp}
+              placeholder="Maximum number of file"
             />
           </div>
           <div className={css(ut.flxc, ut.fw500, FieldStyle.labelTip)}>
-            <span>Maximum Paraller Upload</span>
+            <span>Maximum Parallel Upload</span>
             <input
               data-testid="alw-mltpl-max-inp"
               className={css(FieldStyle.input, ut.w3, ut.mt1)}
@@ -348,6 +362,7 @@ function AdvanceFileUpSettings() {
               name="maxParallelUploads"
               value={fieldData?.config?.maxParallelUploads}
               onChange={setConfigProp}
+              placeholder="Maximum number of parallel upload"
             />
           </div>
         </div>
@@ -469,12 +484,13 @@ function AdvanceFileUpSettings() {
             </div>
             <input
               data-testid="img-prvw-min-hight-inp"
-              placeholder="Preview Min Height"
+              placeholder="44"
               className={css(FieldStyle.input)}
               type="number"
               name="imagePreviewMinHeight"
               value={fieldData?.config?.imagePreviewMinHeight}
               min="0"
+              place
               onChange={setConfigProp}
             />
           </div>
@@ -489,7 +505,7 @@ function AdvanceFileUpSettings() {
             </div>
             <input
               data-testid="img-prvw-max-hight-inp"
-              placeholder="Preview Max Height"
+              placeholder="256"
               className={css(FieldStyle.input)}
               type="number"
               name="imagePreviewMaxHeight"
@@ -776,7 +792,7 @@ function AdvanceFileUpSettings() {
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(ut.flxc, ut.mt2)}>
-          <div className={css(ut.fw500, ut.w8)}>{__('Customized')}</div>
+          <div className={css(ut.fw500, ut.w8)}>{__('Edit Options')}</div>
           <button
             data-testid="img-vldtn-cstmztn-btn"
             type="button"

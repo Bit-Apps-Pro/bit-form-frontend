@@ -293,6 +293,9 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'advanced-file-up',
         lbl: __('Advanced File Upload'),
+        layout: {
+          autoHeight: 1,
+        },
         upBtnTxt: 'Attach File',
         valid: {},
         config: {
@@ -316,6 +319,11 @@ function Toolbar({ setNewData }) {
           allowImageResize: false,
           allowImageTransform: false,
           allowImageValidateSize: false,
+          styleButtonRemoveItemPosition: 'left',
+          styleButtonProcessItemPosition: 'right',
+          styleLoadIndicatorPosition: 'right',
+          styleProgressIndicatorPosition: 'right',
+          maxParallelUploads: 2,
         },
         err: {},
         customClasses: {},

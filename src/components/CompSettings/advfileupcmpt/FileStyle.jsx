@@ -29,7 +29,7 @@ function FileStyle({ action, value }) {
             onChange={action}
           >
             <option value="">Select</option>
-            <option value="integrated">Integrated</option>
+            {/* <option value="integrated">Integrated</option> */}
             <option value="compact">Compact</option>
             <option value="circle">Circle</option>
           </select>
@@ -99,7 +99,6 @@ function FileStyle({ action, value }) {
             className={css(ut.fw500, ut.mr1)}
           >
             {__('Load Indicator')}
-
           </label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
