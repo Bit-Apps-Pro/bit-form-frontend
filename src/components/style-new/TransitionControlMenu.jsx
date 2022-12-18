@@ -100,102 +100,103 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
     generateTransitionValue(prop, { value, unit }, indx)
   }
   return (
-    <div className={css(c.overflowXhidden)}>
-      {arrOfExtractedTransitionObj.map((transitionObj, indx) => (
-        <>
-          <SimpleAccordion
-            className={css(c.accordionHead)}
-            title={__(`Transition ${indx + 1}`)}
-            open={indx === 0}
-            actionComponent={
-              arrOfExtractedTransitionObj.length > 1
-              && (
-                <button
-                  type="button"
-                  title="Remove"
-                  className={css(c.delBtn)}
-                  onClick={() => deleteTransition(indx)}
-                  data-testid={`${id}-del-transn-${indx}`}
-                >
-                  <TrashIcn size="14" />
-                </button>
-              )
-            }
-            key={`transition-${(indx * 2 * 4).toString()}`}
-          >
-            <div className={css(ut.p1)}>
-              <div className={css(ut.flxcb, ut.mb2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Property</span>
-                <select
-                  className={css(sc.select)}
-                  value={transitionObj.property || ''}
-                  onChange={e => generateTransitionValue('property', { value: e.target.value }, indx)}
-                  data-testid={`${id}-transn-property-${indx}`}
-                >
-                  <option value="all">all</option>
-                  <option value="width">width</option>
-                  <option value="background">background</option>
-                  <option value="opacity">opacity</option>
-                  <option value="box-shadow">box-shadow</option>
-                  <option value="border-radius">border-radius</option>
-                  <option value="text-shadow">text-shadow</option>
-                  <option value="transform">transform</option>
-                </select>
-              </div>
-
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Duration</span>
-                <SizeControl
-                  width="128px"
-                  value={Number(getNumFromStr(transitionObj.duration) || 0)}
-                  unit={getStrFromStr(transitionObj.duration) || 's'}
-                  inputHandler={valObj => generateTransitionValue('duration', valObj, indx)}
-                  sizeHandler={(v) => sizeHandler(v, 'duration', indx, getStrFromStr(transitionObj.duration))}
-                  options={['s', 'ms']}
-                  min={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
-                  max={getStrFromStr(transitionObj.duration) === 's' ? 10 : 10000}
-                  step={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
-                  dataTestId={`${id}-transn-duration-${indx}`}
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Delay</span>
-                <SizeControl
-                  width="128px"
-                  value={Number(getNumFromStr(transitionObj.delay) || 0)}
-                  unit={getStrFromStr(transitionObj.delay) || 's'}
-                  inputHandler={valObj => generateTransitionValue('delay', valObj, indx)}
-                  sizeHandler={(v) => sizeHandler(v, 'delay', indx, getStrFromStr(transitionObj.delay))}
-                  options={['s', 'ms']}
-                  min={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
-                  max={getStrFromStr(transitionObj.delay) === 's' ? 10 : 10000}
-                  step={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
-                  dataTestId={`${id}-transn-delay-${indx}`}
-                />
-              </div>
-              <div className={css(ut.flxcb, ut.mb2)}>
-                <span className={css(ut.fs12, ut.fw500)}>Function</span>
-                <div>
+    <>
+      <div className={css(c.overFlowScroll)}>
+        {arrOfExtractedTransitionObj.map((transitionObj, indx) => (
+          <>
+            <SimpleAccordion
+              className={css(c.accordionHead)}
+              title={__(`Transition ${indx + 1}`)}
+              open={indx === 0}
+              actionComponent={
+                arrOfExtractedTransitionObj.length > 1
+                && (
+                  <button
+                    type="button"
+                    title="Remove"
+                    className={css(c.delBtn)}
+                    onClick={() => deleteTransition(indx)}
+                    data-testid={`${id}-del-transn-${indx}`}
+                  >
+                    <TrashIcn size="14" />
+                  </button>
+                )
+              }
+              key={`transition-${(indx * 2 * 4).toString()}`}
+            >
+              <div className={css(ut.p1)}>
+                <div className={css(ut.flxcb, ut.mb2)}>
+                  <span className={css(ut.fs12, ut.fw500)}>Property</span>
                   <select
                     className={css(sc.select)}
-                    value={transitionObj.func || ''}
-                    onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)}
-                    data-testid={`${id}-transn-func-${indx}`}
+                    value={transitionObj.property || ''}
+                    onChange={e => generateTransitionValue('property', { value: e.target.value }, indx)}
+                    data-testid={`${id}-transn-property-${indx}`}
                   >
-                    <option value="Custom">Custom</option>
-                    {transitionFunc.map(itm => (<option value={itm}>{itm}</option>))}
+                    <option value="all">all</option>
+                    <option value="width">width</option>
+                    <option value="background">background</option>
+                    <option value="opacity">opacity</option>
+                    <option value="box-shadow">box-shadow</option>
+                    <option value="border-radius">border-radius</option>
+                    <option value="text-shadow">text-shadow</option>
+                    <option value="transform">transform</option>
                   </select>
                 </div>
-              </div>
-              {!transitionFunc.includes(transitionObj.func) && (
-                <input className={css(c.input)} type="text" aria-label="Custom transition" onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)} value={transitionObj.func} />
-              )}
-            </div>
-          </SimpleAccordion>
-          <div className={css(c.divider)} />
-        </>
-      ))}
 
+                <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                  <span className={css(ut.fs12, ut.fw500)}>Duration</span>
+                  <SizeControl
+                    width="128px"
+                    value={Number(getNumFromStr(transitionObj.duration) || 0)}
+                    unit={getStrFromStr(transitionObj.duration) || 's'}
+                    inputHandler={valObj => generateTransitionValue('duration', valObj, indx)}
+                    sizeHandler={(v) => sizeHandler(v, 'duration', indx, getStrFromStr(transitionObj.duration))}
+                    options={['s', 'ms']}
+                    min={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
+                    max={getStrFromStr(transitionObj.duration) === 's' ? 10 : 10000}
+                    step={getStrFromStr(transitionObj.duration) === 's' ? 0.1 : 100}
+                    dataTestId={`${id}-transn-duration-${indx}`}
+                  />
+                </div>
+                <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                  <span className={css(ut.fs12, ut.fw500)}>Delay</span>
+                  <SizeControl
+                    width="128px"
+                    value={Number(getNumFromStr(transitionObj.delay) || 0)}
+                    unit={getStrFromStr(transitionObj.delay) || 's'}
+                    inputHandler={valObj => generateTransitionValue('delay', valObj, indx)}
+                    sizeHandler={(v) => sizeHandler(v, 'delay', indx, getStrFromStr(transitionObj.delay))}
+                    options={['s', 'ms']}
+                    min={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
+                    max={getStrFromStr(transitionObj.delay) === 's' ? 10 : 10000}
+                    step={getStrFromStr(transitionObj.delay) === 's' ? 0.1 : 100}
+                    dataTestId={`${id}-transn-delay-${indx}`}
+                  />
+                </div>
+                <div className={css(ut.flxcb, ut.mb2)}>
+                  <span className={css(ut.fs12, ut.fw500)}>Function</span>
+                  <div>
+                    <select
+                      className={css(sc.select)}
+                      value={transitionObj.func || ''}
+                      onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)}
+                      data-testid={`${id}-transn-func-${indx}`}
+                    >
+                      <option value="Custom">Custom</option>
+                      {transitionFunc.map(itm => (<option value={itm}>{itm}</option>))}
+                    </select>
+                  </div>
+                </div>
+                {!transitionFunc.includes(transitionObj.func) && (
+                  <input className={css(c.input)} type="text" aria-label="Custom transition" onChange={e => generateTransitionValue('func', { value: e.target.value }, indx)} value={transitionObj.func} />
+                )}
+              </div>
+            </SimpleAccordion>
+            <div className={css(c.divider)} />
+          </>
+        ))}
+      </div>
       <div className={css(c.footer)}>
         <button
           className={css(c.addBtn)}
@@ -208,7 +209,7 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -242,7 +243,7 @@ const c = {
     brs: '50%',
     '&:hover': { bd: 'var(--white-0-86)' },
   },
-  footer: { flx: 'center', m: 5 },
+  footer: { flx: 'center' },
   addBtn: {
     se: 25,
     b: 'none',
@@ -255,7 +256,6 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
-  overflowXhidden: { owx: 'hidden' },
   input: {
     fs: 14,
     fw: 500,
@@ -276,6 +276,7 @@ const c = {
     '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
     ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
   },
+  overFlowScroll: { owx: 'scroll', mxh: 200 },
 }
 
 const transitionFunc = [
