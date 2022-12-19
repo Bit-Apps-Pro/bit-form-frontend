@@ -604,7 +604,7 @@ function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="opt-suffix"
-                    label="Phone Option Leading"
+                    label="Phone Option Suffix"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-suffix="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-suffix')}
