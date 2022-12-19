@@ -8,7 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
-  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
+  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
 } from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
@@ -1080,3 +1080,5 @@ export const msgDefaultConfig = {
     closeIconHover: '#000',
   },
 }
+
+export const truncatedString = (str) => (str.length > 100 ? (`${str.substring(0, 100)}...`) : str)
