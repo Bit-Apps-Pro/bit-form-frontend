@@ -1024,6 +1024,10 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'file-size': 'file-input-wrpr .file-size',
     'cross-btn': 'file-input-wrpr .cross-btn',
     'err-wrp': 'file-input-wrpr .err-wrp',
+    'chip-wrp': 'selected-opt-lbl .chip-wrp',
+    'chip-lbl': 'selected-opt-lbl .chip-lbl',
+    'chip-icn': 'selected-opt-lbl .chip-icn',
+    'chip-clear-btn': 'selected-opt-lbl .chip-clear-btn',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
