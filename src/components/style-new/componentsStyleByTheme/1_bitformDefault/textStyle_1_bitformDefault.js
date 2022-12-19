@@ -40,17 +40,17 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
       [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color) !important' },
       [`.${fk}-fld:disabled`]: {
         cursor: 'default',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 10%), var(--gfbg-a)) !important',
-        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa)) !important',
-        'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a)) !important',
+        'background-color': 'var(--bg-5)!important',
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), .5) !important',
+        'border-color': 'var(--bg-5) !important',
       },
       [`.${fk}-fld:read-only`]: {
         cursor: 'default',
-        'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), calc(var(--gfbg-l) + 10%), var(--gfbg-a)) !important',
-        color: 'hsla(var(--gfh), var(--gfs), calc(var(--gfl) + 40%), var(--gfa)) !important',
-        'border-color': 'hsla(var(--gfbc-h), var(--gfbc-s), calc(var(--gfbc-l) + 20%), var(--gfbc-a)) !important',
       },
-      [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important' },
+      [`.${fk}-fld::placeholder`]: {
+        'font-family': 'inherit',
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 40%) !important',
+      },
 
       // field icon
       [`.${fk}-pre-i`]: {

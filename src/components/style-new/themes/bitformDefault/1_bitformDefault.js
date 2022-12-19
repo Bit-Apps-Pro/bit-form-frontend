@@ -292,8 +292,8 @@ const lgLightThemeVars = {
   '--btn-fw': 700, // button font weight
   '--btn-f-style': '', // button font style (italic, bold, etc)
   '--btn-bdr': 'none', // button border
-  '--btn-bdr-rad': '5px', // button border radius
-  '--btn-bdr-width': '1px', // button border radius
+  '--btn-bdr-rad': 'var(--g-bdr-rad)', // button border radius
+  '--btn-bdr-width': '0', // button border width
 
   // outline style properties assign for testing purpose
   '--global-outline': '1px solid hsla(217, 100%, 50%, 100)', // outline
@@ -324,7 +324,7 @@ const lightThemeColors = {
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness
   '--gfbc-a': 100, // global field border color opacity
-  '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
+  '--global-fld-bg-color': '', // field background color
   '--gfbg-h': 0, // global field background color hue
   '--gfbg-s': '0%', // global field background color saturation
   '--gfbg-l': '100%', // global field background color lightness

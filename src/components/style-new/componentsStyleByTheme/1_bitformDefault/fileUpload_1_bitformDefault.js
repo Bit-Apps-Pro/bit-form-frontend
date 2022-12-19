@@ -35,15 +35,22 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'align-items': 'center',
         'background-color': 'var(--btn-bg) !important',
         border: 'none',
-        'border-radius': '8px !important',
+        'border-radius': 'var(--g-bdr-rad) !important',
         'box-shadow': 'none',
         color: 'hsla(0, 0%, 100%, 100%)',
         cursor: 'pointer',
         display: 'inline-flex',
-        height: '35px',
-        padding: '5px 11px !important',
+        padding: '11px 15px !important',
       },
 
+      [`.${fk}-inp-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+      [`.${fk}-inp-btn:active:focus-visible`]: {
+        'outline-offset': 0,
+      },
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',
