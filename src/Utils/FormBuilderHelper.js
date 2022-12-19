@@ -829,17 +829,15 @@ export function getAbsoluteElmHeight(el, withMargin = 1) {
 }
 
 export function addToSessionStorage(key, value, formId) {
-  const currentFormId = getRecoil($formId)
-  if (!currentFormId && !formId) return
   let newVal = value
   if (typeof value !== 'string') newVal = JSON.stringify(value)
   if (formId === 0) {
     sessionStorage.setItem(`btcd-${key}`, newVal)
-    sessionStorage.setItem(`is-bf-form-updated-${currentFormId}`, false)
     return
   }
+  const currentFormId = getRecoil($formId)
+  if (!currentFormId) return
   sessionStorage.setItem(`btcd-${key}-bf-${currentFormId}`, newVal)
-  sessionStorage.setItem(`is-bf-form-updated-${currentFormId}`, false)
 }
 
 export const getSessionStorageStates = ({ stateName, strType }, formId) => {
