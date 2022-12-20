@@ -46,7 +46,7 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
           options={listOptions()}
           onChange={val => lists(val)}
         />
-        <button onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshLists(sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh SendinBlue Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
       <br />
@@ -69,7 +69,7 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
               <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-              <div className="txt-dp"><b>{__('Sendinblue Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('SendinBlue Fields', 'bitform')}</b></div>
             </div>
 
             {sendinBlueConf.field_map.map((itm, i) => (
@@ -100,7 +100,7 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
                     </select>
                     <div style={{ color: 'red', fontSize: '15px', marginTop: '3px' }}>{error.templateId}</div>
                   </div>
-                  <button onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Sendinblue Templates', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button onClick={() => refreshTemplate(sendinBlueConf, setSendinBlueConf, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh SendinBlue Templates', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
                 <br />
                 <br />

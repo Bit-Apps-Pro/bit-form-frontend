@@ -67,7 +67,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
         <small className="d-blk mt-5">
           {__('To get API , Please Visit', 'bitform')}
           {' '}
-          <a className="btcd-link" href="https://account.sendinblue.com/advanced/api" target="_blank" rel="noreferrer">{__('Sendinblue API Console', 'bitform')}</a>
+          <a className="btcd-link" href="https://account.sendinblue.com/advanced/api" target="_blank" rel="noreferrer">{__('SendinBlue API Console', 'bitform')}</a>
         </small>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
