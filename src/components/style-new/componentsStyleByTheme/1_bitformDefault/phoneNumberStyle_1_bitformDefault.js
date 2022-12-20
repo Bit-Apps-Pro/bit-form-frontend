@@ -108,7 +108,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         cursor: 'pointer',
         height: '34px',
         margin: '3px',
-        padding: '8px 12px',
+        padding: '8px',
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css

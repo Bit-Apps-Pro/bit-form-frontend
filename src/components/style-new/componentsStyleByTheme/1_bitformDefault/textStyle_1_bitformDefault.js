@@ -14,9 +14,7 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
       [`.${fk}-fld`]: {
         display: type === 'textarea' ? 'block!important' : 'inline-block!important',
         direction: 'inherit !important',
-        // 'max-width': '100% !important',
-        // 'font-family': 'var(--g-font-family)',
-        ...type === 'textarea' && { 'font-family': 'var(--g-font-family)' },
+        'font-family': 'inherit',
         width: '100% !important',
         outline: 'none !important',
         'background-color': 'var(--global-fld-bg-color, transparent) !important',
