@@ -98,6 +98,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 name={fieldKey}
                 value={itm.val || itm.lbl}
                 {...itm.check && { checked: true }}
+                {...(attr.valid.disabled || itm.disabled) && { disabled: true }}
                 {...attr.valid.req && { required: true }}
                 {...'name' in attr && { name: attr.name }}
                 // {...{ checked: value === (itm.val || itm.lbl) }}
