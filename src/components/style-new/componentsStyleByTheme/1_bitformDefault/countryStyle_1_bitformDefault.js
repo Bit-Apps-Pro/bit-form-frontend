@@ -108,7 +108,7 @@ export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorSch
         width: '25px',
         'border-radius': '3px !important',
         outline: '1px solid var(--bg-10)',
-        'background-color': 'var(--bg-15)',
+        'background-color': 'var(--bg-10)',
         margin: '0 10px 0 0',
         '-webkit-user-select': 'none',
         'user-select': 'none',

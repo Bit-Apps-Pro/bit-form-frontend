@@ -685,8 +685,8 @@ export const calculateFormGutter = (styles, formId) => {
 
 export const getResizableHandles = fieldType => {
   switch (fieldType) {
+    // case 'divider':
     case 'textarea':
-    case 'divider':
     case 'image':
       return ['se', 'e']
     default:

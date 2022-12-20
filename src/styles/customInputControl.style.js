@@ -67,7 +67,7 @@ const customInputControlStyle = {
     cr: 'var(--white-2-47)',
     lh: 0,
     dy: 'none',
-    bc: 'var(--white-0-95) !important',
+    bc: 'transparent !important',
     tn: 'all .2s',
 
     ':hover': { cr: 'var(--black-0)', bs: 'none' },

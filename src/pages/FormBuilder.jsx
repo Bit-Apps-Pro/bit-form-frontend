@@ -23,7 +23,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $flags, $isNewThemeStyleLoaded, $newFormId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'

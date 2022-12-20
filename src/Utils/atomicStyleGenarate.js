@@ -9,6 +9,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
+import { omitByObj } from './Helpers'
 
 export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '' }) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
@@ -118,7 +119,7 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const allMdLightStyles = flatenStyleObj(mergeNestedObj(lgLightStyles, mdLightStyles))
   const normalizedAllMdLightVars = expressAndCleanCssVars(allMdLightVars)
   const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars, cssFilterConfig)
-  const mdLightStylesOnly = getObjectDiff(normalizedAllMdLightStyles, normalizedAllLgLightStyles)
+  const mdLightStylesOnly = getObjectDiff(normalizedAllLgLightStyles, normalizedAllMdLightStyles)
   const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap, nextAtomicClass: mdLightNextAtomicClass } = atomizeCss(mdLightStylesOnly, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = mdLightNextAtomicClass
 
@@ -219,6 +220,10 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   if (mdDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${mdBreakpointSize}px){${mdDarkCssText}}`
   if (smDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${smBreakpointSize}px){${smDarkCssText}}`
 
+  const lgLightStylesWithoutMergedStyles = omitByObj(lgLightStyles, styleMergeWithAtomicClasses.lgLightStyles)
+  const mdlightStylesWithoutMergedStyles = omitByObj(mdLightStyles, styleMergeWithAtomicClasses.mdLightStyles)
+  const smlightStylesWithoutMergedStyles = omitByObj(smLightStyles, styleMergeWithAtomicClasses.smLightStyles)
+
   return {
     atomicCssText: cssText,
     atomicClassMap: allMergedClassMaps,
@@ -230,11 +235,11 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     mdDarkThemeVars,
     smLightThemeVars,
     smDarkThemeVars,
-    lgLightStyles,
+    lgLightStyles: lgLightStylesWithoutMergedStyles,
     lgDarkStyles,
-    mdLightStyles,
+    mdLightStyles: mdlightStylesWithoutMergedStyles,
     mdDarkStyles,
-    smLightStyles,
+    smLightStyles: smlightStylesWithoutMergedStyles,
     smDarkStyles,
   }
 }
