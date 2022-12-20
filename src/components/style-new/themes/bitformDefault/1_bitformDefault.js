@@ -466,7 +466,9 @@ const lgLightform = ({ formId }) => ({
     // outline: '1px solid hsla(217, 100%, 50%, 100)',
     // 'outline-offset': '10px',
   },
-  [`._frm-${formId}`]: {},
+  [`._frm-${formId}`]: {
+    direction: 'var(--dir)',
+  },
 })
 
 const { msgType, position, animation, styles } = msgDefaultConfig || {}
