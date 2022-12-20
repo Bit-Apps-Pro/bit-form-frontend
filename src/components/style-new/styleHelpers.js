@@ -8,7 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
-  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
+  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
 } from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
@@ -1024,6 +1024,10 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'file-size': 'file-input-wrpr .file-size',
     'cross-btn': 'file-input-wrpr .cross-btn',
     'err-wrp': 'file-input-wrpr .err-wrp',
+    'chip-wrp': 'selected-opt-lbl .chip-wrp',
+    'chip-lbl': 'selected-opt-lbl .chip-lbl',
+    'chip-icn': 'selected-opt-lbl .chip-icn',
+    'chip-clear-btn': 'selected-opt-lbl .chip-clear-btn',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
@@ -1076,3 +1080,5 @@ export const msgDefaultConfig = {
     closeIconHover: '#000',
   },
 }
+
+export const truncatedString = (str) => (str.length > 100 ? (`${str.substring(0, 100)}...`) : str)

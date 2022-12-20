@@ -13,7 +13,7 @@ import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses } from '../../style-new/styleHelpers'
+import { addDefaultStyleClasses, isStyleExist, setIconFilterValue, styleClasses, truncatedString } from '../../style-new/styleHelpers'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import Modal from '../../Utilities/Modal'
@@ -158,7 +158,7 @@ export default function ErrorMessageSettings({
             onClick={openErrorModal}
             onKeyPress={openErrorModal}
           >
-            <RenderHtml html={errMsg} />
+            <RenderHtml html={truncatedString(errMsg)} />
           </div>
 
           {allowIcons && (

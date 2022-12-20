@@ -101,131 +101,133 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
   }
 
   return (
-    <div className={css(c.overflowXhidden)}>
-      {arrOfExtractedShadowObj.map((shadowObj, indx) => (
-        <Fragment key={`key-${indx + 1}`}>
-          <SimpleAccordion
-            key={`shadow-accordion-${indx + 12 * 23}`}
-            className={css(c.accordionHead)}
-            title={__(`Shadow ${indx + 1}`)}
-            open={indx === 0}
-            actionComponent={
-              arrOfExtractedShadowObj.length > 1
-              && (
-                <button
-                  type="button"
-                  title="Remove"
-                  className={css(c.delBtn)}
-                  onClick={() => deleteShadow(indx)}
-                  data-testid={`${id}-del-shadow-${indx}`}
-                >
-                  <TrashIcn size="14" />
-                </button>
-              )
-            }
-          >
-            <div className={css(ut.p1)}>
-              {
-                propertyArray.includes('xOffset') && (
-                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>X</span>
-                    <SizeControl
-                      width="128px"
-                      value={Number(getNumFromStr(shadowObj.xOffset) || 0)}
-                      unit={getStrFromStr(shadowObj.xOffset) || 'px'}
-                      inputHandler={valObj => generateShadowValue('xOffset', valObj, indx)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('xOffset', unitKey, unitValue, shadowObj.xOffset, indx)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
-                      dataTestId={`${id}-shad-x-ofset-${indx}`}
-                    />
-                  </div>
+    <>
+      <div className={css(c.overFlowScroll)}>
+        {arrOfExtractedShadowObj.map((shadowObj, indx) => (
+          <Fragment key={`key-${indx + 1}`}>
+            <SimpleAccordion
+              key={`shadow-accordion-${indx + 12 * 23}`}
+              className={css(c.accordionHead)}
+              title={__(`Shadow ${indx + 1}`)}
+              open={indx === 0}
+              actionComponent={
+                arrOfExtractedShadowObj.length > 1
+                && (
+                  <button
+                    type="button"
+                    title="Remove"
+                    className={css(c.delBtn)}
+                    onClick={() => deleteShadow(indx)}
+                    data-testid={`${id}-del-shadow-${indx}`}
+                  >
+                    <TrashIcn size="14" />
+                  </button>
                 )
               }
-              {
-                propertyArray.includes('yOffset') && (
-                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>Y</span>
-                    <SizeControl
-                      width="128px"
-                      value={Number(getNumFromStr(shadowObj.yOffset) || 0)}
-                      unit={getStrFromStr(shadowObj.yOffset) || 'px'}
-                      inputHandler={valObj => generateShadowValue('yOffset', valObj, indx)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('yOffset', unitKey, unitValue, shadowObj.yOffset, indx)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
-                      dataTestId={`${id}-shad-y-ofset-${indx}`}
-                    />
-                  </div>
-                )
-              }
-              {
-                propertyArray.includes('blur') && (
-                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>Blur</span>
-                    <SizeControl
-                      width="128px"
-                      value={Number(getNumFromStr(shadowObj.blur) || 0)}
-                      unit={getStrFromStr(shadowObj.blur) || 'px'}
-                      inputHandler={valObj => generateShadowValue('blur', valObj, indx)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('blur', unitKey, unitValue, shadowObj.blur, indx)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
-                      dataTestId={`${id}-shad-blur-${indx}`}
-                    />
-                  </div>
-                )
-              }
-              {
-                propertyArray.includes('spread') && (
-                  <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>Spread</span>
-                    <SizeControl
-                      width="128px"
-                      value={Number(getNumFromStr(shadowObj.spread) || 0)}
-                      unit={getStrFromStr(shadowObj.spread) || 'px'}
-                      inputHandler={valObj => generateShadowValue('spread', valObj, indx)}
-                      sizeHandler={({ unitKey, unitValue }) => unitHandler('spread', unitKey, unitValue, shadowObj.spread, indx)}
-                      options={['px', 'em', 'rem']}
-                      min="-10"
-                      max="20"
-                      dataTestId={`${id}-shad-spread-${indx}`}
-                    />
-                  </div>
-                )
-              }
-              {
-                propertyArray.includes('color') && (
-                  <div className={css(ut.flxcb, ut.mb2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>Color</span>
-                    <SimpleColorPickerTooltip action={{ onChange: val => generateShadowValue('color', { value: val }, indx) }} value={shadowObj.color} />
-                  </div>
-                )
-              }
-              {
-                propertyArray.includes('inset') && (
-                  <div className={css(ut.flxcb, ut.mb2)}>
-                    <span className={css(ut.fs12, ut.fw500)}>Inset</span>
-                    <select
-                      data-testid={`${id}-inse-${indx}`}
-                      className={css(sc.select)}
-                      value={shadowObj.inset || ''}
-                      onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}
-                    >
-                      <option value="">outset</option>
-                      <option value="inset">inset</option>
-                    </select>
-                  </div>
-                )
-              }
-            </div>
-          </SimpleAccordion>
-          <div className={css(c.divider)} />
-        </Fragment>
-      ))}
+            >
+              <div className={css(ut.p1)}>
+                {
+                  propertyArray.includes('xOffset') && (
+                    <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>X</span>
+                      <SizeControl
+                        width="128px"
+                        value={Number(getNumFromStr(shadowObj.xOffset) || 0)}
+                        unit={getStrFromStr(shadowObj.xOffset) || 'px'}
+                        inputHandler={valObj => generateShadowValue('xOffset', valObj, indx)}
+                        sizeHandler={({ unitKey, unitValue }) => unitHandler('xOffset', unitKey, unitValue, shadowObj.xOffset, indx)}
+                        options={['px', 'em', 'rem']}
+                        min="-10"
+                        max="20"
+                        dataTestId={`${id}-shad-x-ofset-${indx}`}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  propertyArray.includes('yOffset') && (
+                    <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>Y</span>
+                      <SizeControl
+                        width="128px"
+                        value={Number(getNumFromStr(shadowObj.yOffset) || 0)}
+                        unit={getStrFromStr(shadowObj.yOffset) || 'px'}
+                        inputHandler={valObj => generateShadowValue('yOffset', valObj, indx)}
+                        sizeHandler={({ unitKey, unitValue }) => unitHandler('yOffset', unitKey, unitValue, shadowObj.yOffset, indx)}
+                        options={['px', 'em', 'rem']}
+                        min="-10"
+                        max="20"
+                        dataTestId={`${id}-shad-y-ofset-${indx}`}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  propertyArray.includes('blur') && (
+                    <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>Blur</span>
+                      <SizeControl
+                        width="128px"
+                        value={Number(getNumFromStr(shadowObj.blur) || 0)}
+                        unit={getStrFromStr(shadowObj.blur) || 'px'}
+                        inputHandler={valObj => generateShadowValue('blur', valObj, indx)}
+                        sizeHandler={({ unitKey, unitValue }) => unitHandler('blur', unitKey, unitValue, shadowObj.blur, indx)}
+                        options={['px', 'em', 'rem']}
+                        min="-10"
+                        max="20"
+                        dataTestId={`${id}-shad-blur-${indx}`}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  propertyArray.includes('spread') && (
+                    <div className={css(ut.flxcb, ut.mb2, ut.mt2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>Spread</span>
+                      <SizeControl
+                        width="128px"
+                        value={Number(getNumFromStr(shadowObj.spread) || 0)}
+                        unit={getStrFromStr(shadowObj.spread) || 'px'}
+                        inputHandler={valObj => generateShadowValue('spread', valObj, indx)}
+                        sizeHandler={({ unitKey, unitValue }) => unitHandler('spread', unitKey, unitValue, shadowObj.spread, indx)}
+                        options={['px', 'em', 'rem']}
+                        min="-10"
+                        max="20"
+                        dataTestId={`${id}-shad-spread-${indx}`}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  propertyArray.includes('color') && (
+                    <div className={css(ut.flxcb, ut.mb2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>Color</span>
+                      <SimpleColorPickerTooltip action={{ onChange: val => generateShadowValue('color', { value: val }, indx) }} value={shadowObj.color} />
+                    </div>
+                  )
+                }
+                {
+                  propertyArray.includes('inset') && (
+                    <div className={css(ut.flxcb, ut.mb2)}>
+                      <span className={css(ut.fs12, ut.fw500)}>Inset</span>
+                      <select
+                        data-testid={`${id}-inse-${indx}`}
+                        className={css(sc.select)}
+                        value={shadowObj.inset || ''}
+                        onChange={e => generateShadowValue('inset', { value: e.target.value }, indx)}
+                      >
+                        <option value="">outset</option>
+                        <option value="inset">inset</option>
+                      </select>
+                    </div>
+                  )
+                }
+              </div>
+            </SimpleAccordion>
+            <div className={css(c.divider)} />
+          </Fragment>
+        ))}
+      </div>
       <div className={css(c.footer)}>
         <button
           className={css(c.addBtn)}
@@ -237,7 +239,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
           <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -274,7 +276,7 @@ const c = {
     brs: '50%',
     '&:hover': { bd: 'var(--white-0-86)' },
   },
-  footer: { flx: 'center', m: 5 },
+  footer: { flx: 'center' },
   addBtn: {
     se: 25,
     b: 'none',
@@ -287,6 +289,5 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
-  overflowXhidden: { owx: 'hidden' },
-
+  overFlowScroll: { owx: 'scroll', mxh: 200 },
 }

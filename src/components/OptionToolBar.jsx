@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $builderSettings, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import DarkIcn from '../Icons/DarkIcn'
@@ -37,7 +37,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
-
+  const { darkModeConfig } = useRecoilValue($builderSettings)
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const colorScheme = useRecoilValue($colorScheme)
@@ -233,7 +233,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
               tipPlace="bottom"
               defaultActive={colorScheme}
               onChange={handleColorSchemeSwitch}
-              className={css(ut.mr2)}
+              className={css(ut.mr2, { vy: (darkModeConfig.darkModeSelector === '' && !darkModeConfig.preferSystemColorScheme) ? 'hidden' : 'visible' })}
               options={[
                 { icn: <LightIcn size="19" />, label: 'light', tip: 'Light Mode' },
                 { icn: <DarkIcn size="19" />, label: 'dark', tip: 'Dark Mode' },
