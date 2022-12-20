@@ -44,6 +44,16 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '5px 11px !important',
       },
 
+      [`.${fk}-inp-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+
+      [`.${fk}-inp-btn:active:focus-visible`]: {
+        'outline-offset': 0,
+      },
+
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',

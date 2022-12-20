@@ -165,6 +165,8 @@ export default function FileUpload({ fieldKey, formID, styleClasses }) {
                   {...'disabled' in fieldData.valid && { disabled: fieldData.valid.disabled }}
                   {...'readonly' in fieldData.valid && { readOnly: fieldData.valid.readonly }}
                   {...getCustomAttributes(fieldKey, 'file-upload-input')}
+                  aria-disabled
+                  tabIndex={-1}
                 />
               </div>
               <div className={`err-wrp ${getCustomClsName(fieldKey, 'err-wrp')}`} {...getCustomAttributes(fieldKey, 'err-wrp')} />
