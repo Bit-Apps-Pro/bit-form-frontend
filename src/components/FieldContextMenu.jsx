@@ -24,7 +24,7 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
       role="button"
       tabIndex="0"
       onClick={handleItemClick}
-      onKeyPress={handleItemClick}
+      onKeyDown={handleItemClick}
     >
       {children}
     </div>

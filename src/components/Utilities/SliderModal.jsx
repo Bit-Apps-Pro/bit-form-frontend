@@ -213,7 +213,7 @@ export default function SliderModal({ title = 'Example Title', className, show =
           role="button"
           tabIndex="0"
           onClick={closeModal}
-          onKeyPress={closeModal}
+          onKeyDown={closeModal}
           className={css(s.backdrop)}
           aria-label="Close modal"
           data-backdrop

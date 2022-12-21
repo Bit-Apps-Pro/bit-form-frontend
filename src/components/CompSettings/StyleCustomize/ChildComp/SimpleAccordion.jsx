@@ -86,7 +86,7 @@ export default function SimpleAccordion({
       role="button"
       tabIndex={0}
       onKeyUp={toggleAccordion}
-      onKeyPress={toggleAccordion}
+      onKeyDown={toggleAccordion}
       className={`${className} ${tgl && 'active'}`}
       onClick={onClick}
     >
@@ -95,7 +95,7 @@ export default function SimpleAccordion({
         tabIndex="-1"
         role="button"
         onClick={toggleAccordion}
-        onKeyPress={toggleAccordion}
+        onKeyDown={toggleAccordion}
         data-testid={`${id}-smpl-acrdn`}
       >
         <div className={css(SimpleAccordionStyle.flxbwn)}>
@@ -112,7 +112,7 @@ export default function SimpleAccordion({
             {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
-            <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
+            <div onClick={cancelBubble} onKeyDown={cancelBubble} role="button" tabIndex="-1">
               {switching && (
                 <SingleToggle id={id} className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked || ''} />
               )}
@@ -134,7 +134,7 @@ export default function SimpleAccordion({
           onExiting={() => setH(0)}
           unmountOnExit
         >
-          <div ref={nodeRef} className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
+          <div ref={nodeRef} className="body" onClick={cancelBubble} onKeyDown={cancelBubble}>
             {children}
           </div>
         </CSSTransition>

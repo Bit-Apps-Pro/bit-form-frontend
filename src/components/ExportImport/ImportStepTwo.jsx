@@ -97,7 +97,7 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
           tabIndex="-1"
           style={{ cursor: 'pointer' }}
           onClick={() => resetMapping()}
-          onKeyPress={() => resetMapping()}
+          onKeyDown={() => resetMapping()}
         >
           Reset Field Mapping
         </span>

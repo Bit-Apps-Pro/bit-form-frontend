@@ -57,7 +57,7 @@ export default function ColorPicker({ value, onChange, alwGradient = true }) {
         aria-label="color picker"
         title={__('Color Picker')}
         onClick={() => setIsComponentVisible(!isComponentVisible)}
-        onKeyPress={() => setIsComponentVisible(!isComponentVisible)}
+        onKeyDown={() => setIsComponentVisible(!isComponentVisible)}
         tabIndex="0"
         role="button"
         className="br-50 clr-pick"

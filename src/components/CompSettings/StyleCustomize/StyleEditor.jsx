@@ -52,7 +52,7 @@ function StyleEditor({
       <div className="flx flx-between pos-rel">
         <span>Type</span>
         <div className="flx flx-between" style={{ backgroundColor: '#ddd' }}>
-          <div role="button" tabIndex="0" onClick={e => showDraggableModal(e, setDraggableModal, 'border-style')} onKeyPress={e => showDraggableModal(e, setDraggableModal, 'border-style')}>
+          <div role="button" tabIndex="0" onClick={e => showDraggableModal(e, setDraggableModal, 'border-style')} onKeyDown={e => showDraggableModal(e, setDraggableModal, 'border-style')}>
             <span style={{ backgroundColor: 'red' }}>&nbsp;</span>
             <span>10 rem dashed</span>
           </div>

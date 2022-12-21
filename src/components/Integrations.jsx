@@ -270,7 +270,7 @@ function Integrations() {
                         <div
                           key={`inte-sm-${i + 2}`}
                           onClick={() => !inte.disable && setNewInteg(inte)}
-                          onKeyPress={() => !inte.disable && setNewInteg(inte)}
+                          onKeyDown={() => !inte.disable && setNewInteg(inte)}
                           role="button"
                           tabIndex="0"
                           className={`${css(style.thumb)} ${inte.disable && !inte.pro && css(style.integCardDisabled)}`}
@@ -299,7 +299,7 @@ function Integrations() {
                   className={css(style.itegCard)}
                   tabIndex="0"
                   onClick={() => setShowMdl(true)}
-                  onKeyPress={() => setShowMdl(true)}
+                  onKeyDown={() => setShowMdl(true)}
                 >
                   <div className={css(style.integPlus)}><PlusIcn size={80} /></div>
                 </div>

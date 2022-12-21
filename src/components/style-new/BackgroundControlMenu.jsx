@@ -534,7 +534,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top left' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('top left')}
+                            onKeyDown={() => positionChangeHandler('top left')}
                             onClick={() => positionChangeHandler('top left')}
                             tabIndex={0}
                           >
@@ -547,7 +547,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top center' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('top center')}
+                            onKeyDown={() => positionChangeHandler('top center')}
                             onClick={() => positionChangeHandler('top center')}
                             tabIndex={0}
                           >
@@ -560,7 +560,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top right' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('top right')}
+                            onKeyDown={() => positionChangeHandler('top right')}
                             onClick={() => positionChangeHandler('top right')}
                             tabIndex={0}
                           >
@@ -573,7 +573,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center left' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('center left')}
+                            onKeyDown={() => positionChangeHandler('center left')}
                             onClick={() => positionChangeHandler('center left')}
                             tabIndex={0}
                           >
@@ -586,7 +586,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('center')}
+                            onKeyDown={() => positionChangeHandler('center')}
                             onClick={() => positionChangeHandler('center')}
                             tabIndex={0}
                           >
@@ -599,7 +599,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center right' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('center right')}
+                            onKeyDown={() => positionChangeHandler('center right')}
                             onClick={() => positionChangeHandler('center right')}
                             tabIndex={0}
                           >
@@ -612,7 +612,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom left' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('bottom left')}
+                            onKeyDown={() => positionChangeHandler('bottom left')}
                             onClick={() => positionChangeHandler('bottom left')}
                             tabIndex={0}
                           >
@@ -625,7 +625,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom center' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('bottom center')}
+                            onKeyDown={() => positionChangeHandler('bottom center')}
                             onClick={() => positionChangeHandler('bottom center')}
                             tabIndex={0}
                           >
@@ -638,7 +638,7 @@ function BackgroundControlMenu({ stateObjName,
                           <span
                             className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom right' && bgImgControlStyle.positionDotActive)}
                             role="button"
-                            onKeyPress={() => positionChangeHandler('bottom right')}
+                            onKeyDown={() => positionChangeHandler('bottom right')}
                             onClick={() => positionChangeHandler('bottom right')}
                             tabIndex={0}
                           >
