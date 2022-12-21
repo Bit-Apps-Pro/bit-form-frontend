@@ -200,7 +200,8 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px', // unused css
-        'padding-left': '41px !important',
+        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
+        ...direction === 'rtl' && { 'padding-right': '41px !important' },
         outline: 'none',
         'box-shadow': 'none',
         'font-family': 'inherit',

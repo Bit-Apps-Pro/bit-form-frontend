@@ -244,7 +244,8 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        'padding-left': '41px !important',
+        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
+        ...direction === 'rtl' && { 'padding-right': '41px !important' },
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',

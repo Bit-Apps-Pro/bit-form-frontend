@@ -1,14 +1,12 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }) {
+export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       [`.${fk}-fld-wrp`]: {
         ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
         display: 'flex',
-        ...direction !== 'rtl' && { 'justify-content': 'start' },
-        ...direction === 'rtl' && { 'justify-content': 'end' },
       },
       // [`.${fk}-fld-wrp`]: {
       //   display: 'flex',
