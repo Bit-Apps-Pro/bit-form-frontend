@@ -53,7 +53,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         position: 'relative',
         height: '18px',
         width: '18px',
-        border: 'solid hsl(0, 0%, 50%, 100)',
+        border: 'solid var(--global-font-color)',
         'border-width': '2px',
         display: 'inline-flex',
         ...direction === 'rtl' && { 'margin-left': '10px' },

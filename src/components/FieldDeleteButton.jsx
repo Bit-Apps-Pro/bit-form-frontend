@@ -18,7 +18,7 @@ const FieldDeleteButton = ({
   }
 
   return (
-    <Downmenu place={placement || 'top'} {...downMenuProps}>
+    <Downmenu place={placement || 'top'} offset={[0, 0]} {...downMenuProps}>
       <button
         data-close
         type="button"
