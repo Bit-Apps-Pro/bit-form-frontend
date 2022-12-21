@@ -14,7 +14,7 @@ export default {
     },
   },
   layouts: {
-    lg: [{ h: 40, i: 'fld_key-1', w: 60, x: 0, y: 0 }],
+    lg: [{ h: 58, i: 'fld_key-1', w: 60, x: 0, y: 0 }],
     md: [],
     sm: [],
   },
