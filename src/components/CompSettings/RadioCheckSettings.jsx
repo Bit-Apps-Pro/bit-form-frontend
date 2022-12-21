@@ -21,6 +21,7 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
@@ -257,6 +258,10 @@ function RadioCheckSettings() {
       </div>
 
       <FieldSettingsDivider />
+
+      <FieldDisabledSettings />
+
+      <FieldSettingsDivider />
       <SimpleAccordion
         id="opt-clm-stng"
         title={__('Options Column')}
@@ -466,7 +471,7 @@ function RadioCheckSettings() {
         className="o-v"
         title={__('Options')}
       >
-        <div className="pos-rel">
+        <div className="pos-rel" style={{ width: '700px' }}>
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">

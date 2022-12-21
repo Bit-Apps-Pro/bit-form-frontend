@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
+export default function phoneNumberStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -108,7 +108,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         cursor: 'pointer',
         height: '34px',
         margin: '3px',
-        padding: '8px 12px',
+        padding: '8px',
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css
@@ -136,7 +136,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         width: '25px',
         'border-radius': '3px !important',
         'box-shadow': '0 0 0 1px var(--bg-5)',
-        margin: '0px 10px 0px 0px',
+        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        ...direction === 'rtl' && { margin: '0 0 0 10px' },
         'background-color': 'var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
@@ -147,7 +148,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        right: '6px',
+        ...direction !== 'rtl' && { right: '6px' },
+        ...direction === 'rtl' && { left: '6px' },
         padding: '0px !important',
         background: 'var(--bg-40) !important',
         border: 'none',
@@ -180,7 +182,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         border: '0 !important',
         outline: 0,
         width: 'calc(100% - 50px)',
-        padding: '8px 26px 8px 8px !important',
+        ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
+        ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
         'font-size': 'var(--fld-fs) !important',
         'font-family': 'inherit',
         color: 'var(--global-font-color) !important',
@@ -223,13 +226,15 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
         top: '50%',
         transform: 'translateY(-50%)',
         color: 'var(--global-font-color)',
-        left: '8px',
+        ...direction !== 'rtl' && { left: '13px' },
+        ...direction === 'rtl' && { right: '13px' },
       },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        'padding-left': '41px !important',
+        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
+        ...direction === 'rtl' && { 'padding-right': '41px !important' },
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',
@@ -260,7 +265,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-search-clear-btn`]: {
         display: 'none',
         position: 'absolute',
-        right: '6px',
+        ...direction !== 'rtl' && { right: '6px' },
+        ...direction === 'rtl' && { left: '6px' },
         top: '50%',
         transform: 'translateY(-50%)',
         height: '16px', // unused css
@@ -356,7 +362,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-option-list .opt-icn`]: {
-        margin: '0px 10px 0px 0px',
+        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        ...direction === 'rtl' && { margin: '0 0 0 10px' },
         height: '17px',
         width: '25px',
         'border-radius': '3px',

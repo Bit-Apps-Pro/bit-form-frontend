@@ -18,6 +18,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         cursor: 'not-allowed',
         'pointer-events': 'none',
       },
+
       [`.${fk}-fld-wrp.disabled .${fk}-file-input-wrpr`]: {
         opacity: '.5',
         cursor: 'not-allowed',
@@ -35,27 +36,38 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'align-items': 'center',
         'background-color': 'var(--btn-bg) !important',
         border: 'none',
-        'border-radius': '8px !important',
+        'border-radius': 'var(--g-bdr-rad) !important',
         'box-shadow': 'none',
         color: 'hsla(0, 0%, 100%, 100%)',
         cursor: 'pointer',
         display: 'inline-flex',
-        height: '35px',
-        padding: '5px 11px !important',
+        padding: '11px 15px !important',
+        gap: '5px',
+      },
+
+      [`.${fk}-inp-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+
+      [`.${fk}-inp-btn:active:focus-visible`]: {
+        'outline-offset': 0,
       },
 
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',
-        'margin-right': '5px',
         filter: 'invert(1)',
       },
+
       [`.${fk}-suf-i`]: {
         width: '15px',
         height: '15px',
         'margin-left': '5px',
         filter: 'invert(1)',
       },
+
       [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)', 'font-size': '14px' },
 
       [`.${fk}-file-select-status`]: {
@@ -79,7 +91,9 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         opacity: '0',
         cursor: 'pointer',
       },
+
       [`.${fk}-file-input-wrpr .files-list`]: {},
+
       [`.${fk}-file-input-wrpr .file-wrpr`]: {
         'background-color': 'var(--bg-10)',
         'border-radius': 'var(--g-bdr-rad)',
@@ -92,12 +106,14 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '5px',
         outline: '1px solid var(--bg-15)',
       },
+
       [`.${fk}-file-input-wrpr .file-preview`]: {
         'border-radius': 'calc(var(--g-bdr-rad) - 4px)',
         height: '25px',
         width: '25px',
         outline: '1px solid var(--bg-5)',
       },
+
       [`.${fk}-file-input-wrpr .file-details`]: {
         display: 'flex',
         'align-items': 'center',
@@ -120,6 +136,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'line-height': '1',
         color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)',
       },
+
       [`.${fk}-file-input-wrpr .cross-btn`]: {
         cursor: 'pointer',
         border: 'none',
@@ -137,24 +154,26 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         transition: 'background-color 150ms',
         'background-color': 'var(--bg-15)',
       },
+
       [`.${fk}-file-input-wrpr .cross-btn:hover`]: {
         'background-color': 'var(--bg-20)',
         color: 'var(--global-font-color)',
       },
+
       [`.${fk}-file-input-wrpr .err-wrp`]: {
         display: 'none',
         opacity: '0',
         transition: 'display 1s, opacity 1s',
-        'justify-content': 'left',
         'align-items': 'center',
         'background-color': 'hsla(0, 100%, 97%, 100%)',
         color: 'darkred',
         'border-radius': '10px',
         height: '40px',
         'margin-top': '10px',
-        padding: '2px 20px',
+        padding: '2px 10px',
         width: '100%',
       },
+
       [`.${fk}-file-input-wrpr .err-wrp.active`]: {
         display: 'flex',
         opacity: '1',

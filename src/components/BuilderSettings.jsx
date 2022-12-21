@@ -25,13 +25,9 @@ export default function BuilderSettings() {
   if (darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
   if (darkModeConfig.darkModeSelector) darkModePrefereceInitialValue = 'selector'
   if (darkModeConfig.darkModeSelector && darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'selector-and-system-preference'
-  const breakPoints = {
-    lg: 'lgLightStyles',
-    md: 'mdLightStyles',
-    sm: 'smLightStyles',
-  }
+
   const [darkModePreference, setDarkModePreference] = useState(darkModePrefereceInitialValue)
-  const formWidth = staticStylesState.styleMergeWithAtomicClasses[breakPoints[brkpnt]]?.form?.[`._frm-bg-${formID}`]?.width
+  const formWidth = staticStylesState.styleMergeWithAtomicClasses[`${brkpnt}LightStyles`]?.form?.[`._frm-bg-${formID}`]?.width
 
   const handleDarkModePreference = (value) => {
     setDarkModePreference(value)
@@ -73,12 +69,12 @@ export default function BuilderSettings() {
       },
     }))
   }
-  const handleValues = ({ value: val, unit }) => {
+
+  const handleFormWidth = ({ value: val, unit }) => {
     const preUnit = getStrFromStr(formWidth)
     const convertValue = unitConverter(unit, val, preUnit)
     setStaticStyleState(preStyle => produce(preStyle, draft => {
-      const brcpnt = breakPoints[brkpnt]
-      const path = `styleMergeWithAtomicClasses->${brcpnt}->form->._frm-bg-${formID}->width`
+      const path = `styleMergeWithAtomicClasses->${brkpnt}LightStyles->form->._frm-bg-${formID}->width`
       const value = convertValue + unit
       if (val === '') {
         deleteNestedObj(draft, path)
@@ -96,22 +92,22 @@ export default function BuilderSettings() {
             className={css(style.select)}
             width={250}
             max={1000}
-            inputHandler={handleValues}
-            sizeHandler={({ unitKey, unitValue }) => handleValues({ value: unitValue, unit: unitKey })}
+            inputHandler={handleFormWidth}
+            sizeHandler={({ unitKey, unitValue }) => handleFormWidth({ value: unitValue, unit: unitKey })}
             value={(formWidth && getNumFromStr(formWidth)) || ''}
-            unit={(formWidth && getStrFromStr(formWidth)) || ''}
+            unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
             sliderWidth="40%"
             actualValue="auto"
           />
 
           <Select
             color="primary"
-            value={brkpnt || 'md'}
-            onChange={(value, e) => setBrkpnt(e)}
+            value={brkpnt || 'lg'}
+            onChange={(value) => setBrkpnt(value)}
             options={[
-              { label: 'sm', value: 'sm' },
-              { label: 'md', value: 'md' },
-              { label: 'lg', value: 'lg' },
+              { label: 'lg' },
+              { label: 'md' },
+              { label: 'sm' },
             ]}
             w={60}
             className={css({ fs: 14, ml: 10 })}
@@ -180,7 +176,7 @@ const SettingsBlock = ({ title, children }) => {
   const { css } = useFela()
   return (
     <div className={css(ut.mt2, ut.flxc)}>
-      <div className={css(ut.w1, { w: 150 })}>{title}</div>
+      <div className={css(ut.w1,ut.fw500, { w: 150 })}>{title}</div>
       <div className={css(ut.flxc)}>
         {children}
       </div>

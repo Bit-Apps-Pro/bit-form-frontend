@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
+export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -126,7 +126,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         width: '25px',
         'border-radius': '3px !important',
         'box-shadow': '0 0 0 1px var(--bg-15)',
-        margin: '0px 10px 0px 0px',
+        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        ...direction === 'rtl' && { margin: '0 0 0 10px' },
         'background-color': 'var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
@@ -136,7 +137,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        right: '6px',
+        ...direction !== 'rtl' && { right: '6px' },
+        ...direction === 'rtl' && { left: '6px' },
         padding: '0px !important',
         margin: '0px 5px 0px 0px',
         background: 'var(--bg-40) !important',
@@ -171,7 +173,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'font-family': 'inherit',
         outline: 0,
         width: 'calc(100% - 50px)',
-        padding: '8px 26px 8px 8px !important',
+        ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
+        ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
@@ -234,13 +237,15 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         top: '50%',
         transform: 'translateY(-50%)',
         color: 'var(--bg-25) !important',
-        left: '13px',
+        ...direction !== 'rtl' && { left: '13px' },
+        ...direction === 'rtl' && { right: '13px' },
       },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        'padding-left': '41px !important',
+        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
+        ...direction === 'rtl' && { 'padding-right': '41px !important' },
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',
@@ -272,7 +277,8 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        right: '6px',
+        ...direction !== 'rtl' && { right: '6px' },
+        ...direction === 'rtl' && { left: '6px' },
         padding: '0px !important',
         margin: '0',
         background: 'var(--bg-40) !important',
@@ -326,6 +332,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
+        gap: '5px',
       },
 
       [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: {
@@ -365,11 +372,11 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
-        'margin-right': '5px',
       },
 
       [`.${fk}-option-list .opt-icn`]: {
-        margin: '0px 10px 0px 0px',
+        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        ...direction === 'rtl' && { margin: '0 0 0 10px' },
         height: '17px',
         width: '25px',
         'border-radius': '3px',

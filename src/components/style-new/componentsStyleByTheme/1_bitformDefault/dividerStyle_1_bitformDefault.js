@@ -11,7 +11,7 @@ export default function dividerStyle_1_bitformDefault({ fk, breakpoint, colorSch
         margin: '15px 10px 15px 10px',
         width: '100%',
         'border-bottom': 'solid',
-        'border-color': 'hsla(0, 0%, 67%, 100)',
+        'border-color': 'var(--bg-50)',
         'border-width': '1px !important',
       },
     }

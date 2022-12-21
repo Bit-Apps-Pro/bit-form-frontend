@@ -29,7 +29,6 @@ const SortableElm = ({
 }) => {
   const { css } = useFela()
   const [optionMdl, setOptionMdl] = useState(false)
-  const { fieldKey: fldKey } = useParams()
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
   const isGroupEnd = 'type' in value && value.type.includes('group') && value.type.includes('end')
@@ -155,6 +154,16 @@ const SortableElm = ({
     setOption(tmpOption)
     setScrolIndex(optIndx)
   }
+  function setDisabled(e, i) {
+    const tmpOption = deepCopy([...option])
+    if (e.target.checked) {
+      tmpOption[i].disabled = true
+    } else {
+      delete tmpOption[i].disabled
+    }
+    setOption(tmpOption)
+    setScrolIndex(optIndx)
+  }
 
   function setCheck(e, i) {
     const tmp = deepCopy([...option])
@@ -254,6 +263,15 @@ const SortableElm = ({
                     checked={value.req !== undefined}
                     className="m-0"
                     onChange={(e) => setReq(e, optIndx)}
+                  />
+                </Tip>
+              )}
+              {(type === 'check' || type === 'radio') && (
+                <Tip msg="Disabled">
+                  <CheckBox
+                    checked={value.disabled !== undefined}
+                    className="m-0"
+                    onChange={(e) => setDisabled(e, optIndx)}
                   />
                 </Tip>
               )}

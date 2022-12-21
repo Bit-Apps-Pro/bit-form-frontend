@@ -108,7 +108,6 @@ export default class BitDropdownField {
     }
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '25px'
       this.#clearSearchBtnElm.style.display = 'none'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
@@ -643,6 +642,7 @@ export default class BitDropdownField {
           this.#setCustomAttr(img, optIcn)
         }
         img.src = opt.icn || this.#placeholderImage
+
         this.#handlePlaceholderImgCls(img, opt.icn)
         img.alt = opt.lbl
         img.loading = 'lazy'
