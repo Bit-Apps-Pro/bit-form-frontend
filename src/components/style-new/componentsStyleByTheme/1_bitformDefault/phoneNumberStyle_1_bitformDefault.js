@@ -337,7 +337,6 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
       // },
 
       [`.${fk}-option-list .option.selected-opt`]: {
-        color: 'var(--bg-0)',
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },

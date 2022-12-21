@@ -88,7 +88,7 @@ export default function DecisionBoxSettings() {
             tabIndex="-1"
             className="mr-2 cp"
             onClick={() => setLabelModal(true)}
-            onKeyPress={() => setLabelModal(true)}
+            onKeyDown={() => setLabelModal(true)}
           >
             <EditIcn size={19} />
           </span>

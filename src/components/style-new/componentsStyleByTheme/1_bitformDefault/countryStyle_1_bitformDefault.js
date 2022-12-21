@@ -294,7 +294,6 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       // },
 
       [`.${fk}-option-list .selected-opt`]: {
-        color: 'var(--bg-0)',
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },

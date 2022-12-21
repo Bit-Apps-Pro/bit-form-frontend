@@ -81,7 +81,7 @@ export default function ListGroup({ options, action }) {
               role="button"
               tabIndex="-1"
               onClick={clearSearch}
-              onKeyPress={clearSearch}
+              onKeyDown={clearSearch}
             >
               &nbsp;
             </span>

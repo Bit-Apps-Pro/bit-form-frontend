@@ -39,7 +39,7 @@ export default function NavBtn({
       type="button"
       value={route}
       onClick={styleHandler}
-      onKeyPress={styleHandler}
+      onKeyDown={styleHandler}
       role="button"
       tabIndex="0"
       data-testid={dataTestId}

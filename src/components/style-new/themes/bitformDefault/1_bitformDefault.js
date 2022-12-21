@@ -35,7 +35,7 @@ export default function bitformDefaultTheme({
   switch (type) {
     case 'themeColors': return {
       lightThemeColors,
-      darkThemeColors: {},
+      darkThemeColors,
     }
     case 'themeVars': return {
       lgLightThemeVars,
@@ -296,7 +296,7 @@ const lgLightThemeVars = {
   '--btn-bdr-width': '0', // button border width
 
   // outline style properties assign for testing purpose
-  '--global-outline': '1px solid hsla(217, 100%, 50%, 100)', // outline
+  '--global-outline': '1px solid var(--global-accent-color)', // outline
   '--global-outline-offset': '1px', // outline offset
   '--g-o-offset': '1px', // outline offset
   '--g-o-w': '1px', // outline width
@@ -348,12 +348,12 @@ const lightThemeColors = {
   '--req-smbl-c': 'hsla(0, 100%, 50%, 100%)', // Required Symbol Color
 
   '--sub-titl-bg': '', // sub title background color
-  '--sub-titl-c': '', // sub title color
+  '--sub-titl-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // sub title color
   '--sub-titl-sh': '', // subtitle box shadow
   '--sub-titl-bdr-clr': '', // subtitle border color
 
   '--hlp-txt-bg': '', // helper text background color
-  '--hlp-txt-c': '', // helpertext color
+  '--hlp-txt-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // helpertext color
   '--hlp-txt-sh': '', // helper text box shadow
   '--hlp-txt-bdr-clr': '', // helper text border color
 
@@ -445,6 +445,56 @@ const lightThemeColors = {
   '--bg-100': 'hsl(0, 0%, 0%)',
   // '--white-0': 'hsl(0, 0%, 100%)',
   // '--white-10': 'hsl(0, 90%, 100%)',
+}
+
+const darkThemeColors = {
+  '--global-accent-color': 'hsla(210, 100%, 50%, 100)', // Accent Color
+  '--gah': 210, // global primary hue
+  '--gas': '100%', // global primary saturation
+  '--gal': '50%', // global primary lightness
+  '--gaa': 100, // global primary opacity
+  '--global-font-color': 'hsla(215, 35%, 91%, 100)',
+  '--gfh': 215, // global font color hue
+  '--gfs': '35%', // global font color saturation
+  '--gfl': '91%', // global font color lightness
+  '--gfa': 100, // global font color opacity
+  '--global-bg-color': 'hsla(213,32%,14%,100)', // background color
+  '--gbg-h': 212, // global background color hue
+  '--gbg-s': '46%', // global background color saturation
+  '--gbg-l': '15%', // global background color lightness
+  '--gbg-a': 100,
+  '--global-fld-bdr-clr': 'hsla(220, 22%, 30%, 100)', // field border color
+  '--gfbc-h': 220, // global field border color hue
+  '--gfbc-s': '22%', // global field border color saturation
+  '--gfbc-l': '30%', // global field border color lightness
+  '--gfbc-a': 100, // global field border color opacity
+  '--global-fld-bg-color': 'hsla(211, 27%, 22%, 100)', // field background color
+  '--gfbg-h': 211, // global field background color hue
+  '--gfbg-s': '27%', // global field background color saturation
+  '--gfbg-l': '22%', // global field background color lightness
+  '--gfbg-a': 100, // global field background color opacity
+
+  '--bg-0': 'hsl(213, 32%, 14%)',
+  '--bg-5': 'hsl(213, 32%, 19%)',
+  '--bg-10': 'hsl(213, 32%, 24%)',
+  '--bg-15': 'hsl(213, 32%, 29%)',
+  '--bg-20': 'hsl(213, 32%, 34%)',
+  '--bg-25': 'hsl(213, 32%, 39%)',
+  '--bg-30': 'hsl(213, 32%, 44%)',
+  '--bg-35': 'hsl(213, 32%, 49%)',
+  '--bg-40': 'hsl(213, 32%, 54%)',
+  '--bg-45': 'hsl(213, 32%, 59%)',
+  '--bg-50': 'hsl(213, 32%, 64%)',
+  '--bg-55': 'hsl(213, 32%, 69%)',
+  '--bg-60': 'hsl(213, 32%, 74%)',
+  '--bg-65': 'hsl(213, 32%, 79%)',
+  '--bg-70': 'hsl(213, 32%, 84%)',
+  '--bg-75': 'hsl(213, 32%, 89%)',
+  '--bg-80': 'hsl(213, 32%, 94%)',
+  '--bg-85': 'hsl(213, 32%, 99%)',
+  '--bg-90': 'hsl(213, 32%, 100%)',
+  '--bg-95': 'hsl(213, 32%, 100%)',
+  '--bg-100': 'hsl(213, 32%, 100%)',
 }
 
 const font = {

@@ -694,7 +694,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       data-key={layoutItem.i}
                       className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
                       onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyPress={() => handleFldBlockEvent(layoutItem.i)}
+                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
                       role="button"
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
@@ -726,7 +726,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       data-key={layoutItem.i}
                       className={layoutItem.i}
                       onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyPress={() => handleFldBlockEvent(layoutItem.i)}
+                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
                       role="button"
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}

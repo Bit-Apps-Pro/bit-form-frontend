@@ -65,6 +65,9 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         background: 'var(--global-accent-color)',
         'border-color': 'var(--global-accent-color)',
       },
+      [`.${fk}-ci:hover ~ [data-cl] [data-bx]`]: {
+        'border-color': 'var(--global-accent-color)',
+      },
       [`.${fk}-ci:checked ~ [data-oinp-wrp]`]: { display: 'block !important' },
       [`.${fk}-ci:focus ~ [data-cl] [data-bx]`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
       [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: {
@@ -85,7 +88,8 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         position: 'relative',
         height: '18px',
         width: '18px',
-        border: 'solid var(--global-font-color)',
+        'border-color': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)',
+        'border-style': 'solid',
         'border-width': '2px',
         display: 'inline-flex',
         ...direction === 'rtl' && { margin: '0 0 0 10px' },

@@ -80,7 +80,7 @@ export default function HtmlFieldSettings() {
             tabIndex="-1"
             className={css(ut.mr2, ut.cp)}
             onClick={() => setLabelModal(true)}
-            onKeyPress={() => setLabelModal(true)}
+            onKeyDown={() => setLabelModal(true)}
           >
             <EditIcn size={19} />
           </span>
@@ -91,7 +91,7 @@ export default function HtmlFieldSettings() {
           tabIndex="-1"
           className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0, { h: 'auto', fs: '12px !important' })}
           onClick={() => setLabelModal(true)}
-          onKeyPress={() => setLabelModal(true)}
+          onKeyDown={() => setLabelModal(true)}
         >
           <RenderHtml html={truncatedString(fieldData.content)} />
         </div>

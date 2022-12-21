@@ -364,7 +364,6 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
       },
 
       [`.${fk}-option-list .selected-opt`]: {
-        color: 'var(--bg-0)',
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },

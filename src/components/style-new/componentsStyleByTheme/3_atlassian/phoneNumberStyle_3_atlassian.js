@@ -296,7 +296,6 @@ export default function phoneNumberStyle_3_atlassian({ fk }) {
     },
 
     [`.${fk}-option.selected-opt`]: {
-      // color: ' hsla(0, 0%, 100%, 100%)',
       'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 80%, var(--gfbg-a))',
     },
 
