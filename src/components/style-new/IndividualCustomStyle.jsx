@@ -960,15 +960,18 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
             <ResetStyle id="fld-font-weight" propertyPath={objPaths.paths['font-weight']} stateObjName="styles" />
             <div className={css(ut.flxc, { cg: 3 })}>
               {existCssPropsObj?.['font-weight'] && <Important id="fld-font-weight" propertyPath={objPaths.paths['font-weight']} />}
-              <SimpleDropdown
-                options={fontweightVariants}
-                value={String(existCssPropsObj?.['font-weight'])}
-                onChange={val => fontPropertyUpdateHandler('font-weight', val)}
-                w={130}
-                h={30}
-                id="fld-font-weight"
-                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font?.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
-              />
+              <div className={css(cls.comSection)}>
+                <SimpleDropdown
+                  options={fontweightVariants}
+                  value={String(existCssPropsObj?.['font-weight'])}
+                  onChange={val => fontPropertyUpdateHandler('font-weight', val)}
+                  w={130}
+                  h={30}
+                  id="fld-font-weight"
+                  cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font?.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) ? cls.warningBorder : '')}
+                />
+                {(styles.font?.fontType === 'Google' && existCssPropsObj['font-weight'] && !styles.font?.fontWeightVariants.includes(Number(existCssPropsObj?.['font-weight']))) && <span className={css(cls.clr)}>Font weight not found!</span>}
+              </div>
             </div>
           </StylePropertyBlock>
         )
@@ -986,15 +989,18 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
                   propertyPath={objPaths.paths['font-style']}
                 />
               )}
-              <SimpleDropdown
-                options={fontStyleVariants}
-                value={String(existCssPropsObj?.['font-style'])}
-                onChange={val => fontPropertyUpdateHandler('font-style', val)}
-                w={130}
-                h={30}
-                id="fld-font-style"
-                cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font?.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
-              />
+              <div className={css(cls.comSection)}>
+                <SimpleDropdown
+                  options={fontStyleVariants}
+                  value={String(existCssPropsObj?.['font-style'])}
+                  onChange={val => fontPropertyUpdateHandler('font-style', val)}
+                  w={130}
+                  h={30}
+                  id="fld-font-style"
+                  cls={css((styles.font?.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font?.fontStyle.includes(existCssPropsObj?.['font-style'])) ? cls.warningBorder : '')}
+                />
+                {(styles.font?.fontType === 'Google' && existCssPropsObj['font-style'] && !styles.font?.fontStyle.includes(existCssPropsObj?.['font-style'])) && <span className={css(cls.clr)}>Font style not found!</span>}
+              </div>
             </div>
           </StylePropertyBlock>
         )
@@ -1247,4 +1253,9 @@ const cls = {
   space: { p: 5 },
   warningBorder: { b: '1px solid yellow' },
   mr2: { mr: 2 },
+  comSection: {
+    dy: 'flex',
+    fd: 'column',
+  },
+  clr: { cr: 'red' },
 }
