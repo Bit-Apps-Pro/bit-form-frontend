@@ -117,7 +117,7 @@ export default function SimpleDropdown({
                   type="button"
                   tabIndex={menu.open ? 0 : -1}
                   onClick={(e) => handleOptionClick(e, i)}
-                  onKeyPress={(e) => handleOptionClick(e, i)}
+                  onKeyDown={(e) => handleOptionClick(e, i)}
                   className={css(simppleDpdStyle.opt_btn)}
                   data-testid={`${id}-${itm.value}`}
                 >

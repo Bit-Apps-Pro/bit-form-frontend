@@ -184,7 +184,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
                 tabIndex="-1"
                 className="cp"
                 onClick={() => setshowMdl(true)}
-                onKeyPress={() => setshowMdl(true)}
+                onKeyDown={() => setshowMdl(true)}
               >
                 <EditIcn size={21} />
               </span>
@@ -197,7 +197,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
                 tabIndex="-1"
                 className="cp"
                 onClick={() => setCustomRedirectMdl(true)}
-                onKeyPress={() => setCustomRedirectMdl(true)}
+                onKeyDown={() => setCustomRedirectMdl(true)}
               >
                 <EditIcn size={21} />
               </span>

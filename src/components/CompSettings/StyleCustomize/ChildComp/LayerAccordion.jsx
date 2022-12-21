@@ -80,7 +80,7 @@ export default function LayerAccordion({
       role="button"
       tabIndex={0}
       onKeyUp={toggleAccordion}
-      onKeyPress={toggleAccordion}
+      onKeyDown={toggleAccordion}
       className={`${className} ${tgl && css(cls.active)} ${css(cls.accordionLbl)}`}
       onClick={onClick}
       data-testid={dataTestId}
@@ -90,7 +90,7 @@ export default function LayerAccordion({
         tabIndex="-1"
         role="button"
         onClick={toggleAccordion}
-        onKeyPress={toggleAccordion}
+        onKeyDown={toggleAccordion}
       >
         <div className={`${css(ut.flxc, cls.titlebar)} ${css(active && { bd: 'hsl(233deg 36% 95%)' })}`} style={{ paddingLeft: offset * 2 }}>
           <div>
@@ -132,7 +132,7 @@ export default function LayerAccordion({
                 )}
               </div>
             </div>
-            <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
+            <div onClick={cancelBubble} onKeyDown={cancelBubble} role="button" tabIndex="-1">
               {actionComponent && actionComponent}
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function LayerAccordion({
             ref={nodeRef}
             className={`body ${css(cls.body)}`}
             onClick={cancelBubble}
-            onKeyPress={cancelBubble}
+            onKeyDown={cancelBubble}
             style={{ paddingLeft: offset * 4 }}
           >
             {children}

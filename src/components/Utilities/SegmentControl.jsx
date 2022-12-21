@@ -182,7 +182,7 @@ function SegmentControl({
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
             onClick={e => eventHandler(e, i)}
-            onKeyPress={e => eventHandler(e, i)}
+            onKeyDown={e => eventHandler(e, i)}
             data-label={item.label}
             data-testid={`${item.label}-tab`}
             {...(component === 'button' && { type: 'button' })}

@@ -330,7 +330,7 @@ function AdvanceFileUpSettings() {
               aria-label="Image Validate Customization "
               className={css(ut.btn, ut.pr4)}
               onClick={() => setLblPropertyMdl(true)}
-              onKeyPress={() => setLblPropertyMdl(true)}
+              onKeyDown={() => setLblPropertyMdl(true)}
             >
               <EditIcn size={21} />
             </button>
@@ -799,7 +799,7 @@ function AdvanceFileUpSettings() {
             aria-label="Image Validate Customization "
             className={css(ut.btn)}
             onClick={() => setImgValdiateMdl(true)}
-            onKeyPress={() => setImgValdiateMdl(true)}
+            onKeyDown={() => setImgValdiateMdl(true)}
           >
             <EditIcn size={21} />
           </button>

@@ -80,7 +80,7 @@ function KeyBoard({ clickAction }) {
             {keyItem.content}
           </div>
         ))}
-        <span role="button" className={css(style.crossButton)} onClick={() => hideAll()} tabIndex={0} onKeyPress={undefined}>
+        <span role="button" className={css(style.crossButton)} onClick={() => hideAll()} tabIndex={0} onKeyDown={undefined}>
           <CloseIcn size="12" />
         </span>
       </div>
