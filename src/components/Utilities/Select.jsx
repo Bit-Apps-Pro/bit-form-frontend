@@ -1,9 +1,10 @@
+import { useId } from 'react'
 import { useFela } from 'react-fela'
-
 export default function Select({
   options = [], onChange, value, size = 'md', w, className, color = 'default', inputName, dataTestId,
 }) {
   const { css } = useFela()
+  const id = useId()
 
   const cls = {
     selectInput: {
@@ -39,7 +40,7 @@ export default function Select({
     >
       {options.map(option => (
         <option
-          key={option.value}
+          key={id + option.value}
           value={option.value}
         >
           {option.label}
