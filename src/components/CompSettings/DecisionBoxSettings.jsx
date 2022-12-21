@@ -14,13 +14,13 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import { truncatedString } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
@@ -96,7 +96,7 @@ export default function DecisionBoxSettings() {
         <div
           className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
         >
-          <RenderHtml html={fieldData.lbl || fieldData?.info?.lbl} />
+          <RenderHtml html={truncatedString(fieldData.lbl || fieldData?.info?.lbl)} />
         </div>
       </div>
 

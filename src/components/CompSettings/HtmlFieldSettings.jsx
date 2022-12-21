@@ -10,6 +10,7 @@ import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import { truncatedString } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
@@ -92,7 +93,7 @@ export default function HtmlFieldSettings() {
           onClick={() => setLabelModal(true)}
           onKeyDown={() => setLabelModal(true)}
         >
-          <RenderHtml html={fieldData.content} />
+          <RenderHtml html={truncatedString(fieldData.content)} />
         </div>
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />

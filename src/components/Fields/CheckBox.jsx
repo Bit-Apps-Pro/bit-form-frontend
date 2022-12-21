@@ -139,7 +139,8 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 id={`${fieldKey}-chk-${i}`}
                 type="checkbox"
                 className={`${fieldKey}-ci ${getCustomClsName(fieldKey, 'ci')}`}
-                disabled={attr.valid.disabled}
+                {...(attr.valid.disabled || itm.disabled) && { disabled: true }}
+                // disabled={attr.valid.disabled}
                 // readOnly={attr?.valid?.readonly}
                 // {...itm.check && { defaultChecked: true }}
                 // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}

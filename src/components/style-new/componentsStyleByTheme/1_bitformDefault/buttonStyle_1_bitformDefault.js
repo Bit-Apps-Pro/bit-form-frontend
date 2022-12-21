@@ -7,7 +7,6 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-fld-wrp`]: {
         ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
         display: 'flex',
-        'justify-content': 'start',
       },
       // [`.${fk}-fld-wrp`]: {
       //   display: 'flex',

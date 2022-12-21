@@ -604,7 +604,7 @@ function StyleLayers() {
                   <NavBtn
                     subRoute={fldKey}
                     route="opt-suffix"
-                    label="Phone Option Leading"
+                    label="Phone Option Suffix"
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-suffix="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-suffix')}
@@ -840,6 +840,38 @@ function StyleLayers() {
                     offset="2.5"
                     highlightSelector={`[data-dev-opt-lbl="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'opt-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="chip-wrp"
+                    label="Chip Wrapper"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-chip-wrp="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'chip-wrp')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="chip-icn"
+                    label="Chip Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-chip-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'chip-icn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="chip-lbl"
+                    label="Chip Label"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-chip-lbl="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'chip-lbl')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="chip-clear-btn"
+                    label="Chip Clear Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-chip-clear-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'chip-clear-btn')}
                   />
                 </>
               )}

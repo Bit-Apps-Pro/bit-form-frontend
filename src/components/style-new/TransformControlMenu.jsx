@@ -106,39 +106,41 @@ function TransformControlMenu({ propertyPath, id }) {
           />
         )}
       </div>
-      {arrOfExtractedTransformObj.map((transformObj, indx) => (
-        <div key={`transformObj-${indx * 5}`} className={css(ut.p1, c.containerHover)}>
-          <div className={css(ut.flxcb, ut.mt1)}>
-            <span className={css(ut.flxcb, ut.fs12, ut.fw500)}>
-              {arrOfExtractedTransformObj.length > 1 && (
-                <button
-                  data-testid={`${id}-del-btn-${indx}`}
-                  onClick={() => deleteTransform(indx)}
-                  className={`${css(c.delBtn)} delete-btn`}
-                  type="button"
-                >
-                  <TrashIcn />
-                </button>
-              )}
-              <span className={css({ ml: 20 })}>
-                {ucFirst(transformObj.name)}
+      <div className={css(c.overFlowScroll)}>
+        {arrOfExtractedTransformObj.map((transformObj, indx) => (
+          <div key={`transformObj-${indx * 5}`} className={css(ut.p1, c.containerHover)}>
+            <div className={css(ut.flxcb, ut.mt1)}>
+              <span className={css(ut.flxcb, ut.fs12, ut.fw500)}>
+                {arrOfExtractedTransformObj.length > 1 && (
+                  <button
+                    data-testid={`${id}-del-btn-${indx}`}
+                    onClick={() => deleteTransform(indx)}
+                    className={`${css(c.delBtn)} delete-btn`}
+                    type="button"
+                  >
+                    <TrashIcn />
+                  </button>
+                )}
+                <span className={css({ ml: 20 })}>
+                  {ucFirst(transformObj.name)}
+                </span>
               </span>
-            </span>
-            <SizeControl
-              width="100px"
-              value={Number(getNumFromStr(transformObj.value) || 0)}
-              unit={getStrFromStr(transformObj.value) || ''}
-              inputHandler={valObj => generateTransformValue(transformObj.name, valObj, indx)}
-              sizeHandler={(v) => sizeHandler(v, transformObj.name, indx, getStrFromStr(transformObj.value))}
-              options={transformObj?.name ? transformProps?.[transformObj?.name]?.unit : ''}
-              min={getValue(transformObj, 'min') || ''}
-              max={getValue(transformObj, 'max') || ''}
-              step={getValue(transformObj, 'step') || ''}
-              dataTestId={`${id}-input-${indx}`}
-            />
+              <SizeControl
+                width="100px"
+                value={Number(getNumFromStr(transformObj.value) || 0)}
+                unit={getStrFromStr(transformObj.value) || ''}
+                inputHandler={valObj => generateTransformValue(transformObj.name, valObj, indx)}
+                sizeHandler={(v) => sizeHandler(v, transformObj.name, indx, getStrFromStr(transformObj.value))}
+                options={transformObj?.name ? transformProps?.[transformObj?.name]?.unit : ''}
+                min={getValue(transformObj, 'min') || ''}
+                max={getValue(transformObj, 'max') || ''}
+                step={getValue(transformObj, 'step') || ''}
+                dataTestId={`${id}-input-${indx}`}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   )
 }
@@ -256,4 +258,5 @@ const c = {
     lt: 1,
     ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
+  overFlowScroll: { owx: 'scroll', mxh: 200 },
 }

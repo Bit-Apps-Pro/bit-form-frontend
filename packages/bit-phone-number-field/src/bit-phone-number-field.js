@@ -114,7 +114,7 @@ export default class BitPhoneNumberField {
     if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '25px'
+      this.#searchInputElm.style.paddingRight = '35px'
       this.#clearSearchBtnElm.style.display = 'none'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }

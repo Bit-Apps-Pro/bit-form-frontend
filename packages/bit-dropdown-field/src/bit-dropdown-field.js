@@ -108,7 +108,6 @@ export default class BitDropdownField {
     }
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '25px'
       this.#clearSearchBtnElm.style.display = 'none'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
@@ -362,10 +361,18 @@ export default class BitDropdownField {
       if (chipWrpCustomClasses) this.#setCustomClass(chipWrp, chipWrpCustomClasses)
       const chipWrpCustomAttributes = this.#config.customAttributes?.['chip-wrp']
       if (chipWrpCustomAttributes) this.#setCustomAttr(chipWrp, chipWrpCustomAttributes)
+      if ('chip-wrp' in this.#config.attributes) {
+        const optChipWrp = this.#config.attributes['chip-wrp']
+        this.#setCustomAttr(chipWrp, optChipWrp)
+      }
 
       if (this.#config.selectedOptImage && this.#config.optionIcon) {
         const chipIcn = this.#createElm('img')
         this.#setClassName(chipIcn, 'chip-icn')
+        if ('chip-icn' in this.#config.attributes) {
+          const optChipIcn = this.#config.attributes['chip-icn']
+          this.#setCustomAttr(chipIcn, optChipIcn)
+        }
         const optObj = this.#searchOptionObjByVal(val)
         this.#setAttribute(chipIcn, 'src', optObj.icn || this.#placeholderImage)
         this.#handlePlaceholderImgCls(chipIcn, optObj.icn)
@@ -379,6 +386,10 @@ export default class BitDropdownField {
 
       const chipLbl = this.#createElm('span')
       this.#setClassName(chipLbl, 'chip-lbl')
+      if ('chip-lbl' in this.#config.attributes) {
+        const optChipLbl = this.#config.attributes['chip-lbl']
+        this.#setCustomAttr(chipLbl, optChipLbl)
+      }
       const chipLblCustomClasses = this.#config.customClasses?.['chip-lbl']
       if (chipLblCustomClasses) this.#setCustomClass(chipLbl, chipLblCustomClasses)
       const chipLblCustomAttributes = this.#config.customAttributes?.['chip-lbl']
@@ -389,6 +400,10 @@ export default class BitDropdownField {
 
       const chipClearBtn = this.#createElm('button')
       this.#setClassName(chipClearBtn, 'chip-clear-btn')
+      if ('chip-clear-btn' in this.#config.attributes) {
+        const optClrBtn = this.#config.attributes['chip-clear-btn']
+        this.#setCustomAttr(chipClearBtn, optClrBtn)
+      }
       const chipClearBtnCustomClasses = this.#config.customClasses?.['chip-clear-btn']
       if (chipClearBtnCustomClasses) this.#setCustomClass(chipClearBtn, chipClearBtnCustomClasses)
       const chipClearBtnCustomAttributes = this.#config.customAttributes?.['chip-clear-btn']
@@ -627,6 +642,7 @@ export default class BitDropdownField {
           this.#setCustomAttr(img, optIcn)
         }
         img.src = opt.icn || this.#placeholderImage
+
         this.#handlePlaceholderImgCls(img, opt.icn)
         img.alt = opt.lbl
         img.loading = 'lazy'

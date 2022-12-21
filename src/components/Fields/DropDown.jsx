@@ -58,6 +58,10 @@ function DropDown({
         'opt-icn': getDataDevAttrArr(fieldKey, 'opt-icn'),
         'opt-lbl': getDataDevAttrArr(fieldKey, 'opt-lbl'),
         'opt-prefix': getDataDevAttrArr(fieldKey, 'opt-prefix'),
+        'chip-wrp': getDataDevAttrArr(fieldKey, 'chip-wrp'),
+        'chip-lbl': getDataDevAttrArr(fieldKey, 'chip-lbl'),
+        'chip-icn': getDataDevAttrArr(fieldKey, 'chip-icn'),
+        'chip-clear-btn': getDataDevAttrArr(fieldKey, 'chip-clear-btn'),
       },
       classNames: {
         'opt-lbl-wrp': getCustomClsName(fieldKey, 'opt-lbl-wrp'),

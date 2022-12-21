@@ -107,6 +107,7 @@ export default class BitFileUpField {
     this.#removeFilesList()
 
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
+    this.#addEvent(this.#inpBtn, 'click', () => this.#fileUploadInput.click())
   }
 
   #fileUploadAction(e) {

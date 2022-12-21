@@ -141,7 +141,7 @@ export default class BitCountryField {
     }
 
     if (this.#searchClearable) {
-      this.#searchInputElm.style.paddingRight = '25px'
+      this.#searchInputElm.style.paddingRight = '35px'
       this.#clearSearchBtnElm.style.display = 'none'
     }
     // this.#url = decodeURIComponent((`${this.#document.URL}`).replace(/\+/g, '%20'))

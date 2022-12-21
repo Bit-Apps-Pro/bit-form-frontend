@@ -119,7 +119,7 @@ export default class BitCurrencyField {
     if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '30px'
+      this.#searchInputElm.style.paddingRight = '35px'
       this.#clearSearchBtnElm.style.display = 'none'
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
