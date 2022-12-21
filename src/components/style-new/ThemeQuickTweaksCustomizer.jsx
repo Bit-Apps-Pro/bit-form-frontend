@@ -28,10 +28,10 @@ import BorderControl from './BorderControl'
 import { updateFieldStyleByFieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
+import { changeFormStylesDir, changeFormThemeVarsDir } from './formDirectionHelpers'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir } from './styleHelpers'
 import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
 import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
@@ -78,8 +78,8 @@ export default function ThemeQuickTweaksCustomizer() {
 
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
-    setStyles(prv => changeFormDir(prv, dir))
-    setThemeVars(prv => produce(prv, drft => { drft['--dir'] = dir }))
+    setStyles(prv => changeFormStylesDir(prv, dir))
+    setThemeVars(prv => changeFormThemeVarsDir(prv, dir))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Direction', dir, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))
   }
 

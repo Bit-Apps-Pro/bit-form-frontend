@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
+export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -87,6 +87,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '100%',
         display: 'flex',
         'align-items': 'center',
+        gap: '10px',
       },
 
       [`.${fk}-selected-opt-lbl.multi-chip`]: {
@@ -101,10 +102,10 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         'background-color': 'var(--bg-10)',
         padding: '5px 8px',
         'border-radius': '8px',
+        gap: '5px',
       },
 
       [`.${fk}-selected-opt-lbl .chip-icn`]: {
-        'margin-right': '5px',
         width: '13px',
         height: '13px',
       },
@@ -118,14 +119,13 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         border: 'none',
         outline: 'none',
         'box-shadow': 'none',
-        'margin-left': '5px',
         'border-radius': '50%',
         cursor: 'pointer',
         display: 'grid',
         'place-content': 'center',
         height: '17px',
         width: '17px',
-        'background-color': 'var(--bg-5)',
+        'background-color': 'var(--bg-20)',
         color: 'var(--global-font-color)',
       },
 
@@ -147,7 +147,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
         height: '17px',
         width: '25px',
         'border-radius': '3px',
-        margin: '0 10px 0 0',
+        // margin: '0 10px 0 0',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
@@ -246,13 +246,13 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
       },
 
       [`.${fk}-opt-search-icn`]: {
-        left: '8px',
+        ...direction !== 'rtl' && { left: '11px' },
+        ...direction === 'rtl' && { right: '11px' },
       },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
-        padding: '5px',
-        'padding-left': '35px !important',
+        padding: '0px 35px',
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',
@@ -281,7 +281,8 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-search-clear-btn`]: {
         display: 'none',
-        right: '11px',
+        ...direction !== 'rtl' && { right: '8px' },
+        ...direction === 'rtl' && { left: '8px' },
         padding: '0px !important',
         margin: '0',
         background: 'var(--bg-25) !important',
@@ -377,6 +378,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, breakpoint, colorSc
       [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
+        gap: '5px',
       },
       [`.${fk}-option-list .opt-lbl`]: {},
 
