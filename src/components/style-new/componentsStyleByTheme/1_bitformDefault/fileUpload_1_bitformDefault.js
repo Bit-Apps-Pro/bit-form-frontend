@@ -41,6 +41,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         cursor: 'pointer',
         display: 'inline-flex',
         padding: '11px 15px !important',
+        gap: '5px',
       },
 
       [`.${fk}-inp-btn:focus-visible`]: {
@@ -54,7 +55,6 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',
-        'margin-right': '5px',
         filter: 'invert(1)',
       },
       [`.${fk}-suf-i`]: {
@@ -152,14 +152,13 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         display: 'none',
         opacity: '0',
         transition: 'display 1s, opacity 1s',
-        'justify-content': 'left',
         'align-items': 'center',
         'background-color': 'hsla(0, 100%, 97%, 100%)',
         color: 'darkred',
         'border-radius': '10px',
         height: '40px',
         'margin-top': '10px',
-        padding: '2px 20px',
+        padding: '2px 10px',
         width: '100%',
       },
       [`.${fk}-file-input-wrpr .err-wrp.active`]: {
