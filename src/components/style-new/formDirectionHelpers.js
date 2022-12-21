@@ -58,11 +58,6 @@ const handleFormDirStyleToggle = (style, fieldKey, dir) => {
         if (searchClearBtn) switchXPositions(searchClearBtn, dir === 'rtl' ? 'left' : 'right', '8px')
         break
       }
-      case 'button': {
-        const btnFldWrp = classes?.[`.${fieldKey}-fld-wrp`]
-        if (btnFldWrp) btnFldWrp['justify-content'] = switchFlexContent(btnFldWrp['justify-content'])
-        break
-      }
       default:
         break
     }
