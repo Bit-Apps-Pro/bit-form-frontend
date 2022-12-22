@@ -261,7 +261,7 @@ const SortableElm = ({
                 <Tip msg="Required">
                   <CheckBox
                     checked={value.req !== undefined}
-                    className="m-0"
+                    className={css({ se: 35 })}
                     onChange={(e) => setReq(e, optIndx)}
                   />
                 </Tip>
@@ -270,7 +270,7 @@ const SortableElm = ({
                 <Tip msg="Disabled">
                   <CheckBox
                     checked={value.disabled !== undefined}
-                    className="m-0"
+                    className={css({ se: 35 })}
                     onChange={(e) => setDisabled(e, optIndx)}
                   />
                 </Tip>
