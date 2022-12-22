@@ -212,9 +212,6 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     cssText += '}'
   }
 
-  // if (lgPrefixedDarkCssText) cssText += lgPrefixedDarkCssText
-  // if (mdPrefixedDarkCssText) cssText += mdPrefixedDarkCssText
-  // if (smPrefixedDarkCssText) cssText += smPrefixedDarkCssText
   if (lgDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark){${lgDarkCssText}}`
   if (mdDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${mdBreakpointSize}px){${mdDarkCssText}}`
   if (smDarkCssText && darkModeOnSystemPreference) cssText += `@media (prefers-color-scheme:dark) and (max-width:${smBreakpointSize}px){${smDarkCssText}}`

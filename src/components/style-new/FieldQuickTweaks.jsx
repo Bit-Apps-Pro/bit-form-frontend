@@ -12,7 +12,7 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import { updateFieldStyleByFieldSizing } from './componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
 import PaypalFieldQuickTweaks from './QuickTweaks/PaypalFieldQuickTweaks'
 import RazorpayFieldQuickTweaks from './QuickTweaks/RazorpayFieldQuickTweaks'
