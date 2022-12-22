@@ -134,13 +134,13 @@ export const defaultLgLightThemeVars = {
   '--lbl-al': '', // label align
   '--fld-p': '', // field padding
   '--fld-m': '', // field margin
-  '--fld-fs': '1rem', // field font size
+  '--fld-fs': '14px', // field font size
 
   '--fld-wrp-dis': 'block', // field wrapper display
   '--fld-wrp-fdir': '', // field wrapper flex direction
   '--fld-wrp-justify': 'center',
   '--fld-wrp-m': '', // field wrapper margin
-  '--fld-wrp-p': '10px', // field wrapper paddin
+  '--fld-wrp-p': '7px 10px', // field wrapper paddin
   '--fld-wrp-bdr': '', // field wrapper border
   '--fld-wrp-bdr-width': '', // field wrapper border width
   '--fld-wrp-bdr-rad': '', // field wrapper border radius

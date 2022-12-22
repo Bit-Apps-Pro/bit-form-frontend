@@ -58,8 +58,8 @@ import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
-import bitformDefaultTheme from './style-new/themes/1_bitformDefault/1_bitformDefault'
+import atlassianTheme from './style-new/themes/2_atlassian'
+import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
