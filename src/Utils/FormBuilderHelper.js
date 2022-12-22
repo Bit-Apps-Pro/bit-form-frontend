@@ -234,7 +234,7 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
   }
 
   if (field.typ === 'recaptcha' && (bits.allFormSettings?.gReCaptcha?.secretKey === '' || bits.allFormSettings?.gReCaptcha?.siteKey === '')) {
-    return { msg: __('to use ReCaptchaV2, you must set site key and secret from app settings') }
+    return { validType: 'keyEmpty', msg: __('to use ReCaptchaV2, you must set site key and secret from app settings') }
   }
 
   // eslint-disable-next-line no-undef
