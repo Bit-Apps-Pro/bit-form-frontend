@@ -2,24 +2,24 @@
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
-import advancedFileUp_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
-import buttonStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
-import checkboxNradioStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
-import countryStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/countryStyle_1_bitformDefault'
-import currencyStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
-import decisionBoxStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/decisionBoxStyle_1_bitformDefault'
-import dividerStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
-import dropdownStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/dropdownStyle_1_bitformDefault'
-import fileUploadStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
-import htmlStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
-import imageStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
-import paypalStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/paypalStyle_1_BitformDefault'
-import phoneNumberStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
-import razorpayStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/razorpayStyle_1_BitformDefault'
-import recaptchaStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
-import selectStyle_1_BitformDefault from '../../componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
-import textStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
-import titleStyle_1_bitformDefault from '../../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import advancedFileUp_1_bitformDefault from './advancedFileUp_1_bitformDefault'
+import buttonStyle_1_bitformDefault from './buttonStyle_1_bitformDefault'
+import checkboxNradioStyle_1_bitformDefault from './checkboxNradioStyle_1_bitformDefault'
+import countryStyle_1_BitformDefault from './countryStyle_1_bitformDefault'
+import currencyStyle_1_BitformDefault from './currencyStyle_1_bitformDefault'
+import decisionBoxStyle_1_bitformDefault from './decisionBoxStyle_1_bitformDefault'
+import dividerStyle_1_bitformDefault from './dividerStyle_1_bitformDefault'
+import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
+import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
+import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
+import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
+import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
+import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
+import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
+import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
+import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
+import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
+import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
 import { msgDefaultConfig } from '../../styleHelpers'
 
 export default function bitformDefaultTheme({
@@ -34,11 +34,11 @@ export default function bitformDefaultTheme({
 
   switch (type) {
     case 'themeColors': return {
-      lightThemeColors,
-      darkThemeColors,
+      lightThemeColors: defaultLightThemeColors,
+      darkThemeColors: defaultDarkThemeColors,
     }
     case 'themeVars': return {
-      lgLightThemeVars,
+      lgLightThemeVars: defaultLgLightThemeVars,
       lgDarkThemeVars: {},
       mdLightThemeVars: {},
       mdDarkThemeVars: {},
@@ -46,7 +46,7 @@ export default function bitformDefaultTheme({
       smDarkThemeVars: {},
     }
     // case 'form': return form
-    case 'font': return font
+    case 'font': return defaultFont
     case 'text':
     case 'number':
     case 'password':
@@ -110,8 +110,8 @@ export default function bitformDefaultTheme({
         lgLightStyles: {
           theme: 'bitformDefault',
           fieldsSize: 'medium',
-          font,
-          form: lgLightform({ formId }),
+          defaultFont,
+          form: defaultLgLightform({ formId }),
           fields: lgLightFieldStyles,
           confirmations: lgLightConfMsg,
         },
@@ -124,7 +124,7 @@ export default function bitformDefaultTheme({
   }
 }
 
-const lgLightThemeVars = {
+export const defaultLgLightThemeVars = {
   '--global-fld-bdr': 'solid', // field border color
   '--g-bdr-rad': '11px', // border radius
   '--g-bdr-width': '1px', // border width
@@ -134,13 +134,13 @@ const lgLightThemeVars = {
   '--lbl-al': '', // label align
   '--fld-p': '', // field padding
   '--fld-m': '', // field margin
-  '--fld-fs': '1rem', // field font size
+  '--fld-fs': '14px', // field font size
 
   '--fld-wrp-dis': 'block', // field wrapper display
   '--fld-wrp-fdir': '', // field wrapper flex direction
   '--fld-wrp-justify': 'center',
   '--fld-wrp-m': '', // field wrapper margin
-  '--fld-wrp-p': '10px', // field wrapper paddin
+  '--fld-wrp-p': '7px 10px', // field wrapper paddin
   '--fld-wrp-bdr': '', // field wrapper border
   '--fld-wrp-bdr-width': '', // field wrapper border width
   '--fld-wrp-bdr-rad': '', // field wrapper border radius
@@ -303,7 +303,7 @@ const lgLightThemeVars = {
   '--g-o-s': 'solid', // outline style
 }
 
-const lightThemeColors = {
+export const defaultLightThemeColors = {
   '--global-accent-color': 'hsla(217, 100%, 50%, 100)', // Accent Color
   '--gah': 217, // global primary hue
   '--gas': '100%', // global primary saturation
@@ -443,11 +443,9 @@ const lightThemeColors = {
   '--bg-90': 'hsl(0, 0%, 10%)',
   '--bg-95': 'hsl(0, 0%, 5%)',
   '--bg-100': 'hsl(0, 0%, 0%)',
-  // '--white-0': 'hsl(0, 0%, 100%)',
-  // '--white-10': 'hsl(0, 90%, 100%)',
 }
 
-const darkThemeColors = {
+export const defaultDarkThemeColors = {
   '--global-accent-color': 'hsla(210, 100%, 50%, 100)', // Accent Color
   '--gah': 210, // global primary hue
   '--gas': '100%', // global primary saturation
@@ -497,14 +495,14 @@ const darkThemeColors = {
   '--bg-100': 'hsl(213, 32%, 100%)',
 }
 
-const font = {
+export const defaultFont = {
   fontType: '',
   fontURL: '',
   fontWeightVariants: [],
   fontStyle: [],
 }
 
-const lgLightform = ({ formId }) => ({
+export const defaultLgLightform = ({ formId }) => ({
   [`._frm-bg-${formId} *`]: {
     'box-sizing': 'border-box !important',
     'font-family': 'var(--g-font-family)',

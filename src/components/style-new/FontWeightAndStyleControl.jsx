@@ -37,7 +37,6 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
   }
   return (
     <>
-
       <ThemeStylePropertyBlock label="Font Style">
         <div className={css(ut.flxc)}>
           <ResetStyle

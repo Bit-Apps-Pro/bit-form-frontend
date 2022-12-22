@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import inputWrapperClasses from '../common/inputWrapperClasses'
+import inputWrapperClasses from '../../themes/common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function checkboxNradioStyle1_4_individual({ fk, type, direction }) {

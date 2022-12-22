@@ -1,3 +1,8 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+import { deepCopy } from '../../../../Utils/Helpers'
+import { assignNestedObj } from '../../styleHelpers'
+
 /**
  * @function commonStyle(fk, type, fieldType)
  * @param {string} fk field key
@@ -5,7 +10,7 @@
  * @param {string} fieldType field type
  * @return style classes
 */
-export default function commonStyle(fk, type, fieldType) {
+export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme) {
   switch (type) {
     case 'small-2':
       return {
@@ -18,6 +23,22 @@ export default function commonStyle(fk, type, fieldType) {
         [`.${fk}-hlp-txt`]: { 'font-size': '8px' },
         [`.${fk}-hlp-txt-pre-i`]: { width: '16px', height: '16px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '16px', height: '16px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-bx`]: { width: '10px', height: '10px' },
+          [`.${fk}-ct`]: { 'font-size': '12px' },
+          ...(fieldType === 'check' || fieldType === 'radio') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '0.625rem',
+              padding: '6px 4px !important',
+              height: '25px',
+              'border-radius': '6px',
+            },
+          },
+        },
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-ck`]: { 'border-radius': '3px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '0.625rem',
@@ -33,7 +54,6 @@ export default function commonStyle(fk, type, fieldType) {
           [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
           [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
         },
-
         ...(fieldType === 'select' || fieldType === 'country') && {
           [`.${fk}-dpd-fld-wrp`]: {
             'border-radius': '6px',
@@ -89,9 +109,10 @@ export default function commonStyle(fk, type, fieldType) {
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem' },
-          [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
-          [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
+          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem', height: '25px' },
+          [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '10px' },
         },
 
       }
@@ -100,6 +121,22 @@ export default function commonStyle(fk, type, fieldType) {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-bx`]: { width: '14px', height: '14px' },
+          [`.${fk}-ct`]: { 'font-size': '14px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '0.8rem',
+              padding: '8px 6px',
+              height: '30px',
+              'border-radius': '8px',
+            },
+          },
+        },
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-ck`]: { 'border-radius': '4px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '0.8rem',
@@ -146,7 +183,7 @@ export default function commonStyle(fk, type, fieldType) {
           },
           [`.${fk}-phone-amount-input`]: { padding: '8px 6px' },
           [`.${fk}-phone-fld-container`]: { height: '30px' },
-          [`.${fk}-selected-country-img`]: { height: '14px', width: '26px', 'border-radius': '4px' },
+          [`.${fk}-selected-country-img`]: { height: '17px', width: '25px', 'border-radius': '4px' },
         },
 
         ...fieldType === 'currency' && {
@@ -156,7 +193,7 @@ export default function commonStyle(fk, type, fieldType) {
           },
           [`.${fk}-currency-amount-input`]: { padding: '8px 6px' },
           [`.${fk}-currency-fld-container`]: { height: '30px' },
-          [`.${fk}-selected-currency-img`]: { height: '14px', width: '26px', 'border-radius': '4px' },
+          [`.${fk}-selected-currency-img`]: { height: '17px', width: '25px', 'border-radius': '4px' },
         },
 
         ...(fieldType === 'select'
@@ -184,9 +221,10 @@ export default function commonStyle(fk, type, fieldType) {
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '9px 15px', 'font-size': '0.875rem' },
+          [`.${fk}-inp-btn`]: { padding: '4px 9px', 'font-size': '0.875rem', height: '30px' },
           [`.${fk}-pre-i`]: { width: '18px', height: '18px' },
           [`.${fk}-suf-i`]: { width: '18px', height: '18px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '12px' },
         },
       }
     // case 'small':
@@ -201,6 +239,21 @@ export default function commonStyle(fk, type, fieldType) {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-bx`]: { width: '18px', height: '18px' },
+          [`.${fk}-ct`]: { 'font-size': '16px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1rem',
+              padding: '10px 8px',
+              height: '40px',
+            },
+          },
+        },
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-ck`]: { 'border-radius': '5px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '1rem',
@@ -285,9 +338,10 @@ export default function commonStyle(fk, type, fieldType) {
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '11px 20px', 'font-size': '1rem' },
-          [`.${fk}-pre-i`]: { width: '20px', height: '20px' },
-          [`.${fk}-suf-i`]: { width: '20px', height: '20px' },
+          [`.${fk}-inp-btn`]: { padding: '5px 11px', 'font-size': '1rem', height: '35px' },
+          [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '16px' },
         },
       }
     // case 'large':
@@ -302,6 +356,23 @@ export default function commonStyle(fk, type, fieldType) {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-bx`]: { width: '22px', height: '22px' },
+          [`.${fk}-ct`]: { 'font-size': '18px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1.2rem',
+              padding: '11px 9px',
+              height: '44px',
+              'border-radius': '12px',
+            },
+          },
+        },
+
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-ck`]: { 'border-radius': '6px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '1.2rem',
@@ -385,9 +456,10 @@ export default function commonStyle(fk, type, fieldType) {
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '12px 22px', 'font-size': '1.125rem' },
+          [`.${fk}-inp-btn`]: { padding: '12px 18px', 'font-size': '1.125rem', height: '44px' },
           [`.${fk}-pre-i`]: { width: '24px', height: '24px' },
           [`.${fk}-suf-i`]: { width: '24px', height: '24px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '1.125rem' },
         },
       }
     case 'large-2':
@@ -395,6 +467,22 @@ export default function commonStyle(fk, type, fieldType) {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '16px' },
+
+        ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-bx`]: { width: '26px', height: '26px' },
+          [`.${fk}-ct`]: { 'font-size': '20px' },
+          ...(fieldType === 'radio' || fieldType === 'check') && {
+            [`.${fk}-other-inp`]: {
+              'font-size': '1.4rem',
+              padding: '12px 10px',
+              height: '48px',
+              'border-radius': '13px',
+            },
+          },
+        },
+        ...(fieldType === 'check' || fieldType === 'decision-box') && {
+          [`.${fk}-ck`]: { 'border-radius': '7px' },
+        },
 
         [`.${fk}-fld`]: {
           'font-size': '1.4rem',
@@ -478,12 +566,58 @@ export default function commonStyle(fk, type, fieldType) {
           [`.${fk}-btn-pre-i`]: { width: '28px', height: '28px' },
         },
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '14px 24px', 'font-size': '1.313rem' },
+          [`.${fk}-inp-btn`]: { padding: '14px 22px', 'font-size': '1.313rem', height: '48px' },
           [`.${fk}-pre-i`]: { width: '28px', height: '28px' },
           [`.${fk}-suf-i`]: { width: '28px', height: '28px' },
+          [`.${fk}-btn-txt`]: { 'font-size': '1.313rem' },
         },
       }
     default:
       return 'default......'
   }
+}
+
+export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
+  const commonStyles = commonStyle(fldKey, fldSize, fldType)
+  const commonStylClasses = Object.keys(commonStyles)
+  const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
+  const fldClassesObj = copyFieldPrvStyle.classes
+  assignNestedObj(copyFieldPrvStyle, 'fieldSize', fldSize)
+
+  const commonStylClassesLen = commonStylClasses.length
+  for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+    const comnStylClass = commonStylClasses[indx]
+
+    if (Object.prototype.hasOwnProperty.call(fldClassesObj, comnStylClass)) {
+      const mainStlPropertiesObj = fldClassesObj[comnStylClass]
+      const comStlPropertiesObj = commonStyles[comnStylClass]
+      const comnStlProperties = Object.keys(comStlPropertiesObj)
+      const comnStlPropertiesLen = comnStlProperties.length
+
+      for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
+        const comnStlProperty = comnStlProperties[popIndx]
+
+        if (Object.prototype.hasOwnProperty.call(mainStlPropertiesObj, comnStlProperty)) {
+          const mainStlVal = mainStlPropertiesObj[comnStlProperty]
+          const comStlVal = comStlPropertiesObj[comnStlProperty]
+          if (mainStlVal !== comStlVal) {
+            if (mainStlVal?.match(/(var)/gi) && tempThemeVars) {
+              const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
+              if (tempThemeVars[mainStateVar] !== comStlVal) {
+                tempThemeVars[mainStateVar] = comStlVal
+              }
+            } else {
+              const path = `classes->${comnStylClass}->${comnStlProperty}`
+              assignNestedObj(copyFieldPrvStyle, path, comStlVal)
+            }
+          }
+        } else {
+          const path = `classes->${comnStylClass}->${comnStlProperty}`
+          assignNestedObj(copyFieldPrvStyle, path, comStlPropertiesObj[comnStlProperty])
+        }
+      }
+    }
+  }
+
+  return copyFieldPrvStyle
 }

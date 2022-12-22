@@ -875,7 +875,7 @@ function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|check|html|razorpay|paypal|recaptcha)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|html|razorpay|paypal|recaptcha)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="err-msg"
@@ -885,7 +885,6 @@ function StyleLayers() {
                   styleOverride={isLabelOverrideStyles(styles, fldKey, 'err-msg')}
                 />
               )}
-
             </LayerAccordion>
           ))}
         </div>
