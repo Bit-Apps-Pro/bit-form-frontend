@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import inputWrapperClasses from '../common/inputWrapperClasses'
+import inputWrapperClasses from '../../themes/common/inputWrapperClasses'
 
 export default function fileUploadStyle_3_atlassian({ fk }) {
   return {

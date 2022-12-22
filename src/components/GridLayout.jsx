@@ -56,10 +56,10 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { updateFieldStyleByFieldSizing } from './style-new/componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
-import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
+import bitformDefaultTheme from './style-new/themes/1_bitformDefault/1_bitformDefault'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 

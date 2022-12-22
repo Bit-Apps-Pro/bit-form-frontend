@@ -24,6 +24,7 @@ export function observeElement(element, property, callback, delay = 0) {
         if (typeof callback === 'function') {
           setTimeout(callback.bind(this, oldValue, newValue), delay)
         }
+        // eslint-disable-next-line no-setter-return
         return newValue
       },
     })
@@ -152,14 +153,14 @@ export const getDataDevAttrArr = (fk, element) => {
   used native for loop for perf
 */
 export function targetArrDiff(arr1, arr2) {
-  const diff = []
+  const diffArr = []
   const arr2len = arr2.length
   for (let i = 0; i < arr2len; i += 1) {
     if (arr1.indexOf(arr2[i]) === -1) {
-      diff.push(arr2[i])
+      diffArr.push(arr2[i])
     }
   }
-  return diff
+  return diffArr
 }
 
 /*

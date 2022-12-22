@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { useFela } from 'react-fela'
+
 export default function Select({
   options = [], onChange, value, size = 'md', w, className, color = 'default', inputName, dataTestId,
 }) {
@@ -38,9 +39,9 @@ export default function Select({
       value={value}
       onChange={handleOnChange}
     >
-      {options.map(option => (
+      {options.map((option, i) => (
         <option
-          key={id + option.value}
+          key={`${id + option.value + i + 22}`}
           value={option.value}
         >
           {option.label}
