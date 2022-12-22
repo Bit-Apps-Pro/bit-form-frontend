@@ -29,7 +29,7 @@ import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
 import { assignNestedObj } from './styleHelpers'
-import atlassianTheme from './themes/atlassianTheme/3_atlassianTheme'
+import atlassianTheme from './themes/2_atlassian/2_atlassian'
 import bitformDefaultTheme from './themes/1_bitformDefault/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
