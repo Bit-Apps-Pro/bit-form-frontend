@@ -16,6 +16,7 @@ import atlassianTheme from './themes/2_atlassian'
 import themes from './themes/themeList'
 import individual from './themes/individual/individual'
 import materialTheme from './themes/material/2_material'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
@@ -56,6 +57,7 @@ export default function CustomThemeGallary({ fldKey }) {
       const type = prvStyle.fields[fk].fieldType
       drftStyle.fields[fk] = getStyle(themeSlug, fk, type)
     }))
+    reCalculateFldHeights(fldKey)
   }
 
   const checkActiveTheme = (themeSlug) => {
