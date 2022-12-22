@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { debouncer } from '../Utils/Helpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $themeVarsLgLight = atom({
@@ -8,7 +9,9 @@ export const $themeVarsLgLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgLight) => {
-      addToSessionStorage(generateSessionKey('themeVarsLgLight'), newThemeVarsLgLight, { strType: 'json' })
+      debouncer('themeVarsLgLight', () => {
+        addToSessionStorage(generateSessionKey('themeVarsLgLight'), newThemeVarsLgLight, { strType: 'json' })
+      })
     })
   }],
 })
@@ -17,7 +20,9 @@ export const $themeVarsMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdLight) => {
-      addToSessionStorage(generateSessionKey('themeVarsMdLight'), newThemeVarsMdLight, { strType: 'json' })
+      debouncer('themeVarsMdLight', () => {
+        addToSessionStorage(generateSessionKey('themeVarsMdLight'), newThemeVarsMdLight, { strType: 'json' })
+      })
     })
   }],
 })
@@ -26,7 +31,9 @@ export const $themeVarsSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmLight) => {
-      addToSessionStorage(generateSessionKey('themeVarsSmLight'), newThemeVarsSmLight, { strType: 'json' })
+      debouncer('themeVarsSmLight', () => {
+        addToSessionStorage(generateSessionKey('themeVarsSmLight'), newThemeVarsSmLight, { strType: 'json' })
+      })
     })
   }],
 })
@@ -36,7 +43,9 @@ export const $themeVarsLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgDark) => {
-      addToSessionStorage(generateSessionKey('themeVarsLgDark'), newThemeVarsLgDark, { strType: 'json' })
+      debouncer('themeVarsLgDark', () => {
+        addToSessionStorage(generateSessionKey('themeVarsLgDark'), newThemeVarsLgDark, { strType: 'json' })
+      })
     })
   }],
 })
@@ -45,7 +54,9 @@ export const $themeVarsMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdDark) => {
-      addToSessionStorage(generateSessionKey('themeVarsMdDark'), newThemeVarsMdDark, { strType: 'json' })
+      debouncer('themeVarsMdDark', () => {
+        addToSessionStorage(generateSessionKey('themeVarsMdDark'), newThemeVarsMdDark, { strType: 'json' })
+      })
     })
   }],
 })
@@ -54,7 +65,9 @@ export const $themeVarsSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmDark) => {
-      addToSessionStorage(generateSessionKey('themeVarsSmDark'), newThemeVarsSmDark, { strType: 'json' })
+      debouncer('themeVarsSmDark', () => {
+        addToSessionStorage(generateSessionKey('themeVarsSmDark'), newThemeVarsSmDark, { strType: 'json' })
+      })
     })
   }],
 })

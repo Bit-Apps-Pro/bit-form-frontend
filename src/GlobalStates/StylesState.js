@@ -2,6 +2,7 @@
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
 import { mergeNestedObj } from '../Utils/globalHelpers'
+import { debouncer } from '../Utils/Helpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $stylesLgLight = atom({
@@ -9,7 +10,9 @@ export const $stylesLgLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesLgLight'), newStyles, { strType: 'json' })
+      debouncer('stylesLgLight', () => {
+        addToSessionStorage(generateSessionKey('stylesLgLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -18,7 +21,9 @@ export const $stylesLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesLgDark'), newStyles, { strType: 'json' })
+      debouncer('stylesLgDark', () => {
+        addToSessionStorage(generateSessionKey('stylesLgDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -27,7 +32,9 @@ export const $stylesMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesMdLight'), newStyles, { strType: 'json' })
+      debouncer('stylesMdLight', () => {
+        addToSessionStorage(generateSessionKey('stylesMdLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -36,7 +43,9 @@ export const $stylesMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesMdDark'), newStyles, { strType: 'json' })
+      debouncer('stylesMdDark', () => {
+        addToSessionStorage(generateSessionKey('stylesMdDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -45,7 +54,9 @@ export const $stylesSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesSmLight'), newStyles, { strType: 'json' })
+      debouncer('stylesSmLight', () => {
+        addToSessionStorage(generateSessionKey('stylesSmLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -54,7 +65,9 @@ export const $stylesSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage(generateSessionKey('stylesSmDark'), newStyles, { strType: 'json' })
+      debouncer('stylesSmDark', () => {
+        addToSessionStorage(generateSessionKey('stylesSmDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })

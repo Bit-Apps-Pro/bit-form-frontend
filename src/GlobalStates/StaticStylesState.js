@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { atom } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { debouncer } from '../Utils/Helpers'
 
 export const $staticStylesState = atom({
   key: '$staticStylesState',
@@ -48,7 +49,9 @@ export const $staticStylesState = atom({
   },
   effects: [({ onSet }) => {
     onSet((newStaticStyles) => {
-      addToSessionStorage(generateSessionKey('staticStyles'), newStaticStyles, { strType: 'json' })
+      debouncer('staticStyles', () => {
+        addToSessionStorage(generateSessionKey('staticStyles'), newStaticStyles, { strType: 'json' })
+      })
     })
   }],
 })

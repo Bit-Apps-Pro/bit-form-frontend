@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
-import { getFormsFromPhpVariable, getNewFormId, getNewId, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
+import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
@@ -11,7 +11,9 @@ export const $breakpoint = atom({
   default: 'lg',
   effects: [({ onSet }) => {
     onSet((newBreakpoint) => {
-      addToSessionStorage(generateSessionKey('breakpoint'), newBreakpoint, { strType: 'json' })
+      debouncer('breakpoint', () => {
+        addToSessionStorage(generateSessionKey('breakpoint'), newBreakpoint, { strType: 'json' })
+      })
     })
   }],
 })
@@ -20,7 +22,9 @@ export const $breakpointSize = atom({
   default: { lg: 1024, md: 960, sm: 570 },
   effects: [({ onSet }) => {
     onSet((newSize) => {
-      addToSessionStorage(generateSessionKey('breakpointSize'), newSize, { strType: 'json' })
+      debouncer('breakpointSize', () => {
+        addToSessionStorage(generateSessionKey('breakpointSize'), newSize, { strType: 'json' })
+      })
     })
   }],
 })
@@ -30,7 +34,9 @@ export const $builderHelperStates = atom({
   default: { respectLGLayoutOrder: true },
   effects: [({ onSet }) => {
     onSet((newBuilderHelperStates) => {
-      addToSessionStorage(generateSessionKey('builderHelperStates'), newBuilderHelperStates, { strType: 'json' })
+      debouncer('builderHelperStates', () => {
+        addToSessionStorage(generateSessionKey('builderHelperStates'), newBuilderHelperStates, { strType: 'json' })
+      })
     })
   }],
 })
@@ -41,7 +47,9 @@ export const $builderSettings = atom({
   default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } },
   effects: [({ onSet }) => {
     onSet((newBuilderSettings) => {
-      addToSessionStorage(generateSessionKey('builderSettings'), newBuilderSettings, { strType: 'json' })
+      debouncer('builderSettings', () => {
+        addToSessionStorage(generateSessionKey('builderSettings'), newBuilderSettings, { strType: 'json' })
+      })
     })
   }],
 })
@@ -51,7 +59,9 @@ export const $colorScheme = atom({
   default: 'light',
   effects: [({ onSet }) => {
     onSet((newColorScheme) => {
-      addToSessionStorage(generateSessionKey('colorScheme'), newColorScheme)
+      debouncer('colorScheme', () => {
+        addToSessionStorage(generateSessionKey('colorScheme'), newColorScheme)
+      })
     })
   }],
 })
@@ -60,7 +70,9 @@ export const $customCodes = atom({
   default: { JavaScript: '', CSS: '' },
   effects: [({ onSet }) => {
     onSet((newCustomCodes) => {
-      addToSessionStorage(generateSessionKey('customCodes'), newCustomCodes, { strType: 'json' })
+      debouncer('customCodes', () => {
+        addToSessionStorage(generateSessionKey('customCodes'), newCustomCodes, { strType: 'json' })
+      })
     })
   }],
 })
@@ -70,7 +82,9 @@ export const $deletedFldKey = atom({
   default: [],
   effects: [({ onSet }) => {
     onSet((newDeletedFldKey) => {
-      addToSessionStorage(generateSessionKey('deletedFldKey'), newDeletedFldKey, { strType: 'json' })
+      debouncer('deletedFldKey', () => {
+        addToSessionStorage(generateSessionKey('deletedFldKey'), newDeletedFldKey, { strType: 'json' })
+      })
     })
   }],
 })
@@ -81,7 +95,9 @@ export const $formInfo = atom({
   default: { formName: 'Untitled Form' },
   effects: [({ onSet }) => {
     onSet((newDeletedFldKey) => {
-      addToSessionStorage(generateSessionKey('formInfo'), newDeletedFldKey, { strType: 'json' })
+      debouncer('formInfo', () => {
+        addToSessionStorage(generateSessionKey('formInfo'), newDeletedFldKey, { strType: 'json' })
+      })
     })
   }],
 })
@@ -94,7 +110,9 @@ export const $fields = atom({
   effects: [({ onSet }) => {
     onSet((newFields) => {
       if (isObjectEmpty(newFields)) return
-      addToSessionStorage(generateSessionKey('fields'), newFields, { strType: 'json' })
+      debouncer('fields', () => {
+        addToSessionStorage(generateSessionKey('fields'), newFields, { strType: 'json' })
+      })
     })
   }],
 })
@@ -108,7 +126,9 @@ export const $layouts = atom({
   effects: [({ onSet }) => {
     onSet((newLayouts) => {
       if (!newLayouts.lg.length) return
-      addToSessionStorage(generateSessionKey('layouts'), newLayouts, { strType: 'json' })
+      debouncer('layouts', () => {
+        addToSessionStorage(generateSessionKey('layouts'), newLayouts, { strType: 'json' })
+      })
     })
   }],
 })
