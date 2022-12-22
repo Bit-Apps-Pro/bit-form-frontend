@@ -27,6 +27,14 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
   }
   const fontweightVariants = styles.font?.fontWeightVariants.length ? arrayToObject(styles.font.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font?.fontStyle.length ? arrayToObject(styles.font.fontStyle) : staticFontStyleVariants
+
+  // check if font style or weight is available in the font object
+  const isFontStyleOrWeightAvailable = (varName, variant) => {
+    if (styles.font?.fontType === 'Google' && themeVars[varName] && !styles.font[variant]?.includes(Number(themeVars[varName]))) {
+      return true
+    }
+    return false
+  }
   return (
     <>
 
@@ -37,15 +45,19 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
             stateObjName="themeVars"
             id={`${id}-fs`}
           />
-          <SimpleDropdown
-            options={fontStyleVariants}
-            value={String(themeVars[fontStyleVar])}
-            onChange={val => fontVarSetHandler(fontStyleVar, val)}
-            w={130}
-            h={30}
-            id={`${id}-fs`}
-            cls={css((styles.font?.fontType === 'Google' && themeVars[fontStyleVar] && !styles.font.fontStyleVariants?.includes(Number(themeVars[fontStyleVar]))) ? cls.warningBorder : '')}
-          />
+          <div className={css(cls.comSection)}>
+            <SimpleDropdown
+              options={fontStyleVariants}
+              value={String(themeVars[fontStyleVar])}
+              onChange={val => fontVarSetHandler(fontStyleVar, val)}
+              w={130}
+              h={30}
+              id={`${id}-fs`}
+              cls={css(isFontStyleOrWeightAvailable(fontStyleVar, 'fontStyleVariants') ? cls.warningBorder : '')}
+            />
+            {isFontStyleOrWeightAvailable(fontStyleVar, 'fontStyleVariants') && <span className={css(cls.clr)}>Font style not found!</span>}
+            <span className={css(cls.clr)}>Font style not found!</span>
+          </div>
         </div>
       </ThemeStylePropertyBlock>
       <ThemeStylePropertyBlock label="Font Weight">
@@ -55,18 +67,29 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
             stateObjName="themeVars"
             id={`${id}-fw`}
           />
-          <SimpleDropdown
-            options={fontweightVariants}
-            value={String(themeVars[fontWeightVar])}
-            onChange={val => fontVarSetHandler(fontWeightVar, val)}
-            w={130}
-            h={30}
-            id={`${id}-fw`}
-            cls={css((styles.font?.fontType === 'Google' && themeVars[fontWeightVar] && !styles.font.fontWeightVariants?.includes(Number(themeVars[fontWeightVar]))) ? cls.warningBorder : '')}
-          />
+          <div className={css(cls.comSection)}>
+            <SimpleDropdown
+              options={fontweightVariants}
+              value={String(themeVars[fontWeightVar])}
+              onChange={val => fontVarSetHandler(fontWeightVar, val)}
+              w={130}
+              h={30}
+              id={`${id}-fw`}
+              cls={css(isFontStyleOrWeightAvailable(fontStyleVar, 'fontWeightVariants') ? cls.warningBorder : '')}
+            />
+            {isFontStyleOrWeightAvailable(fontStyleVar, 'fontWeightVariants') && <span className={css(cls.clr)}>Font weight not found!</span>}
+          </div>
         </div>
       </ThemeStylePropertyBlock>
     </>
   )
 }
-const cls = { warningBorder: { b: '1px solid yellow' } }
+
+const cls = {
+  warningBorder: { b: '1px solid yellow' },
+  comSection: {
+    dy: 'flex',
+    fd: 'column',
+  },
+  clr: { cr: 'red' },
+}
