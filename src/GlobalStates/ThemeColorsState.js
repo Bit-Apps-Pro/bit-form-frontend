@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { debouncer } from '../Utils/Helpers'
 import { $colorScheme } from './GlobalStates'
 
 export const $lightThemeColors = atom({
@@ -8,7 +9,9 @@ export const $lightThemeColors = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newLightThemeColors) => {
-      addToSessionStorage(generateSessionKey('lightThemeColors'), newLightThemeColors, { strType: 'json' })
+      debouncer('lightThemeColors', () => {
+        addToSessionStorage(generateSessionKey('lightThemeColors'), newLightThemeColors, { strType: 'json' })
+      })
     })
   }],
 })
@@ -17,7 +20,9 @@ export const $darkThemeColors = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newDarkThemeColors) => {
-      addToSessionStorage(generateSessionKey('darkThemeColors'), newDarkThemeColors, { strType: 'json' })
+      debouncer('darkThemeColors', () => {
+        addToSessionStorage(generateSessionKey('darkThemeColors'), newDarkThemeColors, { strType: 'json' })
+      })
     })
   }],
 })
