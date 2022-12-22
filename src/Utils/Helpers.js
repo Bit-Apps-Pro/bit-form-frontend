@@ -563,3 +563,16 @@ export const resetRecoilStates = () => {
 }
 
 export const trimCSS = (cssStr = '') => cssStr.replace(/\/\*[^*]*\*+([^/][^*]*\*+)*\//g, '').replace(/\n/gm, '')
+
+export const debouncer = (name, func, wait = 300) => {
+  if (debouncer[name]) {
+    clearTimeout(debouncer[name])
+  }
+
+  debouncer[name] = setTimeout(() => {
+    func()
+    delete debouncer[name]
+  }, wait)
+
+  return debouncer[name]
+}
