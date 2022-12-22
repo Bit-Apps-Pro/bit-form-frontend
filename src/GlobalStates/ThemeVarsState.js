@@ -8,7 +8,8 @@ export const $themeVarsLgLight = atom({
   key: '$themeVarsLgLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsLgLight) => {
+    onSet((newThemeVarsLgLight, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsLgLight', () => {
         addToSessionStorage(generateSessionKey('themeVarsLgLight'), newThemeVarsLgLight, { strType: 'json' })
       })
@@ -19,7 +20,8 @@ export const $themeVarsMdLight = atom({
   key: '$themeVarsMdLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsMdLight) => {
+    onSet((newThemeVarsMdLight, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsMdLight', () => {
         addToSessionStorage(generateSessionKey('themeVarsMdLight'), newThemeVarsMdLight, { strType: 'json' })
       })
@@ -30,7 +32,8 @@ export const $themeVarsSmLight = atom({
   key: '$themeVarsSmLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsSmLight) => {
+    onSet((newThemeVarsSmLight, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsSmLight', () => {
         addToSessionStorage(generateSessionKey('themeVarsSmLight'), newThemeVarsSmLight, { strType: 'json' })
       })
@@ -42,7 +45,8 @@ export const $themeVarsLgDark = atom({
   key: '$themeVarsLgDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsLgDark) => {
+    onSet((newThemeVarsLgDark, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsLgDark', () => {
         addToSessionStorage(generateSessionKey('themeVarsLgDark'), newThemeVarsLgDark, { strType: 'json' })
       })
@@ -53,7 +57,8 @@ export const $themeVarsMdDark = atom({
   key: '$themeVarsMdDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsMdDark) => {
+    onSet((newThemeVarsMdDark, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsMdDark', () => {
         addToSessionStorage(generateSessionKey('themeVarsMdDark'), newThemeVarsMdDark, { strType: 'json' })
       })
@@ -64,7 +69,8 @@ export const $themeVarsSmDark = atom({
   key: '$themeVarsSmDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newThemeVarsSmDark) => {
+    onSet((newThemeVarsSmDark, _, isReset) => {
+      if (isReset) return
       debouncer('themeVarsSmDark', () => {
         addToSessionStorage(generateSessionKey('themeVarsSmDark'), newThemeVarsSmDark, { strType: 'json' })
       })
