@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $styles } from '../GlobalStates/StylesState'
 import '../resource/sass/components.scss'
+import { isObjectEmpty } from '../Utils/Helpers'
 import AdvanceFileUp from './Fields/AdvanceFileUp'
 import Button from './Fields/Button'
 import CheckBox from './Fields/CheckBox'
@@ -44,7 +45,7 @@ function MapComponents({
 }) {
   const styles = useRecoilValue($styles)
 
-  if (!atts?.typ) return
+  if (isObjectEmpty(styles) || !atts?.typ) return
 
   switch (atts?.typ) {
     case 'text':

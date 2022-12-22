@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { addToSessionStorage } from '../Utils/FormBuilderHelper'
-import { JCOF } from '../Utils/globalHelpers'
+import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $themeVarsLgLight = atom({
@@ -9,7 +8,7 @@ export const $themeVarsLgLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgLight) => {
-      addToSessionStorage('themeVarsLgLight', JCOF.stringify(newThemeVarsLgLight))
+      addToSessionStorage(generateSessionKey('themeVarsLgLight'), newThemeVarsLgLight, { strType: 'json' })
     })
   }],
 })
@@ -18,7 +17,7 @@ export const $themeVarsMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdLight) => {
-      addToSessionStorage('themeVarsMdLight', JCOF.stringify(newThemeVarsMdLight))
+      addToSessionStorage(generateSessionKey('themeVarsMdLight'), newThemeVarsMdLight, { strType: 'json' })
     })
   }],
 })
@@ -27,7 +26,7 @@ export const $themeVarsSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmLight) => {
-      addToSessionStorage('themeVarsSmLight', JCOF.stringify(newThemeVarsSmLight))
+      addToSessionStorage(generateSessionKey('themeVarsSmLight'), newThemeVarsSmLight, { strType: 'json' })
     })
   }],
 })
@@ -37,7 +36,7 @@ export const $themeVarsLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgDark) => {
-      addToSessionStorage('themeVarsLgDark', JCOF.stringify(newThemeVarsLgDark))
+      addToSessionStorage(generateSessionKey('themeVarsLgDark'), newThemeVarsLgDark, { strType: 'json' })
     })
   }],
 })
@@ -46,7 +45,7 @@ export const $themeVarsMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsMdDark) => {
-      addToSessionStorage('themeVarsMdDark', JCOF.stringify(newThemeVarsMdDark))
+      addToSessionStorage(generateSessionKey('themeVarsMdDark'), newThemeVarsMdDark, { strType: 'json' })
     })
   }],
 })
@@ -55,7 +54,7 @@ export const $themeVarsSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsSmDark) => {
-      addToSessionStorage('themeVarsSmDark', JCOF.stringify(newThemeVarsSmDark))
+      addToSessionStorage(generateSessionKey('themeVarsSmDark'), newThemeVarsSmDark, { strType: 'json' })
     })
   }],
 })

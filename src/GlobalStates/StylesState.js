@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { addToSessionStorage } from '../Utils/FormBuilderHelper'
-import { JCOF, mergeNestedObj } from '../Utils/globalHelpers'
+import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $stylesLgLight = atom({
@@ -9,7 +9,7 @@ export const $stylesLgLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesLgLight', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesLgLight'), newStyles, { strType: 'json' })
     })
   }],
 })
@@ -18,7 +18,7 @@ export const $stylesLgDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesLgDark', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesLgDark'), newStyles, { strType: 'json' })
     })
   }],
 })
@@ -27,7 +27,7 @@ export const $stylesMdLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesMdLight', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesMdLight'), newStyles, { strType: 'json' })
     })
   }],
 })
@@ -36,7 +36,7 @@ export const $stylesMdDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesMdDark', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesMdDark'), newStyles, { strType: 'json' })
     })
   }],
 })
@@ -45,7 +45,7 @@ export const $stylesSmLight = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesSmLight', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesSmLight'), newStyles, { strType: 'json' })
     })
   }],
 })
@@ -54,7 +54,7 @@ export const $stylesSmDark = atom({
   default: {},
   effects: [({ onSet }) => {
     onSet((newStyles) => {
-      addToSessionStorage('stylesSmDark', JCOF.stringify(newStyles))
+      addToSessionStorage(generateSessionKey('stylesSmDark'), newStyles, { strType: 'json' })
     })
   }],
 })

@@ -1,5 +1,4 @@
 import loadable from '@loadable/component'
-import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -15,7 +14,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import {
-  $additionalSettings, $builderHistory, $builderSettings, $confirmations, $customCodes, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
+  $additionalSettings, $builderSettings, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
@@ -64,6 +63,7 @@ function FormDetails() {
   const setAllStyles = useSetRecoilState($allStyles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setIsNewThemeStyleLoaded = useSetRecoilState($isNewThemeStyleLoaded)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   const newFormId = useRecoilValue($newFormId)
   const { css } = useFela()
 
@@ -141,7 +141,8 @@ function FormDetails() {
     onMount()
     return () => {
       componentMounted = false
-      onUnmount() // disable for now because its causing hot reload prblm
+      // TODO: temproray turn off if it causes any hot reload problem
+      onUnmount()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -174,33 +175,26 @@ function FormDetails() {
         .then(res => {
           if (res?.success && componentMounted) {
             const responseData = res.data
-            if (responseData.form_content.layout !== undefined) {
-              const oldLayouts = getSessionStorageStates({ stateName: 'layouts', strType: 'jcof' })
-              if (oldLayouts) {
-                setLayouts(oldLayouts)
-                addToBuilderHistory({ state: { layouts: oldLayouts } }, false, 0)
-              } else {
-                setLayouts(responseData.form_content.layout)
-                addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
-              }
-            }
             const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
-            const oldFields = getSessionStorageStates({ stateName: 'fields', strType: 'jcof' })
-            if (oldFields) {
-              setFields(oldFields)
-              addToBuilderHistory({ state: { fields: oldFields } }, false, 0)
-            } else {
+            const sessionLayouts = getSessionStorageStates(`btcd-layouts-bf-${formID}`, { strType: 'json' })
+            const sessionFields = getSessionStorageStates(`btcd-fields-bf-${formID}`, { strType: 'json' })
+            if (!sessionLayouts) {
+              setLayouts(responseData.form_content.layout)
+              addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
+            }
+            if (!sessionFields) {
               setFields(responseData.form_content.fields)
               addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
             }
-            setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+            const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' })
+            if (!sessionFormInfo) setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
-            if (responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
-
+            const sessionBuilderSettings = getSessionStorageStates(`btcd-builderSettings-bf-${formID}`, { strType: 'json' })
+            if (!sessionBuilderSettings && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,
               isDefault: responseData?.form_content?.report_id === null,
@@ -288,7 +282,10 @@ function FormDetails() {
             </div>
             <input
               className={css(navbar.btcd_bld_title_inp)}
-              onChange={({ target: { value } }) => setFormInfo(oldInfo => ({ ...oldInfo, formName: value }))}
+              onChange={({ target: { value } }) => {
+                setFormInfo(oldInfo => ({ ...oldInfo, formName: value }))
+                setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, unsaved: true }))
+              }}
               value={formName}
               data-testid="form-name"
             />

@@ -828,24 +828,28 @@ export function getAbsoluteElmHeight(el, withMargin = 1) {
   return el.offsetHeight + margin
 }
 
-export function addToSessionStorage(key, value, formId) {
-  let newVal = value
-  if (typeof value !== 'string') newVal = JSON.stringify(value)
-  if (formId === 0) {
-    sessionStorage.setItem(`btcd-${key}`, newVal)
-    return
-  }
-  const currentFormId = getRecoil($formId)
-  if (!currentFormId) return
-  sessionStorage.setItem(`btcd-${key}-bf-${currentFormId}`, newVal)
+export const generateSessionKey = key => {
+  const formId = getRecoil($formId)
+  if (!formId) return null
+  return `btcd-${key}-bf-${formId}`
 }
 
-export const getSessionStorageStates = ({ stateName, strType }, formId) => {
-  let sessionKey = stateName
-  const currentFormId = getRecoil($formId)
-  if (formId !== 0) sessionKey = `btcd-${stateName}-bf-${currentFormId}`
-  const state = sessionStorage.getItem(sessionKey)
-  if (strType === 'json') return state ? JSON.parse(state) : null
-  if (strType === 'jcof') return state ? JCOF.parse(state) : null
+export async function addToSessionStorage(key, value, { strType } = {}) {
+  if (!key) return
+  let newVal = value
+  if (typeof value !== 'string') {
+    if (strType === 'json') newVal = JSON.stringify(value)
+    if (strType === 'jcof') newVal = JCOF.stringify(value)
+  }
+  sessionStorage.setItem(key, newVal)
+}
+
+export const getSessionStorageStates = (key, { strType } = {}) => {
+  if (!key) return null
+  const state = sessionStorage.getItem(key)
+  if (!state) return null
+  if (!strType) return state
+  if (strType === 'json') return JSON.parse(state)
+  if (strType === 'jcof') return JCOF.parse(state)
   return state
 }
