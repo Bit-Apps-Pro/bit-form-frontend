@@ -1,4 +1,4 @@
-import inputWrapperClasses from '../common/inputWrapperClasses'
+import inputWrapperClasses from '../../themes/common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function textStyle_3_atlassian({ fk, type }) {

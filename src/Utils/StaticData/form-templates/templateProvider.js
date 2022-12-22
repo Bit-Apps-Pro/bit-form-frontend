@@ -1,5 +1,5 @@
 import { msgDefaultConfig } from '../../../components/style-new/styleHelpers'
-import themeProvider from '../../../components/style-new/themes/0_themeProvider'
+import themeProvider from '../../../components/style-new/themes/themeProvider'
 
 import { mergeNestedObj } from '../../globalHelpers'
 import blankTemplate from './blankTemplate'

@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
-import inputWrapperClasses from '../common/inputWrapperClasses'
+import inputWrapperClasses from '../../themes/common/inputWrapperClasses'
 
 export default function phoneNumberStyle_3_atlassian({ fk }) {
   return {

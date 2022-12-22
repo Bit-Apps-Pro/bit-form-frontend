@@ -1,5 +1,5 @@
-import bitformDefaultTheme from './bitformDefault/1_bitformDefault'
-import atlassianTheme from './atlassianTheme/3_atlassianTheme'
+import bitformDefaultTheme from './1_bitformDefault'
+import atlassianTheme from './2_atlassian'
 
 export default function themeProvider(themeSlug, fieldsArr, formId) {
   const theme = {
@@ -29,13 +29,15 @@ export default function themeProvider(themeSlug, fieldsArr, formId) {
     theme.themeColors = bitformDefaultTheme({ type: 'themeColors' })
     theme.themeVars = bitformDefaultTheme({ type: 'themeVars' })
     theme.styles = bitformDefaultTheme({ fieldsArr, formId })
+    console.log({ theme })
     return theme
   }
 
   if (themeSlug === 'atlassian') {
-    theme.styles = atlassianTheme({ fieldsArr })
     theme.themeColors = atlassianTheme({ type: 'themeColors' })
     theme.themeVars = atlassianTheme({ type: 'themeVars' })
+    theme.styles = atlassianTheme({ fieldsArr, formId })
+    console.log({ theme })
     return theme
   }
 }

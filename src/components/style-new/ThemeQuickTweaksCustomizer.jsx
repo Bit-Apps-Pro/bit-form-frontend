@@ -32,7 +32,7 @@ import { changeFormStylesDir, changeFormThemeVarsDir } from './formDirectionHelp
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import bitformDefaultTheme from './themes/bitformDefault/1_bitformDefault'
+import bitformDefaultTheme from './themes/1_bitformDefault/1_bitformDefault'
 import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import ThemeStyleReset from './ThemeStyleReset'
