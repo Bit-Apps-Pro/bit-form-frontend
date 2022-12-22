@@ -34,10 +34,7 @@ export default function ButtonQuickTweaks() {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault') {
-        assignNestedObj(drftStyle, propertyPath('btn', prop), v)
-      }
+      assignNestedObj(drftStyle, propertyPath('btn', prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
   }
