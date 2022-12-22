@@ -48,7 +48,8 @@ export const $staticStylesState = atom({
     },
   },
   effects: [({ onSet }) => {
-    onSet((newStaticStyles) => {
+    onSet((newStaticStyles, _, isReset) => {
+      if (isReset) return
       debouncer('staticStyles', () => {
         addToSessionStorage(generateSessionKey('staticStyles'), newStaticStyles, { strType: 'json' })
       })

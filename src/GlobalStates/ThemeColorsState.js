@@ -8,7 +8,8 @@ export const $lightThemeColors = atom({
   key: '$lightThemeColors',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newLightThemeColors) => {
+    onSet((newLightThemeColors, _, isReset) => {
+      if (isReset) return
       debouncer('lightThemeColors', () => {
         addToSessionStorage(generateSessionKey('lightThemeColors'), newLightThemeColors, { strType: 'json' })
       })
@@ -19,7 +20,8 @@ export const $darkThemeColors = atom({
   key: '$darkThemeColors',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newDarkThemeColors) => {
+    onSet((newDarkThemeColors, _, isReset) => {
+      if (isReset) return
       debouncer('darkThemeColors', () => {
         addToSessionStorage(generateSessionKey('darkThemeColors'), newDarkThemeColors, { strType: 'json' })
       })

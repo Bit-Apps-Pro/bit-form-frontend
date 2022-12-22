@@ -10,7 +10,8 @@ export const $breakpoint = atom({
   key: '$breakpoint',
   default: 'lg',
   effects: [({ onSet }) => {
-    onSet((newBreakpoint) => {
+    onSet((newBreakpoint, _, isReset) => {
+      if (isReset) return
       debouncer('breakpoint', () => {
         addToSessionStorage(generateSessionKey('breakpoint'), newBreakpoint, { strType: 'json' })
       })
@@ -21,7 +22,8 @@ export const $breakpointSize = atom({
   key: '$breakpointSize',
   default: { lg: 1024, md: 960, sm: 570 },
   effects: [({ onSet }) => {
-    onSet((newSize) => {
+    onSet((newSize, _, isReset) => {
+      if (isReset) return
       debouncer('breakpointSize', () => {
         addToSessionStorage(generateSessionKey('breakpointSize'), newSize, { strType: 'json' })
       })
@@ -33,7 +35,8 @@ export const $builderHelperStates = atom({
   key: '$builderHelperStates',
   default: { respectLGLayoutOrder: true },
   effects: [({ onSet }) => {
-    onSet((newBuilderHelperStates) => {
+    onSet((newBuilderHelperStates, _, isReset) => {
+      if (isReset) return
       debouncer('builderHelperStates', () => {
         addToSessionStorage(generateSessionKey('builderHelperStates'), newBuilderHelperStates, { strType: 'json' })
       })
@@ -46,7 +49,8 @@ export const $builderSettings = atom({
   key: '$builderSettings',
   default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } },
   effects: [({ onSet }) => {
-    onSet((newBuilderSettings) => {
+    onSet((newBuilderSettings, _, isReset) => {
+      if (isReset) return
       debouncer('builderSettings', () => {
         addToSessionStorage(generateSessionKey('builderSettings'), newBuilderSettings, { strType: 'json' })
       })
@@ -58,7 +62,8 @@ export const $colorScheme = atom({
   key: '$colorScheme',
   default: 'light',
   effects: [({ onSet }) => {
-    onSet((newColorScheme) => {
+    onSet((newColorScheme, _, isReset) => {
+      if (isReset) return
       debouncer('colorScheme', () => {
         addToSessionStorage(generateSessionKey('colorScheme'), newColorScheme)
       })
@@ -69,7 +74,8 @@ export const $customCodes = atom({
   key: '$customCodes',
   default: { JavaScript: '', CSS: '' },
   effects: [({ onSet }) => {
-    onSet((newCustomCodes) => {
+    onSet((newCustomCodes, _, isReset) => {
+      if (isReset) return
       debouncer('customCodes', () => {
         addToSessionStorage(generateSessionKey('customCodes'), newCustomCodes, { strType: 'json' })
       })
@@ -81,7 +87,8 @@ export const $deletedFldKey = atom({
   key: '$deletedFldKey',
   default: [],
   effects: [({ onSet }) => {
-    onSet((newDeletedFldKey) => {
+    onSet((newDeletedFldKey, _, isReset) => {
+      if (isReset) return
       debouncer('deletedFldKey', () => {
         addToSessionStorage(generateSessionKey('deletedFldKey'), newDeletedFldKey, { strType: 'json' })
       })
@@ -94,9 +101,10 @@ export const $formInfo = atom({
   key: '$formInfo',
   default: { formName: 'Untitled Form' },
   effects: [({ onSet }) => {
-    onSet((newDeletedFldKey) => {
+    onSet((newFormInfo, _, isReset) => {
+      if (isReset) return
       debouncer('formInfo', () => {
-        addToSessionStorage(generateSessionKey('formInfo'), newDeletedFldKey, { strType: 'json' })
+        addToSessionStorage(generateSessionKey('formInfo'), newFormInfo, { strType: 'json' })
       })
     })
   }],
@@ -108,8 +116,8 @@ export const $fields = atom({
   default: {},
   dangerouslyAllowMutability: true,
   effects: [({ onSet }) => {
-    onSet((newFields) => {
-      if (isObjectEmpty(newFields)) return
+    onSet((newFields, _, isReset) => {
+      if (isReset) return
       debouncer('fields', () => {
         addToSessionStorage(generateSessionKey('fields'), newFields, { strType: 'json' })
       })
@@ -124,8 +132,8 @@ export const $layouts = atom({
   default: { lg: [], md: [], sm: [] },
   dangerouslyAllowMutability: true,
   effects: [({ onSet }) => {
-    onSet((newLayouts) => {
-      if (!newLayouts.lg.length) return
+    onSet((newLayouts, _, isReset) => {
+      if (isReset) return
       debouncer('layouts', () => {
         addToSessionStorage(generateSessionKey('layouts'), newLayouts, { strType: 'json' })
       })
