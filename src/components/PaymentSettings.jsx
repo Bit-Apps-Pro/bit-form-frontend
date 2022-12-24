@@ -124,7 +124,7 @@ export default function PaymentSettings({ setSnackbar }) {
               <div
                 key={`-${i + 2}`}
                 onClick={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
-                onKeyDown={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
+                onKeyPress={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
                 role="button"
                 tabIndex="0"
                 className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${pay.pro && 'btcd-inte-pro'}`}
@@ -156,7 +156,7 @@ export default function PaymentSettings({ setSnackbar }) {
           className={css(style.itegCard)}
           tabIndex="0"
           onClick={() => setShowMdl(true)}
-          onKeyDown={() => setShowMdl(true)}
+          onKeyPress={() => setShowMdl(true)}
         >
           <div className={css(style.integPlus)}>
             <PlusIcn size={80} />

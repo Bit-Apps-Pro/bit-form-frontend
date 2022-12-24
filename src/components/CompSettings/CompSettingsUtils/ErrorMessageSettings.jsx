@@ -146,7 +146,7 @@ export default function ErrorMessageSettings({
               tabIndex="-1"
               className={css(ErrorMessages.btn)}
               onClick={openErrorModal}
-              onKeyDown={openErrorModal}
+              onKeyPress={openErrorModal}
             >
               <EditIcn size={19} />
             </button>
@@ -156,7 +156,7 @@ export default function ErrorMessageSettings({
             tabIndex="0"
             role="button"
             onClick={openErrorModal}
-            onKeyDown={openErrorModal}
+            onKeyPress={openErrorModal}
           >
             <RenderHtml html={truncatedString(errMsg)} />
           </div>

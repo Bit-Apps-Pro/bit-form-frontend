@@ -73,15 +73,15 @@ export default function bitformDefaultTheme({
     case 'divider':
       return divider({ type, fk, breakpoint, colorScheme })
     case 'button':
-      return button({ type, fk, direction, breakpoint, colorScheme })
+      return button({ type, fk, breakpoint, colorScheme })
     case 'advanced-file-up':
       return advancedFileUP({ type, fk, breakpoint, colorScheme })
     case 'html':
       return html({ type, fk, breakpoint, colorScheme })
     case 'currency':
-      return currency({ type, fk, direction, breakpoint, colorScheme })
+      return currency({ type, fk, breakpoint, colorScheme })
     case 'country':
-      return country({ type, fk, direction, breakpoint, colorScheme })
+      return country({ type, fk, breakpoint, colorScheme })
     case 'recaptcha':
       return recaptcha({ type, fk, breakpoint, colorScheme })
     case 'file-up':
@@ -89,9 +89,9 @@ export default function bitformDefaultTheme({
     case 'html-select':
       return htmlSelect({ type, fk, breakpoint, colorScheme })
     case 'select':
-      return select({ type, fk, direction, breakpoint, colorScheme })
+      return select({ type, fk, breakpoint, colorScheme })
     case 'phone-number':
-      return phoneNumber({ type, fk, direction, breakpoint, colorScheme })
+      return phoneNumber({ type, fk, breakpoint, colorScheme })
     case 'paypal':
       return paypal({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
@@ -296,7 +296,7 @@ export const defaultLgLightThemeVars = {
   '--btn-bdr-width': '0', // button border width
 
   // outline style properties assign for testing purpose
-  '--global-outline': '1px solid var(--global-accent-color)', // outline
+  '--global-outline': '1px solid hsla(217, 100%, 50%, 100)', // outline
   '--global-outline-offset': '1px', // outline offset
   '--g-o-offset': '1px', // outline offset
   '--g-o-w': '1px', // outline width
@@ -348,12 +348,12 @@ export const defaultLightThemeColors = {
   '--req-smbl-c': 'hsla(0, 100%, 50%, 100%)', // Required Symbol Color
 
   '--sub-titl-bg': '', // sub title background color
-  '--sub-titl-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // sub title color
+  '--sub-titl-c': '', // sub title color
   '--sub-titl-sh': '', // subtitle box shadow
   '--sub-titl-bdr-clr': '', // subtitle border color
 
   '--hlp-txt-bg': '', // helper text background color
-  '--hlp-txt-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // helpertext color
+  '--hlp-txt-c': '', // helpertext color
   '--hlp-txt-sh': '', // helper text box shadow
   '--hlp-txt-bdr-clr': '', // helper text border color
 
@@ -606,14 +606,14 @@ const divider = ({ type, fk, breakpoint, colorScheme }) => {
   return {}
 }
 
-const button = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const button = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: buttonStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
@@ -645,27 +645,27 @@ const html = ({ type, fk, breakpoint, colorScheme }) => {
   return {}
 }
 
-const currency = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const currency = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: currencyStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: currencyStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
 }
 
-const country = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const country = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: countryStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: countryStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
@@ -710,27 +710,27 @@ const htmlSelect = ({ type, fk, breakpoint, colorScheme }) => {
   return {}
 }
 
-const select = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const select = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: dropdownStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: dropdownStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
 }
 
-const phoneNumber = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const phoneNumber = ({ type, fk, breakpoint, colorScheme }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: phoneNumberStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: phoneNumberStyle_1_bitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

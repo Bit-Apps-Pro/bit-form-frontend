@@ -43,7 +43,7 @@ function Accordions({
 
   return (
     <div className={`btcd-accr sh-sm ${cls}`}>
-      <div className={`btcd-accr-btn ${tgl && 'blue active'} flx flx-between`} onClick={handleTgl} onKeyDown={handleTgl} role="button" tabIndex={0}>
+      <div className={`btcd-accr-btn ${tgl && 'blue active'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
         <div className="btcd-accr-title w-10">
           <div className={css({ flx: 'align-center' })}>
             {customTitle}

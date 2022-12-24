@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }) {
+export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -126,8 +126,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         width: '25px',
         'border-radius': '3px !important',
         'box-shadow': '0 0 0 1px var(--bg-15)',
-        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
-        ...direction === 'rtl' && { margin: '0 0 0 10px' },
+        margin: '0px 10px 0px 0px',
         'background-color': 'var(--bg-10)',
         '-webkit-user-select': 'none',
         'user-select': 'none',
@@ -137,8 +136,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        ...direction !== 'rtl' && { right: '6px' },
-        ...direction === 'rtl' && { left: '6px' },
+        right: '6px',
         padding: '0px !important',
         margin: '0px 5px 0px 0px',
         background: 'var(--bg-40) !important',
@@ -173,8 +171,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         'font-family': 'inherit',
         outline: 0,
         width: 'calc(100% - 50px)',
-        ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
-        ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
+        padding: '8px 26px 8px 8px !important',
         'font-size': 'var(--fld-fs) !important',
         // 'font-family': 'var(--g-font-family)',
         color: 'var(--global-font-color) !important',
@@ -237,15 +234,13 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         top: '50%',
         transform: 'translateY(-50%)',
         color: 'var(--bg-25) !important',
-        ...direction !== 'rtl' && { left: '13px' },
-        ...direction === 'rtl' && { right: '13px' },
+        left: '13px',
       },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
-        ...direction === 'rtl' && { 'padding-right': '41px !important' },
+        'padding-left': '41px !important',
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',
@@ -277,8 +272,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        ...direction !== 'rtl' && { right: '6px' },
-        ...direction === 'rtl' && { left: '6px' },
+        right: '6px',
         padding: '0px !important',
         margin: '0',
         background: 'var(--bg-40) !important',
@@ -332,7 +326,6 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         padding: '8px 7px',
         display: 'flex',
         'align-items': 'center',
-        gap: '5px',
       },
 
       [`.${fk}-option-list .option:hover:not(.selected-opt):not(.disabled-opt)`]: {
@@ -349,6 +342,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
       // },
 
       [`.${fk}-option-list .selected-opt`]: {
+        color: 'var(--bg-0)',
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },
@@ -371,11 +365,11 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
       [`.${fk}-option-list .opt-lbl-wrp`]: {
         display: 'flex',
         'align-items': 'center',
+        'margin-right': '5px',
       },
 
       [`.${fk}-option-list .opt-icn`]: {
-        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
-        ...direction === 'rtl' && { margin: '0 0 0 10px' },
+        margin: '0px 10px 0px 0px',
         height: '17px',
         width: '25px',
         'border-radius': '3px',

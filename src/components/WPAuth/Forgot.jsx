@@ -104,7 +104,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
           tabIndex="-1"
           className="cp"
           onClick={() => setshowMdl(true)}
-          onKeyDown={() => setshowMdl(true)}
+          onKeyPress={() => setshowMdl(true)}
         >
           <EditIcn size={21} />
         </span>

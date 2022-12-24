@@ -161,7 +161,7 @@ export default function StyleSegmentControl({
                 type="button"
                 className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
                 onClick={e => eventHandler(e, i)}
-                onKeyDown={e => eventHandler(e, i)}
+                onKeyPress={e => eventHandler(e, i)}
                 data-label={item.label}
                 data-testid={`${lowerCaseAllAndReplaceSpaceToHipen(item.label)}-tab`}
               >

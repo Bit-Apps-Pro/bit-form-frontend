@@ -615,7 +615,7 @@ function TextFieldSettings() {
                                 key={i}
                                 role="menuitem"
                                 className={`${css(style.button)} btnHover`}
-                                onKeyDown={() => setRegexrValue(opt.val)}
+                                onKeyPress={() => setRegexrValue(opt.val)}
                                 onClick={() => setRegexrValue(opt.val)}
                               >
                                 <span>{opt.lbl}</span>

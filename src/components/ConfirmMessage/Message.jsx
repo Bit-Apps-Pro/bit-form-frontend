@@ -436,7 +436,7 @@ function Message({ id, msgItem }) {
                             <option value="">Outset</option>
                             <option value="inset">Inset</option>
                           </select>
-                          <span role="button" tabIndex={0} onKeyDown={(e) => handleShadowDelete(e, index)} onClick={(e) => handleShadowDelete(e, index)}>
+                          <span role="button" tabIndex={0} onKeyPress={(e) => handleShadowDelete(e, index)} onClick={(e) => handleShadowDelete(e, index)}>
                             <CloseIcn size="12" className={css({ curp: 1 })} />
                           </span>
                         </div>
@@ -444,7 +444,7 @@ function Message({ id, msgItem }) {
                     </div>
                   </div>
                   <div className={css({ flx: 'center', pt: 5 })}>
-                    <span className={css({ curp: 1 })} role="button" tabIndex={0} onKeyDown={handleAddShadow} onClick={handleAddShadow}>
+                    <span className={css({ curp: 1 })} role="button" tabIndex={0} onKeyPress={handleAddShadow} onClick={handleAddShadow}>
                       <CloseIcn size="12" className={css({ curp: 1, tm: 'rotate(45deg)' })} />
                     </span>
                   </div>

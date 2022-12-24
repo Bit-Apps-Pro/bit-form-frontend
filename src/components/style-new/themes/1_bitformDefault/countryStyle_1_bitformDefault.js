@@ -3,7 +3,7 @@
 
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
-export default function countryStyle_1_BitformDefault({ fk, direction, breakpoint, colorScheme }) {
+export default function countryStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -18,7 +18,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       [`.${fk}-country-fld-wrp`]: {
         position: 'absolute',
         width: '100%',
-        'background-color': 'var(--global-fld-bg-colodirectionr, transparent)',
+        'background-color': 'var(--global-fld-bg-color, transparent)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',
@@ -109,8 +109,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         'border-radius': '3px !important',
         outline: '1px solid var(--bg-10)',
         'background-color': 'var(--bg-10)',
-        ...direction === 'rtl' && { margin: '0 0 0 10px' },
-        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        margin: '0 10px 0 0',
         '-webkit-user-select': 'none',
         'user-select': 'none',
       },
@@ -192,16 +191,13 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)',
-        color: 'var(--bg-25) !important',
-        ...direction !== 'rtl' && { left: '13px' },
-        ...direction === 'rtl' && { right: '13px' },
+        left: '13px',
       },
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px', // unused css
-        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
-        ...direction === 'rtl' && { 'padding-right': '41px !important' },
+        'padding-left': '41px !important',
         outline: 'none',
         'box-shadow': 'none',
         'font-family': 'inherit',
@@ -240,8 +236,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         top: '50%',
         transform: 'translateY(-50%)',
         display: 'none',
-        ...direction !== 'rtl' && { right: '6px' },
-        ...direction === 'rtl' && { left: '6px' },
+        right: '6px',
         padding: '0px !important',
         margin: '0px',
         background: 'var(--bg-25) !important',
@@ -294,6 +289,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       // },
 
       [`.${fk}-option-list .selected-opt`]: {
+        color: 'var(--bg-0)',
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },
@@ -324,8 +320,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       },
 
       [`.${fk}-option-list .opt-icn`]: {
-        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
-        ...direction === 'rtl' && { margin: '0 0 0 10px' },
+        'margin-right': '10px',
         height: '17px',
         width: '25px',
         'border-radius': '3px',
