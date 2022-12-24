@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
-import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
+import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
