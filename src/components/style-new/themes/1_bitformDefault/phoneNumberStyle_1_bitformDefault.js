@@ -28,7 +28,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        transition: 'box-shadow .3s',
+        transition: 'box-shadow .2s',
         'z-index': '1',
       },
       [`.${fk}-phone-fld-wrp.disabled .${fk}-phone-inner-wrp`]: {
@@ -84,7 +84,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         0px 9.6px 17.9px hsla(0, 0%, 0%, 6.2%),
         0px 18px 33.4px hsla(0, 0%, 0%, 7.3%),
         0px 43px 80px hsla(0, 0%, 0%, 10%)`,
-        border: 'solid hsla(0, 0%, 87%, 100%)',
+        'border-style': 'solid',
+        'border-width': '1px',
         'border-color': 'var(--bg-10)!important',
       },
 
@@ -106,9 +107,9 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        height: '34px',
+        height: '32px',
         margin: '3px',
-        padding: '8px',
+        padding: '10px',
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css
@@ -164,7 +165,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
       },
 
       [`.${fk}-input-clear-btn:hover`]: {
-        'background-color': 'var(--bg-60) !important',
+        background: 'var(--bg-60) !important',
       },
 
       [`.${fk}-input-clear-btn:focus-visible`]: {
@@ -204,8 +205,6 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
@@ -232,9 +231,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
-        padding: '5px',
-        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
-        ...direction === 'rtl' && { 'padding-right': '41px !important' },
+        ...direction !== 'rtl' && { padding: '0 5px 0 41px !important' },
+        ...direction === 'rtl' && { padding: '0 41px 0 5px !important' },
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',
@@ -336,7 +334,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
       //   'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), 90%, var(--gfbg-l))',
       // },
 
-      [`.${fk}-option-list .option.selected-opt`]: {
+      [`.${fk}-option-list .selected-opt`]: {
         'font-weight': 500,
         'background-color': 'var(--global-accent-color)',
       },

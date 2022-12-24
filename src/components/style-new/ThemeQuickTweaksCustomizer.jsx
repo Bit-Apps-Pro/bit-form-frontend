@@ -17,7 +17,7 @@ import {
   addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights,
+  reCalculateFldHeights
 } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -25,14 +25,14 @@ import Btn from '../Utilities/Btn'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
-import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
 import { changeFormStylesDir, changeFormThemeVarsDir } from './formDirectionHelpers'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import bitformDefaultTheme from './themes/1_bitformDefault/1_bitformDefault'
+import bitformDefaultTheme from './themes/1_bitformDefault'
+import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import ThemeStyleReset from './ThemeStyleReset'

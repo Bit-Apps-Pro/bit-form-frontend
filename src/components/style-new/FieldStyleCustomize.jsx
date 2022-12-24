@@ -29,8 +29,8 @@ import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
 import { assignNestedObj } from './styleHelpers'
-import bitformDefaultTheme from './themes/1_bitformDefault/1_bitformDefault'
 import atlassianTheme from './themes/2_atlassian'
+import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, '*': rightParams } = useParams()

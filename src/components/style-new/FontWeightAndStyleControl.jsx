@@ -83,6 +83,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
     </>
   )
 }
+
 const cls = {
   warningBorder: { b: '1px solid yellow' },
   comSection: {
@@ -90,5 +91,4 @@ const cls = {
     fd: 'column',
   },
   clr: { cr: 'red' },
-
 }

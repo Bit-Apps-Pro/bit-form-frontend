@@ -41,8 +41,10 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         color: 'hsla(0, 0%, 100%, 100%)',
         cursor: 'pointer',
         display: 'inline-flex',
-        padding: '11px 15px !important',
+        padding: 'var(--btn-p) !important',
+        'font-size': 'var(--btn-fs) !important',
         gap: '5px',
+        'line-height': 1,
       },
 
       [`.${fk}-inp-btn:focus-visible`]: {
@@ -66,7 +68,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         filter: 'invert(1)',
       },
 
-      [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)', 'font-size': '14px' },
+      [`.${fk}-btn-txt`]: {},
 
       [`.${fk}-file-select-status`]: {
         'font-size': '14px',

@@ -17,7 +17,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
       [`.${fk}-dpd-fld-wrp`]: {
         position: 'absolute',
         width: '100%',
-        'background-color': 'var(--global-fld-bg-color, transparent)',
+        'background-color': 'var(--global-fld-bg-color)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',
@@ -28,7 +28,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        transition: 'box-shadow .3s',
+        transition: 'box-shadow 200ms',
       },
 
       [`.${fk}-dpd-fld-wrp:hover:not(.menu-open):not(.disabled)`]: {
@@ -62,9 +62,9 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        padding: '8px',
+        padding: '4px 10px',
         'box-sizing': 'border-box',
-        'min-height': '40px',
+        'min-height': '38px',
         // 'font-size': '12px',
         position: 'relative',
         outline: 'none',
@@ -101,7 +101,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         'align-items': 'center',
         'background-color': 'var(--bg-10)',
         padding: '5px 8px',
-        'border-radius': '8px',
+        'border-radius': 'var(--g-bdr-rad)',
         gap: '5px',
       },
 
@@ -125,12 +125,12 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         'place-content': 'center',
         height: '17px',
         width: '17px',
-        'background-color': 'var(--bg-20)',
-        color: 'var(--global-font-color)',
+        'background-color': 'var(--bg-20) !important',
+        color: 'var(--global-font-color) !important',
       },
 
       [`.${fk}-selected-opt-lbl .chip-clear-btn:hover`]: {
-        'background-color': 'var(--bg-15)',
+        'background-color': 'var(--bg-15) !important',
       },
 
       [`.${fk}-selected-opt-lbl .chip-clear-btn:focus-visible`]: {
@@ -195,8 +195,6 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
@@ -261,7 +259,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         height: '35px',
         'border-radius': 'calc(var(--g-bdr-rad) - 1px) !important',
         'background-color': 'var(--bg-5)',
-        'font-size': '1rem',
+        'font-size': 'var(--fld-fs)',
         'font-family': 'inherit',
         color: 'var(--global-font-color) !important',
       },
