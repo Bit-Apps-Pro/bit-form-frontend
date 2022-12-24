@@ -571,10 +571,10 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box'),
-        lbl: `<p><span style="font-size: 12pt">${__('Decision Box')}</span></p>`,
+        lbl: `<p style="margin:0"><span style="font-size: 12pt">${__('Decision Box')}</span></p>`,
         msg: {
           checked: 'Accepted',
-          unchecked: 'Not Accepted',
+          unchecked: 'Rejected',
         },
         valid: { req: true },
         err: { req: { dflt: '<p>This field is required</p>', show: true } },

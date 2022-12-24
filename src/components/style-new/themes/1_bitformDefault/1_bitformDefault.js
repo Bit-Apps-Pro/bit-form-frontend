@@ -195,7 +195,7 @@ export const defaultLgLightThemeVars = {
   '--hlp-txt-font-w': 400, // helper text font weight
   '--hlp-txt-font-style': '', // helper text font style
 
-  '--err-m': '1px', // error messages margin
+  '--err-m': '5px 0 0 0', // error messages margin
   '--err-p': '5px', // error messages padding
   '--err-bdr': 'solid', // error message border
   '--err-bdr-width': '1px', // error message border width
@@ -292,8 +292,8 @@ export const defaultLgLightThemeVars = {
   '--btn-fw': 700, // button font weight
   '--btn-f-style': '', // button font style (italic, bold, etc)
   '--btn-bdr': 'none', // button border
-  '--btn-bdr-rad': '5px', // button border radius
-  '--btn-bdr-width': '1px', // button border radius
+  '--btn-bdr-rad': 'var(--g-bdr-rad)', // button border radius
+  '--btn-bdr-width': '0', // button border width
 
   // outline style properties assign for testing purpose
   '--global-outline': '1px solid var(--global-accent-color)', // outline
@@ -324,7 +324,7 @@ export const defaultLightThemeColors = {
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness
   '--gfbc-a': 100, // global field border color opacity
-  '--global-fld-bg-color': 'hsla(0, 0%, 100%, 100)', // field background color
+  '--global-fld-bg-color': '', // field background color
   '--gfbg-h': 0, // global field background color hue
   '--gfbg-s': '0%', // global field background color saturation
   '--gfbg-l': '100%', // global field background color lightness

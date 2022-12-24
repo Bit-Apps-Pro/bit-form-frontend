@@ -32,6 +32,7 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'font-weight': 'var(--btn-fw)',
         'border-style': 'var(--btn-bdr)',
         'border-color': 'var(--btn-bdr-clr)',
+        'border-width': 'var(--btn-bdr-width)',
         'border-radius': 'var(--btn-bdr-rad) !important',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
@@ -43,6 +44,13 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         display: 'flex',
         'justify-content': 'center',
         'align-items': 'center',
+        transition: 'background-color 0.2s, transform 0.2s',
+      },
+      [`.${fk}-btn:hover`]: {
+        'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
+      },
+      [`.${fk}-btn:active`]: {
+        transform: 'scale(0.95)',
       },
       [`.${fk}-btn:focus-visible`]: {
         outline: '2px solid var(--global-accent-color)',

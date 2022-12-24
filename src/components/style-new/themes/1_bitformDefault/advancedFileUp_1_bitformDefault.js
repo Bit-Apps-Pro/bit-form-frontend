@@ -19,23 +19,25 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
 
       /* filepond-root */
-      [`.${fk}-inp-wrp .filepond--root`]: { margin: '0px 0px 40px 0px !important' },
+      [`.${fk}-inp-wrp .filepond--root`]: {
+        'min-height': '40px',
+      },
 
       /* the text color of the drop label */
       [`.${fk}-inp-wrp .filepond--drop-label`]: {
         'min-height': '40px !important',
-        color: '#555',
+        color: 'var(--global-font-color)',
         cursor: 'pointer',
       },
 
       /* underline color for "Browse" button */
-      [`.${fk}-inp-wrp .filepond--label-action`]: { 'text-decoration-color': '#aaa' },
+      [`.${fk}-inp-wrp .filepond--label-action`]: { 'text-decoration-color': 'var(--global-font-color)' },
 
       /* use a hand cursor intead of arrow for the action buttons */
       [`.${fk}-inp-wrp .filepond--file-action-button`]: {
         cursor: 'pointer',
-        'background-color': 'rgba(0, 0, 0, 0.5)',
-        color: 'white',
+        'background-color': 'var(--bg-5)',
+        color: 'var(--global-font-color)',
       },
 
       /* the color of the focus ring */
@@ -43,12 +45,15 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       [`.${fk}-inp-wrp .filepond--file-action-button:focus`]: { 'box-shadow': '0 0 0 0.125em rgba(255, 255, 255, 0.9)' },
 
       /* the background color of the filepond drop area */
-      [`.${fk}-inp-wrp .filepond--panel-root`]: { 'background-color': '#eee' },
+      [`.${fk}-inp-wrp .filepond--panel-root`]: {
+        'background-color': 'var(--bg-10)',
+      },
 
       /* the border radius of the file item */
       [`.${fk}-inp-wrp .filepond--item-panel`]: {
-        'border-radius': '0.5em',
-        'background-color': '#555',
+        // 'border-radius': '0.5em',
+        'background-color': 'var(--bg-30)',
+        outline: '1px solid var(--bg-0)',
       },
 
       /* error state color */
@@ -56,13 +61,17 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       [`.${fk}-inp-wrp [data-filepond-item-state*='invalid'] .filepond--item-panel`]: { 'background-color': 'red' },
 
       /* complete state color */
-      [`.${fk}-inp-wrp [data-filepond-item-state='processing-complete'] .filepond--item-panel`]: { 'background-color': 'green' },
+      [`.${fk}-inp-wrp [data-filepond-item-state='processing-complete'] .filepond--item-panel`]: {
+        'background-color': '#34c45c',
+      },
 
       /* the background color of the drop circle */
-      [`.${fk}-inp-wrp .filepond--drip-blob`]: { 'background-color': '#999' },
+      [`.${fk}-inp-wrp .filepond--drip-blob`]: {
+        'background-color': 'var(--bg-20)',
+      },
 
       /* the text color of the file status and info labels */
-      [`.${fk}-inp-wrp .filepond--file`]: { color: 'white' },
+      [`.${fk}-inp-wrp .filepond--file`]: { color: 'var(--global-font-color)' },
 
     }
   }

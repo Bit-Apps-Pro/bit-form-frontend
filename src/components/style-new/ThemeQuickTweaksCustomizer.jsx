@@ -170,6 +170,16 @@ export default function ThemeQuickTweaksCustomizer() {
       />
 
       <SimpleColorPicker
+        title="Background color"
+        subtitle="Theme Quick Tweaks Background Color"
+        value={globalBgColor}
+        stateObjName="themeColors"
+        propertyPath="--global-bg-color"
+        modalId="global-bg-clr"
+        hslaPaths={{ h: '--gbg-h', s: '--gbg-s', l: '--gbg-l', a: '--gbg-a' }}
+      />
+
+      <SimpleColorPicker
         title="Font Color"
         subtitle="Theme Quick Tweaks Font Color"
         value={globalFontColor}
@@ -177,6 +187,16 @@ export default function ThemeQuickTweaksCustomizer() {
         propertyPath="--global-font-color"
         modalId="global-font-clr"
         hslaPaths={{ h: '--gfh', s: '--gfs', l: '--gfl', a: '--gfa' }}
+      />
+
+      <SimpleColorPicker
+        title="Field Background Color"
+        subtitle="Theme Quick Tweaks Field Background Color"
+        value={globalFldBgClr}
+        stateObjName="themeColors"
+        propertyPath="--global-fld-bg-color"
+        modalId="global-fld-bg-clr"
+        hslaPaths={{ h: '--gfbg-h', s: '--gfbg-s', l: '--gfbg-l', a: '--gfbg-a' }}
       />
 
       <ThemeStylePropertyBlock label="Border">
@@ -209,16 +229,6 @@ export default function ThemeQuickTweaksCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock> */}
-
-      <SimpleColorPicker
-        title="Field Background Color"
-        subtitle="Theme Quick Tweaks Field Background Color"
-        value={globalFldBgClr}
-        stateObjName="themeColors"
-        propertyPath="--global-fld-bg-color"
-        modalId="global-fld-bg-clr"
-        hslaPaths={{ h: '--gfbg-h', s: '--gfbg-s', l: '--gfbg-l', a: '--gfbg-a' }}
-      />
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>Font Family</span>
@@ -279,15 +289,6 @@ export default function ThemeQuickTweaksCustomizer() {
         propertyPath="--global-bg-color"
         modalId="global-bg-clr"
       /> */}
-      <SimpleColorPicker
-        title="Form Background"
-        subtitle="Theme Quick Tweaks Background Color"
-        value={globalBgColor}
-        stateObjName="themeColors"
-        propertyPath="--global-bg-color"
-        modalId="global-bg-clr"
-        hslaPaths={{ h: '--gbg-h', s: '--gbg-s', l: '--gbg-l', a: '--gbg-a' }}
-      />
     </>
 
   )

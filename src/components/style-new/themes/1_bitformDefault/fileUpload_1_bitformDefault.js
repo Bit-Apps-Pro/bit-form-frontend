@@ -18,6 +18,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         cursor: 'not-allowed',
         'pointer-events': 'none',
       },
+
       [`.${fk}-fld-wrp.disabled .${fk}-file-input-wrpr`]: {
         opacity: '.5',
         cursor: 'not-allowed',
@@ -57,12 +58,14 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         height: '15px',
         filter: 'invert(1)',
       },
+
       [`.${fk}-suf-i`]: {
         width: '15px',
         height: '15px',
         'margin-left': '5px',
         filter: 'invert(1)',
       },
+
       [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)', 'font-size': '14px' },
 
       [`.${fk}-file-select-status`]: {
@@ -86,7 +89,9 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         opacity: '0',
         cursor: 'pointer',
       },
+
       [`.${fk}-file-input-wrpr .files-list`]: {},
+
       [`.${fk}-file-input-wrpr .file-wrpr`]: {
         'background-color': 'var(--bg-10)',
         'border-radius': 'var(--g-bdr-rad)',
@@ -99,12 +104,14 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '5px',
         outline: '1px solid var(--bg-15)',
       },
+
       [`.${fk}-file-input-wrpr .file-preview`]: {
         'border-radius': 'calc(var(--g-bdr-rad) - 4px)',
         height: '25px',
         width: '25px',
         outline: '1px solid var(--bg-5)',
       },
+
       [`.${fk}-file-input-wrpr .file-details`]: {
         display: 'flex',
         'align-items': 'center',
@@ -127,6 +134,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'line-height': '1',
         color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)',
       },
+
       [`.${fk}-file-input-wrpr .cross-btn`]: {
         cursor: 'pointer',
         border: 'none',
@@ -161,6 +169,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: '2px 10px',
         width: '100%',
       },
+
       [`.${fk}-file-input-wrpr .err-wrp.active`]: {
         display: 'flex',
         opacity: '1',
