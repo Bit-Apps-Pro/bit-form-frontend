@@ -1,8 +1,7 @@
 import produce from 'immer'
 import { atom, selector } from 'recoil'
-import { addToSessionStorage } from '../Utils/FormBuilderHelper'
-import { JCOF } from '../Utils/globalHelpers'
-import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
+import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 
 // atoms
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
@@ -11,8 +10,11 @@ export const $breakpoint = atom({
   key: '$breakpoint',
   default: 'lg',
   effects: [({ onSet }) => {
-    onSet((newBreakpoint) => {
-      addToSessionStorage('breakpoint', newBreakpoint)
+    onSet((newBreakpoint, _, isReset) => {
+      if (isReset) return
+      debouncer('breakpoint', () => {
+        addToSessionStorage(generateSessionKey('breakpoint'), newBreakpoint, { strType: 'json' })
+      })
     })
   }],
 })
@@ -20,24 +22,93 @@ export const $breakpointSize = atom({
   key: '$breakpointSize',
   default: { lg: 1024, md: 960, sm: 570 },
   effects: [({ onSet }) => {
-    onSet((newSize) => {
-      addToSessionStorage('breakpointSize', JCOF.stringify(newSize))
+    onSet((newSize, _, isReset) => {
+      if (isReset) return
+      debouncer('breakpointSize', () => {
+        addToSessionStorage(generateSessionKey('breakpointSize'), newSize, { strType: 'json' })
+      })
     })
   }],
 })
 export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset', state: { breakpoint: 'lg', colorScheme: 'light' } }], active: 0 } })
-export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
+export const $builderHelperStates = atom({
+  key: '$builderHelperStates',
+  default: { respectLGLayoutOrder: true },
+  effects: [({ onSet }) => {
+    onSet((newBuilderHelperStates, _, isReset) => {
+      if (isReset) return
+      debouncer('builderHelperStates', () => {
+        addToSessionStorage(generateSessionKey('builderHelperStates'), newBuilderHelperStates, { strType: 'json' })
+      })
+    })
+  }],
+})
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
-export const $builderSettings = atom({ key: '$builderSettings', default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } } })
+export const $builderSettings = atom({
+  key: '$builderSettings',
+  default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false } },
+  effects: [({ onSet }) => {
+    onSet((newBuilderSettings, _, isReset) => {
+      if (isReset) return
+      debouncer('builderSettings', () => {
+        addToSessionStorage(generateSessionKey('builderSettings'), newBuilderSettings, { strType: 'json' })
+      })
+    })
+  }],
+})
 export const $confirmations = atom({ key: '$confirmations', default: {}, dangerouslyAllowMutability: true })
-export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
-export const $customCodes = atom({ key: '$customCodes', default: { JavaScript: '', CSS: '' } })
+export const $colorScheme = atom({
+  key: '$colorScheme',
+  default: 'light',
+  effects: [({ onSet }) => {
+    onSet((newColorScheme, _, isReset) => {
+      if (isReset) return
+      debouncer('colorScheme', () => {
+        addToSessionStorage(generateSessionKey('colorScheme'), newColorScheme)
+      })
+    })
+  }],
+})
+export const $customCodes = atom({
+  key: '$customCodes',
+  default: { JavaScript: '', CSS: '' },
+  effects: [({ onSet }) => {
+    onSet((newCustomCodes, _, isReset) => {
+      if (isReset) return
+      debouncer('customCodes', () => {
+        addToSessionStorage(generateSessionKey('customCodes'), newCustomCodes, { strType: 'json' })
+      })
+    })
+  }],
+})
 export const $draggingField = atom({ key: '$draggingField', default: null, dangerouslyAllowMutability: true })
-export const $deletedFldKey = atom({ key: '$deletedFldKey', default: [] })
+export const $deletedFldKey = atom({
+  key: '$deletedFldKey',
+  default: [],
+  effects: [({ onSet }) => {
+    onSet((newDeletedFldKey, _, isReset) => {
+      if (isReset) return
+      debouncer('deletedFldKey', () => {
+        addToSessionStorage(generateSessionKey('deletedFldKey'), newDeletedFldKey, { strType: 'json' })
+      })
+    })
+  }],
+})
 export const $draggableModal = atom({ key: '$draggableModal', default: { show: false, component: null, position: { x: 0, y: 0 }, width: 250 } })
 export const $formId = atom({ key: '$formId', default: 0 })
-export const $formInfo = atom({ key: '$formInfo', default: { formName: 'Untitled Form' } })
+export const $formInfo = atom({
+  key: '$formInfo',
+  default: { formName: 'Untitled Form' },
+  effects: [({ onSet }) => {
+    onSet((newFormInfo, _, isReset) => {
+      if (isReset) return
+      debouncer('formInfo', () => {
+        addToSessionStorage(generateSessionKey('formInfo'), newFormInfo, { strType: 'json' })
+      })
+    })
+  }],
+})
 export const $forms = atom({ key: '$forms', default: getFormsFromPhpVariable(), dangerouslyAllowMutability: true })
 export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerouslyAllowMutability: true })
 export const $fields = atom({
@@ -45,8 +116,11 @@ export const $fields = atom({
   default: [],
   dangerouslyAllowMutability: true,
   effects: [({ onSet }) => {
-    onSet((newFields) => {
-      addToSessionStorage('fields', JCOF.stringify(newFields))
+    onSet((newFields, _, isReset) => {
+      if (isReset) return
+      debouncer('fields', () => {
+        addToSessionStorage(generateSessionKey('fields'), newFields, { strType: 'json' })
+      })
     })
   }],
 })
@@ -58,9 +132,11 @@ export const $layouts = atom({
   default: { lg: [], md: [], sm: [] },
   dangerouslyAllowMutability: true,
   effects: [({ onSet }) => {
-    onSet((newLayouts, oldLayouts) => {
-      if (newLayouts.lg.length !== oldLayouts.lg.length) return
-      addToSessionStorage('layouts', JCOF.stringify(newLayouts))
+    onSet((newLayouts, _, isReset) => {
+      if (isReset) return
+      debouncer('layouts', () => {
+        addToSessionStorage(generateSessionKey('layouts'), newLayouts, { strType: 'json' })
+      })
     })
   }],
 })

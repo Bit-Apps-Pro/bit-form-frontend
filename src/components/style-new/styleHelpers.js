@@ -13,21 +13,21 @@ import {
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
-import advancedFileUp_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/advancedFileUp_1_bitformDefault'
-import buttonStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/buttonStyle_1_bitformDefault'
-import checkboxNradioStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
-import countryStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/countryStyle_1_bitformDefault'
-import currencyStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/currencyStyle_1_bitformDefault'
-import dividerStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
-import dropdownStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/dropdownStyle_1_bitformDefault'
-import fileUploadStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/fileUpload_1_bitformDefault'
-import htmlStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/htmlStyle_1_bitformDefault'
-import imageStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/imageStyle_1_bitformDefault'
-import phoneNumberStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
-import recaptchaStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/recaptchaStyle_1_bitformDefault'
-import selectStyle_1_BitformDefault from './componentsStyleByTheme/1_bitformDefault/selectStyle_1_bitformDefault'
-import textStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
-import titleStyle1BitformDefault from './componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import advancedFileUp_1_bitformDefault from './themes/1_bitformDefault/advancedFileUp_1_bitformDefault'
+import buttonStyle1BitformDefault from './themes/1_bitformDefault/buttonStyle_1_bitformDefault'
+import checkboxNradioStyle1BitformDefault from './themes/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
+import countryStyle_1_BitformDefault from './themes/1_bitformDefault/countryStyle_1_bitformDefault'
+import currencyStyle_1_BitformDefault from './themes/1_bitformDefault/currencyStyle_1_bitformDefault'
+import dividerStyle1BitformDefault from './themes/1_bitformDefault/dividerStyle_1_bitformDefault'
+import dropdownStyle_1_BitformDefault from './themes/1_bitformDefault/dropdownStyle_1_bitformDefault'
+import fileUploadStyle_1_BitformDefault from './themes/1_bitformDefault/fileUpload_1_bitformDefault'
+import htmlStyle_1_bitformDefault from './themes/1_bitformDefault/htmlStyle_1_bitformDefault'
+import imageStyle1BitformDefault from './themes/1_bitformDefault/imageStyle_1_bitformDefault'
+import phoneNumberStyle_1_bitformDefault from './themes/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
+import recaptchaStyle_1_bitformDefault from './themes/1_bitformDefault/recaptchaStyle_1_bitformDefault'
+import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
+import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
+import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
 
 export const assignNestedObj = (obj, keyPath, value) => {
@@ -94,6 +94,82 @@ export const jsObjtoCssStr = (jsObj) => {
   })
   return css
 }
+
+export const changeFormDir = (style, dir) => produce(style, drft => {
+  if (drft.theme === 'bitformDefault') {
+    const fieldsKeysArr = Object.keys(drft.fields)
+    const fieldsKeysArrLen = fieldsKeysArr.length
+    for (let i = 0; i < fieldsKeysArrLen; i += 1) {
+      const fieldKey = fieldsKeysArr[i]
+      if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
+        if (drft.fields[fieldKey].overrideGlobalTheme.length === 0) {
+          switch (drft.fields[fieldKey].fieldType) {
+            case 'check':
+            case 'radio':
+              if (dir === 'rtl') {
+                const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
+                drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left'] = prvMargin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
+              } else if (dir === 'ltr') {
+                const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
+                drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
+              }
+              break
+            case 'currency':
+            case 'country':
+              if (dir === 'rtl') {
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '6px'
+                if (style.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]?.margin) {
+                  drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                }
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '35px !important'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-left'] = '35px !important'
+              } else if (dir === 'ltr') {
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
+                if (style.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`]?.margin) {
+                  delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                }
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right']
+              }
+              break
+            case 'phone-number':
+              if (dir === 'rtl') {
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left = '6px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin = '0px 10px 0px 0px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right'] = '35px !important'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left = '6px'
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-prefix`].margin = '0px 10px 0px 0px'
+              } else if (dir === 'ltr') {
+                drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].left = '13px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-icn`].right
+                drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].right = '6px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-input-clear-btn`].left
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-lbl`].margin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-search-input`]['padding-right']
+                drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].right = '6px'
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-search-clear-btn`].left
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-opt-prefix`].margin
+              }
+              break
+            default:
+              break
+          }
+        }
+      }
+    }
+  }
+})
 
 export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === unit) return value

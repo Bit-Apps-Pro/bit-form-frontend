@@ -11,8 +11,9 @@ import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import SliderModal from '../Utilities/SliderModal'
 import Tip from '../Utilities/Tip'
-import themeProvider from './themes/0_themeProvider'
+import themeProvider from './themes/themeProvider'
 import themes from './themes/themeList'
+import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 
 export default function ThemeGallary() {
   const { css } = useFela()
@@ -32,6 +33,7 @@ export default function ThemeGallary() {
     setAllThemeColors(themeColors)
     setAllThemeVars(themeVars)
     setAllStyles(styles)
+    reCalculateFldHeights()
   }
 
   return (

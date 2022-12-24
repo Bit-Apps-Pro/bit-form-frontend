@@ -392,9 +392,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             setSavedFormId(data.id)
             setButtonText('Update')
             navigate(`/form/${page}/edit/${data.id}/${rightBarUrl}`, { replace: true })
-            setTimeout(() => generateAndSaveAtomicCss(data.id), 100)
           }
 
+          setTimeout(() => generateAndSaveAtomicCss(data.id), 100)
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')

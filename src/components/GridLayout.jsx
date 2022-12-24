@@ -56,10 +56,10 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { updateFieldStyleByFieldSizing } from './style-new/componentsStyleByTheme/1_bitformDefault/fieldSizeControlStyle'
+import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import atlassianTheme from './style-new/themes/atlassianTheme/3_atlassianTheme'
-import bitformDefaultTheme from './style-new/themes/bitformDefault/1_bitformDefault'
+import atlassianTheme from './style-new/themes/2_atlassian'
+import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -310,8 +310,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     // add style
     let newStyles = styles
     const tempThemeVars = deepCopy(themeVars)
-    setStyles(preStyles => {
-      newStyles = produce(preStyles, draftStyle => {
+    setStyles(prevStyles => {
+      newStyles = produce(prevStyles, draftStyle => {
         const globalTheme = draftStyle.theme
         if (globalTheme === 'bitformDefault') {
           const defaultFieldStyle = bitformDefaultTheme({
@@ -319,28 +319,21 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             fieldKey: newBlk,
             direction: themeVars['--dir'],
           })
-          if (preStyles.fieldsSize !== 'medium') {
-            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, preStyles.fieldsSize, tempThemeVars)
+          if (prevStyles.fieldsSize !== 'medium') {
+            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, prevStyles.fieldsSize, tempThemeVars)
             draftStyle.fields[newBlk] = updateStyle
           } else {
             draftStyle.fields[newBlk] = defaultFieldStyle
           }
         }
 
-        // if (globalTheme === 'material') {
-        //   const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
-        //   draftStyle.fields[newBlk] = fieldStyle
-        // }
-
         if (globalTheme === 'atlassian') {
-          const obj = {
+          draftStyle.fields[newBlk] = atlassianTheme({
             type: processedFieldData.typ,
-            fk: newBlk,
+            fieldKey: newBlk,
             direction: themeVars['--dir'],
-          }
-          draftStyle.fields[newBlk] = atlassianTheme(obj)
+          })
         }
-        // newStyles = draftStyle
       })
       return newStyles
     })

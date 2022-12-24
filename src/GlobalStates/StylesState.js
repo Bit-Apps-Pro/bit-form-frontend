@@ -1,15 +1,19 @@
 /* eslint-disable import/no-cycle */
 import { atom, selector } from 'recoil'
-import { addToSessionStorage } from '../Utils/FormBuilderHelper'
-import { JCOF, mergeNestedObj } from '../Utils/globalHelpers'
+import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { mergeNestedObj } from '../Utils/globalHelpers'
+import { debouncer } from '../Utils/Helpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $stylesLgLight = atom({
   key: '$stylesLgLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesLgLight', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesLgLight', () => {
+        addToSessionStorage(generateSessionKey('stylesLgLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -17,8 +21,11 @@ export const $stylesLgDark = atom({
   key: '$stylesLgDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesLgDark', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesLgDark', () => {
+        addToSessionStorage(generateSessionKey('stylesLgDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -26,8 +33,11 @@ export const $stylesMdLight = atom({
   key: '$stylesMdLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesMdLight', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesMdLight', () => {
+        addToSessionStorage(generateSessionKey('stylesMdLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -35,8 +45,11 @@ export const $stylesMdDark = atom({
   key: '$stylesMdDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesMdDark', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesMdDark', () => {
+        addToSessionStorage(generateSessionKey('stylesMdDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -44,8 +57,11 @@ export const $stylesSmLight = atom({
   key: '$stylesSmLight',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesSmLight', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesSmLight', () => {
+        addToSessionStorage(generateSessionKey('stylesSmLight'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
@@ -53,8 +69,11 @@ export const $stylesSmDark = atom({
   key: '$stylesSmDark',
   default: {},
   effects: [({ onSet }) => {
-    onSet((newStyles) => {
-      addToSessionStorage('stylesSmDark', JCOF.stringify(newStyles))
+    onSet((newStyles, _, isReset) => {
+      if (isReset) return
+      debouncer('stylesSmDark', () => {
+        addToSessionStorage(generateSessionKey('stylesSmDark'), newStyles, { strType: 'json' })
+      })
     })
   }],
 })
