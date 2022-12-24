@@ -812,7 +812,7 @@ export default function ShowIcon() {
         && (
           <div className="flx">
             {searchIcon.map((icn, i) => (
-              <button key={`icon-id-${i * 5}`} onClick={copyVar} onKeyDown={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
+              <button key={`icon-id-${i * 5}`} onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
                 {icn.icon}
               </button>
             ))}
@@ -823,7 +823,7 @@ export default function ShowIcon() {
         && (
           <div className="flx">
             {icons.map((icn, i) => (
-              <button key={`icon-id-${i * 2}`} onClick={copyVar} onKeyDown={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
+              <button key={`icon-id-${i * 2}`} onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
                 {icn.icon}
               </button>
             ))}

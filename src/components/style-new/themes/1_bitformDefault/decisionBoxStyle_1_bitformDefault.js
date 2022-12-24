@@ -22,9 +22,7 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         'flex-wrap': 'wrap',
       },
       // checkbox wrapper
-      [`.${fk}-cw`]: {
-        // margin: '0px 10px 0px 0px' // unused css
-      },
+      [`.${fk}-cw`]: { margin: '0px 10px 0px 0px' },
       // checkbox label
       [`.${fk}-cl`]: {
         cursor: 'pointer',
@@ -58,8 +56,8 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         border: 'solid var(--global-font-color)',
         'border-width': '2px',
         display: 'inline-flex',
-        ...direction === 'rtl' && { margin: '0 0 0 10px' },
-        ...direction !== 'rtl' && { margin: '0 10px 0 0' },
+        ...direction === 'rtl' && { 'margin-left': '10px' },
+        ...direction !== 'rtl' && { 'margin-right': '10px' },
         transition: 'all 0.2s',
         'justify-content': 'center',
         'align-items': 'center',

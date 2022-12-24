@@ -54,64 +54,62 @@ export default function FieldQuickTweaks({ fieldKey }) {
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault') {
-        let elemntKey
-        switch (fld.fieldType) {
-          case 'text':
-          case 'date':
-          case 'html-select':
-          case 'number':
-          case 'password':
-          case 'username':
-          case 'email':
-          case 'url':
-          case 'time':
-          case 'datetime-local':
-          case 'month':
-          case 'week':
-          case 'color':
-          case 'textarea':
-            elemntKey = 'fld'
-            break
+      let elemntKey
+      switch (fld.fieldType) {
+        case 'text':
+        case 'date':
+        case 'html-select':
+        case 'number':
+        case 'password':
+        case 'username':
+        case 'email':
+        case 'url':
+        case 'time':
+        case 'datetime-local':
+        case 'month':
+        case 'week':
+        case 'color':
+        case 'textarea':
+          elemntKey = 'fld'
+          break
 
-          case 'check':
-            elemntKey = 'ck'
-            break
+        case 'check':
+          elemntKey = 'ck'
+          break
 
-          case 'radio':
-            elemntKey = 'rdo'
-            break
+        case 'radio':
+          elemntKey = 'rdo'
+          break
 
-          case 'button':
-            elemntKey = 'btn'
-            break
+        case 'button':
+          elemntKey = 'btn'
+          break
 
-          case 'currency':
-          case 'country':
-            elemntKey = `${fld.fieldType}-fld-wrp`
-            break
+        case 'currency':
+        case 'country':
+          elemntKey = `${fld.fieldType}-fld-wrp`
+          break
 
-          case 'image':
-            elemntKey = 'fld-wrp'
-            break
+        case 'image':
+          elemntKey = 'fld-wrp'
+          break
 
-          case 'phone-number':
-            elemntKey = 'phone-fld-wrp'
-            break
+        case 'phone-number':
+          elemntKey = 'phone-fld-wrp'
+          break
 
-          case 'paypal':
-            elemntKey = 'paypal-wrp'
-            break
+        case 'paypal':
+          elemntKey = 'paypal-wrp'
+          break
 
-          case 'select':
-            elemntKey = 'dpd-fld-wrp'
-            break
+        case 'select':
+          elemntKey = 'dpd-fld-wrp'
+          break
 
-          default:
-            break
-        }
-        assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
+        default:
+          break
       }
+      assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
   }

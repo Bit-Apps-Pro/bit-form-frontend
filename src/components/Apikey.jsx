@@ -101,7 +101,7 @@ export default function Apikey() {
               role="button"
               tabIndex="-1"
               onClick={changeKey}
-              onKeyDown={changeKey}
+              onKeyPress={changeKey}
             >
               {__('Generate new API key')}
             </span>

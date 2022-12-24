@@ -68,7 +68,7 @@ export default function Modal({
         <div
           tabIndex="-1"
           onClick={cancelBubble}
-          onKeyDown={cancelBubble}
+          onKeyPress={cancelBubble}
           role="button"
           className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className} ${autoHeight ? 'auto-height' : ''}`}
           style={style}

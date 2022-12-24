@@ -35,7 +35,7 @@ function Tools({ setNewData, value, children, title }) {
       // onDrag={e => debounce(bounce(e), 1000)}
       unselectable="on"
       onClick={() => { setBreakpointToLg(); setNewData(value) }}
-      onKeyDown={() => setNewData(value)}
+      onKeyPress={() => setNewData(value)}
       onDragStart={handleOnDrag}
       onDragEnd={() => setDraggingField(null)}
     >

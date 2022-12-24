@@ -57,11 +57,7 @@ export default function PaypalFieldQuickTweaks() {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault') {
-        const elemntKey = 'paypal-wrp'
-        assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
-      }
+      assignNestedObj(drftStyle, propertyPath('paypal-wrp', prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
   }

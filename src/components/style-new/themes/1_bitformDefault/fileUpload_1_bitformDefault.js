@@ -60,6 +60,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',
+        'margin-right': '5px',
         filter: 'invert(1)',
       },
 
@@ -166,13 +167,14 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         display: 'none',
         opacity: '0',
         transition: 'display 1s, opacity 1s',
+        'justify-content': 'left',
         'align-items': 'center',
         'background-color': 'hsla(0, 100%, 97%, 100%)',
         color: 'darkred',
         'border-radius': '10px',
         height: '40px',
         'margin-top': '10px',
-        padding: '2px 10px',
+        padding: '2px 20px',
         width: '100%',
       },
 

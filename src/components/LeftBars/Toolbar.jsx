@@ -840,7 +840,7 @@ function Toolbar({ setNewData }) {
               role="button"
               tabIndex="-1"
               onClick={clearSearch}
-              onKeyDown={clearSearch}
+              onKeyPress={clearSearch}
             >
               &nbsp;
             </span>
