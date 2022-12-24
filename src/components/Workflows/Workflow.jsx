@@ -130,7 +130,7 @@ function Workflow({ formID }) {
   }
 
   return (
-    <div className="btcd-workflow" style={{ width: 900 }}>
+    <div className="btcd-workflow" style={{ width: '93%' }}>
       <ConfirmModal
         show={confMdl.show}
         close={closeConfMdl}

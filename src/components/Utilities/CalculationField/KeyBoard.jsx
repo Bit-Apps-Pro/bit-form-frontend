@@ -74,7 +74,7 @@ function KeyBoard({ clickAction, options }) {
                 role="button"
                 className={css(style.field)}
                 key={`${option.value}${index + 1}`}
-                onClick={() => clickAction(`${index + 1}`, 'field', { label: option.label, content: option.value })}
+                onClick={() => clickAction(`${index + 1}`, 'letters', { label: option.label, content: option.value })}
                 tabIndex={0}
                 onKeyDown={undefined}
               >

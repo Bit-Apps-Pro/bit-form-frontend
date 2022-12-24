@@ -1,15 +1,14 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 // import MtInput from './MtInput'
-import MtSelect from '../Utilities/MtSelect'
-import TrashIcn from '../../Icons/TrashIcn'
 import { $fields, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
-import TagifyComp from '../CompSettings/TagifyComp'
+import TrashIcn from '../../Icons/TrashIcn'
+import CalculatorField from '../Utilities/CalculationField/CalculatorField'
+import MtSelect from '../Utilities/MtSelect'
 
 function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
   const setWorkflows = useSetRecoilState($workflows)
@@ -27,6 +26,16 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
         fieldKey = itm.key
       }
     })
+  }
+
+  const getOptions = () => {
+    let options
+    options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+    if (!options) {
+      options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+    }
+
+    return options
   }
 
   const changeAction = val => {
@@ -69,11 +78,6 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   const isNotSubmitAction = actionType !== 'onsubmit'
   const isNotValidateAction = actionType !== 'onvalidate'
 
-  const btnFields = Object.entries(fields).filter(fld => fld[1].typ === 'button').map(fl => ({
-    key: fl[0],
-    name: fl[1].txt,
-  }))
-
   return (
     <div className="flx pos-rel btcd-logic-blk">
       <MtSelect
@@ -83,7 +87,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
         style={{ width: 720 }}
       >
         <option value="">{__('Select One')}</option>
-        {[...formFields, ...btnFields].map(itm => (
+        {formFields.map(itm => (
           <option
             key={`ff-Ab-${itm.key}`}
             value={itm.key}
@@ -109,10 +113,10 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
           <option value="click">{__('Click')}</option>
         )}
         {(isNotFileUpField && isNotButtonField && isNotValidateAction)
-              && <option value="value">{__('Value')}</option>}
+          && <option value="value">{__('Value')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
         {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField)
-              && <option value="readonly">{__('Readonly')}</option>}
+          && <option value="readonly">{__('Readonly')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
@@ -125,35 +129,13 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
           <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
             <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />
           </div>
-
-          {type === 'select' || type === 'check' || type === 'radio'
-            ? (
-              <MultiSelect
-                className="msl-wrp-options btcd-paper-drpdwn w-10"
-                defaultValue={action.val || ''}
-                onChange={changeAtnVal}
-                options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({
-                  label: opt.lbl,
-                  value: (opt.val || opt.lbl),
-                }))}
-                customValue={fields?.[fieldKey]?.customOpt}
-                // eslint-disable-next-line no-nested-ternary
-                singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}
-              />
-            )
-            : (
-          // <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />
-              <div style={{ width: '100%' }}>
-                <TagifyComp
-                  selector={`input-${lgcGrpInd}_${condGrpInd}_${actionInd}`}
-                  actionId={`${lgcGrpInd}_${condGrpInd}_${actionInd}`}
-                  onChange={changeAtnVal}
-                  value={action.val || ''}
-                >
-                  <input type="text" name={`input-${lgcGrpInd}_${condGrpInd}_${actionInd}`} />
-                </TagifyComp>
-              </div>
-            )}
+          <CalculatorField
+            label="Value"
+            type={type}
+            onChange={changeAtnVal}
+            value={action.val || ''}
+            options={getOptions()}
+          />
         </>
       )}
       <div className="btcd-li-side-btn">
