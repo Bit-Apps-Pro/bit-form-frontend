@@ -790,8 +790,8 @@ export const updateGoogleFontUrl = (allStyles) => {
 
 export const arrayToObject = (arr) => {
   if (!arr) {
-    console.warn('arrayToObject: arr is undefined', arr)
-    return
+    // console.warn('arrayToObject: arr is undefined', arr)
+    return {}
   }
   return Object.keys(arr).map(item => ({ label: arr[item], value: String(arr[item]) }))
 }

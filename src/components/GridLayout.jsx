@@ -239,13 +239,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   const handleFieldExtraAttr = (fieldData) => {
     const extraAttr = checkFieldsExtraAttr(fieldData, fields, payments, additional, bits, __)
-
     if (extraAttr.validType === 'pro') {
       setProModal({ show: true, msg: extraAttr.msg })
       return 0
     }
 
     if (extraAttr.validType === 'onlyOne') {
+      setAlertMdl({ show: true, msg: extraAttr.msg })
+      return 0
+    }
+
+    if (extraAttr.validType === 'keyEmpty') {
       setAlertMdl({ show: true, msg: extraAttr.msg })
       return 0
     }
@@ -762,7 +766,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
           className="right-click-context-menu"
         />
       </div>
-    </div >
+    </div>
   )
 }
 export default memo(GridLayout)

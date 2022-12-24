@@ -61,8 +61,9 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         transition: 'all 0.2s',
         'justify-content': 'center',
         'align-items': 'center',
+        'border-radius': '5px',
       },
-      [`.${fk}-ck`]: { 'border-radius': '5px' },
+      // [`.${fk}-ck`]: { 'border-radius': '5px' },
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',
@@ -78,7 +79,6 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         'stroke-dasharray': '16px',
       },
       [`.${fk}-ci:checked ~ [data-cl] [data-ck-icn]`]: { 'stroke-dashoffset': 0 },
-
     }
   }
   return {}

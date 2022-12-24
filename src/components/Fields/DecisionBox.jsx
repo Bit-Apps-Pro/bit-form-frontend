@@ -105,10 +105,10 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
               {...getCustomAttributes(fieldKey, 'cl')}
             >
               <span
-                data-dev-ck={fieldKey}
+                data-dev-bx={fieldKey}
                 data-bx
-                className={`${fieldKey}-bx ${fieldKey}-ck ${getCustomClsName(fieldKey, 'ck')}`}
-                {...getCustomAttributes(fieldKey, 'ck')}
+                className={`${fieldKey}-bx ${getCustomClsName(fieldKey, 'bx')}`}
+                {...getCustomAttributes(fieldKey, 'bx')}
               >
                 <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
                   <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
