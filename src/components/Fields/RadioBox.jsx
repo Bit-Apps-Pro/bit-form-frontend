@@ -119,10 +119,10 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 {/* <span data-bx className={`${fieldKey}-bx`} /> */}
                 <span
                   data-testid={`${fieldKey}-bx`}
-                  data-dev-rdo={fieldKey}
+                  data-dev-bx={fieldKey}
                   data-bx
-                  className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
-                  {...getCustomAttributes(fieldKey, 'rdo')}
+                  className={`${fieldKey}-bx ${getCustomClsName(fieldKey, 'bx')}`}
+                  {...getCustomAttributes(fieldKey, 'bx')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />
@@ -173,10 +173,13 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
               >
                 <span
                   data-testid={`${fieldKey}-bx`}
-                  data-dev-ck={fieldKey}
+                  // data-dev-ck={fieldKey}
+                  data-dev-bx={fieldKey}
                   data-bx
-                  className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
-                  {...getCustomAttributes(fieldKey, 'rdo')}
+                  // className={`${fieldKey}-bx ${fieldKey}-rdo ${getCustomClsName(fieldKey, 'rdo')}`}
+                  // {...getCustomAttributes(fieldKey, 'rdo')}
+                  className={`${fieldKey}-bx  ${getCustomClsName(fieldKey, 'bx')}`}
+                  {...getCustomAttributes(fieldKey, 'bx')}
                 >
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp ${getCustomClsName(fieldKey, 'svgwrp')}`}>
                     <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn ${getCustomClsName(fieldKey, 'ck-icn')}`} />

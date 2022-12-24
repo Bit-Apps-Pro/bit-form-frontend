@@ -273,28 +273,17 @@ function StyleLayers() {
                     highlightSelector={`[data-dev-cl="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'cl')}
                   />
-
-                  {fldData.typ === 'radio' && (
-                    <NavBtn
-                      subRoute={fldKey}
-                      route="rdo"
-                      label="Radio Box"
-                      offset="2.5"
-                      highlightSelector={`[data-dev-rdo="${fldKey}"]`}
-                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'rdo')}
-                    />
-                  )}
                 </>
               )}
 
-              {fldData.typ.match(/(check|decision-box)/gi) && (
+              {fldData.typ.match(/(check|decision-box|radio)/gi) && (
                 <NavBtn
                   subRoute={fldKey}
-                  route="ck"
-                  label="Check Box"
+                  route="bx"
+                  label={fldData.typ === 'radio' ? 'Radio Box' : 'Check Box'}
                   offset="2.5"
-                  highlightSelector={`[data-dev-ck="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'ck')}
+                  highlightSelector={`[data-dev-bx="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'bx')}
                 />
               )}
 
