@@ -170,6 +170,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'btn-pre-i': 'Button Leading Icon',
     'btn-suf-i': 'Button Trailing Icon',
     'other-inp': 'Other Option Input',
+    'inp-wrp .filepond--panel-root': 'Item Panel Wrapper',
     'inp-wrp .filepond--item-panel': 'Item Panel',
     'inp-wrp .filepond--file-action-button': 'File Action Button',
     'inp-wrp .filepond--file': 'File',

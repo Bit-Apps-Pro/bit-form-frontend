@@ -18,7 +18,7 @@ import KeyBoard from './KeyBoard'
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 function CalculatorField({
-  label, onChange, value, disabled, type, textarea, className,
+  label, onChange, value, disabled, type, textarea, className, options
 }) {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
@@ -327,6 +327,7 @@ function CalculatorField({
         content={(
           <KeyBoard
             clickAction={keyboardClickAction}
+            options={options}
           />
         )}
       >

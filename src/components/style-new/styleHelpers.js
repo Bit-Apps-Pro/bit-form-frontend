@@ -8,7 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
-  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
+  $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
 } from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
 import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
@@ -732,7 +732,7 @@ export const isValidURL = (string) => {
 export const getValueFromStateVar = (stateObj, val) => {
   if (val?.match?.(/(var)/g)?.[0] === 'var') {
     const getVarProperty = val.replace(/\(|var|,.*|\)|(!important|\s)/gi, '')
-    return stateObj[getVarProperty] || ''
+    return getValueFromStateVar(stateObj, stateObj[getVarProperty] || '')
   }
   return val
 }

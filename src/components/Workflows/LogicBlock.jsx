@@ -40,7 +40,7 @@ function LogicBlock({
   let fieldKey = ''
   formFields?.find?.(itm => {
     if (itm.key === fieldVal) {
-      if (itm.type.match(/^(check|radio)$/)) {
+      if (itm.type.match(/^(check|radio|select)$/)) {
         type = 'text'
       } else {
         type = itm.type
@@ -58,13 +58,13 @@ function LogicBlock({
 
   const getOptions = () => {
     let options
-
-    if (type === 'select') {
-      options = fields?.[fieldKey]?.opt
-    } else if (type === 'user') {
+    if (type === 'user') {
       options = checkLoginOption
     } else {
       options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+    }
+    if (!options) {
+      options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
 
     return options
@@ -148,7 +148,27 @@ function LogicBlock({
           </div>
         </div>
 
-        {findTagFromSmartTags(fieldVal)?.custom && (
+        {findTagFromSmartTags(fieldVal)?.functionParam && (
+          <div className="block-wrapper">
+            <div className="block-content">
+              <MtSelect
+                label="Field Parameter"
+                onChange={e => changeSmartKey(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
+                value={logic.smartKey || ''}
+              >
+                <option value="">{__('Select Form Field')}</option>
+                {!!formFields.length && (
+                  <optgroup label="Form Fields">
+                    {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
+                    && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+                  </optgroup>
+                )}
+              </MtSelect>
+            </div>
+          </div>
+        )}
+
+        {findTagFromSmartTags(fieldVal)?.custom && !findTagFromSmartTags(fieldVal)?.functionParam && (
           <div className="block-wrapper">
             <div className="block-content">
               <MtInput
@@ -199,6 +219,7 @@ function LogicBlock({
                     disabled={logicValue === 'null' || logicValue === 'not_null'}
                     onChange={val => changeValue(val, lgcInd, subLgcInd, subSubLgcInd)}
                     value={value || ''}
+                    options={getOptions()}
                   />
                 )}
             </div>
