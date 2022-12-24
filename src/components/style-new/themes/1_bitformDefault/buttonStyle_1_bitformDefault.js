@@ -24,8 +24,8 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
       // },
 
       [`.${fk}-btn`]: {
-        'font-size': 'var(--btn-fs)',
-        padding: 'var(--btn-p)',
+        'font-size': 'var(--btn-fs)!important',
+        padding: 'var(--btn-p)!important',
         // 'background-color': 'var(--btn-bgc)',
         background: 'var(--btn-bg)',
         color: 'var(--btn-c)',

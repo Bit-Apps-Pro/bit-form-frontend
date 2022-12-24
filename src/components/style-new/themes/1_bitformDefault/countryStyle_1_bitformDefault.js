@@ -18,7 +18,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
       [`.${fk}-country-fld-wrp`]: {
         position: 'absolute',
         width: '100%',
-        'background-color': 'var(--global-fld-bg-colodirectionr, transparent)',
+        'background-color': 'var(--global-fld-bg-color)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',
@@ -29,7 +29,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        transition: 'box-shadow .3s',
+        transition: 'box-shadow .2s',
       },
 
       [`.${fk}-country-fld-wrp.disabled .${fk}-dpd-wrp`]: {
@@ -82,8 +82,8 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        height: '40px',
-        padding: '8px 12px',
+        height: '38px',
+        padding: '10px',
         'box-sizing': 'border-box', // unused css
         // 'font-size': '12px',
         position: 'relative', // unused css
@@ -151,8 +151,6 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         overflow: 'hidden', // unused css
         display: 'flex',
         'flex-direction': 'column',
-        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
@@ -199,9 +197,8 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
 
       [`.${fk}-opt-search-input`]: {
         width: '100%',
-        padding: '5px', // unused css
-        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
-        ...direction === 'rtl' && { 'padding-right': '41px !important' },
+        ...direction !== 'rtl' && { padding: '0 5px 0 41px !important' },
+        ...direction === 'rtl' && { padding: '0 41px 0 5px !important' },
         outline: 'none',
         'box-shadow': 'none',
         'font-family': 'inherit',
@@ -224,7 +221,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         'background-color': 'var(--bg-0)',
         'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
       },
-      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)' },
+      [`.${fk}-opt-search-input:focus~svg`]: { color: 'var(--global-accent-color)!important' },
       [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },
       [`.${fk}-opt-search-input::-webkit-search-results-button`]: { display: 'none' },

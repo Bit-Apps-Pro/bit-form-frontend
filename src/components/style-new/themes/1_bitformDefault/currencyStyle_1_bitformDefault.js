@@ -27,7 +27,7 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
-        transition: 'box-shadow .3s',
+        transition: 'box-shadow .2s',
       },
       [`.${fk}-currency-fld-wrp.disabled .${fk}-currency-inner-wrp`]: {
         cursor: 'not-allowed',
@@ -95,9 +95,9 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         'justify-content': 'space-between',
         'align-items': 'center',
         cursor: 'pointer',
-        height: '34px',
+        height: '32px',
         margin: '3px',
-        padding: '8px 8px',
+        padding: '10px',
         position: 'relative', // unused css
         'font-size': '12px',
         outline: 'none', // unused css
@@ -206,8 +206,6 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
         overflow: 'hidden', // unused css
         display: 'flex',
         'flex-direction': 'column',
-        // 'background-color': 'hsla(var(--gfbg-h), var(--gfbg-s), var(--gfbg-l), var(--gfbg-a))',
-        transition: 'max-height 150ms',
       },
 
       [`.${fk}-option-inner-wrp`]: {
@@ -244,8 +242,8 @@ export default function currencyStyle_1_BitformDefault({ fk, direction, breakpoi
       [`.${fk}-opt-search-input`]: {
         width: '100%',
         padding: '5px',
-        ...direction !== 'rtl' && { 'padding-left': '41px !important' },
-        ...direction === 'rtl' && { 'padding-right': '41px !important' },
+        ...direction !== 'rtl' && { padding: '0 5px 0 41px !important' },
+        ...direction === 'rtl' && { padding: '0 41px 0 5px !important' },
         outline: 'none',
         'box-shadow': 'none',
         border: 'none !important',

@@ -51,7 +51,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       },
       [`.${fk}-ct`]: {
         // unused css
-        // 'font-size': 'var(--fld-fs) !important',
+        'font-size': 'var(--fld-fs)',
         // 'font-family': 'var(--g-font-family)',
         // 'line-height': 'initial',
         // color: 'var(--global-font-color) !important',

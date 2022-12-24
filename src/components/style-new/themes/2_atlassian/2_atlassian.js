@@ -133,32 +133,33 @@ const lgLightThemeVars = {
   '--fld-lbl-fs': '12px', // field label font size
   '--lbl-font-w': 600, // field font weight
   '--lbl-wrp-m': '0 0 4px 0', // label wrapper for margin
+  '--fld-fs': '14px', // field font size
 
 }
 
 const lightThemeColors = {
   ...defaultLightThemeColors,
   '--btn-sh': '',
-  '--global-bg-color': 'hsla(0, 0%, 100%, 100)', // background color
+  '--global-bg-color': 'hsla(0, 0%, 100%, 100%)', // background color
   '--gbg-h': 0, // global background color hue
   '--gbg-s': '0%', // global background color saturation
   '--gbg-l': '100%', // global background color lightness
-  '--gbg-a': 100, // global background color opacity
-  '--global-fld-bdr-clr': 'hsla(223, 12%, 89%, 100)', // field border color
+  '--gbg-a': '100%', // global background color opacity
+  '--global-fld-bdr-clr': 'hsla(223, 12%, 89%, 100%)', // field border color
   '--gfbc-h': 223, // global field border color hue
   '--gfbc-s': '12%', // global field border color saturation
   '--gfbc-l': '89%', // global field border color lightness
-  '--gfbc-a': 100, // global field border color opacity
-  '--global-fld-bg-color': 'hsla(210, 25%, 98%, 100 )', // field background color
+  '--gfbc-a': '100%', // global field border color opacity
+  '--global-fld-bg-color': 'hsla(210, 25%, 98%, 100%)', // field background color
   '--gfbg-h': 210, // global field background color hue
   '--gfbg-s': '25%', // global field background color saturation
   '--gfbg-l': '98%', // global field background color lightness
-  '--gfbg-a': 100, // global field background color opacity
-  '--global-font-color': 'hsla(218, 76%, 15%, 100)',
+  '--gfbg-a': '100%', // global field background color opacity
+  '--global-font-color': 'hsla(218, 76%, 15%, 100%)',
   '--gfh': 218, // global font color hue
   '--gfs': '76%', // global font color saturation
   '--gfl': '15%', // global font color lightness
-  '--gfa': 100, // global font color opacity
+  '--gfa': '100%', // global font color opacity
 }
 
 const darkThemeColors = {

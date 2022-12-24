@@ -132,9 +132,9 @@ export const defaultLgLightThemeVars = {
   '--dir': 'ltr', // direaction
   '--inp-wrp-width': '',
   '--lbl-al': '', // label align
-  '--fld-p': '', // field padding
+  '--fld-p': '10px', // field padding
   '--fld-m': '', // field margin
-  '--fld-fs': '14px', // field font size
+  '--fld-fs': '1rem', // field font size
 
   '--fld-wrp-dis': 'block', // field wrapper display
   '--fld-wrp-fdir': '', // field wrapper flex direction
@@ -304,31 +304,31 @@ export const defaultLgLightThemeVars = {
 }
 
 export const defaultLightThemeColors = {
-  '--global-accent-color': 'hsla(217, 100%, 50%, 100)', // Accent Color
+  '--global-accent-color': 'hsla(217, 100%, 50%, 100%)', // Accent Color
   '--gah': 217, // global primary hue
   '--gas': '100%', // global primary saturation
   '--gal': '50%', // global primary lightness
-  '--gaa': 100, // global primary opacity
-  '--global-font-color': 'hsla(0, 0%, 14%, 100)',
+  '--gaa': '100%', // global primary opacity
+  '--global-font-color': 'hsla(0, 0%, 14%, 100%)',
   '--gfh': 0, // global font color hue
   '--gfs': '0%', // global font color saturation
   '--gfl': '14%', // global font color lightness
-  '--gfa': 100, // global font color opacity
+  '--gfa': '100%', // global font color opacity
   '--global-bg-color': '', // background color
   '--gbg-h': 0, // global background color hue
   '--gbg-s': '0%', // global background color saturation
   '--gbg-l': '100%', // global background color lightness
-  '--gbg-a': 100, // global background color opacity
-  '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)', // field border color
+  '--gbg-a': '100%', // global background color opacity
+  '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100%)', // field border color
   '--gfbc-h': 0, // global field border color hue
   '--gfbc-s': '0%', // global field border color saturation
   '--gfbc-l': '67%', // global field border color lightness
-  '--gfbc-a': 100, // global field border color opacity
+  '--gfbc-a': '100%', // global field border color opacity
   '--global-fld-bg-color': '', // field background color
   '--gfbg-h': 0, // global field background color hue
   '--gfbg-s': '0%', // global field background color saturation
   '--gfbg-l': '100%', // global field background color lightness
-  '--gfbg-a': 100, // global field background color opacity
+  '--gfbg-a': '100%', // global field background color opacity
 
   '--fld-focs-i-fltr': 'invert(26%) sepia(41%) saturate(6015%) hue-rotate(211deg) brightness(100%) contrast(108%)',
 
@@ -407,10 +407,10 @@ export const defaultLightThemeColors = {
   '--err-txt-suf-i-sh': '', // helper txt suffix icon shadow
   '--err-txt-suf-i-bdr-clr': '', // helper txt suffix icon border color
 
-  '--err-bg': 'hsla(0, 100%, 94%, 100)', // error messages background color
-  '--err-c': 'hsla(0, 100%, 11%, 100)', // error messages text color
+  '--err-bg': 'hsla(0, 100%, 94%, 100%)', // error messages background color
+  '--err-c': 'hsla(0, 100%, 11%, 100%)', // error messages text color
   '--err-sh': '', // error messages box shadow
-  '--err-bdr-clr': 'hsla(0, 50%, 90%, 100)', // error message border color
+  '--err-bdr-clr': 'hsla(0, 50%, 90%, 100%)', // error message border color
 
   '--btn-bg': 'var(--global-accent-color)', // button backgrond
   '--btn-bgc': 'var(--global-accent-color)', // button backgrond color
@@ -418,9 +418,9 @@ export const defaultLightThemeColors = {
   '--btn-bdr-clr': 'none', // button border color
   '--btn-sh': '0   2px 4px -2px hsla(0, 0%, 0%, 40%)', // button shadow
 
-  '--ck-bdr-c': 'hsla(210, 78%, 96%, 100)',
+  '--ck-bdr-c': 'hsla(210, 78%, 96%, 100%)',
 
-  '--g-o-c': 'hsla(217, 100%, 50%, 100)', // outline color for testing purposes
+  '--g-o-c': 'hsla(217, 100%, 50%, 100%)', // outline color for testing purposes
 
   '--bg-0': 'hsl(0, 0%, 100%)',
   '--bg-5': 'hsl(0, 0%, 95%)',
