@@ -97,6 +97,8 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         transition: 'all 0.2s',
         'justify-content': 'center',
         'align-items': 'center',
+        ...type === 'check' && { 'border-radius': '5px' },
+        ...type === 'radio' && { 'border-radius': '50%' },
       },
       [`.${fk}-other-inp-wrp`]: { display: 'none' },
       [`.${fk}-other-inp`]: {
@@ -127,7 +129,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       [`.${fk}-other-inp:hover`]: { 'border-color': 'var(--global-accent-color) !important' },
 
       ...type === 'check' && {
-        [`.${fk}-ck`]: { 'border-radius': '5px' },
+        // [`.${fk}-ck`]: { 'border-radius': '5px' },
         [`.${fk}-svgwrp`]: {
           height: '12px',
           width: '10px',
@@ -152,9 +154,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
           left: '50%',
           height: 0,
           width: 0,
-        },
-        [`.${fk}-rdo`]: { 'border-radius': '50%' },
-        [`.${fk}-rdo::before`]: {
+          // for radio button (new style)
           'border-radius': '50%',
           transition: 'all 0.2s cubic-bezier(0.25, 0.1, 0.59, 1.82)',
           top: '50%',
@@ -162,12 +162,20 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
           'box-shadow': '0 1px 3px 0px grey',
           transform: 'translate(-50%, -50%)',
         },
+        // [`.${fk}-rdo`]: { 'border-radius': '50%' },
+        // [`.${fk}-rdo::before`]: {
+        //   'border-radius': '50%',
+        //   transition: 'all 0.2s cubic-bezier(0.25, 0.1, 0.59, 1.82)',
+        //   top: '50%',
+        //   background: 'white',
+        //   'box-shadow': '0 1px 3px 0px grey',
+        //   transform: 'translate(-50%, -50%)',
+        // },
         [`.${fk}-ci:checked ~ [data-cl] [data-bx]::before`]: {
           width: '50%',
           height: '50%',
         },
       },
-
     }
   }
   return {}

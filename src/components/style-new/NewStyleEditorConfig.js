@@ -701,7 +701,7 @@ const editorConfig = {
         'font-style': '',
       },
     },
-    ck: {
+    bx: {
       states: ['hover', 'focus', 'checked'],
       properties: { ...chackProps },
     },
@@ -742,7 +742,7 @@ const editorConfig = {
         'font-style': '',
       },
     },
-    ck: {
+    bx: {
       states: ['hover', 'focus', 'checked'],
       properties: { ...chackProps },
     },
@@ -779,7 +779,7 @@ const editorConfig = {
         'font-style': '',
       },
     },
-    rdo: {
+    bx: {
       states: ['hover', 'focus', 'checked'],
       properties: { ...chackProps },
     },
