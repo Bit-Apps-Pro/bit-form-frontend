@@ -6,7 +6,7 @@ import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $themeVarsLgLight = atom({
   key: '$themeVarsLgLight',
-  default: {}, O
+  default: {},
   effects: [({ onSet }) => {
     onSet((newThemeVarsLgLight, _, isReset) => {
       if (isReset) return
