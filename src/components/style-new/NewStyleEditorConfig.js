@@ -295,6 +295,17 @@ const editorConfig = {
       },
     },
   },
+  // for input fields
+  fld: {
+    properties: {
+      border: {
+        'border-style': true,
+        'border-color': true,
+        'border-width': true,
+        'border-radius': true,
+      },
+    },
+  },
   // TODO: field-containers
   'field-containers': {
     states: ['hover'],
