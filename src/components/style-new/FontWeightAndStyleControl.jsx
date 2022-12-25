@@ -55,7 +55,6 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
               cls={css(isFontStyleOrWeightAvailable(fontStyleVar, 'fontStyleVariants') ? cls.warningBorder : '')}
             />
             {isFontStyleOrWeightAvailable(fontStyleVar, 'fontStyleVariants') && <span className={css(cls.clr)}>Font style not found!</span>}
-            <span className={css(cls.clr)}>Font style not found!</span>
           </div>
         </div>
       </ThemeStylePropertyBlock>
