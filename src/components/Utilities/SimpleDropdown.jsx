@@ -8,11 +8,11 @@ export default function SimpleDropdown({
   options = [], value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25, id,
 }) {
   let defaultVal = null
-  const selected = options?.find(opt => opt.value === value)
+  // const selected = options?.find(opt => opt.value === value)
   if (Number.isInteger(value)) {
     defaultVal = options?.[value]
   } else {
-    defaultVal = selected || {}
+    defaultVal = options?.find(opt => opt.value === value) || {}
   }
   const { css } = useFela()
   const [menu, setMenu] = useState({ open: false, height: 0 })
