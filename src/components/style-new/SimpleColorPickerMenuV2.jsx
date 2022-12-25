@@ -37,7 +37,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
 
   const getCustomColor = () => {
     const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
-    if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100)'
+    if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100%)'
     if (colorValue.match(/var/g)?.[0] === 'var') {
       const getVarProperty = colorValue.replace(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]
@@ -71,7 +71,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
     const l = Math.round(_l)
     const a = color.a || 100
 
-    const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
+    const hsla = `hsla(${h}, ${s}%, ${l}%, ${a}%)`
 
     switch (action.type) {
       case 'global-accent-color':
@@ -80,7 +80,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
           drft['--gah'] = h
           drft['--gas'] = `${s}%`
           drft['--gal'] = `${l}%`
-          drft['--gaa'] = a / 100
+          drft['--gaa'] = `${a}%`
         }))
         break
       case 'global-font-color':
@@ -89,7 +89,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
           drft['--gfh'] = Math.round(_h)
           drft['--gfs'] = `${s}%`
           drft['--gfl'] = `${l}%`
-          drft['--gfa'] = a / 100
+          drft['--gfa'] = `${a}%`
         }))
         break
       case 'global-bg-color':
@@ -98,7 +98,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
           drft['--gbg-h'] = Math.round(_h)
           drft['--gbg-s'] = `${s}%`
           drft['--gbg-l'] = `${l}%`
-          drft['--gbg-a'] = a / 100
+          drft['--gbg-a'] = `${a}%`
         }))
         break
       case 'global-fld-bdr-clr':
@@ -160,7 +160,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
       c = `var(${clr})`
     } else {
       const [_h, _s, _l] = hsva2hsla(clr.h, clr.s, clr.v)
-      c = `hsla(${Math.round(_h || 0)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${clr.a || 100})`
+      c = `hsla(${Math.round(_h || 0)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${clr.a || 100}%)`
     }
 
     action.onChange(c)
