@@ -74,6 +74,7 @@ function StyleLayers() {
             offset="6"
             title="Label(s)"
             highlightSelector="[data-dev-lbl]"
+            route="lbl"
           >
             <NavBtn
               route="lbl-pre-i"
@@ -101,6 +102,7 @@ function StyleLayers() {
             offset="6"
             title="Subtitle(s)"
             highlightSelector="[data-dev-sub-titl]"
+            route="sub-titl"
           >
             <NavBtn
               route="sub-titl-pre-i"
@@ -118,10 +120,11 @@ function StyleLayers() {
 
           <LayerAccordion
             childrenAccodin
-            onClick={() => styleHandler('pre-i')}
+            onClick={() => styleHandler('fld')}
             offset="6"
             title="Input(s)"
             highlightSelector="[data-dev-fld]"
+            route="fld"
           >
             <NavBtn
               route="pre-i"
@@ -143,6 +146,7 @@ function StyleLayers() {
             offset="6"
             title="Helper Text(s)"
             highlightSelector="[data-dev-hlp-txt]"
+            route="hlp-txt"
           >
             <NavBtn
               route="hlp-txt-pre-i"
