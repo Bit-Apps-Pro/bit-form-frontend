@@ -5,7 +5,7 @@ import ut from '../../styles/2.utilities'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 
 export default function SimpleDropdown({
-  options, value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25, id,
+  options = [], value, cls, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25, id,
 }) {
   let defaultVal = null
   const selected = options?.find(opt => opt.value === value)

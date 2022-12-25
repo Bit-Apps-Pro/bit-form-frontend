@@ -13,7 +13,7 @@ import SliderModal from '../Utilities/SliderModal'
 import Tip from '../Utilities/Tip'
 import themeProvider from './themes/themeProvider'
 import themes from './themes/themeList'
-import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, generateHistoryData, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 
 export default function ThemeGallary() {
   const { css } = useFela()
@@ -30,9 +30,11 @@ export default function ThemeGallary() {
 
   const handleThemeApply = (themeSlug) => {
     const { themeColors, themeVars, styles } = themeProvider(themeSlug, fieldsArray, formId)
+    if (currentStyles.confirmations && styles.lgLightStyles) styles.lgLightStyles.confirmations = [...currentStyles.confirmations]
     setAllThemeColors(themeColors)
     setAllThemeVars(themeVars)
     setAllStyles(styles)
+    addToBuilderHistory(generateHistoryData('', '', 'Theme', themeSlug, { allThemeColors: themeColors, allThemeVars: themeVars, allStyles: styles }))
     reCalculateFldHeights()
   }
 

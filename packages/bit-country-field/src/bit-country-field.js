@@ -475,9 +475,6 @@ export default class BitCountryField {
         }
         this.#setTextContent(lbl, opt.lbl)
         lblimgbox.append(lbl)
-        const prefix = this.#createElm('span')
-        this.#setClassName(prefix, 'opt-prefix')
-        this.#setTextContent(prefix, opt.code)
         li.tabIndex = this.#isMenuOpen() ? '0' : '-1'
         this.#setAttribute(li, 'role', 'option')
         this.#setAttribute(li, 'aria-posinset', index + 1)
@@ -496,7 +493,7 @@ export default class BitCountryField {
           this.#setClassName(li, 'disabled-opt')
         }
 
-        li.append(lblimgbox, prefix)
+        li.append(lblimgbox)
 
         if (this.#selectedCountryCode === opt.i) {
           this.#setClassName(li, 'selected-opt')

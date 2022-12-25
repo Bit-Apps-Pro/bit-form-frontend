@@ -110,7 +110,7 @@ export default function bitformDefaultTheme({
         lgLightStyles: {
           theme: 'bitformDefault',
           fieldsSize: 'medium',
-          defaultFont,
+          font: defaultFont,
           form: defaultLgLightform({ formId }),
           fields: lgLightFieldStyles,
           confirmations: lgLightConfMsg,
