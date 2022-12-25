@@ -134,6 +134,7 @@ const lgLightThemeVars = {
   '--lbl-font-w': 600, // field font weight
   '--lbl-wrp-m': '0 0 4px 0', // label wrapper for margin
   '--fld-fs': '14px', // field font size
+  '--g-font-family': "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif", // default font family inherit from theme
 
 }
 
@@ -164,6 +165,26 @@ const lightThemeColors = {
 
 const darkThemeColors = {
   ...defaultDarkThemeColors,
+  '--global-accent-color': 'hsla(215, 100%, 67%, 100%)', // Accent Color
+  '--gah': 215, // global primary hue
+  '--gas': '100%', // global primary saturation
+  '--gal': '67%', // global primary lightness
+  '--gaa': '100%', // global primary opacity
+  '--global-bg-color': 'hsla(206, 14%, 10%, 100%)', // background color
+  '--gbg-h': 206, // global background color hue
+  '--gbg-s': '14%', // global background color saturation
+  '--gbg-l': '10%', // global background color lightness
+  '--gbg-a': '100%', // global background color opacity
+  '--global-fld-bg-color': 'hsla(210, 12%, 13%, 100%)', // field background color
+  '--gfbg-h': 210, // global field background color hue
+  '--gfbg-s': '12%', // global field background color saturation
+  '--gfbg-l': '13%', // global field background color lightness
+  '--gfbg-a': '100%', // global field background color opacity
+  '--global-fld-bdr-clr': 'hsla(209, 51%, 77%, 16%)', // field border color
+  '--gfbc-h': 209, // global field border color hue
+  '--gfbc-s': '51%', // global field border color saturation
+  '--gfbc-l': '77%', // global field border color lightness
+  '--gfbc-a': '16%', // global field border color opacity
 }
 
 const font = {

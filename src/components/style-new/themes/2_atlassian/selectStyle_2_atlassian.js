@@ -6,7 +6,11 @@ export default function selectStyle_2_atlassian({ fk, breakpoint, colorScheme })
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return mergeNestedObj(
       selectStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
-      {},
+      {
+        [`.${fk}-fld:focus`]: {
+          'box-shadow': '',
+        },
+      },
     )
   }
   return {}

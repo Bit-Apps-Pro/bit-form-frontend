@@ -39,7 +39,10 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
 
   const invalidPropValue = {
     'border-color': 'none',
-    'background-color': 'none',
+    margin: '!important',
+    paddin: '!important',
+    background: '!important',
+    'background-color': '!important',
   }
 
   const atomizeCssConfig = { classPrefix: atomicClassPrefix, classSuffix: atomicClassSuffix }
