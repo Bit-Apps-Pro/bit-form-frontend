@@ -289,5 +289,5 @@ const c = {
     ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
     ':active': { tm: 'scale(0.95)' },
   },
-  overFlowScroll: { owx: 'scroll', mxh: 200 },
+  overFlowScroll: { owx: 'scroll', mxh: 200, w: 235 },
 }
