@@ -17,16 +17,16 @@ export default function bfValidationErrMsg(result, contentId) {
       msg: responseData,
       error: true,
       show: true,
-      id: 4,
+      type: 'success',
     })
   } else if (responseData) {
     if (responseData.$form !== undefined) {
       setBFMsg({
         contentId,
-        msg: responseData.$form,
-        error: true,
-        show: true,
-        id: 5,
+        msg: responseData.$form.message,
+        msgId: responseData.$form.msg_id,
+        duration: responseData.$form.msg_duration,
+        type: 'success',
       })
       delete responseData.$form
     }

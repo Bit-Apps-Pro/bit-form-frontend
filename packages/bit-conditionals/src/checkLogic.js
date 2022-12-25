@@ -246,6 +246,19 @@ const checkBetweenLogic = (logics, fields, targetFieldValue, logicsVal) => {
   return targetVal >= minVal && targetVal <= maxVal
 }
 
+const cehckIsFunction = (data) => data.match(/\([A-Za-z\s0-9+-\\*]*\)/g)
+
+const getFunctionValue = (funtionName, params, fldType) => {
+  switch (funtionName) {
+    case '_bf_length':
+      return params[0].length
+    case '_bf_count':
+      if (fldType.match(/check|radio|select/)) { return params[0].trim().split(',').length }
+      return params[0].split(/\b\W+\b/g).length
+    default: return params[0]
+  }
+}
+
 export const checkLogic = (logics, fields, props) => {
   if (Array.isArray(logics)) {
     let conditionStatus = false
@@ -272,9 +285,44 @@ export const checkLogic = (logics, fields, props) => {
     const targetFieldValue = flds[logics.field].value
     return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
   }
+
+  if (cehckIsFunction(logics.field)) {
+    const funtionName = logics.field.substring(2, logics.field.length - 1).replace(/\([A-Za-z\s0-9+-\\*]*\)/g, '')
+    const targetFieldValue = getFunctionValue(funtionName, [flds[logics.smartKey].value], flds[logics.smartKey].type)
+    if (isNaN(targetFieldValue)) flds[logics.field] = { type: 'text' }
+    else flds[logics.field] = { type: 'number' }
+    return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
+  }
   return false
 }
 
+const mutateString = (dataString, fieldValues) => {
+  const matchedFields = dataString.match(/\${\w[^${}]*}/g)
+  let mutatedString = dataString
+
+  matchedFields.map(field => {
+    let fieldName = field
+    if (!fieldValues[fieldName]) {
+      fieldName = field.substring(2, field.length - 1)
+    }
+    let val2Rplc = ''
+    if (fieldValues[fieldName]) {
+      val2Rplc = fieldValues[fieldName].value
+      if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
+        val2Rplc = 0
+        fieldValues[fieldName].value.map(sV => {
+          val2Rplc += Number(sV)
+        })
+      }
+    } else if (cehckIsFunction(fieldName)) {
+      const funcName = fieldName.replace(/\([A-Za-z\s0-9+-\\*]*\)/g, '')
+      const params = fieldName.substring(fieldName.indexOf('(') + 1, fieldName.length - 1)
+      val2Rplc = getFunctionValue(funcName, [params], '')
+    }
+    mutatedString = mutatedString.replace(field, val2Rplc)
+  })
+  return mutatedString
+}
 export const replaceWithField = (stringToReplace, fieldValues) => {
   if (!stringToReplace) {
     return stringToReplace
@@ -288,24 +336,27 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   if (typeof mutatedString !== 'string') {
     return stringToReplace
   }
-  const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
-  if (matchedFields) {
-    matchedFields.map(field => {
-      let fieldName = field
-      if (!fieldValues[fieldName]) {
-        fieldName = field.substring(2, field.length - 1)
-      }
-      if (fieldValues[fieldName]) {
-        let val2Rplc = fieldValues[fieldName].value
-        if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
-          val2Rplc = 0
-          fieldValues[fieldName].value.map(sV => {
-            val2Rplc += Number(sV)
-          })
-        }
-        mutatedString = mutatedString.replace(field, val2Rplc)
-      }
-    })
+  // const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
+  // if (matchedFields) {
+  //   matchedFields.map(field => {
+  //     let fieldName = field
+  //     if (!fieldValues[fieldName]) {
+  //       fieldName = field.substring(2, field.length - 1)
+  //     }
+  //     if (fieldValues[fieldName]) {
+  //       let val2Rplc = fieldValues[fieldName].value
+  //       if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
+  //         val2Rplc = 0
+  //         fieldValues[fieldName].value.map(sV => {
+  //           val2Rplc += Number(sV)
+  //         })
+  //       }
+  //       mutatedString = mutatedString.replace(field, val2Rplc)
+  //     }
+  //   })
+  // }
+  while (mutatedString.match(/\${\w[^${}]*}/g)) {
+    mutatedString = mutateString(mutatedString, fieldValues)
   }
 
   return evalMathExpression(mutatedString)

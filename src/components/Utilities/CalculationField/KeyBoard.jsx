@@ -9,7 +9,7 @@ import CloseIcn from '../../../Icons/CloseIcn'
 import { makeFieldsArrByLabel } from '../../../Utils/Helpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 
-function KeyBoard({ clickAction }) {
+function KeyBoard({ clickAction, options }) {
   const fields = useRecoilValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)
   const keyList = [{ id: 25, type: 'back', content: <BackIcn size="18" /> },
@@ -65,6 +65,24 @@ function KeyBoard({ clickAction }) {
             {smartTag.label}
           </div>
         ))}
+
+        {options && (
+          <>
+            <h4 className={css({ m: 0, td: 'underline', mt: 5 })}>Options</h4>
+            {options.map((option, index) => (
+              <div
+                role="button"
+                className={css(style.field)}
+                key={`${option.value}${index + 1}`}
+                onClick={() => clickAction(`${index + 1}`, 'letters', { label: option.label, content: option.value })}
+                tabIndex={0}
+                onKeyDown={undefined}
+              >
+                {option.label}
+              </div>
+            ))}
+          </>
+        )}
 
       </div>
       <div className={css(style.keyContainer)}>

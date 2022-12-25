@@ -41,8 +41,10 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         color: 'hsla(0, 0%, 100%, 100%)',
         cursor: 'pointer',
         display: 'inline-flex',
-        padding: '11px 15px !important',
+        padding: 'var(--btn-p) !important',
+        'font-size': 'var(--btn-fs) !important',
         gap: '5px',
+        'line-height': 1,
       },
 
       [`.${fk}-inp-btn:focus-visible`]: {
@@ -50,11 +52,9 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         'outline-offset': '2px',
         transition: 'outline-offset 0.2s ease',
       },
-
       [`.${fk}-inp-btn:active:focus-visible`]: {
         'outline-offset': 0,
       },
-
       [`.${fk}-pre-i`]: {
         width: '15px',
         height: '15px',
@@ -68,7 +68,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         filter: 'invert(1)',
       },
 
-      [`.${fk}-btn-txt`]: { color: 'hsla(0,100%,100%,100)', 'font-size': '14px' },
+      [`.${fk}-btn-txt`]: {},
 
       [`.${fk}-file-select-status`]: {
         'font-size': '14px',
@@ -154,12 +154,10 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         transition: 'background-color 150ms',
         'background-color': 'var(--bg-15)',
       },
-
       [`.${fk}-file-input-wrpr .cross-btn:hover`]: {
         'background-color': 'var(--bg-20)',
         color: 'var(--global-font-color)',
       },
-
       [`.${fk}-file-input-wrpr .err-wrp`]: {
         display: 'none',
         opacity: '0',

@@ -25,14 +25,15 @@ import Btn from '../Utilities/Btn'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
-import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import FontPicker from './FontPicker'
 import FontSizeControl from './FontSizeControl'
 import { changeFormStylesDir, changeFormThemeVarsDir } from './formDirectionHelpers'
 import LabelControl from './LabelControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import bitformDefaultTheme from './themes/1_bitformDefault/1_bitformDefault'
+import bitformDefaultTheme from './themes/1_bitformDefault'
+import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
+import atlassianTheme from './themes/2_atlassian'
 import individual from './themes/individual/individual'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import ThemeStyleReset from './ThemeStyleReset'
@@ -84,11 +85,9 @@ export default function ThemeQuickTweaksCustomizer() {
   }
 
   const getThemeWiseStyle = (theme, fk, type, dir) => {
-    const themes = {
-      bitformDefault: bitformDefaultTheme({ fieldKey: fk, type, direction: dir }),
-      individual: individual({ fk, type, direction: dir }),
-    }
-    return themes[theme]
+    if (theme === 'bitformDefault') return bitformDefaultTheme({ fieldKey: fk, type, direction: dir })
+    if (theme === 'atlassian') return atlassianTheme({ fieldKey: fk, type, direction: dir })
+    return individual({ fieldKey: fk, type, direction: dir })
   }
 
   const resetStyle = () => {

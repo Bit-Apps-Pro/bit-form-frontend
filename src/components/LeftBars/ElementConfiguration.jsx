@@ -375,7 +375,7 @@ export default function ElementConfiguration({ fldKey }) {
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--label-action')}
             />
 
-            {/* <NavBtn
+            <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
               subRoute={fldKey}
               route="filepond--panel-root"
@@ -383,7 +383,7 @@ export default function ElementConfiguration({ fldKey }) {
               offset="3.1"
               highlightSelector={`[data-dev-filepond--panel-root="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'filepond--panel-root')}
-            /> */}
+            />
 
             <NavBtn
               cssSelector={`.${fldKey}-${styleClasses.button[0]}`}

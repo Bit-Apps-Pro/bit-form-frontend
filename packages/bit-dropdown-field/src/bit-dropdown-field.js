@@ -334,6 +334,7 @@ export default class BitDropdownField {
       this.#selectedOptImgElm.src = this.#placeholderImage
       this.#handlePlaceholderImgCls(this.#selectedOptImgElm)
     }
+    this.value = ''
     if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips([])
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
     if (this.#config.selectedOptClearable) this.#selectedOptClearBtnElm.style.display = 'none'
@@ -452,6 +453,7 @@ export default class BitDropdownField {
     if (!this.#selectedOptValue) this.#clearSelectedOption()
     if (!selectedItem) return
 
+    this.value = values
     if (this.#config.selectedOptImage) {
       if (this.#config.multipleSelect) {
         if (valueArr.length > 1) {
