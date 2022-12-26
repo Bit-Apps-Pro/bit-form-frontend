@@ -50,7 +50,7 @@ export default function ThemeGallary() {
       <h4 className={css(themeGalStyle.title)}>Themes</h4>
       <div className={css(themeGalStyle.thm_container)}>
         {themes.map(theme => (
-          <ThemeGallary.Card
+          <ThemePreviewCard
             key={theme.name}
             applyThemeAction={() => handleThemeApply(theme.slug)}
             name={theme.name}
@@ -63,7 +63,7 @@ export default function ThemeGallary() {
   )
 }
 
-const Card = ({ name, img, isActive, applyThemeAction }) => {
+const ThemePreviewCard = ({ name, img, isActive, applyThemeAction }) => {
   const { formType, formID } = useParams()
   const { css } = useFela()
 
@@ -108,8 +108,6 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
     </div>
   )
 }
-
-ThemeGallary.Card = Card
 
 const themeGalStyle = {
   wrp: { bd: 'var(--white-100)' },
