@@ -60,6 +60,7 @@ import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefau
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/2_atlassian'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
+import noStyleTheme from './style-new/themes/0_noStyle'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -317,6 +318,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setStyles(prevStyles => {
       newStyles = produce(prevStyles, draftStyle => {
         const globalTheme = draftStyle.theme
+
         if (globalTheme === 'bitformDefault') {
           const defaultFieldStyle = bitformDefaultTheme({
             type: processedFieldData.typ,
@@ -333,6 +335,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
         if (globalTheme === 'atlassian') {
           draftStyle.fields[newBlk] = atlassianTheme({
+            type: processedFieldData.typ,
+            fieldKey: newBlk,
+            direction: themeVars['--dir'],
+          })
+        }
+
+        if (globalTheme === 'noStyle') {
+          draftStyle.fields[newBlk] = noStyleTheme({
             type: processedFieldData.typ,
             fieldKey: newBlk,
             direction: themeVars['--dir'],
