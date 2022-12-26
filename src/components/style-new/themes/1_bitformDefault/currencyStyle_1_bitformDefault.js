@@ -172,6 +172,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         border: '0 !important',
         'font-family': 'inherit',
         outline: 0,
+        height: 'auto',
         width: 'calc(100% - 50px)',
         ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
         ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
