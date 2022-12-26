@@ -1,12 +1,15 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
-export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
+export default function buttonStyle_1_bitformDefault({
+  fk, breakpoint, direction, colorScheme, align, txtAlign, btnTyp, fulW,
+}) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       [`.${fk}-fld-wrp`]: {
         ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
         display: 'flex',
+        ...align && { 'justify-content': align },
       },
       // [`.${fk}-fld-wrp`]: {
       //   display: 'flex',
@@ -27,8 +30,8 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'font-size': 'var(--btn-fs)!important',
         padding: 'var(--btn-p)!important',
         // 'background-color': 'var(--btn-bgc)',
-        background: 'var(--btn-bg)',
-        color: 'var(--btn-c)',
+        background: btnTyp === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'var(--btn-bg)',
+        color: btnTyp === 'reset' ? 'hsla(208, 46%, 25%, 100)' : 'var(--btn-c)',
         'font-weight': 'var(--btn-fw)',
         'border-style': 'var(--btn-bdr)',
         'border-color': 'var(--btn-bdr-clr)',
@@ -42,9 +45,10 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
         margin: 'var(--btn-m)',
         outline: 'none',
         display: 'flex',
-        'justify-content': 'center',
+        'justify-content': txtAlign || 'center',
         'align-items': 'center',
         transition: 'background-color 0.2s, transform 0.2s',
+        ...fulW && { width: '100%' },
       },
       [`.${fk}-btn:hover`]: {
         'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
@@ -68,12 +72,14 @@ export default function buttonStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-btn-pre-i`]: {
         width: '20px',
         height: '20px',
-        margin: '0px 5px 0px 0px',
+        ...direction !== 'rtl' && { margin: '0px 5px 0px 0px' },
+        ...direction === 'rtl' && { margin: '0px 0px 0px 5px' },
       },
       [`.${fk}-btn-suf-i`]: {
         width: '20px',
         height: '20px',
-        margin: '0px 0px 0px 5px',
+        ...direction !== 'rtl' && { margin: '0px 0px 0px 5px' },
+        ...direction === 'rtl' && { margin: '0px 5px 0px 0px' },
       },
       [`.${fk}-hlp-txt`]: {
         background: 'var(--hlp-txt-bg, none)',

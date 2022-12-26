@@ -8,13 +8,17 @@ export const changeFormStylesDir = (style, dir) => produce(style, drft => {
     const fieldKey = fieldsKeysArr[i]
     if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
       if (drft.fields[fieldKey].overrideGlobalTheme.length === 0) {
-        handleFormDirStyleToggle(drft, fieldKey, dir)
+        if (drft.theme === 'bitformDefault') {
+          bitformDefaultThemeDirStyle(drft, fieldKey, dir)
+        } else if (drft.theme === 'atlassian') {
+          atlassianThemeDirStyle(drft, fieldKey, dir)
+        }
       }
     }
   }
 })
 
-const handleFormDirStyleToggle = (style, fieldKey, dir) => {
+const bitformDefaultThemeDirStyle = (style, fieldKey, dir) => {
   const { classes = {}, fieldType = '' } = style.fields[fieldKey]
   if (isObjectEmpty(classes)) return
   switch (fieldType) {
@@ -27,6 +31,7 @@ const handleFormDirStyleToggle = (style, fieldKey, dir) => {
       if (otherInp) otherInp.margin = switchXSpacing(otherInp.margin)
       break
     }
+    case 'select':
     case 'country':
     case 'currency':
     case 'phone-number': {
@@ -41,20 +46,72 @@ const handleFormDirStyleToggle = (style, fieldKey, dir) => {
       const phoneNumberInput = classes?.[`.${fieldKey}-phone-number-input`]
       if (phoneNumberInput) phoneNumberInput.padding = switchXSpacing(phoneNumberInput.padding)
       const countryOptSearchInput = classes?.[`.${fieldKey}-opt-search-input`]
-      if (countryOptSearchInput) switchXPadding(countryOptSearchInput, dir === 'rtl' ? 'right' : 'left', '41px')
+      if (countryOptSearchInput) countryOptSearchInput.padding = switchXSpacing(countryOptSearchInput.padding)
       const countryOptSearchIcn = classes?.[`.${fieldKey}-opt-search-icn`]
-      if (countryOptSearchIcn) switchXPositions(countryOptSearchIcn, dir === 'rtl' ? 'right' : 'left', '13px')
+      if (countryOptSearchIcn) switchXProperties(countryOptSearchIcn, dir === 'rtl' ? 'right' : 'left', '13px')
       const countrySearchClearBtn = classes?.[`.${fieldKey}-search-clear-btn`]
-      if (countrySearchClearBtn) switchXPositions(countrySearchClearBtn, dir === 'rtl' ? 'left' : 'right', '6px')
+      if (countrySearchClearBtn) switchXProperties(countrySearchClearBtn, dir === 'rtl' ? 'left' : 'right', '6px')
       const countryInputClearBtn = classes?.[`.${fieldKey}-input-clear-btn`]
-      if (countryInputClearBtn) switchXPositions(countryInputClearBtn, dir === 'rtl' ? 'left' : 'right', '6px')
+      if (countryInputClearBtn) switchXProperties(countryInputClearBtn, dir === 'rtl' ? 'left' : 'right', '6px')
       break
     }
-    case 'select': {
-      const selectOptSearchIcn = classes?.[`.${fieldKey}-opt-search-icn`]
-      if (selectOptSearchIcn) switchXPositions(selectOptSearchIcn, dir === 'rtl' ? 'right' : 'left', '11px')
-      const searchClearBtn = classes?.[`.${fieldKey}-search-clear-btn`]
-      if (searchClearBtn) switchXPositions(searchClearBtn, dir === 'rtl' ? 'left' : 'right', '8px')
+    case 'button': {
+      const btnPrefixIcn = classes?.[`.${fieldKey}-btn-pre-i`]
+      if (btnPrefixIcn) btnPrefixIcn.margin = switchXSpacing(btnPrefixIcn.margin)
+      const btnSuffixIcn = classes?.[`.${fieldKey}-btn-suf-i`]
+      if (btnSuffixIcn) btnSuffixIcn.margin = switchXSpacing(btnSuffixIcn.margin)
+      break
+    }
+    default:
+      break
+  }
+}
+
+const atlassianThemeDirStyle = (style, fieldKey, dir) => {
+  const { classes = {}, fieldType = '' } = style.fields[fieldKey]
+  if (isObjectEmpty(classes)) return
+  switch (fieldType) {
+    case 'check':
+    case 'radio':
+    case 'decision-box': {
+      const checkBx = classes?.[`.${fieldKey}-bx`]
+      if (checkBx) checkBx.margin = switchXSpacing(checkBx.margin)
+      const otherInp = classes?.[`.${fieldKey}-other-inp`]
+      if (otherInp) otherInp.margin = switchXSpacing(otherInp.margin)
+      break
+    }
+    case 'select':
+    case 'country':
+    case 'currency':
+    case 'phone-number': {
+      const countrySelectedCountryImg = classes?.[`.${fieldKey}-selected-country-img`]
+      if (countrySelectedCountryImg) countrySelectedCountryImg.margin = switchXSpacing(countrySelectedCountryImg.margin)
+      const currencySelectedCurrencyImg = classes?.[`.${fieldKey}-selected-currency-img`]
+      if (currencySelectedCurrencyImg) currencySelectedCurrencyImg.margin = switchXSpacing(currencySelectedCurrencyImg.margin)
+      const countryOptIcn = classes?.[`.${fieldKey}-option-list .opt-icn`]
+      if (countryOptIcn) countryOptIcn.margin = switchXSpacing(countryOptIcn.margin)
+      const currencyAmountInput = classes?.[`.${fieldKey}-currency-amount-input`]
+      if (currencyAmountInput) currencyAmountInput.padding = switchXSpacing(currencyAmountInput.padding)
+      const phoneNumberInput = classes?.[`.${fieldKey}-phone-number-input`]
+      if (phoneNumberInput) phoneNumberInput.padding = switchXSpacing(phoneNumberInput.padding)
+      const countryOptSearchInput = classes?.[`.${fieldKey}-opt-search-input`]
+      if (countryOptSearchInput) countryOptSearchInput.padding = switchXSpacing(countryOptSearchInput.padding)
+      const countryOptSearchIcn = classes?.[`.${fieldKey}-opt-search-icn`]
+      if (countryOptSearchIcn) {
+        switchXProperties(countryOptSearchIcn, dir === 'rtl' ? 'left' : 'right', '5px')
+        switchXProperties(countryOptSearchIcn, dir === 'rtl' ? 'border-right' : 'border-left', '1px solid var(--bg-20)')
+      }
+      const countrySearchClearBtn = classes?.[`.${fieldKey}-search-clear-btn`]
+      if (countrySearchClearBtn) switchXProperties(countrySearchClearBtn, dir === 'rtl' ? 'left' : 'right', '40px')
+      const countryInputClearBtn = classes?.[`.${fieldKey}-input-clear-btn`]
+      if (countryInputClearBtn) switchXProperties(countryInputClearBtn, dir === 'rtl' ? 'left' : 'right', '6px')
+      break
+    }
+    case 'button': {
+      const btnPrefixIcn = classes?.[`.${fieldKey}-btn-pre-i`]
+      if (btnPrefixIcn) btnPrefixIcn.margin = switchXSpacing(btnPrefixIcn.margin)
+      const btnSuffixIcn = classes?.[`.${fieldKey}-btn-suf-i`]
+      if (btnSuffixIcn) btnSuffixIcn.margin = switchXSpacing(btnSuffixIcn.margin)
       break
     }
     default:
@@ -81,14 +138,16 @@ const switchXPositions = (draft, positionName, defaultStl) => {
   delete draft.left
 }
 
-const switchXPadding = (draft, positionName, defaultStl) => {
-  if (positionName === 'left') {
-    draft['padding-left'] = draft['padding-right'] || defaultStl
-    delete draft['padding-right']
-    return
+const switchXProperties = (draft, propName, defaultStl) => {
+  const [propName1, propName2] = propName.split('-')
+  let oppositeProp = ''
+  if (propName2 && propName1 !== 'left' && propName1 !== 'right') {
+    oppositeProp = `${propName1}-${propName2 === 'left' ? 'right' : 'left'}`
+  } else {
+    oppositeProp = propName1 === 'left' ? 'right' : 'left'
   }
-  draft['padding-right'] = draft['padding-left'] || defaultStl
-  delete draft['padding-left']
+  draft[propName] = draft[oppositeProp] || defaultStl
+  delete draft[oppositeProp]
 }
 
 const switchFlexContent = justifyCont => {

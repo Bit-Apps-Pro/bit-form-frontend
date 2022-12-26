@@ -86,7 +86,7 @@ export default function LayerAccordion({
       data-testid={dataTestId}
     >
       <div
-        className={`btgl ${css({ w: '100%' })}`}
+        className={`btgl ${css({ w: '100%' }, active && cls.navBtnActive)}`}
         tabIndex="-1"
         role="button"
         onClick={toggleAccordion}
@@ -247,4 +247,5 @@ const cls = {
   active: {
     bd: 'hsl(0deg 13% 97%)',
   },
+  navBtnActive: { bd: '#eeeff7' },
 }

@@ -8,8 +8,6 @@ import { useRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
-import BorderIcn from '../../../../Icons/BorderIcn'
-import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
@@ -45,6 +43,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const fldStyleObj = styles?.fields?.[fieldKey]
   const elementKey = getActualElementKey(element)
   let borderPropObj
+
   try {
     if (!fldStyleObj && rightBar === 'theme-customize') {
       borderPropObj = editorConfig[elementKey].properties.border

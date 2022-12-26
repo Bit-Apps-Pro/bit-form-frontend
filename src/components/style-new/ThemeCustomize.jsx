@@ -21,6 +21,7 @@ import FormContainerCustomizer from './FormContainerCustomizer'
 import FormWrapperCustomizer from './FormWrapperCustomizer'
 import HelperTextCustomizer from './HelperTextCustomizer'
 import IcnCustomizer from './IcnCustomizer'
+import InputCustomizer from './InputCustomizer'
 import LabelContainerCustomizer from './LabelContainerCustomizer'
 import LabelCustomizer from './LabelCustomizer'
 import SubTitleCustomizer from './SubTitleCustomizer'
@@ -50,6 +51,7 @@ export default function ThemeCustomize() {
       'sub-titl': 'Subtitle(s)',
       'sub-titl-pre-i': 'Subtitle Leading Icon(s)',
       'sub-titl-suf-i': 'Subtitle Trailing Icon(s)',
+      fld: 'Input(s)',
       'pre-i': 'Input Leading Icon(s)',
       'suf-i': 'Input Trailing Icons',
       'hlp-txt': 'Helper Text(s)',
@@ -96,6 +98,7 @@ export default function ThemeCustomize() {
         {element === 'label-containers' && <LabelContainerCustomizer />}
         {element === 'lbl' && <LabelCustomizer />}
         {element === 'sub-titl' && <SubTitleCustomizer />}
+        {element === 'fld' && <InputCustomizer />}
         {element === 'hlp-txt' && <HelperTextCustomizer />}
         {element === 'err-msg' && <ErrorMessagesCustomizer />}
         {element === 'btn' && <ButtonCustomizer />}

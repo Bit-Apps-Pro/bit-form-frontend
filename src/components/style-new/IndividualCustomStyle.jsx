@@ -183,6 +183,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'option-list .opt-suffix': 'Option Suffix',
     'option-list .opt-prefix': 'Option Prefix',
     divider: 'Divider',
+    bx: fieldType === 'radio' ? 'Radio Box' : 'Check Box',
   }
 
   const fldTitle = getTitle[elementKey]
