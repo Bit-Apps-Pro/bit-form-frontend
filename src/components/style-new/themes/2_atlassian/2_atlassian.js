@@ -24,7 +24,7 @@ import { msgDefaultConfig } from '../../styleHelpers'
 import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
 
 export default function atlassianTheme({
-  type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
+  type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
 }) {
   const lgLightFieldStyles = {}
   const lgDarkFieldStyles = {}
@@ -60,8 +60,10 @@ export default function atlassianTheme({
     case 'month':
     case 'week':
     case 'color':
-    case 'textarea':
-      return text({ type, fk, breakpoint, colorScheme })
+    case 'textarea': {
+      const { fldPrefix, fldSuffix } = textOptions
+      return text({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix })
+    }
     case 'decision-box':
       return decisionBox({ type, fk, direction, breakpoint, colorScheme })
     case 'check':
@@ -73,8 +75,12 @@ export default function atlassianTheme({
       return image({ type, fk, breakpoint, colorScheme })
     case 'divider':
       return divider({ type, fk, breakpoint, colorScheme })
-    case 'button':
-      return button({ type, fk, direction, breakpoint, colorScheme })
+    case 'button': {
+      const { align, txtAlign, btnTyp, fulW } = buttonOptions
+      return button({
+        type, fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+      })
+    }
     case 'advanced-file-up':
       return advancedFileUP({ type, fk, breakpoint, colorScheme })
     case 'html':
@@ -99,12 +105,12 @@ export default function atlassianTheme({
       return razorpay({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
-        lgLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
-        lgDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark' })
-        mdLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'light' })
-        mdDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'dark' })
-        smLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'light' })
-        smDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark' })
+        lgLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        lgDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        mdLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        mdDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        smLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        smDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
       })
 
       return {
@@ -183,14 +189,14 @@ const lgLightConfMsg = [
   },
 ]
 
-const text = ({ type, fk, breakpoint, colorScheme }) => {
+const text = ({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'atlassian',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: textStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
+      classes: textStyle_2_atlassian({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }),
     }
   }
   return {}
@@ -261,14 +267,18 @@ const divider = ({ type, fk, breakpoint, colorScheme }) => {
   return {}
 }
 
-const button = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const button = ({
+  type, fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+}) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'atlassian',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: buttonStyle_2_atlassian({ fk, direction, breakpoint, colorScheme }),
+      classes: buttonStyle_2_atlassian({
+        fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+      }),
     }
   }
   return {}
