@@ -16,6 +16,7 @@ export default function countryStyle_2_atlassian({ fk, direction, breakpoint, co
           'border-color': 'transparent',
           margin: '0 !important',
           transition: '',
+          border: '',
         },
         [`.${fk}-option-list .option:hover:not(.selected-opt)`]: {
           'border-color': 'var(--global-accent-color)',
