@@ -78,7 +78,8 @@ export const multiAssign = (obj, assignArr) => {
     }
   }
 }
-const forEach = (array, iteratee) => {
+
+export const forEach = (array, iteratee) => {
   let index = -1
   const { length } = array
   // eslint-disable-next-line no-plusplus

@@ -4,14 +4,14 @@
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
   $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
 } from '../../GlobalStates/ThemeVarsState'
 import { select } from '../../Utils/globalHelpers'
-import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
+import { deepCopy, forEach, getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
 import advancedFileUp_1_bitformDefault from './themes/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './themes/1_bitformDefault/buttonStyle_1_bitformDefault'
@@ -491,6 +491,31 @@ export const removeUnusedStyles = () => {
     smLightStyles: smLightStylesUpdated,
     smDarkStyles: smDarkStylesUpdated,
   }
+}
+
+const addImportantToClasses = classesObj => {
+  if (isObjectEmpty(classesObj)) return classesObj
+  const classKeys = Object.keys(classesObj)
+  forEach(classKeys, classKey => {
+    const props = classesObj[classKey]
+    const propKeys = Object.keys(props)
+    forEach(propKeys, propKey => {
+      let propVal = props[propKey]
+      if (typeof propVal === 'number') propVal = propVal.toString()
+      if (propVal.match(/!important/g) || !propVal) return
+      classesObj[classKey][propKey] = `${propVal} !important`
+    })
+  })
+
+  return classesObj
+}
+
+export const generateStylesWithImportantRule = styles => {
+  const { addImportantRuleToStyles } = getRecoil($builderSettings)
+  if (!addImportantRuleToStyles) return styles
+  if (isObjectEmpty(styles)) return styles
+
+  return addImportantToClasses(deepCopy(styles))
 }
 
 const breakpointAndColorScheme = {
