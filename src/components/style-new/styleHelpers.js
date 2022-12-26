@@ -72,7 +72,7 @@ export const json2CssStr = (className, jsonValue) => {
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
   objArr.forEach(([property, value]) => {
-    if (property && value) {
+    if (property !== '' && value !== '') {
       cssStr += `${property}:${value};`
     }
   })
