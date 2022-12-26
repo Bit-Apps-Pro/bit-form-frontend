@@ -119,8 +119,8 @@ export default class BitCurrencyField {
     if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '35px'
-      this.#clearSearchBtnElm.style.display = 'none'
+      this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
+      this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
     this.#searchInputElm.value = ''
@@ -306,7 +306,7 @@ export default class BitCurrencyField {
   #handleDefaultCurrencyInputValue() {
     if (!this.#currencyHiddenInputElm.value) return
     this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
-    if (this.#config.selectedCurrencyClearable) this.#clearCurrencyInputElm.style.display = 'grid'
+    if (this.#config.selectedCurrencyClearable) this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'grid')
   }
 
   #handleKeyboardNavigation(e) {
@@ -450,9 +450,9 @@ export default class BitCurrencyField {
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', numValue || '')
     if (this.#config.selectedCurrencyClearable) {
       if (numValue) {
-        this.#clearCurrencyInputElm.style.display = 'grid'
+        this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'grid')
       } else {
-        this.#clearCurrencyInputElm.style.display = 'none'
+        this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'none')
       }
     }
   }
@@ -493,6 +493,10 @@ export default class BitCurrencyField {
         this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
+  }
+
+  #setStyleProperty(elm, property, value) {
+    elm.style.setProperty(property, value, 'important')
   }
 
   #setRowHeightOnMount() {
@@ -686,10 +690,10 @@ export default class BitCurrencyField {
         filteredOptions = [{ i: 0, lbl: this.#config.noCurrencyFoundText }]
       }
       this.#options = filteredOptions
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'grid')
     } else {
       this.#options = this.#config.options
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
     }
 
     this.#reRenderVirtualOptions()
@@ -706,16 +710,16 @@ export default class BitCurrencyField {
     const spaceBelow = this.#window.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
-      this.#currencyNumberFieldWrapper.style.flexDirection = 'column-reverse'
-      this.#currencyNumberFieldWrapper.style.bottom = '0%'
+      this.#setStyleProperty(this.#currencyNumberFieldWrapper, 'flex-direction', 'column-reverse')
+      this.#setStyleProperty(this.#currencyNumberFieldWrapper, 'bottom', '0%')
     } else {
-      this.#currencyNumberFieldWrapper.style.flexDirection = 'column'
-      this.#currencyNumberFieldWrapper.style.removeProperty('bottom')
+      this.#setStyleProperty(this.#currencyNumberFieldWrapper, 'flex-direction', 'column')
+      this.#setStyleProperty(this.#currencyNumberFieldWrapper, 'bottom', 'auto')
     }
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
+    this.#setStyleProperty(this.#optionWrapperElm, 'max-height', `${open ? this.#config.maxHeight : 0}px`)
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#currencyNumberFieldWrapper, 'menu-open')

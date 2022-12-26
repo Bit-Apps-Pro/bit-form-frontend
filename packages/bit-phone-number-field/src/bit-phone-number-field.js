@@ -114,8 +114,8 @@ export default class BitPhoneNumberField {
     if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
     if (this.#config.searchClearable) {
-      this.#searchInputElm.style.paddingRight = '35px'
-      this.#clearSearchBtnElm.style.display = 'none'
+      this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
+      this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
     this.#searchInputElm.value = ''
@@ -135,7 +135,7 @@ export default class BitPhoneNumberField {
   #handleDefaultPhoneInputValue() {
     if (!this.#phoneHiddenInputElm.value) return
     this.#handleHiddenInputValueChange('', this.#phoneHiddenInputElm.value)
-    if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'grid'
+    if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'grid')
   }
 
   #detectCountryCodeFromIpAddress() {
@@ -324,9 +324,9 @@ export default class BitPhoneNumberField {
   #handlePhoneInput(e) {
     const { value } = e.target
     if (value) {
-      if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'grid'
+      if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'grid')
     } else {
-      if (this.#config.selectedCountryClearable) this.#clearPhoneInputElm.style.display = 'none'
+      if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
       this.#countrySelectedFromList = false
     }
 
@@ -449,6 +449,10 @@ export default class BitPhoneNumberField {
         this.#setAttribute(element, objArr[i].key, objArr[i].value)
       }
     }
+  }
+
+  #setStyleProperty(elm, property, value) {
+    elm.style.setProperty(property, value, 'important')
   }
 
   #setRowHeightOnMount() {
@@ -656,10 +660,10 @@ export default class BitPhoneNumberField {
         filteredOptions = [{ i: 0, lbl: this.#config.noCountryFoundText }]
       }
       this.#options = filteredOptions
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'grid')
     } else {
       this.#options = this.#config.options
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
     }
 
     this.#reRenderVirtualOptions()
@@ -676,16 +680,16 @@ export default class BitPhoneNumberField {
     const spaceBelow = this.#window.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
-      this.#phoneNumberFieldWrapper.style.flexDirection = 'column-reverse'
-      this.#phoneNumberFieldWrapper.style.bottom = '0%'
+      this.#setStyleProperty(this.#phoneNumberFieldWrapper, 'flex-direction', 'column-reverse')
+      this.#setStyleProperty(this.#phoneNumberFieldWrapper, 'bottom', '0%')
     } else {
-      this.#phoneNumberFieldWrapper.style.flexDirection = 'column'
-      this.#phoneNumberFieldWrapper.style.removeProperty('bottom')
+      this.#setStyleProperty(this.#phoneNumberFieldWrapper, 'flex-direction', 'column')
+      this.#setStyleProperty(this.#phoneNumberFieldWrapper, 'bottom', 'auto')
     }
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
+    this.#setStyleProperty(this.#optionWrapperElm, 'max-height', `${open ? this.#config.maxHeight : 0}px`)
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#phoneNumberFieldWrapper, 'menu-open')
