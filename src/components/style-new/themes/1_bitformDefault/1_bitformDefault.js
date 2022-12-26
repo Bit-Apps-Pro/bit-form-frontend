@@ -23,7 +23,7 @@ import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
 import { msgDefaultConfig } from '../../styleHelpers'
 
 export default function bitformDefaultTheme({
-  type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
+  type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
 }) {
   const lgLightFieldStyles = {}
   const lgDarkFieldStyles = {}
@@ -59,8 +59,10 @@ export default function bitformDefaultTheme({
     case 'month':
     case 'week':
     case 'color':
-    case 'textarea':
-      return text({ type, fk, breakpoint, colorScheme })
+    case 'textarea': {
+      const { fldPrefix, fldSuffix } = textOptions
+      return text({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix })
+    }
     case 'decision-box':
       return decisionBox({ type, fk, direction, breakpoint, colorScheme })
     case 'check':
@@ -72,8 +74,12 @@ export default function bitformDefaultTheme({
       return image({ type, fk, breakpoint, colorScheme })
     case 'divider':
       return divider({ type, fk, breakpoint, colorScheme })
-    case 'button':
-      return button({ type, fk, direction, breakpoint, colorScheme })
+    case 'button': {
+      const { align, txtAlign, btnTyp, fulW } = buttonOptions
+      return button({
+        type, fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+      })
+    }
     case 'advanced-file-up':
       return advancedFileUP({ type, fk, breakpoint, colorScheme })
     case 'html':
@@ -98,12 +104,12 @@ export default function bitformDefaultTheme({
       return razorpay({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
-        lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
-        lgDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark' })
-        mdLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'light' })
-        mdDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'dark' })
-        smLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'light' })
-        smDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark' })
+        lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        lgDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        mdLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        mdDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'md', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        smLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
+        smDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
       })
 
       return {
@@ -528,14 +534,14 @@ const lgLightConfMsg = [
   },
 ]
 
-const text = ({ type, fk, breakpoint, colorScheme }) => {
+const text = ({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix }) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }),
+      classes: textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }),
     }
   }
   return {}
@@ -606,14 +612,18 @@ const divider = ({ type, fk, breakpoint, colorScheme }) => {
   return {}
 }
 
-const button = ({ type, fk, direction, breakpoint, colorScheme }) => {
+const button = ({
+  type, fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+}) => {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       theme: 'bitformDefault',
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: buttonStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+      classes: buttonStyle_1_bitformDefault({
+        fk, direction, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
+      }),
     }
   }
   return {}

@@ -1,7 +1,11 @@
 import inputWrapperClasses from '../common/inputWrapperClasses'
+import { paddingGenerator } from '../../styleHelpers'
 
 /* eslint-disable camelcase */
-export default function textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }) {
+export default function textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }) {
+  let inpPadding = 'var(--fld-p)!important'
+  if (fldPrefix) inpPadding = paddingGenerator(inpPadding, 'left', true)
+  if (fldSuffix) inpPadding = paddingGenerator(inpPadding, 'right', true)
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
@@ -21,7 +25,7 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
         color: 'var(--global-font-color) !important',
-        padding: 'var(--fld-p)!important',
+        padding: inpPadding,
         margin: 'var(--fld-m)!important',
         'line-height': '1.4 !important',
         height: type === 'textarea' ? '' : '40px',

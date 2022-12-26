@@ -29,7 +29,6 @@ export default function themeProvider(themeSlug, fieldsArr, formId) {
     theme.themeColors = bitformDefaultTheme({ type: 'themeColors' })
     theme.themeVars = bitformDefaultTheme({ type: 'themeVars' })
     theme.styles = bitformDefaultTheme({ fieldsArr, formId })
-    console.log({ theme })
     return theme
   }
 
@@ -37,7 +36,6 @@ export default function themeProvider(themeSlug, fieldsArr, formId) {
     theme.themeColors = atlassianTheme({ type: 'themeColors' })
     theme.themeVars = atlassianTheme({ type: 'themeVars' })
     theme.styles = atlassianTheme({ fieldsArr, formId })
-    console.log({ theme })
     return theme
   }
 }

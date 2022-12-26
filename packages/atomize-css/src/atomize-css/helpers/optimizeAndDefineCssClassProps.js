@@ -26,6 +26,7 @@ export default function optimizeAndDefineCssClassProps(selectorObj, cssVarDefina
           if (isFloat(value)) {
             value.toString().replace(/(?<=^0|,|\s*,\s*|\s)0*\./g, '.')
           }
+          if (value === undefined || value === null) value = ''
           let newValue = value
             .trim()
             .replace(/\s{2,}/g, ' ')

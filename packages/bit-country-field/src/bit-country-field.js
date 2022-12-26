@@ -73,6 +73,8 @@ export default class BitCountryField {
 
   #onChange
 
+  #isReset = false
+
   constructor(selector, config) {
     this.#setConfigPropertiesToVariables(config)
     if (typeof selector === 'string') {
@@ -320,7 +322,7 @@ export default class BitCountryField {
     this.#setTextContent(this.#selectedCountryLblElm, this.#placeholder)
     if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm.style.display = 'none'
     this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Selected country cleared')
-    this.#dropdownWrapperElm.focus()
+    if (!this.#isReset) this.#dropdownWrapperElm.focus()
     this.value = ''
     setTimeout(() => {
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder)
@@ -685,8 +687,10 @@ export default class BitCountryField {
   // make public reset api for all custom field
   reset() {
     // if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm?.click()
+    this.#isReset = true
     this.#clearSelectedCountry()
     this.destroy()
     this.init()
+    this.#isReset = false
   }
 }

@@ -13,7 +13,7 @@ export default function selectStyle_1_BitformDefault({ fk, breakpoint, colorSche
         // 'font-family': 'var(--g-font-family)',
         width: '100% !important',
         outline: 'none !important',
-        'background-color': 'var(--global-fld-bg-color, transparent)!important',
+        'background-color': 'var(--global-fld-bg-color)!important',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad)!important',

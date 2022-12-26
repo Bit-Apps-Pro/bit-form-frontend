@@ -21,8 +21,6 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
   const [loaded, setLoaded] = useState(false)
   const location = useLocation()
 
-  console.log('appSettingsContext', appSettingsContext)
-
   useEffect(() => {
     if (!clientID) {
       addFormUpdateError({

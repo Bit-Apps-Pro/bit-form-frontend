@@ -45,10 +45,12 @@ export default function titleStyle_1_bitformDefault({ fk, breakpoint, colorSchem
       [`.${fk}-sub-titl-pre-i`]: {
         width: '20px',
         height: '20px',
+        margin: '0 5px 0 0',
       },
       [`.${fk}-sub-titl-suf-i`]: {
         width: '20px',
         height: '20px',
+        margin: '0 0 0 5px',
       },
     }
   }
