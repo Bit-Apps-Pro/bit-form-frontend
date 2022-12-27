@@ -20,8 +20,8 @@ import recaptchaStyle_2_atlassian from './recaptchaStyle_2_atlassian'
 import selectStyle_2_atlassian from './selectStyle_2_atlassian'
 import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
-import { msgDefaultConfig } from '../../styleHelpers'
 import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
+import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 
 export default function atlassianTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},

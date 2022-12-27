@@ -97,7 +97,6 @@ const s = {
   },
   sliderContent: {
     w: '100%',
-    bd: 'red',
     h: '100%',
     mnw: '100%',
     tn: 'transform .4s',

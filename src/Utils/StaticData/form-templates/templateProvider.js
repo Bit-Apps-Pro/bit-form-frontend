@@ -1,8 +1,8 @@
-import { msgDefaultConfig } from '../../../components/style-new/styleHelpers'
 import themeProvider from '../../../components/style-new/themes/themeProvider'
 
 import { mergeNestedObj } from '../../globalHelpers'
 import blankTemplate from './blankTemplate'
+import { defaultConfirmations } from './defaultConfirmation'
 
 export default function templateProvider(templateSlug, formId) {
   let templateData = {}
@@ -50,29 +50,6 @@ export default function templateProvider(templateSlug, formId) {
     allThemeColors: themeColors,
     allThemeVars: themeVars,
     allStyles: styles,
-  }
-}
-
-function defaultConfirmations(formID) {
-  const { msgType, position, animation, autoHide, duration, styles } = msgDefaultConfig
-
-  return {
-    type: {
-      successMsg: [{
-        title: 'Untitled Message 1',
-        msg: '<p>Successfully Submitted.</p>',
-        config: {
-          msgType,
-          position,
-          animation,
-          autoHide,
-          duration,
-          styles,
-        },
-      }],
-      redirectPage: [{ title: 'Untitled Redirect Url 1', url: '' }],
-      webHooks: [{ title: 'Untitled Webhook 1', url: '', method: 'GET' }],
-    },
   }
 }
 

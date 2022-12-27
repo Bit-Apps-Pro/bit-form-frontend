@@ -157,7 +157,6 @@ function Message({ id, msgItem }) {
   const msgStyles = {
     msgContainer: {
       m: 'auto',
-
       w: styles?.width,
       h: 'auto',
     },
@@ -213,11 +212,10 @@ function Message({ id, msgItem }) {
   return (
     <>
       <div className={css({ p: 10, flx: '1', fd: 'column' })}>
-
         <div className={css({ flx: 1, fd: 'column', rg: 5 })}>
           <div>
             <div className={css({ flx: 'align-center', cg: 5 })}>
-              <span className={css({ w: 130 })}>{__('Message Styles')}</span>
+              <span className={css({ w: 130, fw: 500 })}>{__('Message Styles')}</span>
               <select
                 className={css(uiStyles.selectInput)}
                 name="animation"
@@ -226,20 +224,25 @@ function Message({ id, msgItem }) {
               >
                 <option value="custom-style">Custom Style</option>
               </select>
-              <button type="button" className={css(uiStyles.input, { curp: 1 })} title="Edit styles" onClick={() => setModal({ show: true })}>
+              <button
+                type="button"
+                className={css(uiStyles.input, { curp: 1 })}
+                title="Edit styles"
+                onClick={() => setModal({ show: true })}
+              >
                 <span><EditIcn size="20" /></span>
               </button>
             </div>
           </div>
           <div>
-            <span className={css({ w: 130 })}>{__('Message Type')}</span>
+            <span className={css({ w: 130, fw: 500 })}>{__('Message Type')}</span>
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
             <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'below'} title={<small className="txt-dp"><b>Below of Form</b></small>} value="below" />
           </div>
           <div className={css({ flx: 1, cg: 5 })}>
             <div className={css({ flx: 'align-center' })}>
-              <span className={css({ fs: 15, w: 80 })}>Animation</span>
+              <span className={css({ fs: 16, w: 80, fw: 500 })}>Animation</span>
               <select
                 className={css(uiStyles.selectInput)}
                 name="animation"
@@ -253,7 +256,7 @@ function Message({ id, msgItem }) {
             </div>
             {((msgType === 'snackbar' || ['slide-up', 'slide-down'].includes(animation)) && msgType !== 'below') && (
               <div className={css({ flx: 'align-center' })}>
-                <span className={css({ fs: 15, w: 65 })}>Position</span>
+                <span className={css({ fs: 16, w: 65, fw: 500 })}>Position</span>
                 <select
                   className={css(uiStyles.selectInput)}
                   name="position"
@@ -267,35 +270,48 @@ function Message({ id, msgItem }) {
               </div>
             )}
             <div className={css({ flx: 'align-center' })}>
-              <span className={css({ fs: 15, w: 80 })}>Auto Hide</span>
-              <SingleToggle name={`auto-hide-check-${id}`} action={handleAutoHide} isChecked={allConf.type.successMsg[id]?.config?.autoHide} className="flx" />
+              <span className={css({ fs: 16, w: 80, fw: 500, ml: 10 })}>Auto Hide</span>
+              <SingleToggle
+                name={`auto-hide-check-${id}`}
+                action={handleAutoHide}
+                isChecked={allConf.type.successMsg[id]?.config?.autoHide}
+                className="flx"
+              />
             </div>
             {allConf.type.successMsg[id]?.config?.autoHide && (
               <div className={css({ flx: 'align-center' })}>
-                <span className={css({ fs: 15, w: 70 })}>Duration</span>
-                <input placeholder="Duration" className={css(uiStyles.input, { w: 50 })} type="number" value={duration} onChange={handleDelay} />
+                <span className={css({ fs: 16, w: 70, fw: 500, ml: 10 })}>Duration</span>
+                <input
+                  placeholder="Duration"
+                  className={css(uiStyles.input, { w: 50 })}
+                  type="number"
+                  value={duration}
+                  onChange={handleDelay}
+                  aria-label="Confirmation auto hide aftere duration"
+                />
                 <small>Sec</small>
               </div>
             )}
           </div>
           <div>
-            <button type="button" className={css(app.btn, app.blueGrd, { mt: 0 })} onClick={() => setMsgActive(!msgActive)}>Preview</button>
+            <button
+              type="button"
+              className={css(app.btn, app.blueGrd, { mt: 0 })}
+              onClick={() => setMsgActive(!msgActive)}
+            >
+              Preview
+            </button>
           </div>
         </div>
       </div>
-      <TinyMCE
-        id={`conf-${id}`}
-        formFields={fieldsArr}
-        value={msgItem?.msg}
-        onChangeHandler={val => handleMsg(val, id)}
-      />
+
       <SliderModal
         title="Confirmation Style"
         show={modal.show}
         setModal={setModal}
         className={css({ h: '500px !important', w: '550px !important' })}
       >
-        <div className="confirmation-style">
+        <div className="layout-wrapper confirmation-style">
           <div className={`style-preview ${css({ h: '250px', p: '40px 20px', ow: 'auto', bd: '#E8E8E8' })}`}>
             <div className={`${css(msgStyles.msgContainer)}`}>
               <div className={`${css(msgStyles.msgBackground)}`}>
@@ -564,6 +580,12 @@ function Message({ id, msgItem }) {
         message={msgItem?.msg}
         confirmationStyles={styles || ''}
       />
+      <TinyMCE
+        id={`conf-${id}`}
+        formFields={fieldsArr}
+        value={msgItem?.msg}
+        onChangeHandler={val => handleMsg(val, id)}
+      />
     </>
   )
 }
@@ -653,6 +675,7 @@ const uiStyles = {
     bd: '#f0f0f1 !important',
     brs: '8px !important',
     b: 'none !important',
+    ':hover': { bd: 'var(--b-50-95) !important', cr: 'var(--b-50) !important' },
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
   selectInput: {
@@ -662,6 +685,8 @@ const uiStyles = {
     bc: '#f0f0f1 !important',
     brs: '8px !important',
     b: 'none !important',
+    cr: 'var(--dp-blue) !important',
+    ':hover': { cr: 'var(--b-50) !important', },
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
   colorInput: {

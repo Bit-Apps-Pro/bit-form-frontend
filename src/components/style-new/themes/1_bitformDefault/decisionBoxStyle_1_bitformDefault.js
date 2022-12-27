@@ -51,11 +51,15 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         'pointer-events': 'none',
         cursor: 'not-allowed',
       },
+      [`.${fk}-ci:hover ~ [data-cl] [data-bx]`]: {
+        'border-color': 'var(--global-accent-color)',
+      },
       [`.${fk}-bx`]: {
         position: 'relative',
         height: '18px',
         width: '18px',
-        border: 'solid var(--global-font-color)',
+        'border-color': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)',
+        'border-style': 'solid',
         'border-width': '2px',
         display: 'inline-flex',
         ...direction === 'rtl' && { margin: '0 0 0 10px' },
@@ -65,7 +69,6 @@ export default function decisionBoxStyle_1_bitformDefault({ fk, direction, break
         'align-items': 'center',
         'border-radius': '5px',
       },
-      // [`.${fk}-ck`]: { 'border-radius': '5px' },
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',

@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
+import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import advancedFileUp_1_bitformDefault from './advancedFileUp_1_bitformDefault'
 import buttonStyle_1_bitformDefault from './buttonStyle_1_bitformDefault'
@@ -20,7 +21,6 @@ import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
-import { msgDefaultConfig } from '../../styleHelpers'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},

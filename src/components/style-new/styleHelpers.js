@@ -77,7 +77,9 @@ export const json2CssStr = (className, jsonValue) => {
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
   objArr.forEach(([property, value]) => {
-    cssStr += `${property}:${value};`
+    if (property !== '' && value !== '') {
+      cssStr += `${property}:${value};`
+    }
   })
   cssStr += '}'
   return className + cssStr
@@ -1025,54 +1027,6 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
-}
-
-export const msgDefaultConfig = {
-  msgType: 'snackbar',
-  position: 'bottom-right',
-  animation: 'fade',
-  autoHide: false,
-  duration: 1,
-  styles: {
-    width: '300px',
-    padding: '5px 35px 5px 20px',
-    background: '#fafafa',
-    color: '#000000',
-    borderWidth: '1px',
-    borderType: 'solid',
-    borderColor: 'gray',
-    borderRadius: '10px',
-    boxShadow: [
-      {
-        x: '0px',
-        y: '27px',
-        blur: '30px',
-        spread: '',
-        color: 'rgb(0 0 0 / 18%)',
-        inset: '',
-      },
-      {
-        x: '0px',
-        y: '5.2px',
-        blur: '9.4px',
-        spread: '5px',
-        color: 'rgb(0 0 0 / 6%)',
-        inset: '',
-      },
-      {
-        x: '0px',
-        y: '11.1px',
-        blur: '14px',
-        spread: '',
-        color: 'rgb(0 0 0 / 14%)',
-        inset: '',
-      },
-    ],
-    closeBackground: '#48484829',
-    closeHover: '#dfdfdf',
-    closeIconColor: '#5a5a5a',
-    closeIconHover: '#000',
-  },
 }
 
 export const truncatedString = (str) => (str.length > 100 ? (`${str.substring(0, 100)}...`) : str)
