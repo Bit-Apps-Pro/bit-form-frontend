@@ -13,6 +13,7 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, unitConverter } from './
 import Cooltip from './Utilities/Cooltip'
 import Input from './Utilities/Input'
 import Select from './Utilities/Select'
+import SingleToggle from './Utilities/SingleToggle'
 
 export default function BuilderSettings() {
   const { css } = useFela()
@@ -20,7 +21,7 @@ export default function BuilderSettings() {
   const [staticStylesState, setStaticStyleState] = useRecoilState($staticStylesState)
   const breakpoints = useRecoilValue($breakpoint)
   const [brkpnt, setBrkpnt] = useState(breakpoints)
-  const [{ atomicClassPrefix, darkModeConfig }, setBuilderSettings] = useRecoilState($builderSettings)
+  const [{ atomicClassPrefix, darkModeConfig, addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
   let darkModePrefereceInitialValue = 'disabled'
   if (darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
   if (darkModeConfig.darkModeSelector) darkModePrefereceInitialValue = 'selector'
@@ -58,6 +59,10 @@ export default function BuilderSettings() {
 
   const handleClassPrefix = (value) => {
     setBuilderSettings(prv => ({ ...prv, atomicClassPrefix: value }))
+  }
+
+  const handleImportantStyles = e => {
+    setBuilderSettings(prv => ({ ...prv, addImportantRuleToStyles: e.target.checked }))
   }
 
   const handleDarkModeSelector = (value) => {
@@ -165,9 +170,14 @@ export default function BuilderSettings() {
           <br />
           <a href="doclink for dark mode selector">Learn More</a>
         </Cooltip>
-
       </SettingsBlock>
 
+      <SettingsBlock title="Add !important rule">
+        <SingleToggle action={handleImportantStyles} isChecked={addImportantRuleToStyles} />
+        <Cooltip>
+          Add important rule to all styles to override the conflicting styles in frontend.
+        </Cooltip>
+      </SettingsBlock>
     </div>
   )
 }
@@ -176,7 +186,7 @@ const SettingsBlock = ({ title, children }) => {
   const { css } = useFela()
   return (
     <div className={css(ut.mt2, ut.flxc)}>
-      <div className={css(ut.w1,ut.fw500, { w: 150 })}>{title}</div>
+      <div className={css(ut.w1, ut.fw500, { w: 150 })}>{title}</div>
       <div className={css(ut.flxc)}>
         {children}
       </div>
