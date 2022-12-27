@@ -7,16 +7,21 @@ import { useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import RenderStyle from '../style-new/RenderStyle'
+import RenderThemeVarsAndFormCSS from '../style-new/RenderThemeVarsAndFormCSS'
 import RenderHtml from '../Utilities/RenderHtml'
 import confirmMsgCssStyles from './confirmMsgCssStyles'
 
 export default function ConfirmMsgPreview({
-  index, msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles,
+  msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles,
 }) {
   //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)
   const { formID } = useParams()
   const setStyles = useSetRecoilState($styles)
-  const styleObject = useCallback(() => confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles), [formID, msgId, msgType, position, animation, confirmationStyles])
+
+  const styleObject = useCallback(
+    () => confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles),
+    [formID, msgId, msgType, position, animation, confirmationStyles],
+  )
 
   const delayTimeoutFunc = useRef(null)
   const handleBackdrop = ({ target }) => {
@@ -49,6 +54,7 @@ export default function ConfirmMsgPreview({
   return (
     <>
       <RenderStyle styleClasses={styleObject()} />
+      <RenderThemeVarsAndFormCSS />
       <div
         role="dialog"
         aria-hidden="true"
@@ -56,16 +62,23 @@ export default function ConfirmMsgPreview({
         onClick={handleBackdrop}
         className={`msg-container-${msgId} ${active ? 'active' : 'deactive'}`}
       >
-        <div role="button" className={`msg-background-${msgId}`}>
+        <div role="button" className={`layout-wrapper msg-background-${msgId}`}>
           <div className={`msg-content-${msgId}`}>
             <button
               className={`close-${msgId}`}
               type="button"
               onClick={() => setActive(false)}
             >
-              <svg className={`close-icn-${msgId}`} viewBox="0 0 30 30">
-                <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="4" y1="3.88" x2="26" y2="26.12" />
-                <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" x1="26" y1="3.88" x2="4" y2="26.12" />
+              <svg
+                className={`close-icn-${msgId}`}
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 30 30"
+              >
+                <line x1="4" y1="3.88" x2="26" y2="26.12" />
+                <line x1="26" y1="3.88" x2="4" y2="26.12" />
               </svg>
             </button>
             <div><RenderHtml html={message} /></div>

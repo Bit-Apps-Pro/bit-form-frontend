@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
+import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import advancedFileUp_0_noStyle from './advancedFileUp_0_noStyle'
 import buttonStyle_0_noStyle from './buttonStyle_0_noStyle'
@@ -20,7 +21,6 @@ import recaptchaStyle_0_noStyle from './recaptchaStyle_0_noStyle'
 import selectStyle_0_noStyle from './selectStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
 import titleStyle_0_noStyle from './titleStyle_0_noStyle'
-import { msgDefaultConfig } from '../../styleHelpers'
 
 export default function noStyleTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,

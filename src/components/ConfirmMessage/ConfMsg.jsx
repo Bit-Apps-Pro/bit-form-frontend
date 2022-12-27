@@ -18,7 +18,7 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { JCOF } from '../../Utils/globalHelpers'
 import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { msgDefaultConfig } from '../style-new/styleHelpers'
+import { msgDefaultConfig } from '../../Utils/StaticData/form-templates/defaultConfirmation'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
@@ -38,6 +38,7 @@ function ConfMsg({ removeIntegration }) {
   const setStyles = useSetRecoilState($styles)
   const allConfirmations = deepCopy(allConf)
   const { css } = useFela()
+
   useEffect(() => {
     if (!isNewThemeStyleLoaded) {
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
