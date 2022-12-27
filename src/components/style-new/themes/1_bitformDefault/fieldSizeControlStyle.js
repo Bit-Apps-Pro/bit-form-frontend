@@ -1,7 +1,22 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
+import { getRecoil } from 'recoil-nexus'
+import { $fields } from '../../../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../../../Utils/Helpers'
 import { assignNestedObj } from '../../styleHelpers'
+
+const getPaddingForExistIcn = (fk, size) => {
+  const fields = getRecoil($fields)
+  let value
+  if ('prefixIcn' in fields[fk] && 'suffixIcn' in fields[fk]) {
+    value = `var(--fld-p) ${size}px var(--fld-p) ${size}}px !important`
+  } else if ('prefixIcn' in fields[fk]) {
+    value = `var(--fld-p) var(--fld-p) var(--fld-p) ${size}}px !important`
+  } else if ('suffixIcn' in fields[fk]) {
+    value = `var(--fld-p) ${size}}px var(--fld-p) var(--fld-p) !important`
+  }
+  return value
+}
 
 /**
  * @function commonStyle(fk, type, fieldType)
@@ -11,8 +26,11 @@ import { assignNestedObj } from '../../styleHelpers'
  * @return style classes
 */
 export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme) {
+  const fields = getRecoil($fields)
+  let fldPadding = null
   switch (type) {
     case 'small-2':
+      fldPadding = getPaddingForExistIcn(fk, 25) || '6px 4px !important'
       return {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
         [`.${fk}-lbl-pre-i`]: { width: '16px', height: '16px' },
@@ -42,17 +60,17 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
         [`.${fk}-fld`]: {
           'font-size': '0.625rem',
-          padding: '6px 4px !important',
           height: '25px',
           'border-radius': '6px',
+          padding: fldPadding,
           ...fieldType === 'html-select' && { padding: '2px 1px' },
           ...fieldType === 'color' && { padding: '2px 1px' },
           ...fieldType === 'textarea' && { height: '40px' },
         },
 
-        ...!(fieldType === 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
-          [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
+        ...(fieldType !== 'file-up') && {
+          [`.${fk}-pre-i`]: { width: '16px', height: '16px' },
+          [`.${fk}-suf-i`]: { width: '16px', height: '16px' },
         },
         ...(fieldType === 'select' || fieldType === 'country') && {
           [`.${fk}-dpd-fld-wrp`]: {
@@ -117,6 +135,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
       }
     case 'small-1':
+      fldPadding = getPaddingForExistIcn(fk, 30) || '8px 6px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
@@ -140,7 +159,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
         [`.${fk}-fld`]: {
           'font-size': '0.8rem',
-          padding: '8px 6px',
+          ...(fldPadding !== null) && { padding: fldPadding },
           height: '30px',
           'border-radius': '8px',
           ...fieldType === 'html-select' && { padding: '3px 1px' },
@@ -155,9 +174,9 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '18px', height: '18px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '18px', height: '18px' },
 
-        ...!(fieldType === 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '34px', height: '34px' },
-          [`.${fk}-suf-i`]: { width: '34px', height: '34px' },
+        ...(fieldType !== 'file-up') && {
+          [`.${fk}-pre-i`]: { width: '20px', height: '20px' },
+          [`.${fk}-suf-i`]: { width: '20px', height: '20px' },
         },
 
         ...fieldType === 'select' && {
@@ -235,6 +254,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
     //     [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
     //   }
     case 'medium':
+      fldPadding = getPaddingForExistIcn(fk, 35) || '10px 8px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
@@ -257,7 +277,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
         [`.${fk}-fld`]: {
           'font-size': '1rem',
-          padding: '10px 8px',
+          padding: fldPadding,
           height: '40px',
           'border-radius': '11px',
           ...fieldType === 'html-select' && { padding: '5px 3px' },
@@ -272,9 +292,9 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '20px', height: '20px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '20px', height: '20px' },
 
-        ...!(fieldType === 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '40px', height: '40px' },
-          [`.${fk}-suf-i`]: { width: '40px', height: '40px' },
+        ...(fieldType !== 'file-up') && {
+          [`.${fk}-pre-i`]: { width: '25px', height: '25px' },
+          [`.${fk}-suf-i`]: { width: '25px', height: '25px' },
         },
 
         ...fieldType === 'select' && {
@@ -352,6 +372,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
     //     [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
     //   }
     case 'large-1':
+      fldPadding = getPaddingForExistIcn(fk, 40) || '11px 9px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
@@ -376,7 +397,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
         [`.${fk}-fld`]: {
           'font-size': '1.2rem',
-          padding: '11px 9px',
+          padding: fldPadding,
           height: '44px',
           'border-radius': '12px',
           ...fieldType === 'html-select' && { padding: '5px 3px' },
@@ -391,9 +412,9 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '24px', height: '24px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '24px', height: '24px' },
 
-        ...!(fieldType === 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '44px', height: '44px' },
-          [`.${fk}-suf-i`]: { width: '44px', height: '44px' },
+        ...(fieldType !== 'file-up') && {
+          [`.${fk}-pre-i`]: { width: '30px', height: '30px' },
+          [`.${fk}-suf-i`]: { width: '30px', height: '30px' },
         },
 
         ...fieldType === 'select' && {
@@ -463,6 +484,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
       }
     case 'large-2':
+      fldPadding = getPaddingForExistIcn(fk, 45) || '12px 10px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
@@ -486,7 +508,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
         [`.${fk}-fld`]: {
           'font-size': '1.4rem',
-          padding: '12px 10px',
+          padding: fldPadding,
           height: '48px',
           'border-radius': '13px',
           ...fieldType === 'html-select' && { padding: '6px 4px' },
@@ -501,9 +523,9 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-hlp-txt-pre-i`]: { width: '28px', height: '28px' },
         [`.${fk}-hlp-txt-suf-i`]: { width: '28px', height: '28px' },
 
-        ...!(fieldType === 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '48px', height: '48px' },
-          [`.${fk}-suf-i`]: { width: '48px', height: '48px' },
+        ...(fieldType !== 'file-up') && {
+          [`.${fk}-pre-i`]: { width: '35px', height: '35px' },
+          [`.${fk}-suf-i`]: { width: '35px', height: '35px' },
         },
 
         ...fieldType === 'select' && {
@@ -596,12 +618,11 @@ export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fl
 
       for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
         const comnStlProperty = comnStlProperties[popIndx]
-
         if (Object.prototype.hasOwnProperty.call(mainStlPropertiesObj, comnStlProperty)) {
           const mainStlVal = mainStlPropertiesObj[comnStlProperty]
           const comStlVal = comStlPropertiesObj[comnStlProperty]
           if (mainStlVal !== comStlVal) {
-            if (mainStlVal?.match(/(var)/gi) && tempThemeVars) {
+            if (mainStlVal?.match(/(var)/gi)?.length === 1 && tempThemeVars) {
               const mainStateVar = mainStlVal.replace(/\(|var|!important|,.*|\)/gi, '')?.trim()
               if (tempThemeVars[mainStateVar] !== comStlVal) {
                 tempThemeVars[mainStateVar] = comStlVal

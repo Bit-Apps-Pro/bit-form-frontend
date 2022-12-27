@@ -35,7 +35,7 @@ export default function SpacingControl({
     if (valu === '' || valu === null) {
       valu = getValueFromStateVar(themeVars, val)
     }
-    return valu
+    return valu || val
   }
 
   const clearHandler = () => {

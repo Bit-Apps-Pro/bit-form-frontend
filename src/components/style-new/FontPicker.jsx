@@ -10,14 +10,16 @@ export default function FontPicker({ id }) {
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const font = themeVars['--g-font-family']
+  const fontName = font === 'inherit' ? 'Inherit' : font || 'Configure'
   return (
     <button
       className={css(c.preview_wrp, c.btn, draggableModal.id === id && c.active)}
       onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id, width: 240 })}
       type="button"
       data-testid="font-picker"
+      title={fontName}
     >
-      {font === 'inherit' ? 'Inherit' : font || 'Configure'}
+      {fontName.length > 15 ? `${fontName.slice(0, 15)}...` : fontName}
     </button>
   )
 }

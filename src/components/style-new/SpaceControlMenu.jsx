@@ -9,13 +9,12 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
-export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
+export default function SpaceControlMenu({ objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { element, fieldKey } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const savedThemeVars = useRecoilValue($savedThemeVars)
   const { object, paths } = objectPaths
-
   const spaceHandler = (val, propertyPath) => {
     if (object === 'themeVars') {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
@@ -50,16 +49,15 @@ export default function SpaceControlMenu({ value: spacing, objectPaths, id }) {
     if (object === 'themeVars') return themeVars[propertyPath]
     if (object === 'styles') {
       let value = getValueByObjPath(styles, propertyPath)
+      const realValue = value?.replace(/!important/gi, '')
       const isCssVar = value?.match(/var/gi)?.[0]
       if (isCssVar === 'var') {
         const getVarProperty = value.replace(/\(|var|,.*|\)/gi, '')
         value = themeVars[getVarProperty]
       }
-      return value
+      return value || realValue
     }
   }
-
-  const checkIsResetable = (v) => (object === 'themeVars') && (savedThemeVars[v] !== themeVars[v])
 
   return (
     <>

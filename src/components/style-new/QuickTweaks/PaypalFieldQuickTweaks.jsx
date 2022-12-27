@@ -45,7 +45,7 @@ export default function PaypalFieldQuickTweaks() {
     { value: 'pay', label: 'Pay with Paypal' },
   ]
 
-  const widthValue = getValueByObjPath(styles, propertyPath('paypal-wrp', 'width'))
+  const widthValue = getValueByObjPath(styles, propertyPath('paypal-wrp', 'max-width'))
   const [fldWrpWidthVal, fldWrpWidthUnit] = [getNumFromStr(widthValue), getStrFromStr(widthValue)]
 
   const paypalStyleHandler = (name, value) => {
@@ -63,13 +63,13 @@ export default function PaypalFieldQuickTweaks() {
   }
   return (
     <>
-      <ThemeStylePropertyBlock label="Width">
+      <ThemeStylePropertyBlock label="Max Width">
         <div className={css(ut.flxc)}>
           <SizeControl
             min={150}
             max={750}
-            inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWrpWidthUnit, 'width')}
-            sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWrpWidthUnit, 'width')}
+            inputHandler={({ unit, value }) => onchangeHandler({ unit, value }, fldWrpWidthUnit, 'max-width')}
+            sizeHandler={({ unitKey, unitValue }) => onchangeHandler({ unit: unitKey, value: unitValue }, fldWrpWidthUnit, 'max-width')}
             value={fldWrpWidthVal || 0}
             unit={fldWrpWidthUnit || 'px'}
             width="128px"

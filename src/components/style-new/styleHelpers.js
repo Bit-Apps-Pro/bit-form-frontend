@@ -858,9 +858,9 @@ export const isStyleExist = (styles, fieldKey, classKeys) => {
 
 /**
  * @function paddingGenerator
- * @description This funcaiton generate padding for add or remove padding by icon position
+ * @description This function generate padding for add or remove padding by icon position
  * @param {String} padding : {Padding String};
- * @param {String} pos {Add Icon left or right positon in input field};
+ * @param {String} pos {Add Icon left or right position in input field};
  * @param {true|false} add {When padding add param value true or remove param value false }
  * @return Padding String
  */

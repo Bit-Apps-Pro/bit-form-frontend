@@ -307,7 +307,7 @@ export default function FontPickerMenu({ id }) {
             <div className={css(ut.flxClm, ut.mt2)}>
               <span className={css(fontStyle.title)}>Font Family</span>
               <input
-                value={(styles.font.fontType === 'Custom' && themeVars['--g-font-family']) || ''}
+                value={((styles.font.fontType !== 'Google') && themeVars['--g-font-family']) || ''}
                 className={css(fontStyle.url)}
                 onChange={customFontHandler}
                 name="font-family"
@@ -337,7 +337,8 @@ const fontStyle = {
     oe: 0,
     p: 5,
     ':focus': {
-      bs: '0px 0px 3px 0px var(--b-50) !important',
+      // bs: '0px 0px 3px 0px var(--b-50) !important',
+      focusShadow: 1,
       bcr: 'var(--b-92-62) !important',
       pr: '0px !important',
       '& ~ .shortcut': { dy: 'none' },
@@ -387,7 +388,8 @@ const fontStyle = {
     pl: '27px !important',
     pr: '5px !important',
     ':focus': {
-      bs: '0px 0px 3px 0px var(--b-50) !important',
+      // bs: '0px 0px 3px 0px var(--b-50) !important',
+      focusShadow: '',
       bcr: 'var(--b-92-62) !important',
       pr: '0px !important',
       '& ~ .shortcut': { dy: 'none' },

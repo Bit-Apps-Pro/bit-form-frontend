@@ -26,7 +26,6 @@ export default function SpaceControl({
   const { css } = useFela()
 
   let values = (value?.replace(/!important/gi, '') || '0px 0px 0px 0px').trim().split(' ')
-
   if (values.length === 4) {
     const distinct = values.filter((val, index, self) => self.indexOf(val) === index)
     if (distinct.length === 1) values = distinct
@@ -66,11 +65,11 @@ export default function SpaceControl({
   }
 
   const handleValues = ({ value: val, unit, id }) => {
-    console.log('handleValues', val, unit, id)
+    const unt = unit === 'var' ? 'px' : unit
     const preUnit = getStrFromStr(values[id])
-    const convertvalue = unitConverter(unit, val, preUnit)
+    const convertvalue = unitConverter(unt, val, preUnit)
 
-    values[id] = convertvalue + unit
+    values[id] = convertvalue + unt
     let v
     if (controller === 'All') {
       v = `${values[0]}`
