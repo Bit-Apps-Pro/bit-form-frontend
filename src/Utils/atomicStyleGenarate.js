@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
-import { generateStylesWithImportantRule, removeUnusedStyles } from '../components/style-new/styleHelpers'
+import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $fields, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -229,6 +229,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const lgLightStylesWithoutMergedStyles = omitByObj(lgLightStyles, styleMergeWithAtomicClasses.lgLightStyles)
   const mdlightStylesWithoutMergedStyles = omitByObj(mdLightStyles, styleMergeWithAtomicClasses.mdLightStyles)
   const smlightStylesWithoutMergedStyles = omitByObj(smLightStyles, styleMergeWithAtomicClasses.smLightStyles)
+
+  cssText += mergeOtherStylesWithAtomicCSS()
 
   return {
     atomicCssText: cssText,

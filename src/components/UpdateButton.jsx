@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
-import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import filepondCSS from 'filepond/dist/filepond.min.css'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-
 import {
   $additionalSettings,
   $breakpointSize,
@@ -33,7 +30,7 @@ import {
   $reportSelector,
   $selectedFieldId,
   $updateBtn,
-  $workflows,
+  $workflows
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
@@ -44,11 +41,11 @@ import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, isObjectEmpty, trimCSS } from '../Utils/Helpers'
+import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-import { jsObjtoCssStr, removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
+import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -187,40 +184,39 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       lgLightStyles,
     } = atomicStyles
 
-    atomicCssText += jsObjtoCssStr(staticStylesState.staticStyles)
-
-    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) atomicCssText += trimCSS(filepondCSS)
-    if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) atomicCssText += trimCSS(filepondPluginImagePreviewCSS)
     if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
 
     return { atomicCssText, atomicClassMap }
   }
 
   const generateAndSaveAtomicCss = currentFormId => {
-    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
+    if (isStyleNotLoaded) return {}
 
-    const generatedAtomicStyles = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts })
+    const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+    const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
 
-    const { atomicCssText, atomicClassMap } = mergeOtherStylesWithAtomicStyles(generatedAtomicStyles)
+    generatedAtomicStyles.layouts = sortedLayout
 
-    if (!isStyleNotLoaded && currentFormId) {
-      const generatedAtomicStylesWithFormId = isStyleNotLoaded ? {} : atomicStyleGenarate({ sortedLayout: layouts, atomicClassSuffix: currentFormId })
-      const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = mergeOtherStylesWithAtomicStyles(generatedAtomicStylesWithFormId)
+    if (!currentFormId) return generatedAtomicStyles
 
-      const atomicData = {
-        form_id: savedFormId || newFormId,
-        atomicCssText,
-        atomicCssWithFormIdText,
-        atomicClassMap,
-        atomicClassMapWithFormId,
-      }
-      bitsFetch(atomicData, 'bitforms_save_css')
-        .catch(err => console.error('save css error=', err))
+    const generatedAtomicStylesWithFormId = atomicStyleGenarate({ sortedLayout, atomicClassSuffix: currentFormId })
+    const { atomicCssText, atomicClassMap, lgLightStyles } = generatedAtomicStyles
+    const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = mergeOtherStylesWithAtomicStyles(generatedAtomicStylesWithFormId)
+
+    if (lgLightStyles?.font?.fontURL) {
+      atomicClassMap.font = lgLightStyles.font.fontURL
+      atomicClassMapWithFormId.font = lgLightStyles.font.fontURL
     }
-
-    generatedAtomicStyles.layouts = layouts
+    const atomicData = {
+      form_id: currentFormId,
+      atomicCssText,
+      atomicCssWithFormIdText,
+      atomicClassMap,
+      atomicClassMapWithFormId,
+    }
+    bitsFetch(atomicData, 'bitforms_save_css')
+      .catch(err => console.error('save css error=', err))
 
     return generatedAtomicStyles
   }
