@@ -693,10 +693,9 @@ input[type="checkbox"].disabled:checked:before {
   content: "";
   transform: scale(0);
   transition: transform .3s;
-  filter: drop-shadow(0 2px 1px #0000005e);
+  filter: drop-shadow(0 2px 1px #0000002d);
 }
 
-.btcd-ck-wrp input:checked~.btcd-mrk:after {}
 
 .btcd-ck-wrp input:checked~.btcd-mrk:not(.rdo):after {
   transform: scale(1) translate(-50%, -50%) rotate(45deg);
