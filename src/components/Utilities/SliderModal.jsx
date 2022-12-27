@@ -203,9 +203,10 @@ export default function SliderModal({ title = 'Example Title', className, show =
           </div>
 
           <div className={css(s.sliderContentWrp)} id="description">
-            {children.map((slideItem, i) => (
+            {Array.isArray(children) && children.map((slideItem, i) => (
               <div key={`slider-itm-${i * 7}`} className={css(s.sliderContent)} style={{ transform: `translate3d(${step * -100}%,0,0)` }}>{slideItem}</div>
             ))}
+            {!Array.isArray(children) && { children }}
           </div>
         </div>
         <div
