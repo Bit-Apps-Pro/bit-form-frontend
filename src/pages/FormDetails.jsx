@@ -181,10 +181,16 @@ function FormDetails() {
             if (!sessionLayouts) {
               setLayouts(responseData.form_content.layout)
               addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
+            } else {
+              setLayouts(sessionLayouts)
+              addToBuilderHistory({ state: { layouts: sessionLayouts } }, false, 0)
             }
             if (!sessionFields) {
               setFields(responseData.form_content.fields)
               addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
+            } else {
+              setFields(sessionFields)
+              addToBuilderHistory({ state: { fields: sessionFields } }, false, 0)
             }
             const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' })
             if (!sessionFormInfo) setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
