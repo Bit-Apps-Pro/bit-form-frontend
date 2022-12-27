@@ -7,8 +7,8 @@ export default function selectStyle_2_atlassian({ fk, breakpoint, colorScheme })
     return mergeNestedObj(
       selectStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
       {
-        [`.${fk}-fld:focus`]: {
-          'box-shadow': '',
+        [`.${fk}-fld`]: {
+          transition: 'background 0.2s ease',
         },
         [`.${fk}-fld:hover`]: {
           'border-color': 'none !important',
