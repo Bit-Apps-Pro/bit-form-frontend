@@ -8,6 +8,8 @@ export default function validateForm({ form, input }) {
   if (typeof window?.bf_globals?.[contentId] === 'undefined') return false
   let formEntries = {}
   fields = window?.bf_globals?.[contentId].fields
+  const modifiedFields = window?.bf_globals?.[contentId].modifiedFields
+  if (modifiedFields) Object.assign(fields, modifiedFields)
   if (form) {
     formEntries = generateFormEntries()
   } else if (input) {

@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
-import { removeUnusedStyles } from '../components/style-new/styleHelpers'
+import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $fields, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
@@ -39,7 +39,10 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
 
   const invalidPropValue = {
     'border-color': 'none',
-    'background-color': 'none',
+    margin: '!important',
+    paddin: '!important',
+    background: '!important',
+    'background-color': '!important',
   }
 
   const atomizeCssConfig = { classPrefix: atomicClassPrefix, classSuffix: atomicClassSuffix }
@@ -102,7 +105,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const allLgLightStyles = flatenStyleObj(lgLightStyles)
   const normalizedAllLgLightVars = expressAndCleanCssVars(allLgLightVars)
   const normalizedAllLgLightStyles = optimizeAndDefineCssClassProps(allLgLightStyles, normalizedAllLgLightVars, cssFilterConfig)
-  const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap, nextAtomicClass: lgLightNextAtomicClass } = atomizeCss(normalizedAllLgLightStyles, { ...atomizeCssConfig, atomicClassStart })
+  const lgLightStylesWithImportant = generateStylesWithImportantRule(normalizedAllLgLightStyles)
+  const { atomicClasses: lgLightAtomicStyles, classMaps: lgLightAtomicClassMap, nextAtomicClass: lgLightNextAtomicClass } = atomizeCss(lgLightStylesWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = lgLightNextAtomicClass
 
   // generate lg dark styles merged
@@ -111,7 +115,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const normalizedAllLgDarkVars = expressAndCleanCssVars(allLgDarkVars)
   const normalizedAllLgDarkStyles = optimizeAndDefineCssClassProps(allLgDarkStyles, normalizedAllLgDarkVars, cssFilterConfig)
   const lgDarkStylesOnly = getObjectDiff(normalizedAllLgLightStyles, normalizedAllLgDarkStyles)
-  const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap, nextAtomicClass: lgDarkNextAtomicClass } = atomizeCss(lgDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
+  const lgDarkStylesOnlyWithImportant = generateStylesWithImportantRule(lgDarkStylesOnly)
+  const { atomicClasses: lgDarkAtomicStyles, classMaps: lgDarkAtomicClassMap, nextAtomicClass: lgDarkNextAtomicClass } = atomizeCss(lgDarkStylesOnlyWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = lgDarkNextAtomicClass
 
   // generate md light styles merged
@@ -120,7 +125,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const normalizedAllMdLightVars = expressAndCleanCssVars(allMdLightVars)
   const normalizedAllMdLightStyles = optimizeAndDefineCssClassProps(allMdLightStyles, normalizedAllMdLightVars, cssFilterConfig)
   const mdLightStylesOnly = getObjectDiff(normalizedAllLgLightStyles, normalizedAllMdLightStyles)
-  const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap, nextAtomicClass: mdLightNextAtomicClass } = atomizeCss(mdLightStylesOnly, { ...atomizeCssConfig, atomicClassStart })
+  const mdLightStylesOnlyWithImportant = generateStylesWithImportantRule(mdLightStylesOnly)
+  const { atomicClasses: mdLightAtomicStyles, classMaps: mdLightAtomicClassMap, nextAtomicClass: mdLightNextAtomicClass } = atomizeCss(mdLightStylesOnlyWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = mdLightNextAtomicClass
 
   // generate md dark styles merged
@@ -129,7 +135,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const normalizedAllMdDarkVars = expressAndCleanCssVars(allMdDarkVars)
   const normalizedAllMdDarkStyles = optimizeAndDefineCssClassProps(allMdDarkStyles, normalizedAllMdDarkVars, cssFilterConfig)
   const mdDarkStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllLgDarkStyles), normalizedAllMdDarkStyles)
-  const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap, nextAtomicClass: mdDarkNextAtomicClass } = atomizeCss(mdDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
+  const mdDarkStylesOnlyWithImportant = generateStylesWithImportantRule(mdDarkStylesOnly)
+  const { atomicClasses: mdDarkAtomicStyles, classMaps: mdDarkAtomicClassMap, nextAtomicClass: mdDarkNextAtomicClass } = atomizeCss(mdDarkStylesOnlyWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = mdDarkNextAtomicClass
 
   // generate sm light styles merged
@@ -138,7 +145,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const normalizedAllSmLightVars = expressAndCleanCssVars(allSmLightVars)
   const normalizedAllSmLightStyles = optimizeAndDefineCssClassProps(allSmLightStyles, normalizedAllSmLightVars, cssFilterConfig)
   const smLightStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllMdLightStyles), normalizedAllSmLightStyles)
-  const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap, nextAtomicClass: smLightNextAtomicClass } = atomizeCss(smLightStylesOnly, { ...atomizeCssConfig, atomicClassStart })
+  const smLightStylesOnlyWithImportant = generateStylesWithImportantRule(smLightStylesOnly)
+  const { atomicClasses: smLightAtomicStyles, classMaps: smLightAtomicClassMap, nextAtomicClass: smLightNextAtomicClass } = atomizeCss(smLightStylesOnlyWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = smLightNextAtomicClass
 
   // generate sm dark styles merged
@@ -147,7 +155,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const normalizedAllSmDarkVars = expressAndCleanCssVars(allSmDarkVars)
   const normalizedAllSmDarkStyles = optimizeAndDefineCssClassProps(allSmDarkStyles, normalizedAllSmDarkVars, cssFilterConfig)
   const smDarkStylesOnly = getObjectDiff(mergeNestedObj(normalizedAllLgLightStyles, normalizedAllLgDarkStyles, normalizedAllMdDarkStyles), normalizedAllSmDarkStyles)
-  const { atomicClasses: smDarkAtomicStyles, classMaps: smDarkAtomicClassMap, nextAtomicClass: smDarkNextAtomicClass } = atomizeCss(smDarkStylesOnly, { ...atomizeCssConfig, atomicClassStart })
+  const smDarkStylesOnlyWithImportant = generateStylesWithImportantRule(smDarkStylesOnly)
+  const { atomicClasses: smDarkAtomicStyles, classMaps: smDarkAtomicClassMap, nextAtomicClass: smDarkNextAtomicClass } = atomizeCss(smDarkStylesOnlyWithImportant, { ...atomizeCssConfig, atomicClassStart })
   atomicClassStart = smDarkNextAtomicClass
 
   const allMergedClassMaps = mergeNestedObj(
@@ -220,6 +229,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const lgLightStylesWithoutMergedStyles = omitByObj(lgLightStyles, styleMergeWithAtomicClasses.lgLightStyles)
   const mdlightStylesWithoutMergedStyles = omitByObj(mdLightStyles, styleMergeWithAtomicClasses.mdLightStyles)
   const smlightStylesWithoutMergedStyles = omitByObj(smLightStyles, styleMergeWithAtomicClasses.smLightStyles)
+
+  cssText += mergeOtherStylesWithAtomicCSS()
 
   return {
     atomicCssText: cssText,

@@ -11,9 +11,12 @@ import { deepCopy } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 import { assignNestedObj } from '../style-new/styleHelpers'
 
+// const placeholderImgUrl = (h, w) => `https://via.placeholder.com/${w}x${h}`
+const placeholderImgUrl = (h, w) => `https://fakeimg.pl/${h}x${w}/?text=${h} x ${w}`
+
 function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const wrap = useRef()
-  const tempData = useRef({ extarnalSource: 'https://via.placeholder.com/1000x40' })
+  const tempData = useRef({ extarnalSource: placeholderImgUrl(100, 40) })
   const breakpoint = useRecoilValue($breakpoint)
   const { styleMode } = useRecoilValue($flags)
   const setStyles = useSetRecoilState($styles)
@@ -36,11 +39,11 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
-    tempData.current.extarnalSource = `https://via.placeholder.com/${wrap?.current?.parentElement.clientWidth}x${wrap?.current?.parentElement.clientHeight}`
+    tempData.current.extarnalSource = placeholderImgUrl(wrap?.current?.parentElement.clientWidth, wrap?.current?.parentElement.clientHeight)
   }
 
   useEffect(() => {
-    tempData.current.extarnalSource = `https://via.placeholder.com/${wrap?.current?.parentElement.clientWidth}x${wrap?.current?.parentElement.clientHeight}`
+    tempData.current.extarnalSource = placeholderImgUrl(wrap?.current?.parentElement.clientWidth, wrap?.current?.parentElement.clientHeight)
     setFields(prvFields => produce(prvFields, drftFields => {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
@@ -52,8 +55,9 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   }, [])
 
   useEffect(() => {
-    tempData.current.extarnalSource = `https://via.placeholder.com/${width}x${height}`
+    tempData.current.extarnalSource = placeholderImgUrl(width, height)
   }, [width, height])
+
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />

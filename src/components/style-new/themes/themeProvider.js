@@ -1,3 +1,4 @@
+import noStyleTheme from './0_noStyle'
 import bitformDefaultTheme from './1_bitformDefault'
 import atlassianTheme from './2_atlassian'
 
@@ -23,6 +24,13 @@ export default function themeProvider(themeSlug, fieldsArr, formId) {
       smLightStyles: {},
       smDarkStyles: {},
     },
+  }
+
+  if (themeSlug === 'noStyle') {
+    theme.themeColors = noStyleTheme({ type: 'themeColors' })
+    theme.themeVars = noStyleTheme({ type: 'themeVars' })
+    theme.styles = noStyleTheme({ fieldsArr, formId })
+    return theme
   }
 
   if (themeSlug === 'bitformDefault') {

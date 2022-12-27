@@ -452,31 +452,31 @@ export const defaultLightThemeColors = {
 }
 
 export const defaultDarkThemeColors = {
-  '--global-accent-color': 'hsla(210, 100%, 50%, 100)', // Accent Color
+  '--global-accent-color': 'hsla(210, 100%, 50%, 100%)', // Accent Color
   '--gah': 210, // global primary hue
   '--gas': '100%', // global primary saturation
   '--gal': '50%', // global primary lightness
-  '--gaa': 100, // global primary opacity
-  '--global-font-color': 'hsla(215, 35%, 91%, 100)',
+  '--gaa': '100%', // global primary opacity
+  '--global-font-color': 'hsla(215, 35%, 91%, 100%)',
   '--gfh': 215, // global font color hue
   '--gfs': '35%', // global font color saturation
   '--gfl': '91%', // global font color lightness
-  '--gfa': 100, // global font color opacity
-  '--global-bg-color': 'hsla(213,32%,14%,100)', // background color
+  '--gfa': '100%', // global font color opacity
+  '--global-bg-color': 'hsla(213,32%,14%,100%)', // background color
   '--gbg-h': 212, // global background color hue
   '--gbg-s': '46%', // global background color saturation
   '--gbg-l': '15%', // global background color lightness
-  '--gbg-a': 100,
-  '--global-fld-bdr-clr': 'hsla(220, 22%, 30%, 100)', // field border color
+  '--gbg-a': '100%',
+  '--global-fld-bdr-clr': 'hsla(220, 22%, 30%, 100%)', // field border color
   '--gfbc-h': 220, // global field border color hue
   '--gfbc-s': '22%', // global field border color saturation
   '--gfbc-l': '30%', // global field border color lightness
-  '--gfbc-a': 100, // global field border color opacity
-  '--global-fld-bg-color': 'hsla(211, 27%, 22%, 100)', // field background color
+  '--gfbc-a': '100%', // global field border color opacity
+  '--global-fld-bg-color': 'hsla(211, 27%, 22%, 100%)', // field background color
   '--gfbg-h': 211, // global field background color hue
   '--gfbg-s': '27%', // global field background color saturation
   '--gfbg-l': '22%', // global field background color lightness
-  '--gfbg-a': 100, // global field background color opacity
+  '--gfbg-a': '100%', // global field background color opacity
 
   '--bg-0': 'hsl(213, 32%, 14%)',
   '--bg-5': 'hsl(213, 32%, 19%)',

@@ -1,18 +1,24 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
+import { combineSelectors, objectToCssText } from 'atomize-css'
+import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import filepondCSS from 'filepond/dist/filepond.min.css'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
   $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight
 } from '../../GlobalStates/ThemeVarsState'
+import css2json from '../../Utils/css2json'
 import { select } from '../../Utils/globalHelpers'
-import { getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty } from '../../Utils/Helpers'
+import { deepCopy, forEach, getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty, trimCSS } from '../../Utils/Helpers'
 import { hslToHex } from './colorHelpers'
+import editorConfig from './NewStyleEditorConfig'
 import advancedFileUp_1_bitformDefault from './themes/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './themes/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from './themes/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
@@ -28,7 +34,6 @@ import recaptchaStyle_1_bitformDefault from './themes/1_bitformDefault/recaptcha
 import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
-import editorConfig from './NewStyleEditorConfig'
 
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []
@@ -491,6 +496,71 @@ export const removeUnusedStyles = () => {
     smLightStyles: smLightStylesUpdated,
     smDarkStyles: smDarkStylesUpdated,
   }
+}
+
+const ignorePropsForImportant = {
+  '.filepond--panel-bottom,.filepond--panel-center': ['transform', '-webkit-transform', 'transform-origin', '-webkit-transform-origin'],
+}
+
+const addImportantToClasses = (styleObj, ignoredProps = []) => {
+  if (isObjectEmpty(styleObj)) return styleObj
+  const styleKeys = Object.keys(styleObj)
+  forEach(styleKeys, styleKey => {
+    let styleVal = styleObj[styleKey]
+    if (typeof styleVal === 'object' && styleVal !== null) {
+      const ignoredPropsForSelector = ignorePropsForImportant?.[styleKey] || []
+      const { all = [] } = ignorePropsForImportant
+      const allIgnoreProps = [...ignoredPropsForSelector, ...all]
+      styleObj[styleKey] = addImportantToClasses(styleVal, allIgnoreProps)
+      return styleObj
+    }
+    if (ignoredProps.includes(styleKey)) return
+    if (typeof styleVal === 'number') styleVal = styleVal.toString()
+    if (!styleVal || styleVal.includes('!important')) return
+    styleObj[styleKey] = `${styleVal} !important`
+  })
+
+  return styleObj
+}
+
+export const generateStylesWithImportantRule = styles => {
+  const { addImportantRuleToStyles } = getRecoil($builderSettings)
+  if (!addImportantRuleToStyles) return styles
+  if (isObjectEmpty(styles)) return styles
+
+  return addImportantToClasses(deepCopy(styles))
+}
+const generateCombinedCSSWithImportantRule = (cssText, { combined = true } = {}) => {
+  let cssObj = {}
+  if (typeof cssText === 'string') {
+    const trimmedCSS = trimCSS(cssText)
+    cssObj = css2json(trimmedCSS)
+  }
+  if (typeof cssText === 'object' && cssText !== null) {
+    cssObj = cssText
+  }
+  if (isObjectEmpty(cssObj)) return ''
+  cssObj = generateStylesWithImportantRule(cssObj)
+  if (combined) cssObj = combineSelectors(cssObj)
+  const newCSSText = objectToCssText(cssObj)
+
+  return newCSSText
+}
+
+export const mergeOtherStylesWithAtomicCSS = () => {
+  const fields = getRecoil($fields)
+  const staticStyles = getRecoil($staticStylesState)
+  let cssText = ''
+
+  if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) {
+    cssText += generateCombinedCSSWithImportantRule(filepondCSS, { combined: false })
+  }
+  if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up' && fields[f]?.config?.allowImagePreview)) {
+    cssText += generateCombinedCSSWithImportantRule(filepondPluginImagePreviewCSS, { combined: false })
+  }
+  cssText += generateCombinedCSSWithImportantRule(staticStyles.staticStyles)
+
+  return cssText
 }
 
 const breakpointAndColorScheme = {

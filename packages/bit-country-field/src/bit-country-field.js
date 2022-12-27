@@ -143,8 +143,8 @@ export default class BitCountryField {
     }
 
     if (this.#searchClearable) {
-      this.#searchInputElm.style.paddingRight = '35px'
-      this.#clearSearchBtnElm.style.display = 'none'
+      this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
+      this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
     }
     // this.#url = decodeURIComponent((`${this.#document.URL}`).replace(/\+/g, '%20'))
   }
@@ -320,7 +320,7 @@ export default class BitCountryField {
       this.#selectedCountryImgElm.src = this.#placeholderImage
     }
     this.#setTextContent(this.#selectedCountryLblElm, this.#placeholder)
-    if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm.style.display = 'none'
+    if (this.#selectedCountryClearable) this.#setStyleProperty(this.#selectedCountryClearBtnElm, 'display', 'none')
     this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Selected country cleared')
     if (!this.#isReset) this.#dropdownWrapperElm.focus()
     this.value = ''
@@ -343,7 +343,7 @@ export default class BitCountryField {
     this.setMenu({ open: false })
     this.value = selectedItem.val || selectedItem.lbl
     if (this.#selectedCountryClearable) {
-      this.#selectedCountryClearBtnElm.style.display = 'grid'
+      this.#setStyleProperty(this.#selectedCountryClearBtnElm, 'display', 'grid')
       this.#addEvent(this.#selectedCountryClearBtnElm, 'click', e => { this.#clearSelectedCountry(e) })
     }
     if (this.#onChange) this.#onChange(selectedItem.val || selectedItem.lbl)
@@ -375,6 +375,10 @@ export default class BitCountryField {
 
   #setAttribute(elm, name, value) {
     elm?.setAttribute?.(name, value)
+  }
+
+  #setStyleProperty(elm, property, value) {
+    elm.style.setProperty(property, value, 'important')
   }
 
   #reRenderVirtualOptions() {
@@ -531,10 +535,10 @@ export default class BitCountryField {
         filteredOptions = [{ i: 0, lbl: this.#noCountryFoundText }]
       }
       this.#listOptions = filteredOptions
-      if (this.#searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'grid')
     } else {
       this.#listOptions = this.#initialOptions
-      if (this.#searchClearable) this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
     }
 
     this.#reRenderVirtualOptions()
@@ -563,16 +567,16 @@ export default class BitCountryField {
     const spaceBelow = iframeWindow.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < this.#maxHeight) {
-      this.#countryFieldWrapper.style.flexDirection = 'column-reverse'
-      this.#countryFieldWrapper.style.bottom = '0%'
+      this.#setStyleProperty(this.#countryFieldWrapper, 'flex-direction', 'column-reverse')
+      this.#setStyleProperty(this.#countryFieldWrapper, 'bottom', '0%')
     } else {
-      this.#countryFieldWrapper.style.flexDirection = 'column'
-      this.#countryFieldWrapper.style.removeProperty('bottom')
+      this.#setStyleProperty(this.#countryFieldWrapper, 'flex-direction', 'column')
+      this.#setStyleProperty(this.#countryFieldWrapper, 'bottom', 'auto')
     }
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.maxHeight = `${open ? this.#maxHeight : 0}px`
+    this.#setStyleProperty(this.#optionWrapperElm, 'max-height', `${open ? this.#maxHeight : 0}px`)
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#countryFieldWrapper.classList.add('menu-open')
@@ -685,12 +689,13 @@ export default class BitCountryField {
   }
 
   // make public reset api for all custom field
-  reset() {
+  reset(value) {
     // if (this.#selectedCountryClearable) this.#selectedCountryClearBtnElm?.click()
     this.#isReset = true
     this.#clearSelectedCountry()
     this.destroy()
     this.init()
+    this.setSelectedCountryItem(value)
     this.#isReset = false
   }
 }

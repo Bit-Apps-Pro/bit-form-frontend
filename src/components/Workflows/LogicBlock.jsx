@@ -63,8 +63,12 @@ function LogicBlock({
     } else {
       options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
+    if (type === 'select') {
+      const selectOpt = fields?.[fieldKey]?.optionsList[fields?.[fieldKey].config.activeList]
+      options = Object.values(selectOpt)[0].map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+    }
     if (!options) {
-      options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+      options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.code || opt.i || opt.lbl) }))
     }
 
     return options
@@ -215,7 +219,7 @@ function LogicBlock({
                 ) : (
                   <CalculatorField
                     label="Value"
-                    type={type}
+                    type={type.match(/select|check|radio/g) ? 'text' : type}
                     disabled={logicValue === 'null' || logicValue === 'not_null'}
                     onChange={val => changeValue(val, lgcInd, subLgcInd, subSubLgcInd)}
                     value={value || ''}

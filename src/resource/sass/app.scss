@@ -4038,6 +4038,7 @@ select.btcd-paper-inp {
 .cal-fld-inp>textarea {
   border-radius: 8px 0px 0px 8px !important;
   border-color: none;
+  height: 100%;
 }
 
 .cal-fld-inp>input+span::after,

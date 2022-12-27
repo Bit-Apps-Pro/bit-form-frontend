@@ -11,7 +11,14 @@ export default function buttonStyle_2_atlassian({
       buttonStyle_1_bitformDefault({
         fk, breakpoint, colorScheme, align, txtAlign, btnTyp, fulW,
       }),
-      {},
+      {
+        [`.${fk}-btn`]: {
+          transition: '',
+        },
+        [`.${fk}-btn:active`]: {
+          transform: '',
+        },
+      },
     )
   }
   return {}

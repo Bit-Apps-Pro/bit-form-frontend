@@ -285,7 +285,7 @@ function DropDown({
                             aria-selected="false"
                             tabIndex="-1"
                             {...getCustomAttributes(fieldKey, 'option')}
-                            style={{ display: 'none' }}
+                            style={{ display: 'none !important' }}
                           >
                             <span
                               data-dev-opt-lbl-wrp={fieldKey}

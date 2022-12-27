@@ -108,7 +108,7 @@ export default class BitDropdownField {
     }
 
     if (this.#config.searchClearable) {
-      this.#clearSearchBtnElm.style.display = 'none'
+      this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
       this.#addEvent(this.#clearSearchBtnElm, 'click', () => { this.searchOptions('') })
     }
 
@@ -214,7 +214,7 @@ export default class BitDropdownField {
           }
         } else if (activeEl.classList.contains('option')) {
           let prevIndex = this.#findNotDisabledOptIndex(activeIndex, 'previous')
-          if (this.#addCustomOption && prevIndex === 0 && this.#customOption?.style.display !== 'block') prevIndex = -1
+          if (this.#addCustomOption && prevIndex === 0 && this.#getStyleDisplay(this.#customOption) !== 'block') prevIndex = -1
           const prevElm = this.#selectOptElmByIndex(prevIndex)
           if (prevElm) {
             focussableEl = prevElm
@@ -337,7 +337,7 @@ export default class BitDropdownField {
     this.value = ''
     if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips([])
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
-    if (this.#config.selectedOptClearable) this.#selectedOptClearBtnElm.style.display = 'none'
+    if (this.#config.selectedOptClearable) this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'none')
     this.#reRenderVirtualOptions()
   }
 
@@ -350,11 +350,11 @@ export default class BitDropdownField {
     this.#dropdownFldContainer = this.#dropdownFieldWrapper.parentElement
     if (!valueArr.length) {
       this.#dropdownFldContainer.style.removeProperty('min-height')
-      if (this.#config.selectedOptImage) this.#selectedOptImgElm.style.display = 'block'
+      if (this.#config.selectedOptImage) this.#setStyleProperty(this.#selectedOptImgElm, 'display', 'block')
       this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
       return
     }
-    if (this.#config.selectedOptImage) this.#selectedOptImgElm.style.display = 'none'
+    if (this.#config.selectedOptImage) this.#setStyleProperty(this.#selectedOptImgElm, 'display', 'none')
     valueArr.forEach((val, valIndx) => {
       const chipWrp = this.#createElm('div')
       this.#setClassName(chipWrp, 'chip-wrp')
@@ -417,7 +417,7 @@ export default class BitDropdownField {
       this.#appendChild(this.#selectedOptLblElm, chipWrp)
     })
     this.#dropdownFldContainer = this.#dropdownFieldWrapper.parentElement
-    this.#dropdownFldContainer.style.minHeight = `${this.#dropdownFieldWrapper.offsetHeight - this.#optionWrapperElm.offsetHeight}px`
+    this.#setStyleProperty(this.#dropdownFldContainer, 'min-height', `${this.#dropdownFieldWrapper.offsetHeight - this.#optionWrapperElm.offsetHeight}px`)
   }
 
   #clearSelectedChip(e, chipIndex) {
@@ -477,7 +477,7 @@ export default class BitDropdownField {
     if (this.#config.closeOnSelect) this.setMenu({ open: false })
     this.#setAttribute(this.#dropdownHiddenInputElm, 'value', values)
     if (this.#config.selectedOptClearable) {
-      this.#selectedOptClearBtnElm.style.display = 'grid'
+      this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'grid')
       this.#addEvent(this.#selectedOptClearBtnElm, 'click', e => { this.#clearSelectedOption(e) })
     }
     if (this.#config.onChange) this.#config.onChange(values)
@@ -513,6 +513,10 @@ export default class BitDropdownField {
 
   #setTextContent(elm, txt) {
     elm.textContent = txt
+  }
+
+  #setStyleProperty(elm, property, value) {
+    elm.style.setProperty(property, value, 'important')
   }
 
   #splitStringByDelimiter(str) {
@@ -800,22 +804,22 @@ export default class BitDropdownField {
       }
       this.#options = this.#allowCustomOption ? [this.#config.options[0]] : []
       this.#options.push(...filteredOptions)
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'grid'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'grid')
     } else {
       this.#options = this.#config.options
-      if (this.#config.searchClearable) this.#clearSearchBtnElm.style.display = 'none'
+      if (this.#config.searchClearable) this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
       if (this.#allowCustomOption) {
         this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
-        this.#customOption.style.display = 'none'
+        this.#setStyleProperty(this.#customOption, 'display', 'none')
         this.#options = this.#options.concat(this.#customOptions)
       }
     }
 
     this.#reRenderVirtualOptions()
     this.#customOption = this.#select(`${this.#activeOptionList()} .create-opt`)
-    if (isExist && this.#allowCustomOption) this.#customOption.style.display = 'none'
+    if (isExist && this.#allowCustomOption) this.#setStyleProperty(this.#customOption, 'display', 'none')
     else if (this.#allowCustomOption && value.trim()) {
-      this.#customOption.style.display = 'block'
+      this.#setStyleProperty(this.#customOption, 'display', 'block')
       const createOptLbl = this.#customOption.querySelector('.opt-lbl')
       createOptLbl.innerText = `Create: ${value}`
       this.#setAttribute(this.#customOption, 'data-value', value)
@@ -843,16 +847,18 @@ export default class BitDropdownField {
     const spaceBelow = this.#window.innerHeight - elementRect.bottom
 
     if (spaceBelow < spaceAbove && spaceBelow < this.#config.maxHeight) {
-      this.#dropdownFieldWrapper.style.flexDirection = 'column-reverse'
-      this.#dropdownFieldWrapper.style.bottom = '0%'
+      this.#setStyleProperty(this.#dropdownFieldWrapper, 'flex-direction', 'column-reverse')
+      this.#setStyleProperty(this.#dropdownFieldWrapper, 'bottom', '0%')
     } else {
-      this.#dropdownFieldWrapper.style.flexDirection = 'column'
-      this.#dropdownFieldWrapper.style.removeProperty('bottom')
+      this.#setStyleProperty(this.#dropdownFieldWrapper, 'flex-direction', 'column')
+      this.#setStyleProperty(this.#dropdownFieldWrapper, 'bottom', 'auto')
+
     }
   }
 
   setMenu({ open }) {
-    this.#optionWrapperElm.style.maxHeight = `${open ? this.#config.maxHeight : 0}px`
+    this.#setStyleProperty(this.#optionWrapperElm, 'max-height', `${open ? this.#config.maxHeight : 0}px`)
+
     if (open) {
       this.#openDropdownAsPerWindowSpace()
       this.#setClassName(this.#dropdownFieldWrapper, 'menu-open')
