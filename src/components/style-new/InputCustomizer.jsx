@@ -18,7 +18,7 @@ export default function InputCustomizer() {
     <div className={css(ut.m10)}>
       <SimpleColorPicker
         title="Background Color"
-        subtitle="Input Background Color"
+        subtitle="Inputs Background Color"
         value={fldBg}
         stateObjName="themeColors"
         propertyPath="--global-fld-bg-color"
@@ -33,7 +33,7 @@ export default function InputCustomizer() {
             id="inp-titl-bdr"
           />
           <BorderControl
-            subtitle="Input Border"
+            subtitle="Inputs Border"
             objectPaths={borderPathsObj}
             id="inp-titl-bdr-ctrl"
           />
@@ -44,7 +44,7 @@ export default function InputCustomizer() {
         <span className={css(ut.fw500)}>{__('Spacing')}</span>
         <SpacingControl
           action={{ type: 'spacing-control' }}
-          subtitle="Input Spacing"
+          subtitle="Inputs Spacing"
           objectPaths={inpSpacingObj}
           id="input-spacing-ctrl"
         />
