@@ -11,6 +11,7 @@ export default function bfReset(contentId, customHook = false) {
   localStorage.setItem('bf-entry-id', '')
   typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
   typeof resetOtherOpt !== 'undefined' && resetOtherOpt()
+  window.bf_globals[contentId].modifiedFields = props.fields
   Object.keys(props.fields).forEach(fk => {
     const errWrp = bfSelect(`#form-${contentId} .${fk}-err-wrp`)
     if (errWrp) {

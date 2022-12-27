@@ -773,10 +773,11 @@ export default class BitCurrencyField {
     this.#detachAllEvents()
   }
 
-  reset() {
+  reset(value) {
     this.#clearSelectedCurrency()
     this.destroy()
     this.init()
+    this.value = value
   }
 }
 

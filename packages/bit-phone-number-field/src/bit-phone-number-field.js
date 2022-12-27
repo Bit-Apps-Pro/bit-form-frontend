@@ -743,10 +743,11 @@ export default class BitPhoneNumberField {
     this.#detachAllEvents()
   }
 
-  reset() {
+  reset(value) {
     this.#clearSelectedCountry()
     this.destroy()
     this.init()
+    this.value = value
   }
 }
 

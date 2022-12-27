@@ -39,6 +39,23 @@ function KeyBoard({ clickAction, options }) {
   return (
     <div className={css(style.board)}>
       <div className={css(style.leftSlider)}>
+        {options && (
+          <>
+            <h4 className={css({ m: 0, td: 'underline', mt: 5 })}>Options</h4>
+            {options.map((option, index) => (
+              <div
+                role="button"
+                className={css(style.field)}
+                key={`${option.value}${index + 1}`}
+                onClick={() => clickAction(`${index + 1}`, 'letters', { label: option.label, content: option.value })}
+                tabIndex={0}
+                onKeyDown={undefined}
+              >
+                {option.label}
+              </div>
+            ))}
+          </>
+        )}
         <h4 className={css({ m: 0 })}>Form Fields</h4>
         {fieldArr.map((field, index) => (
           <div
@@ -65,25 +82,6 @@ function KeyBoard({ clickAction, options }) {
             {smartTag.label}
           </div>
         ))}
-
-        {options && (
-          <>
-            <h4 className={css({ m: 0, td: 'underline', mt: 5 })}>Options</h4>
-            {options.map((option, index) => (
-              <div
-                role="button"
-                className={css(style.field)}
-                key={`${option.value}${index + 1}`}
-                onClick={() => clickAction(`${index + 1}`, 'letters', { label: option.label, content: option.value })}
-                tabIndex={0}
-                onKeyDown={undefined}
-              >
-                {option.label}
-              </div>
-            ))}
-          </>
-        )}
-
       </div>
       <div className={css(style.keyContainer)}>
         {keyList.map((keyItem) => (
