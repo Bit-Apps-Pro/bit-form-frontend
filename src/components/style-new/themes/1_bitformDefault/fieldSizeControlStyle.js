@@ -9,11 +9,11 @@ const getPaddingForExistIcn = (fk, size) => {
   const fields = getRecoil($fields)
   let value
   if ('prefixIcn' in fields[fk] && 'suffixIcn' in fields[fk]) {
-    value = `var(--fld-p) ${size}px var(--fld-p) ${size}}px !important`
+    value = `var(--fld-p) ${size}px var(--fld-p) ${size}px !important`
   } else if ('prefixIcn' in fields[fk]) {
-    value = `var(--fld-p) var(--fld-p) var(--fld-p) ${size}}px !important`
+    value = `var(--fld-p) var(--fld-p) var(--fld-p) ${size}px !important`
   } else if ('suffixIcn' in fields[fk]) {
-    value = `var(--fld-p) ${size}}px var(--fld-p) var(--fld-p) !important`
+    value = `var(--fld-p) ${size}px var(--fld-p) var(--fld-p) !important`
   }
   return value
 }
