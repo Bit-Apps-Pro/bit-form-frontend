@@ -7,8 +7,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import CPTIcn from '../../Icons/CPTIcn'
@@ -18,7 +18,7 @@ import SearchIcon from '../../Icons/SearchIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import LoaderSm from '../Loaders/LoaderSm'
 import { iconElementLabel } from '../style-new/styleHelpers'
@@ -60,7 +60,6 @@ function IconsModal({
     { label: uploadLabel },
     { label: 'Downloaded Icons' },
   ]
-
 
   if (unsplash) {
     segmentOptions.push({ label: 'Unsplash' })
@@ -139,11 +138,11 @@ function IconsModal({
         //   draft[fldKey] = fieldData
         // }))
         const newOption = produce(option, draft => {
-          draft[optIndx].img = attachment
+          draft[optIndx].img = attachment.url
         })
 
         setOption(newOption)
-        reCalculateFldHeights(fldKey)
+        // reCalculateFldHeights(fldKey)
         setModal(false)
       })
 
@@ -284,12 +283,12 @@ function IconsModal({
     setOption(newOption)
 
     setModal(false)
-    addToBuilderHistory({
-      event: `${iconElementLabel[iconType]} Icon Added`,
-      type: `add_${iconType}`,
-      state: { fldKey, fields: newOption },
-    })
-    reCalculateFldHeights(fldKey)
+    // addToBuilderHistory({
+    //   event: `${iconElementLabel[iconType]} Icon Added`,
+    //   type: `add_${iconType}`,
+    //   state: { fldKey, fields: newOption },
+    // })
+    // reCalculateFldHeights(fldKey)
   }
 
   const handlePrefixIcon = e => {
