@@ -30,7 +30,8 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
   let fldPadding = null
   switch (type) {
     case 'small-2':
-      fldPadding = getPaddingForExistIcn(fk, 25) || '6px 4px !important'
+      // fldPadding = getPaddingForExistIcn(fk, 25) || '6px 4px !important'
+      fldPadding = getPaddingForExistIcn(fk, 25) || '4px !important'
       return {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
         [`.${fk}-lbl-pre-i`]: { width: '16px', height: '16px' },
@@ -135,7 +136,8 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 
       }
     case 'small-1':
-      fldPadding = getPaddingForExistIcn(fk, 30) || '8px 6px'
+      // fldPadding = getPaddingForExistIcn(fk, 30) || '8px 6px'
+      fldPadding = getPaddingForExistIcn(fk, 30) || '6px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
         [`.${fk}-sub-titl`]: { 'font-size': '10px' },
@@ -254,7 +256,8 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
     //     [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
     //   }
     case 'medium':
-      fldPadding = getPaddingForExistIcn(fk, 35) || '10px 8px'
+      // fldPadding = getPaddingForExistIcn(fk, 35) || '10px 8px'
+      fldPadding = getPaddingForExistIcn(fk, 35) || '8px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
@@ -372,7 +375,8 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
     //     [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
     //   }
     case 'large-1':
-      fldPadding = getPaddingForExistIcn(fk, 40) || '11px 9px'
+      // fldPadding = getPaddingForExistIcn(fk, 40) || '11px 9px'
+      fldPadding = getPaddingForExistIcn(fk, 40) || '9px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
         [`.${fk}-sub-titl`]: { 'font-size': '14px' },
@@ -484,7 +488,8 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
       }
     case 'large-2':
-      fldPadding = getPaddingForExistIcn(fk, 45) || '12px 10px'
+      // fldPadding = getPaddingForExistIcn(fk, 45) || '12px 10px'
+      fldPadding = getPaddingForExistIcn(fk, 45) || '10px'
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
         [`.${fk}-sub-titl`]: { 'font-size': '16px' },
