@@ -1,15 +1,16 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
-import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { $allStyles, $styles } from '../../GlobalStates/StylesState'
+import { $allThemeColors, $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $allThemeVars, $themeVars } from '../../GlobalStates/ThemeVarsState'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
@@ -17,11 +18,12 @@ import {
   addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights,
+  reCalculateFldHeights
 } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
+import CheckBox from '../Utilities/CheckBox'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -35,6 +37,7 @@ import bitformDefaultTheme from './themes/1_bitformDefault'
 import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import atlassianTheme from './themes/2_atlassian'
 import individual from './themes/individual/individual'
+import themeProvider from './themes/themeProvider'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 import ThemeStyleReset from './ThemeStyleReset'
 
@@ -49,6 +52,12 @@ export default function ThemeQuickTweaksCustomizer() {
   const tmpStyles = useRecoilValue($savedStyles)
   const tmpThemeColors = useRecoilValue($savedThemeColors)
   const tmpThemeVars = useRecoilValue($savedThemeVars)
+  const formId = useRecoilValue($formId)
+  const fieldsArray = Object.entries(fields)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+  const [styleResetTo, setStyleResetTo] = useState('initial')
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
@@ -91,45 +100,59 @@ export default function ThemeQuickTweaksCustomizer() {
   }
 
   const resetStyle = () => {
-    const existingFields = Object.keys(styles.fields)
-    const previousFields = Object.keys(tmpStyles.fields)
+    if (styleResetTo === 'initial') {
+      const existingFields = Object.keys(styles.fields)
+      const previousFields = Object.keys(tmpStyles.fields)
 
-    setStyles(prv => produce(prv, drft => {
-      existingFields.forEach((fldKey) => {
-        if (previousFields.includes(fldKey)) {
-          drft.fields[fldKey] = tmpStyles.fields[fldKey]
-        } else {
-          drft.fields[fldKey] = getThemeWiseStyle(
-            styles.fields[fldKey].theme,
-            fldKey,
-            fields[fldKey].typ,
-            tmpThemeVars['--dir'],
-          )
-        }
-      })
+      setStyles(prv => produce(prv, drft => {
+        existingFields.forEach((fldKey) => {
+          if (previousFields.includes(fldKey)) {
+            drft.fields[fldKey] = tmpStyles.fields[fldKey]
+          } else {
+            drft.fields[fldKey] = getThemeWiseStyle(
+              styles.fields[fldKey].theme,
+              fldKey,
+              fields[fldKey].typ,
+              tmpThemeVars['--dir'],
+            )
+          }
+        })
 
-      drft.font = tmpStyles.font
-      drft.theme = tmpStyles.theme
-      drft.fieldSize = tmpStyles.fieldSize
-      drft.form = tmpStyles.form
-    }))
-    setThemeVars(tmpThemeVars)
-    setThemeColors(tmpThemeColors)
-    reCalculateFldHeights()
-    addToBuilderHistory(
-      generateHistoryData(
-        element,
-        fieldKey,
-        'Reset All Styles',
-        '',
-        {
-          styles: getLatestState('styles'),
-          themeVars: getLatestState('themeVars'),
-          themeColors: getLatestState('themeColors'),
-        },
-      ),
-    )
+        drft.font = tmpStyles.font
+        drft.theme = tmpStyles.theme
+        drft.fieldSize = tmpStyles.fieldSize
+        drft.form = tmpStyles.form
+      }))
+      setThemeVars(tmpThemeVars)
+      setThemeColors(tmpThemeColors)
+      reCalculateFldHeights()
+      addToBuilderHistory(
+        generateHistoryData(
+          element,
+          fieldKey,
+          'Reset All Styles',
+          '',
+          {
+            styles: getLatestState('styles'),
+            themeVars: getLatestState('themeVars'),
+            themeColors: getLatestState('themeColors'),
+          },
+        ),
+      )
+    } else if (styleResetTo === 'theme') {
+      const { themeColors: newThemeColors, themeVars: newThemeVars, styles: newStyles } = themeProvider(styles.theme, fieldsArray, formId)
+      if (styles.confirmations && newStyles.lgLightStyles) newStyles.lgLightStyles.confirmations = [...styles.confirmations]
+      setAllThemeColors(newThemeColors)
+      setAllThemeVars(newThemeVars)
+      setAllStyles(newStyles)
+      addToBuilderHistory(generateHistoryData('', '', 'Theme', styles.theme, { allThemeColors: newThemeColors, allThemeVars: newThemeVars, allStyles: newStyles }))
+      reCalculateFldHeights()
+    }
     hideAll()
+  }
+
+  const changeStyleResetTo = e => {
+    setStyleResetTo(e.target.value)
   }
 
   return (
@@ -142,7 +165,11 @@ export default function ThemeQuickTweaksCustomizer() {
               {__('Reset Style')}
             </Btn>
             <div>
-              <div className={css({ mt: 5, mb: 10 }, ut.fw500)}>Confirm reset style?</div>
+              <div className={css({ mt: 5, ml: 8 }, ut.fw500)}>Confirm reset style?</div>
+              <div className={css(ut.flxClm)}>
+                <CheckBox radio name="reset" onChange={changeStyleResetTo} checked={styleResetTo === 'initial'} title={<small className="txt-dp"><b>Restore all saved style</b></small>} value="initial" />
+                <CheckBox radio name="reset" onChange={changeStyleResetTo} checked={styleResetTo === 'theme'} title={<small className="txt-dp"><b>Reset Style as theme default</b></small>} value="theme" />
+              </div>
               <Btn
                 onClick={resetStyle}
                 width="100%"
