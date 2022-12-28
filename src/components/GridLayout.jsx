@@ -70,7 +70,7 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
-  const { payments } = useContext(AppSettings)
+  const { payments, reCaptchaV2 } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
@@ -239,7 +239,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const handleFieldExtraAttr = (fieldData) => {
-    const extraAttr = checkFieldsExtraAttr(fieldData, fields, payments, additional, bits, __)
+    const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
     if (extraAttr.validType === 'pro') {
       setProModal({ show: true, msg: extraAttr.msg })
       return 0
