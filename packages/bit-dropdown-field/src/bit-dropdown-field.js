@@ -281,7 +281,7 @@ export default class BitDropdownField {
       if (value) obj.val = value
       if (this.#containsClass(opt, 'disabled-opt')) obj.disabled = true
       const imgElm = opt.querySelector('.opt-icn')
-      if (this.#config.selectedOptImage && imgElm?.src) {
+      if (this.#config.optionIcon && imgElm?.src) {
         obj.icn = imgElm.src
       }
       const { attributes } = opt
@@ -852,7 +852,6 @@ export default class BitDropdownField {
     } else {
       this.#setStyleProperty(this.#dropdownFieldWrapper, 'flex-direction', 'column')
       this.#setStyleProperty(this.#dropdownFieldWrapper, 'bottom', 'auto')
-
     }
   }
 
