@@ -18,8 +18,6 @@ const s = {
   },
   modalWrapper: { pn: 'relative' },
   modal: {
-    w: 500,
-    h: 200,
     bd: 'var(--white-100)',
     zx: 99999,
     pn: 'fixed',
@@ -102,9 +100,20 @@ const s = {
     tn: 'transform .4s',
   },
 }
-export default function SliderModal({ title = 'Example Title', className, show = true, setModal, children, isInfinite = true }) {
+
+export default function SliderModal({
+  title = 'Example Title',
+  className,
+  show = true,
+  setModal,
+  children,
+  isInfinite = true,
+  modalStyle = { width: 500, height: 500 },
+  onChange,
+  defaultActiveSlideIndex = 0,
+}) {
   const { css } = useFela()
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(defaultActiveSlideIndex)
   const nodeRef = useRef(null)
 
   const setNewStep = (type) => {
@@ -129,6 +138,7 @@ export default function SliderModal({ title = 'Example Title', className, show =
         break
     }
   }
+
   const handleKeys = ({ type, code }) => {
     if (type === 'keyup') {
       if (code === 'Escape') {
@@ -152,9 +162,7 @@ export default function SliderModal({ title = 'Example Title', className, show =
     return () => { document.removeEventListener('keyup', handleKeys) }
   }, [])
 
-  const handleStep = (type) => {
-    setNewStep(type)
-  }
+  useEffect(() => { onChange?.(step) }, [step])
 
   return (
     <CSSTransition
@@ -172,10 +180,11 @@ export default function SliderModal({ title = 'Example Title', className, show =
           aria-modal="true"
           data-modal
           className={`${css(s.modal)} ${className}`}
+          style={modalStyle}
         >
           <div data-arrow className={css(s.leftArrwWrp)}>
             <button
-              onClick={() => handleStep('dec')}
+              onClick={() => setNewStep('dec')}
               className={css(s.arrwBtn)}
               type="button"
               aria-label="Previous"
@@ -186,7 +195,7 @@ export default function SliderModal({ title = 'Example Title', className, show =
           </div>
           <div data-arrow className={css(s.rightArrwWrp)}>
             <button
-              onClick={() => handleStep('inc')}
+              onClick={() => setNewStep('inc')}
               className={css(s.arrwBtn, s.rightArw)}
               type="button"
               aria-label="Next"
@@ -196,7 +205,9 @@ export default function SliderModal({ title = 'Example Title', className, show =
             </button>
           </div>
           <div className={css(ut.flxcb, ut.px10)}>
-            <h2 id="title" className={css(s.title)}>{title}</h2>
+            <div className={css({ h: 42, w: '100%' })}>
+              {typeof title === 'string' ? <h2 id="title" className={css(s.title)}>{title}</h2> : title}
+            </div>
             <div>
               <button onClick={closeModal} className={css(s.closeBtn)} type="button" aria-label="Close Modal" title="Close modal   Esc"><CloseIcn size="12" /></button>
             </div>
