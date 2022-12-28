@@ -4,6 +4,8 @@ import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
+  $additionalSettings,
+  $bits,
   $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
@@ -12,6 +14,7 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { deepCopy } from './Helpers'
+import { __ } from './i18nwrap'
 
 export const cols = { lg: 60, md: 60, sm: 60 }
 
@@ -223,8 +226,11 @@ const FIELDS_EXTRA_ATTR = {
   reset: { onlyOne: true },
 }
 
-export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], additionalSettings, bits, __) => {
+export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) => {
   // eslint-disable-next-line no-undef
+  const allFields = getRecoil($fields)
+  const bits = getRecoil($bits)
+  const additionalSettings = getRecoil($additionalSettings)
   if (field.lbl === 'Select Country' && !bits.isPro) {
     return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.') }
   }
@@ -233,8 +239,8 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
     return { validType: 'onlyOne', msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.') }
   }
 
-  if (field.typ === 'recaptcha' && (bits.allFormSettings?.gReCaptcha?.secretKey === '' || bits.allFormSettings?.gReCaptcha?.siteKey === '')) {
-    return { validType: 'keyEmpty', msg: __('to use ReCaptchaV2, you must set site key and secret from app settings') }
+  if (field.typ === 'recaptcha' && (!reCaptchaV2?.secretKey || !reCaptchaV2?.siteKey)) {
+    return { validType: 'keyEmpty', msg: __('To use ReCaptchaV2, you must set site key and secret from app settings') }
   }
 
   // eslint-disable-next-line no-undef
