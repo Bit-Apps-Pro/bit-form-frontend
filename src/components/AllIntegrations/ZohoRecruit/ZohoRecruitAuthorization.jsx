@@ -6,8 +6,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import NextBtn from '../NextBtn'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import NextBtn from '../NextBtn'
 import { refreshModules } from './ZohoRecruitCommonFunc'
 
 export default function ZohoRecruitAuthorization({
@@ -16,7 +16,6 @@ export default function ZohoRecruitAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
-  const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
     setTimeout(() => {

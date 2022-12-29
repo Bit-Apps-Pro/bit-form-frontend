@@ -6,8 +6,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import NextBtn from '../NextBtn'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import NextBtn from '../NextBtn'
 import { refreshWorkbooks } from './ZohoSheetCommonFunc'
 
 export default function ZohoSheetAuthorization({
@@ -17,7 +17,6 @@ export default function ZohoSheetAuthorization({
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
-  const scopes = 'ZohoSheet.dataAPI.READ,ZohoSheet.dataAPI.UPDATE'
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0

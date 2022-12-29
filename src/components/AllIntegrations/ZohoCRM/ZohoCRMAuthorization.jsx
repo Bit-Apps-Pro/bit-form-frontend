@@ -16,7 +16,6 @@ export default function ZohoCRMAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
-  const scopes = 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
 
   const nextPage = () => {
