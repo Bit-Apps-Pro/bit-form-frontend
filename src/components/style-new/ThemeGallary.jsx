@@ -107,7 +107,10 @@ export default function ThemeGallary() {
 }
 
 const ThemePreviewCard = ({
-  name, img, isActive, applyThemeAction,
+  name,
+  img,
+  isActive,
+  applyThemeAction,
   onPreviewClick,
 }) => {
   const { formType, formID } = useParams()
