@@ -740,6 +740,7 @@ export default class BitPhoneNumberField {
   destroy() {
     this.#optionListElm.innerHTML = ''
     this.value = ''
+    this.#countrySelectedFromList = false
     this.#detachAllEvents()
   }
 

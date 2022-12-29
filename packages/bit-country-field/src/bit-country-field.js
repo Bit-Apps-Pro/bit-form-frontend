@@ -169,7 +169,7 @@ export default class BitCountryField {
       if (!keyFound) return c.val ? (c.val === searchVal) : (c.lbl === searchVal)
       return true
     })
-    this.setSelectedCountryItem(countryObj.i)
+    if (countryObj) this.setSelectedCountryItem(countryObj.i)
   }
 
   #setCountryNameFromURL() {

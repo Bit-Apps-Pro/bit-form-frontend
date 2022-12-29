@@ -14,6 +14,7 @@ import Tip from '../Utilities/Tip'
 import themeProvider from './themes/themeProvider'
 import themes from './themes/themeList'
 import { addToBuilderHistory, generateHistoryData, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import Btn from '../Utilities/Btn'
 
 export default function ThemeGallary() {
   const { css } = useFela()
@@ -26,6 +27,7 @@ export default function ThemeGallary() {
   const formId = useRecoilValue($formId)
   const fields = useRecoilValue($fields)
   const fieldsArray = Object.entries(fields)
+  const activeTheme = themes.find(theme => theme.slug === currentStyles.theme)
   const [modal, setModal] = useState({ show: false })
 
   const handleThemeApply = (themeSlug) => {
@@ -38,24 +40,65 @@ export default function ThemeGallary() {
     reCalculateFldHeights()
   }
 
+  const handleSliderModal = (index, _themes) => {
+    setModal(prev => ({ ...prev, title: _themes[index].name, slug: _themes[index].slug }))
+  }
+
+  const openPreviewModal = (i) => {
+    setModal(prev => ({
+      ...prev,
+      show: true,
+      title: themes[i].name,
+      slug: themes[i].slug,
+      activeSlideIndex: i,
+    }))
+  }
+
+  const onModalThemeActive = () => {
+    handleThemeApply(modal.slug)
+    setModal(prev => ({ ...prev, show: false }))
+  }
+
   return (
     <div className={css(themeGalStyle.wrp)}>
-      <SliderModal show={modal.show} setModal={setModal}>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
+      <SliderModal
+        title={(
+          <div className={css({ flx: 'center-between', w: '100%' })}>
+            <h4 className={css(themeGalStyle.title)}>{modal.title}</h4>
+            <Btn
+              size="sm"
+              onClick={onModalThemeActive}
+              disabled={activeTheme.slug === modal.slug}
+              gap={5}
+              className={css({ mr: 10, my: 5 })}
+            >
+              Activate
+              <CheckMarkIcn size="12" />
+            </Btn>
+          </div>
+        )}
+        show={modal.show}
+        defaultActiveSlideIndex={modal.activeSlideIndex}
+        setModal={setModal}
+        onChange={(i) => handleSliderModal(i, themes)}
+      >
+        {themes.map(theme => (
+          <div key={theme.name} className={css(themeGalStyle.previewWrapper)}>
+            <img className={css(themeGalStyle.previewImg)} src={theme.img} alt="theme-thumbnail" />
+          </div>
+        ))}
       </SliderModal>
       <button type="button" onClick={() => setModal({ show: true })}>asdf</button>
       <h4 className={css(themeGalStyle.title)}>Themes</h4>
       <div className={css(themeGalStyle.thm_container)}>
-        {themes.map(theme => (
+        {themes.map((theme, i) => (
           <ThemePreviewCard
             key={theme.name}
+            onPreviewClick={() => openPreviewModal(i)}
             applyThemeAction={() => handleThemeApply(theme.slug)}
             name={theme.name}
             img={theme.img}
-            isActive={currentStyles.theme === theme.slug}
+            isActive={activeTheme.slug === theme.slug}
           />
         ))}
       </div>
@@ -63,7 +106,13 @@ export default function ThemeGallary() {
   )
 }
 
-const ThemePreviewCard = ({ name, img, isActive, applyThemeAction }) => {
+const ThemePreviewCard = ({
+  name,
+  img,
+  isActive,
+  applyThemeAction,
+  onPreviewClick,
+}) => {
   const { formType, formID } = useParams()
   const { css } = useFela()
 
@@ -72,13 +121,23 @@ const ThemePreviewCard = ({ name, img, isActive, applyThemeAction }) => {
       <div className={css(themeGalStyle.thm_btn, isActive && themeGalStyle.activeStyle)}>
         <div data-thm-ctrl-wrp className={css(themeGalStyle.thm_control_wrp)}>
           <Tip msg="Preview">
-            <button type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Preview">
+            <button
+              onClick={onPreviewClick}
+              type="button"
+              className={css(themeGalStyle.thm_ctrl_btn)}
+              aria-label="Theme Preview"
+            >
               <EyeIcon size="20" />
             </button>
           </Tip>
           {isActive ? (
             <Tip msg="Customize theme">
-              <Link to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Customize">
+              <Link
+                to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`}
+                type="button"
+                className={css(themeGalStyle.thm_ctrl_btn)}
+                aria-label="Theme Customize"
+              >
                 <EditIcn size="20" stroke="2.2" />
               </Link>
             </Tip>
@@ -94,14 +153,13 @@ const ThemePreviewCard = ({ name, img, isActive, applyThemeAction }) => {
               </button>
             </Tip>
           )}
-
         </div>
         <img
           className={css(themeGalStyle.thmImg)}
           width="120"
           height="147.64"
           alt="Theme thumbnail"
-          src={`https://raw.githubusercontent.com/Bit-Apps-Pro/bitform-resourses/main/theme-thumbnails/${img}`}
+          src={img}
         />
       </div>
       <span className={css(themeGalStyle.thm_name)}>{name}</span>
@@ -175,5 +233,17 @@ const themeGalStyle = {
   activeStyle: {
     bcr: 'var(--b-50)',
     bs: '0 0 0 2px var(--b-50)',
+  },
+  previewWrapper: {
+    w: '100%',
+    h: '100%',
+    p: '10px 60px',
+    bd: '#d4d9e6',
+    flx: 'center',
+  },
+  previewImg: {
+    w: '90%',
+    b: '2px solid #bbbfd3',
+    brs: '10px',
   },
 }

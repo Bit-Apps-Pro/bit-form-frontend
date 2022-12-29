@@ -580,11 +580,13 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
     const clsNam = `.${fk}-${replaceWithFk}`
     const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
     if (!fieldStyle[clsNam]) return
+    console.log('addStyleInState', fieldStyle[clsNam])
     assignNestedObj(drftAllStyles, path, fieldStyle[clsNam])
   })
 }
 
 export const addDefaultStyleClasses = (fk, element) => {
+  console.log('addDefaultStyleClasses', fk, element)
   const allStyles = getRecoil($allStyles)
   const allNewStyles = produce(allStyles, drftAllStyles => {
     Object.keys(allStyles).forEach(brkPntColorSchema => {
@@ -877,7 +879,7 @@ export const paddingGenerator = (padding, pos, add) => {
     values = (padding.replace(/(!important)/gi, '')).trim().split(' ')
   }
   const valuesLan = values.length
-  const val = add ? '40px' : values[0]
+  const val = add ? '35px' : values[0]
   switch (valuesLan) {
     case 1:
       if (pos === 'left') {
