@@ -3,10 +3,11 @@ import WarningIcn from '../../Icons/WarningIcn'
 import ut from '../../styles/2.utilities'
 import Btn from './Btn'
 
-export default function FeedBack() {
+export default function FeedBack({ className }) {
   const { css } = useFela()
+
   return (
-    <>
+    <div className={className}>
       <div className={css(feedbackStyle.flx)}>
         <label htmlFor="issue" className={css(feedbackStyle.lbl)}>
           <input id="issue" type="radio" name="issue" checked />
@@ -30,14 +31,13 @@ export default function FeedBack() {
         <textarea className={css(feedbackStyle.body)} rows="5" />
       </div>
       <Btn size="sm" width="100%" className={css(ut.mt1)}>Send</Btn>
-    </>
+    </div>
   )
 }
 
 const feedbackStyle = {
   flx: {
     flx: 'center-between',
-    gap: 10,
   },
   lbl: {
     curp: 1,
@@ -69,9 +69,9 @@ const feedbackStyle = {
     oe: 'none',
     b: '1px solid var(--white-0-75) !important',
     brs: '9px !important',
+    tn: 'all 0.2s',
     ':focus': {
       focusShadow: '',
-      // bcr: 'var(--b-92-62) !important',
     },
   },
 
