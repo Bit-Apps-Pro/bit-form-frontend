@@ -1,7 +1,11 @@
+import bfDefaultThemeImg from './1_bitformDefault/bfDefault.png'
+import atlassian from './2_atlassian/atlassian.png'
+import noStyle from './0_noStyle/noStyle.png'
+
 const themes = [
-  { name: 'No Style', slug: 'noStyle', img: 'defaultTheme.svg' },
-  { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
-  { name: 'Atlassion Theme', slug: 'atlassian', img: 'defaultTheme.svg' },
+  { name: 'No Style', slug: 'noStyle', img: noStyle },
+  { name: 'Bit Form Default', slug: 'bitformDefault', img: bfDefaultThemeImg },
+  { name: 'Atlassion Theme', slug: 'atlassian', img: atlassian },
 ]
 
 export default themes
