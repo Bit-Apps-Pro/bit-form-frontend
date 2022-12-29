@@ -18,4 +18,14 @@ export default {
     md: [],
     sm: [],
   },
+  additionalSettings: {
+    enabled: {
+      empty_submission: true,
+    },
+    settings: {
+      empty_submission: {
+        message: 'Empty form cannot be submitted.',
+      },
+    },
+  },
 }

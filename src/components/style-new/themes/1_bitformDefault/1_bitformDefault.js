@@ -202,7 +202,7 @@ export const defaultLgLightThemeVars = {
   '--hlp-txt-font-style': '', // helper text font style
 
   '--err-m': '5px 0 0 0', // error messages margin
-  '--err-p': '5px', // error messages padding
+  '--err-p': '10px', // error messages padding
   '--err-bdr': 'solid', // error message border
   '--err-bdr-width': '1px', // error message border width
   '--err-bdr-rad': '8px', // error message border radius
@@ -293,7 +293,7 @@ export const defaultLgLightThemeVars = {
   '--err-txt-suf-i-bdr-rad': '8px', // error txt suffix icon border radius
 
   '--btn-fs': 'var(--fld-fs)', // button txt font size
-  '--btn-p': '11px 20px', // button padding
+  '--btn-p': '13px 20px', // button padding
   '--btn-m': '0px 0px', // button marging
   '--btn-fw': 700, // button font weight
   '--btn-f-style': '', // button font style (italic, bold, etc)
@@ -351,7 +351,7 @@ export const defaultLightThemeColors = {
   '--fld-lbl-sh': '', // field label box shadow
   '--fld-lbl-bdr-clr': '', // field label border color
 
-  '--req-smbl-c': 'hsla(0, 100%, 50%, 100%)', // Required Symbol Color
+  '--req-smbl-c': 'var(--global-font-color)', // Required Symbol Color
 
   '--sub-titl-bg': '', // sub title background color
   '--sub-titl-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // sub title color

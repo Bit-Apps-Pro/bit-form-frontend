@@ -43,6 +43,9 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     paddin: '!important',
     background: '!important',
     'background-color': '!important',
+    border: '!important',
+    'border-style': '!important',
+    'border-width': '!important',
   }
 
   const atomizeCssConfig = { classPrefix: atomicClassPrefix, classSuffix: atomicClassSuffix }

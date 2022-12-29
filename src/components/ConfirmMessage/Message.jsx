@@ -565,7 +565,6 @@ function Message({ id, msgItem }) {
             </div>
           </div>
         </div>
-        <div> Sample</div>
       </SliderModal>
       <ConfirmMsgPreview
         index={id}

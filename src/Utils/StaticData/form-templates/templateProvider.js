@@ -2,18 +2,21 @@ import themeProvider from '../../../components/style-new/themes/themeProvider'
 
 import { mergeNestedObj } from '../../globalHelpers'
 import blankTemplate from './blankTemplate'
+import contactFormTemplate from './contactFormTemplate'
 import { defaultConfirmations } from './defaultConfirmation'
 
 export default function templateProvider(templateSlug, formId) {
   let templateData = {}
 
-  if (templateSlug.replace(/\s+/g, '_').toLowerCase() === 'contact_form') {
-    // contact form template
+  if (templateSlug === 'contact_form') {
+    templateData = contactFormTemplate
   } else {
     templateData = blankTemplate
   }
 
-  const { name, fields, layouts, conditions, confirmations, theme: themeSlug } = templateData
+  const {
+    name, fields, layouts, conditions, confirmations, theme: themeSlug, additionalSettings,
+  } = templateData
 
   // merge default layouts
   layouts.md = mergeNestedObj(layouts.lg, layouts.md)
@@ -50,6 +53,7 @@ export default function templateProvider(templateSlug, formId) {
     allThemeColors: themeColors,
     allThemeVars: themeVars,
     allStyles: styles,
+    additionalSettings,
   }
 }
 
