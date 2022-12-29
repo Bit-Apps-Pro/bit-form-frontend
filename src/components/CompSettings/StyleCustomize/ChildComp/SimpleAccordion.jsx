@@ -68,7 +68,6 @@ export default function SimpleAccordion({
 
   const getAbsoluteHeight = (el) => {
     const element = el
-    console.log({ el })
     const { overflow } = element.style
     element.style.overflow = 'auto'
     let { height, marginBlock } = window.getComputedStyle(element)
@@ -134,7 +133,12 @@ export default function SimpleAccordion({
           onExiting={() => setH(0)}
           unmountOnExit
         >
-          <div ref={nodeRef} className="body" onClick={cancelBubble} onKeyDown={cancelBubble}>
+          <div
+            ref={nodeRef}
+            className="body"
+            onClick={cancelBubble}
+            onKeyDown={cancelBubble}
+          >
             {children}
           </div>
         </CSSTransition>
