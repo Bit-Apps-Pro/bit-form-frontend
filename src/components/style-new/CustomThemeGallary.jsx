@@ -43,7 +43,7 @@ export default function CustomThemeGallary({ fldKey }) {
   const getStyle = (slug, fk, type) => {
     const obj = {
       bitformDefault: bitformDefaultTheme({ fieldKey: fk, type }),
-      atlassian: atlassianTheme({ fk, type }),
+      atlassian: atlassianTheme({ fieldKey: fk, type }),
       individual: individual({ fk, type }),
       material: materialTheme({ fk, type }),
     }
@@ -52,7 +52,6 @@ export default function CustomThemeGallary({ fldKey }) {
 
   const handleThemeApply = (themeSlug) => {
     const fk = fldKey || selectedFieldId
-
     const newStyles = produce(styles, drftStyle => {
       const type = drftStyle.fields[fk].fieldType
       drftStyle.fields[fk] = getStyle(themeSlug, fk, type)
