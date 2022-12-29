@@ -13,6 +13,7 @@ import { __ } from '../../Utils/i18nwrap'
 import { truncatedString } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
@@ -56,7 +57,8 @@ export default function HtmlFieldSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
-
+      <AdminLabelSettings />
+      <FieldSettingsDivider />
       <SizeAndPosition />
       <FieldSettingsDivider />
 

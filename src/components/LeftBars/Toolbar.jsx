@@ -571,6 +571,7 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box'),
+        adminLblHide: true,
         lbl: `<p style="margin:0"><span style="font-size: 12pt">${__('Decision Box')}</span></p>`,
         msg: {
           checked: 'Accepted',
@@ -624,6 +625,7 @@ function Toolbar({ setNewData }) {
       pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'paypal',
+        adminLbl: __('Paypal'),
         currency: 'USD',
         style: {
           layout: 'vertical',
@@ -678,6 +680,8 @@ function Toolbar({ setNewData }) {
       pos: { h: 48, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'title',
+        adminLbl: __('Title'),
+        adminLblHide: true,
         titleImg: '',
         logoHide: true,
         title: 'Your Title Here',
@@ -698,6 +702,8 @@ function Toolbar({ setNewData }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'image',
+        adminLbl: __('Image'),
+        adminLblHide: true,
         alt: '',
         valid: {},
         height: '',
@@ -715,6 +721,8 @@ function Toolbar({ setNewData }) {
       pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'divider',
+        adminLbl: __('Divider'),
+        adminLblHide: true,
         valid: {},
         divider: {},
         err: {},
@@ -729,6 +737,8 @@ function Toolbar({ setNewData }) {
       pos: { h: 80, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'html',
+        adminLbl: __('HTML'),
+        adminLblHide: true,
         content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
         customClasses: {},

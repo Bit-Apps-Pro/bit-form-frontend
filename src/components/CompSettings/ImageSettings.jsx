@@ -16,6 +16,7 @@ import { __ } from '../../Utils/i18nwrap'
 import { assignNestedObj } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import Tip from '../Utilities/Tip'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
@@ -91,6 +92,9 @@ function ImageSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
+      <AdminLabelSettings />
+
+      <FieldSettingsDivider />
       <SizeAndPosition />
 
       <FieldSettingsDivider />
