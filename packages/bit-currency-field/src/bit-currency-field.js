@@ -47,6 +47,7 @@ export default class BitCurrencyField {
     searchClearable: true,
     selectedFlagImage: true,
     defaultCurrencyKey: '',
+    defaultValue: '',
     optionFlagImage: true,
     inputFormatOptions: {
       formatter: 'browser',
@@ -107,16 +108,14 @@ export default class BitCurrencyField {
     this.#addEvent(this.#currencyInputElm, 'focus', () => { this.#handleCurrencyInputFocus() })
     this.#addEvent(this.#currencyInputElm, 'blur', () => { this.#handleCurrencyInputBlur() })
     this.#addEvent(this.#currencyInputElm, 'input', e => { this.#handleCurrencyInput(e) })
-
-    this.#window.observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
-
     if (this.#config.selectedCurrencyClearable) this.#addEvent(this.#clearCurrencyInputElm, 'click', e => { this.#handleClearCurrencyInput(e) })
 
-    this.#handleDefaultCurrencyInputValue()
+    this.#window.observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+    if (this.#config.defaultValue) this.#handleDefaultCurrencyInputValue()
+    console.log(this.#config.defaultCurrencyKey, this.#config.defaultValue)
+    if (!this.#config.defaultValue && this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     this.#generateOptions()
-
-    if (this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     if (this.#config.searchClearable) {
       this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
@@ -304,8 +303,9 @@ export default class BitCurrencyField {
   }
 
   #handleDefaultCurrencyInputValue() {
-    if (!this.#currencyHiddenInputElm.value) return
-    this.#handleHiddenInputValueChange('', this.#currencyHiddenInputElm.value)
+    // regex to get only numbers and decimal separator from the value
+    this.#currencyInputElm.dataset.numValue = this.#unformatCurrencyValue(this.#config.defaultValue)
+    this.#handleHiddenInputValueChange('', this.#config.defaultValue)
     if (this.#config.selectedCurrencyClearable) this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'grid')
   }
 
@@ -628,21 +628,23 @@ export default class BitCurrencyField {
   }
 
   #clearSelectedCurrency() {
-    this.#selectedCurrencyCode = ''
+    this.#selectedCurrencyCode = this.#config.defaultCurrencyKey || ''
     if (this.#config.selectedFlagImage) {
       this.#selectedCurrencyImgElm.src = this.#placeholderImage
     }
-    this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
+    this.#setAttribute(this.#currencyHiddenInputElm, 'value', this.#config.defaultValue)
     this.#reRenderVirtualOptions()
   }
 
   setSelectedCurrencyItem(currencyKey) {
+    console.log('setSelectedCurrencyItem 1', currencyKey)
     this.#selectedCurrencyCode = currencyKey
     if (!this.#selectedCurrencyCode) {
       this.#clearSelectedCurrency()
       return
     }
     const selectedItem = this.#getSelectedCurrencyItem()
+    console.log('setSelectedCurrencyItem 2', selectedItem)
     if (!selectedItem) return
     if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${this.#assetsURL}${selectedItem.img}`
     this.setMenu({ open: false })
@@ -769,15 +771,14 @@ export default class BitCurrencyField {
 
   destroy() {
     this.#optionListElm.innerHTML = ''
-    this.#setAttribute(this.#currencyHiddenInputElm, 'value', '')
+    this.value = this.#config.defaultValue
     this.#detachAllEvents()
   }
 
-  reset(value) {
+  reset() {
     this.#clearSelectedCurrency()
     this.destroy()
     this.init()
-    this.value = value
   }
 }
 
@@ -813,4 +814,5 @@ export default class BitCurrencyField {
 //   },
 //   defaultCurrencyKey: 'INR',
 //   options: currencyList
+//   defaultValue: '',
 // })

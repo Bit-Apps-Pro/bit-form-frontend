@@ -191,9 +191,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const generateAndSaveAtomicCss = currentFormId => {
     const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
-    if (isStyleNotLoaded) return {}
-
     const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+    if (isStyleNotLoaded) return { layouts: sortedLayout }
+
     const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
 
     generatedAtomicStyles.layouts = sortedLayout
