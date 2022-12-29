@@ -6,8 +6,9 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshModules } from './ZohoBiginCommonFunc'
+import { refreshModules } from './ZohoBiginCommonFunc'
 
 export default function ZohoBiginAuthorization({
   formID, biginConf, setBiginConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -16,6 +17,8 @@ export default function ZohoBiginAuthorization({
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
+  const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL'
+
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -81,14 +84,8 @@ export default function ZohoBiginAuthorization({
           readOnly={isInfo}
         />
 
-        <div className="mt-3">
-          <b>{__('Authorized Redirect URIs:')}</b>
-        </div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}

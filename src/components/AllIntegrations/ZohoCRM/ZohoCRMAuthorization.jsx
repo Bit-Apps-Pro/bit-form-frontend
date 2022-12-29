@@ -7,7 +7,8 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshModules } from './ZohoCRMCommonFunc'
+import { refreshModules } from './ZohoCRMCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCRMAuthorization({
   formID, crmConf, setCrmConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -15,6 +16,7 @@ export default function ZohoCRMAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
+  const scopes = 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
 
   const nextPage = () => {
@@ -81,14 +83,8 @@ export default function ZohoCRMAuthorization({
           readOnly={isInfo}
         />
 
-        <div className="mt-3">
-          <b>{__('Authorized Redirect URIs:')}</b>
-        </div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}

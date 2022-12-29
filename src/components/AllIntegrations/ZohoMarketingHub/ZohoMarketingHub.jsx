@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import NextBtn from '../NextBtn'
 import ZohoMarketingHubAuthorization from './ZohoMarketingHubAuthorization'
-import { checkMappedFields, handleInput, refreshLists, setGrantTokenResponse } from './ZohoMarketingHubCommonFunc'
+import { checkMappedFields, handleInput, refreshLists } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
 
 function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -29,7 +29,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse()
+    window.opener && setGrantTokenResponse('zohoMarkatingHub')
   }, [])
 
   const nextPage = val => {

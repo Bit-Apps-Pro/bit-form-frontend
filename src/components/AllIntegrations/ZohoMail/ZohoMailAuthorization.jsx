@@ -4,10 +4,13 @@ import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
+import LoaderSm from '../../Loaders/LoaderSm'
+import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { handleAuthorize } from './ZohoMailCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoMailAuthorization({
   mailConf, setMailConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -15,6 +18,7 @@ export default function ZohoMailAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
+  const scopes = 'ZohoMail.accounts.Read,ZohoMail.messages.CREATE,ZohoMail.messages.UPDATE,ZohoMail.Attachments.CREATE,ZohoMail.Attachments.READ,ZohoMail.Attachments.UPDATE'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -70,12 +74,8 @@ export default function ZohoMailAuthorization({
         <div className="mt-3"><b>{__('Homepage URL:')}</b></div>
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}

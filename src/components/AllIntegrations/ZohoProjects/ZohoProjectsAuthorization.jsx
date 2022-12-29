@@ -7,7 +7,8 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import { refreshPortals } from './ZohoProjectsCommonFunc'
 
 export default function ZohoProjectsAuthorization({
   formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -16,6 +17,7 @@ export default function ZohoProjectsAuthorization({
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
+  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -71,12 +73,8 @@ export default function ZohoProjectsAuthorization({
         <div className="mt-3"><b>{__('Homepage URL:')}</b></div>
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}

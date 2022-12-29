@@ -7,7 +7,8 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
+import { refreshApplications } from './ZohoCreatorCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCreatorAuthorization({
   formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -16,6 +17,7 @@ export default function ZohoCreatorAuthorization({
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
+  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE,ZohoCreator.report.UPDATE'
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -77,12 +79,8 @@ export default function ZohoCreatorAuthorization({
         <div className="mt-3"><b>{__('Homepage URL:')}</b></div>
         <CopyText value={siteURL} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}
@@ -132,7 +130,7 @@ export default function ZohoCreatorAuthorization({
           disabled={isInfo}
         />
         <div style={{ color: 'red' }}>{error.accountOwner}</div>
-
+        zohoCreator
         {!isInfo && (
           <>
             {/* <button onClick={() => handleAuthorize(creatorConf, setCreatorConf, setError, setisAuthorized, setisLoading, setSnackbar)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>

@@ -7,7 +7,8 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshTemplates } from './ZohoSignCommonFunc'
+import { refreshTemplates } from './ZohoSignCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoSingAuthorization({
   formID, signConf, setSignConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -15,6 +16,7 @@ export default function ZohoSingAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
+  const scopes = 'ZohoSign.templates.CREATE,ZohoSign.templates.READ,ZohoSign.templates.UPDATE'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -75,12 +77,8 @@ export default function ZohoSingAuthorization({
           readOnly={isInfo}
         />
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}

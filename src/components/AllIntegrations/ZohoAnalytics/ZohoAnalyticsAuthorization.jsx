@@ -8,7 +8,8 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoAnalyticsAuthorization({
   formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
@@ -16,6 +17,7 @@ export default function ZohoAnalyticsAuthorization({
   const bits = useRecoilValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
+  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -80,12 +82,8 @@ export default function ZohoAnalyticsAuthorization({
           readOnly={isInfo}
         />
 
-        <div className="mt-3"><b>{__('Authorized Redirect URIs:')}</b></div>
-        <CopyText
-          value={redirectLocation || `${window.location.href}/redirect`}
-          className="field-key-cpy w-6 ml-0"
-          readOnly={isInfo}
-        />
+        <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
+        <CopyText value={redirectLocation || `${bits.zohoRedirectURL}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
         <small className="d-blk mt-5">
           {__('To get Client ID and SECRET , Please Visit')}
