@@ -112,7 +112,6 @@ export default class BitCurrencyField {
 
     this.#window.observeElm(this.#currencyHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
     if (this.#config.defaultValue) this.#handleDefaultCurrencyInputValue()
-    console.log(this.#config.defaultCurrencyKey, this.#config.defaultValue)
     if (!this.#config.defaultValue && this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
     this.#generateOptions()
@@ -637,14 +636,12 @@ export default class BitCurrencyField {
   }
 
   setSelectedCurrencyItem(currencyKey) {
-    console.log('setSelectedCurrencyItem 1', currencyKey)
     this.#selectedCurrencyCode = currencyKey
     if (!this.#selectedCurrencyCode) {
       this.#clearSelectedCurrency()
       return
     }
     const selectedItem = this.#getSelectedCurrencyItem()
-    console.log('setSelectedCurrencyItem 2', selectedItem)
     if (!selectedItem) return
     if (this.#config.selectedFlagImage) this.#selectedCurrencyImgElm.src = `${this.#assetsURL}${selectedItem.img}`
     this.setMenu({ open: false })

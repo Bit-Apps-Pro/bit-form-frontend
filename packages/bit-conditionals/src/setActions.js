@@ -20,6 +20,7 @@ const setFieldValue = (fldData, val) => {
   const fld = document.querySelector(`[name^='${fieldName}']`)
   if (fld.value === val) return
   fld.value = val
+  fld.setAttribute('value', val)
 }
 
 const setDisabled = (fldKey, props, val) => {
