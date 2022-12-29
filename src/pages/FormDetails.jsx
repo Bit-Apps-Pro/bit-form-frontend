@@ -14,7 +14,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import {
-  $additionalSettings, $builderSettings, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows
+  $additionalSettings, $builderSettings, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
@@ -85,6 +85,7 @@ function FormDetails() {
       allThemeColors,
       allThemeVars,
       allStyles,
+      additionalSettings,
     } = templateProvider(formType, newFormId)
 
     setFormInfo({ formName: name })
@@ -99,6 +100,9 @@ function FormDetails() {
     setIsNewThemeStyleLoaded(true)
     addToBuilderHistory({ state: { fields, layouts, allThemeColors, allThemeVars, allStyles } }, false, 0)
     setisLoading(false)
+    if (additionalSettings) {
+      setAdditional(additionalSettings)
+    }
   }
 
   const onMount = () => {
@@ -142,7 +146,7 @@ function FormDetails() {
     return () => {
       componentMounted = false
       // TODO: temproray turn off if it causes any hot reload problem
-      onUnmount()
+      // onUnmount()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
