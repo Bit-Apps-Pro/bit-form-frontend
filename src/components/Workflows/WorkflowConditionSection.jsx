@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -64,7 +64,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
           </div>
         )}
         {lgcGrp?.conditions?.map((condGrp, condGrpInd) => (
-          <>
+          <Fragment key={`wkf-${condGrpInd + 99}`}>
             {(lgcGrp.action_behaviour === 'cond' && condGrp.cond_type !== 'else') && (
               <WorkflowAccordion
                 key={condGrp.cond_type + 0}
@@ -158,7 +158,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
                 condGrpInd={condGrpInd}
               />
             )}
-          </>
+          </Fragment>
         ))}
       </div>
       {lgcGrp.action_behaviour === 'cond' && (
