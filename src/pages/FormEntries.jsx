@@ -418,24 +418,21 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     }
   }
 
-  const splitFileName=(fileId)=>{
+  const splitFileName = (fileId) => {
     const fileName = fileId?.split('_')
-    if(fileName.length>1){
+    if (fileName.length > 1) {
       return fileName[1]
     }
     return fileId
-
   }
 
-  const splitFileLink=(fileId)=>{
+  const splitFileLink = (fileId) => {
     const fileName = fileId?.split('_')
-    if(fileName.length>1){
+    if (fileName.length > 1) {
       return fileName[0]
     }
     return fileId
-
   }
-
 
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up') {

@@ -9,7 +9,6 @@ import hexToRGBA from '../../../../Utils/hex2RGBA'
 import { __ } from '../../../../Utils/i18nwrap'
 import useComponentVisible from './useComponentVisible'
 
-
 export default function ColorPicker({ value, onChange, alwGradient = true }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const [gradient, setgradient] = useState(false)

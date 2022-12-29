@@ -5,7 +5,7 @@ import {
   createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState
+  useReducer, useRef, useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -21,7 +21,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $colorScheme, $customCodes, $deletedFldKey, $fields, $flags, $formInfo, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn
+  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $colorScheme, $customCodes, $deletedFldKey, $fields, $flags, $formInfo, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'

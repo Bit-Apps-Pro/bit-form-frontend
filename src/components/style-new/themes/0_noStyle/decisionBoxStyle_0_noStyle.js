@@ -47,7 +47,7 @@ export default function decisionBoxStyle_0_noStyle({ fk, direction, breakpoint, 
         // 'border-color': 'var(--global-accent-color)',
       },
       [`.${fk}-ci:focus ~ [data-cl] [data-bx]`]: {
-        //  'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' 
+        //  'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)'
       },
       [`.${fk}-ci:focus-visible ~ [data-cl] [data-bx]`]: {
         // 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)'

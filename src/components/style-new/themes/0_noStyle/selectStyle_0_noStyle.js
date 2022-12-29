@@ -30,7 +30,7 @@ export default function selectStyle_0_noStyle({ fk, breakpoint, colorScheme }) {
         // 'border-color': 'var(--global-accent-color)!important',
       },
       [`.${fk}-fld:hover`]: {
-        // 'border-color': 'var(--global-accent-color)!important' 
+        // 'border-color': 'var(--global-accent-color)!important'
       },
       [`.${fk}-fld.readonly`]: {
         // cursor: 'not-allowed',

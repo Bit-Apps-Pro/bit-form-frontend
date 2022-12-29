@@ -47,7 +47,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
   }, [clientID])
 
   useEffect(() => {
-    if (!attr.payIntegID) { setClientID(''); return; }
+    if (!attr.payIntegID) { setClientID(''); return }
 
     const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
     if (!payInteg) return
