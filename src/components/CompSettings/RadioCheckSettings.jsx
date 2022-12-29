@@ -247,7 +247,7 @@ function RadioCheckSettings() {
 
       <FieldSettingsDivider />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
+      {/* <div className={`${css(FieldStyle.fieldSection)} ${css({ pr: 36 })}`}>
         <SingleToggle
           id="rnd-stng"
           tip="By disabling this option, the field rounded will be remove"
@@ -255,7 +255,7 @@ function RadioCheckSettings() {
           action={e => setRound(e)}
           isChecked={isRound}
         />
-      </div>
+      </div> */}
 
       <FieldSettingsDivider />
 
