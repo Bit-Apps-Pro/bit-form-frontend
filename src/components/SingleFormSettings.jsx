@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { produce } from 'immer'
-import { $additionalSettings, $bits, $fields } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $bits, $fields, $updateBtn } from '../GlobalStates/GlobalStates'
 import BlockIcn from '../Icons/BlockIcn'
 import DateIcn from '../Icons/DateIcn'
 import DBIcn from '../Icons/DBIcn'
@@ -39,6 +39,7 @@ export default function SingleFormSettings() {
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
   const bits = useRecoilValue($bits)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   // const setStaticStyle = useSetRecoilState($staticStylesState)
   const [staticStyleState, setStaticStyleState] = useRecoilState($staticStylesState)
   const { isPro } = bits
@@ -59,6 +60,7 @@ export default function SingleFormSettings() {
       additional.settings.blocked_ip.push({ ip: '', status: false })
     }
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm()
   }
 
@@ -71,18 +73,21 @@ export default function SingleFormSettings() {
       additional.settings.private_ip.push({ ip: '', status: false })
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delBlkIp = i => {
     const additional = deepCopy(additionalSetting)
     additional.settings.blocked_ip.splice(i, 1)
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const delPrivateIp = i => {
     const additional = deepCopy(additionalSetting)
     additional.settings.private_ip.splice(i, 1)
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setEntryLimit = e => {
@@ -90,6 +95,7 @@ export default function SingleFormSettings() {
     if (e.target.value > 0) {
       additional.settings.entry_limit = e.target.value
       setadditional({ ...additional })
+      setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     }
   }
 
@@ -102,6 +108,7 @@ export default function SingleFormSettings() {
     }
     additionalSettings.updateForm = 1
     setadditional(additionalSettings)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additionalSettings)
   }
 
@@ -117,12 +124,14 @@ export default function SingleFormSettings() {
       delete additionalSettings.enabled.submission
     }
     setadditional(additionalSettings)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setCustomMsg = (e, typ) => {
     const additionalSettings = deepCopy(additionalSetting)
     additionalSettings.settings[typ][e.target.name] = e.target.value
     setadditional(additionalSettings)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const enableReCaptchav3 = e => {
@@ -163,6 +172,7 @@ export default function SingleFormSettings() {
       delete additional.settings.recaptchav3
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const toggleCaptureGCLID = e => {
@@ -178,6 +188,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -190,6 +201,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -202,6 +214,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const hideReCaptchaBadge = e => {
@@ -219,6 +232,7 @@ export default function SingleFormSettings() {
       }
     }))
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -234,6 +248,7 @@ export default function SingleFormSettings() {
       delete additional.settings.recaptchav3.score
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setReCaptchaLowScoreMessage = e => {
@@ -246,6 +261,7 @@ export default function SingleFormSettings() {
       delete additional.settings.recaptchav3.message
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleIpStatus = (e, i, type) => {
@@ -271,6 +287,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleIp = (e, i, typ) => {
@@ -281,6 +298,7 @@ export default function SingleFormSettings() {
       additional.settings.private_ip[i].ip = e.target.value
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const toggleAllIpStatus = e => {
@@ -298,6 +316,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -316,6 +335,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -333,6 +353,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -367,6 +388,7 @@ export default function SingleFormSettings() {
         drft.settings.restrict_form.date.to = `${m}-${d}-${y}`
       }
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleTime = (val, typ) => {
@@ -378,6 +400,7 @@ export default function SingleFormSettings() {
           drft.settings.restrict_form.time.to = val
         }
       }))
+      setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     }
   }
 
@@ -430,6 +453,7 @@ export default function SingleFormSettings() {
       }
     }
     setadditional({ ...additional })
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const checkRestrictFromExist = val => {
@@ -475,6 +499,7 @@ export default function SingleFormSettings() {
     }
     additional.updateForm = 1
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     // saveForm('addional', additional)
   }
 
@@ -499,6 +524,7 @@ export default function SingleFormSettings() {
       delete additional.settings[type]
     }
     setadditional(additional)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (
