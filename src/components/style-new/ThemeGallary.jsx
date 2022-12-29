@@ -88,7 +88,7 @@ export default function ThemeGallary() {
           </div>
         ))}
       </SliderModal>
-      <button type="button" onClick={() => setModal({ show: true })}>asdf</button>
+
       <h4 className={css(themeGalStyle.title)}>Themes</h4>
       <div className={css(themeGalStyle.thm_container)}>
         {themes.map((theme, i) => (
