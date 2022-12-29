@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import loadable from '@loadable/component'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import AllForms from './pages/AllForms'
+import Feedback from './pages/Feedback'
 import { __ } from './Utils/i18nwrap'
 
 const loaderStyle = { height: '90vh' }
@@ -29,6 +31,7 @@ const Nav = ({ setActive }) => {
 
 export default function App() {
   const [active, setActive] = useState(false)
+  const { css } = useFela()
 
   useEffect(removeUnwantedCSS, [])
 
@@ -53,35 +56,44 @@ export default function App() {
       <HashRouter>
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
-            <div className="flx">
+            <div className="flx flx-between">
               <Nav setActive={setActive} />
-              <div className="logo flx" title={__('Bit Form')}>
-                <Link to="/" className="flx">
-                  <img src={logo} alt="bit form logo" className="ml-2" />
-                  <span className="ml-2">Bit Form</span>
-                </Link>
-              </div>
-              <nav className="top-nav ml-2">
-                <NavLink
-                  to="/"
-                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                >
-                  {__('My Forms')}
-                </NavLink>
+              <div className="flx">
+                <div className="logo flx" title={__('Bit Form')}>
+                  <Link to="/" className="flx">
+                    <img src={logo} alt="bit form logo" className="ml-2" />
+                    <span className="ml-2">Bit Form</span>
+                  </Link>
+                </div>
+                <nav className="top-nav ml-2">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                  >
+                    {__('My Forms')}
+                  </NavLink>
 
-                <NavLink
-                  to="/app-settings/recaptcha"
-                  className={active ? 'app-link-active' : ''}
-                >
-                  {__('App Settings')}
-                </NavLink>
-              </nav>
+                  <NavLink
+                    to="/app-settings/recaptcha"
+                    className={active ? 'app-link-active' : ''}
+                  >
+                    {__('App Settings')}
+                  </NavLink>
+                </nav>
+              </div>
+              <NavLink
+                to="/feedback"
+                className={css(appStyle.feedbackLink)}
+              >
+                {__('Feedback')}
+              </NavLink>
             </div>
           </div>
 
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
+              <Route path="/feedback" element={<Feedback />} />
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
               <Route path="*" element={<Error404 />} />
@@ -105,4 +117,14 @@ function removeUnwantedCSS() {
       }
     }
   }
+}
+
+const appStyle = {
+  feedbackLink: {
+    cr: 'var(--white)',
+    mr: '13px',
+    background: 'var(--blue)',
+    p: '12px 15px',
+    brs: 12,
+  },
 }
