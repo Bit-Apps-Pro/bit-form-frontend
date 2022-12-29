@@ -146,7 +146,7 @@ function FormDetails() {
     return () => {
       componentMounted = false
       // TODO: temproray turn off if it causes any hot reload problem
-      // onUnmount()
+      onUnmount()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
