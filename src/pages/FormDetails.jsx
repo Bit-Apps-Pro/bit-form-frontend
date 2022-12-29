@@ -14,7 +14,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import {
-  $additionalSettings, $builderSettings, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows
+  $additionalSettings, $builderSettings, $confirmations, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
@@ -29,6 +29,7 @@ import { bitDecipher, hideWpMenu, resetRecoilStates, showWpMenu } from '../Utils
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
+import FeedbackBtn from '../components/FeedbackBtn'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
@@ -307,6 +308,7 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
+            <FeedbackBtn />
             {formType === 'edit' && <PublishBtn />}
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
