@@ -21,8 +21,8 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
   const [biginConf, setBiginConf] = useState({
     name: 'Zoho Bigin API',
     type: 'Zoho Bigin',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.8YJRJQ5R5GBMFB9NSTO369X8XTW66P' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'cf2a97054162619aa35f421088cc7023fb64439d85' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.CV9SFKPGAJPZUUALBNE364K7X4A1WX' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '0ca5298ffd1ea6017b63076e3d18a1ae79fb0993ed' : '',
     module: '',
     field_map: [
       { formField: '', zohoFormField: '' },

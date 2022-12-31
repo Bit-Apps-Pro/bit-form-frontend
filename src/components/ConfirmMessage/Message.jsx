@@ -565,7 +565,6 @@ function Message({ id, msgItem }) {
             </div>
           </div>
         </div>
-        <div> Sample</div>
       </SliderModal>
       <ConfirmMsgPreview
         index={id}
@@ -686,7 +685,7 @@ const uiStyles = {
     brs: '8px !important',
     b: 'none !important',
     cr: 'var(--dp-blue) !important',
-    ':hover': { cr: 'var(--b-50) !important', },
+    ':hover': { cr: 'var(--b-50) !important' },
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
   colorInput: {

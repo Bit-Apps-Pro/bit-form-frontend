@@ -2,8 +2,8 @@ export const msgDefaultConfig = {
   msgType: 'modal',
   position: 'bottom-right',
   animation: 'fade',
-  autoHide: false,
-  duration: 1,
+  autoHide: true,
+  duration: 3,
   styles: {
     width: '300px',
     padding: '5px 35px 5px 20px',
@@ -52,8 +52,8 @@ export function defaultConfirmations(formID) {
   return {
     type: {
       successMsg: [{
-        title: 'Untitled Message 1',
-        msg: '<p>Successfully Submitted.</p>',
+        title: 'Form Success Message',
+        msg: '<p style="text-align: center;"><span style="font-size: 14pt;">✅ <span style="font-size: 12pt;"><strong>Successfully Submitted.&nbsp;</strong></span></span></p>',
         config: {
           msgType,
           position,

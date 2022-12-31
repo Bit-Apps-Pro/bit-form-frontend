@@ -222,7 +222,7 @@ export default function countryStyle_0_noStyle({ fk, direction, breakpoint, colo
         // 'box-shadow': '0 0 0 2px var(--global-accent-color) inset',
       },
       [`.${fk}-opt-search-input:focus~svg`]: {
-        //  color: 'var(--global-accent-color)!important' 
+        //  color: 'var(--global-accent-color)!important'
       },
       // [`.${fk}-opt-search-input::-webkit-search-decoration`]: { display: 'none' },
       // [`.${fk}-opt-search-input::-webkit-search-cancel-button`]: { display: 'none' },

@@ -94,7 +94,7 @@ function Integrations() {
     { type: 'MetaBox', logo: metabox, pro },
     { type: 'Pods', logo: pods, pro },
     { type: 'Mail Poet', logo: mailPoet, pro },
-    { type: 'Sendinblue', logo: sendinblue, pro },
+    { type: 'SendinBlue', logo: sendinblue, pro },
     { type: 'WooCommerce', logo: wooCommerce, pro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro },
     { type: 'Telegram', logo: telegram, pro },

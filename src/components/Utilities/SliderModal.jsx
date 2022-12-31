@@ -116,6 +116,10 @@ export default function SliderModal({
   const [step, setStep] = useState(defaultActiveSlideIndex)
   const nodeRef = useRef(null)
 
+  useEffect(() => {
+    setStep(defaultActiveSlideIndex)
+  }, [defaultActiveSlideIndex])
+
   const setNewStep = (type) => {
     switch (type) {
       case 'inc':
@@ -205,7 +209,7 @@ export default function SliderModal({
             </button>
           </div>
           <div className={css(ut.flxcb, ut.px10)}>
-            <div className={css({ h: 42, w: '100%' })}>
+            <div className={css({ h: 42, w: '100%', flx: 'center' })}>
               {typeof title === 'string' ? <h2 id="title" className={css(s.title)}>{title}</h2> : title}
             </div>
             <div>
@@ -217,7 +221,7 @@ export default function SliderModal({
             {Array.isArray(children) && children.map((slideItem, i) => (
               <div key={`slider-itm-${i * 7}`} className={css(s.sliderContent)} style={{ transform: `translate3d(${step * -100}%,0,0)` }}>{slideItem}</div>
             ))}
-            {!Array.isArray(children) && { children }}
+            {!Array.isArray(children) && children}
           </div>
         </div>
         <div

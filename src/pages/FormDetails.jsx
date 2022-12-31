@@ -86,6 +86,7 @@ function FormDetails() {
       allThemeColors,
       allThemeVars,
       allStyles,
+      additionalSettings,
     } = templateProvider(formType, newFormId)
 
     setFormInfo({ formName: name })
@@ -100,6 +101,9 @@ function FormDetails() {
     setIsNewThemeStyleLoaded(true)
     addToBuilderHistory({ state: { fields, layouts, allThemeColors, allThemeVars, allStyles } }, false, 0)
     setisLoading(false)
+    if (additionalSettings) {
+      setAdditional(additionalSettings)
+    }
   }
 
   const onMount = () => {

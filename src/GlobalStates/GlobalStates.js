@@ -2,9 +2,10 @@ import produce from 'immer'
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
 import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
+import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
 
 // atoms
-export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: { empty_submission: { message: 'Empty form cannot be submitted.' } } } })
+export const $additionalSettings = atom({ key: '$additionalSettings', default: blankTemplate.additionalSettings })
 export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} }) // eslint-disable-line no-undef
 export const $breakpoint = atom({
   key: '$breakpoint',

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import NextBtn from '../NextBtn'
 import ZohoAnalyticsAuthorization from './ZohoAnalyticsAuthorization'
-import { handleInput, setGrantTokenResponse } from './ZohoAnalyticsCommonFunc'
+import { handleInput } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 
 export default function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -25,7 +25,7 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse()
+    window.opener && setGrantTokenResponse('zohoAnalytics')
   }, [])
 
   const nextPage = () => {
