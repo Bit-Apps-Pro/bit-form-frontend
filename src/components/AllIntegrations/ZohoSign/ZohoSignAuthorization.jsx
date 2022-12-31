@@ -7,8 +7,7 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { refreshTemplates } from './ZohoSignCommonFunc'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import { handleAuthorize, refreshTemplates } from './ZohoSignCommonFunc'
 
 export default function ZohoSingAuthorization({
   formID, signConf, setSignConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

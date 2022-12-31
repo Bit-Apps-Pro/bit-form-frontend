@@ -7,8 +7,7 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshPortals } from './ZohoProjectsCommonFunc'
+import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
 
 export default function ZohoProjectsAuthorization({
   formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

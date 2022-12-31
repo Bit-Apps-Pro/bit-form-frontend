@@ -1,5 +1,7 @@
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { getRecoil } from 'recoil-nexus'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 
 export const handleInput = (e, deskConf, setDeskConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...deskConf }
@@ -253,10 +255,10 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     })
     return
   }
-
+  const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'Desk.settings.READ,Desk.basic.READ,Desk.search.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoDesk', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {

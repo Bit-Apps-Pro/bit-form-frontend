@@ -6,9 +6,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import NextBtn from '../NextBtn'
-import { refreshApplications } from './ZohoCreatorCommonFunc'
+import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
 
 export default function ZohoCreatorAuthorization({
   formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

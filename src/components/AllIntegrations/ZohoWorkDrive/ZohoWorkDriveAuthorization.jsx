@@ -6,9 +6,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import NextBtn from '../NextBtn'
-import { refreshTeams } from './ZohoWorkDriveCommonFunc'
+import { handleAuthorize, refreshTeams } from './ZohoWorkDriveCommonFunc'
 
 export default function ZohoWorkDriveAuthorization({
   formID, workDriveConf, setWorkDriveConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

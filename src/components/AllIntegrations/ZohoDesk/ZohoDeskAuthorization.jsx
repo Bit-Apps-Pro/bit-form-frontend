@@ -7,8 +7,7 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshOrganizations } from './ZohoDeskCommonFunc'
+import { handleAuthorize, refreshOrganizations } from './ZohoDeskCommonFunc'
 
 export default function ZohoDeskAuthorization({
   formID, deskConf, setDeskConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

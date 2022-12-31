@@ -6,9 +6,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import NextBtn from '../NextBtn'
-import { refreshLists } from './ZohoCampaignsCommonFunc'
+import { handleAuthorize, refreshLists } from './ZohoCampaignsCommonFunc'
 
 export default function ZohoCampaignsAuthorization({
   formID, campaignsConf, setCampaignsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

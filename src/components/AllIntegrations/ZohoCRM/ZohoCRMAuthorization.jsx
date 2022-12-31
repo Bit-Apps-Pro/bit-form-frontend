@@ -7,8 +7,7 @@ import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
-import { refreshModules } from './ZohoCRMCommonFunc'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
+import { handleAuthorize, refreshModules } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMAuthorization({
   formID, crmConf, setCrmConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

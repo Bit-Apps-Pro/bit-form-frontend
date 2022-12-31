@@ -7,9 +7,8 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
-import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import NextBtn from '../NextBtn'
-import { refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 
 export default function ZohoAnalyticsAuthorization({
   formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,

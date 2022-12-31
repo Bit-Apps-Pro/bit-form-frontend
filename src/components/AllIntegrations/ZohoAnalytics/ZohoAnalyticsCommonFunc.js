@@ -1,6 +1,8 @@
-import { __ } from '../../../Utils/i18nwrap'
+import { getRecoil } from 'recoil-nexus'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { checkValidEmail } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const setGrantTokenResponse = () => {
   const grantTokenResponse = {}
@@ -32,9 +34,10 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     setError({ ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid') : '' })
     return
   }
+  const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoAnalytics', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
