@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
   },
 
   root: 'src',
-  base: mode === 'development' ? '/' : '/wp-content/plugins/bitform/assets/',
+  base: mode === 'development' ? '/' : '',
   build: {
     outDir: '../../assets',
     emptyOutDir: true,
