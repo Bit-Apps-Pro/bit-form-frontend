@@ -73,7 +73,7 @@ export default function Modal({
           className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className} ${autoHeight ? 'auto-height' : ''}`}
           style={style}
         >
-          <div data-testid="mdl-cntnt" className="btcd-modal-content" style={{ width: width }}>
+          <div data-testid="mdl-cntnt" className="btcd-modal-content" style={{ width }}>
             {headerAction}
             <button
               data-testid="mdl-cls-btn"

@@ -31,7 +31,7 @@ const ElasticEmail = lazy(() => import('./ElasticEmail/ElasticEmail'))
 const Acf = lazy(() => import('./Acf/Acf'))
 const Metabox = lazy(() => import('./Metabox/Metabox'))
 const MailPoet = lazy(() => import('./MailPoet/MailPoet'))
-const Sendinblue = lazy(() => import('./SendinBlue/SendinBlue'))
+const SendinBlue = lazy(() => import('./SendinBlue/SendinBlue'))
 const WooCommerce = lazy(() => import('./WooCommerce/WooCommerce'))
 const ActiveCampaign = lazy(() => import('./ActiveCampaign/ActiveCampaign'))
 const WebHooks = lazy(() => import('./WebHooks/WebHooks'))
@@ -106,8 +106,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Metabox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':
         return <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-      case 'Sendinblue':
-        return <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SendinBlue':
+        return <SendinBlue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'WooCommerce':
         return <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ActiveCampaign':

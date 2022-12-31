@@ -136,7 +136,6 @@ function SimpleColorsPickerMenu({ stateObjName,
             }
             console.log('g bg color', drftThmClr[`--gbg-${5}`])
           }
-
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeColors: getLatestState('themeColors') }))
         break

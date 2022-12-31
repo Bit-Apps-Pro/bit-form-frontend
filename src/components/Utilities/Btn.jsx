@@ -28,6 +28,7 @@ export default function Btn({
         btnStyle[variant],
         shadow && btnStyle.shadow,
         rounded && btnStyle.rounded,
+        disabled && btnStyle.disabled,
       ])} ${className}`}
       onClick={onClick}
     >
@@ -37,7 +38,7 @@ export default function Btn({
 }
 const btnStyle = {
   btn: {
-    // fw: 700,
+    fw: 500,
     b: 'none',
     brs: 8,
     bd: 'transparent',
@@ -53,6 +54,10 @@ const btnStyle = {
     ':active:focus-visible': {
       'outline-offset': '0',
     },
+  },
+  xs: {
+    p: '5px 10px',
+    fs: 10,
   },
   sm: {
     p: '7px 13px',
@@ -133,10 +138,12 @@ const btnStyle = {
     ':focus-visible': { bs: '0 0 0 0.2rem hsla(0, 100%, 50%, 0.548)' },
   },
   disabled: {
-    cr: 'hsl(0, 0%, 100%)',
-    bd: 'hsla(0, 0%, 76%, 63%)',
+    bcr: 'transparent',
+    cr: 'hsla(240, 0%, 50%, 100%)!important',
+    bd: 'hsla(0, 0%, 76%, 43%)',
+
     cur: 'not-allowed',
-    ':hover': { bd: 'hsla(240, 1%, 50%, 59%)' },
+    ':hover': { bd: 'hsla(240, 1%, 50%, 49%)' },
   },
   shadow: { bs: '0 2px 4px -2px hsla(0, 0%, 0%, 40%)  ' },
   rounded: { brs: '50px' },

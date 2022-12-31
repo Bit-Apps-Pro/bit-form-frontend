@@ -89,10 +89,10 @@ export default function countryStyle_2_atlassian({ fk, direction, breakpoint, co
           display: 'none',
           ...direction !== 'rtl' && { right: '40px' },
           ...direction === 'rtl' && { left: '40px' },
-          background: 'hsla(var(--gah), var(--gas), 20%, 100%) !important'
+          background: 'hsla(var(--gah), var(--gas), 20%, 100%) !important',
         },
         [`.${fk}-search-clear-btn:hover`]: {
-          background: 'hsla(var(--gah), var(--gas), 30%, 100%) !important'
+          background: 'hsla(var(--gah), var(--gas), 30%, 100%) !important',
         },
       },
     )

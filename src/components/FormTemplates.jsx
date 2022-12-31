@@ -10,7 +10,10 @@ import { __ } from '../Utils/i18nwrap'
 import FormImporter from './FormImporter'
 import Modal from './Utilities/Modal'
 
-const staticTem = [{ slug: 'Blank', img: '' }, { slug: 'Contact Form', img: '' }]
+const staticTem = [
+  { title: 'Blank', slug: 'blank', img: '' },
+  { title: 'Contact Form', slug: 'contact_form', img: '' },
+]
 
 export default function FormTemplates({ setTempModal, setSnackbar }) {
   const newFormId = useRecoilValue($newFormId)
@@ -27,7 +30,7 @@ export default function FormTemplates({ setTempModal, setSnackbar }) {
       {staticTem.map((tem, i) => (
         <div key={tem.slug} className="btcd-tem flx" data-testid={`create-form-wrp-${i}`}>
           <FormIcn w="50" />
-          <div>{tem.slug}</div>
+          <div>{tem.title}</div>
           <div className="btcd-hid-btn">
             <button
               onClick={handleTemplateBtnClick(tem.slug)}
