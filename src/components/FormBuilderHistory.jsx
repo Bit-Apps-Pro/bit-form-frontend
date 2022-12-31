@@ -138,7 +138,7 @@ export default function FormBuilderHistory() {
   const showEventMessages = indx => {
     if (active > indx) {
       for (let i = active; i > indx; i -= 1) {
-        toast.error(histories[i].event, { style: { textDecoration: 'line-through' } })
+        toast.error(histories[i].event)
       }
     } else {
       for (let i = active + 1; i <= indx; i += 1) {
