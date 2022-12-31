@@ -312,7 +312,7 @@ export default function DoubleOptin() {
                       <span>Otherwise, the confirmation message will not sent to the responder.</span>
                     </p>
                     <div>
-                      <button type="button" className="btn" onClick={() => setCustomRedirectMdl(true)}>
+                      <button type="button" className={css(app.btn)} onClick={() => setCustomRedirectMdl(true)}>
                         <EditIcn size={18} />
                         &nbsp;
                         {__('Edit verification messages')}
