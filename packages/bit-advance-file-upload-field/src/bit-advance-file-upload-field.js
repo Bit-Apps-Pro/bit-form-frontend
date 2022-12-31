@@ -43,7 +43,6 @@ export default class BitAdvanceFileUpload {
     this.#ajaxURL = this.#config.ajaxURL
     this.#nonce = this.#config.nonce
     this.#uploadFileToServer = this.#config.uploadFileToServer
-    this.files = []
     this.uploaded_files = []
     this.on_select_upload = false
 
@@ -51,6 +50,7 @@ export default class BitAdvanceFileUpload {
   }
 
   init() {
+    this.files = []
     const plugins = []
     if (this.#configSetting.allowFileSizeValidation) {
       plugins.push(this.#window.bit_filepond_plugin_file_validate_size)
