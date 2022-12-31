@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
@@ -19,6 +20,8 @@ function DividerSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
+      <AdminLabelSettings />
+      <FieldSettingsDivider />
       <SizeAndPosition />
       <FieldSettingsDivider />
     </div>

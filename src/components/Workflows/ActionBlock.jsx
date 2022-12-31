@@ -135,7 +135,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
           </div>
           <CalculatorField
             label="Value"
-            type={type.match(/select|check|radio/g) ? 'text' : type}
+            type={type.match(/select|check|radio|number/g) ? 'text' : type}
             onChange={changeAtnVal}
             value={action.val || ''}
             options={getOptions()}

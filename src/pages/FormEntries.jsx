@@ -487,7 +487,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
 
   const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
     const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
-    return !ignoreLbls.includes(lbl.accessor)
+    const fieldTyps = ['divider', 'image', 'title']
+    return !ignoreLbls.includes(lbl.accessor) && !fieldTyps.includes(lbl.fieldType)
   })
 
   return (

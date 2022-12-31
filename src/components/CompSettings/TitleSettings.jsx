@@ -30,6 +30,7 @@ import {
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import Icons from './Icons'
@@ -360,6 +361,8 @@ function TitleSettings() {
             />
           </div>
         </SimpleAccordion>
+        <FieldSettingsDivider />
+        <AdminLabelSettings />
         <FieldSettingsDivider />
         <SizeAndPosition />
         <FieldSettingsDivider />

@@ -219,7 +219,7 @@ function LogicBlock({
                 ) : (
                   <CalculatorField
                     label="Value"
-                    type={type.match(/select|check|radio/g) ? 'text' : type}
+                    type={type.match(/select|check|radio|number/g) ? 'text' : type}
                     disabled={logicValue === 'null' || logicValue === 'not_null'}
                     onChange={val => changeValue(val, lgcInd, subLgcInd, subSubLgcInd)}
                     value={value || ''}
