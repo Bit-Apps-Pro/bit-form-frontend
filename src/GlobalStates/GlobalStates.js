@@ -48,7 +48,7 @@ export const $builderHookStates = atom({ key: '$builderHookStates', default: { r
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $builderSettings = atom({
   key: '$builderSettings',
-  default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false }, addImportantRuleToStyles: true },
+  default: { atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false }, addImportantRuleToStyles: false },
   effects: [({ onSet }) => {
     onSet((newBuilderSettings, _, isReset) => {
       if (isReset) return
