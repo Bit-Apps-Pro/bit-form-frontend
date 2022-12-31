@@ -8,7 +8,7 @@ import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import AllForms from './pages/AllForms'
-import Feedback from './pages/Feedback'
+import DocNSupport from './pages/DocNSupport'
 import { __ } from './Utils/i18nwrap'
 
 const loaderStyle = { height: '90vh' }
@@ -82,10 +82,10 @@ export default function App() {
                 </nav>
               </div>
               <NavLink
-                to="/feedback"
-                className={css(appStyle.feedbackLink)}
+                to="/doc-support"
+                className={css(appStyle.supportLink)}
               >
-                {__('Feedback')}
+                {__('Doc & Support')}
               </NavLink>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function App() {
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
-              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/doc-support" element={<DocNSupport />} />
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
               <Route path="*" element={<Error404 />} />
@@ -120,11 +120,17 @@ function removeUnwantedCSS() {
 }
 
 const appStyle = {
-  feedbackLink: {
+  supportLink: {
     cr: 'var(--white)',
     mr: '13px',
-    background: 'var(--blue)',
+    bd: 'linear-gradient(145deg, var(--b-50), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important',
     p: '12px 15px',
+    fw: 700,
+    fs: 13,
     brs: 12,
+    ':hover': {
+      cr: 'var(--white)',
+      bd: 'linear-gradient(145deg, hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 5%)), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 10%))) !important',
+    },
   },
 }

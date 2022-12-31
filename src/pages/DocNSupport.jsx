@@ -1,14 +1,13 @@
 import { useFela } from 'react-fela'
 import logo from '../../logo.svg'
-import FeedBack from '../components/Utilities/FeedBack'
 
-export default function Feedback() {
+export default function DocNSupport() {
   const { css } = useFela()
   return (
     <>
       <img className={css(style.logo)} src={logo} alt="logo" />
-      <h2 className={css(style.title)}>Feedback</h2>
-      <FeedBack className={css(style.container)} />
+      {/* <h2 className={css(style.title)}>Feedback</h2>
+      <FeedBack className={css(style.container)} /> */}
     </>
   )
 }

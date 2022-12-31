@@ -270,7 +270,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
         // hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
         />
       )}
-      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check|decision-box)$/gi) && (
+      {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|currency|phone-number|country|radio|check|decision-box|file-up)$/gi) && (
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500)}>Fields Size</span>
           <span className={css(ut.flxc)}>
