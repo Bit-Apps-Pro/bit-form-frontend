@@ -12,7 +12,7 @@ function pushFileToFormData(formData, fld, files) {
     uploadedFileNames.length && formData.append(fld, uploadedFileNames.join(','))
   } else {
     const file = !files[0]?.serverId ? files[0]?.file : files[0]?.serverId
-    formData.append(fld, file)
+    if (file) formData.append(fld, file)
   }
   return formData
 }

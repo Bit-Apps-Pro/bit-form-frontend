@@ -193,22 +193,27 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|check|select|sys)$/) && {
+        && val.type.match(/^(file-up|advanced-file-up|check|select|sys)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
             && row.cell.value !== undefined
             && row.cell.value !== ''
           ) {
-            if (val.type === 'file-up') {
+            if (val.type === 'file-up' || val.type === 'advanced-file-up') {
               // eslint-disable-next-line max-len
-              return getUploadedFilesArr(row.cell.value).map((itm, i) => (
-                <TableFileLink
-                  key={`file-n-${row.cell.row.index + i}`}
-                  fname={splitFileName(itm)}
-                  link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${splitFileLink(itm)}`}
-                />
-              ))
+              console.log('advance file cell', row.cell.value)
+              return (
+                <>
+                  {getUploadedFilesArr(row.cell.value).map((itm, i) => (
+                    <TableFileLink
+                      key={`file-n-${row.cell.row.index + i}`}
+                      fname={splitFileName(itm)}
+                      link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${splitFileLink(itm)}`}
+                    />
+                  ))}
+                </>
+              )
             }
             if (val.type === 'check' || val.type === 'select') {
               const vals = typeof row.cell.value === 'string'
@@ -435,7 +440,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   }
 
   const drawerEntryMap = (entry) => {
-    if (entry.fieldType === 'file-up') {
+    if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up') {
       return (
         getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
           <TableFileLink
