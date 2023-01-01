@@ -33,7 +33,7 @@ import TipGroup from './Utilities/Tip/TipGroup'
 
 const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
 
-export default function OptionToolBar({ showToolBar, setShowToolbar }) {
+export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form }) {
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
@@ -218,14 +218,16 @@ export default function OptionToolBar({ showToolBar, setShowToolbar }) {
           <div className={css(OptionToolBarStyle.border_right)} />
 
           <div className={css(ut.flxc)}>
-            <Tip msg="Custom Styling">
-              <NavLink
-                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
-                to={`/form/builder/${formType}/${formID}/style`}
-              >
-                <BrushIcn size="20" />
-              </NavLink>
-            </Tip>
+            {!isV2Form && (
+              <Tip msg="Custom Styling">
+                <NavLink
+                  className={css([OptionToolBarStyle.icn_btn, ut.icn_hover, ({ isActive }) => (isActive ? 'active' : '')])}
+                  to={`/form/builder/${formType}/${formID}/style`}
+                >
+                  <BrushIcn size="20" />
+                </NavLink>
+              </Tip>
+            )}
             <StyleSegmentControl
               width={90}
               wideTab
