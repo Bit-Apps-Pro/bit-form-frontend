@@ -137,14 +137,12 @@ export default function FormBuilderHistory() {
 
   const showEventMessages = indx => {
     if (active > indx) {
-      for (let i = active; i > indx; i -= 1) {
-        toast.error(histories[i].event)
-      }
-    } else {
-      for (let i = active + 1; i <= indx; i += 1) {
-        toast.success(histories[i].event)
-      }
+      // undo
+      toast.success(histories[indx].event, { position: 'bottom-right' })
+      return
     }
+    // redo
+    toast.success(histories[indx].event, { position: 'bottom-right' })
   }
 
   const checkForPreviousState = (indx, setState, stateName) => {
