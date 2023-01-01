@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import checkboxNradioStyle1_4_individual from '../../componentsStyleByTheme/4_individual/checkboxNradioStyle1_4_individual'
 
-export default function individual({ fk, type, direction, fieldsArr }) {
+export default function individual({ fieldKey: fk, type, direction, fieldsArr }) {
   const fieldsStyles = {}
   switch (type) {
     case 'check':
