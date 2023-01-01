@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { loadScript } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import '../../resource/css/tinymce.css'
 
 export default function TinyMCE({
   formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins,
