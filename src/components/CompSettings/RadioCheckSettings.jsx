@@ -471,7 +471,7 @@ function RadioCheckSettings() {
         className="o-v"
         title={__('Options')}
       >
-        <div className="pos-rel" style={{ width: '700px' }}>
+        <div className="pos-rel" style={{ width: '725px' }}>
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
