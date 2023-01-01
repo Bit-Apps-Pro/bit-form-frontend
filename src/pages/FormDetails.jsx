@@ -197,7 +197,11 @@ function FormDetails() {
               addToBuilderHistory({ state: { fields: sessionFields } }, false, 0)
             }
             const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' })
-            if (!sessionFormInfo) setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+            if (!sessionFormInfo) {
+              setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+            } else {
+              setFormInfo(sessionFormInfo)
+            }
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
