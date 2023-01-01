@@ -32,6 +32,7 @@ import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
+import { selectInGrid } from '../../Utils/globalHelpers'
 import { ucFirst } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 
@@ -39,14 +40,23 @@ export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
   const setSeletedFieldId = useSetRecoilState($selectedFieldId)
   const naviage = useNavigate()
+  const dragEl = selectInGrid(`.${fieldKey}-fld-wrp.drag`)
 
   const handleFldLink = () => {
     setSeletedFieldId(fieldKey)
+    if (dragEl) dragEl.classList.remove('drag-hover')
     naviage(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
   }
 
+  const handleFldHover = e => {
+    if (!dragEl) return
+    const { type: hoverType } = e
+    if (hoverType === 'mouseenter') dragEl.classList.add('drag-hover')
+    else if (hoverType === 'mouseleave') dragEl.classList.remove('drag-hover')
+  }
+
   return (
-    <button type="button" data-testid={`fld-lst-itm-${icn}-${fieldKey}`} onClick={handleFldLink} className="btc-s-l mt-2">
+    <button type="button" data-testid={`fld-lst-itm-${icn}-${fieldKey}`} onClick={handleFldLink} onMouseEnter={handleFldHover} onMouseLeave={handleFldHover} className="btc-s-l mt-2">
       <div className="flx flx-between ">
         <div className="flx w-9">
           <span className="lft-icn mr-2 flx br-50">
