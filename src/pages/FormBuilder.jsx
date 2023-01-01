@@ -109,6 +109,7 @@ const FormBuilder = ({ isLoading }) => {
   const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
   const [formInfo, setFormInfo] = useRecoilState($formInfo)
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
+  const isV2Form = useRef(true)
   // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG } = builderHookStates
@@ -121,36 +122,31 @@ const FormBuilder = ({ isLoading }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const sessionDataNotFound = useRef(0)
-
-  const inscreaseSessionDataNotFound = () => {
-    sessionDataNotFound.current += 1
-  }
-
   const handleSessionStorageStates = () => {
-    const sessionStorageBreakpoint = getSessionStorageStates(`btcd-breakpoint-bf-${formID}`) ?? inscreaseSessionDataNotFound()
+    let sessionDataNotFound = 0
+    const sessionStorageBreakpoint = getSessionStorageStates(`btcd-breakpoint-bf-${formID}`) ?? (sessionDataNotFound += 1)
     const sessionStorageAllThemeVars = {
-      lgLightThemeVars: getSessionStorageStates(`btcd-themeVarsLgLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      mdLightThemeVars: getSessionStorageStates(`btcd-themeVarsMdLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      smLightThemeVars: getSessionStorageStates(`btcd-themeVarsSmLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      lgDarkThemeVars: getSessionStorageStates(`btcd-themeVarsLgDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      mdDarkThemeVars: getSessionStorageStates(`btcd-themeVarsMdDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      smDarkThemeVars: getSessionStorageStates(`btcd-themeVarsSmDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
+      lgLightThemeVars: getSessionStorageStates(`btcd-themeVarsLgLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      mdLightThemeVars: getSessionStorageStates(`btcd-themeVarsMdLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      smLightThemeVars: getSessionStorageStates(`btcd-themeVarsSmLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      lgDarkThemeVars: getSessionStorageStates(`btcd-themeVarsLgDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      mdDarkThemeVars: getSessionStorageStates(`btcd-themeVarsMdDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      smDarkThemeVars: getSessionStorageStates(`btcd-themeVarsSmDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
     }
     const sessionStorageAllThemeColors = {
-      lightThemeColors: getSessionStorageStates(`btcd-lightThemeColors-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      darkThemeColors: getSessionStorageStates(`btcd-darkThemeColors-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
+      lightThemeColors: getSessionStorageStates(`btcd-lightThemeColors-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      darkThemeColors: getSessionStorageStates(`btcd-darkThemeColors-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
     }
     const sessionStorageAllStyles = {
-      lgLightStyles: getSessionStorageStates(`btcd-stylesLgLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      mdLightStyles: getSessionStorageStates(`btcd-stylesMdLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      smLightStyles: getSessionStorageStates(`btcd-stylesSmLight-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      lgDarkStyles: getSessionStorageStates(`btcd-stylesLgDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      mdDarkStyles: getSessionStorageStates(`btcd-stylesMdDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
-      smDarkStyles: getSessionStorageStates(`btcd-stylesSmDark-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound(),
+      lgLightStyles: getSessionStorageStates(`btcd-stylesLgLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      mdLightStyles: getSessionStorageStates(`btcd-stylesMdLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      smLightStyles: getSessionStorageStates(`btcd-stylesSmLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      lgDarkStyles: getSessionStorageStates(`btcd-stylesLgDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      mdDarkStyles: getSessionStorageStates(`btcd-stylesMdDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
+      smDarkStyles: getSessionStorageStates(`btcd-stylesSmDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
     }
-    const sessionLayouts = getSessionStorageStates(`btcd-layouts-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound()
-    const sessionFields = getSessionStorageStates(`btcd-fields-bf-${formID}`, { strType: 'json' }) ?? inscreaseSessionDataNotFound()
+    const sessionLayouts = getSessionStorageStates(`btcd-layouts-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
+    const sessionFields = getSessionStorageStates(`btcd-fields-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
 
     const sessionBreakpointSize = getSessionStorageStates(`btcd-breakpointSize-bf-${formID}`, { strType: 'json' }) ?? breakpointSize
     const sessionStaticStyle = getSessionStorageStates(`btcd-staticStyles-bf-${formID}`, { strType: 'json' }) ?? staticStylesState
@@ -161,16 +157,13 @@ const FormBuilder = ({ isLoading }) => {
     const sessionDeletedFldKey = getSessionStorageStates(`btcd-deletedFldKey-bf-${formID}`, { strType: 'json' }) ?? deletedFldKey
     const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' }) ?? formInfo
 
-    if (sessionDataNotFound.current === 0) {
+    if (sessionDataNotFound === 0) {
       setBreakpoint(sessionStorageBreakpoint)
       setAllThemeVars(sessionStorageAllThemeVars)
       setAllThemeColors(sessionStorageAllThemeColors)
       setAllStyles(sessionStorageAllStyles)
       setStaticStylesState(sessionStaticStyle)
       setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
-      setLayouts(sessionLayouts)
-      setFields(sessionFields)
-      addToBuilderHistory({ state: { layouts: sessionLayouts, fields: sessionFields } }, false, 0)
       setBuilderHelperStates(sessionBuilderHelperStates)
       setBuilderSettings(sessionBuilderSettings)
       setColorScheme(sessionColorScheme)
@@ -189,20 +182,18 @@ const FormBuilder = ({ isLoading }) => {
 
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
-    let isV2Form = true
 
     if (!isNewForm) {
       if (handleSessionStorageStates()) return
-      sessionDataNotFound.current = 0
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
         .then(({ data }) => {
           setIsFetchingV2Styles(false)
           const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
           const oldStyles = fetchedBuilderHelperStates || {}
           if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
-            isV2Form = false
+            isV2Form.current = false
           }
-          if (isV2Form && !isNewForm && isObjectEmpty(styles)) {
+          if (isV2Form.current && !isNewForm && isObjectEmpty(styles)) {
             const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
             const allThemeVars = JCOF.parse(allThemeVarsStr)
             const allThemeColors = JCOF.parse(allThemeColorsStr)
@@ -232,7 +223,7 @@ const FormBuilder = ({ isLoading }) => {
       setStyleLoading(false)
     }
 
-    if (isV2Form && isNewForm && !isObjectEmpty(styles)) {
+    if (isV2Form.current && isNewForm && !isObjectEmpty(styles)) {
       setTimeout(() => {
         select('#update-btn').click()
       }, 100)
@@ -401,6 +392,7 @@ const FormBuilder = ({ isLoading }) => {
       <OptionToolBar
         setShowToolbar={setShowToolbar}
         showToolBar={showToolBar}
+        isV2Form={isV2Form.current}
       />
       <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
