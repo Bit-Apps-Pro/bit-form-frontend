@@ -4,14 +4,14 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $breakpoint, $fields, $layouts } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
-import { ucFirst } from '../../Utils/Helpers'
+import { deepCopy, ucFirst } from '../../Utils/Helpers'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
-import { isFieldOverrideStyles, isLabelOverrideStyles } from '../style-new/styleHelpers'
+import { isFieldOverrideStyles, isLabelOverrideStyles, sortArrOfObjByMultipleProps } from '../style-new/styleHelpers'
 import ElementConfiguration from './ElementConfiguration'
 import NavBtn from './NavBtn'
 
@@ -22,7 +22,11 @@ function StyleLayers() {
   const navigate = useNavigate()
   const { formID, formType, '*': rightBar } = useParams()
   const fieldKey = rightBar.split('/')[2]
-  const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
+  const layouts = useRecoilValue($layouts)
+  const breakpoint = useRecoilValue($breakpoint)
+  const sortedLayouts = deepCopy(layouts[breakpoint]).sort(sortArrOfObjByMultipleProps(['y', 'x']))
+  const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
+  const activeFields = Object.entries(sortedFields).filter(([, fld]) => !fld.hidden)
   const showFldTitle = (typ) => ucFirst(fieldTypes[typ] || typ)
   const styleHandler = (route, fldKey = null, fldData = null) => {
     if (fldData) {
