@@ -1,4 +1,10 @@
 const style = {
+  integWrp: {
+    flx: 'center',
+    ai: 'start',
+    flxp: 1,
+    gap: '5px',
+  },
   itegCard: {
     w: 240,
     b: '2px solid #e3eff8 ',
@@ -22,8 +28,8 @@ const style = {
     ':hover': { cr: 'var(--blue)' },
   },
   integLogo: {
-    mxw: 80,
-    mxh: 100,
+    w: 80,
+    h: 80,
     b: '1px solid #e3eff8',
     brs: 8,
     p: 5,

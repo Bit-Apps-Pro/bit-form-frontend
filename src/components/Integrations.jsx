@@ -249,7 +249,7 @@ function Integrations() {
           element={(
             <>
               <h2>{__('Integrations')}</h2>
-              <div className="flx flx-wrp">
+              <div className={css(style.integWrp)}>
                 <Modal
                   title={__('Available Integrations')}
                   show={showMdl}
