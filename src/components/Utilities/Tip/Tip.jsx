@@ -3,14 +3,14 @@ import Tippy from '@tippyjs/react'
 import { animateFill } from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 // import 'tippy.js/themes/translucent.css'
-import 'tippy.js/themes/material.css'
 import 'tippy.js/themes/light-border.css'
+import 'tippy.js/themes/material.css'
 // import 'tippy.js/themes/light.css'
 // import 'tippy.js/animations/scale.css'
 // import 'tippy.js/dist/svg-arrow.css'
-import 'tippy.js/dist/backdrop.css'
-import 'tippy.js/animations/shift-away.css'
 import { useFela } from 'react-fela'
+import 'tippy.js/animations/shift-away.css'
+import 'tippy.js/dist/backdrop.css'
 
 export default function Tip({
   className,
@@ -46,7 +46,7 @@ export default function Tip({
       // offset={[00, 0]}
       content={<span className={css([style, felaStyle])}>{msg}</span>}
     >
-      <span className={className}>{children}</span>
+      {children && <span className={className}>{children}</span>}
     </Tippy>
   )
 }

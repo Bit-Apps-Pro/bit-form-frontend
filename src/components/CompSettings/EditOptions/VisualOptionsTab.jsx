@@ -2,7 +2,6 @@ import { arrayMoveImmutable } from 'array-move'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useParams } from 'react-router-dom'
 import CloseEyeIcn from '../../../Icons/CloseEyeIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
@@ -251,7 +250,7 @@ const SortableElm = ({
               {!isGroupStart && checkByDefault && (
                 <Tip msg="Check by Default">
                   <CheckBox
-                    className={css({ se: 35 })}
+                    className={css({ se: 35, mx: 7.5 })}
                     checked={value.check !== undefined}
                     onChange={(e) => setCheck(e, optIndx)}
                   />
@@ -261,7 +260,7 @@ const SortableElm = ({
                 <Tip msg="Required">
                   <CheckBox
                     checked={value.req !== undefined}
-                    className={css({ se: 35 })}
+                    className={css({ se: 35, mx: 7.5 })}
                     onChange={(e) => setReq(e, optIndx)}
                   />
                 </Tip>
@@ -270,7 +269,7 @@ const SortableElm = ({
                 <Tip msg="Disabled">
                   <CheckBox
                     checked={value.disabled !== undefined}
-                    className={css({ se: 35 })}
+                    className={css({ se: 35, mx: 7.5 })}
                     onChange={(e) => setDisabled(e, optIndx)}
                   />
                 </Tip>
@@ -441,6 +440,15 @@ export default function VisualOptionsTab({
   return (
     <>
       <SortableList onSortEnd={onSortEnd} useDragHandle>
+        <div className={css(optionStyle.labelWapper)}>
+          <span className={css(optionStyle.propLabel)}>Label</span>
+          <span className={css(optionStyle.propLabel, { ml: 10 })}>Value</span>
+          <div className={css({ flxi: 'align-center', ml: 5 })}>
+            {checkByDefault && <span className={css(optionStyle.checkLabel)}>Check</span>}
+            {type === 'check' && <span className={css(optionStyle.checkLabel)}>Require</span>}
+            {(type === 'check' || type === 'radio') && <span className={css(optionStyle.checkLabel)}>Disable</span>}
+          </div>
+        </div>
         <div className={css(optionStyle.scroll)}>
           {option.map((_, index) => (
             <SortableItem
@@ -496,6 +504,9 @@ export default function VisualOptionsTab({
 }
 
 const optionStyle = {
+  labelWapper: { p: '5px 30px 0px', fs: 14, fw: 500 },
+  propLabel: { dy: 'inline-block', ta: 'center', w: 200 },
+  checkLabel: { dy: 'inline-block', ta: 'center', w: 50, ow: 'hidden', to: 'ellipsis' },
   disabled: { bd: 'hsla(0, 11%, 93%, 100%)' },
   list: { width: '100%', height: 300 },
   container: {
