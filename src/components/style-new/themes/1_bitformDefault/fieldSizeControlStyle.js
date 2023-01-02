@@ -25,7 +25,9 @@ const getPaddingForExistIcn = (fk, size) => {
  * @param {string} fieldType field type
  * @return style classes
 */
-export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme, direction = '') {
+export default function commonStyle({
+  fk, type, fieldType, breakpoint, theme, colorScheme, direction = '',
+}) {
   let fldPadding = null
   switch (type) {
     case 'small-2':
@@ -680,8 +682,15 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
   }
 }
 
-export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
-  const commonStyles = commonStyle(fldKey, fldSize, fldType, '')
+export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, theme, fldSize, tempThemeVars) => {
+  const props = {
+    fk: fldKey,
+    type: fldSize,
+    fieldType: fldType,
+    theme,
+    direction: '',
+  }
+  const commonStyles = commonStyle(props)
   const commonStylClasses = Object.keys(commonStyles)
   const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
   const fldClassesObj = copyFieldPrvStyle.classes

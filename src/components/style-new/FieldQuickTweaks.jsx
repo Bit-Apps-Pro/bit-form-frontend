@@ -43,7 +43,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
   const setSizes = ({ target: { value } }) => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const updateStyle = updateFieldStyleByFieldSizing(prvStyle.fields[fieldKey], fieldKey, fieldData.typ, value)
+      const fieldStyle = prvStyle.fields[fieldKey]
+      const { theme } = prvStyle.fields[fieldKey]
+      const updateStyle = updateFieldStyleByFieldSizing(fieldStyle, fieldKey, fieldData.typ, theme, value)
       drftStyle.fields[fieldKey] = updateStyle
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
