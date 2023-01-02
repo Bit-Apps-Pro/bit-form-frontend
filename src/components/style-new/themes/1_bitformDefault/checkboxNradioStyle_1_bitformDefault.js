@@ -116,7 +116,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
         color: 'var(--global-font-color) !important',
-        padding: '10px 8px 10px 8px!important',
+        padding: '10px 8px !important',
         'line-height': '1.4 !important',
         // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',
         height: '40px',

@@ -25,8 +25,7 @@ const getPaddingForExistIcn = (fk, size) => {
  * @param {string} fieldType field type
  * @return style classes
 */
-export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme) {
-  const fields = getRecoil($fields)
+export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme, direction = '') {
   let fldPadding = null
   switch (type) {
     case 'small-2':
@@ -80,8 +79,22 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           },
         },
 
-        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '25px' } },
-        ...fieldType === 'country' && { [`.${fk}-country-fld-container`]: { height: '25px' } },
+        ...fieldType === 'select' && { [`.${fk}-dpd-fld-container`]: { height: '21px' } },
+        ...fieldType === 'country' && {
+          [`.${fk}-country-fld-container`]: { height: '21px' },
+          [`.${fk}-dpd-wrp`]: {
+            padding: '6px 4px',
+            height: '25px',
+          },
+          [`.${fk}-opt-search-input`]: {
+            height: '25px',
+            'font-size': '0.625rem',
+          },
+          [`.${fk}-opt-search-icn`]: {
+            height: '18px',
+            width: '18px',
+          },
+        },
 
         ...fieldType === 'phone-number' && {
           [`.${fk}-phone-fld-wrp`]: {
@@ -104,12 +117,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...(fieldType === 'select'
-          || fieldType === 'country'
           || fieldType === 'currency'
           || fieldType === 'phone-number') && {
           [`.${fk}-dpd-wrp`]: {
             padding: '6px 4px',
-            height: '25px',
+            height: '21px',
           },
           [`.${fk}-opt-search-input`]: {
             height: '25px',
@@ -128,10 +140,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem', height: '25px' },
+          [`.${fk}-inp-btn`]: { padding: '7px 10px', 'font-size': '0.625rem' },
           [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
           [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
-          [`.${fk}-btn-txt`]: { 'font-size': '10px' },
+          // [`.${fk}-btn-txt`]: { 'font-size': '10px' },
         },
 
       }
@@ -216,14 +228,27 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-currency-fld-container`]: { height: '30px' },
           [`.${fk}-selected-currency-img`]: { height: '17px', width: '25px', 'border-radius': '4px' },
         },
+        ...(fieldType === 'country') && {
+          [`.${fk}-dpd-wrp`]: {
+            padding: '8px 6px',
+            height: '30px',
+          },
+          [`.${fk}-opt-search-input`]: {
+            height: '30px',
+            'font-size': '0.8rem',
+          },
+          [`.${fk}-opt-search-icn`]: {
+            height: '20px',
+            width: '20px',
+          },
+        },
 
         ...(fieldType === 'select'
-          || fieldType === 'country'
           || fieldType === 'currency'
           || fieldType === 'phone-number') && {
           [`.${fk}-dpd-wrp`]: {
             padding: '8px 6px',
-            height: '30px',
+            height: '24px',
           },
           [`.${fk}-opt-search-input`]: {
             height: '30px',
@@ -242,10 +267,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '4px 9px', 'font-size': '0.875rem', height: '30px' },
+          [`.${fk}-inp-btn`]: { padding: '9px 11px', 'font-size': '0.875rem' },
           [`.${fk}-pre-i`]: { width: '18px', height: '18px' },
           [`.${fk}-suf-i`]: { width: '18px', height: '18px' },
-          [`.${fk}-btn-txt`]: { 'font-size': '12px' },
+          // [`.${fk}-btn-txt`]: { 'font-size': '12px' },
         },
       }
     // case 'small':
@@ -259,52 +284,52 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
       // fldPadding = getPaddingForExistIcn(fk, 35) || '10px 8px'
       fldPadding = getPaddingForExistIcn(fk, 35) || '8px'
       return {
-        [`.${fk}-lbl`]: { 'font-size': '16px' },
+        [`.${fk}-lbl`]: { 'font-size': '1rem' },
         [`.${fk}-sub-titl`]: { 'font-size': '12px' },
         [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
 
         ...(fieldType === 'radio' || fieldType === 'check' || fieldType === 'decision-box') && {
           [`.${fk}-bx`]: { width: '18px', height: '18px' },
-          [`.${fk}-ct`]: { 'font-size': '16px' },
+          [`.${fk}-ct`]: { 'font-size': '14px' },
           ...(fieldType === 'radio' || fieldType === 'check') && {
             [`.${fk}-other-inp`]: {
-              'font-size': '1rem',
-              padding: '10px 8px',
+              'font-size': '14px',
+              padding: '10px 8px !important',
               height: '40px',
             },
           },
         },
-        ...(fieldType === 'check' || fieldType === 'decision-box') && {
-          [`.${fk}-ck`]: { 'border-radius': '5px' },
-        },
+        // ...(fieldType === 'check' || fieldType === 'decision-box') && {
+        //   [`.${fk}-ck`]: { 'border-radius': '5px' },
+        // },
 
         [`.${fk}-fld`]: {
-          'font-size': '1rem',
+          'font-size': '14px',
           padding: fldPadding,
           height: '40px',
           'border-radius': '11px',
-          ...fieldType === 'html-select' && { padding: '5px 3px' },
-          ...fieldType === 'color' && { padding: '5px 3px' },
-          ...fieldType === 'textarea' && { height: '58px' },
+          ...fieldType === 'html-select' && { padding: '6px!important' },
+          ...fieldType === 'color' && { padding: '10px' },
+          // ...fieldType === 'textarea' && { height: '58px' },
         },
 
         [`.${fk}-lbl-pre-i`]: { width: '20px', height: '20px' },
         [`.${fk}-lbl-suf-i`]: { width: '20px', height: '20px' },
-        [`.${fk}-sub-titl-pre-i`]: { width: '20px', height: '20px' },
-        [`.${fk}-sub-titl-suf-i`]: { width: '20px', height: '20px' },
-        [`.${fk}-hlp-txt-pre-i`]: { width: '20px', height: '20px' },
-        [`.${fk}-hlp-txt-suf-i`]: { width: '20px', height: '20px' },
+        [`.${fk}-sub-titl-pre-i`]: { width: '15px', height: '15px' },
+        [`.${fk}-sub-titl-suf-i`]: { width: '15px', height: '15px' },
+        [`.${fk}-hlp-txt-pre-i`]: { width: '15px', height: '15px' },
+        [`.${fk}-hlp-txt-suf-i`]: { width: '15px', height: '15px' },
 
         ...(fieldType !== 'file-up') && {
-          [`.${fk}-pre-i`]: { width: '25px', height: '25px' },
-          [`.${fk}-suf-i`]: { width: '25px', height: '25px' },
+          [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
+          [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
         },
 
         ...fieldType === 'select' && {
           [`.${fk}-dpd-fld-container`]: { height: '40px' },
           [`.${fk}-dpd-fld-wrp`]: {
             'border-radius': '11px',
-            'font-size': '1rem',
+            'font-size': '14px',
           },
         },
 
@@ -312,59 +337,75 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-country-fld-container`]: { height: '40px' },
           [`.${fk}-dpd-fld-wrp`]: {
             'border-radius': '11px',
-            'font-size': '1rem',
+            'font-size': '14px',
           },
         },
 
         ...fieldType === 'phone-number' && {
           [`.${fk}-phone-fld-wrp`]: {
             'border-radius': '11px',
-            'font-size': '1rem',
+            'font-size': '14px',
           },
-          [`.${fk}-phone-amount-input`]: { padding: '10px 8px' },
+          // [`.${fk}-phone-amount-input`]: { padding: '10px 8px' }, // discuss with @rubel vaiya
           [`.${fk}-phone-fld-container`]: { height: '40px' },
-          [`.${fk}-selected-country-img`]: { height: '20px', width: '27px', 'border-radius': '4px' },
+          [`.${fk}-selected-country-img`]: {
+            height: '17px !important',
+            width: '25px',
+            'border-radius': '3px !important',
+          },
         },
 
         ...fieldType === 'currency' && {
           [`.${fk}-currency-fld-wrp`]: {
             'border-radius': '11px',
-            'font-size': '1rem',
+            'font-size': '14px',
           },
-          [`.${fk}-currency-amount-input`]: { padding: '10px 8px' },
+          [`.${fk}-currency-amount-input`]: {
+            ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
+            ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
+          },
           [`.${fk}-currency-fld-container`]: { height: '40px' },
-          [`.${fk}-selected-currency-img`]: { height: '20px', width: '27px', 'border-radius': '4px' },
+          [`.${fk}-selected-currency-img`]: {
+            height: '17px !important',
+            width: '25px',
+            'border-radius': '3px !important',
+          },
+        },
+        ...(fieldType === 'select') && {
+          [`.${fk}-dpd-wrp`]: {
+            padding: '4px 10px',
+            'min-height': '38px',
+          },
+          [`.${fk}-opt-search-input`]: {
+            height: '35px',
+            'font-size': '14px',
+          },
         },
 
-        ...(fieldType === 'select'
-          || fieldType === 'country'
+        ...(fieldType === 'country'
           || fieldType === 'currency'
           || fieldType === 'phone-number') && {
           [`.${fk}-dpd-wrp`]: {
-            padding: '10px 8px',
-            height: '40px',
+            padding: '10px',
+            height: fieldType === 'country' ? '38px' : '32px',
           },
+
           [`.${fk}-opt-search-input`]: {
             height: '35px',
             'font-size': '1rem',
           },
-          [`.${fk}-opt-search-icn`]: {
-            height: '22px',
-            width: '22px',
-          },
         },
 
         ...fieldType === 'button' && {
-          [`.${fk}-btn`]: { padding: '11px 20px', 'font-size': '1rem' },
+          [`.${fk}-btn`]: { padding: '11px 20px', 'font-size': '14px' },
           [`.${fk}-btn-suf-i`]: { width: '20px', height: '20px' },
           [`.${fk}-btn-pre-i`]: { width: '20px', height: '20px' },
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '5px 11px', 'font-size': '1rem', height: '35px' },
+          [`.${fk}-inp-btn`]: { padding: '11px 20px', 'font-size': '14px' },
           [`.${fk}-pre-i`]: { width: '15px', height: '15px' },
           [`.${fk}-suf-i`]: { width: '15px', height: '15px' },
-          [`.${fk}-btn-txt`]: { 'font-size': '16px' },
         },
       }
     // case 'large':
@@ -402,11 +443,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-fld`]: {
           'font-size': '1.2rem',
           padding: fldPadding,
-          height: '44px',
           'border-radius': '12px',
           ...fieldType === 'html-select' && { padding: '5px 3px' },
           ...fieldType === 'color' && { padding: '5px 3px' },
-          ...fieldType === 'textarea' && { height: '70px' },
+          ...fieldType !== 'textarea' && { height: '45px' },
         },
 
         [`.${fk}-lbl-pre-i`]: { width: '24px', height: '24px' },
@@ -429,10 +469,22 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           },
         },
         ...fieldType === 'country' && {
-          [`.${fk}-country-fld-container`]: { height: '44px' },
+          [`.${fk}-country-fld-container`]: { height: '45px' },
           [`.${fk}-dpd-fld-wrp`]: {
             'border-radius': '12px',
             'font-size': '1.2rem',
+          },
+          [`.${fk}-dpd-wrp`]: {
+            padding: '11px 9px',
+            height: '45px',
+          },
+          [`.${fk}-opt-search-input`]: {
+            height: '40px',
+            'font-size': '1.2rem',
+          },
+          [`.${fk}-opt-search-icn`]: {
+            height: '24px',
+            width: '24px',
           },
         },
 
@@ -457,12 +509,11 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...(fieldType === 'select'
-          || fieldType === 'country'
           || fieldType === 'currency'
           || fieldType === 'phone-number') && {
           [`.${fk}-dpd-wrp`]: {
             padding: '11px 9px',
-            height: '44px',
+            height: '40px',
           },
           [`.${fk}-opt-search-input`]: {
             height: '40px',
@@ -481,10 +532,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '12px 18px', 'font-size': '1.125rem', height: '44px' },
+          [`.${fk}-inp-btn`]: { padding: '12px 18px', 'font-size': '1.125rem' },
           [`.${fk}-pre-i`]: { width: '24px', height: '24px' },
           [`.${fk}-suf-i`]: { width: '24px', height: '24px' },
-          [`.${fk}-btn-txt`]: { 'font-size': '1.125rem' },
+          // [`.${fk}-btn-txt`]: { 'font-size': '1.125rem' },
         },
       }
     case 'large-2':
@@ -514,11 +565,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         [`.${fk}-fld`]: {
           'font-size': '1.4rem',
           padding: fldPadding,
-          height: '48px',
           'border-radius': '13px',
           ...fieldType === 'html-select' && { padding: '6px 4px' },
           ...fieldType === 'color' && { padding: '6px 4px' },
-          ...fieldType === 'textarea' && { height: '84px' },
+          ...fieldType !== 'textarea' && { height: '54px' },
         },
 
         [`.${fk}-lbl-pre-i`]: { width: '28px', height: '28px' },
@@ -588,15 +638,15 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
 
         ...fieldType === 'button' && {
-          [`.${fk}-btn`]: { padding: '14px 24px', 'font-size': '1.313rem' },
+          [`.${fk}-btn`]: { padding: '13px 20px', 'font-size': '1.313rem' },
           [`.${fk}-btn-suf-i`]: { width: '28px', height: '28px' },
           [`.${fk}-btn-pre-i`]: { width: '28px', height: '28px' },
         },
         ...fieldType === 'file-up' && {
-          [`.${fk}-inp-btn`]: { padding: '14px 22px', 'font-size': '1.313rem', height: '48px' },
+          [`.${fk}-inp-btn`]: { padding: '13px 20px', 'font-size': '1.313rem' },
           [`.${fk}-pre-i`]: { width: '28px', height: '28px' },
           [`.${fk}-suf-i`]: { width: '28px', height: '28px' },
-          [`.${fk}-btn-txt`]: { 'font-size': '1.313rem' },
+          // [`.${fk}-btn-txt`]: { 'font-size': '1.313rem' },
         },
       }
     default:
@@ -605,7 +655,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
 }
 
 export const updateFieldStyleByFieldSizing = (fieldPrvStyle, fldKey, fldType, fldSize, tempThemeVars) => {
-  const commonStyles = commonStyle(fldKey, fldSize, fldType)
+  const commonStyles = commonStyle(fldKey, fldSize, fldType, '')
   const commonStylClasses = Object.keys(commonStyles)
   const copyFieldPrvStyle = deepCopy(fieldPrvStyle)
   const fldClassesObj = copyFieldPrvStyle.classes
