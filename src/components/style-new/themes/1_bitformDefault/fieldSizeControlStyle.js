@@ -117,7 +117,7 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
         },
         ...(fieldType === 'select') && {
           [`.${fk}-dpd-wrp`]: {
-            padding: '6px 4px',
+            padding: '3px 4px',
             'min-height': '30px',
           },
           [`.${fk}-opt-search-input`]: {
