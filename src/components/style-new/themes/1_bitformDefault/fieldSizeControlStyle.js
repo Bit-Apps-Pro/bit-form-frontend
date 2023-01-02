@@ -115,13 +115,29 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-currency-fld-container`]: { height: '25px' },
           [`.${fk}-selected-currency-img`]: { height: '13px', width: '25px', 'border-radius': '3px' },
         },
+        ...(fieldType === 'select') && {
+          [`.${fk}-dpd-wrp`]: {
+            padding: '6px 4px',
+            'min-height': '30px',
+          },
+          [`.${fk}-opt-search-input`]: {
+            height: '25px',
+            'font-size': '0.625rem',
+          },
+          [`.${fk}-opt-search-icn`]: {
+            height: '18px',
+            width: '18px',
+          },
+          [`.${fk}-selected-opt-lbl .chip-wrp`]: {
+            padding: '3px 8px',
+          },
+        },
 
-        ...(fieldType === 'select'
-          || fieldType === 'currency'
+        ...(fieldType === 'currency'
           || fieldType === 'phone-number') && {
           [`.${fk}-dpd-wrp`]: {
             padding: '6px 4px',
-            height: '21px',
+            height: '24px',
           },
           [`.${fk}-opt-search-input`]: {
             height: '25px',
@@ -260,6 +276,12 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           },
         },
 
+        ...(fieldType === 'select') && {
+          [`.${fk}-selected-opt-lbl .chip-wrp`]: {
+            padding: '4px 8px',
+          },
+        },
+
         ...fieldType === 'button' && {
           [`.${fk}-btn`]: { padding: '9px 15px', 'font-size': '0.875rem' },
           [`.${fk}-btn-suf-i`]: { width: '18px', height: '18px' },
@@ -379,6 +401,10 @@ export default function commonStyle(fk, type, fieldType, breakpoint, colorScheme
           [`.${fk}-opt-search-input`]: {
             height: '35px',
             'font-size': '14px',
+          },
+
+          [`.${fk}-selected-opt-lbl .chip-wrp`]: {
+            padding: '5px 8px',
           },
         },
 
