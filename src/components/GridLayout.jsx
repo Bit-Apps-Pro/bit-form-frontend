@@ -61,6 +61,7 @@ import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 import atlassianTheme from './style-new/themes/2_atlassian'
 import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import noStyleTheme from './style-new/themes/0_noStyle'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -84,6 +85,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
+  const setStaticStyleState = useSetRecoilState($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
@@ -224,6 +226,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     })
     sessionStorage.setItem('btcd-lc', '-')
 
+    const fldType = fldData?.typ
+    if (fldType === 'razorpay') {
+      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
+        delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
+      }))
+    }
+
     // redirect to fields list
     // navigate.replace(`/form/builder/${formType}/${formID}/fields-list`)
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
@@ -352,6 +361,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       return newStyles
     })
     setThemeVars(tempThemeVars)
+
+    const fldType = processedFieldData.typ
+    if (fldType === 'razorpay') {
+      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
+        draftStaticStyleState.staticStyles['.razorpay-checkout-frame'] = { height: '100% !important' }
+      }))
+    }
 
     const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
     addToBuilderHistory({ event, type, state })
