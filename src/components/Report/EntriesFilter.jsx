@@ -1,10 +1,10 @@
-import Tippy from '@tippyjs/react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
+import { hideAll } from 'tippy.js'
 import { $reportSelector } from '../../GlobalStates/GlobalStates'
 import CalendarIcn from '../../Icons/CalendarIcn'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -13,20 +13,28 @@ import tableStyle from '../../styles/table.style'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
+import Downmenu from '../Utilities/Downmenu'
+import Tip from '../Utilities/Tip'
 
 export default function EntriesFilter({ fetchData }) {
   const currentReport = useRecoilValue($reportSelector)
-  const [data, setData] = useState([
-    {
-      startDate: '',
-      endDate: '',
-      key: 'date',
-    },
-  ])
+  const initialRange = {
+    startDate: '',
+    endDate: '',
+    key: 'date',
+  }
+  const [data, setData] = useState(initialRange)
   const { css } = useFela()
+  const searchBtnClicked = useRef(false)
 
-  const searchByDateBetween = () => {
-    const { startDate, endDate } = data[0]
+  const handleSearch = () => {
+    searchBtnClicked.current = true
+    searchByDateBetween(data)
+    hideAll()
+  }
+
+  const searchByDateBetween = dates => {
+    const { startDate, endDate } = dates
     const startDateFormate = startDate ? dateTimeFormatter(startDate, 'Y-m-d') : ''
     const endDateFormate = endDate ? dateTimeFormatter(endDate, 'Y-m-d') : ''
     const entriesFilterByDate = {
@@ -40,65 +48,69 @@ export default function EntriesFilter({ fetchData }) {
     })
   }
 
+  const handleClearRange = () => {
+    setData(initialRange)
+    searchByDateBetween(initialRange)
+    searchBtnClicked.current = false
+    hideAll()
+  }
+
+  // eslint-disable-next-line no-restricted-globals
+  const isFiniteDate = date => date && isFinite(date)
+
   return (
-    <div className="flx mr-2">
-      <Tippy
-        animation="shift-away-extreme"
-        arrow
-        theme="light-border"
-        trigger="click"
-        interactive="true"
-        placement="bottom"
-        appendTo="parent"
-        className="tippy-box tippy-box-datepicker"
-        content={(
-          <div style={{ minHeight: '200px !important' }} className={css(tableStyle.dataRange)}>
-            <DateRange
-              onChange={item => setData([item.date])}
-              moveRangeOnFirstSelection={false}
-              editableDateInputs
-              ranges={data}
-              maxDate={new Date()}
-              showSelectionPreview={false}
-              showDateDisplay
-              startDatePlaceholder="Start Date"
-              endDatePlaceholder="End Date"
-            />
-            {/* <div className="flx flx-between ml-1"> */}
-            <div className={css({ flx: '', jc: 'end', pt: 8, pb: 6 })}>
-              <Btn className={css(ut.mr1)} size="sm" onClick={searchByDateBetween}>{__('Search')}</Btn>
-              <Btn variant="primary-outline" size="sm" onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}>{__('Clear')}</Btn>
+    <div className="mr-2">
+      <Downmenu>
+        <div className="flx">
+          {(searchBtnClicked.current && isFiniteDate(data.startDate) && isFiniteDate(data.endDate)) && (
+            <div className="btcd-custom-date-range white ml-2">
+              <span className="m-a">
+                &nbsp;
+                {`${dateTimeFormatter(data.startDate, 'Y-m-d')} - ${dateTimeFormatter(data.endDate, 'Y-m-d')}`}
+              </span>
+              <button
+                aria-label="Close"
+                type="button"
+                className="icn-btn"
+                onClick={handleClearRange}
+              >
+                <CloseIcn size="12" />
+              </button>
             </div>
-          </div>
-        )}
-      >
-        {(data[0].startDate === '' || data[0].endDate === '') ? (
-          <button
-            aria-label="Fitler"
-            // className="btn btn-date-range mb3 tooltip"
-            className={css(tableStyle.tableActionBtn, ut.ml2)}
-            style={{ '--tooltip-txt': `'${__('Filter')}'` }}
-            type="button"
-          >
-            <CalendarIcn size="16" />
-          </button>
-        ) : (
-          <div className="btcd-custom-date-range white  mt-2">
-            <span className="m-a">
-              &nbsp;
-              {`${dateTimeFormatter(data[0].startDate, 'Y-m-d')} - ${dateTimeFormatter(data[0].endDate, 'Y-m-d')}`}
-            </span>
+          )}
+          <Tip msg={__('Filter Entries between Dates')}>
             <button
-              aria-label="Close"
+              aria-label="Fitler"
+              // className="btn btn-date-range mb3 tooltip"
+              className={css(tableStyle.tableActionBtn, ut.ml2)}
+              style={{ '--tooltip-txt': `'${__('Filter')}'` }}
               type="button"
-              className="icn-btn"
-              onClick={() => { setData([{ startDate: '', endDate: '', key: 'date' }]) }}
             >
-              <CloseIcn size="12" />
+              <CalendarIcn size="16" />
             </button>
+          </Tip>
+        </div>
+        <div style={{ minHeight: '200px !important' }} className={css(tableStyle.dataRange)}>
+          <DateRange
+            onChange={item => setData(item.date)}
+            moveRangeOnFirstSelection={false}
+            retainEndDateOnFirstSelection
+            editableDateInputs
+            ranges={[data]}
+            maxDate={new Date()}
+            showSelectionPreview={false}
+            showDateDisplay
+            startDatePlaceholder="Start Date"
+            endDatePlaceholder="End Date"
+            direction="horizontal"
+          />
+          {/* <div className="flx flx-between ml-1"> */}
+          <div className={css({ flx: '', jc: 'end', pt: 8, pb: 6 })}>
+            <Btn className={css(ut.mr1)} size="sm" onClick={handleSearch}>{__('Search')}</Btn>
+            <Btn variant="primary-outline" size="sm" onClick={handleClearRange}>{__('Clear')}</Btn>
           </div>
-        )}
-      </Tippy>
+        </div>
+      </Downmenu>
     </div>
   )
 }
