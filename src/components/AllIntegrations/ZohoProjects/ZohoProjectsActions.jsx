@@ -679,7 +679,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     </select>
                   </div>
                   <span
-                    className="btcd-link cp"
+                    className="btcd-link"
                     onClick={() => handleTimeLog(true, 'settime')}
                     onKeyDown={() => handleTimeLog(true, 'settime')}
                     role="button"
@@ -728,7 +728,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     </select>
                   </div>
                   <span
-                    className="btcd-link cp"
+                    className="btcd-link"
                     onClick={() => handleTimeLog(false, 'settime')}
                     onKeyDown={() => handleTimeLog(false, 'settime')}
                     role="button"

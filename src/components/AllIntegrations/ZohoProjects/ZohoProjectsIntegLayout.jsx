@@ -115,7 +115,7 @@ export default function ZohoProjectsIntegLayout({
           <br />
           <br />
           <span
-            className="btcd-link cp"
+            className="btcd-link"
             style={{ marginLeft: 155 }}
             event="project"
             onClick={handleSubEventInput}
@@ -164,7 +164,7 @@ export default function ZohoProjectsIntegLayout({
           )}
           {/* {`${ 'margin-left: 155px'}`} */}
           <span
-            className="btcd-link cp"
+            className="btcd-link"
             style={{ marginLeft: !projectsConf.subEvent.includes('project') ? 155 : 5 }}
             event="milestone"
             onClick={handleSubEventInput}
@@ -243,7 +243,7 @@ export default function ZohoProjectsIntegLayout({
             </>
           )}
           <span
-            className="btcd-link cp"
+            className="btcd-link"
             style={{ marginLeft: !(projectsConf.subEvent.includes('project') || projectsConf.subEvent.includes('milestone')) ? 155 : 5 }}
             event="tasklist"
             onClick={handleSubEventInput}
@@ -318,7 +318,7 @@ export default function ZohoProjectsIntegLayout({
             </>
           )}
           <span
-            className="btcd-link cp"
+            className="btcd-link"
             style={{ marginLeft: (!projectsConf.subEvent.includes('project') && !projectsConf.subEvent.includes('milestone') && !projectsConf.subEvent.includes('tasklist')) ? 155 : 5 }}
             event="task"
             onClick={handleSubEventInput}

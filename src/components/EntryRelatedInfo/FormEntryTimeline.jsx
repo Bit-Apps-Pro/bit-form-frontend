@@ -94,8 +94,8 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
         {
           !!Object.keys(integInfo)?.length && (
             <>
-              {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs')}</small>}
-              {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs')}</small>}
+              {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs')}</small>}
+              {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs')}</small>}
               {logShow && data.integration && renderIntegLog(integInfo)}
             </>
           )
@@ -141,8 +141,8 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
           </p>
           {note.title && <h4>{note.title}</h4>}
           <div><RenderHtml html={logShow ? (note.content || '') : truncate(note.content || '', 20)} /></div>
-          {(!logShow && (note.content || '').length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More')}</small>}
-          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less')}</small>}
+          {(!logShow && (note.content || '').length > 20) && <small role="button" tabIndex="0" className="btcd-link" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More')}</small>}
+          {logShow && <small role="button" tabIndex="0" className="btcd-link" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less')}</small>}
         </>
       )
     } if (data.content === null && data.action_type === 'update') {
