@@ -176,9 +176,9 @@ export default class BitRazorpayField {
       description,
       theme,
       prefill: {
-        name: this.#getDynamicValue(prefill.name),
-        email: this.#getDynamicValue(prefill.email),
-        contact: this.#getDynamicValue(prefill.contact),
+        name: this.#getDynamicValue(prefill.prefillNameFld),
+        email: this.#getDynamicValue(prefill.prefillEmailFld),
+        contact: this.#getDynamicValue(prefill.prefillContactFld),
       },
       notes,
       modal: {
