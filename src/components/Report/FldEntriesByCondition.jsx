@@ -4,8 +4,8 @@ import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { roundArrow } from 'tippy.js'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { hideAll, roundArrow } from 'tippy.js'
 import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
 import 'tippy.js/dist/svg-arrow.css'
@@ -34,6 +34,7 @@ import Tip from '../Utilities/Tip'
 import ConditionalLogic from './ConditionalLogic'
 import SearchIcon from '../../Icons/SearchIcon'
 import FilterIcn from '../../Icons/FilterIcn'
+import Downmenu from '../Utilities/Downmenu'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useRecoilValue($reportSelector)
@@ -78,18 +79,18 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     }
   }, [])
 
-  const reportFetchById = (rprtId) => {
-    const rprt = reports.find(r => r?.id?.toString() === rprtId.toString())
-    // const { pageIndex, pageSize, sortBy, filters, globalFilter, conditions } = rprt.details
-    // fetchData({ pageIndex, pageSize, sortBy, filters, conditions })
-    setReportId({ id: rprtId, isDefault: rprt?.isDefault === '1' })
-  }
-
   const setAvailableReport = () => {
     const tmpReports = []
     reports.forEach(r => r.id && tmpReports.push({ label: r?.details?.report_name || '', value: r.id.toString(), isDefault: r.isDefault }))
     setAvailableReports([...tmpReports])
     return tmpReports
+  }
+
+  const reportFetchById = (rprtId) => {
+    const rprt = reports.find(r => r?.id?.toString() === rprtId.toString())
+    // const { pageIndex, pageSize, sortBy, filters, globalFilter, conditions } = rprt.details
+    // fetchData({ pageIndex, pageSize, sortBy, filters, conditions })
+    setReportId({ id: rprtId, isDefault: rprt?.isDefault === '1' })
   }
 
   const saveReport = () => {
@@ -135,23 +136,6 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     setReports(tmpConf)
   }
 
-  const handleInput = (val) => {
-    reportFetchById(val)
-  }
-
-  const editCurrentReport = (val) => {
-    if (!isPro) {
-      setProModal({ show: true, msg: 'Edit option available in the pro version!' })
-      return
-    }
-    setReportUpdate(true)
-    const rprtIndex = availableReports.findIndex(r => r.value === val)
-    setTimeout(() => {
-      setReportIndex(rprtIndex)
-      setshowMdl(true)
-    }, 1)
-  }
-
   const onCloseMdl = () => {
     setshowMdl(false)
     const tmpConf = deepCopy([...reports])
@@ -195,43 +179,6 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
     }, 1)
   }
 
-  const searchReport = (e) => {
-    const { value } = e.target
-    const filtedReports = setAvailableReport().filter(r => r.label?.toLowerCase().includes(value.toLowerCase()))
-    setAvailableReports(filtedReports)
-  }
-
-  const deleteReportAlert = (val) => {
-    confMdl.btnTxt = __('Delete')
-    confMdl.body = __('Are you sure to delete this report')
-    confMdl.btnClass = ''
-    confMdl.action = () => { delItem(val); closeConfMdl() }
-    confMdl.show = true
-    setconfMdl({ ...confMdl })
-  }
-
-  const delItem = (id) => {
-    const deletedReportProm = bitsFetch({ report_id: id }, 'bitforms_delete_report')
-      .then(response => {
-        if (response?.success) {
-          const rpDeletedId = reports.findIndex(r => r.id === id)
-          const tmpReport = deepCopy([...reports])
-          tmpReport.splice(rpDeletedId, 1)
-
-          setReports(tmpReport)
-        } else if (!response?.success) {
-          return 'Error occured'
-        }
-        return response
-      })
-
-    toast.promise(deletedReportProm, {
-      loading: __('Deleting ...'),
-      success: (res) => res?.data?.message || res?.data,
-      error: __('Error occurred, Please try again.'),
-    })
-  }
-
   const closeConfMdl = () => {
     confMdl.show = false
     setconfMdl({ ...confMdl })
@@ -242,26 +189,26 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx ml-2">
-        <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
-          <span className="flx sm b-none pos-rel mr-1">
-            <FilterIcn size="16" stroke="2" />
-          </span>
-          <div className="w-9">
-            {currentReport?.details?.report_name?.length > 11 ? (
-              `${currentReport.details.report_name?.slice(0, 11)}...`
-            ) : (
-              currentReport?.details?.report_name
-            )}
+
+        <Downmenu>
+          <div className="flx btcd-custom-report-dpdw mr-2 b-none" style={{ height: 28 }}>
+            <span className="flx sm b-none pos-rel mr-1">
+              <FilterIcn size="16" stroke="2" />
+            </span>
+            <div className="btcd-custom-report-title">
+              {currentReport?.details?.report_name}
+            </div>
+            <button
+              className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn, { pr: 0, cur: 'pointer' })}`}
+              onClick={() => { hideAll(); setRefreshResp(1) }}
+              type="button"
+              style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
+            >
+              <RefreshIcn size="20" />
+            </button>
           </div>
-          <button
-            className={`flx sm b-none tooltip pos-rel ${css(reportSearch.refreshBtn, { pr: 0, cur: 'pointer' })}`}
-            onClick={() => setRefreshResp(1)}
-            type="button"
-            style={{ '--tooltip-txt': `'${__('Refresh')}'` }}
-          >
-            <RefreshIcn size="20" />
-          </button>
-        </div>
+          <ReportsList availableReports={availableReports} setAvailableReports={setAvailableReports} setAvailableReport={setAvailableReport} reportFetchById={reportFetchById} setReportIndex={setReportIndex} setReportUpdate={setReportUpdate} setProModal={setProModal} confMdl={confMdl} setconfMdl={setconfMdl} setshowMdl={setshowMdl} />
+        </Downmenu>
         <div className="mr-2">
           <ConfirmModal
             show={confMdl.show}
@@ -281,69 +228,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             placement="bottom"
             appendTo="parent"
             className={css(reportSearch.reportTippyBox)}
-            content={(
-              <div style={{ height: 250, padding: 3 }}>
-                <div className="mb-2" style={{ color: 'rgb(63, 63, 63)', fontWeight: 700 }}>Filters</div>
-                <div className={css(reportSearch.reportBox, ut.mb2)}>
-                  <span><SearchIcon size="16" /></span>
-                  <input
-                    aria-label="Search reports"
-                    type="text"
-                    placeholder="Search filters"
-                    onChange={searchReport}
-                    className={css(reportSearch.dpdwInputBox)}
-                  />
-                </div>
-                {availableReports.length === 0 && (
-                  <div style={{ color: '#000' }}>No matching report found</div>
-                )}
-                <Scrollbars style={{ height: '70%' }} autoHide>
-                  <div>
-                    {availableReports?.map((report, indx) => (
-                      <div
-                        key={`fld-condition-${indx * 5}`}
-                        className={`report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}
-                      >
-                        <button
-                          type="button"
-                          className="report-content-btn-item"
-                          disabled={report.value === currentReport?.id}
-                          title={report?.label}
-                          onClick={() => handleInput(report.value)}
-                        >
-                          {report?.label?.length > 14 ? (
-                            `${report?.label?.slice(0, 14)}...`
-                          ) : (report?.label)}
-                        </button>
-                        {(report.isDefault.toString() === '0') && (
-                          <div className="show_tippy_action">
-                            <button
-                              className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
-                              title="Edit"
-                              onClick={() => editCurrentReport(report.value)}
-                              type="button"
-                            >
-                              <EditIcn size="17" />
-                            </button>
-                            {report.value !== currentReport?.id && (
-                              <button
-                                // className="icn-btn sm"
-                                className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
-                                title="Delete"
-                                onClick={() => deleteReportAlert(report.value)}
-                                type="button"
-                              >
-                                <TrashIcn size="15" />
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </Scrollbars>
-              </div>
-            )}
+            content={(<ReportsList availableReports={availableReports} setAvailableReports={setAvailableReports} setAvailableReport={setAvailableReport} reportFetchById={reportFetchById} setReportIndex={setReportIndex} setReportUpdate={setReportUpdate} setProModal={setProModal} confMdl={confMdl} setconfMdl={setconfMdl} setshowMdl={setshowMdl} />)}
           >
             <button className={css(tableStyle.tableActionBtn)} type="button">
               <MoreVerticalIcn size="14" />
@@ -468,4 +353,135 @@ const reportSearch = {
     cr: 'hsl(0deg 1% 29%)',
     '&:hover': { cr: 'var(--blue)', bd: 'var(--b-79-96)' },
   },
+}
+
+const ReportsList = ({
+  availableReports, setAvailableReports, setAvailableReport, reportFetchById, setProModal, confMdl, setconfMdl, setReportUpdate, setReportIndex, setshowMdl,
+}) => {
+  const { css } = useFela()
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
+  const currentReport = useRecoilValue($reportSelector)
+  const [reports, setReports] = useRecoilState($reports)
+
+  const searchReport = (e) => {
+    const { value } = e.target
+    const filtedReports = setAvailableReport().filter(r => r.label?.toLowerCase().includes(value.toLowerCase()))
+    setAvailableReports(filtedReports)
+  }
+
+  const handleInput = (val) => {
+    if (val === currentReport?.id) return
+    reportFetchById(val)
+  }
+
+  const editCurrentReport = (val) => {
+    if (!isPro) {
+      setProModal({ show: true, msg: 'Edit option available in the pro version!' })
+      return
+    }
+    setReportUpdate(true)
+    const rprtIndex = availableReports.findIndex(r => r.value === val)
+    setTimeout(() => {
+      setReportIndex(rprtIndex)
+      setshowMdl(true)
+    }, 1)
+  }
+
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }
+
+  const deleteReportAlert = (val) => {
+    confMdl.btnTxt = __('Delete')
+    confMdl.body = __('Are you sure to delete this report')
+    confMdl.btnClass = ''
+    confMdl.action = () => { delItem(val); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
+  const delItem = (id) => {
+    const deletedReportProm = bitsFetch({ report_id: id }, 'bitforms_delete_report')
+      .then(response => {
+        if (response?.success) {
+          const rpDeletedId = reports.findIndex(r => r.id === id)
+          const tmpReport = deepCopy([...reports])
+          tmpReport.splice(rpDeletedId, 1)
+
+          setReports(tmpReport)
+        } else if (!response?.success) {
+          return 'Error occured'
+        }
+        return response
+      })
+
+    toast.promise(deletedReportProm, {
+      loading: __('Deleting ...'),
+      success: (res) => res?.data?.message || res?.data,
+      error: __('Error occurred, Please try again.'),
+    })
+  }
+
+  return (
+    <div style={{ height: 250, padding: 3 }}>
+      <div className="mb-2" style={{ color: 'rgb(63, 63, 63)', fontWeight: 700 }}>Filters</div>
+      <div className={css(reportSearch.reportBox, ut.mb2)}>
+        <span><SearchIcon size="16" /></span>
+        <input
+          aria-label="Search reports"
+          type="text"
+          placeholder="Search filters"
+          onChange={searchReport}
+          className={css(reportSearch.dpdwInputBox)}
+        />
+      </div>
+      {availableReports.length === 0 && (
+        <div style={{ color: '#000' }}>No matching report found</div>
+      )}
+      <Scrollbars style={{ height: '70%' }} autoHide>
+        <div>
+          {availableReports?.map((report, indx) => (
+            <div
+              key={`fld-condition-${indx * 5}`}
+              className={`report-content-item flx ${report.value === currentReport?.id ? 'report-dpdw-active' : ''}`}
+            >
+              <button
+                type="button"
+                className="report-content-btn-item"
+                title={report?.label}
+                onClick={() => handleInput(report.value)}
+              >
+                {report?.label}
+              </button>
+              {(report.isDefault.toString() === '0') && (
+                <div className="show_tippy_action">
+                  <button
+                    className={`icn-btn sm ${css(reportSearch.refreshBtn)} ${css(ut.p0)}`}
+                    title="Edit"
+                    onClick={() => editCurrentReport(report.value)}
+                    type="button"
+                  >
+                    <EditIcn size="17" />
+                  </button>
+                  {report.value !== currentReport?.id && (
+                    <button
+                      // className="icn-btn sm"
+                      className={`icn-btn sm ${css(reportSearch.refreshBtn)}`}
+                      title="Delete"
+                      onClick={() => deleteReportAlert(report.value)}
+                      type="button"
+                    >
+                      <TrashIcn size="15" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Scrollbars>
+    </div>
+  )
 }
