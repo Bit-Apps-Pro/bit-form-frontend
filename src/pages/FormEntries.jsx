@@ -201,8 +201,6 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
             && row.cell.value !== ''
           ) {
             if (val.type === 'file-up' || val.type === 'advanced-file-up') {
-              // eslint-disable-next-line max-len
-              console.log('advance file cell', row.cell.value)
               return (
                 <>
                   {getUploadedFilesArr(row.cell.value).map((itm, i) => (
@@ -266,7 +264,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       accessor: 'table_ac',
       Cell: (val) => (
         <TableAction
-          edit={() => editData(val.row)}
+          // edit={() => editData(val.row)}
           del={() => delConfMdl(val.row, {
             fetchData: val.fetchData,
             data: {
@@ -386,18 +384,15 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         }
         setRowDtl({ ...newRowDtl })
 
-        const findStatusCol = row.find(col => col.column.id === '__entry_status')
-        if (findStatusCol && findStatusCol.value === '1') {
-          const entry = allResp[idx]
-          const entryId = entry.entry_id
+        const statusCol = row.find(col => col.column.id === '__entry_status')
+        if (statusCol && statusCol.value === '1') {
+          const entryId = statusCol.row?.original?.entry_id
+          if (!entryId) return
           bitsFetch({ formId: formID, entryId }, 'bitforms_entry_status_update')
             .then(resp => {
               if (resp.success) {
-                const newAllResp = [...allResp]
-                // eslint-disable-next-line dot-notation
-                newAllResp[idx]['__entry_status'] = '0'
-                newAllResp[idx].__updated_at = resp?.data?.update_at_time
-                setAllResp(newAllResp)
+                const { fetchData: fetchRowData } = rowFetchData
+                setTimeout(() => fetchRowData(currentReportData.details), 1000)
               }
             })
         }
@@ -469,7 +464,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         </div>
       )
     }
-    if (entry.fieldType === 'check') {
+    if (entry.fieldType === 'check' || entry.fieldType === 'select') {
       return (
         allResp[rowDtl.idx]?.[entry.accessor]
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
@@ -573,6 +568,12 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
           columnHidable
           hasAction
           rowClickable
+          leftHeader={(
+            <FldEntriesByCondition
+              fetchData={fetchData}
+              setRefreshResp={setRefreshResp}
+            />
+          )}
           rightHeader={(
             <>
               <ExportImportMenu
@@ -583,12 +584,6 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
               />
               <EntriesFilter fetchData={fetchData} />
             </>
-          )}
-          leftHeader={(
-            <FldEntriesByCondition
-              fetchData={fetchData}
-              setRefreshResp={setRefreshResp}
-            />
           )}
           formID={formID}
           setTableCols={setTableColumns}
