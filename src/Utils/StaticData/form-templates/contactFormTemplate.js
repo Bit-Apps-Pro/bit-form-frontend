@@ -23,6 +23,7 @@ export default {
       valid: {
         req: true,
         reqPos: 'after',
+        reqShow: true,
       },
       err: {
         req: {
@@ -44,6 +45,7 @@ export default {
       valid: {
         req: true,
         reqPos: 'after',
+        reqShow: true,
       },
       err: {
         req: {
@@ -67,6 +69,7 @@ export default {
       valid: {
         req: true,
         reqPos: 'after',
+        reqShow: true,
       },
       err: {
         invalid: {
