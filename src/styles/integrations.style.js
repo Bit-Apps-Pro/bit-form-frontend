@@ -1,6 +1,7 @@
 const style = {
   integWrp: {
-    flx: 'center',
+    mt: 8,
+    dy: 'flex',
     ai: 'start',
     flxp: 1,
     gap: '5px',

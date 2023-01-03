@@ -1938,6 +1938,7 @@ nav.top-nav {
     background: var(--b-97);
     // box-shadow: 0px 1px 4px 1px #cacaca;
     box-shadow: 0px 1px 4px 1px var(--white-0-80);
+    z-index: 9;
   }
 
   &:focus-within {
@@ -4612,6 +4613,7 @@ select.btcd-ud-inp {
   color: var(--blue); //blue
   box-shadow: none !important;
   transition: box-shadow .2s;
+  cursor: pointer;
 
   &:focus-visible {
     box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important;
@@ -5247,12 +5249,19 @@ _:-ms-fullscreen,
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
+  width: 200px;
+  justify-content: space-between;
+}
+
+.btcd-custom-report-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btcd-custom-date-range {
   display: flex;
   border: 1px solid #e2e2e2 !important;
-  min-width: 100%;
   justify-content: center;
   border-radius: 8px;
   padding: 0px 5px 0px 5px;
@@ -5279,8 +5288,6 @@ _:-ms-fullscreen,
 }
 
 .report-content-btn-item {
-  display: flex;
-  //background: white;
   background: none;
   border: none;
   font-size: 14px;
@@ -5290,19 +5297,27 @@ _:-ms-fullscreen,
   font-style: normal;
   font-weight: 500;
   line-height: 181.9%;
-  width: 80%;
   cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .report-content-item {
   transition: .2s all ease;
   margin-bottom: 2px;
+  justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   //padding:5px;
   // &:hover > .show_tippy_action {
   //   display: inline-flex !important;
   // }
-  &:hover {
+  &:hover:not(.report-dpdw-active) {
     background: var(--b-79-96);
     border-radius: 8px;
   }
@@ -5315,7 +5330,7 @@ _:-ms-fullscreen,
 
 .report-dpdw-active {
   // background: #F2F2F2;
-  background: var(--b-79-96);
+  background: var(--b-90);
   border-radius: 8px;
   //padding: 0px;
 }

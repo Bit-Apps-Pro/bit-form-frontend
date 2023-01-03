@@ -99,7 +99,7 @@ export default function PaymentSettings({ setSnackbar }) {
       />
       <h2>{__('Payment Settings')}</h2>
       <div className="btcd-hr" />
-      <div className="flx flx-wrp pos-rel mt-2">
+      <div className={css(style.integWrp)}>
         {!isPro && (
           <div className="pro-blur flx w-10" style={{ top: 5, left: -10 }}>
             <div className="pro">
