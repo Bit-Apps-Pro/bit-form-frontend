@@ -15,7 +15,6 @@ import noStyleTheme from './themes/0_noStyle'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 import atlassianTheme from './themes/2_atlassian'
 import individual from './themes/individual/individual'
-import materialTheme from './themes/3_material'
 import themes from './themes/themeList'
 
 export default function CustomThemeGallary({ fldKey }) {
@@ -35,7 +34,6 @@ export default function CustomThemeGallary({ fldKey }) {
       bitformDefault: bitformDefaultTheme({ fieldKey: fk, type }),
       atlassian: atlassianTheme({ fieldKey: fk, type }),
       individual: individual({ fieldKey: fk, type }),
-      material: materialTheme({ fieldKey: fk, type }),
       noStyle: noStyleTheme({ fieldKey: fk, type }),
     }
     return obj[slug]
