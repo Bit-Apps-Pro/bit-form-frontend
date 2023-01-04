@@ -9,7 +9,7 @@ export default function ThemeControl({ fldKey }) {
 
   const handleSpacingMenu = (e) => showDraggableModal(e, setDraggableModal, { component: 'theme-control', width: 600, fldKey })
   return (
-    <button className={css(cls.delBtn)} onClick={handleSpacingMenu} type="button">Control Model</button>
+    <button className={css(cls.delBtn)} onClick={handleSpacingMenu} type="button">Choose theme</button>
   )
 }
 
