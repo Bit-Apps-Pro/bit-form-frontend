@@ -1,12 +1,17 @@
 /* eslint-disable no-param-reassign */
+import { produce } from 'immer'
 import { useContext, useState } from 'react'
-import DatePicker from 'react-date-picker'
+import { Calendar } from 'react-date-range'
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { produce } from 'immer'
+import { hideAll } from 'tippy.js'
 import { $additionalSettings, $bits, $fields, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import BlockIcn from '../Icons/BlockIcn'
+import CloseIcn from '../Icons/CloseIcn'
 import DateIcn from '../Icons/DateIcn'
 import DBIcn from '../Icons/DBIcn'
 import EmptyIcn from '../Icons/EmptyIcn'
@@ -20,17 +25,17 @@ import NoneIcn from '../Icons/NoneIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { deepCopy } from '../Utils/Helpers'
+import { deleteNestedObj } from '../Utils/FormBuilderHelper'
+import { dateTimeFormatter, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import { assignNestedObj } from './style-new/styleHelpers'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
+import Downmenu from './Utilities/Downmenu'
 import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
-import { $staticStylesState } from '../GlobalStates/StaticStylesState'
-import { assignNestedObj } from './style-new/styleHelpers'
-import { deleteNestedObj } from '../Utils/FormBuilderHelper'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -41,7 +46,7 @@ export default function SingleFormSettings() {
   const bits = useRecoilValue($bits)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   // const setStaticStyle = useSetRecoilState($staticStylesState)
-  const [staticStyleState, setStaticStyleState] = useRecoilState($staticStylesState)
+  const setStaticStyleState = useRecoilValue($staticStylesState)
   const { isPro } = bits
   const [proModal, setProModal] = useState({ show: false, msg: '' })
 
@@ -224,7 +229,7 @@ export default function SingleFormSettings() {
       if (e.target.checked) {
         additional.settings.recaptchav3.hideReCaptcha = true
         const path = 'staticStyles->.grecaptcha-badge->visibility'
-        assignNestedObj(draft, path, 'hidden')
+        assignNestedObj(draft, path, 'hidden !important')
       } else {
         delete additional.settings.recaptchav3.hideReCaptcha
         const path = 'staticStyles->.grecaptcha-badge'
@@ -376,17 +381,14 @@ export default function SingleFormSettings() {
   }
 
   const handleDate = (val, typ) => {
-    const date = new Date(val)
-    const y = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date)
-    const m = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date)
-    const d = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
-
+    if (!val) hideAll()
+    let date = val
+    if (val) date = dateTimeFormatter(val, 'm-d-Y')
     setadditional(prvState => produce(prvState, drft => {
-      if (typ === 'from') {
-        drft.settings.restrict_form.date.from = `${m}-${d}-${y}`
-      } else {
-        drft.settings.restrict_form.date.to = `${m}-${d}-${y}`
-      }
+      if (!drft.settings) drft.settings = {}
+      if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
+      if (!drft.settings.restrict_form.date) drft.settings.restrict_form.date = {}
+      drft.settings.restrict_form.date[typ] = date
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
@@ -527,6 +529,11 @@ export default function SingleFormSettings() {
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
+  const fromDate = additionalSetting?.settings?.restrict_form?.date?.from
+  const toDate = additionalSetting?.settings?.restrict_form?.date?.to
+  const fromTime = additionalSetting?.settings?.restrict_form?.time?.from
+  const toTime = additionalSetting?.settings?.restrict_form?.time?.to
+
   return (
     <div>
       <h2>{__('Settings')}</h2>
@@ -631,7 +638,7 @@ export default function SingleFormSettings() {
               {__('Hide ReCaptcha Badge')}
             </div>
             <span
-              className="btcd-link cp mb-4 ml-2"
+              className="btcd-link mb-4 ml-2"
               onClick={toggleCaptchaAdvanced}
               onKeyDown={toggleCaptchaAdvanced}
               role="button"
@@ -737,27 +744,66 @@ export default function SingleFormSettings() {
             <span className="mt-2 ml-2">Date:</span>
             <div className="mr-2 ml-2">
               <div><small>{__('From')}</small></div>
-              <DatePicker
-                onChange={val => handleDate(val, 'from')}
-                value={new Date(additionalSetting?.settings?.restrict_form?.date?.from || null)}
-                dayPlaceholder="dd"
-                monthPlaceholder="mm"
-                yearPlaceholder="year"
-                className="btcd-date-pick"
-                calendarClassName="btcd-date-pick-cln"
-              />
+              <Downmenu>
+                <div className="btcd-custom-date-range white">
+                  {fromDate && (
+                    <>
+                      <span className="m-a">
+                        {dateTimeFormatter(fromDate || '', 'm-d-Y')}
+                      </span>
+                      <button
+                        aria-label="Close"
+                        type="button"
+                        className="icn-btn"
+                        onClick={() => handleDate('', 'from')}
+                      >
+                        <CloseIcn size="12" />
+                      </button>
+                    </>
+                  )}
+                  {!fromDate && (
+                    <span className="m-a">
+                      Select From Date
+                    </span>
+                  )}
+                </div>
+                <Calendar
+                  onChange={val => handleDate(val, 'from')}
+                  date={fromDate ? new Date(fromDate) : ''}
+                />
+              </Downmenu>
             </div>
             <div>
               <div><small>{__('To')}</small></div>
-              <DatePicker
-                onChange={val => handleDate(val, 'to')}
-                value={new Date(additionalSetting?.settings?.restrict_form?.date?.to || null)}
-                dayPlaceholder="dd"
-                monthPlaceholder="mm"
-                yearPlaceholder="year"
-                className="btcd-date-pick"
-                calendarClassName="btcd-date-pick-cln"
-              />
+              <Downmenu>
+                <div className="btcd-custom-date-range white">
+                  {toDate && (
+                    <>
+                      <span className="m-a">
+                        {dateTimeFormatter(toDate || '', 'm-d-Y')}
+                      </span>
+                      <button
+                        aria-label="Close"
+                        type="button"
+                        className="icn-btn"
+                        onClick={() => handleDate('', 'to')}
+                      >
+                        <CloseIcn size="12" />
+                      </button>
+                    </>
+                  )}
+                  {!toDate && (
+                    <span className="m-a">
+                      Select To Date
+                    </span>
+                  )}
+
+                </div>
+                <Calendar
+                  onChange={val => handleDate(val, 'to')}
+                  date={toDate ? new Date(toDate) : ''}
+                />
+              </Downmenu>
             </div>
           </div>
         )}
@@ -768,14 +814,15 @@ export default function SingleFormSettings() {
             <div><small>{__('From')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'from')}
-              value={additionalSetting?.settings?.restrict_form?.time?.from || new Date()}
+              value={fromTime || new Date()}
+              className="btcd-date-pick"
             />
           </div>
           <div>
             <div><small>{__('To')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'to')}
-              value={additionalSetting?.settings?.restrict_form?.time?.to || new Date()}
+              value={toTime || new Date()}
               className="btcd-date-pick"
             />
           </div>
