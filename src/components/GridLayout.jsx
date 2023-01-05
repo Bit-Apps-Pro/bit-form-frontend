@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -22,8 +22,9 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId,
+  $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
@@ -45,7 +46,7 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -56,12 +57,11 @@ import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComp
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import atlassianTheme from './style-new/themes/2_atlassian'
-import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
 import noStyleTheme from './style-new/themes/0_noStyle'
-import { $staticStylesState } from '../GlobalStates/StaticStylesState'
+import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
+import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
+import atlassianTheme from './style-new/themes/2_atlassian'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -227,9 +227,12 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     sessionStorage.setItem('btcd-lc', '-')
 
     const fldType = fldData?.typ
-    if (fldType === 'razorpay') {
+    if (fldType === 'razorpay' || fldType === 'paypal') {
       setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
-        delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
+        delete draftStaticStyleState.staticStyles['.pos-rel']
+        delete draftStaticStyleState.staticStyles['.form-loading::before']
+        delete draftStaticStyleState.staticStyles['.form-loading::after']
+        if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
       }))
     }
 
@@ -363,9 +366,35 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setThemeVars(tempThemeVars)
 
     const fldType = processedFieldData.typ
-    if (fldType === 'razorpay') {
+    if (fldType === 'razorpay' || fldType === 'paypal') {
       setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
-        draftStaticStyleState.staticStyles['.razorpay-checkout-frame'] = { height: '100% !important' }
+        draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
+        draftStaticStyleState.staticStyles['.form-loading::before'] = {
+          position: 'absolute',
+          'border-radius': '5px',
+          display: 'block',
+          top: 0,
+          left: 0,
+          content: "''",
+          height: '100%',
+          width: '100%',
+          'z-index': '9999',
+          'background-color': 'rgba(0,0,0,0.2)',
+        }
+        draftStaticStyleState.staticStyles['.form-loading::after'] = {
+          position: 'absolute',
+          'border-radius': '5px',
+          color: '#fff',
+          top: '50%',
+          left: '50%',
+          content: "'loading...'",
+          transform: 'translate(-50%, -50%)',
+          'z-index': '99999',
+          'font-size': '20px',
+          'background-color': '#222',
+          padding: '5px 15px',
+        }
+        if (fldType === 'razorpay') draftStaticStyleState.staticStyles['.razorpay-checkout-frame'] = { height: '100% !important' }
       }))
     }
 
