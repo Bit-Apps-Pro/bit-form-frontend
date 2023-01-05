@@ -21,7 +21,7 @@ export default function DocNSupport() {
         <p className={css(style.fs)}>
           Explore our extensive documentation. From beginners to developers - everyone will get an answer
           {' '}
-          <a target="_blank" href="https://www.bitapps.pro/bit-form" rel="noreferrer">
+          <a target="_blank" href="https://docs.form.bitapps.pro/" rel="noreferrer">
             here
             {' '}
             <ExternalLinkIcn size="15" />
@@ -34,7 +34,7 @@ export default function DocNSupport() {
             <MailIcn size="20" />
           </span>
           <span className={css(style.pb)}>
-            <a href="mailto:" rel="noreferrer">
+            <a href="mailto:support@bitapps.pro" rel="noreferrer">
               support@bitapps.pro
             </a>
           </span>
