@@ -17,8 +17,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)
   const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0) && urlFldKey === fieldKey
   const isHidden = fieldData.valid?.hide || false
-
-  const err = fieldData.error || ''
+  const err = fieldData.err?.req?.dflt || ''
   const fldWrapperElm = useRef(null)
   const isElementInViewport = elm => {
     const rect = elm.getBoundingClientRect()
@@ -31,7 +30,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
     )
   }
 
-  if (err && fldWrapperElm) {
+  if (err && fldWrapperElm.current) {
     const fld = fldWrapperElm.current
     const bodyRect = document.body.getBoundingClientRect()
     const fldRect = fld.getBoundingClientRect()
@@ -43,6 +42,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
 
   return (
     <div
+      ref={fldWrapperElm}
       data-testid={`${fieldKey}-fld-wrp`}
       data-dev-fld-wrp={fieldKey}
       className={`${fieldKey}-fld-wrp ${getCustomClsName(fieldKey, 'fld-wrp')} ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''}`}
@@ -212,7 +212,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 className={`${fieldKey}-err-txt ${getCustomClsName(fieldKey, 'err-txt')}`}
                 {...getCustomAttributes(fieldKey, 'err-txt')}
               >
-                {err || 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero obcaecati totam a! Ullam dolores esse perspiciatis dignissimos vel quos quae?'}
+                {err || 'This is an example of an error message. this message will vary by a condition or validation check.'}
               </div>
               {fieldData.errSufIcn && (
                 <img
