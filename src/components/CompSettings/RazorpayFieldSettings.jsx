@@ -186,7 +186,7 @@ export default function RazorpayFieldSettings() {
     if (type === 'amount') {
       pattern = /number|radio/g
     } else if (type === 'desc') {
-      pattern = /text/g
+      pattern = /text|username/g
     } else if (type === 'email') {
       pattern = /text|email/g
     } else if (type === 'number') {
