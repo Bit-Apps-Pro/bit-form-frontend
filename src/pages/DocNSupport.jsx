@@ -4,6 +4,7 @@ import { useFela } from 'react-fela'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import MailIcn from '../Icons/MailIcn'
 import MessagesCircle from '../Icons/MessagesCircle'
+import YoutubeIcn from '../Icons/YoutubeIcn'
 import ut from '../styles/2.utilities'
 
 export default function DocNSupport() {
@@ -31,7 +32,7 @@ export default function DocNSupport() {
         <p className={css(style.fs)}>In Bit Apps, we provide all kind product support for any types of customer, it doesn't matter FREE or PRO user. We actively provide support through Email and Live Chat. Our support team is always ready to help you. We are here to answer your questions and help you with any issues you may have.</p>
         <div className={css(style.suprt)}>
           <span className={css(ut.mr2)}>
-            <MailIcn size="20" />
+            <MailIcn size="18" />
           </span>
           <span className={css(style.pb)}>
             <a href="mailto:support@bitapps.pro" rel="noreferrer">
@@ -44,8 +45,20 @@ export default function DocNSupport() {
             <MessagesCircle size="20" />
           </span>
           <span className={css(style.pb)}>
-            <a href="">
+            <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" rel="noreferrer">
               Chat here
+              {' '}
+              <ExternalLinkIcn size="15" />
+            </a>
+          </span>
+        </div>
+        <div className={css(style.suprt)}>
+          <span className={css(ut.mr2)}>
+            <YoutubeIcn size="20" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" rel="noreferrer">
+              You tube channel
               {' '}
               <ExternalLinkIcn size="15" />
             </a>
